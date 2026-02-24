@@ -4,6 +4,7 @@ using System.Linq;
 using H.Avalonia.Events;
 using H.Avalonia.Models;
 using H.Avalonia.Views.ComponentViews;
+using H.Avalonia.Views.ResultViews;
 using H.Core.Models;
 using H.Core.Services;
 using H.Core.Services.StorageService;
@@ -218,6 +219,15 @@ public class MyComponentsViewModel : ViewModelBase
         if (activeViews != null && activeViews.All(x => x.GetType() != typeof(ChooseComponentsView)))
         {
             this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ChooseComponentsView));
+        }
+    }
+
+    public void OnResultsButtonClicked()
+    {
+        var activeViews = this.RegionManager.Regions[UiRegions.ContentRegion].ActiveViews;
+        if (activeViews != null && activeViews.All(x => x.GetType() != typeof(EmissionPieChartView)))
+        {
+            this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EmissionPieChartView));
         }
     }
 

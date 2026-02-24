@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="H.Avalonia.Views.ResultViews.EmissionPieChartView"
+             xmlns:lvcore="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia">
+    <Grid ColumnDefinitions="180, *">
+        <Grid Grid.Column="0" RowDefinitions="*,*,*">
+			<StackPanel Orientation="Vertical" Grid.Row="1">
+
+                <StackPanel Orientation="Vertical" Margin="10">
+                <TextBlock Text="Units of Measurement:" Margin="0 0 0 5"/>
+                <ComboBox>
+                    <ComboBoxItem>Kg CO2e</ComboBoxItem>
+                    <ComboBoxItem>Mg CO2e</ComboBoxItem>
+                    <ComboBoxItem>Kg GHGs</ComboBoxItem>
+                    <ComboBoxItem>Mg GHGs</ComboBoxItem>
+                </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10">
+                    <TextBlock Text="Show details:"/>
+                    <ToggleSwitch/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10">
+                    <TextBlock Text="Year: " Margin="0 0 0 5"/>
+                    <ComboBox>
+                        <ComboBoxItem>2026</ComboBoxItem>
+                        <ComboBoxItem>2025</ComboBoxItem>
+                        <ComboBoxItem>2024</ComboBoxItem>
+                        <ComboBoxItem>2023</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+        <lvcore:PieChart Grid.Column="1" Series="{Binding PieChartSeries}" LegendPosition="Right" />
+    </Grid>
+
+</UserControl>
