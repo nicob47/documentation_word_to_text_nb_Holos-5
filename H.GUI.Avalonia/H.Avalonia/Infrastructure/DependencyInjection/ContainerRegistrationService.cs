@@ -184,6 +184,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterForNavigation<ClimateResultsView, ClimateResultsViewModel>();
             containerRegistry.RegisterForNavigation<SoilResultsView, SoilResultsViewModel>();
             containerRegistry.RegisterForNavigation<MyComponentsView, MyComponentsViewModel>();
+            containerRegistry.RegisterForNavigation<ResultsSidebarView, ResultsSidebarViewModel>();
             containerRegistry.RegisterForNavigation<ChooseComponentsView, ChooseComponentsViewModel>();
             containerRegistry.RegisterForNavigation<FieldComponentView, FieldComponentViewModel>();
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>();

@@ -6484,4 +6484,25 @@ Please note: emissions related to the deposition or application of livestock man
   <data name="ErrorCouldNotReachNominatimApiDescription" xml:space="preserve">
     <value>Location data could not be retrieved from Nominatim API, try another method of setting farm location.</value>
   </data>
+  <data name="TitleEstimatesOfProduction" xml:space="preserve">
+    <value>Estimates of Production</value>
+  </data>
+  <data name="TitleFeedEstimateReport" xml:space="preserve">
+    <value>Feed Estimate Report</value>
+  </data>
+  <data name="TitleEmissionsPieChart" xml:space="preserve">
+    <value>Emissions Pie Chart</value>
+  </data>
+  <data name="TitleOverallEmissions" xml:space="preserve">
+    <value>Overall Emissions</value>
+  </data>
+  <data name="TitleComponentEmissions" xml:space="preserve">
+    <value>Component Emissions</value>
+  </data>
+  <data name="TitleDetailedEmissionsReport" xml:space="preserve">
+    <value>Detailed Emissions Report</value>
+  </data>
+  <data name="TitleResults" xml:space="preserve">
+    <value>Results</value>
+  </data>
 </root>

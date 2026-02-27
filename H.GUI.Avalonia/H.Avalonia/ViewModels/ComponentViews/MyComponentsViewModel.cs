@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using H.Avalonia.Events;
 using H.Avalonia.Models;
+using H.Avalonia.Views;
 using H.Avalonia.Views.ComponentViews;
 using H.Avalonia.Views.ResultViews;
 using H.Core.Models;
@@ -224,11 +225,8 @@ public class MyComponentsViewModel : ViewModelBase
 
     public void OnResultsButtonClicked()
     {
-        var activeViews = this.RegionManager.Regions[UiRegions.ContentRegion].ActiveViews;
-        if (activeViews != null && activeViews.All(x => x.GetType() != typeof(EmissionPieChartView)))
-        {
-            this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EmissionPieChartView));
-        }
+        this.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
+        this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
     }
 
     public void OnRemoveComponentExecute()
