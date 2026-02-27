@@ -6,10 +6,10 @@
              x:Class="H.Avalonia.Views.ComponentViews.Shared.AdvancedOptionsToggleView">
 
 	<!-- Advanced Options Toggle Section -->
-	<Border Background="#F8F9FA" 
+	<Border Background="{StaticResource GcdsBgLightBrush}"
 	        CornerRadius="8" 
 	        Padding="16,12" 
-	        BorderBrush="#E9ECEF" 
+	        BorderBrush="{StaticResource GcdsBorderLightBrush}" 
 	        BorderThickness="1">
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -20,9 +20,9 @@
 			<StackPanel Grid.Column="0" VerticalAlignment="Center">
 				<TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" 
 				          FontSize="15" FontWeight="SemiBold" 
-				          Foreground="#495057" Margin="0,0,0,2"/>
+				          Foreground="{StaticResource GcdsTextPrimaryBrush}" Margin="0,0,0,2"/>
 				<TextBlock Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-				          FontSize="11" Foreground="#6C757D" 
+				          FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
 				          FontStyle="Italic"/>
 			</StackPanel>
 			

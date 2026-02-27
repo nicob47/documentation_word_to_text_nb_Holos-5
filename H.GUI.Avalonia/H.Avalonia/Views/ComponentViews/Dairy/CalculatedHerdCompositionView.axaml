@@ -48,7 +48,7 @@
         <TextBlock x:Name="HeaderDescriptionTextBlock"
                    Text="Click on a stage card below to configure its population, duration, and management practices" 
                    FontSize="13"
-                   Foreground="#555"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    TextWrapping="Wrap"
                    Margin="0,12,0,0"/>
       </StackPanel>
@@ -89,7 +89,7 @@
                        Foreground="#1976D2"/>
                   <Run Text=" animals"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Center">
                   <Run Text="{Binding SelectedDairyComponentDto.CalfStageDurationDays, StringFormat='{}{0}'}"
@@ -98,7 +98,7 @@
                        Foreground="#1976D2"/>
                   <Run Text=" days"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
@@ -136,7 +136,7 @@
                        Foreground="#7B1FA2"/>
                   <Run Text=" animals"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Center">
                   <Run Text="{Binding SelectedDairyComponentDto.HeiferStageDurationDays, StringFormat='{}{0}'}"
@@ -145,7 +145,7 @@
                        Foreground="#7B1FA2"/>
                   <Run Text=" days"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
@@ -182,7 +182,7 @@
                        Foreground="#388E3C"/>
                   <Run Text=" animals"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Center">
                   <Run Text="{Binding SelectedDairyComponentDto.LactationDurationDays, StringFormat='{}{0}'}"
@@ -191,7 +191,7 @@
                        Foreground="#388E3C"/>
                   <Run Text=" days"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
@@ -229,7 +229,7 @@
                        Foreground="#F57C00"/>
                   <Run Text=" animals"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Center">
                   <Run Text="{Binding SelectedDairyComponentDto.DryPeriodDays, StringFormat='{}{0}'}"
@@ -238,7 +238,7 @@
                        Foreground="#F57C00"/>
                   <Run Text=" days"
                        FontSize="12"
-                       Foreground="#666"/>
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
@@ -282,7 +282,7 @@
   
   <!-- Step 2: Population and Duration Configuration (shows when a stage is selected) -->
   <Border Classes="step-container"
-          Background="#FFF8E1"
+          Background="{StaticResource GcdsWarningBgBrush}"
           BorderBrush="#FFA726"
           Margin="0,0,0,20"
           IsVisible="{Binding IsAnyStageSelected}">
@@ -302,7 +302,7 @@
         <!-- Description -->
         <TextBlock Text="Enter the steady-state population and duration for the selected stage"
                    FontSize="13"
-                   Foreground="#555"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    TextWrapping="Wrap"
                    Margin="0,12,0,0"/>
       </StackPanel>
@@ -379,7 +379,7 @@
                              Classes="section-heading"/>
 
                   <!-- Helpful explanation -->
-                  <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#666" 
+                  <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
                              FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
                     <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
                   </TextBlock>
@@ -403,13 +403,13 @@
 
                       <TextBlock Grid.Column="0" Text="Group Name"
                                  FontWeight="Medium" FontSize="11"
-                                 Foreground="#666"/>
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                       <TextBlock Grid.Column="1" Text="Animals"
                                  FontWeight="Medium" FontSize="11"
-                                 Foreground="#666"/>
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                       <TextBlock Grid.Column="2" Text="Actions"
                                  FontWeight="Medium" FontSize="11"
-                                 Foreground="#666"/>
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                     </Grid>
 
                     <!-- Groups ItemsControl -->
@@ -513,7 +513,7 @@
                          Classes="section-heading"/>
 
               <!-- Helpful explanation -->
-              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#666" 
+              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
                          FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
                 <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
               </TextBlock>
@@ -534,11 +534,11 @@
                   </Grid.ColumnDefinitions>
 
                   <TextBlock Grid.Column="0" Text="Group Name"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   <TextBlock Grid.Column="1" Text="Animals"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   <TextBlock Grid.Column="2" Text="Actions"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </Grid>
 
                 <ItemsControl ItemsSource="{Binding SelectedDairyComponentDto.HeiferPopulationGroups}">
@@ -637,7 +637,7 @@
                          Classes="section-heading"/>
 
               <!-- Helpful explanation -->
-              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#666" 
+              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
                          FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
                 <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
               </TextBlock>
@@ -658,11 +658,11 @@
                   </Grid.ColumnDefinitions>
 
                   <TextBlock Grid.Column="0" Text="Group Name"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   <TextBlock Grid.Column="1" Text="Animals"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   <TextBlock Grid.Column="2" Text="Actions"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </Grid>
 
                 <ItemsControl ItemsSource="{Binding SelectedDairyComponentDto.LactatingPopulationGroups}">
@@ -761,7 +761,7 @@
                          Classes="section-heading"/>
 
               <!-- Helpful explanation -->
-              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#666" 
+              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
                          FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
                 <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
               </TextBlock>
@@ -782,11 +782,11 @@
                   </Grid.ColumnDefinitions>
 
                   <TextBlock Grid.Column="0" Text="Group Name"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   <TextBlock Grid.Column="1" Text="Animals"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   <TextBlock Grid.Column="2" Text="Actions"
-                             FontWeight="Medium" FontSize="11" Foreground="#666"/>
+                             FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </Grid>
 
                 <ItemsControl ItemsSource="{Binding SelectedDairyComponentDto.DryPopulationGroups}">

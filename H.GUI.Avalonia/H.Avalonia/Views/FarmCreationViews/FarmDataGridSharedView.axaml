@@ -9,13 +9,13 @@
 	<StackPanel>
 		<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 0 20">
 			<Grid Width="260" VerticalAlignment="Center">
-				<TextBox Text="{Binding SearchText}" Watermark="{x:Static  properties:Resources.LabelSearchforfarms}" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="#696969" BorderBrush="#EDEDED" BorderThickness="2" FontWeight="SemiBold" Padding="40,10,0,10" />
+				<TextBox Text="{Binding SearchText}" Watermark="{x:Static  properties:Resources.LabelSearchforfarms}" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="#696969" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold" Padding="40,10,0,10" />
 				<Image Source="avares://H.Avalonia/Assets/Images/Icons/search-icon.png" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"/>
 			</Grid>
 		</StackPanel>
 
 		
-		<DataGrid SelectedItem="{Binding Path=SelectedFarm}" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" Margin="0 20 0 0" Padding="20" GridLinesVisibility="All" IsReadOnly="True" Height="250" BorderThickness="2"  BorderBrush="#EDEDED" CornerRadius="10" Background="#f5f5f5">
+		<DataGrid SelectedItem="{Binding Path=SelectedFarm}" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" Margin="0 20 0 0" Padding="20" GridLinesVisibility="All" IsReadOnly="True" Height="250" BorderThickness="2"  BorderBrush="{StaticResource GcdsBorderLightBrush}" CornerRadius="10" Background="#f5f5f5">
 			<DataGrid.Styles>
 				<Style Selector="DataGridColumnHeader">
 					<Setter Property="FontWeight" Value="Bold" />

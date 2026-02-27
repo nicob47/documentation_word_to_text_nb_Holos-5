@@ -16,14 +16,14 @@
          RenderOptions.BitmapInterpolationMode="HighQuality">
     </Image>
     <TextBlock Text="{x:Static properties:Resources.ApplicationTitle}"
-               FontFamily="{StaticResource MonaSansFontFamily}"
+               FontFamily="{StaticResource GcdsHeadingFont}"
                FontWeight="Bold"
                FontSize="37"
                TextWrapping="Wrap"
                Width="240"
                TextAlignment="Center"
                Margin="10"/>
-    <Border Background="#E5E4E2"
+    <Border Background="{StaticResource GcdsBgLightBrush}"
         CornerRadius="10"
         Width="720">
         <TextBlock Text ="{x:Static properties:Resources.TextAboutPage}"
@@ -38,28 +38,28 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0"
-                Background="#E5E4E2"
+                Background="{StaticResource GcdsBgLightBrush}"
                 Width="340"
                 CornerRadius="10"
                 Padding="10">
           <StackPanel HorizontalAlignment="Center">
               <Label Content="{x:Static properties:Resources.LabelContributors}"
                      FontSize="24"
-                     FontFamily="{StaticResource RobotoFontFamily}"/>
+                     FontFamily="{StaticResource GcdsHeadingFont}"/>
               <TextBlock Text="{x:Static properties:Resources.ContributorsList}"
                          Padding="10"/>
           </StackPanel>
         </Border>
 
         <Border Grid.Column="1"
-                Background="#E5E4E2"
+                Background="{StaticResource GcdsBgLightBrush}"
                 Width="340"
                 CornerRadius="10"
                 Padding="10">
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="{x:Static properties:Resources.LabelUsefulLinks}"
                        FontSize="24"
-                       FontFamily="{StaticResource RobotoFontFamily}"/>
+                       FontFamily="{StaticResource GcdsHeadingFont}"/>
                 <Label Content="{x:Static properties:Resources.LabelGithub}"
                        Padding="10, 10, 0, 0"/>
                 <Label Content="{x:Static properties:Resources.LabelHolosOfficialPage}"

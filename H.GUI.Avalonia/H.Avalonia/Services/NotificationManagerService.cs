@@ -80,9 +80,9 @@ namespace H.Avalonia.Services
 
                 _notificationManager = new WindowNotificationManager(targetWindow)
                 {
-                    Position = NotificationPosition.TopRight,
+                    Position = NotificationPosition.BottomRight,
                     MaxItems = 4,
-                    Margin = new(0, 5, 15, 0),
+                    Margin = new(0, 0, 15, 5),
                 };
                 _isInitialized = true;
             }

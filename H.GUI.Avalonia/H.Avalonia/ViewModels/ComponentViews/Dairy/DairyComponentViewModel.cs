@@ -77,6 +77,41 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
         private IEnumerable<HousingType>? _housingTypes;
         
         /// <summary>
+        /// Collection of available bedding material types for dropdown selection
+        /// </summary>
+        private IEnumerable<BeddingMaterialType>? _beddingMaterialTypes;
+
+        /// <summary>
+        /// Collection of available diet additive types for dropdown selection
+        /// </summary>
+        private IEnumerable<DietAdditiveType>? _dietAdditiveTypes;
+
+        /// <summary>
+        /// Collection of available diet types for dropdown selection
+        /// </summary>
+        private IEnumerable<DietType>? _availableDietTypes;
+
+        /// <summary>
+        /// The currently selected management practice for the calf stage
+        /// </summary>
+        private ManagementPeriodDto? _selectedCalfPractice;
+
+        /// <summary>
+        /// The currently selected management practice for the heifer stage
+        /// </summary>
+        private ManagementPeriodDto? _selectedHeiferPractice;
+
+        /// <summary>
+        /// The currently selected management practice for the lactating stage
+        /// </summary>
+        private ManagementPeriodDto? _selectedLactatingPractice;
+
+        /// <summary>
+        /// The currently selected management practice for the dry stage
+        /// </summary>
+        private ManagementPeriodDto? _selectedDryPractice;
+
+        /// <summary>
         /// The currently selected calf group for management configuration
         /// </summary>
         private DairyPopulationGroup? _selectedCalfGroup;
@@ -254,6 +289,69 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
         {
             get => _housingTypes;
             set => SetProperty(ref _housingTypes, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the collection of available bedding material types for dairy animals
+        /// </summary>
+        public IEnumerable<BeddingMaterialType>? BeddingMaterialTypes
+        {
+            get => _beddingMaterialTypes;
+            set => SetProperty(ref _beddingMaterialTypes, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the collection of available diet additive types
+        /// </summary>
+        public IEnumerable<DietAdditiveType>? DietAdditiveTypes
+        {
+            get => _dietAdditiveTypes;
+            set => SetProperty(ref _dietAdditiveTypes, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the collection of available diet types for dairy animals
+        /// </summary>
+        public IEnumerable<DietType>? AvailableDietTypes
+        {
+            get => _availableDietTypes;
+            set => SetProperty(ref _availableDietTypes, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected management practice for the calf stage
+        /// </summary>
+        public ManagementPeriodDto? SelectedCalfPractice
+        {
+            get => _selectedCalfPractice;
+            set => SetProperty(ref _selectedCalfPractice, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected management practice for the heifer stage
+        /// </summary>
+        public ManagementPeriodDto? SelectedHeiferPractice
+        {
+            get => _selectedHeiferPractice;
+            set => SetProperty(ref _selectedHeiferPractice, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected management practice for the lactating stage
+        /// </summary>
+        public ManagementPeriodDto? SelectedLactatingPractice
+        {
+            get => _selectedLactatingPractice;
+            set => SetProperty(ref _selectedLactatingPractice, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected management practice for the dry stage
+        /// </summary>
+        public ManagementPeriodDto? SelectedDryPractice
+        {
+            get => _selectedDryPractice;
+            set => SetProperty(ref _selectedDryPractice, value);
         }
 
         /// <summary>
@@ -495,7 +593,36 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
                 .Where(x => !x.GetType().GetMember(x.ToString())[0]
                     .GetCustomAttributes(typeof(ObsoleteAttribute), false).Any())
                 .ToList();
-                
+
+            // Initialize bedding material types valid for dairy animals
+            BeddingMaterialTypes = new List<BeddingMaterialType>
+            {
+                BeddingMaterialType.None,
+                BeddingMaterialType.Sand,
+                BeddingMaterialType.SeparatedManureSolid,
+                BeddingMaterialType.StrawLong,
+                BeddingMaterialType.StrawChopped,
+                BeddingMaterialType.Shavings,
+                BeddingMaterialType.Sawdust,
+            };
+
+            // Initialize diet additive types
+            DietAdditiveTypes = Enum.GetValues<DietAdditiveType>().ToList();
+
+            // Initialize available diet types for dairy animals
+            AvailableDietTypes = new List<DietType>
+            {
+                DietType.None,
+                DietType.CloseUp,
+                DietType.FarOffDry,
+                DietType.HighEnergy,
+                DietType.HighEnergyAndProtein,
+                DietType.LowEnergy,
+                DietType.LowEnergyAndProtein,
+                DietType.MediumEnergy,
+                DietType.MediumEnergyAndProtein,
+            };
+
             // Initialize commands for adding/removing population groups
             AddCalfGroupCommand = new DelegateCommand(AddCalfGroup);
             AddHeiferGroupCommand = new DelegateCommand(AddHeiferGroup);
@@ -536,6 +663,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
                     {
                         SelectedCalfGroup = SelectedDairyComponentDto.CalfPopulationGroups.First();
                     }
+                    // Auto-select first practice if available
+                    SelectedCalfPractice ??= SelectedDairyComponentDto?.CalfManagementPractices.FirstOrDefault();
                     break;
                 case "Heifer":
                     IsHeiferSelected = true;
@@ -544,6 +673,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
                     {
                         SelectedHeiferGroup = SelectedDairyComponentDto.HeiferPopulationGroups.First();
                     }
+                    SelectedHeiferPractice ??= SelectedDairyComponentDto?.HeiferManagementPractices.FirstOrDefault();
                     break;
                 case "Lactating":
                     IsLactatingSelected = true;
@@ -552,6 +682,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
                     {
                         SelectedLactatingGroup = SelectedDairyComponentDto.LactatingPopulationGroups.First();
                     }
+                    SelectedLactatingPractice ??= SelectedDairyComponentDto?.LactatingManagementPractices.FirstOrDefault();
                     break;
                 case "Dry":
                     IsDrySelected = true;
@@ -560,6 +691,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
                     {
                         SelectedDryGroup = SelectedDairyComponentDto.DryPopulationGroups.First();
                     }
+                    SelectedDryPractice ??= SelectedDairyComponentDto?.DryManagementPractices.FirstOrDefault();
                     break;
             }
 
@@ -710,6 +842,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
             };
 
             SelectedDairyComponentDto.CalfManagementPractices.Add(newPractice);
+            SelectedCalfPractice = newPractice;
 
             Logger?.LogDebug("Added new calf management practice");
         }
@@ -730,6 +863,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
             };
 
             SelectedDairyComponentDto.HeiferManagementPractices.Add(newPractice);
+            SelectedHeiferPractice = newPractice;
 
             Logger?.LogDebug("Added new heifer management practice");
         }
@@ -750,6 +884,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
             };
 
             SelectedDairyComponentDto.LactatingManagementPractices.Add(newPractice);
+            SelectedLactatingPractice = newPractice;
 
             Logger?.LogDebug("Added new lactating management practice");
         }
@@ -770,6 +905,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
             };
 
             SelectedDairyComponentDto.DryManagementPractices.Add(newPractice);
+            SelectedDryPractice = newPractice;
 
             Logger?.LogDebug("Added new dry management practice");
         }
@@ -781,6 +917,12 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
         {
             if (practice is null || SelectedDairyComponentDto is null) return;
 
+            // Track if removed practice was the selected one for its stage
+            var wasCalfPractice = Equals(practice, SelectedCalfPractice);
+            var wasHeiferPractice = Equals(practice, SelectedHeiferPractice);
+            var wasLactatingPractice = Equals(practice, SelectedLactatingPractice);
+            var wasDryPractice = Equals(practice, SelectedDryPractice);
+
             var removed = SelectedDairyComponentDto.CalfManagementPractices.Remove(practice) ||
                          SelectedDairyComponentDto.HeiferManagementPractices.Remove(practice) ||
                          SelectedDairyComponentDto.LactatingManagementPractices.Remove(practice) ||
@@ -788,6 +930,16 @@ namespace H.Avalonia.ViewModels.ComponentViews.Dairy
 
             if (removed)
             {
+                // Auto-select next practice if we removed the selected one
+                if (wasCalfPractice)
+                    SelectedCalfPractice = SelectedDairyComponentDto.CalfManagementPractices.FirstOrDefault();
+                if (wasHeiferPractice)
+                    SelectedHeiferPractice = SelectedDairyComponentDto.HeiferManagementPractices.FirstOrDefault();
+                if (wasLactatingPractice)
+                    SelectedLactatingPractice = SelectedDairyComponentDto.LactatingManagementPractices.FirstOrDefault();
+                if (wasDryPractice)
+                    SelectedDryPractice = SelectedDairyComponentDto.DryManagementPractices.FirstOrDefault();
+
                 Logger?.LogDebug($"Removed management practice: {practice.Name}");
             }
         }

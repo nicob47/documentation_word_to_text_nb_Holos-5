@@ -11,7 +11,7 @@
   <converters:BoolToBorderThicknessConverter x:Key="BoolToBorderThicknessConverter"/>
 </UserControl.Resources>
 
-  <Border BorderBrush="#E0E0E0"
+  <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
           BorderThickness="2"
           CornerRadius="8"
           Background="White"
@@ -26,7 +26,7 @@
                    HorizontalAlignment="Center"/>
         <TextBlock Text="Understanding the journey from birth to productive milking cow" 
                    FontSize="13" 
-                   Foreground="#666" 
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}" 
                    HorizontalAlignment="Center"
                    Margin="0,4,0,0"/>
       </StackPanel>
@@ -43,7 +43,7 @@
                 Canvas.Top="100"
                 Width="180" 
                 Height="140"
-                Background="#E3F2FD" 
+                Background="{StaticResource GcdsSelectionBgBrush}" 
                 BorderBrush="{Binding IsCalfSelected, Converter={StaticResource BoolToBorderBrushConverter}}" 
                 BorderThickness="{Binding IsCalfSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
                 CornerRadius="12"
@@ -59,7 +59,7 @@
                        Margin="0,0,0,8"/>
             <TextBlock Text="Birth - 4 months" 
                        FontSize="11" 
-                       Foreground="#666"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
             <TextBlock Text="Milk &amp; Starter Feed" 
@@ -80,7 +80,7 @@
                    Canvas.Top="145"
                    Text="Weaning" 
                    FontSize="10" 
-                   Foreground="#666"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontStyle="Italic"/>
 
         <!-- Stage 2: Heifer (4 months to First Calving ~24 months) -->
@@ -104,7 +104,7 @@
                        Margin="0,0,0,8"/>
             <TextBlock Text="4 mo - First Calving" 
                        FontSize="11" 
-                       Foreground="#666"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
             <TextBlock Text="Growing Phase" 
@@ -125,7 +125,7 @@
                    Canvas.Top="145"
                    Text="First Calving" 
                    FontSize="10" 
-                   Foreground="#666"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontWeight="Bold"/>
 
         <!-- Stage 3: Lactating Cow (Producing Milk) -->
@@ -149,7 +149,7 @@
                        Margin="0,0,0,8"/>
             <TextBlock Text="Milk Production" 
                        FontSize="11" 
-                       Foreground="#666"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
             <TextBlock Text="~305 days lactation" 
@@ -170,7 +170,7 @@
                    Canvas.Top="145"
                    Text="Drying Off" 
                    FontSize="10" 
-                   Foreground="#666"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontWeight="Bold"/>
 
         <!-- Stage 4: Dry Cow (Pre-Calving Rest) -->
@@ -194,7 +194,7 @@
                        Margin="0,0,0,8"/>
             <TextBlock Text="Pre-Calving Rest" 
                        FontSize="11" 
-                       Foreground="#666"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
             <TextBlock Text="~60 days" 
@@ -243,7 +243,7 @@
                        HorizontalAlignment="Center"/>
             <TextBlock Text="Based on replacement rate" 
                        FontSize="9" 
-                       Foreground="#666"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"/>
           </StackPanel>
         </Border>
@@ -272,7 +272,7 @@
                        HorizontalAlignment="Center"/>
             <TextBlock Text="Heifers enter herd" 
                        FontSize="9" 
-                       Foreground="#666"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"/>
           </StackPanel>
         </Border>
@@ -281,8 +281,8 @@
 
       <!-- Stage Information Box (appears when a stage is selected) -->
       <Border Grid.Row="2"
-              Background="#F5F5F5"
-              BorderBrush="#E0E0E0"
+              Background="{StaticResource GcdsBgLightBrush}"
+              BorderBrush="{StaticResource GcdsBorderLightBrush}"
               BorderThickness="1"
               CornerRadius="6"
               Padding="16"
@@ -294,7 +294,7 @@
                        Text="{Binding SelectedStageTitle}"
                        FontSize="14"
                        FontWeight="Bold"
-                       Foreground="#333"/>
+                       Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
             <Button Grid.Column="1"
                     Content="✕"
                     Background="Transparent"
@@ -308,7 +308,7 @@
           <TextBlock Text="{Binding SelectedStageDescription}"
                      TextWrapping="Wrap"
                      FontSize="12"
-                     Foreground="#666"
+                     Foreground="{StaticResource GcdsTextSecondaryBrush}"
                      LineHeight="18"
                      Margin="0,8,0,0"/>
         </StackPanel>

@@ -12,7 +12,7 @@
     </Design.DataContext>
 
 	<StackPanel>
-		<TextBlock FontSize="16" Margin="10,20,0,0" Foreground="#605D5D">
+		<TextBlock FontSize="16" Margin="10,20,0,0" Foreground="{StaticResource GcdsTextSecondaryBrush}">
 			<Run Text="{x:Static properties:Resources.LabelStep3}" FontWeight="Bold"/>
 			<Run Text="{x:Static properties:Resources.LabelStep3Text}"/>
 		</TextBlock>
@@ -20,10 +20,10 @@
 			<!--General tab-->
 			<TabItem Header="{x:Static properties:Resources.TitleGeneralTab}" FontSize="18">
 				<StackPanel Margin="10, 20, 10, 10">
-					<TextBlock FontSize="16" Foreground="#605D5D" FontWeight="Bold" Text="{x:Static properties:Resources.LabelGeneralManagement}"/>
-					<TextBlock FontSize="16" Foreground="#605D5D" TextWrapping="Wrap" Text="{x:Static properties:Resources.MessageAnimalGeneralTab}"/>
+					<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="Bold" Text="{x:Static properties:Resources.LabelGeneralManagement}"/>
+					<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" TextWrapping="Wrap" Text="{x:Static properties:Resources.MessageAnimalGeneralTab}"/>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock FontSize="16" Margin="0,20,10,20" Foreground="#605D5D" TextWrapping="Wrap" Text="{x:Static properties:Resources.LabelNumberOfAnimals}"/>
+						<TextBlock FontSize="16" Margin="0,20,10,20" Foreground="{StaticResource GcdsTextSecondaryBrush}" TextWrapping="Wrap" Text="{x:Static properties:Resources.LabelNumberOfAnimals}"/>
 						<NumericUpDown Value="10" HorizontalAlignment="Right" VerticalAlignment="Center" Increment="1" Padding="10"/>
 					</StackPanel>
 				</StackPanel>
@@ -34,10 +34,10 @@
 					<Grid ColumnDefinitions="400,300*" HorizontalAlignment="Stretch">
 						<!-- Left side -->
 						<StackPanel Grid.Column="0" HorizontalAlignment="Left" Margin="10" Spacing="5">
-							<TextBlock FontSize="16" Foreground="#605D5D" FontWeight="Bold" Text="{x:Static properties:Resources.LabelHousingManagement}"/>
-							<TextBlock FontSize="16" Foreground="#605D5D" TextWrapping="WrapWithOverflow" Text="{x:Static properties:Resources.MessageAnimalHousingTab}"/>
+							<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="Bold" Text="{x:Static properties:Resources.LabelHousingManagement}"/>
+							<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" TextWrapping="WrapWithOverflow" Text="{x:Static properties:Resources.MessageAnimalHousingTab}"/>
 							<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-								<TextBlock FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#605D5D" TextWrapping="Wrap" Text="{x:Static properties:Resources.LabelHousingType}"/>
+								<TextBlock FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{StaticResource GcdsTextSecondaryBrush}" TextWrapping="Wrap" Text="{x:Static properties:Resources.LabelHousingType}"/>
 								<ComboBox SelectedIndex="0" MaxDropDownHeight="100">
 									<ComboBoxItem Content="{x:Static properties:Resources.HousedInBarn}"/>
 									<ComboBoxItem Content="{x:Static properties:Resources.ConfinedNoBarn}"/>
@@ -47,7 +47,7 @@
 						</StackPanel>
 						<!--Right side-->
 						<StackPanel Grid.Column="1" HorizontalAlignment="Right" Margin="10" Spacing="5">
-							<TextBlock FontSize="16" Foreground="#605D5D" FontWeight="Bold" Text="{x:Static properties:Resources.LabelAdditionalInformation}"/>
+							<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="Bold" Text="{x:Static properties:Resources.LabelAdditionalInformation}"/>
 							<TextBlock Text="{x:Static properties:Resources.LabelBeddingType}"/>
 							<Button Content="{x:Static properties:Resources.ButtonBeddingApplication}"/>
 						</StackPanel>
@@ -57,10 +57,10 @@
 			<!--Manure Tab-->
 			<TabItem Header="{x:Static properties:Resources.TitleManureTab}" FontSize="18">
 				<StackPanel Margin="10, 20, 10, 10" HorizontalAlignment="Left">
-					<TextBlock FontSize="16" Foreground="#605D5D" FontWeight="Bold" Text="{x:Static properties:Resources.LabelManureManagement}"/>
-					<TextBlock FontSize="16" Foreground="#605D5D" TextWrapping="Wrap" Text="{x:Static properties:Resources.MessageAnimalManureTab}"/>
+					<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="Bold" Text="{x:Static properties:Resources.LabelManureManagement}"/>
+					<TextBlock FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" TextWrapping="Wrap" Text="{x:Static properties:Resources.MessageAnimalManureTab}"/>
 					<StackPanel Orientation="Horizontal" >
-						<TextBlock FontSize="16" Margin="0,25,10,20" Foreground="#605D5D" TextWrapping="Wrap" Text="{x:Static properties:Resources.LabelManureHandlingSystem}"/>
+						<TextBlock FontSize="16" Margin="0,25,10,20" Foreground="{StaticResource GcdsTextSecondaryBrush}" TextWrapping="Wrap" Text="{x:Static properties:Resources.LabelManureHandlingSystem}"/>
 						<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
 							<ComboBox SelectedIndex="0" MaxDropDownHeight="100">
 								<ComboBoxItem Content="{x:Static properties:Resources.SolidStorageHandlingSystemName}"/>

@@ -21,6 +21,8 @@ using H.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Prism.Commands;
+using Avalonia.Controls.Notifications;
+using H.Avalonia.Services;
 
 namespace H.Avalonia.ViewModels.ComponentViews
 {
@@ -55,8 +57,9 @@ namespace H.Avalonia.ViewModels.ComponentViews
             InitializeCommands();
         }
 
-        public ChooseComponentsViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IStorageService storageService, ILogger logger) : base(regionManager, eventAggregator, storageService, logger)
+        public ChooseComponentsViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IStorageService storageService, ILogger logger, INotificationManagerService notificationManager) : base(regionManager, eventAggregator, storageService, logger)
         {
+            this.NotificationManager = notificationManager;
             this.PropertyChanged += OnPropertyChanged;
             this.AvailableComponents = new ObservableCollection<ComponentBase>();
             InitializeAvailableComponents();
@@ -262,6 +265,12 @@ namespace H.Avalonia.ViewModels.ComponentViews
             if (this.SelectedComponent is not null)
             {
                 base.EventAggregator?.GetEvent<ComponentAddedEvent>().Publish(this.SelectedComponent);
+
+                var componentName = this.SelectedComponent.ComponentType.GetDescription();
+                this.NotificationManager?.ShowToast(
+                    H.Core.Properties.Resources.ToastTitleComponentAdded,
+                    string.Format(H.Core.Properties.Resources.ToastMessageComponentAddedToFarm, componentName),
+                    NotificationType.Success);
             }
         }
 

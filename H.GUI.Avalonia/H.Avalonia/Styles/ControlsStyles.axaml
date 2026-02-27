@@ -8,6 +8,20 @@
 		</Border>
 	</Design.PreviewWith>
 
+	<!-- ── Global Typography Defaults ──────────────────────────────────── -->
+	<Style Selector="TextBlock">
+		<Setter Property="FontFamily" Value="{StaticResource GcdsBodyFont}"/>
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeBody}"/>
+	</Style>
+	<Style Selector="TextBox">
+		<Setter Property="FontFamily" Value="{StaticResource GcdsBodyFont}"/>
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeBody}"/>
+	</Style>
+	<Style Selector="Label">
+		<Setter Property="FontFamily" Value="{StaticResource GcdsBodyFont}"/>
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeBody}"/>
+	</Style>
+
 	<!-- Button Styles -->
 	<Style Selector="Button">
 		<Setter Property="Cursor" Value="Hand"/>
@@ -19,7 +33,7 @@
 	<Style Selector="Button.generic-button">
 	</Style>
 	<Style Selector="Button:pointerover.user-prompt-button--confirm /template/ ContentPresenter">
-		<Setter Property="Background" Value="#e34234" />
+		<Setter Property="Background" Value="{StaticResource GcdsDangerBrush}" />
 	</Style>
 	<Style Selector="Button.user-prompt-button--cancel">
 		<Setter Property="Background" Value="#D3D3D3" />
@@ -29,7 +43,7 @@
 		<Setter Property="Background" Value="Transparent"/>
 	</Style>
 	<Style Selector="Button:pointerover.row-delete-button--pointerOver /template/ ContentPresenter">
-		<Setter Property="Background" Value="#e34234" />
+		<Setter Property="Background" Value="{StaticResource GcdsDangerBrush}" />
 	</Style>
 	<Style Selector="Button.multiple-row-delete-button">
 		<Setter Property="Background" Value="Transparent"/>
@@ -39,7 +53,7 @@
 		<Setter Property="Margin" Value="20,0,20,0"/>
 		<Setter Property="HorizontalAlignment" Value="Stretch"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
-		<Setter Property="Background" Value="MediumAquamarine"/>
+		<Setter Property="Background" Value="{StaticResource GcdsBgPrimaryBrush}"/>
 	</Style>
 	<Style Selector="Button.calculate-results-button">
 		<Setter Property="HorizontalAlignment" Value="Center"/>
@@ -51,27 +65,27 @@
 		<Setter Property="Width" Value="240" />
 		<Setter Property="FontSize" Value="16" />
 		<Setter Property="FontWeight" Value="Bold" />
-		<Setter Property="FontFamily" Value="{DynamicResource RobotoFontFamily}" />
-		<Setter Property="Background" Value="MediumAquamarine"/>
+		<Setter Property="FontFamily" Value="{StaticResource GcdsHeadingFont}" />
+		<Setter Property="Background" Value="{StaticResource GcdsBgPrimaryBrush}"/>
 	</Style>
 	<Style Selector="Button.add-management-period">
 		<Setter Property="Margin" Value="10,20,0,0"/>
-		<Setter Property="BorderBrush" Value="#D7D7D7"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderSubtleBrush}"/>
 		<Setter Property="Background" Value="White"/>
-		<Setter Property="Foreground" Value="#605D5D"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
 		<Setter Property="Width" Value="275"/>
 		<Setter Property="Height" Value="45"/>
 	</Style>
 	<Style Selector="Button.add-group">
 		<Setter Property="Margin" Value="10,20,0,0"/>
-		<Setter Property="BorderBrush" Value="#D7D7D7"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderSubtleBrush}"/>
 		<Setter Property="Background" Value="White"/>
-		<Setter Property="Foreground" Value="#605D5D"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
 		<Setter Property="MinWidth" Value="175"/>
 		<Setter Property="Height" Value="40"/>
 	</Style>
 	<Style Selector="Button.back-button">
-		<Setter Property="Background" Value="#EDEDED" />
+		<Setter Property="Background" Value="{StaticResource GcdsBgLightBrush}" />
 		<Setter Property="Foreground" Value="Black" />
 	</Style>
 	
@@ -108,21 +122,22 @@
 
 	<!-- GridSplitter Styles -->
 	<Style Selector="GridSplitter.default-vertical-gridsplitter">
-		<Setter Property="Background" Value="LightGray"/>
+		<Setter Property="Background" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="Width" Value="2"/>
 	</Style>
 
 	<!-- Grid.Border Styles-->
 	<Style Selector="Border.component-border">
-		<Setter Property="BorderBrush" Value="LightGray" />
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}" />
 		<Setter Property="BorderThickness" Value="1" />
 	</Style>
 
 
 	<!-- TextBlock Styles -->
 	<Style Selector="TextBlock.title-textblock">
+		<Setter Property="FontFamily" Value="{StaticResource GcdsHeadingFont}"/>
 		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="FontSize" Value="18" />
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeH6}" />
 		<Setter Property="Foreground" Value="{StaticResource DefaultForegroundTextBrush}" />
 		<Setter Property="Padding" Value="20" />
 		<Setter Property="TextWrapping" Value="Wrap" />
@@ -130,21 +145,22 @@
 	</Style>
 
 	<Style Selector="TextBlock.step-title-textblock">
+		<Setter Property="FontFamily" Value="{StaticResource GcdsHeadingFont}"/>
 		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="FontSize" Value="24" />
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeH4}" />
 		<Setter Property="Foreground" Value="{StaticResource DefaultForegroundTextBrush}" />
 		<Setter Property="TextWrapping" Value="Wrap" />
 	</Style>
 
 	<Style Selector="TextBlock.inline-text-block-error">
 		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="Foreground" Value="Red"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsDangerBrush}"/>
 		<Setter Property="FontSize" Value="14"/>
 	</Style>
 
 	<Style Selector="TextBlock.inline-text-block-succeed">
 		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="Foreground" Value="Green"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsSuccessBrush}"/>
 		<Setter Property="FontSize" Value="14"/>
 	</Style>
 
@@ -155,7 +171,8 @@
 	</Style>
 
 	<Style Selector="TextBlock.step-number">
-		<Setter Property="FontSize" Value="22"/>
+		<Setter Property="FontFamily" Value="{StaticResource GcdsHeadingFont}"/>
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeH5}"/>
 		<Setter Property="FontWeight" Value="Bold"/>
 		<Setter Property="Foreground" Value="{StaticResource DefaultHighlightBrush}"/>
 		<Setter Property="TextDecorations" Value="Underline"/>
@@ -165,28 +182,29 @@
 	<Style Selector="TextBlock.step-number-description">
 		<Setter Property="FontSize" Value="16"/>
 		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="Foreground" Value="#605D5D"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
 		<Setter Property="Margin" Value="0,0,4,0"/>
 	</Style>
 
 	<!-- TextBox Styles -->
 	<Style Selector="TextBox.view-title">
-		<Setter Property="FontSize" Value="36"/>
+		<Setter Property="FontFamily" Value="{StaticResource GcdsHeadingFont}"/>
+		<Setter Property="FontSize" Value="{StaticResource GcdsFontSizeH1}"/>
 		<Setter Property="FontWeight" Value="Bold"/>
 		<Setter Property="Margin" Value="0,10,0,0"/>
-		<Setter Property="Foreground" Value="#605D5D"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextPrimaryBrush}"/>
 		<Setter Property="BorderThickness" Value="0"/>
 	</Style>
 
 	<!-- Border Styles -->
 	<Style Selector="Border.title-underline">
-		<Setter Property="BorderBrush" Value="DarkGray"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="BorderThickness" Value="0,0,0,3"/>
 		<Setter Property="Margin" Value="0,10,0,0"/>
 	</Style>
 
 	<Style Selector="Border.control-separator">
-		<Setter Property="BorderBrush" Value="#D7D7D7"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderSubtleBrush}"/>
 		<Setter Property="BorderThickness" Value="0,0,0,3"/>
 		<Setter Property="Margin" Value="0,10,0,0"/>
 	</Style>
@@ -194,7 +212,7 @@
 	<Style Selector="GridSplitter.default-horizontal-style">
 		<Setter Property="ResizeDirection" Value="Rows"/>
 		<Setter Property="Height" Value="1"/>
-		<Setter Property="Background" Value="LightGray"/>
+		<Setter Property="Background" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="BorderThickness" Value="0,0,0,3"/>
 		<Setter Property="HorizontalAlignment" Value="Stretch"/>
 	</Style>
@@ -209,7 +227,7 @@
 						<Style Selector="TextBlock">
 							<Setter Property="FontSize" Value="12"/>
 							<Setter Property="TextWrapping" Value="Wrap" />
-							<Setter Property="Foreground" Value="Red"/>
+							<Setter Property="Foreground" Value="{StaticResource GcdsDangerBrush}"/>
 						</Style>
 					</ItemsControl.Styles>
 				</ItemsControl>
@@ -254,7 +272,7 @@
 
 	<Style Selector="Border.step-card">
 		<Setter Property="Background" Value="White"/>
-		<Setter Property="BorderBrush" Value="LightGray"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="CornerRadius" Value="8"/>
 		<Setter Property="Padding" Value="20"/>
@@ -265,7 +283,7 @@
 	<!-- Shared style for step content containers used in Field and Rotation component views -->
 	<Style Selector="Border.step-container">
 		<Setter Property="Background" Value="White"/>
-		<Setter Property="BorderBrush" Value="LightGray"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="CornerRadius" Value="8"/>
 		<Setter Property="Padding" Value="20"/>
@@ -273,11 +291,11 @@
 	</Style>
 
 	<Style Selector="Border.input-card">
-		<Setter Property="BorderBrush" Value="#E0E0E0"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderLightBrush}"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="CornerRadius" Value="6"/>
 		<Setter Property="Padding" Value="16"/>
-		<Setter Property="Background" Value="#FAFAFA"/>
+		<Setter Property="Background" Value="{StaticResource GcdsBgLightBrush}"/>
 		<Setter Property="HorizontalAlignment" Value="Left"/>
 	</Style>
 
@@ -285,7 +303,7 @@
 	<!-- Style for hint/help text that appears below inputs in input cards -->
 	<Style Selector="TextBlock.input-hint">
 		<Setter Property="FontSize" Value="11"/>
-		<Setter Property="Foreground" Value="#666666"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
 		<Setter Property="Margin" Value="0,10,0,0"/>
 	</Style>
 
@@ -309,7 +327,7 @@
     <!-- Animal Group Card Styles - Static styling without binding -->
     <Style Selector="Border.timeline-card.animal-group-card">
         <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderBrush" Value="LightGray"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="RenderTransform" Value="scale(1.0)"/>
         <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}"/>
@@ -319,21 +337,21 @@
     </Style>
 
     <Style Selector="Button:pointerover > Border.timeline-card.animal-group-card">
-        <Setter Property="BorderBrush" Value="DodgerBlue"/>
-        <Setter Property="Background" Value="#F0F8FF"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GcdsSelectionBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource GcdsSelectionBgBrush}"/>
     </Style>
 
     <!-- Selected animal group card state - applied via code when needed -->
     <Style Selector="Border.timeline-card.animal-group-card.selected">
-        <Setter Property="Background" Value="#E3F2FD"/>
-        <Setter Property="BorderBrush" Value="DodgerBlue"/>
+        <Setter Property="Background" Value="{StaticResource GcdsSelectionBgBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GcdsSelectionBorderBrush}"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="RenderTransform" Value="scale(0.98)"/>
     </Style>
 
     <Style Selector="Button:pointerover > Border.timeline-card.animal-group-card.selected">
-        <Setter Property="BorderBrush" Value="DodgerBlue"/>
-        <Setter Property="Background" Value="#E3F2FD"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GcdsSelectionBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource GcdsSelectionBgBrush}"/>
         <Setter Property="RenderTransform" Value="scale(0.98)"/>
     </Style>
 
@@ -435,10 +453,13 @@
 
 	<!-- Timeline Container Styles -->
 	<Style Selector="Border.timeline-container">
-		<Setter Property="BorderBrush" Value="LightGray"/>
+		<Setter Property="Background" Value="White"/>
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="Padding" Value="10"/>
+		<Setter Property="CornerRadius" Value="8"/>
+		<Setter Property="Padding" Value="20"/>
 		<Setter Property="Margin" Value="0,10"/>
+		<Setter Property="BoxShadow" Value="0 2 8 0 #1A000000"/>
 	</Style>
 
 	<Style Selector="TextBlock.timeline-header">
@@ -450,7 +471,7 @@
 	<Style Selector="TextBlock.timeline-hint">
 		<Setter Property="FontStyle" Value="Italic"/>
 		<Setter Property="FontSize" Value="11"/>
-		<Setter Property="Foreground" Value="Gray"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 		<Setter Property="Margin" Value="0,8,0,0"/>
 	</Style>
@@ -473,13 +494,13 @@
 	<Style Selector="TextBlock.empty-state-title">
 		<Setter Property="FontSize" Value="24"/>
 		<Setter Property="FontWeight" Value="SemiBold"/>
-		<Setter Property="Foreground" Value="LightGray"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 	</Style>
 
 	<Style Selector="TextBlock.empty-state-subtitle">
 		<Setter Property="FontSize" Value="16"/>
-		<Setter Property="Foreground" Value="Gray"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
 		<Setter Property="FontStyle" Value="Italic"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 		<Setter Property="TextWrapping" Value="Wrap"/>
@@ -488,7 +509,7 @@
 	</Style>
 
 	<Style Selector="Border.empty-state-tip">
-		<Setter Property="Background" Value="#F0F0F0"/>
+		<Setter Property="Background" Value="{StaticResource GcdsBgLightBrush}"/>
 		<Setter Property="CornerRadius" Value="8"/>
 		<Setter Property="Padding" Value="16,12"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
@@ -499,7 +520,7 @@
 		<Setter Property="Width" Value="16"/>
 		<Setter Property="Height" Value="16"/>
 		<Setter Property="CornerRadius" Value="8"/>
-		<Setter Property="Background" Value="#4A90E2"/>
+		<Setter Property="Background" Value="{StaticResource GcdsLinkDefaultBrush}"/>
 		<Setter Property="VerticalAlignment" Value="Center"/>
 	</Style>
 
@@ -516,7 +537,7 @@
 	<Style Selector="TextBlock.section-heading">
 		<Setter Property="FontWeight" Value="Medium"/>
 		<Setter Property="FontSize" Value="13"/>
-		<Setter Property="Foreground" Value="#333333"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextPrimaryBrush}"/>
 		<Setter Property="Margin" Value="0,0,0,12"/>
 	</Style>
 

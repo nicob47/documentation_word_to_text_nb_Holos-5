@@ -41,11 +41,11 @@ public class BoolToSelectionBorderBrushConverter : IValueConverter
         if (value is bool isSelected && isSelected)
         {
             // Selected: blue highlight border
-            return Brushes.DodgerBlue;
+            return Brush.Parse("#1f497a");
         }
 
         // Not selected: normal gray border
-        return Brush.Parse("#E0E0E0");
+        return Brush.Parse("#d9d9d9");
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

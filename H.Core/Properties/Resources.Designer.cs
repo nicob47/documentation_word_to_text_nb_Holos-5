@@ -17244,7 +17244,25 @@ namespace H.Core.Properties {
                 return ResourceManager.GetString("ToastMessageSavedSuccessfully", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has been added to your farm..
+        /// </summary>
+        public static string ToastMessageComponentAddedToFarm {
+            get {
+                return ResourceManager.GetString("ToastMessageComponentAddedToFarm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Component Added.
+        /// </summary>
+        public static string ToastTitleComponentAdded {
+            get {
+                return ResourceManager.GetString("ToastTitleComponentAdded", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Save Success.
         /// </summary>

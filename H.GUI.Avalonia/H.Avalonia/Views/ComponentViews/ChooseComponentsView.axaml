@@ -16,252 +16,232 @@
         <infrastructure:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Margin="16">
         <Grid.RowDefinitions>
-
-			<!-- Title row -->
+            <!-- Header row -->
             <RowDefinition Height="Auto"/>
-
-			<!-- Content row -->
-            <RowDefinition/>
-
-            <!-- Gridsplitter row -->
-            <RowDefinition Height="Auto"/>
-
-			<!-- Command row -->
-            <RowDefinition Height="Auto"/>
+            <!-- Content row -->
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
+        <!-- Compact Header Bar -->
+        <Border Grid.Row="0"
+                Background="{StaticResource GcdsBgLightBrush}"
+                BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                BorderThickness="1"
+                CornerRadius="6"
+                Padding="20,12"
+                Margin="0,0,0,12">
+            <DockPanel>
+                <!-- Finish Button (docked right) -->
+                <Button DockPanel.Dock="Right"
+                        Content="{x:Static properties:Resources.LabelFinishSelectComponent}"
+                        Command="{Binding OnFinishedAddingComponentsExecute}"
+                        Classes="responsive-button"
+                        VerticalAlignment="Center"
+                        Margin="16,0,0,0"/>
 
-			<!-- Main content column -->
-            <ColumnDefinition Width="1*"/>
-
-			<!-- Gridsplitter column -->
-            <ColumnDefinition Width="Auto"/>
-
-			<!-- Component description column -->
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid Name="TitleGrid" 
-              Grid.Row="0"
-              Grid.Column="0"
-              Grid.ColumnSpan="3"
-              VerticalAlignment="Top">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <StackPanel Margin="10,10,10,5" VerticalAlignment="Center">
-                <!-- Combined Header and Instructions Card -->
-                <Border Background="#F8F9FA" 
-                       BorderBrush="#E9ECEF" 
-                       BorderThickness="1" 
-                       CornerRadius="6" 
-                       Padding="20,16" 
-                       Margin="0">
-                    <StackPanel Spacing="12">
-                        <!-- Main Title -->
-                        <TextBlock Text="{x:Static properties:Resources.ChooseComponents}" 
-                                  Classes="title-textblock"
-                                  Margin="0"/>
-                        
-                        <!-- Horizontal Separator Line -->
-                        <Border BorderBrush="#D0D0D0" 
-                               BorderThickness="0,1,0,0" 
-                               Margin="0,8,0,12"/>
-                        
-                        <!-- Instructions Header -->
-                        <TextBlock Text="Follow these steps to add components to your farm:" 
-                                  FontWeight="SemiBold" 
-                                  FontSize="14" 
-                                  Foreground="#495057"/>
-                        
-                        <!-- Step Instructions -->
-                        <StackPanel Spacing="4">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Border Classes="step-badge">
-                                    <TextBlock Text="1" Classes="step-badge-text"/>
-                                </Border>
-                                <TextBlock Text="Choose a component from the categories below" 
-                                          FontSize="13" 
-                                          Foreground="#6C757D" 
-                                          VerticalAlignment="Center"/>
-                            </StackPanel>
-                            
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Border Classes="step-badge">
-                                    <TextBlock Text="2" Classes="step-badge-text"/>
-                                </Border>
-                                <TextBlock Text="Click the 'Add This Component' button in the description panel" 
-                                          FontSize="13" 
-                                          Foreground="#6C757D" 
-                                          VerticalAlignment="Center"/>
-                            </StackPanel>
-                            
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Border Classes="step-badge">
-                                    <TextBlock Text="3" Classes="step-badge-text"/>
-                                </Border>
-                                <TextBlock Text="When finished adding components, click 'Finish Selecting Components'" 
-                                          FontSize="13" 
-                                          Foreground="#6C757D" 
-                                          VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </Grid>
-
-        <Grid Name="AvailableComponentsGrid" 
-              Grid.Row="1"
-              Grid.Column="0">
-
-            <Border Background="#F8F9FA" 
-                   BorderBrush="#E9ECEF" 
-                   BorderThickness="1" 
-                   CornerRadius="6" 
-                   Padding="16,12" 
-                   Margin="10,5,5,5">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <ItemsControl ItemsSource="{Binding GroupedComponents}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,8">
-                                    <!-- Category Expander -->
-                                    <Expander IsExpanded="True" HorizontalAlignment="Stretch">
-                                        <Expander.Header>
-                                            <Border Padding="8,6"
-                                                   HorizontalAlignment="Stretch">
-                                                <TextBlock Text="{Binding CategoryName}" 
-                                                          FontWeight="Bold" 
-                                                          FontSize="14" 
-                                                          Foreground="#2C3E50"/>
-                                            </Border>
-                                        </Expander.Header>
-
-                                        <!-- Components in Category -->
-                                        <ItemsControl ItemsSource="{Binding Components}" Margin="12,4,0,0">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Button Background="Transparent"
-                                                           BorderThickness="0"
-                                                           Padding="0"
-                                                           HorizontalContentAlignment="Stretch"
-                                                           HorizontalAlignment="Stretch"
-                                                           Command="{Binding $parent[UserControl].DataContext.SelectComponentCommand}"
-                                                           CommandParameter="{Binding}"
-                                                           Margin="0,1">
-                                                        <Border Padding="12,8" 
-                                                               Background="Transparent"
-                                                               BorderBrush="Transparent"
-                                                               BorderThickness="1"
-                                                               CornerRadius="4"
-                                                               HorizontalAlignment="Stretch">
-                                                            <Border.Styles>
-                                                                <Style Selector="Border:pointerover">
-                                                                    <Setter Property="Background" Value="#F8F9FA"/>
-                                                                    <Setter Property="BorderBrush" Value="{StaticResource DefaultHighlightBrush}"/>
-                                                                </Style>
-                                                            </Border.Styles>
-                                                            
-                                                            <!-- Component Name (Always Visible) -->
-                                                            <TextBlock Text="{Binding Path=ComponentType, Converter={StaticResource EnumDescriptionConverter}}"
-                                                                      VerticalAlignment="Center"
-                                                                      HorizontalAlignment="Left"
-                                                                      FontWeight="Medium"
-                                                                      FontSize="13"
-                                                                      Foreground="#2C3E50"/>
-                                                        </Border>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Expander>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Border>
-        </Grid>
-
-        <GridSplitter Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"></GridSplitter>
-
-        <Grid Name="DescriptionGrid" 
-              Grid.Row="1"
-              Grid.Column="2">
-            <Border Background="#F8F9FA" 
-                   BorderBrush="#E9ECEF" 
-                   BorderThickness="1" 
-                   CornerRadius="6" 
-                   Padding="16,12" 
-                   Margin="5,5,10,5">
-                <StackPanel Margin="10">
-                    <!-- Component Title -->
-                    <TextBlock FontSize="20" Classes="title-textblock" Text="{Binding Path=SelectedComponentTitle}"/>
-                    
-                    <!-- Horizontal Separator Line -->
-                    <Border BorderBrush="#D0D0D0" 
-                           BorderThickness="0,1,0,0" 
-                           Margin="0,12,0,16"/>
-                    
-                    <!-- Component Description -->
-                    <TextBlock FontSize="16" TextWrapping="Wrap" Margin="0,0,0,0" Text="{Binding Path=SelectedComponentDescription}"/>
-                    
-                    <!-- Add Component Button - Using same responsive-button styling -->
-                    <Button Content="Add This Component" 
-                           Command="{Binding OnAddComponentExecute}"
-                           Classes="responsive-button"
-                           HorizontalAlignment="Center"
-                           Margin="0,30,0,10"
-                           MinWidth="180"
-                           MaxWidth="220"
-                           IsVisible="{Binding SelectedComponent, Converter={x:Static ObjectConverters.IsNotNull}}">
-                        <Button.Styles>
-                            <Style Selector="Button.responsive-button">
-                                <Setter Property="Background" Value="MediumAquamarine"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Style>
-                        </Button.Styles>
-                    </Button>
-                   
-                    <!-- Helper text -->
-                    <TextBlock Text="This component will be added to your farm"
-                              FontStyle="Italic"
-                              FontSize="12"
-                              Foreground="Gray"
-                              HorizontalAlignment="Center"
-                              IsVisible="{Binding SelectedComponent, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                <!-- Title and Subtitle (left) -->
+                <StackPanel VerticalAlignment="Center" Spacing="4">
+                    <TextBlock Text="{x:Static properties:Resources.ChooseComponents}"
+                              Classes="title-textblock"
+                              Margin="0"/>
+                    <TextBlock Name="SubtitleText"
+                              Text="Select a category to browse available components"
+                              FontSize="{StaticResource GcdsFontSizeSmall}"
+                              Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </StackPanel>
-            </Border>
-        </Grid>
+            </DockPanel>
+        </Border>
 
-		<Grid Name="CommandGrid" 
-              Grid.Row="3"
-              Grid.Column="0"
-              Grid.ColumnSpan="3"
-              Height="120">
-            <Border Background="#F8F9FA" 
-                   BorderBrush="#E9ECEF" 
-                   BorderThickness="1" 
-                   CornerRadius="6" 
-                   Padding="16,12" 
-                   Margin="10,5,10,10">
-                <WrapPanel HorizontalAlignment="Center" 
-                          VerticalAlignment="Center" 
-                          Orientation="Horizontal" 
-                          Margin="10">
-                    
-                    <!-- Finish Button with same styling as MyComponentsView -->
-                    <Button Content="{x:Static properties:Resources.LabelFinishSelectComponent}" 
-                           Command="{Binding OnFinishedAddingComponentsExecute}"
-                           Classes="responsive-button"
-                           Margin="5"/>
-                           
-                </WrapPanel>
-            </Border>
+        <!-- Hidden bindings to preserve ViewModel properties -->
+        <TextBlock Text="{Binding SelectedComponentTitle}" IsVisible="False"/>
+        <TextBlock Text="{Binding SelectedComponentDescription}" IsVisible="False"/>
+
+        <!-- ════════════════════════════════════════════════════════ -->
+        <!-- STEP 1: Category Selection                              -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <ScrollViewer Name="CategoryPanel"
+                      Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="0,8,0,0">
+                <ItemsControl ItemsSource="{Binding GroupedComponents}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Category Card -->
+                            <Button Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0"
+                                    Margin="0"
+                                    Click="OnCategoryClick"
+                                    Tag="{Binding}">
+                                <Border Width="280"
+                                        MinHeight="100"
+                                        Background="White"
+                                        BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        Padding="20,16"
+                                        Margin="4">
+                                    <Border.Styles>
+                                        <Style Selector="Border:pointerover">
+                                            <Setter Property="BorderBrush" Value="{StaticResource GcdsSelectionBorderBrush}"/>
+                                            <Setter Property="Background" Value="{StaticResource GcdsSelectionBgBrush}"/>
+                                        </Style>
+                                    </Border.Styles>
+
+                                    <StackPanel Spacing="8">
+                                        <!-- Category Name -->
+                                        <TextBlock Text="{Binding CategoryName}"
+                                                  FontFamily="{StaticResource GcdsHeadingFont}"
+                                                  FontWeight="Bold"
+                                                  FontSize="{StaticResource GcdsFontSizeH6}"
+                                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+
+                                        <!-- Component Count -->
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock Text="{Binding Components.Count}"
+                                                      FontSize="{StaticResource GcdsFontSizeSmall}"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="{StaticResource GcdsLinkDefaultBrush}"/>
+                                            <TextBlock Text="components available"
+                                                      FontSize="{StaticResource GcdsFontSizeSmall}"
+                                                      Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ════════════════════════════════════════════════════════ -->
+        <!-- STEP 2: Component Selection (within chosen category)    -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <Grid Name="ComponentPanel"
+              Grid.Row="1"
+              IsVisible="False">
+            <Grid.RowDefinitions>
+                <!-- Back button + category title row -->
+                <RowDefinition Height="Auto"/>
+                <!-- Component cards row -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Back Navigation + Category Title -->
+            <StackPanel Grid.Row="0" Margin="4,8,0,16" Spacing="8">
+                <Button Name="BackButton"
+                        Click="OnBackToCategoriesClick"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="4,4"
+                        HorizontalAlignment="Left"
+                        Cursor="Hand">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="&#x2190;"
+                                  FontSize="{StaticResource GcdsFontSizeBody}"
+                                  Foreground="{StaticResource GcdsLinkDefaultBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="Back to Categories"
+                                  FontSize="{StaticResource GcdsFontSizeBody}"
+                                  Foreground="{StaticResource GcdsLinkDefaultBrush}"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <TextBlock Name="CategoryTitle"
+                          FontFamily="{StaticResource GcdsHeadingFont}"
+                          FontWeight="Bold"
+                          FontSize="{StaticResource GcdsFontSizeH5}"
+                          Foreground="{StaticResource GcdsTextPrimaryBrush}"
+                          Margin="0,0,0,4"/>
+                <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}"
+                       BorderThickness="0,1,0,0"/>
+            </StackPanel>
+
+            <!-- Component Cards -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl Name="ComponentItems">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Component Card -->
+                            <Border Width="280"
+                                    Height="200"
+                                    Background="White"
+                                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="16"
+                                    Margin="4">
+                                <Border.Styles>
+                                    <Style Selector="Border:pointerover">
+                                        <Setter Property="BorderBrush" Value="{StaticResource GcdsSelectionBorderBrush}"/>
+                                        <Setter Property="Background" Value="{StaticResource GcdsSelectionBgBrush}"/>
+                                    </Style>
+                                </Border.Styles>
+
+                                <DockPanel>
+                                    <!-- Add Button (docked bottom) -->
+                                    <Button DockPanel.Dock="Bottom"
+                                            Content="+ Add to Farm"
+                                            Click="OnAddComponentClick"
+                                            Tag="{Binding}"
+                                            HorizontalAlignment="Left"
+                                            Margin="0,12,0,0"
+                                            Padding="16,8"
+                                            FontSize="{StaticResource GcdsFontSizeSmall}"
+                                            FontWeight="SemiBold"
+                                            CornerRadius="4">
+                                        <Button.Styles>
+                                            <Style Selector="Button">
+                                                <Setter Property="Background" Value="{StaticResource GcdsBgPrimaryBrush}"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Style>
+                                            <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                <Setter Property="Background" Value="{StaticResource GcdsLinkDefaultBrush}"/>
+                                            </Style>
+                                        </Button.Styles>
+                                    </Button>
+
+                                    <!-- Card Content -->
+                                    <StackPanel Spacing="8">
+                                        <!-- Component Name -->
+                                        <TextBlock Text="{Binding Path=ComponentType, Converter={StaticResource EnumDescriptionConverter}}"
+                                                  FontFamily="{StaticResource GcdsHeadingFont}"
+                                                  FontWeight="Bold"
+                                                  FontSize="{StaticResource GcdsFontSizeBody}"
+                                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
+                                                  TextWrapping="Wrap"/>
+
+                                        <!-- Component Description -->
+                                        <TextBlock Text="{Binding Path=ComponentDescriptionString}"
+                                                  FontSize="{StaticResource GcdsFontSizeSmall}"
+                                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                                  TextWrapping="Wrap"
+                                                  MaxLines="3"
+                                                  TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

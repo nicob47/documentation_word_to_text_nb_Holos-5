@@ -48,7 +48,7 @@
                     <ItemsControl ItemsSource="{Binding Path=AnimalGroupDtos}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="15" />
+                                <StackPanel Orientation="Horizontal" Spacing="16" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
@@ -58,7 +58,7 @@
                                 <Button Background="Transparent"
                                         BorderThickness="0"
                                         Padding="0"
-                                        Margin="5"
+                                        Margin="4"
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch">
 
@@ -82,7 +82,7 @@
                                                 <TextBlock Text="{Binding Path=Name, FallbackValue='Unnamed Group'}"
                                                           FontSize="13"
                                                           FontWeight="Medium"
-                                                          Foreground="#2C3E50"
+                                                          Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                                           HorizontalAlignment="Center"
                                                           TextWrapping="Wrap"
                                                           MinHeight="40" />

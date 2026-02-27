@@ -69,7 +69,7 @@ namespace H.Avalonia.Views.ResultViews
         {
             button.Background = new SolidColorBrush()
             {
-                Color = Color.FromRgb(175, 225, 175),
+                Color = Color.Parse("#d6e4f5"),
                 Opacity = 0.25,
             };
         }

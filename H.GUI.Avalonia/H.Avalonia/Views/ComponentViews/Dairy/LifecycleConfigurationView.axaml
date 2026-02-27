@@ -15,25 +15,25 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
       <!-- Dynamic colored header based on selected stage -->
       <Panel Margin="0,0,0,20">
         <!-- Calf: Blue -->
-        <Border BorderBrush="#2196F3" BorderThickness="2" CornerRadius="8"
+        <Border BorderBrush="{StaticResource GcdsLinkDefaultBrush}" BorderThickness="2" CornerRadius="8"
                 IsVisible="{Binding IsCalfSelected}">
           <StackPanel>
-            <Border Background="#2196F3" CornerRadius="6,6,0,0" Padding="16,12">
+            <Border Background="{StaticResource GcdsLinkDefaultBrush}" CornerRadius="6,6,0,0" Padding="16,12">
               <StackPanel>
                 <!-- Step Badge -->
                 <Border Classes="step-badge" HorizontalAlignment="Left" Background="White" Margin="0,0,0,8">
                   <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#2196F3"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Calf Stage" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Management Practices - Calf Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="Configure management practices for calf stage (birth to 4 months)"
-                          FontSize="13" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
+                          FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
             <Border Background="White" Padding="20">
               <StackPanel>
                 <!-- Group Selector (Advanced Mode Only) -->
-                <Border Background="#F0F8FF" BorderBrush="#2196F3" BorderThickness="1"
+                <Border Background="{StaticResource GcdsSelectionBgBrush}" BorderBrush="{StaticResource GcdsLinkDefaultBrush}" BorderThickness="1"
                         CornerRadius="6" Padding="16" Margin="0,0,0,20"
                         IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}">
                   <StackPanel>
@@ -41,12 +41,12 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.CalfPopulationGroups.Count}">
                       <TextBlock Text="Select Group to Configure:"
                                  FontWeight="SemiBold"
-                                 FontSize="14"
+                                 FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#2196F3"
                                  Margin="0,0,0,8"/>
                       <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
-                                 FontSize="12"
-                                 Foreground="#666"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.CalfPopulationGroups}"
@@ -61,7 +61,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="#666"/>
+                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
@@ -78,14 +78,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                         </MultiBinding>
                       </StackPanel.IsVisible>
                       <TextBlock Text="⚠️ No Groups Defined"
-                                 FontSize="16"
+                                 FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
-                                 Foreground="#856404"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
                       <TextBlock TextWrapping="Wrap"
-                                 FontSize="13"
-                                 Foreground="#856404"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
                                  MaxWidth="400">
                         <Run Text="You haven't added any groups yet. Go back to "/>
@@ -107,7 +107,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                 
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
-                <Border Background="#FFF3CD" BorderBrush="#FFC107" BorderThickness="1"
+                <Border Background="{StaticResource GcdsWarningBgBrush}" BorderBrush="{StaticResource GcdsWarningBrush}" BorderThickness="1"
                         CornerRadius="6" Padding="20">
                   <Border.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -117,14 +117,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="⚠️ No Group Selected"
-                               FontSize="16"
+                               FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
-                               Foreground="#856404"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
                     <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
-                               FontSize="13"
-                               Foreground="#856404"
+                               FontSize="{StaticResource GcdsFontSizeSmall}"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
                                TextWrapping="Wrap"/>
                   </StackPanel>
@@ -145,9 +145,9 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#7B1FA2"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Heifer Stage" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Management Practices - Heifer Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="Configure management practices for heifer stage (4 months to first calving)"
-                          FontSize="13" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
+                          FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
             <Border Background="White" Padding="20">
@@ -161,12 +161,12 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.HeiferPopulationGroups.Count}">
                       <TextBlock Text="Select Group to Configure:"
                                  FontWeight="SemiBold"
-                                 FontSize="14"
+                                 FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#7B1FA2"
                                  Margin="0,0,0,8"/>
                       <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
-                                 FontSize="12"
-                                 Foreground="#666"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.HeiferPopulationGroups}"
@@ -181,7 +181,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="#666"/>
+                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
@@ -198,14 +198,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                         </MultiBinding>
                       </StackPanel.IsVisible>
                       <TextBlock Text="⚠️ No Groups Defined"
-                                 FontSize="16"
+                                 FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
-                                 Foreground="#856404"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
                       <TextBlock TextWrapping="Wrap"
-                                 FontSize="13"
-                                 Foreground="#856404"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
                                  MaxWidth="400">
                         <Run Text="You haven't added any groups yet. Go back to "/>
@@ -227,8 +227,8 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                 
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
-                <Border Background="#FFF3CD" 
-                        BorderBrush="#FFC107" 
+                <Border Background="{StaticResource GcdsWarningBgBrush}" 
+                        BorderBrush="{StaticResource GcdsWarningBrush}" 
                         BorderThickness="1"
                         CornerRadius="6" 
                         Padding="20">
@@ -240,14 +240,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="⚠️ No Group Selected"
-                               FontSize="16"
+                               FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
-                               Foreground="#856404"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
                     <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
-                               FontSize="13"
-                               Foreground="#856404"
+                               FontSize="{StaticResource GcdsFontSizeSmall}"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
                                TextWrapping="Wrap"/>
                   </StackPanel>
@@ -268,9 +268,9 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#388E3C"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Lactating Stage" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Management Practices - Lactating Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="Configure management practices for lactating cow stage (active milk production)"
-                          FontSize="13" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
+                          FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
             <Border Background="White" Padding="20">
@@ -284,12 +284,12 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.LactatingPopulationGroups.Count}">
                       <TextBlock Text="Select Group to Configure:"
                                  FontWeight="SemiBold"
-                                 FontSize="14"
+                                 FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#388E3C"
                                  Margin="0,0,0,8"/>
                       <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
-                                 FontSize="12"
-                                 Foreground="#666"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.LactatingPopulationGroups}"
@@ -304,7 +304,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="#666"/>
+                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
@@ -321,14 +321,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                         </MultiBinding>
                       </StackPanel.IsVisible>
                       <TextBlock Text="⚠️ No Groups Defined"
-                                 FontSize="16"
+                                 FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
-                                 Foreground="#856404"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
                       <TextBlock TextWrapping="Wrap"
-                                 FontSize="13"
-                                 Foreground="#856404"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
                                  MaxWidth="400">
                         <Run Text="You haven't added any groups yet. Go back to "/>
@@ -350,7 +350,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                 
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
-                <Border Background="#FFF3CD" BorderBrush="#FFC107" BorderThickness="1"
+                <Border Background="{StaticResource GcdsWarningBgBrush}" BorderBrush="{StaticResource GcdsWarningBrush}" BorderThickness="1"
                         CornerRadius="6" Padding="20">
                   <Border.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -360,14 +360,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="⚠️ No Group Selected"
-                               FontSize="16"
+                               FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
-                               Foreground="#856404"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
                     <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
-                               FontSize="13"
-                               Foreground="#856404"
+                               FontSize="{StaticResource GcdsFontSizeSmall}"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
                                TextWrapping="Wrap"/>
                   </StackPanel>
@@ -388,9 +388,9 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#F57C00"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Dry Stage" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Management Practices - Dry Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="Configure management practices for dry cow stage (pre-calving period)"
-                          FontSize="13" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
+                          FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
             <Border Background="White" Padding="20">
@@ -404,12 +404,12 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.DryPopulationGroups.Count}">
                       <TextBlock Text="Select Group to Configure:"
                                  FontWeight="SemiBold"
-                                 FontSize="14"
+                                 FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#F57C00"
                                  Margin="0,0,0,8"/>
                       <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
-                                 FontSize="12"
-                                 Foreground="#666"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.DryPopulationGroups}"
@@ -424,7 +424,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="#666"/>
+                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
@@ -441,14 +441,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                         </MultiBinding>
                       </StackPanel.IsVisible>
                       <TextBlock Text="⚠️ No Groups Defined"
-                                 FontSize="16"
+                                 FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
-                                 Foreground="#856404"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
                       <TextBlock TextWrapping="Wrap"
-                                 FontSize="13"
-                                 Foreground="#856404"
+                                 FontSize="{StaticResource GcdsFontSizeSmall}"
+                                 Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
                                  MaxWidth="400">
                         <Run Text="You haven't added any groups yet. Go back to "/>
@@ -470,7 +470,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                 
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
-                <Border Background="#FFF3CD" BorderBrush="#FFC107" BorderThickness="1"
+                <Border Background="{StaticResource GcdsWarningBgBrush}" BorderBrush="{StaticResource GcdsWarningBrush}" BorderThickness="1"
                         CornerRadius="6" Padding="20">
                   <Border.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -480,14 +480,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="⚠️ No Group Selected"
-                               FontSize="16"
+                               FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
-                               Foreground="#856404"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
                     <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
-                               FontSize="13"
-                               Foreground="#856404"
+                               FontSize="{StaticResource GcdsFontSizeSmall}"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
                                TextWrapping="Wrap"/>
                   </StackPanel>
@@ -515,21 +515,21 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#1976D2"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices Configuration" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Management Practices Configuration" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="⬆️ Click a stage card above to configure management practices" 
-                          FontSize="13" Foreground="White" Opacity="0.95" Margin="0,4,0,0" FontWeight="SemiBold"/>
+                          FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0" FontWeight="SemiBold"/>
               </StackPanel>
             </Border>
             <Border Background="White" Padding="20">
-              <Border Background="#E3F2FD" BorderBrush="#1976D2" BorderThickness="1" CornerRadius="6" Padding="20">
+              <Border Background="{StaticResource GcdsSelectionBgBrush}" BorderBrush="#1976D2" BorderThickness="1" CornerRadius="6" Padding="20">
                 <StackPanel HorizontalAlignment="Center">
-                  <TextBlock Text="Select a Stage to Begin" FontSize="16" FontWeight="Bold" 
+                  <TextBlock Text="Select a Stage to Begin" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" 
                             Foreground="#1976D2" HorizontalAlignment="Center" Margin="0,0,0,8"/>
                   <TextBlock Text="Click on one of the stage cards above (Calf, Heifer, Lactating, or Dry)" 
-                            FontSize="14" Foreground="#666" HorizontalAlignment="Center" TextWrapping="Wrap"
+                            FontSize="{StaticResource GcdsFontSizeBody}" Foreground="{StaticResource GcdsTextSecondaryBrush}" HorizontalAlignment="Center" TextWrapping="Wrap"
                             TextAlignment="Center" MaxWidth="500" Margin="0,0,0,8"/>
                   <TextBlock Text="to configure its specific management practices and production parameters." 
-                            FontSize="14" Foreground="#666" HorizontalAlignment="Center" TextWrapping="Wrap"
+                            FontSize="{StaticResource GcdsFontSizeBody}" Foreground="{StaticResource GcdsTextSecondaryBrush}" HorizontalAlignment="Center" TextWrapping="Wrap"
                             TextAlignment="Center" MaxWidth="500"/>
                 </StackPanel>
               </Border>

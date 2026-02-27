@@ -33,14 +33,15 @@
                     Margin="0,0,0,12"/>
 
             <!-- Status Messages -->
-            <Border Background="#E3F2FD"
-                    BorderBrush="#2196F3"
+            <Border Background="{StaticResource GcdsBgLightBrush}"
+                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     BorderThickness="1"
-                    CornerRadius="4"
+                    CornerRadius="6"
                     Padding="12"
                     IsVisible="{Binding ShowValidationMessage}">
                 <TextBlock Text="{Binding ValidationMessage}"
                            TextWrapping="Wrap"
+                           Foreground="{StaticResource GcdsTextSecondaryBrush}"
                            TextAlignment="Center"/>
             </Border>
         </StackPanel>

@@ -42,7 +42,7 @@
                     IsEnabled="{Binding !IsProcessingData, Mode=TwoWay}"
                     Click="ChooseSelectedSoilButton_OnClick"
                     HorizontalAlignment="Left"
-                    Background="MediumAquamarine"
+                    Background="{StaticResource GcdsBgPrimaryBrush}"
                     Margin="20, 10"
                     Cursor="Hand"/>
 
@@ -51,7 +51,7 @@
                     IsEnabled="{Binding !IsProcessingData, Mode=TwoWay}"
                     Click="ExportDataButton_OnClick"
                     HorizontalAlignment="Right"
-                    Background="MediumAquamarine"
+                    Background="{StaticResource GcdsBgPrimaryBrush}"
                     Margin="20, 10"
                     Cursor="Hand"/>
 
@@ -61,7 +61,7 @@
                     HorizontalAlignment="Stretch"
                     Command="{Binding SwitchToClimateViewCommand}"
                     Click="Button_OnClick"
-                    FontFamily="{DynamicResource RobotoFontFamily}"
+                    FontFamily="{StaticResource GcdsBodyFont}"
                     FontWeight="Regular"
                     FontSize="14"
                     CornerRadius="5">
