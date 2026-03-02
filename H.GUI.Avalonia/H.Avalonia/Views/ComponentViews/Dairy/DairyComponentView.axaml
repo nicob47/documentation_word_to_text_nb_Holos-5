@@ -33,7 +33,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.DairyComponentView">
                                       Margin="{StaticResource DefaultUserControlMargin}"
                                       Title="Show Advanced Options"
                                       Description="Display additional configuration options for detailed dairy operation management"
-                                      IsChecked="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"/>
+                                      IsChecked="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairy:DairyComponentView}, Mode=TwoWay}"/>
 
     <ScrollViewer Grid.Row="2" 
                   VerticalScrollBarVisibility="Auto" 
@@ -42,7 +42,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.DairyComponentView">
 
             <!-- Lifecycle Visualization - Educational Diagram (Advanced Options Only) -->
       <dairy:DairyLifecycleVisualizationView Margin="0,0,0,24"
-                                              IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                              IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairy:DairyComponentView}}"/>
 
       <!-- Step 1: Select Stage & Step 2: Configure Population/Duration (CalculatedHerdCompositionView contains both) -->
       <dairy:CalculatedHerdCompositionView Margin="0,0,0,20"/>
