@@ -8,11 +8,18 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
+  <!-- Disable shared Roslyn compiler so VBCSCompiler.exe doesn't hold file locks -->
+  <PropertyGroup>
+    <UseSharedCompilation>false</UseSharedCompilation>
+  </PropertyGroup>
+
   <!-- Clean up Avalonia XAML compiler intermediate files before each build
        to prevent 'original.pdb is locked by another process' errors -->
   <Target Name="CleanAvaloniaObj" BeforeTargets="BeforeBuild">
-    <Delete Files="$(IntermediateOutputPath)Avalonia\original.pdb" ContinueOnError="true"/>
-    <Delete Files="$(IntermediateOutputPath)Avalonia\original.dll" ContinueOnError="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
   </Target>
 
   <ItemGroup>
