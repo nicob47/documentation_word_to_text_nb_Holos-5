@@ -6,6 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Clean up Avalonia XAML compiler intermediate files before each build
+       to prevent 'original.pdb is locked by another process' errors -->
+  <Target Name="CleanAvaloniaObj" BeforeTargets="BeforeBuild">
+    <Delete Files="$(IntermediateOutputPath)Avalonia\original.pdb" ContinueOnError="true"/>
+    <Delete Files="$(IntermediateOutputPath)Avalonia\original.dll" ContinueOnError="true"/>
+  </Target>
+
   <ItemGroup>
     <None Remove="Resources\Alberta_No_Styles.kml" />
     <None Remove="Resources\BC_No_Styles.kml" />

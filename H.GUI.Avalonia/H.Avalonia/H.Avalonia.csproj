@@ -8,6 +8,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
+  <!-- Clean up Avalonia XAML compiler intermediate files before each build
+       to prevent 'original.pdb is locked by another process' errors -->
+  <Target Name="CleanAvaloniaObj" BeforeTargets="BeforeBuild">
+    <Delete Files="$(IntermediateOutputPath)Avalonia\original.pdb" ContinueOnError="true"/>
+    <Delete Files="$(IntermediateOutputPath)Avalonia\original.dll" ContinueOnError="true"/>
+  </Target>
+
   <ItemGroup>
     <AvaloniaResource Include="Assets\Fonts\*" />
     <AvaloniaResource Include="Assets\Images\**" />
