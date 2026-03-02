@@ -213,12 +213,16 @@
               StrokeThickness="3"
               StrokeDashArray="4,2"
               Data="M 75,5 Q 37,-45 0,5"/>
-        <!-- Arrowhead pointing left at Lactating right edge (solid, no dash) -->
-        <Path Canvas.Left="720"
-              Canvas.Top="95"
+        <!-- Arrowhead pointing left-and-slightly-down to match curve arrival angle -->
+        <Path Canvas.Left="716"
+              Canvas.Top="91"
               Stroke="#424242"
               StrokeThickness="3"
-              Data="M 8,0 L 0,5 L 8,10"/>
+              Data="M 8,0 L 0,5 L 8,10">
+          <Path.RenderTransform>
+            <RotateTransform Angle="-35" CenterX="4" CenterY="5"/>
+          </Path.RenderTransform>
+        </Path>
         <TextBlock Canvas.Left="645"
                    Canvas.Top="35"
                    Text="CALVING - Cycle Repeats"
