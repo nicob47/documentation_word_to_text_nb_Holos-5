@@ -206,13 +206,19 @@
         </Border>
 
         <!-- Arrow 4: Dry back to Lactating (curved up - completing the cycle) -->
-        <!-- Arc from Dry left (795) to Lactating right (725); Canvas.Left=720 so offsets are 75 and 5 -->
+        <!-- Arc curve only (dashed): from Dry left (795) to Lactating right (725) -->
         <Path Canvas.Left="720"
               Canvas.Top="95"
               Stroke="#424242"
               StrokeThickness="3"
               StrokeDashArray="4,2"
-              Data="M 75,5 Q 37,-45 0,5 M 6,0 L 0,5 L 6,10"/>
+              Data="M 75,5 Q 37,-45 0,5"/>
+        <!-- Arrowhead pointing left at Lactating right edge (solid, no dash) -->
+        <Path Canvas.Left="720"
+              Canvas.Top="95"
+              Stroke="#424242"
+              StrokeThickness="3"
+              Data="M 8,0 L 0,5 L 8,10"/>
         <TextBlock Canvas.Left="645"
                    Canvas.Top="35"
                    Text="CALVING - Cycle Repeats"
@@ -227,8 +233,9 @@
               StrokeThickness="2"
               StrokeDashArray="3,2"
               Data="M 0,0 L 0,50 M -5,45 L 0,50 L 5,45"/>
-        <Border Canvas.Left="545" 
+        <Border Canvas.Left="545"
                 Canvas.Top="300"
+                Width="160"
                 Background="#FFEBEE"
                 BorderBrush="{Binding IsCullingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                 BorderThickness="{Binding IsCullingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
@@ -258,6 +265,7 @@
               Data="M 0,0 L 0,50 M -5,45 L 0,50 L 5,45"/>
         <Border Canvas.Left="285"
                 Canvas.Top="300"
+                Width="160"
                 Background="#E8F5E9"
                 BorderBrush="{Binding IsReplacementSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                 BorderThickness="{Binding IsReplacementSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
