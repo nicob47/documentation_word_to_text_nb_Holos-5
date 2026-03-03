@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <!-- Disable shared Roslyn compiler so VBCSCompiler.exe doesn't hold file locks -->
+  <!-- Disable Avalonia XAML IL debug info so original.pdb is never generated -->
   <PropertyGroup>
     <UseSharedCompilation>false</UseSharedCompilation>
+    <AvaloniaXamlIlDebugInfo>false</AvaloniaXamlIlDebugInfo>
   </PropertyGroup>
 
   <!-- Clean up Avalonia XAML compiler intermediate files before each build
