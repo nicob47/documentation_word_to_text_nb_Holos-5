@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using H.Core.Enumerations;
 using H.Core.Services.CropColorService;
 
@@ -74,6 +75,13 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
     // ─── Crop item ────────────────────────────────────────────────────────────
     // White background + 4 px coloured left border so colour is always visible
     // regardless of the ComboBox item container's hover/selected highlight.
+    //
+    // The same template is used for both the popup items and the closed
+    // (selection) display.  In the closed state the ComboBox reserves space
+    // for the dropdown arrow, so the accent strip + margin would clip the
+    // crop name.  We detect the context in AttachedToVisualTree and hide
+    // the accent strip when the item is inside the selection ContentPresenter
+    // rather than a ComboBoxItem in the popup.
     private static Control BuildCropItem(CropType cropType)
     {
         var colorHex = _colorService.GetCropColorHex(cropType);
@@ -106,6 +114,16 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
         DockPanel.SetDock(accent, Dock.Left);
         row.Children.Add(accent);
         row.Children.Add(label);
+
+        // When used in the closed ComboBox selection area (not inside a
+        // ComboBoxItem), hide the accent strip so the text isn't clipped.
+        row.AttachedToVisualTree += (_, _) =>
+        {
+            var isInPopup = row.FindAncestorOfType<ComboBoxItem>() is not null;
+            accent.IsVisible = isInPopup;
+            // Don't force MinWidth in the closed selection display
+            row.MinWidth = isInPopup ? ItemMinWidth : 0;
+        };
 
         return row;
     }
