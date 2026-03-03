@@ -147,11 +147,13 @@
                                                          non-interactive dividers and CropType values as coloured pill badges.
                                                          SelectedCropTypeItem syncs back to CropDto.CropType; setting it to a
                                                          header string is silently ignored by the DTO. -->
+                                                    <!-- Width = card Width(280) - CardPadding(12×2) - StackPanel Margin(8×2) = 240.
+                                                         Explicit Width ensures the popup inherits the same dimension. -->
                                                     <ComboBox Classes="crop-selector"
                                                               ItemsSource="{Binding GroupedCropItems}"
                                                               SelectedItem="{Binding SelectedCropTypeItem}"
                                                               ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
-                                                              HorizontalAlignment="Stretch"
+                                                              Width="240"
                                                               MaxDropDownHeight="320"/>
                                                 </StackPanel>
                                             </StackPanel>
