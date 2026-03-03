@@ -22,6 +22,14 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
 {
     private static readonly ICropColorService _colorService = new CropColorService();
 
+    /// <summary>
+    /// Minimum width for every item in the popup.  This forces the popup to
+    /// be at least this wide, working around the Avalonia 11 Fluent theme's
+    /// Bounds.Width binding on PART_Popup not resolving across visual trees.
+    /// Should match the ComboBox Width minus popup border/padding (~12 px).
+    /// </summary>
+    private const double ItemMinWidth = 224;
+
     /// <inheritdoc/>
     public bool Match(object? data) => data is string or CropType;
 
@@ -56,6 +64,7 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
         {
             Background = Brush.Parse("#EEEEEE"),
             Padding = new Thickness(0, 5, 0, 5),
+            MinWidth = ItemMinWidth,
             IsHitTestVisible = false,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             Child = label,
@@ -88,7 +97,12 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        var row = new DockPanel { LastChildFill = true, HorizontalAlignment = HorizontalAlignment.Stretch };
+        var row = new DockPanel
+        {
+            LastChildFill = true,
+            MinWidth = ItemMinWidth,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+        };
         DockPanel.SetDock(accent, Dock.Left);
         row.Children.Add(accent);
         row.Children.Add(label);
