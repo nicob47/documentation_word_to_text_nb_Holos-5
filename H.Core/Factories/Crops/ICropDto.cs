@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using H.Core.Enumerations;
 using H.Core.Models.LandManagement.Fields;
 
@@ -18,6 +19,24 @@ public interface ICropDto : IDto
     /// The list of valid crop types available for selection
     /// </summary>
     ObservableCollection<CropType> ValidCropTypes { get; set; }
+
+    /// <summary>
+    /// A flat, grouped list of items for the crop selection ComboBox.
+    /// Alternates between plain-string category headers (non-selectable) and
+    /// <see cref="CropType"/> values (selectable).  Used by the UI layer together
+    /// with <see cref="SelectedCropTypeItem"/> to produce a categorised dropdown.
+    /// </summary>
+    IReadOnlyList<object> GroupedCropItems { get; }
+
+    /// <summary>
+    /// The currently selected item in the grouped ComboBox.
+    /// Wraps <see cref="CropType"/> as an <c>object?</c> so the ComboBox
+    /// <c>SelectedItem</c> binding can coexist with the mixed-type
+    /// <see cref="GroupedCropItems"/> list.  Setting this to a string (category
+    /// header) is silently ignored so that clicking a header does not change the
+    /// selected crop.
+    /// </summary>
+    object? SelectedCropTypeItem { get; set; }
 
     /// <summary>
     /// The year in which the crop was grown
