@@ -5,6 +5,6 @@
         DateTime Start { get; set; }
         DateTime End { get; set; }
         TimeSpan Duration { get; }
-        string Name { get; set; }
+        string? Name { get; set; }
     }
 }

@@ -4,17 +4,19 @@ using H.Core.Models;
 using H.Core.Services.StorageService;
 using Moq;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews.DataTransferObjects
 {
     [TestClass]
     public class UserSettingsDTOTests
     {
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private ApplicationData _applicationData;
-        private UserSettingsDTO _userSettingsDTO;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private ApplicationData _applicationData = null!;
+        private UserSettingsDTO _userSettingsDTO = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

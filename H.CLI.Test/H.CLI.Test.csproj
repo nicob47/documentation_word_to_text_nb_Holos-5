@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9.0-windows7.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<EnableMSTestRunner>true</EnableMSTestRunner>
@@ -8,12 +8,6 @@
 		<TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
-	<PropertyGroup>
-		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="System.Configuration" />
-	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\H.CLI\H.CLI.csproj" />
 		<ProjectReference Include="..\H.Content\H.Content.csproj" />
@@ -22,16 +16,7 @@
 		<ProjectReference Include="..\H.Infrastructure\H.Infrastructure.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CommonServiceLocator">
-			<Version>2.0.7</Version>
-		</PackageReference>
-		<PackageReference Include="Moq">
-			<Version>4.20.72</Version>
-		</PackageReference>
-		<PackageReference Include="Prism.Wpf">
-			<Version>7.2.0.1422</Version>
-		</PackageReference>
-		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
+		<PackageReference Include="Moq" Version="4.20.72" />
 		<PackageReference Include="MSTest" Version="3.10.4" />
 	</ItemGroup>
 </Project>

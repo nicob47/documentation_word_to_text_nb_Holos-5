@@ -14,7 +14,7 @@ public abstract class ErrorValidationBase : ModelBase, INotifyDataErrorInfo
 
     private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
 
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
     #endregion
 
@@ -28,7 +28,7 @@ public abstract class ErrorValidationBase : ModelBase, INotifyDataErrorInfo
 
     IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName)
     {
-        return GetErrors(propertyName);
+        return GetErrors(propertyName ?? string.Empty)!;
     }
 
     #endregion
@@ -85,7 +85,7 @@ public abstract class ErrorValidationBase : ModelBase, INotifyDataErrorInfo
     /// </summary>
     /// <param name="propertyName">The string representing the property that might have errors</param>
     /// <returns>A collection of string errors associate with the property</returns>
-    public IEnumerable GetErrors(string propertyName)
+    public IEnumerable? GetErrors(string propertyName)
     {
         if (string.IsNullOrWhiteSpace(propertyName) || !_errors.ContainsKey(propertyName))
         {

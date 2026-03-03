@@ -12,7 +12,7 @@ namespace H.Avalonia.Views.ComponentViews.Dairy;
 /// </summary>
 public partial class DairyLifecycleVisualizationView : UserControl, INotifyPropertyChanged
 {
-    private string _selectedStage;
+    private string? _selectedStage;
     private bool _hasSelection;
 
     public DairyLifecycleVisualizationView()
@@ -21,7 +21,7 @@ public partial class DairyLifecycleVisualizationView : UserControl, INotifyPrope
         DataContext = this;
     }
 
-    public string SelectedStage
+    public string? SelectedStage
     {
         get => _selectedStage;
         set
@@ -86,32 +86,32 @@ public partial class DairyLifecycleVisualizationView : UserControl, INotifyPrope
         _ => ""
     };
 
-    private void Calf_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void Calf_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Calf";
     }
 
-    private void Heifer_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void Heifer_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Heifer";
     }
 
-    private void Lactating_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void Lactating_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Lactating";
     }
 
-    private void Dry_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void Dry_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Dry";
     }
 
-    private void Culling_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void Culling_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Culling";
     }
 
-    private void Replacement_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void Replacement_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Replacement";
     }
@@ -131,14 +131,14 @@ public partial class DairyLifecycleVisualizationView : UserControl, INotifyPrope
     public bool IsCullingSelected => IsStageSelected("Culling");
     public bool IsReplacementSelected => IsStageSelected("Replacement");
 
-    private void CloseInfo_Click(object sender, RoutedEventArgs e)
+    private void CloseInfo_Click(object? sender, RoutedEventArgs e)
     {
         SelectedStage = null;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public new event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class CropTypeStringConverterTest
     {
-        private CropTypeStringConverter converter;
+        private CropTypeStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides

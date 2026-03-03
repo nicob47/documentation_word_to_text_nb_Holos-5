@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider_Test
     {
-        private Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider _provider;
+        private Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

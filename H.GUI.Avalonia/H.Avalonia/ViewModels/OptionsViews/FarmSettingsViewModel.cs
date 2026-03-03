@@ -10,9 +10,9 @@ namespace H.Avalonia.ViewModels.OptionsViews
     {
         #region Fields
 
-        private ObservableCollection<MeasurementSystemType> _measurementSystemTypes;
+        private ObservableCollection<MeasurementSystemType> _measurementSystemTypes = null!;
         private MeasurementSystemType _selectedMeasurementType;
-        private FarmSettingsDTO _data;
+        private FarmSettingsDTO _data = null!;
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
             {
                 if (SetProperty(ref _selectedMeasurementType, value))
                 {
-                    if (base.IsInitialized && MeasurementSystemTypes.Contains(value)) 
+                    if (base.IsInitialized && MeasurementSystemTypes.Contains(value) && base.ActiveFarm is not null && base.StorageService != null)
                     {
                         base.ActiveFarm.MeasurementSystemType = value;
                         base.ActiveFarm.MeasurementSystemSelected = true;
@@ -63,8 +63,8 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         public void Initialize()
         {
-            this.Data = new FarmSettingsDTO(StorageService);
-            this.SelectedMeasurementSystem = StorageService.GetActiveFarm().MeasurementSystemType;
+            this.Data = new FarmSettingsDTO(StorageService!);
+            this.SelectedMeasurementSystem = StorageService!.GetActiveFarm()?.MeasurementSystemType ?? MeasurementSystemType.Metric;
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)

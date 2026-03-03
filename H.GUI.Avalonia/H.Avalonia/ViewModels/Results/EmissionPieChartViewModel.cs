@@ -28,15 +28,20 @@ namespace H.Avalonia.ViewModels.Results
     {
         #region Fields
 
-        private readonly ExportHelpers _exportHelpers;
-        private CancellationTokenSource _cancellationTokenSource;
         private readonly ILogger _logger;
+        private bool _showDetails = true;
 
         #endregion
 
         #region Properties
 
         public IEnumerable<ISeries> PieChartSeries { get; set; }
+
+        public bool ShowDetails
+        {
+            get => _showDetails;
+            set => SetProperty(ref _showDetails, value);
+        }
 
         #endregion
 

@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Plants
     [TestClass]
     public class LumCMax_KValues_Perennial_Cropping_Change_Provider_Test
     {
-        private LumCMax_KValues_Perennial_Cropping_Change_Provider _forPerennialsAndGrasslandProvider;
+        private LumCMax_KValues_Perennial_Cropping_Change_Provider _forPerennialsAndGrasslandProvider = null!;
 
         [TestInitialize]
         public void TestInitialize()

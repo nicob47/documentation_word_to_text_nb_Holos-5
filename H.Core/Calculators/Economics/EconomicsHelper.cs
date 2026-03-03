@@ -58,7 +58,7 @@ namespace H.Core.Calculators.Economics
                 //convert only certain values that are reported in $/acre originally
                 if (dollarsPerAcreProps.Contains(prop.Name))
                 {
-                    var currentValue = (double)prop.GetValue(economicData);
+                    var currentValue = (double)(prop.GetValue(economicData) ?? 0.0);
                     var convertedValue = currentValue * AcresPerHectare;
                     prop.SetValue(economicData, convertedValue);
                 }

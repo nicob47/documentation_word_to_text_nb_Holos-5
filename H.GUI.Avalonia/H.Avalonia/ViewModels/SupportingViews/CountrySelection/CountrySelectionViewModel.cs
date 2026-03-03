@@ -59,7 +59,7 @@ namespace H.Avalonia.ViewModels.SupportingViews.CountrySelection
             // Update the App.config with the selected country if it's not null
             if (SelectedCountry != null)
             {
-                ConfigurationFileHelper.UpdateCountryVersion(SelectedCountry.ToString());
+                ConfigurationFileHelper.UpdateCountryVersion(SelectedCountry.ToString()!);
             }
 
             // Navigate to MeasurementProvinceView

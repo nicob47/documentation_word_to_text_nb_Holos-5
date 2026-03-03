@@ -24,7 +24,9 @@ namespace H.CLI.Test.Converters
             Directory.CreateDirectory("H.CLI.TestFiles");
             Directory.CreateDirectory(@"H.CLI.TestFiles\TestOutputs");
             var outputDirectory = @"H.CLI.TestFiles\TestOutputs";
-            string farmDirectoryPath = @"C:\Users\HolosEN\Farms\Farm1";
+#pragma warning disable CS0219
+            string _farmDirectoryPath = @"C:\Users\HolosEN\Farms\Farm1";
+#pragma warning restore CS0219
 
             directoryHandler.InitializeDirectoriesAndFilesForComponents(outputDirectory);
 

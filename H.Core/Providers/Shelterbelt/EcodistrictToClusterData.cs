@@ -3,7 +3,7 @@
     public class EcodistrictToClusterData
     {
         public int EcodistrictId { get; set; }
-        public string ClusterId { get; set; }
-        public string SoilZone { get; set; }
+        public string ClusterId { get; set; } = string.Empty;
+        public string SoilZone { get; set; } = string.Empty;
     }
 }

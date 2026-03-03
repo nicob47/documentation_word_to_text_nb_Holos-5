@@ -7,17 +7,19 @@ using Moq;
 using Prism.Regions;
 using static H.Avalonia.Views.OptionsViews.FileMenuViews.FileExportClimateView;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews.FileMenuViews
 {
     [TestClass]
     public class FileExportClimateViewModelTest
     {
-        private Mock<IRegionManager> _mockRegionManager;
-        private Mock<IStorageService> _mockStorageService;
-        private Mock<INotificationManagerService> _mockNotificationService;
-        private Mock<IStorageFile> _mockStorageFile;
-        private FileExportClimateViewModel _viewModel;
-        private Farm _testFarm;
+        private Mock<IRegionManager> _mockRegionManager = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private Mock<INotificationManagerService> _mockNotificationService = null!;
+        private Mock<IStorageFile> _mockStorageFile = null!;
+        private FileExportClimateViewModel _viewModel = null!;
+        private Farm _testFarm = null!;
 
         [TestInitialize]
         public void TestInitialize()
@@ -69,7 +71,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.FileMenuViews
         public void Constructor_WithNullRegionManager_ThrowsArgumentNullException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => 
+            Assert.ThrowsExactly<ArgumentNullException>(() => 
                 new FileExportClimateViewModel(null, _mockStorageService.Object, _mockNotificationService.Object));
         }
 
@@ -77,7 +79,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.FileMenuViews
         public void Constructor_WithNullStorageService_ThrowsArgumentNullException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => 
+            Assert.ThrowsExactly<ArgumentNullException>(() => 
                 new FileExportClimateViewModel(_mockRegionManager.Object, null, _mockNotificationService.Object));
         }
 
@@ -85,7 +87,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.FileMenuViews
         public void Constructor_WithNullNotificationService_ThrowsArgumentNullException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
                 new FileExportClimateViewModel(null, null, _mockNotificationService.Object));
         }
 

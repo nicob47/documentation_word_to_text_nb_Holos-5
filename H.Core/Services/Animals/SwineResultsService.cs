@@ -41,11 +41,11 @@ namespace H.Core.Services.Animals
         #region Private Methods
 
         protected override GroupEmissionsByDay CalculateDailyEmissions(
-            AnimalComponentBase animalComponentBase, 
-            ManagementPeriod managementPeriod, 
-            DateTime dateTime, 
-            GroupEmissionsByDay previousDaysEmissions, 
-            AnimalGroup animalGroup, 
+            AnimalComponentBase animalComponentBase,
+            ManagementPeriod managementPeriod,
+            DateTime dateTime,
+            GroupEmissionsByDay? previousDaysEmissions,
+            AnimalGroup animalGroup,
             Farm farm)
         {
             var dailyEmissions = new GroupEmissionsByDay();
@@ -73,7 +73,9 @@ namespace H.Core.Services.Animals
              */
 
             // Old farms had the DMI/Intake associated with the management period and not the diet
+#pragma warning disable CS0618 // Type or member is obsolete
             var dryMatterIntake = managementPeriod.SelectedDiet.DailyDryMatterFeedIntakeOfFeed > 0 ? managementPeriod.SelectedDiet.DailyDryMatterFeedIntakeOfFeed : managementPeriod.FeedIntakeAmount;
+#pragma warning restore CS0618 // Type or member is obsolete
                 dailyEmissions.DryMatterIntake = dryMatterIntake;
 
             dailyEmissions.FecalCarbonExcretionRate = this.CalculateCarbonExcretionRate(
@@ -286,7 +288,7 @@ namespace H.Core.Services.Animals
 
             var energyConversionFactor = _energyConversionDefaultsProvider.GetElectricityConversionValue(
                 year: groupEmissionsByMonth.MonthsAndDaysData.Year, 
-                province: farm.DefaultSoilData.Province);
+                province: farm.DefaultSoilData!.Province);
 
             groupEmissionsByMonth.MonthlyEnergyCarbonDioxide = this.CalculateTotalCarbonDioxideEmissionsFromSwineHousing(
                 numberOfAnimals: groupEmissionsByMonth.MonthsAndDaysData.ManagementPeriod.NumberOfAnimals,

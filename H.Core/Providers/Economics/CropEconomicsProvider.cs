@@ -83,7 +83,7 @@ namespace H.Core.Providers.Economics
 
             //We look for a direct match of croptype, soil, and province
             var result = this.GetDirectMatch(cropType, province, soilCategory, econCropType, mapper);
-            if (result != null)
+            if (result is not null)
             {
                 this.FinalizeCropEconomicData(result, cropType);
                 return result;
@@ -91,7 +91,7 @@ namespace H.Core.Providers.Economics
 
             //if no direct match then we should look at other soilcategories in the same province
             result = this.GetMatchAcrossTheProvince(province, econCropType, soilCategory, mapper);
-            if (result != null)
+            if (result is not null)
             {
                 this.FinalizeCropEconomicData(result, cropType);
                 return result;
@@ -99,7 +99,7 @@ namespace H.Core.Providers.Economics
 
             //if no match in other soil regions in the province then look to neighbouring provinces
             result = this.GetMatchInNeighbouringProvince(province, cropType, soilCategory, mapper);
-            if (result != null)
+            if (result is not null)
             {
                 this.FinalizeCropEconomicData(result, cropType);
                 return result;
@@ -191,7 +191,7 @@ namespace H.Core.Providers.Economics
         /// <param name="soilCategory">the soil category</param>
         /// <param name="mapper">the mapper</param>
         /// <returns>CropEconomicData matching the search but from another province</returns>
-        private CropEconomicData GetMatchInNeighbouringProvince(Province province, CropType originalCropType,
+        private CropEconomicData? GetMatchInNeighbouringProvince(Province province, CropType originalCropType,
             SoilFunctionalCategory soilCategory, IMapper mapper)
         {
             const int searchLimit = 2;
@@ -201,7 +201,7 @@ namespace H.Core.Providers.Economics
             //we have a province with no economic neighbour
             if (provinceNeighbour == province) return null;
 
-            CropEconomicData econData = null;
+            CropEconomicData? econData = null;
             for (var i = 0; i < searchLimit; i++)
             {
                 //we need to get the econ croptype everytime we look a new province
@@ -213,12 +213,12 @@ namespace H.Core.Providers.Economics
                         entry.SoilFunctionalCategory == soilCategory &&
                         entry.CropType == econCropType &&
                         entry.Province == provinceNeighbour);
-                    if (econData != null) break;
+                    if (econData is not null) break;
 
                     //need to search through all the province's soil zones also if I strike out with the given soil zone in a new province
                     econData = this.GetMatchAcrossTheProvince(provinceNeighbour, econCropType, soilCategory, mapper);
 
-                    if (econData != null) break;
+                    if (econData is not null) break;
                 }
 
                 provinceNeighbour = provinceNeighbour.GetNeigbouringProvince();
@@ -237,11 +237,11 @@ namespace H.Core.Providers.Economics
         /// <summary>
         /// Cycle through all of the soil zones in the province and try and find economic data for the croptype
         /// </summary>
-        private CropEconomicData GetMatchAcrossTheProvince(Province province, CropType econCropType,
+        private CropEconomicData? GetMatchAcrossTheProvince(Province province, CropType econCropType,
             SoilFunctionalCategory soilFunctionalCategory, IMapper mapper)
         {
             if (soilFunctionalCategory == SoilFunctionalCategory.NotApplicable) return new CropEconomicData();
-            CropEconomicData econData = null;
+            CropEconomicData? econData = null;
             var soilNeighbour = soilFunctionalCategory.GetNeighbouringCategory();
 
             while (soilNeighbour != soilFunctionalCategory && soilNeighbour != SoilFunctionalCategory.NotApplicable)
@@ -251,7 +251,7 @@ namespace H.Core.Providers.Economics
                     entry.CropType == econCropType &&
                     entry.Province == province);
 
-                if (econData != null) break;
+                if (econData is not null) break;
 
                 soilNeighbour = soilNeighbour.GetNeighbouringCategory();
             }
@@ -264,10 +264,10 @@ namespace H.Core.Providers.Economics
         /// <summary>
         /// Get economic data that matches directly to province, soil zone, and croptype
         /// </summary>
-        private CropEconomicData GetDirectMatch(CropType cropType, Province province,
+        private CropEconomicData? GetDirectMatch(CropType cropType, Province province,
             SoilFunctionalCategory soilCategory, CropType econCropType, IMapper mapper)
         {
-            CropEconomicData result;
+            CropEconomicData? result;
             if (soilCategory == SoilFunctionalCategory.Brown && province == Province.Alberta &&
                 (cropType == CropType.SummerFallow || cropType == CropType.Fallow))
             {
@@ -302,7 +302,7 @@ namespace H.Core.Providers.Economics
         private List<CropEconomicData> ReadFile()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CropEconomics);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CropEconomics)!;
             var result = new List<CropEconomicData>();
             double parseResult;
             foreach (var line in fileLines.Skip(1))

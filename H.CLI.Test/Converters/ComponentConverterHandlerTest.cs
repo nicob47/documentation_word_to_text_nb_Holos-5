@@ -17,10 +17,12 @@ namespace H.CLI.Test.Converters
         {
             CLILanguageConstants.SetCulture(CultureInfo.CreateSpecificCulture("en-CA"));
 
-            string outputDirectory = "TestOutputs";
-            string farmName = "FarmName1";
+#pragma warning disable CS0219
+            string _outputDirectory = "TestOutputs";
+            string _farmName = "FarmName1";
+#pragma warning restore CS0219
             //directoryHandler.ValidateUserInputedOutputDirectory(outputDirectory, farmName);
-            
+
             var tempShelterBeltInput = new ShelterBeltTemporaryInput()
             {
                 HardinessZone = Core.Enumerations.HardinessZone.H3b,
@@ -55,8 +57,10 @@ namespace H.CLI.Test.Converters
         [TestMethod]
         public void TestSetComponentListGuid_ExpectShelterbelt1andShelterbelt2ToHaveSameRowGuid()
         {
-            string outputDirectory = "TestOutputs";
-            string farmName =  "FarmName1";
+#pragma warning disable CS0219
+            string _outputDirectory = "TestOutputs";
+            string _farmName =  "FarmName1";
+#pragma warning restore CS0219
             //directoryHandler.ValidateUserInputedOutputDirectory(outputDirectory, farmName);
 
             var tempShelterBeltRow1 = new ShelterBeltTemporaryInput()

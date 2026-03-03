@@ -47,7 +47,7 @@ namespace H.Core.Providers.Economics
         /// <param name="animalType">The animal type for which the cost information is needed</param>
         /// <param name="dietType">The diet type of the animal for which cost information is needed.</param>
         /// <returns>Returns an instance of <see cref="Beef_Cattle_Winter_Feed_Cost_Data"/>. If nothing is found, returns null.</returns>
-        public Beef_Cattle_Winter_Feed_Cost_Data GetBeefCattleWinterFeedCost(AnimalType animalType,
+        public Beef_Cattle_Winter_Feed_Cost_Data? GetBeefCattleWinterFeedCost(AnimalType animalType,
                                                                                       DietType dietType)
         {
             var data = BeefCattleWinterFeedData.Find(x => 
@@ -82,7 +82,7 @@ namespace H.Core.Providers.Economics
         private List<Beef_Cattle_Winter_Feed_Cost_Data> ReadFile()
         {
             var fileData = new List<Beef_Cattle_Winter_Feed_Cost_Data>();
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.BeefCattleFedWinterFeedCost);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.BeefCattleFedWinterFeedCost)!;
 
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 

@@ -47,9 +47,9 @@ namespace H.Core.Providers.Climate
         /// <param name="emissionType">The emission for which we need the global radiative forcing value</param>
         /// <returns>An instance of Table_55_Global_Radiative_Forcing_Data based on the year and emission type. Returns null if nothing found.
         ///  Unit of measurement for the global radiative forcing value = W m-2</returns>
-        public Table_55_Global_Radiative_Forcing_Data GetGlobalRadiativeForcingInstance(int year, EmissionTypes emissionType)
+        public Table_55_Global_Radiative_Forcing_Data? GetGlobalRadiativeForcingInstance(int year, EmissionTypes emissionType)
         {
-            Table_55_Global_Radiative_Forcing_Data data = this.Data.Find(x => (x.Year == year) && (x.EmissionType == emissionType));
+            Table_55_Global_Radiative_Forcing_Data? data = this.Data.Find(x => (x.Year == year) && (x.EmissionType == emissionType));
 
             if (data != null)
             {
@@ -85,7 +85,7 @@ namespace H.Core.Providers.Climate
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             const int NumberOfHeaders = 1;
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.GlobalRadiativeForcing);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.GlobalRadiativeForcing)!;
 
             // Dictionary Key = Column number where the data is located.
             // Dictionary Value = The value of the particular emission type as read from csv file.

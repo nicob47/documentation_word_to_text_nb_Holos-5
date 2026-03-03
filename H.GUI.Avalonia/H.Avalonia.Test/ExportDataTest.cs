@@ -1,4 +1,4 @@
-using H.Avalonia.Models.ClassMaps;
+﻿using H.Avalonia.Models.ClassMaps;
 using H.Avalonia.ViewModels.Results;
 using H.Avalonia.Infrastructure;
 using H.Avalonia.Models;
@@ -8,9 +8,9 @@ namespace H.Avalonia.Test
     [TestClass]
     public class ExportDataTest
     {
-        private static ExportHelpers _exportHelpers;
-        private static ClimateResultsViewModel _climateResultsViewModel;
-        private static ClimateResultsViewItemMap _climateResultsViewItemMap;
+        private static ExportHelpers _exportHelpers = null!;
+        private static ClimateResultsViewModel _climateResultsViewModel = null!;
+        private static ClimateResultsViewItemMap _climateResultsViewItemMap = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)

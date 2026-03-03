@@ -1,12 +1,14 @@
 ﻿using H.Core.Providers.Soil;
 using H.Core.Enumerations;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Soil
 {
     [TestClass]
     public class DefaultYieldProviderTest
     {
-        private DefaultYieldProvider _provider;
+        private DefaultYieldProvider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

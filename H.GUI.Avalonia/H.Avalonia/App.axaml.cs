@@ -56,7 +56,7 @@ namespace H.Avalonia
         /// </summary>
         /// <param name="sender">The application lifetime object</param>
         /// <param name="e">Exit event arguments</param>
-        private void OnExit(object sender, ControlledApplicationLifetimeExitEventArgs e)
+        private void OnExit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
         {
             var storage = Container.Resolve<IStorage>();
             if (storage != null)

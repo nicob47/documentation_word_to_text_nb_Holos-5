@@ -1,7 +1,9 @@
-using H.Avalonia.ViewModels.Results;
+﻿using H.Avalonia.ViewModels.Results;
 using H.Core.Services.StorageService;
 using Microsoft.Extensions.Logging;
 using Moq;
+
+#nullable disable
 
 namespace H.Avalonia.Test.ViewModels.Results
 {
@@ -10,9 +12,9 @@ namespace H.Avalonia.Test.ViewModels.Results
     {
         #region Fields
 
-        private GHGResultsViewModel _viewModel;
-        private Mock<ILogger> _mockLogger;
-        private Mock<IStorageService> _mockStorageService;
+        private GHGResultsViewModel _viewModel = null!;
+        private Mock<ILogger> _mockLogger = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
 
         #endregion
 
@@ -69,7 +71,7 @@ namespace H.Avalonia.Test.ViewModels.Results
             var storageService = _mockStorageService.Object;
 
             // Act & Assert
-            var exception = Assert.ThrowsException<ArgumentNullException>(
+            var exception = Assert.ThrowsExactly<ArgumentNullException>(
                 () => new GHGResultsViewModel(nullLogger, storageService));
             
             Assert.AreEqual("logger", exception.ParamName);

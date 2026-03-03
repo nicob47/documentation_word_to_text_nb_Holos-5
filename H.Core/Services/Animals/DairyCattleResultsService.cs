@@ -31,7 +31,7 @@ namespace H.Core.Services.Animals
             AnimalComponentBase animalComponentBase,
             ManagementPeriod managementPeriod,
             DateTime dateTime,
-            GroupEmissionsByDay previousDaysEmissions,
+            GroupEmissionsByDay? previousDaysEmissions,
             AnimalGroup animalGroup,
             Farm farm)
         {
@@ -62,11 +62,11 @@ namespace H.Core.Services.Animals
         }
 
         protected GroupEmissionsByDay CalculateDailyEmissionsForCalves(
-            ManagementPeriod managementPeriod, 
-            DateTime dateTime, 
-            AnimalComponentBase dairyComponent, 
-            GroupEmissionsByDay previousDaysEmissions, 
-            AnimalGroup animalGroup, 
+            ManagementPeriod managementPeriod,
+            DateTime dateTime,
+            AnimalComponentBase dairyComponent,
+            GroupEmissionsByDay? previousDaysEmissions,
+            AnimalGroup animalGroup,
             Farm farm)
         {
             var dailyEmissions = new GroupEmissionsByDay();
@@ -242,9 +242,9 @@ namespace H.Core.Services.Animals
 
         protected GroupEmissionsByDay CalculateDailyEmissionsForGroup(
             AnimalComponentBase dairyComponent,
-            ManagementPeriod managementPeriod, 
-            DateTime dateTime, 
-            GroupEmissionsByDay previousDaysEmissions, 
+            ManagementPeriod managementPeriod,
+            DateTime dateTime,
+            GroupEmissionsByDay? previousDaysEmissions,
             AnimalGroup animalGroup,
             Farm farm)
         {
@@ -536,7 +536,7 @@ namespace H.Core.Services.Animals
                 return;
             }
 
-            var energyConversionFactor = _energyConversionDefaultsProvider.GetElectricityConversionValue(groupEmissionsByMonth.MonthsAndDaysData.Year, farm.DefaultSoilData.Province);
+            var energyConversionFactor = _energyConversionDefaultsProvider.GetElectricityConversionValue(groupEmissionsByMonth.MonthsAndDaysData.Year, farm.DefaultSoilData!.Province);
             groupEmissionsByMonth.MonthlyEnergyCarbonDioxide = this.CalculateTotalCarbonDioxideEmissionsFromDairyHousing(
                 numberOfLactatingDairyCows: groupEmissionsByMonth.MonthsAndDaysData.ManagementPeriod.NumberOfAnimals,
                 numberOfDaysInMonth: groupEmissionsByMonth.MonthsAndDaysData.DaysInMonth, 

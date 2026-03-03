@@ -571,14 +571,14 @@ namespace H.Core.Providers.Animals
                                                 x.AnimalType == animalType &&
                                                 x.ManureStateType == manureStateType);
 
-            if (data != null)
+            if (data is not null)
             {
                 return data;
             }
 
             data = ManureCompositionData.Find(x => x.AnimalType == animalType);
 
-            if (data != null)
+            if (data is not null)
             {
                 Trace.TraceError($"{nameof(Table_6_Manure_Types_Default_Composition_Provider)}.{nameof(GetManureCompositionDataByType)} " +
                                  $"could not find ManureStateType: {manureStateType} for AnimalType: {animalType} in the csv file. Returning 0 for all values.");
@@ -599,7 +599,7 @@ namespace H.Core.Providers.Animals
         private List<DefaultManureCompositionData> ReadFile()
         {
             var fileData = new List<DefaultManureCompositionData>();
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ManureTypesDefaultComposition);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ManureTypesDefaultComposition)!;
             var numberStyle = NumberStyles.Float;
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 

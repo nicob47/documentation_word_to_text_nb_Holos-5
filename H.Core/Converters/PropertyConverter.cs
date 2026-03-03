@@ -15,7 +15,7 @@ namespace H.Core.Converters
     {
         #region Fields
 
-        private readonly UnitsOfMeasurementCalculator _unitsCalculator;
+        private readonly UnitsOfMeasurementCalculator _unitsCalculator = null!;
 
         #endregion
 
@@ -41,9 +41,9 @@ namespace H.Core.Converters
 
         #region Properties
 
-        public T Instance { get; set; }
-        public Type Type { get; set; }
-        public List<PropertyInfo> PropertyInfos { get; set; }
+        public T Instance { get; set; } = default!;
+        public Type Type { get; set; } = null!;
+        public List<PropertyInfo> PropertyInfos { get; set; } = null!;
 
         #endregion
 
@@ -96,7 +96,7 @@ namespace H.Core.Converters
             if (measurementSystemType == MeasurementSystemType.Metric)
             {
                 // The GUI is in metric so just return system value
-                return (double)prop.GetValue(this.Instance);
+                return (double)(prop.GetValue(this.Instance) ?? 0.0);
             }
             // Convert for imperial
             if (this.Instance != null && attrs.Length > 0)
@@ -105,7 +105,7 @@ namespace H.Core.Converters
                 var metricUnit = ((UnitsAttribute)attrs[0]).SourceUnit;
 
                 // Now we need to get the value of the property
-                var propValue = (double)prop.GetValue(this.Instance);
+                var propValue = (double)(prop.GetValue(this.Instance) ?? 0.0);
 
                 // Convert to an imperial value for the binding
                 var imperialValue = _unitsCalculator.ConvertValueToImperialFromMetric(metricUnit, propValue);
@@ -126,7 +126,7 @@ namespace H.Core.Converters
             if (Settings.Default.MeasurementSystem == MeasurementSystemType.Metric)
             {
                 //the gui is in metric so just return system value
-                return (double)prop.GetValue(this.Instance);
+                return (double)(prop.GetValue(this.Instance) ?? 0.0);
             }
             //convert for imperial
             if (this.Instance != null && attrs.Length > 0)
@@ -135,7 +135,7 @@ namespace H.Core.Converters
                 var metricUnit = ((UnitsAttribute)attrs[0]).SourceUnit;
 
                 //now I need to get the value of the property
-                var propValue = (double)prop.GetValue(this.Instance);
+                var propValue = (double)(prop.GetValue(this.Instance) ?? 0.0);
 
                 //the imperial value for the binding
                 var imperialValue = _unitsCalculator.ConvertValueToImperialFromMetric(metricUnit, propValue);
@@ -152,7 +152,7 @@ namespace H.Core.Converters
             //nothing to convert and return
             if (Settings.Default.MeasurementSystem == MeasurementSystemType.Metric)
             {
-                return (double)prop.GetValue(this.Instance);
+                return (double)(prop.GetValue(this.Instance) ?? 0.0);
             }
 
             //get the attribute on the property first
@@ -166,7 +166,7 @@ namespace H.Core.Converters
                 var imperialUnit = _unitsCalculator.GetImperialUnitsOfMeasurement(metricUnit);
 
                 //now I need to get the value of the property
-                var propValue = (double)prop.GetValue(this.Instance);
+                var propValue = (double)(prop.GetValue(this.Instance) ?? 0.0);
 
                 //Convert to Metric the value entered from imperial to metric
                 var convertedValue = _unitsCalculator.ConvertValueToMetricFromImperial(imperialUnit, propValue, metricUnit);
@@ -181,7 +181,7 @@ namespace H.Core.Converters
             // All values are stored internally as metric so we have nothing to convert
             if (measurementSystemType == MeasurementSystemType.Metric)
             {
-                return (double)prop.GetValue(this.Instance);
+                return (double)(prop.GetValue(this.Instance) ?? 0.0);
             }
 
             // Get the units of measurement attribute on the property so we know which conversion to perform
@@ -195,7 +195,7 @@ namespace H.Core.Converters
                 var imperialUnit = _unitsCalculator.GetImperialUnitsOfMeasurement(metricUnit);
 
                 // Get the value of the property
-                var propValue = (double)prop.GetValue(this.Instance);
+                var propValue = (double)(prop.GetValue(this.Instance) ?? 0.0);
 
                 // Convert the value entered from imperial to metric
                 var convertedValue = _unitsCalculator.ConvertValueToMetricFromImperial(imperialUnit, propValue, metricUnit);

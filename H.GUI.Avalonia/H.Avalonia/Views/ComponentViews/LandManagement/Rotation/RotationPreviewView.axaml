@@ -30,15 +30,15 @@
                            Classes="step-number-description"
                            Margin="0,8,0,0"/>
                 <TextBlock Text="Review how crops will be distributed across fields over time. Each row represents a field, each column represents a year."
-                           Foreground="Gray"
+                           Foreground="{StaticResource GcdsTextSecondaryBrush}"
                            FontSize="12"
                            Margin="0,4,0,0"/>
             </StackPanel>
 
             <!-- Preview Grid - Only visible when both NumberOfFields > 0 AND crops exist -->
-            <Border BorderBrush="LightGray"
+            <Border BorderBrush="{StaticResource GcdsBorderDefaultBrush}"
                     BorderThickness="1"
-                    CornerRadius="4"
+                    CornerRadius="6"
                     Background="White"
                     IsVisible="{Binding ShouldShowPreview}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -48,7 +48,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <!-- Each row showing one field's crop assignments across years -->
-                                    <Border BorderBrush="#E0E0E0" 
+                                    <Border BorderBrush="{StaticResource GcdsBorderLightBrush}" 
                                             BorderThickness="0,0,0,1"
                                             Padding="8,12">
                                         <Grid>
@@ -61,7 +61,7 @@
 
                                             <!-- Field Name -->
                                             <Border Grid.Column="0"
-                                                    Background="#F5F5F5" 
+                                                    Background="{StaticResource GcdsBgLightBrush}" 
                                                     Padding="12,8"
                                                     Margin="0,0,8,0"
                                                     CornerRadius="4">
@@ -108,10 +108,10 @@
                                                                 </Border.Styles>
                                                                 <StackPanel Spacing="4">
                                                                     <!-- Year label -->
-                                                                    <TextBlock Text="{Binding Year}" 
-                                                                               FontSize="11"
+                                                                    <TextBlock Text="{Binding Year}"
+                                                                               FontSize="12"
                                                                                FontWeight="SemiBold"
-                                                                               Foreground="#666666"
+                                                                               Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                                                                TextAlignment="Center"/>
                                                                     <!-- Crop name with icon - with text trimming -->
                                                                     <TextBlock Text="{Binding CropDisplay}" 
@@ -139,65 +139,45 @@
 
             <!-- Empty State Message when preview should not be shown -->
             <Border IsVisible="{Binding !ShouldShowPreview}"
-                    Background="#FFF3E0"
-                    BorderBrush="#FF9800"
+                    Background="{StaticResource GcdsWarningBgBrush}"
+                    BorderBrush="{StaticResource GcdsWarningBrush}"
                     BorderThickness="1"
-                    CornerRadius="4"
+                    CornerRadius="6"
                     Padding="16"
                     Margin="0,0,0,12">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="ℹ" 
-                               FontSize="20"
-                               Margin="0,0,12,0"
-                               VerticalAlignment="Center"/>
-                    <StackPanel>
-                        <TextBlock Text="Preview requirements:" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                        <TextBlock Text="• Configure the number of fields in Step 1" Margin="0,0,0,2"/>
-                        <TextBlock Text="• Add at least one crop in Step 2"/>
-                    </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Preview requirements:" FontWeight="SemiBold" Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <TextBlock Text="• Configure the number of fields in Step 1" Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,2"/>
+                    <TextBlock Text="• Add at least one crop in Step 2" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </StackPanel>
             </Border>
 
             <!-- Helpful Note -->
-            <Border Background="#E8F5E9"
-                    BorderBrush="#4CAF50"
+            <Border Background="{StaticResource GcdsBgLightBrush}"
+                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     BorderThickness="1"
-                    CornerRadius="4"
+                    CornerRadius="6"
                     Padding="12"
                     Margin="0,12,0,0"
                     IsVisible="{Binding IsShiftEnabled}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="ℹ"
-                               FontSize="18"
-                               Margin="0,0,12,0"
-                               VerticalAlignment="Top"/>
-                    <TextBlock TextWrapping="Wrap">
-                        <Run Text="Rotation shifting is enabled. "/>
-                        <Run Text="Each field will grow a different sequence of crops, starting at different points in the rotation. "/>
-                        <Run Text="This diversifies operational risk and distributes workload across the growing season."/>
-                    </TextBlock>
-                </StackPanel>
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource GcdsTextSecondaryBrush}">
+                    <Run Text="Rotation shifting is enabled." FontWeight="SemiBold"/>
+                    <Run Text=" Each field will grow a different sequence of crops, starting at different points in the rotation."/>
+                    <Run Text=" This diversifies operational risk and distributes workload across the growing season."/>
+                </TextBlock>
             </Border>
 
             <!-- Next Step Guidance -->
-            <Border Background="#FFF3E0"
-                    BorderBrush="#FF9800"
+            <Border Background="{StaticResource GcdsBgLightBrush}"
+                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     BorderThickness="1"
-                    CornerRadius="4"
+                    CornerRadius="6"
                     Padding="12"
                     Margin="0,12,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="→"
-                               FontSize="18"
-                               FontWeight="Bold"
-                               Margin="0,0,12,0"
-                               VerticalAlignment="Top"/>
-                    <TextBlock TextWrapping="Wrap">
-                        <Run Text="Next step: "/>
-                        <Run Text="Click any cell in the preview grid to edit crop-specific details (yield, irrigation, etc.) for that field and year."
-                             FontWeight="SemiBold"/>
-                    </TextBlock>
-                </StackPanel>
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource GcdsTextSecondaryBrush}">
+                    <Run Text="Next step:" FontWeight="SemiBold"/>
+                    <Run Text=" Click any cell in the preview grid to edit crop-specific details (yield, irrigation, etc.) for that field and year."/>
+                </TextBlock>
             </Border>
         </StackPanel>
     </Border>

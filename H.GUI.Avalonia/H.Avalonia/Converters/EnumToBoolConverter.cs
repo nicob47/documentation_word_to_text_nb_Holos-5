@@ -21,7 +21,7 @@ public class EnumToBoolConverter : IValueConverter
     /// Converts an enum value to a boolean.
     /// Returns true if the value matches the parameter, false otherwise.
     /// </summary>
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value == null || parameter == null)
         {
@@ -37,7 +37,7 @@ public class EnumToBoolConverter : IValueConverter
     /// Converts a boolean back to an enum value.
     /// Returns the parameter value if the boolean is true, otherwise returns the original value.
     /// </summary>
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is bool boolValue && boolValue && parameter != null)
         {

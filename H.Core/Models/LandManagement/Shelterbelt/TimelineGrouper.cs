@@ -43,7 +43,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             return _display;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             //RadTimeline Appears to use a combination of GetHashCode and .Equals to decide if these guys are equal
             if (obj is TimelineGrouper grouper)

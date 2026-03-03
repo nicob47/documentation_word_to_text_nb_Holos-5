@@ -63,7 +63,7 @@ namespace H.Core.Models
                 animalLookupType = animalType;
             }
 
-            var manureCompositionData = this.DefaultManureCompositionData.SingleOrDefault(x =>
+            DefaultManureCompositionData? manureCompositionData = this.DefaultManureCompositionData.SingleOrDefault(x =>
                 x.ManureStateType == manureStateType &&
                 x.AnimalType == animalLookupType);
 

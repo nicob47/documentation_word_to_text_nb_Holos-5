@@ -148,10 +148,10 @@ namespace H.Core.Providers.Precipitation
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             // If one of the monthly values changes, we need to recalculate the growing season precipitation - but not if the user explicitly sets the growing season precipitation
-            if (e.PropertyName.Equals(nameof(GrowingSeasonPrecipitation)) == false)
+            if (e.PropertyName?.Equals(nameof(GrowingSeasonPrecipitation)) == false)
             {
                 this.GrowingSeasonPrecipitation = this.CalculateGrowingSeasonPrecipitation();
             }

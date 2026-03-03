@@ -11,8 +11,8 @@ namespace H.Core.Services.Animals
             ManagementPeriod managementPeriod,
             AnimalGroup animalGroup,
             DateTime dateTime,
-            GroupEmissionsByDay previousDaysEmissions,
-            double temperature, 
+            GroupEmissionsByDay? previousDaysEmissions,
+            double temperature,
             Farm farm)
         {
             if (animalGroup.GroupType.IsDairyCattleType())

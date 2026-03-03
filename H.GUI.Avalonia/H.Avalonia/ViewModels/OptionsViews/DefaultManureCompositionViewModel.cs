@@ -11,11 +11,11 @@ namespace H.Avalonia.ViewModels.OptionsViews
     {
         #region Fields
 
-        private ObservableCollection<DefaultManureCompositionDTO> _defaultManureDTOs;
-        private string _nitrogenFractionHeader;
-        private string _carbonFractionHeader;
-        private string _phosphorusFractionHeader;
-        private string _moistureContentHeader;
+        private ObservableCollection<DefaultManureCompositionDTO> _defaultManureDTOs = null!;
+        private string _nitrogenFractionHeader = string.Empty;
+        private string _carbonFractionHeader = string.Empty;
+        private string _phosphorusFractionHeader = string.Empty;
+        private string _moistureContentHeader = string.Empty;
 
         #endregion
 
@@ -72,6 +72,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         public void Initialize()
         {
+            if (base.ActiveFarm is null) return;
             foreach (var dataClassInstance in base.ActiveFarm.DefaultManureCompositionData)
             {
                 var dto = new DefaultManureCompositionDTO(dataClassInstance);
@@ -104,6 +105,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         private void SetStrings()
         {
+            if (StorageService == null) return;
             var displayUnits = StorageService.Storage.ApplicationData.DisplayUnitStrings;
             NitrogenFractionHeader = H.Core.Properties.Resources.LabelTotalNitrogen + " " + displayUnits.PercentageWetWeight;
             CarbonFractionHeader = H.Core.Properties.Resources.LabelTotalCarbon + " " + displayUnits.PercentageWetWeight;

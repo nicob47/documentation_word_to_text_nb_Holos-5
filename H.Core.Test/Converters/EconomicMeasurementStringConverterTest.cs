@@ -6,7 +6,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class EconomicMeasurementStringConverterTest
     {
-        private EconomicsMeasurementStringConverter _converter;
+        private EconomicsMeasurementStringConverter _converter = null!;
 
         [TestInitialize]
         public void Initialize()

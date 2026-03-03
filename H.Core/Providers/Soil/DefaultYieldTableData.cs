@@ -71,7 +71,7 @@
         /// % provincial yield - derived from NEYIELD/EYIELD
         /// </summary>
         public double PPYield { get; set; }
-        public string CSad { get; set; }
+        public string CSad { get; set; } = string.Empty;
         #endregion
 
         #region Methods

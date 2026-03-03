@@ -15,12 +15,12 @@ namespace H.Avalonia.ViewModels.OptionsViews
     {
         #region Fields
 
-        private SoilN2OBreakdownSettingsDTO _data;
-        private readonly IErrorHandlerService _errorHandlerService;
+        private SoilN2OBreakdownSettingsDTO _data = null!;
+        private readonly IErrorHandlerService _errorHandlerService = null!;
 
         private bool _entriesAreValid;
         private double _totalUserEnteredPercentageOfAllMonths;
-        private string _totalEnteredPercentageForAllMonthsMessage;
+        private string _totalEnteredPercentageForAllMonthsMessage = string.Empty;
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
         {
             if (!IsInitialized)
             {
-                Data = new SoilN2OBreakdownSettingsDTO(StorageService);
+                Data = new SoilN2OBreakdownSettingsDTO(StorageService!);
                 IsInitialized = true;
             }
             CalculateTotal();
@@ -105,7 +105,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
             // If total of monthly N2O inputs equals 100%, publish validation pass event to release navigation lock
             if (TotalUserEnteredPercentageOfAllMonths == 100)
             {
-                EventAggregator.GetEvent<ValidationPassOccurredEvent>().Publish(new ErrorInformation(string.Format(H.Core.Properties.Resources.SumOfMonthlyN2OInputsPercent, TotalUserEnteredPercentageOfAllMonths)));
+                EventAggregator?.GetEvent<ValidationPassOccurredEvent>().Publish(new ErrorInformation(string.Format(H.Core.Properties.Resources.SumOfMonthlyN2OInputsPercent, TotalUserEnteredPercentageOfAllMonths)));
                 AreEntriesValid = true;
                 return;
             }
@@ -123,7 +123,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         #region Event Handlers
 
-        private void ValidateTotalEquals100(object sender, PropertyChangedEventArgs e)
+        private void ValidateTotalEquals100(object? sender, PropertyChangedEventArgs e)
         {
             CalculateTotal();
         }

@@ -165,24 +165,24 @@ public class FieldSystemComponentDto : DtoBase, IFieldComponentDto
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName.Equals(nameof(Name)))
+        if (e.PropertyName != null && e.PropertyName.Equals(nameof(Name)))
         {
             // Ensure the field name is valid
            ValidateFieldName();
         }
-        else if (e.PropertyName.Equals(nameof(FieldArea)))
+        else if (e.PropertyName != null && e.PropertyName.Equals(nameof(FieldArea)))
         {
             // Ensure the area of the field is valid
             ValidateFieldArea();
         }
-        else if (e.PropertyName.Equals(nameof(StartYear)))
+        else if (e.PropertyName != null && e.PropertyName.Equals(nameof(StartYear)))
         {
             // Ensure the start year is valid
             ValidateStartYear();
             // Re-validate end year in case it was previously invalid due to start year
             ValidateEndYear();
         }
-        else if (e.PropertyName.Equals(nameof(EndYear)))
+        else if (e.PropertyName != null && e.PropertyName.Equals(nameof(EndYear)))
         {
             // Ensure the end year is valid
             ValidateEndYear();

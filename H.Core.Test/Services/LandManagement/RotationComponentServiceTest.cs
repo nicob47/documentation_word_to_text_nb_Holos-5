@@ -1,4 +1,4 @@
-using H.Core.Factories;
+﻿using H.Core.Factories;
 using H.Core.Factories.Crops;
 using H.Core.Factories.Fields;
 using H.Core.Factories.Rotations;
@@ -11,6 +11,8 @@ using H.Core.Services.LandManagement.Fields;
 using Microsoft.Extensions.Logging;
 using Moq;
 
+#nullable disable
+
 namespace H.Core.Test.Services.LandManagement;
 
 [TestClass]
@@ -18,11 +20,11 @@ public class RotationComponentServiceTest
 {
     #region Fields
 
-    private IRotationComponentService _rotationComponentService;
-    private Mock<ILogger> _mockLogger;
-    private Mock<IFieldFactory> _mockFieldFactory;
-    private Mock<ICropFactory> _mockCropFactory;
-    private Mock<ITransferService<RotationComponent, RotationComponentDto>> _mockRotationTransferService;
+    private IRotationComponentService _rotationComponentService = null!;
+    private Mock<ILogger> _mockLogger = null!;
+    private Mock<IFieldFactory> _mockFieldFactory = null!;
+    private Mock<ICropFactory> _mockCropFactory = null!;
+    private Mock<ITransferService<RotationComponent, RotationComponentDto>> _mockRotationTransferService = null!;
 
     #endregion
 
@@ -93,7 +95,7 @@ public class RotationComponentServiceTest
         var mockRotationTransferService = new Mock<ITransferService<RotationComponent, RotationComponentDto>>();
 
         // Act & Assert: attempt to create instance with null logger
-        Assert.ThrowsException<ArgumentNullException>(() => 
+        Assert.ThrowsExactly<ArgumentNullException>(() => 
             new RotationComponentService(logger, mockFieldFactory.Object, mockCropFactory.Object, mockRotationTransferService.Object));
     }
 
@@ -107,7 +109,7 @@ public class RotationComponentServiceTest
         var mockRotationTransferService = new Mock<ITransferService<RotationComponent, RotationComponentDto>>();
 
         // Act & Assert: attempt to create instance with null field factory
-        Assert.ThrowsException<ArgumentNullException>(() => 
+        Assert.ThrowsExactly<ArgumentNullException>(() => 
             new RotationComponentService(mockLogger.Object, fieldFactory, mockCropFactory.Object, mockRotationTransferService.Object));
     }
 
@@ -121,7 +123,7 @@ public class RotationComponentServiceTest
         var mockRotationTransferService = new Mock<ITransferService<RotationComponent, RotationComponentDto>>();
 
         // Act & Assert: attempt to create instance with null crop factory
-        Assert.ThrowsException<ArgumentNullException>(() => 
+        Assert.ThrowsExactly<ArgumentNullException>(() => 
             new RotationComponentService(mockLogger.Object, mockFieldFactory.Object, cropFactory, mockRotationTransferService.Object));
     }
 
@@ -135,7 +137,7 @@ public class RotationComponentServiceTest
         ITransferService<RotationComponent, RotationComponentDto> rotationTransferService = null;
 
         // Act & Assert: attempt to create instance with null rotation transfer service
-        Assert.ThrowsException<ArgumentNullException>(() => 
+        Assert.ThrowsExactly<ArgumentNullException>(() => 
             new RotationComponentService(mockLogger.Object, mockFieldFactory.Object, mockCropFactory.Object, rotationTransferService));
     }
 

@@ -34,6 +34,7 @@ namespace H.Avalonia.Infrastructure
         {
             // Convert KML coordinates to NetTopologySuite coordinates for the outer ring
             List<Coordinate> netTopologyCoordinates = new();
+            if (kmlPolygon == null) return new LinearRing(Array.Empty<Coordinate>());
             foreach (var item in kmlPolygon.OuterBoundary.LinearRing.Coordinates)
             {
                 var point = _mapHelpers.ConvertLatLongtToSphericalMercator(item.Latitude, item.Longitude);
@@ -59,6 +60,7 @@ namespace H.Avalonia.Infrastructure
             List<LinearRing> innerRings = new List<LinearRing>();
 
             // Convert inner ring (hole) coordinates to NetTopologySuite coordinates
+            if (kmlPolygon == null) return innerRings;
             foreach (var innerBoundary in kmlPolygon.InnerBoundary)
             {
                 List<Coordinate> innerNetTopologyCoordinates = new();

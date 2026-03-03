@@ -12,7 +12,7 @@ namespace H.Core.Models.Animals
     {
         #region Fields
 
-        private FieldSystemComponent _pastureLocation;
+        private FieldSystemComponent? _pastureLocation;
 
         private HousingType _housingType;
         private BeddingMaterialType _beddingMaterialType;
@@ -32,7 +32,6 @@ namespace H.Core.Models.Animals
 
         private double _indoorHousingTemperature;
 
-        private string _nameOfPastureLocation;
 
         private static readonly IMapper _housingDetailsMapper;
 
@@ -86,7 +85,7 @@ namespace H.Core.Models.Animals
             {
                 if (this.PastureLocation != null)
                 {
-                    return this.PastureLocation.Name;
+                    return this.PastureLocation.Name ?? string.Empty;
                 }
                 else
                 {
@@ -133,7 +132,7 @@ namespace H.Core.Models.Animals
         /// <summary>
         /// A reference to the <see cref="FieldSystemComponent"/> when animals are housed on pasture.
         /// </summary>
-        public FieldSystemComponent PastureLocation
+        public FieldSystemComponent? PastureLocation
         {
             get { return _pastureLocation; }
             set { this.SetProperty(ref _pastureLocation, value); }
@@ -280,7 +279,7 @@ namespace H.Core.Models.Animals
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is HousingDetails housingDetails)
             {

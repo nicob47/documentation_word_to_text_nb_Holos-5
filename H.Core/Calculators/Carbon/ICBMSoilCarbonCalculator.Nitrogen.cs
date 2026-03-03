@@ -30,7 +30,7 @@ namespace H.Core.Calculators.Carbon
         public void CalculateNitrogenAtInterval(
            CropViewItem previousYearResults,
            CropViewItem currentYearResults,
-           CropViewItem nextYearResults,
+           CropViewItem? nextYearResults,
            Farm farm,
            int yearIndex)
         {

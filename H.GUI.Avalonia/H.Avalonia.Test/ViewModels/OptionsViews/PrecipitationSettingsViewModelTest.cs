@@ -5,19 +5,21 @@ using H.Core.Providers.Precipitation;
 using H.Core.Services.StorageService;
 using Moq;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews
 {
     [TestClass]
     public class PrecipitationSettingsViewModelTests
     {
-        private Farm _testFarm;
-        private PrecipitationData _precipitationData;
-        private PrecipitationSettingsViewModel _viewModel;
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private ApplicationData _applicationData;
+        private Farm _testFarm = null!;
+        private PrecipitationData _precipitationData = null!;
+        private PrecipitationSettingsViewModel _viewModel = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private ApplicationData _applicationData = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -88,7 +90,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews
         [TestMethod]
         public void TestConstructuroThrowsExceptionOnNullConstructorParameter()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new PrecipitationSettingsViewModel(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new PrecipitationSettingsViewModel(null));
         }
     }
 }

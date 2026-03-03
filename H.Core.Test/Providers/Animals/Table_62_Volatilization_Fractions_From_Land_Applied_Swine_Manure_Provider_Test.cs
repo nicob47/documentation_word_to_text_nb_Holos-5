@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Animals
     {
         #region Fields
 
-        private IVolatilizationFractionsFromLandAppliedManureProvider _sut;
+        private IVolatilizationFractionsFromLandAppliedManureProvider _sut = null!;
 
         #endregion
 

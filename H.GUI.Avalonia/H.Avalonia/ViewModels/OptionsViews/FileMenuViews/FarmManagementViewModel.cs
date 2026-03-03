@@ -16,9 +16,9 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
     public class FarmManagementViewModel : ViewModelBase
     {
         #region Fields
-        private ObservableCollection<Farm> _farms;
-        private Farm _selectedFarm;
-        private string _searchText;
+        private ObservableCollection<Farm> _farms = null!;
+        private Farm? _selectedFarm;
+        private string _searchText = string.Empty;
         #endregion
 
         #region Constructors
@@ -47,7 +47,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             set => SetProperty(ref _farms, value);
         }
 
-        public Farm SelectedFarm
+        public Farm? SelectedFarm
         {
             get => _selectedFarm;
             set
@@ -63,6 +63,8 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             set
             {
                 SetProperty(ref _searchText, value);
+                if (base.StorageService == null) return;
+
                 if (string.IsNullOrEmpty(value))
                 {
                     Farms.Clear();
@@ -72,7 +74,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                 else
                 {
                     Farms.Clear();
-                    var farms = base.StorageService.GetAllFarms().Where(f => f.Name.ToLower().Contains(value.ToLower()) || f.DefaultSoilData.EcodistrictName.ToLower().Contains(value.ToLower()) || f.Province.ToString().ToLower().Contains(value.ToLower()));
+                    var farms = base.StorageService.GetAllFarms().Where(f => (f.Name?.ToLower().Contains(value.ToLower()) ?? false) || (f.DefaultSoilData?.EcodistrictName?.ToLower().Contains(value.ToLower()) ?? false) || f.Province.ToString().ToLower().Contains(value.ToLower()));
                     Farms.Add(farms);
                 }
             }
@@ -85,7 +87,10 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             Farms.Clear();
-            Farms.AddRange(StorageService.Storage.ApplicationData.Farms);
+            if (StorageService != null)
+            {
+                Farms.AddRange(StorageService.Storage.ApplicationData.Farms);
+            }
         }
 
         #endregion
@@ -94,49 +99,49 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
 
         private void OnRemoveFarmExecute()
         {
-            if (this.Farms.Count > 1)
+            if (this.Farms.Count > 1 && this.SelectedFarm is not null)
             {
-                var userDeletedCurrentFarm = this.SelectedFarm == base.StorageService.GetActiveFarm();
-                
-                base.StorageService.Storage.ApplicationData.Farms.Remove(this.SelectedFarm);
+                var userDeletedCurrentFarm = Equals(this.SelectedFarm, base.StorageService?.GetActiveFarm());
+
+                base.StorageService?.Storage.ApplicationData.Farms.Remove(this.SelectedFarm);
                 this.Farms.Clear();
-                this.Farms.AddRange(base.StorageService.Storage.ApplicationData.Farms);
+                this.Farms.AddRange(base.StorageService?.Storage.ApplicationData.Farms ?? Enumerable.Empty<Farm>());
 
 
                 if (userDeletedCurrentFarm)
                 {
                     this.ClearActiveView();
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
+                    base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
                 }
             }
             else
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.CantDeleteCurrentFarmTitle, H.Core.Properties.Resources.CantDeleteCurrentFarmBody, NotificationType.Warning);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.CantDeleteCurrentFarmTitle, H.Core.Properties.Resources.CantDeleteCurrentFarmBody, NotificationType.Warning);
             }
         }
 
         private void ClearActiveView()
         {
             // Clear content region
-            var contentView = this.RegionManager.Regions[UiRegions.ContentRegion].ActiveViews.SingleOrDefault();
+            var contentView = this.RegionManager?.Regions[UiRegions.ContentRegion].ActiveViews.SingleOrDefault();
             if (contentView != null)
             {
-                this.RegionManager.Regions[UiRegions.ContentRegion].Deactivate(contentView);
-                this.RegionManager.Regions[UiRegions.ContentRegion].Remove(contentView);
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Deactivate(contentView);
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Remove(contentView);
             }
 
             // Clear sidebar region
-            var sidebarView = this.RegionManager.Regions[UiRegions.SidebarRegion].ActiveViews.SingleOrDefault();
+            var sidebarView = this.RegionManager?.Regions[UiRegions.SidebarRegion].ActiveViews.SingleOrDefault();
             if (sidebarView != null)
             {
-                this.RegionManager.Regions[UiRegions.SidebarRegion].Deactivate(sidebarView);
-                this.RegionManager.Regions[UiRegions.SidebarRegion].Remove(sidebarView);
+                this.RegionManager?.Regions[UiRegions.SidebarRegion].Deactivate(sidebarView);
+                this.RegionManager?.Regions[UiRegions.SidebarRegion].Remove(sidebarView);
             }
         }
 
         private bool OnRemoveFarmCanExecute()
         {
-            return this.SelectedFarm != null;
+            return this.SelectedFarm is not null;
         }
 
         #endregion

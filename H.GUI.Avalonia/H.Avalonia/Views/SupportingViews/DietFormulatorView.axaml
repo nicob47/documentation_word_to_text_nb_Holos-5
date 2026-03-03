@@ -28,7 +28,7 @@
                          VerticalContentAlignment="Center" 
                          VerticalAlignment="Center" 
                          Foreground="#696969" 
-                         BorderBrush="#EDEDED" 
+                         BorderBrush="{StaticResource GcdsBorderLightBrush}" 
                          BorderThickness="2" 
                          FontWeight="SemiBold" 
                          Padding="40,10,0,10" />
@@ -51,7 +51,7 @@
                   IsReadOnly="True" 
                   Height="400" 
                   BorderThickness="2"  
-                  BorderBrush="#EDEDED" 
+                  BorderBrush="{StaticResource GcdsBorderLightBrush}" 
                   CornerRadius="10" 
                   Background="#f5f5f5">
             

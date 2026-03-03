@@ -4,9 +4,9 @@ namespace H.Infrastructure.Services;
 
 public interface ICacheService
 {
-    T Get<T>(string key);
+    T? Get<T>(string key);
     void Set<T>(string key, T value, TimeSpan? absoluteExpirationRelativeToNow = null);
-    void Set<T>(string key, T value, MemoryCacheEntryOptions options);
+    void Set<T>(string key, T value, MemoryCacheEntryOptions? options);
     void Remove(string key);
-    Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan? absoluteExpirationRelativeToNow = null);
+    Task<T?> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan? absoluteExpirationRelativeToNow = null);
 }

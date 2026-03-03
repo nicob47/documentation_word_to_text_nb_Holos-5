@@ -1,6 +1,8 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers.Plants;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Plants
 {
     [TestClass]
@@ -8,7 +10,7 @@ namespace H.Core.Test.Providers.Plants
     {
         #region Fields
 
-        private static Table_10_Default_Values_For_Steady_State_Method_Provider _provider;
+        private static Table_10_Default_Values_For_Steady_State_Method_Provider _provider = null!;
 
         #endregion
 

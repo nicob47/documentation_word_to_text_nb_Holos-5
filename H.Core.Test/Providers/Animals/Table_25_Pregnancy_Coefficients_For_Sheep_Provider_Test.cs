@@ -5,7 +5,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_25_Pregnancy_Coefficients_For_Sheep_Provider_Test
     {
-        private Table_25_Pregnancy_Coefficients_For_Sheep_Provider _provider;
+        private Table_25_Pregnancy_Coefficients_For_Sheep_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

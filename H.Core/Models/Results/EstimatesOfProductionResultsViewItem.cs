@@ -6,7 +6,7 @@
 
         private int _year;
         private ComponentCategory _category;
-        private string _componentTypeString;
+        private string _componentTypeString = string.Empty;
         private double _harvest;
         private double _area;
         private double _landAppliedManure;
@@ -14,9 +14,9 @@
         private double _milk;
         private double _fpcm;
         private double _lamb;
-        private string _componentName;
-        private string _monthString;
-        private string _managementPeriodName;
+        private string _componentName = string.Empty;
+        private string _monthString = string.Empty;
+        private string _managementPeriodName = string.Empty;
 
         #endregion
 

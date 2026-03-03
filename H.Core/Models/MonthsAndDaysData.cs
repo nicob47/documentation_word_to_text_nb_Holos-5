@@ -51,7 +51,7 @@ namespace H.Core.Models
         /// An object that holds animal type information and timespan that animal is in certain state (i.e. backgrounding
         /// state, finishing state, etc.)
         /// </summary>
-        public AnimalGroup AnimalGroup { get; set; }
+        public AnimalGroup AnimalGroup { get; set; } = null!;
 
         /// <summary>
         /// Month value that can be used to lookup temperature data.
@@ -85,9 +85,9 @@ namespace H.Core.Models
         /// <summary>
         /// Geographic data based on users location that will be used to lookup temperature, precipitation, etc.
         /// </summary>
-        public GeographicData GeographicData { get; set; }
+        public GeographicData GeographicData { get; set; } = null!;
 
-        public ManagementPeriod ManagementPeriod { get; set; }
+        public ManagementPeriod ManagementPeriod { get; set; } = null!;
 
         /// <summary>
         /// The total number of calves

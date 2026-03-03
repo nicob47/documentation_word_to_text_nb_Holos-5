@@ -7,12 +7,12 @@ namespace H.Core.Emissions.Results
     {
         #region Fields
 
-        private SoilCarbonEmissionResult _carbonDioxideFromTillageChange;
-        private SoilCarbonEmissionResult _carbonDioxideFromFallowChange;
-        private SoilCarbonEmissionResult _carbonDioxideFromPastPerennials;
-        private SoilCarbonEmissionResult _carbonDioxideFromCurrentPerennials;
-        private SoilCarbonEmissionResult _carbonDioxideFromSeedGrassland;
-        private SoilCarbonEmissionResult _carbonDioxideFromBrokenGrassland;
+        private SoilCarbonEmissionResult _carbonDioxideFromTillageChange = new();
+        private SoilCarbonEmissionResult _carbonDioxideFromFallowChange = new();
+        private SoilCarbonEmissionResult _carbonDioxideFromPastPerennials = new();
+        private SoilCarbonEmissionResult _carbonDioxideFromCurrentPerennials = new();
+        private SoilCarbonEmissionResult _carbonDioxideFromSeedGrassland = new();
+        private SoilCarbonEmissionResult _carbonDioxideFromBrokenGrassland = new();
 
         #endregion
 

@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class HousingStringConverterTest
     {
-        private HousingStringConverter converter;
+        private HousingStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -105,7 +105,7 @@ namespace H.Core.Test.Converters
         public void ConvertReturnsException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<Exception>(() => converter.Convert("Beef"));
+            Assert.ThrowsExactly<Exception>(() => converter.Convert("Beef"));
         }
 
         #region Additional test attributes

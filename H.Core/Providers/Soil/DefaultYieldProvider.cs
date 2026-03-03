@@ -62,7 +62,7 @@ namespace H.Core.Providers.Soil
 
             foreach (var filename in files)
             {
-                var filelines = CsvResourceReader.GetFileLines(filename);
+                var filelines = CsvResourceReader.GetFileLines(filename)!;
                 var totalcols = filelines.First().Count();
                 double i;
 
@@ -129,7 +129,7 @@ namespace H.Core.Providers.Soil
             return result;
         }
 
-        public DefaultYieldTableData GetRowByCarIdYearAndCropType(int carId, int year, CropType cropType)
+        public DefaultYieldTableData? GetRowByCarIdYearAndCropType(int carId, int year, CropType cropType)
         {
             var listByCarId = _cachedData.Where(x => x.CarId == carId);
             if (listByCarId.Any() == false)

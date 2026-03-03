@@ -5,7 +5,7 @@ namespace H.Core.Test.Calculators.Emissions
    [TestClass]
     public class SummationsCalculatorTest
     {
-        private SummationsCalculator calc;
+        private SummationsCalculator calc = null!;
 
         [TestInitialize]
         public void testInitialize()

@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider_Test
     {
-        private Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider _provider;
+        private Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

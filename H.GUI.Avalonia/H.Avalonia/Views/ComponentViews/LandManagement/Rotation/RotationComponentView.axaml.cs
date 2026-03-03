@@ -10,7 +10,7 @@ public partial class RotationComponentView : UserControl
 {
     #region Fields
 
-    private DispatcherTimer _scrollTimer;
+    private DispatcherTimer? _scrollTimer;
     private double _scrollStartOffset;
     private double _scrollTargetOffset;
     private DateTime _scrollStartTime;
@@ -137,17 +137,17 @@ public partial class RotationComponentView : UserControl
             // This prevents unwanted scrolling when crops are selected programmatically
             if (viewModel?.SelectedCropDto != null && viewModel.ShouldTriggerAutoScroll)
             {
+                // Capture to local variable for use in closure
+                var vm = viewModel;
+
                 // Use Dispatcher to ensure the UI layout has been updated before scrolling
                 // This prevents scrolling to the wrong position due to pending layout changes
                 Dispatcher.UIThread.Post(() =>
                 {
                     ScrollToBottomSmooth();
-                    
+
                     // Reset the auto-scroll flag to prevent scrolling on subsequent programmatic changes
-                    if (viewModel != null)
-                    {
-                        viewModel.ShouldTriggerAutoScroll = false;
-                    }
+                    vm.ShouldTriggerAutoScroll = false;
                 }, DispatcherPriority.Background);
             }
         }

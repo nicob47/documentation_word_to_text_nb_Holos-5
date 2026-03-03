@@ -7,7 +7,7 @@
 	<Grid>
 		<TextBlock Text="Select an option"
                    FontSize="20"
-                   Foreground="Gray"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
 	</Grid>

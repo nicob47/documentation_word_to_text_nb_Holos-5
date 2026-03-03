@@ -14,12 +14,12 @@ namespace H.Core.Emissions.Results
 
         private readonly EmissionTypeConverter _emissionTypeConverter = new EmissionTypeConverter();
 
-        private Farm _farm;
+        private Farm _farm = null!;
 
-        private ObservableCollection<AnimalComponentEmissionsResults> _animalComponentEmissionsResults;
-        private ObservableCollection<EconomicsResultsViewItem> _economicsResultsViewItems;
-        private ObservableCollection<CropViewItem> _finalFieldResultViewItems;
-        private ObservableCollection<DigestorDailyOutput> _anaerobicDigestorResults;
+        private ObservableCollection<AnimalComponentEmissionsResults> _animalComponentEmissionsResults = new();
+        private ObservableCollection<EconomicsResultsViewItem> _economicsResultsViewItems = new();
+        private ObservableCollection<CropViewItem> _finalFieldResultViewItems = new();
+        private ObservableCollection<DigestorDailyOutput> _anaerobicDigestorResults = new();
 
         private double _economicsProfit;
 

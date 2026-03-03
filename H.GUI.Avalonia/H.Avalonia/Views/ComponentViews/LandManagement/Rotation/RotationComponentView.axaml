@@ -49,7 +49,7 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 
 				<!-- Step Divider -->
 				<GridSplitter Height="2" 
-							  Background="LightGray" 
+							  Background="{StaticResource GcdsBorderDefaultBrush}" 
 							  HorizontalAlignment="Stretch"
 							  Margin="{StaticResource DefaultUserControlMargin}"/>
 
@@ -59,7 +59,7 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 
 				<!-- Step Divider -->
 				<GridSplitter Height="2" 
-							  Background="LightGray" 
+							  Background="{StaticResource GcdsBorderDefaultBrush}" 
 							  HorizontalAlignment="Stretch"
 							  Margin="{StaticResource DefaultUserControlMargin}"/>
 
@@ -69,7 +69,7 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 
 				<!-- Step Divider -->
 				<GridSplitter Height="2" 
-							  Background="LightGray" 
+							  Background="{StaticResource GcdsBorderDefaultBrush}" 
 							  HorizontalAlignment="Stretch"
 							  Margin="{StaticResource DefaultUserControlMargin}"
 							  IsVisible="{Binding ShouldShowPreview}"/>
@@ -88,21 +88,21 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 									   Classes="step-number-description"
 									   Margin="0,8,0,0"/>
 							<TextBlock Text="Configure yield and irrigation for each crop in your rotation. Click a cell in the preview grid above to edit its details."
-									   Foreground="Gray"
+									   Foreground="{StaticResource GcdsTextSecondaryBrush}"
 									   FontSize="12"
 									   Margin="0,4,0,0"/>
 						</StackPanel>
 
 						<!-- Currently Editing Indicator -->
 						<Border IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
-								Background="#E3F2FD"
-								BorderBrush="#2196F3"
+								Background="{StaticResource GcdsSelectionBgBrush}"
+								BorderBrush="{StaticResource GcdsLinkDefaultBrush}"
 								BorderThickness="1"
-								CornerRadius="4"
+								CornerRadius="6"
 								Padding="12"
 								Margin="0,0,0,16">
 							<StackPanel Orientation="Horizontal" Spacing="8">
-								<Border Background="#2196F3"
+								<Border Background="{StaticResource GcdsLinkDefaultBrush}"
 										CornerRadius="12"
 										Width="24"
 										Height="24"
@@ -124,8 +124,8 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 											 FontWeight="Bold"/>
 										<Run Text=")"/>
 									</TextBlock>
-									<TextBlock FontSize="11" 
-											   Foreground="#666"
+									<TextBlock FontSize="12"
+											   Foreground="{StaticResource GcdsTextSecondaryBrush}"
 											   Margin="0,2,0,0">
 										<Run Text="Field:"/>
 										<Run Text="{Binding SelectedFieldName, Mode=OneWay}"
@@ -137,50 +137,48 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 
 						<!-- Crop Details Editing Section -->
 						<Border IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
-								Background="#F8F9FA"
-								BorderBrush="#E9ECEF"
+								Background="{StaticResource GcdsBgLightBrush}"
+								BorderBrush="{StaticResource GcdsBorderLightBrush}"
 								BorderThickness="1"
 								CornerRadius="8"
 								Padding="20">
 							<StackPanel>
 								<!-- Section Header -->
-								<StackPanel Margin="0,0,0,20">
-									<TextBlock Text="Crop Details" 
-											  FontSize="18" 
-											  FontWeight="Bold" 
-											  Foreground="#2C3E50" 
+								<StackPanel Margin="0,0,0,16">
+									<TextBlock Text="Crop Details"
+											  FontSize="16"
+											  FontWeight="Bold"
+											  Foreground="{StaticResource GcdsTextPrimaryBrush}"
 											  Margin="0,0,0,4"/>
-									<TextBlock Text="Configure yield and irrigation for the selected crop" 
-											  FontSize="12" 
-											  Foreground="Gray" 
+									<TextBlock Text="Configure yield and irrigation for the selected crop"
+											  FontSize="12"
+											  Foreground="{StaticResource GcdsTextSecondaryBrush}"
 											  FontStyle="Italic"/>
 								</StackPanel>
 
 								<!-- Copy to Similar Crops Toggle -->
-								<Border Background="#FFF9C4"
-										BorderBrush="#FBC02D"
+								<Border Background="{StaticResource GcdsBgLightBrush}"
+										BorderBrush="{StaticResource GcdsBorderLightBrush}"
 										BorderThickness="1"
-										CornerRadius="4"
+										CornerRadius="6"
 										Padding="12"
 										Margin="0,0,0,16">
 									<StackPanel Spacing="8">
-										<StackPanel Orientation="Horizontal" Spacing="8">
-											<TextBlock Text="Copy to Similar Crops" 
-													   FontWeight="SemiBold"
-													   FontSize="14"
-													   VerticalAlignment="Center"/>
-										</StackPanel>
+										<TextBlock Text="Copy to Similar Crops"
+												   FontWeight="SemiBold"
+												   FontSize="13"
+												   Foreground="{StaticResource GcdsTextPrimaryBrush}"
+												   VerticalAlignment="Center"/>
 										<TextBlock TextWrapping="Wrap"
 												   FontSize="12"
-												   Foreground="#666"
-												   Margin="24,0,0,8">
-											When enabled, changes you make to yield, irrigation, and herbicide will be automatically 
+												   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+												   Margin="0,0,0,4">
+											When enabled, changes you make to yield, irrigation, and herbicide will be automatically
 											copied to all other cells in this field (row) that have the same crop type.
 										</TextBlock>
 										<ToggleSwitch IsChecked="{Binding SelectedCropDto.CopyToSimilarCrops}"
 													  OnContent="Copy enabled"
-													  OffContent="Copy disabled"
-													  Margin="24,0,0,0"/>
+													  OffContent="Copy disabled"/>
 									</StackPanel>
 								</Border>
 								
@@ -261,19 +259,14 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 
 						<!-- Empty State Message when no crop is selected -->
 						<Border IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNull}}"
-								Background="#E3F2FD"
-								BorderBrush="#2196F3"
+								Background="{StaticResource GcdsBgLightBrush}"
+								BorderBrush="{StaticResource GcdsBorderLightBrush}"
 								BorderThickness="1"
-								CornerRadius="4"
+								CornerRadius="6"
 								Padding="16">
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="?" 
-										   FontSize="20"
-										   Margin="0,0,12,0"
-										   VerticalAlignment="Center"/>
-								<TextBlock Text="Click a cell in the preview grid (Step 3) to edit its details"
-										   VerticalAlignment="Center"/>
-							</StackPanel>
+							<TextBlock Text="Click a cell in the preview grid (Step 3) to edit its details"
+									   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+									   VerticalAlignment="Center"/>
 						</Border>
 					</StackPanel>
 				</Border>

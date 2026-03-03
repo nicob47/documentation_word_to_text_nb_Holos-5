@@ -12,7 +12,7 @@
     </Design.DataContext>
 
 	<StackPanel>
-			<TextBlock FontSize="16" Margin="10,20,0,0" Foreground="#605D5D">
+			<TextBlock FontSize="16" Margin="10,20,0,0" Foreground="{StaticResource GcdsTextSecondaryBrush}">
 				<Run Text="{x:Static properties:Resources.LabelStep2}" FontWeight="Bold"/>
 				<Run Text="{x:Static properties:Resources.LabelStep2Text}"/>
 			</TextBlock>

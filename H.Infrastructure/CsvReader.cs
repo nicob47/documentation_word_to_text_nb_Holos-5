@@ -41,8 +41,8 @@ namespace H.Infrastructure
                 }
 
                 this.RowIndex = 0;
-                string sLine;
-                string sNextLine;
+                string? sLine;
+                string? sNextLine;
 
                 while (null != (sLine = __reader.ReadLine()))
                 {

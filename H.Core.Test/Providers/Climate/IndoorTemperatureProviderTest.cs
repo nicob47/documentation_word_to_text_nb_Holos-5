@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.Climate
     {
         #region Fields
 
-        private Table_63_Indoor_Temperature_Provider _sut;
+        private Table_63_Indoor_Temperature_Provider _sut = null!;
 
         #endregion
 

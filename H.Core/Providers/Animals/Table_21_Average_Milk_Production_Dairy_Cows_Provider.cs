@@ -62,7 +62,7 @@ namespace H.Core.Providers.Animals
                 year = 1990;
             }
 
-            Table_21_Average_Milk_Production_Dairy_Cows_Data data = this.AvgMilkProductionData.Find(x => (x.Year == year) && (x.Province == province));
+            Table_21_Average_Milk_Production_Dairy_Cows_Data? data = this.AvgMilkProductionData.Find(x => (x.Year == year) && (x.Province == province));
 
             if (data != null)
             {
@@ -100,7 +100,7 @@ namespace H.Core.Providers.Animals
             var milkProductionData = new List<Table_21_Average_Milk_Production_Dairy_Cows_Data>();
 
             CultureInfo cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.AverageMilkProductionDairyCows);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.AverageMilkProductionDairyCows)!;
 
             // Get the first line of the collection as that contains province names
             string[] provinceNames = fileLines.ElementAt(0);

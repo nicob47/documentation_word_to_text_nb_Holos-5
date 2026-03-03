@@ -50,7 +50,7 @@ namespace H.Core.Providers.Animals
                 evapotranspiration: meanAnnualEvapotranspiration);
 
             var region = farm.Province.GetRegion();
-            var soilTexture = farm.DefaultSoilData.SoilTexture;
+            var soilTexture = farm.DefaultSoilData!.SoilTexture;
 
             var factors = new Table_36_Livestock_Emission_Conversion_Factors_Data
             {

@@ -23,7 +23,7 @@ public class InMemoryCacheService : ICacheService
 
     #region Public Methods
     
-    public T Get<T>(string key)
+    public T? Get<T>(string key)
     {
         return _memoryCache.Get<T>(key);
     }
@@ -36,7 +36,7 @@ public class InMemoryCacheService : ICacheService
         _memoryCache.Set(key, value, options);
     }
 
-    public void Set<T>(string key, T value, MemoryCacheEntryOptions options)
+    public void Set<T>(string key, T value, MemoryCacheEntryOptions? options)
     {
         _memoryCache.Set(key, value, options);
     }
@@ -46,7 +46,7 @@ public class InMemoryCacheService : ICacheService
         _memoryCache.Remove(key);
     }
 
-    public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan? absoluteExpirationRelativeToNow = null)
+    public async Task<T?> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan? absoluteExpirationRelativeToNow = null)
     {
         return await _memoryCache.GetOrCreateAsync(key, async entry =>
         {

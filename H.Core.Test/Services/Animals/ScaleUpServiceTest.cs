@@ -11,8 +11,8 @@ namespace H.Core.Test.Services.Animals
     {
         #region Fields
 
-        private ITable_28_Production_Days_Provider _table28ProductionDaysProvider;
-        private IScaleUpService _scaleUpService;
+        private ITable_28_Production_Days_Provider _table28ProductionDaysProvider = null!;
+        private IScaleUpService _scaleUpService = null!;
 
         #endregion
 

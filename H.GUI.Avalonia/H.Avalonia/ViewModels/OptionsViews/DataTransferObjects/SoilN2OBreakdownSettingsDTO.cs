@@ -198,13 +198,13 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
 
         private void InitializeSoilN2OBreakdownSettings()
         {
-            if (ActiveFarm.AnnualSoilN2OBreakdown != null)
+            if (ActiveFarm?.AnnualSoilN2OBreakdown is not null)
             {
-                this.MonthlyValues = ActiveFarm.AnnualSoilN2OBreakdown;
+                this.MonthlyValues = ActiveFarm!.AnnualSoilN2OBreakdown;
             }
             else
             {
-                throw new ArgumentNullException(nameof(base.ActiveFarm.AnnualSoilN2OBreakdown));
+                throw new ArgumentNullException(nameof(MonthlyValues));
             }
         }
 
@@ -212,7 +212,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
 
         #region Methods
 
-        private void ValidateTotalLessThan100(object sender, PropertyChangedEventArgs e)
+        private void ValidateTotalLessThan100(object? sender, PropertyChangedEventArgs e)
         {
             double total = 0;
 
@@ -222,7 +222,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             }
             if (total == 100.00)
             {
-                RemoveError(e.PropertyName);
+                if (e.PropertyName != null) RemoveError(e.PropertyName);
             }
         }
         #endregion

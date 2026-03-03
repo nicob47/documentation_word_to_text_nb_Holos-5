@@ -1,4 +1,4 @@
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Services;
 
 namespace H.Core.Test.Services;
@@ -8,7 +8,7 @@ public class CountrySettingsTest
 {
     #region Fields
 
-    private ICountrySettings _countrySettings;
+    private ICountrySettings _countrySettings = null!;
 
     #endregion
 

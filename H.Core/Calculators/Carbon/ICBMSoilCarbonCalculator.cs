@@ -52,9 +52,9 @@ namespace H.Core.Calculators.Carbon
         #region Public Methods
 
         public CropViewItem SetCarbonInputs(
-            CropViewItem previousYearViewItem,
+            CropViewItem? previousYearViewItem,
             CropViewItem currentYearViewItem,
-            CropViewItem nextYearViewItem,
+            CropViewItem? nextYearViewItem,
             Farm farm)
         {
             var isNonSwathingGrazingScenario = currentYearViewItem.TotalCarbonLossesByGrazingAnimals > 0 &&
@@ -69,9 +69,9 @@ namespace H.Core.Calculators.Carbon
                 farm: farm);
 
             currentYearViewItem.CarbonInputFromProduct = this.CalculateCarbonInputFromProduct(
-                previousYearViewItem: previousYearViewItem,
+                previousYearViewItem: previousYearViewItem!,
                 currentYearViewItem: currentYearViewItem,
-                nextYearViewItem: nextYearViewItem,
+                nextYearViewItem: nextYearViewItem!,
                 farm: farm);
 
             if (isNonSwathingGrazingScenario)
@@ -92,17 +92,17 @@ namespace H.Core.Calculators.Carbon
             }
 
             currentYearViewItem.CarbonInputFromStraw = this.CalculateCarbonInputFromStraw(
-                previousYearViewItem: previousYearViewItem,
+                previousYearViewItem: previousYearViewItem!,
                 currentYearViewItem: currentYearViewItem,
                 farm: farm);
 
             currentYearViewItem.CarbonInputFromRoots = this.CalculateCarbonInputFromRoots(
-                previousYearViewItem: previousYearViewItem,
+                previousYearViewItem: previousYearViewItem!,
                 currentYearViewItem: currentYearViewItem,
                 farm: farm);
 
             currentYearViewItem.CarbonInputFromExtraroots = this.CalculateCarbonInputFromExtraroot(
-                previousYearViewItem: previousYearViewItem,
+                previousYearViewItem: previousYearViewItem!,
                 currentYearViewItem: currentYearViewItem,
                 farm: farm);
 
@@ -157,8 +157,8 @@ namespace H.Core.Calculators.Carbon
         /// <param name="farm">The <see cref="Farm"/> being considered</param>
         /// <returns>The total above ground carbon input</returns>
         public double CalculatePlantCarbonInAgriculturalProduct(
-            CropViewItem previousYearViewItem, 
-            CropViewItem currentYearViewItem, 
+            CropViewItem? previousYearViewItem,
+            CropViewItem currentYearViewItem,
             Farm farm)
         {
             if (currentYearViewItem.DoNotRecalculatePlantCarbonInAgriculturalProduct)
@@ -451,9 +451,9 @@ namespace H.Core.Calculators.Carbon
         /// <param name="farm">The <see cref="Farm"/> being considered</param>
         /// <returns>The total above ground carbon input</returns>
         public double CalculateAboveGroundCarbonInputFromPerennials(
-            CropViewItem previousYearViewItem, 
-            CropViewItem currentYearViewItem, 
-            CropViewItem nextYearViewItem, 
+            CropViewItem previousYearViewItem,
+            CropViewItem currentYearViewItem,
+            CropViewItem? nextYearViewItem,
             Farm farm)
         {
             // Estimate the value using the productivity calculation
@@ -587,8 +587,8 @@ namespace H.Core.Calculators.Carbon
         /// <param name="farm">The <see cref="Farm"/> being considered</param>
         /// <returns>The carbon input from roots</returns>
         public double CalculateCarbonInputFromRootsForPerennials(
-            CropViewItem previousYearViewItem, 
-            CropViewItem currentYearViewItem, 
+            CropViewItem? previousYearViewItem,
+            CropViewItem currentYearViewItem,
             Farm farm)
         {
             // Next line divides by biomass of product so it can't be zero
@@ -670,7 +670,7 @@ namespace H.Core.Calculators.Carbon
         /// <param name="farm">The <see cref="Farm"/> being considered</param>
         /// <returns>The estimated plant carbon in agricultural product</returns>
         private double EstimatePlantCarbonInAgriculturalProductForNextYear(
-            CropViewItem nextYearViewItem,
+            CropViewItem? nextYearViewItem,
             Farm farm)
         {
             if (nextYearViewItem == null)

@@ -2,14 +2,16 @@
 using Moq;
 using H.Avalonia.ViewModels;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels
 {
     [TestClass]
     public class MainWindowViewModelTest
     {
-        private MainWindowViewModel _viewModel;
-        private Mock<INotificationManagerService> _mockNotificationManager;
-        private INotificationManagerService _notificationManagerMock;
+        private MainWindowViewModel _viewModel = null!;
+        private Mock<INotificationManagerService> _mockNotificationManager = null!;
+        private INotificationManagerService _notificationManagerMock = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -31,7 +33,7 @@ namespace H.Avalonia.Test.ViewModels
         [TestMethod]
         public void TestConstructorNullParameters()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new MainWindowViewModel(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new MainWindowViewModel(null));
         }
 
         [TestMethod]

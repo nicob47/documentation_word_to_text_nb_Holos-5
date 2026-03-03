@@ -50,7 +50,7 @@ namespace H.Core.Providers.Animals.Table_28
                 lookupType = AnimalType.SwineGrower;
             }
 
-            ProductionDaysData result = null;
+            ProductionDaysData? result = null;
             if (lookupType == AnimalType.SwinePiglets)
             {
                 // We only need the production stage when considering piglet groups
@@ -123,7 +123,7 @@ namespace H.Core.Providers.Animals.Table_28
 
         private void ReadFile(CsvResourceNames resourceName)
         {
-            var fileLines = CsvResourceReader.GetFileLines(resourceName).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(resourceName)!.ToList();
 
             this.ReadLines(fileLines);
         }

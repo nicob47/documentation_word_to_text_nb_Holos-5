@@ -7,20 +7,20 @@ namespace H.Core
     {
         #region Fields
         
-        private T _january;
-        private T _february;
-        private T _march;
-        private T _april;
-        private T _may;
-        private T _june;
-        private T _july;
-        private T _august;
-        private T _september;
-        private T _october;
-        private T _november;
-        private T _december;
+        private T _january = default!;
+        private T _february = default!;
+        private T _march = default!;
+        private T _april = default!;
+        private T _may = default!;
+        private T _june = default!;
+        private T _july = default!;
+        private T _august = default!;
+        private T _september = default!;
+        private T _october = default!;
+        private T _november = default!;
+        private T _december = default!;
 
-        private readonly List<string> _monthNames;
+        private readonly List<string> _monthNames = new();
 
         #endregion
 
@@ -28,18 +28,18 @@ namespace H.Core
 
         public MonthlyValueBase()
         {
-            this.January = default(T);
-            this.February = default(T);
-            this.March = default(T);
-            this.April = default(T);
-            this.May = default(T);
-            this.June = default(T);
-            this.July = default(T);
-            this.August = default(T);
-            this.September = default(T);
-            this.October = default(T);
-            this.November = default(T);
-            this.December = default(T);
+            this.January = default!;
+            this.February = default!;
+            this.March = default!;
+            this.April = default!;
+            this.May = default!;
+            this.June = default!;
+            this.July = default!;
+            this.August = default!;
+            this.September = default!;
+            this.October = default!;
+            this.November = default!;
+            this.December = default!;
 
             _monthNames = new List<string>()
             {
@@ -162,18 +162,18 @@ namespace H.Core
 
         public void AssignMonthlyValues(List<T> valuesByMonth)
         {
-            this.January = valuesByMonth.ElementAtOrDefault(0);
-            this.February = valuesByMonth.ElementAtOrDefault(1);
-            this.March = valuesByMonth.ElementAtOrDefault(2);
-            this.April = valuesByMonth.ElementAtOrDefault(3);
-            this.May = valuesByMonth.ElementAtOrDefault(4);
-            this.June = valuesByMonth.ElementAtOrDefault(5);
-            this.July = valuesByMonth.ElementAtOrDefault(6);
-            this.August = valuesByMonth.ElementAtOrDefault(7);
-            this.September = valuesByMonth.ElementAtOrDefault(8);
-            this.October = valuesByMonth.ElementAtOrDefault(9);
-            this.November = valuesByMonth.ElementAtOrDefault(10);
-            this.December = valuesByMonth.ElementAtOrDefault(11);
+            this.January = valuesByMonth.ElementAtOrDefault(0)!;
+            this.February = valuesByMonth.ElementAtOrDefault(1)!;
+            this.March = valuesByMonth.ElementAtOrDefault(2)!;
+            this.April = valuesByMonth.ElementAtOrDefault(3)!;
+            this.May = valuesByMonth.ElementAtOrDefault(4)!;
+            this.June = valuesByMonth.ElementAtOrDefault(5)!;
+            this.July = valuesByMonth.ElementAtOrDefault(6)!;
+            this.August = valuesByMonth.ElementAtOrDefault(7)!;
+            this.September = valuesByMonth.ElementAtOrDefault(8)!;
+            this.October = valuesByMonth.ElementAtOrDefault(9)!;
+            this.November = valuesByMonth.ElementAtOrDefault(10)!;
+            this.December = valuesByMonth.ElementAtOrDefault(11)!;
         }
 
         public void AssignValueByMonth(T value, Months month)

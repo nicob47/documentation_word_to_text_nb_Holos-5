@@ -10,28 +10,81 @@
 	  <!-- Add Styles Here -->
       <Styles.Resources>
 
-		  <Thickness x:Key="DefaultUserControlMargin">6,6,6,6</Thickness>
+		  <!-- ════════════════════════════════════════════════════════════════
+		       GC Design System — Color Tokens (adapted for desktop)
+		       Source: gc_colors.json, gc_spacing.json, gc_typography.json
+		       ════════════════════════════════════════════════════════════════ -->
 
-		  <!-- Brushes -->
-		<SolidColorBrush x:Key="DefaultForegroundTextBrush" Color="DimGray" />
-		  <SolidColorBrush x:Key="DefaultHighlightBrush" Color="DarkGreen" />
+		  <!-- Base color constants -->
+		  <Color x:Key="GcdsBlue50">#ebf2fa</Color>
+		  <Color x:Key="GcdsBlue100">#d6e4f5</Color>
+		  <Color x:Key="GcdsBlue700">#1f497a</Color>
+		  <Color x:Key="GcdsBlueMuted">#26374a</Color>
+		  <Color x:Key="GcdsGray50">#f2f2f2</Color>
+		  <Color x:Key="GcdsGray150">#d9d9d9</Color>
+		  <Color x:Key="GcdsGray200">#cccccc</Color>
+		  <Color x:Key="GcdsGray450">#8c8c8c</Color>
+		  <Color x:Key="GcdsGray650">#595959</Color>
+		  <Color x:Key="GcdsGray800">#333333</Color>
+		  <Color x:Key="GcdsGreen700">#1f7a40</Color>
+		  <Color x:Key="GcdsRed600">#b3192e</Color>
+		  <Color x:Key="GcdsYellow50">#fef7e7</Color>
+		  <Color x:Key="GcdsYellow500">#f2ad0d</Color>
+		  <Color x:Key="GcdsFocusBlue">#1354ec</Color>
+
+		  <!-- ── Semantic Brushes ─────────────────────────────────────────── -->
+
+		  <!-- Text -->
+		  <SolidColorBrush x:Key="GcdsTextPrimaryBrush" Color="{StaticResource GcdsGray800}" />
+		  <SolidColorBrush x:Key="GcdsTextSecondaryBrush" Color="{StaticResource GcdsGray650}" />
+
+		  <!-- Backgrounds -->
+		  <SolidColorBrush x:Key="GcdsBgLightBrush" Color="{StaticResource GcdsGray50}" />
+		  <SolidColorBrush x:Key="GcdsBgPrimaryBrush" Color="{StaticResource GcdsBlueMuted}" />
+		  <SolidColorBrush x:Key="GcdsBgWhiteBrush" Color="White" />
+
+		  <!-- Links / Selection -->
+		  <SolidColorBrush x:Key="GcdsLinkDefaultBrush" Color="{StaticResource GcdsBlue700}" />
+		  <SolidColorBrush x:Key="GcdsSelectionBgBrush" Color="{StaticResource GcdsBlue50}" />
+		  <SolidColorBrush x:Key="GcdsSelectionBorderBrush" Color="{StaticResource GcdsBlue700}" />
+
+		  <!-- Borders -->
+		  <SolidColorBrush x:Key="GcdsBorderDefaultBrush" Color="{StaticResource GcdsGray450}" />
+		  <SolidColorBrush x:Key="GcdsBorderLightBrush" Color="{StaticResource GcdsGray150}" />
+		  <SolidColorBrush x:Key="GcdsBorderSubtleBrush" Color="{StaticResource GcdsGray200}" />
+
+		  <!-- Status -->
+		  <SolidColorBrush x:Key="GcdsDangerBrush" Color="{StaticResource GcdsRed600}" />
+		  <SolidColorBrush x:Key="GcdsSuccessBrush" Color="{StaticResource GcdsGreen700}" />
+		  <SolidColorBrush x:Key="GcdsWarningBrush" Color="{StaticResource GcdsYellow500}" />
+		  <SolidColorBrush x:Key="GcdsWarningBgBrush" Color="{StaticResource GcdsYellow50}" />
+		  <SolidColorBrush x:Key="GcdsFocusBrush" Color="{StaticResource GcdsFocusBlue}" />
+
+		  <!-- ── Legacy brush aliases (mapped to GC tokens) ───────────────── -->
+
+		  <SolidColorBrush x:Key="DefaultForegroundTextBrush" Color="{StaticResource GcdsGray800}" />
+		  <SolidColorBrush x:Key="DefaultHighlightBrush" Color="{StaticResource GcdsBlueMuted}" />
 
 		  <!-- Card and UI State Brushes -->
 		  <SolidColorBrush x:Key="CardBackgroundBrush" Color="White" />
-		  <SolidColorBrush x:Key="CardSelectedBackgroundBrush" Color="#E3F2FD" />
-		  <SolidColorBrush x:Key="CardBorderBrush" Color="LightGray" />
-		  <SolidColorBrush x:Key="CardSelectedBorderBrush" Color="DodgerBlue" />
-		  <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="#F8F9FA" />
-		  <SolidColorBrush x:Key="BadgeBackgroundBrush" Color="DodgerBlue" />
+		  <SolidColorBrush x:Key="CardSelectedBackgroundBrush" Color="{StaticResource GcdsBlue50}" />
+		  <SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource GcdsGray450}" />
+		  <SolidColorBrush x:Key="CardSelectedBorderBrush" Color="{StaticResource GcdsBlue700}" />
+		  <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="{StaticResource GcdsGray50}" />
+		  <SolidColorBrush x:Key="BadgeBackgroundBrush" Color="{StaticResource GcdsBlue700}" />
 		  <SolidColorBrush x:Key="BadgeTextBrush" Color="White" />
-		  <SolidColorBrush x:Key="DeleteButtonBrush" Color="#FF6B6B" />
+		  <SolidColorBrush x:Key="DeleteButtonBrush" Color="{StaticResource GcdsRed600}" />
+
+		  <!-- ── Spacing ──────────────────────────────────────────────────── -->
+
+		  <Thickness x:Key="DefaultUserControlMargin">8,8,8,8</Thickness>
 
 		  <!-- Card Dimensions -->
 		  <Thickness x:Key="CardBorderThickness">2</Thickness>
 		  <Thickness x:Key="CardSelectedBorderThickness">3</Thickness>
 		  <CornerRadius x:Key="CardCornerRadius">8</CornerRadius>
 		  <Thickness x:Key="CardPadding">12</Thickness>
-		  <Thickness x:Key="CardMargin">5</Thickness>
+		  <Thickness x:Key="CardMargin">4</Thickness>
 
 		  <!-- Badge Dimensions -->
 		  <CornerRadius x:Key="StepBadgeCornerRadius">4</CornerRadius>
@@ -39,15 +92,37 @@
 		  <Thickness x:Key="StepBadgePadding">12,6</Thickness>
 		  <Thickness x:Key="YearBadgePadding">12,6</Thickness>
 
-		  <!-- Selection State Converters -->
+		  <!-- ── Typography ───────────────────────────────────────────────── -->
+
+		  <!-- Font Families — GC Design System -->
+		  <FontFamily x:Key="GcdsHeadingFont">avares://H.Avalonia/Assets/Fonts/Lato-Regular.ttf#Lato</FontFamily>
+		  <FontFamily x:Key="GcdsBodyFont">avares://H.Avalonia/Assets/Fonts/NotoSans-Regular.ttf#Noto Sans</FontFamily>
+
+		  <!-- Legacy aliases (mapped to GC fonts) -->
+		  <FontFamily x:Key="RobotoFontFamily">avares://H.Avalonia/Assets/Fonts/Lato-Regular.ttf#Lato</FontFamily>
+		  <FontFamily x:Key="MonaSansFontFamily">avares://H.Avalonia/Assets/Fonts/NotoSans-Regular.ttf#Noto Sans</FontFamily>
+
+		  <!-- Font Sizes (desktop-scaled: 14px base, preserving GC ratios) -->
+		  <x:Double x:Key="GcdsFontSizeH1">36</x:Double>
+		  <x:Double x:Key="GcdsFontSizeH2">34</x:Double>
+		  <x:Double x:Key="GcdsFontSizeH3">25</x:Double>
+		  <x:Double x:Key="GcdsFontSizeH4">24</x:Double>
+		  <x:Double x:Key="GcdsFontSizeH5">21</x:Double>
+		  <x:Double x:Key="GcdsFontSizeH6">19</x:Double>
+		  <x:Double x:Key="GcdsFontSizeBody">14</x:Double>
+		  <x:Double x:Key="GcdsFontSizeSmall">13</x:Double>
+		  <x:Double x:Key="GcdsFontSizeCaption">11</x:Double>
+
+		  <!-- ── Selection State Converters ────────────────────────────────── -->
+
 		  <converters:BoolToBackgroundConverter x:Key="BoolToBackgroundConverter"/>
 		  <converters:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter"/>
 		  <converters:BoolToBorderThicknessConverter x:Key="BoolToBorderThicknessConverter"/>
 		  <converters:BoolToScaleTransformConverter x:Key="BoolToScaleTransformConverter"/>
 		  <converters:WidthMinusMarginConverter x:Key="WidthMinusMarginConverter"/>
 
-		  <FontFamily x:Key="RobotoFontFamily">/Assets/Fonts/Roboto-Slab*.ttf#Roboto Slab</FontFamily>
-          <FontFamily x:Key="MonaSansFontFamily">/Assets/Fonts/Mona-Sans*.ttf#Mona Sans</FontFamily>
+		  <!-- ── Icons & Branding ─────────────────────────────────────────── -->
+
           <DrawingImage x:Key="CanadaLogo">
               <DrawingImage.Drawing>
                 <DrawingGroup>

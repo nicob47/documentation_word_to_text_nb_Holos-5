@@ -44,8 +44,8 @@ namespace H.Core.Models
             NASA,
         }
 
-        private string _comments;
-        private string _pathToYieldInputFile;
+        private string _comments = string.Empty;
+        private string _pathToYieldInputFile = string.Empty;
 
         private double _latitude;
         private double _longitude;
@@ -75,20 +75,20 @@ namespace H.Core.Models
         private bool _isCommandLineMode;
         private bool _useCustomRunInTillage;
 
-        private Defaults _defaults;
+        private Defaults _defaults = null!;
         private Province _province;
-        private GeographicData _geographicData;
-        private ClimateData _climateData;
+        private GeographicData _geographicData = null!;
+        private ClimateData _climateData = null!;
 
         private bool _measurementSystemSelected;
 
         private MeasurementSystemType _measurementSystemType;
 
         private ChosenClimateAcquisition _climateAcquisition;
-        private Table_15_Default_Soil_N2O_Emission_BreakDown_Provider _annualSoilN2OBreakdown;
+        private Table_15_Default_Soil_N2O_Emission_BreakDown_Provider _annualSoilN2OBreakdown = null!;
         private YieldAssignmentMethod _yieldAssignmentMethod;
 
-        private List<TimeFrame> _availableTimeFrame;
+        private List<TimeFrame> _availableTimeFrame = new();
         private readonly ShelterbeltEnabledFromHardinessZoneConverter _shelterbeltFromHardinessZoneConverter = new ShelterbeltEnabledFromHardinessZoneConverter();
 
         #endregion
@@ -156,7 +156,7 @@ namespace H.Core.Models
 
         #region Properties
 
-        public ComponentBase SelectedComponent { get; set; }
+        public ComponentBase? SelectedComponent { get; set; }
 
         public bool ResultsCalculated
         {
@@ -308,7 +308,7 @@ namespace H.Core.Models
         /// The default soil data selected by the user if there was more than one soil component found within the selected polygon. The user
         /// has the option to define a field-level soil type as well <see cref="FieldSystemComponent.SoilData"/>.
         /// </summary>
-        public SoilData DefaultSoilData
+        public SoilData? DefaultSoilData
         {
             get
             {
@@ -445,7 +445,7 @@ namespace H.Core.Models
         {
             get
             {
-                return this.FieldSystemComponents.Where(x => x.GetSingleYearViewItem() != null).Sum(x => x.GetSingleYearViewItem().Area);
+                return this.FieldSystemComponents.Where(x => x.GetSingleYearViewItem() != null).Sum(x => x.GetSingleYearViewItem()!.Area);
             }
         }
 
@@ -454,7 +454,7 @@ namespace H.Core.Models
             get
             {
                 var fieldSystemComponents = this.FieldSystemComponents.Where(x => x.IsIrrigated);
-                var sum = fieldSystemComponents.Sum(x => x.GetSingleYearViewItem().Area);
+                var sum = fieldSystemComponents.Sum(x => x.GetSingleYearViewItem()!.Area);
 
                 return sum;
             }
@@ -519,17 +519,17 @@ namespace H.Core.Models
         /// <summary>
         /// For CLI, this is the path to the directory that contains all the input files for the farm.
         /// </summary>
-        public string CliInputPath { get; set; }
+        public string CliInputPath { get; set; } = string.Empty;
 
         /// <summary>
         /// For CLI, the name of the settings file for the farm.
         /// </summary>
-        public string SettingsFileName { get; set; }
+        public string SettingsFileName { get; set; } = string.Empty;
 
         /// <summary>
         /// The path to a custom daily climate data file.
         /// </summary>
-        public string ClimateDataFileName { get; set; }
+        public string ClimateDataFileName { get; set; } = string.Empty;
 
         /// <summary>
         /// Climate data for the farm
@@ -745,6 +745,7 @@ namespace H.Core.Models
             foreach (var fieldSystemComponent in this.FieldSystemComponents)
             {
                 var viewItem = fieldSystemComponent.GetSingleYearViewItem();
+                if (viewItem == null) continue;
                 var manureApplications = viewItem.ManureApplicationViewItems.Where(x => x.DateOfApplication.Date.Equals(dateTime.Date)
                     && x.AnimalType == animalType
                     && x.ManureLocationSourceType == ManureLocationSourceType.Livestock);
@@ -885,7 +886,7 @@ namespace H.Core.Models
             }
         }
 
-        public FieldSystemComponent GetFieldSystemComponent(Guid guid)
+        public FieldSystemComponent? GetFieldSystemComponent(Guid guid)
         {
             var result = this.FieldSystemComponents.SingleOrDefault(x => x.Guid == guid);
 
@@ -942,8 +943,8 @@ namespace H.Core.Models
             AnimalType animalType)
         {
             var fields = this.FieldSystemComponents.ToList();
-            var crops = fields.Select(field => field.GetSingleYearViewItem()).ToList();
-            var manureApplications = crops.SelectMany(crop => crop.ManureApplicationViewItems).ToList();
+            var crops = fields.Select(field => field.GetSingleYearViewItem()).Where(c => c != null).ToList();
+            var manureApplications = crops.SelectMany(crop => crop!.ManureApplicationViewItems).ToList();
             var manureApplicationsByManureType = manureApplications.Where(application => application.AnimalType == animalType).ToList();
             var manureApplicationsInMonth = manureApplicationsByManureType.Where(manureApplication => monthsAndDaysData.DateIsInMonth(manureApplication.DateOfApplication)).ToList();
 
@@ -961,6 +962,7 @@ namespace H.Core.Models
             foreach (var fieldSystemComponent in this.FieldSystemComponents)
             {
                 var crop = fieldSystemComponent.GetSingleYearViewItem();
+                if (crop == null) continue;
                 foreach (var manureApplicationViewItem in crop.ManureApplicationViewItems)
                 {
                     var dateIsInMonth = monthsAndDaysData.DateIsInMonth(manureApplicationViewItem.DateOfApplication);
@@ -1009,9 +1011,9 @@ namespace H.Core.Models
             return this.Latitude != 0 && this.Latitude != 0;
         }
 
-        public Diet GetDietByName(DietType dietType)
+        public Diet? GetDietByName(DietType dietType)
         {
-            var result = this.Diets.FirstOrDefault(x => x.DietType == dietType);
+            Diet? result = this.Diets.FirstOrDefault(x => x.DietType == dietType);
             if (result != null)
             {
                 return result;
@@ -1130,7 +1132,7 @@ namespace H.Core.Models
                 // Old farms won't have soil data set on fields, use farm level soil data instead
 
                 // Return farm soil type
-                return this.DefaultSoilData;
+                return this.DefaultSoilData!;
             }
             else
             {
@@ -1140,7 +1142,7 @@ namespace H.Core.Models
                 }
                 else
                 {
-                    return this.DefaultSoilData;
+                    return this.DefaultSoilData!;
                 }
             }
         }
@@ -1180,9 +1182,9 @@ namespace H.Core.Models
             this.FarmHasBales = this.TotalBalesProducedByFarm > 0;
         }
 
-        private void FarmPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FarmPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals(nameof(this.IsBasicMode), StringComparison.InvariantCultureIgnoreCase))
+            if (e.PropertyName != null && e.PropertyName.Equals(nameof(this.IsBasicMode), StringComparison.InvariantCultureIgnoreCase))
             {
                 if (this.IsBasicMode)
                 {
@@ -1197,7 +1199,7 @@ namespace H.Core.Models
             }
         }
 
-        private void ComponentsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        private void ComponentsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             this.RaisePropertyChanged(nameof(this.HasComponents));
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)

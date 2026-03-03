@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
@@ -12,7 +12,7 @@ public class AnimalComponentFactoryTests
 {
     #region Fields
 
-    private AnimalComponentFactory _sut;
+    private AnimalComponentFactory _sut = null!;
 
     #endregion
 

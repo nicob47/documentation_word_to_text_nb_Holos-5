@@ -12,7 +12,7 @@ namespace H.Avalonia.Converters;
 /// </summary>
 public class BoolToSelectionBorderThicknessConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is bool isSelected && isSelected)
         {
@@ -24,7 +24,7 @@ public class BoolToSelectionBorderThicknessConverter : IValueConverter
         return new Thickness(1);
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException("BoolToSelectionBorderThicknessConverter only supports one-way conversion.");
     }
@@ -36,19 +36,19 @@ public class BoolToSelectionBorderThicknessConverter : IValueConverter
 /// </summary>
 public class BoolToSelectionBorderBrushConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is bool isSelected && isSelected)
         {
             // Selected: blue highlight border
-            return Brushes.DodgerBlue;
+            return Brush.Parse("#1f497a");
         }
 
         // Not selected: normal gray border
-        return Brush.Parse("#E0E0E0");
+        return Brush.Parse("#d9d9d9");
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException("BoolToSelectionBorderBrushConverter only supports one-way conversion.");
     }

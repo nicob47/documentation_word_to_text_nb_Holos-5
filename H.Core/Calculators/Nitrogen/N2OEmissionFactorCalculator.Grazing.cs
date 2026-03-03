@@ -11,6 +11,7 @@ namespace H.Core.Calculators.Nitrogen
         {
             var result = 0d;
             var field = farm.GetFieldSystemComponent(currentYearResults.FieldSystemComponentGuid);
+            if (field == null) return 0.0;
 
             foreach (var emissionsResults in animalComponentEmissionsResultsList)
             {
@@ -37,6 +38,7 @@ namespace H.Core.Calculators.Nitrogen
         {
             var result = 0d;
             var field = farm.GetFieldSystemComponent(currentYearResults.FieldSystemComponentGuid);
+            if (field == null) return 0.0;
 
             foreach (var emissionsResults in animalComponentEmissionsResultsList)
             {
@@ -63,6 +65,7 @@ namespace H.Core.Calculators.Nitrogen
         {
             var result = 0d;
             var field = farm.GetFieldSystemComponent(currentYearResults.FieldSystemComponentGuid);
+            if (field == null) return 0.0;
 
             foreach (var emissionsResults in animalComponentEmissionsResultsList)
             {
@@ -89,6 +92,7 @@ namespace H.Core.Calculators.Nitrogen
         {
             var result = 0d;
             var field = farm.GetFieldSystemComponent(currentYearResults.FieldSystemComponentGuid);
+            if (field == null) return 0.0;
 
             foreach (var emissionsResults in animalComponentEmissionsResultsList)
             {
@@ -115,6 +119,7 @@ namespace H.Core.Calculators.Nitrogen
         {
             var result = 0d;
             var field = farm.GetFieldSystemComponent(currentYearResults.FieldSystemComponentGuid);
+            if (field == null) return 0.0;
 
             foreach (var emissionsResults in animalComponentEmissionsResultsList)
             {

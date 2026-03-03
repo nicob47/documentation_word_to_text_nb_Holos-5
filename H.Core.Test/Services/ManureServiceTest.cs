@@ -15,9 +15,9 @@ namespace H.Core.Test.Services
     {
         #region Fields
 
-        private ManureService _sut;
-        private Mock<IAnimalService> _mockAnimalService;
-        private AnimalComponentEmissionsResults _componentResults;
+        private ManureService _sut = null!;
+        private Mock<IAnimalService> _mockAnimalService = null!;
+        private AnimalComponentEmissionsResults _componentResults = null!;
 
         #endregion
 

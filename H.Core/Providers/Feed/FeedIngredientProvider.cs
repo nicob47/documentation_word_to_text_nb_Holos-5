@@ -53,8 +53,8 @@ namespace H.Core.Providers.Feed
         #region Fields
 
         private readonly IMapper _feedIngredientMapper;
-        private readonly ILogger _logger;
-        private readonly ICacheService _cacheService;
+        private readonly ILogger _logger = null!;
+        private readonly ICacheService _cacheService = null!;
 
         private readonly Dictionary<ComponentCategory, IReadOnlyList<IFeedIngredient>> _ingredientsByAnimalCategory;
         private readonly Dictionary<Tuple<ComponentCategory, IngredientType>, IFeedIngredient> _ingredientDictionary;
@@ -118,7 +118,7 @@ namespace H.Core.Providers.Feed
                             $"{animalType}_{dietType}";
 
             // Try to retrieve the result from cache
-            IReadOnlyCollection<IFeedIngredient> cachedResult = null;
+            IReadOnlyCollection<IFeedIngredient>? cachedResult = null;
             if (_cacheService != null)
             {
                 cachedResult = _cacheService.Get<IReadOnlyCollection<IFeedIngredient>>(cacheKey);
@@ -156,7 +156,7 @@ namespace H.Core.Providers.Feed
             return collection;
         }
 
-        public FeedIngredient CopyIngredient(IFeedIngredient ingredient, double defaultPercentageInDiet)
+        public FeedIngredient? CopyIngredient(IFeedIngredient ingredient, double defaultPercentageInDiet)
         {
             if (ingredient != null)
             {
@@ -179,7 +179,7 @@ namespace H.Core.Providers.Feed
         /// <summary>
         /// Gets the list of beef feed ingredients available for beef production.
         /// </summary>
-        public IList<IFeedIngredient> GetBeefFeedIngredients()
+        public IList<IFeedIngredient>? GetBeefFeedIngredients()
         {
             return _ingredientsByAnimalCategory[ComponentCategory.BeefProduction] as IList<IFeedIngredient>;
         }
@@ -187,7 +187,7 @@ namespace H.Core.Providers.Feed
         /// <summary>
         /// Gets the list of dairy feed ingredients available for dairy production.
         /// </summary>
-        public IList<IFeedIngredient> GetDairyFeedIngredients()
+        public IList<IFeedIngredient>? GetDairyFeedIngredients()
         {
             return _ingredientsByAnimalCategory[ComponentCategory.Dairy] as IList<IFeedIngredient>;
         }
@@ -195,7 +195,7 @@ namespace H.Core.Providers.Feed
         /// <summary>
         /// Gets the list of swine feed ingredients available for swine production.
         /// </summary>
-        public IList<IFeedIngredient> GetSwineFeedIngredients()
+        public IList<IFeedIngredient>? GetSwineFeedIngredients()
         {
             return _ingredientsByAnimalCategory[ComponentCategory.Swine] as IList<IFeedIngredient>;
         }
@@ -230,14 +230,13 @@ namespace H.Core.Providers.Feed
         /// <param name="componentCategory">The component category (e.g., BeefProduction, Dairy, Swine).</param>
         /// <param name="ingredientType">The type of ingredient to retrieve.</param>
         /// <returns>The <see cref="FeedIngredient"/> if found; otherwise, null.</returns>
-        private FeedIngredient Get(ComponentCategory componentCategory, IngredientType ingredientType)
+        private FeedIngredient? Get(ComponentCategory componentCategory, IngredientType ingredientType)
         {
             var tuple = new Tuple<ComponentCategory, IngredientType>(componentCategory, ingredientType);
-            IFeedIngredient ingredient;
-            bool exists = _ingredientDictionary.TryGetValue(tuple, out ingredient);
+            bool exists = _ingredientDictionary.TryGetValue(tuple, out IFeedIngredient? ingredient);
             if (exists)
             {
-                return (FeedIngredient)ingredient;
+                return (FeedIngredient?)ingredient;
             }
             else
             {
@@ -250,9 +249,9 @@ namespace H.Core.Providers.Feed
         private IFeedIngredient GetIngredient(IngredientType ingredientType, double percentageInDiet, ComponentCategory componentCategory)
         {
             var ingredient = this.Get(componentCategory, ingredientType);
-            var copy = this.CopyIngredient(ingredient, percentageInDiet);
+            var copy = this.CopyIngredient(ingredient!, percentageInDiet);
 
-            return copy;
+            return copy!;
         }
 
         /// <summary>
@@ -628,7 +627,7 @@ namespace H.Core.Providers.Feed
         private IEnumerable<FeedIngredient> ReadSwineFile()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SwineFeedIngredientList);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SwineFeedIngredientList)!;
             var feedNameStringConverter = new FeedIngredientStringConverter();
             double parseResult = 0;
 
@@ -809,7 +808,7 @@ namespace H.Core.Providers.Feed
         private IEnumerable<FeedIngredient> ReadBeefFile()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.FeedNames);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.FeedNames)!;
             var feedNameStringConverter = new FeedIngredientStringConverter();
             double parseResult = 0;
 
@@ -912,7 +911,7 @@ namespace H.Core.Providers.Feed
         private IEnumerable<FeedIngredient> ReadDairyFile()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.DairyFeedComposition).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.DairyFeedComposition)!.ToList();
             var feedNameStringConverter = new FeedIngredientStringConverter();
             var dairyClassTypeConverter = new DairyFeedClassTypeConverter();
             double parseResult = 0;

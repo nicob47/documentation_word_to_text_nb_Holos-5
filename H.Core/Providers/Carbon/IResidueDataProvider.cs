@@ -5,7 +5,7 @@ namespace H.Core.Providers.Carbon
 {
     public interface IResidueDataProvider
     {
-        Table_7_Relative_Biomass_Information_Data GetResidueData(IrrigationType irrigationType,
+        Table_7_Relative_Biomass_Information_Data? GetResidueData(IrrigationType irrigationType,
                                    double irrigationAmount,
                                    CropType cropType,
                                    SoilFunctionalCategory soilFunctionalCategory,

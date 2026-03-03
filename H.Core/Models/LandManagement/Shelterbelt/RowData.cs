@@ -62,9 +62,9 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             var seen = new Dictionary<string, bool>();
             for (var i = 0; i < this.TreeGroupData.Count; ++i)
             {
+                var name = this.TreeGroupData[i].GetCorrectName() ?? string.Empty;
                 bool saw;
-                seen.TryGetValue(this.TreeGroupData[i]
-                                     .GetCorrectName(), out saw);
+                seen.TryGetValue(name, out saw);
                 if (!saw)
                 {
                     if (woke)
@@ -76,17 +76,15 @@ namespace H.Core.Models.LandManagement.Shelterbelt
                         woke = true;
                     }
 
-                    genauto += this.TreeGroupData[i]
-                                   .GetCorrectName();
-                    seen[this.TreeGroupData[i]
-                             .GetCorrectName()] = true;
+                    genauto += name;
+                    seen[name] = true;
                 }
             }
 
             return genauto;
         }
 
-        public string GetCorrectName()
+        public string? GetCorrectName()
         {
             if (this.NameIsFromUser)
             {

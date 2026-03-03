@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories.Climate;
 using H.Core.Mappers;
 using H.Core.Models;
@@ -7,6 +7,8 @@ using H.Core.Providers.Climate;
 using Moq;
 using Prism.Ioc;
 
+#nullable disable
+
 namespace H.Core.Test.Factories.Climate
 {
     [TestClass]
@@ -14,7 +16,7 @@ namespace H.Core.Test.Factories.Climate
     {
         #region Fields
 
-        private DailyClimateDataFactory _factory;
+        private DailyClimateDataFactory _factory = null!;
 
         #endregion
 

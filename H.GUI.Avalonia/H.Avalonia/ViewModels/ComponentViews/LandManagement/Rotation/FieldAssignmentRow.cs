@@ -28,13 +28,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// Format: "Field {number}"
         /// Example: "Field 1"
         /// </summary>
-        public string FieldName { get; set; }
-        
+        public string FieldName { get; set; } = string.Empty;
+
         /// <summary>
         /// Collection of year/crop assignments for this field, ordered chronologically.
         /// Each assignment represents one year in the rotation period and specifies which crop grows that year.
         /// The length of this collection equals (EndYear - StartYear + 1) from the rotation parameters.
         /// </summary>
-        public ObservableCollection<YearCropAssignment> YearAssignments { get; set; }
+        public ObservableCollection<YearCropAssignment> YearAssignments { get; set; } = new();
     }
 }

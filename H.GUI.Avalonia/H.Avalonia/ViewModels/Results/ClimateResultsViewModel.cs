@@ -26,12 +26,12 @@ namespace H.Avalonia.ViewModels.Results
         #region Fields
 
         private IRegionNavigationJournal? _navigationJournal;
-        private readonly ExportHelpers _exportHelpers;
-        private readonly ClimateResultsViewItemMap _climateResultsViewItemMap;
-        private CancellationTokenSource _cancellationTokenSource;
+        private readonly ExportHelpers _exportHelpers = null!;
+        private readonly ClimateResultsViewItemMap _climateResultsViewItemMap = null!;
+        private CancellationTokenSource _cancellationTokenSource = null!;
         private ObservableCollection<ClimateViewItem>? _climateViewItems;
-        private readonly IClimateService _climateService;
-        private readonly ILogger _logger;
+        private readonly IClimateService _climateService = null!;
+        private readonly ILogger _logger = null!;
 
         #endregion
 
@@ -210,7 +210,7 @@ namespace H.Avalonia.ViewModels.Results
             }
             catch (IOException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, type: NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, type: NotificationType.Error);
             }
         }
 

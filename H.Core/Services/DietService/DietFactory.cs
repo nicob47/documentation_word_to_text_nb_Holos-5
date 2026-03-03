@@ -191,23 +191,23 @@ namespace H.Core.Services.DietService
             if (this.IsValidDietType(animalType, dietType))
             {
                 var key = $"{nameof(DietFactory)}_{nameof(DietFactory.Create)}_{dietType}_{animalType}";
-                var cachedDiet = _cacheService.Get<IDietDto>(key);
+                var cachedDiet = _cacheService?.Get<IDietDto>(key);
                 if (cachedDiet != null)
                 {
-                    _logger.LogInformation($"Returning cached diet for {dietType} and {animalType}");
+                    _logger?.LogInformation($"Returning cached diet for {dietType} and {animalType}");
                     return cachedDiet;
                 }
 
-                _logger.LogInformation($"Creating diet for {dietType} and {animalType}");
+                _logger?.LogInformation($"Creating diet for {dietType} and {animalType}");
 
                 var dietDto = BuildDietDto(animalType, dietType);
-                _cacheService.Set(key, dietDto);
+                _cacheService?.Set(key, dietDto);
 
                 return dietDto;
             }
             else
             {
-                _logger.LogError($"Cannot create {dietType} for {animalType}");
+                _logger?.LogError($"Cannot create {dietType} for {animalType}");
 
                 return new DietDto()
                 {
@@ -255,7 +255,7 @@ namespace H.Core.Services.DietService
         /// <seealso cref="DietType"/>
         public IReadOnlyList<Tuple<AnimalType, DietType>> GetValidDietKeys()
         {
-            return _validDietKeys;
+            return _validDietKeys!;
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace H.Core.Services.DietService
         {
             var result = new List<Tuple<AnimalType, DietType>>();
 
-            var keys = _dietCollection.Select(d => new Tuple<AnimalType, DietType>(d.AnimalType, d.DietType));
+            var keys = _dietCollection!.Select(d => new Tuple<AnimalType, DietType>(d.AnimalType, d.DietType));
             result.AddRange(keys);
 
             return result;
@@ -424,7 +424,7 @@ namespace H.Core.Services.DietService
                     AnimalType = AnimalType.BeefCow,
                     Ingredients = (List<IFeedIngredient>)
                     [
-                        .._feedIngredientProvider.GetIngredientsForDiet(AnimalType.BeefCow, DietType.LowEnergyAndProtein)
+                        .._feedIngredientProvider!.GetIngredientsForDiet(AnimalType.BeefCow, DietType.LowEnergyAndProtein)
                     ],
 
                     MethaneConversionFactor = 0.07,
@@ -892,12 +892,12 @@ namespace H.Core.Services.DietService
         {
             if (this.IsValidDietType(animalType, dietType) == false)
             {
-                _logger.LogError($"Cannot build diet for {animalType} and {dietType}");
+                _logger?.LogError($"Cannot build diet for {animalType} and {dietType}");
 
                 return new DietDto();
             }
 
-            return _dietCollection.Single(x => x.AnimalType == animalType && x.DietType == dietType);
+            return _dietCollection!.Single(x => x.AnimalType == animalType && x.DietType == dietType);
         }
 
         #endregion

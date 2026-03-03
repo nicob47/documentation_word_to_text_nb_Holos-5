@@ -7,7 +7,7 @@ namespace H.Core.Models.LandManagement.Fields
         #region Fields
 
         private double _totalCarbonLossFromBaleExports;
-        private EstimatesOfProductionResultsViewItem _estimatesOfProductionResultsViewItem;
+        private EstimatesOfProductionResultsViewItem _estimatesOfProductionResultsViewItem = null!;
 
         #endregion
 

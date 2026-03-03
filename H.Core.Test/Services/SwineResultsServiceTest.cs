@@ -7,7 +7,7 @@ namespace H.Core.Test.Services
     {
         #region Fields
         
-        private SwineResultsService _resultsService; 
+        private SwineResultsService _resultsService = null!;
         
         #endregion
 

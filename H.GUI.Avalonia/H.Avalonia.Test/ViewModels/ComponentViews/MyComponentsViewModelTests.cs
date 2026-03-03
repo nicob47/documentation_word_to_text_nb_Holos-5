@@ -1,4 +1,4 @@
-using H.Avalonia.Events;
+﻿using H.Avalonia.Events;
 using H.Avalonia.Test.TestHelpers;
 using H.Avalonia.ViewModels.ComponentViews;
 using H.Core.Models;
@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Prism.Events;
 using Prism.Regions;
+
+#nullable disable
 
 namespace H.Avalonia.Test.ViewModels.ComponentViews;
 

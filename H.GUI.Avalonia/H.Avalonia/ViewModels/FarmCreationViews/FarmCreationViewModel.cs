@@ -14,9 +14,9 @@ namespace H.Avalonia.ViewModels.FarmCreationViews
         
         #region Fields
 
-        private string _farmName;
-        private string _farmComments;
-        private readonly IFarmHelper _farmHelper;
+        private string _farmName = string.Empty;
+        private string _farmComments = string.Empty;
+        private readonly IFarmHelper _farmHelper = null!;
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace H.Avalonia.ViewModels.FarmCreationViews
 
         #region Properties
 
-        public ICommand NavigateToPreviousPage { get; }
+        public ICommand NavigateToPreviousPage { get; } = null!;
 
         public string FarmName
         {
@@ -88,14 +88,14 @@ namespace H.Avalonia.ViewModels.FarmCreationViews
             farm.Name = FarmName;
             farm.Comments = FarmComments;
 
-            base.StorageService.SetActiveFarm(farm);
-            base.StorageService.Storage.ApplicationData.DisplayUnitStrings.SetStrings(farm.MeasurementSystemType);
+            base.StorageService?.SetActiveFarm(farm);
+            base.StorageService?.Storage.ApplicationData.DisplayUnitStrings.SetStrings(farm.MeasurementSystemType);
 
             //base.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(MyComponentsView));
             //base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ChooseComponentsView));
 
             // Navigate to next view
-            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(SoilDataView));
+            base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(SoilDataView));
         }
 
         #endregion
@@ -126,7 +126,7 @@ namespace H.Avalonia.ViewModels.FarmCreationViews
 
         private void OnNavigateToPreviousPage()
         {
-           base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
+           base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
         }
         private void ValidateFarmName()
         {

@@ -3,6 +3,8 @@
 using H.Core.Enumerations;
 using H.Core.Providers.Carbon;
 
+#nullable disable
+
 #endregion
 
 namespace H.Core.Test.Providers.Carbon
@@ -12,7 +14,7 @@ namespace H.Core.Test.Providers.Carbon
     {
         #region Fields
 
-        private IResidueDataProvider _sut;
+        private IResidueDataProvider _sut = null!;
 
         #endregion
 

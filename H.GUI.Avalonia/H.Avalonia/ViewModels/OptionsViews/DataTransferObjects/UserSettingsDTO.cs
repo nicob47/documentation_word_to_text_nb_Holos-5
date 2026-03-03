@@ -30,10 +30,10 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
         private EquilibriumCalculationStrategies _equilibriumCalculationStrategy;
         private TillageType _runInPeriodTillageType;
         private PumpType _defaultPumpType;
-        private ObservableCollection<CarbonModellingStrategies> _carbonModellingStrategiesList;
-        private ObservableCollection<EquilibriumCalculationStrategies> _equilibriumCalculationStrategiesList;
-        private ObservableCollection<TillageType> _runInPeriodTillageList;
-        private ObservableCollection<PumpType> _pumpTypeList;
+        private ObservableCollection<CarbonModellingStrategies>? _carbonModellingStrategiesList;
+        private ObservableCollection<EquilibriumCalculationStrategies>? _equilibriumCalculationStrategiesList;
+        private ObservableCollection<TillageType>? _runInPeriodTillageList;
+        private ObservableCollection<PumpType>? _pumpTypeList;
 
         #endregion
 
@@ -41,7 +41,10 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
         public UserSettingsDTO(IStorageService storageService) : base(storageService)
         {
             ManageData();
-            System.Diagnostics.Debug.WriteLine(ActiveFarm.Defaults.DefaultPumpType);
+            if (ActiveFarm is not null)
+            {
+                System.Diagnostics.Debug.WriteLine(ActiveFarm.Defaults.DefaultPumpType);
+            }
         }
         #endregion
 
@@ -54,7 +57,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _customN2OEmissionFactor, value))
                 {
-                    if (ValidateNonNegative(nameof(CustomN2OEmissionFactor), value))
+                    if (ValidateNonNegative(nameof(CustomN2OEmissionFactor), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.CustomN2OEmissionFactor = value;
                     }
@@ -69,7 +72,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _emissionFactorForLeachingAndRunoff, value))
                 {
-                    if (ValidateNonNegative(nameof(EmissionFactorForLeachingAndRunoff), value))
+                    if (ValidateNonNegative(nameof(EmissionFactorForLeachingAndRunoff), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.EmissionFactorForLeachingAndRunoff = value;
                     }
@@ -84,7 +87,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _emissionFactorForVolatilization, value))
                 {
-                    if (ValidateNonNegative(nameof(EmissionFactorForVolatilization), value))
+                    if (ValidateNonNegative(nameof(EmissionFactorForVolatilization), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.EmissionFactorForVolatilization = value;
                     }
@@ -99,7 +102,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _defaultSupplementalFeedingLossPercentage, value))
                 {
-                    if (ValidateNonNegative(nameof(DefaultSupplementalFeedingLossPercentage), value))
+                    if (ValidateNonNegative(nameof(DefaultSupplementalFeedingLossPercentage), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.DefaultSupplementalFeedingLossPercentage = value;
                     }
@@ -114,7 +117,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfStrawReturnedToSoilForRootCrops, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfStrawReturnedToSoilForRootCrops), value))
+                    if (ValidatePercentage(nameof(PercentageOfStrawReturnedToSoilForRootCrops), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfStrawReturnedToSoilForRootCrops = value;
                     }
@@ -129,7 +132,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfProductReturnedToSoilForRootCrops, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForRootCrops), value))
+                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForRootCrops), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForRootCrops = value;
                     }
@@ -144,7 +147,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfRootsReturnedToSoilForPerennials, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfRootsReturnedToSoilForPerennials), value))
+                    if (ValidatePercentage(nameof(PercentageOfRootsReturnedToSoilForPerennials), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForPerennials = value;
                     }
@@ -159,7 +162,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfProductReturnedToSoilForPerennials, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForPerennials), value))
+                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForPerennials), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForPerennials = value;
                     }
@@ -174,7 +177,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfRootsReturnedToSoilForFodderCorn, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfRootsReturnedToSoilForFodderCorn), value))
+                    if (ValidatePercentage(nameof(PercentageOfRootsReturnedToSoilForFodderCorn), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForFodderCorn = value;
                     }
@@ -189,7 +192,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfProductReturnedToSoilForFodderCorn, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForFodderCorn), value))
+                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForFodderCorn), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForFodderCorn = value;
                     }
@@ -204,7 +207,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfRootsReturnedToSoilForAnnuals, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfRootsReturnedToSoilForAnnuals), value))
+                    if (ValidatePercentage(nameof(PercentageOfRootsReturnedToSoilForAnnuals), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForAnnuals = value;
                     }
@@ -219,7 +222,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _defaultRunInPeriod, value))
                 {
-                    if (ValidateNonNegative(nameof(DefaultRunInPeriod), value))
+                    if (ValidateNonNegative(nameof(DefaultRunInPeriod), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.DefaultRunInPeriod = value;
                     }
@@ -234,7 +237,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfProductReturnedToSoilForAnnuals, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForAnnuals), value))
+                    if (ValidatePercentage(nameof(PercentageOfProductReturnedToSoilForAnnuals), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForAnnuals = value;
                     }
@@ -249,7 +252,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _percentageOfStrawReturnedToSoilForAnnuals, value))
                 {
-                    if (ValidatePercentage(nameof(PercentageOfStrawReturnedToSoilForAnnuals), value))
+                    if (ValidatePercentage(nameof(PercentageOfStrawReturnedToSoilForAnnuals), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.PercentageOfStrawReturnedToSoilForAnnuals = value;
                     }
@@ -264,7 +267,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _customEquilibriumCarbonValue, value))
                 {
-                    if (ValidateNonNegative(nameof(CustomEquilibriumCarbonValue), value))
+                    if (ValidateNonNegative(nameof(CustomEquilibriumCarbonValue), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.StartingSoilOrganicCarbon = value;
                     }
@@ -279,7 +282,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             {
                 if (SetProperty(ref _carbonConcentration, value))
                 {
-                    if (ValidateNonNegative(nameof(CarbonConcentration), value))
+                    if (ValidateNonNegative(nameof(CarbonConcentration), value) && ActiveFarm is not null)
                     {
                         ActiveFarm.Defaults.CarbonConcentration = value;
                     }
@@ -292,7 +295,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             get => _carbonModellingStrategy;
             set
             {
-                if (SetProperty(ref _carbonModellingStrategy, value))
+                if (SetProperty(ref _carbonModellingStrategy, value) && ActiveFarm is not null)
                 {
                     ActiveFarm.Defaults.CarbonModellingStrategy = value;
                 }
@@ -304,7 +307,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             get => _equilibriumCalculationStrategy;
             set
             {
-                if (SetProperty(ref _equilibriumCalculationStrategy, value))
+                if (SetProperty(ref _equilibriumCalculationStrategy, value) && ActiveFarm is not null)
                 {
                     ActiveFarm.Defaults.EquilibriumCalculationStrategy = value;
                 }
@@ -316,7 +319,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             get => _runInPeriodTillageType;
             set
             {
-                if (SetProperty(ref _runInPeriodTillageType, value))
+                if (SetProperty(ref _runInPeriodTillageType, value) && ActiveFarm is not null)
                 {
                     ActiveFarm.Defaults.RunInPeriodTillageType = value;
                 }
@@ -328,7 +331,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             get => _defaultPumpType;
             set
             {
-                if (SetProperty(ref _defaultPumpType, value))
+                if (SetProperty(ref _defaultPumpType, value) && ActiveFarm is not null)
                 {
                     ActiveFarm.Defaults.DefaultPumpType = value;
                 }
@@ -357,25 +360,25 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
         }
 
         //Collections for ComboBox
-        public ObservableCollection<CarbonModellingStrategies> CarbonModellingStrategiesList
+        public ObservableCollection<CarbonModellingStrategies>? CarbonModellingStrategiesList
         {
             get => _carbonModellingStrategiesList;
             set => SetProperty(ref _carbonModellingStrategiesList, value);
         }
 
-        public ObservableCollection<EquilibriumCalculationStrategies> EquilibriumCalculationStrategiesList
+        public ObservableCollection<EquilibriumCalculationStrategies>? EquilibriumCalculationStrategiesList
         {
             get => _equilibriumCalculationStrategiesList;
             set => SetProperty(ref _equilibriumCalculationStrategiesList, value);
         }
 
-        public ObservableCollection<TillageType> RunInPeriodTillageList
+        public ObservableCollection<TillageType>? RunInPeriodTillageList
         {
             get => _runInPeriodTillageList;
             set => SetProperty(ref _runInPeriodTillageList, value);
         }
 
-        public ObservableCollection<PumpType> PumpTypeList
+        public ObservableCollection<PumpType>? PumpTypeList
         {
             get => _pumpTypeList;
             set => SetProperty(ref _pumpTypeList, value);
@@ -431,26 +434,29 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             }
 
             // Initialize properties to values from the ActiveFarm
-            this.CustomN2OEmissionFactor = base.ActiveFarm.Defaults.CustomN2OEmissionFactor;
-            this.EmissionFactorForLeachingAndRunoff = base.ActiveFarm.Defaults.EmissionFactorForLeachingAndRunoff;
-            this.EmissionFactorForVolatilization = base.ActiveFarm.Defaults.EmissionFactorForVolatilization;
-            this.DefaultSupplementalFeedingLossPercentage = base.ActiveFarm.Defaults.DefaultSupplementalFeedingLossPercentage;
-            this.PercentageOfStrawReturnedToSoilForRootCrops = base.ActiveFarm.Defaults.PercentageOfStrawReturnedToSoilForRootCrops;
-            this.PercentageOfProductReturnedToSoilForRootCrops = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForRootCrops;
-            this.PercentageOfRootsReturnedToSoilForPerennials = base.ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForPerennials;
-            this.PercentageOfProductReturnedToSoilForPerennials = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForPerennials;
-            this.PercentageOfRootsReturnedToSoilForFodderCorn = base.ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForFodderCorn;
-            this.PercentageOfProductReturnedToSoilForFodderCorn = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForFodderCorn;
-            this.PercentageOfRootsReturnedToSoilForAnnuals = base.ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForAnnuals;
-            this.DefaultRunInPeriod = base.ActiveFarm.Defaults.DefaultRunInPeriod;
-            this.PercentageOfProductReturnedToSoilForAnnuals = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForAnnuals;
-            this.PercentageOfStrawReturnedToSoilForAnnuals = base.ActiveFarm.Defaults.PercentageOfStrawReturnedToSoilForAnnuals;
-            this.CustomEquilibriumCarbonValue = base.ActiveFarm.StartingSoilOrganicCarbon;
-            this.CarbonConcentration = base.ActiveFarm.Defaults.CarbonConcentration;
-            this.CarbonModellingStrategy = base.ActiveFarm.Defaults.CarbonModellingStrategy;
-            this.EquilibriumCalculationStrategy = base.ActiveFarm.Defaults.EquilibriumCalculationStrategy;
-            this.RunInPeriodTillageType = base.ActiveFarm.Defaults.RunInPeriodTillageType;
-            this.DefaultPumpType = base.ActiveFarm.Defaults.DefaultPumpType;
+            if (base.ActiveFarm is not null)
+            {
+                this.CustomN2OEmissionFactor = base.ActiveFarm.Defaults.CustomN2OEmissionFactor;
+                this.EmissionFactorForLeachingAndRunoff = base.ActiveFarm.Defaults.EmissionFactorForLeachingAndRunoff;
+                this.EmissionFactorForVolatilization = base.ActiveFarm.Defaults.EmissionFactorForVolatilization;
+                this.DefaultSupplementalFeedingLossPercentage = base.ActiveFarm.Defaults.DefaultSupplementalFeedingLossPercentage;
+                this.PercentageOfStrawReturnedToSoilForRootCrops = base.ActiveFarm.Defaults.PercentageOfStrawReturnedToSoilForRootCrops;
+                this.PercentageOfProductReturnedToSoilForRootCrops = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForRootCrops;
+                this.PercentageOfRootsReturnedToSoilForPerennials = base.ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForPerennials;
+                this.PercentageOfProductReturnedToSoilForPerennials = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForPerennials;
+                this.PercentageOfRootsReturnedToSoilForFodderCorn = base.ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForFodderCorn;
+                this.PercentageOfProductReturnedToSoilForFodderCorn = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForFodderCorn;
+                this.PercentageOfRootsReturnedToSoilForAnnuals = base.ActiveFarm.Defaults.PercentageOfRootsReturnedToSoilForAnnuals;
+                this.DefaultRunInPeriod = base.ActiveFarm.Defaults.DefaultRunInPeriod;
+                this.PercentageOfProductReturnedToSoilForAnnuals = base.ActiveFarm.Defaults.PercentageOfProductReturnedToSoilForAnnuals;
+                this.PercentageOfStrawReturnedToSoilForAnnuals = base.ActiveFarm.Defaults.PercentageOfStrawReturnedToSoilForAnnuals;
+                this.CustomEquilibriumCarbonValue = base.ActiveFarm.StartingSoilOrganicCarbon;
+                this.CarbonConcentration = base.ActiveFarm.Defaults.CarbonConcentration;
+                this.CarbonModellingStrategy = base.ActiveFarm.Defaults.CarbonModellingStrategy;
+                this.EquilibriumCalculationStrategy = base.ActiveFarm.Defaults.EquilibriumCalculationStrategy;
+                this.RunInPeriodTillageType = base.ActiveFarm.Defaults.RunInPeriodTillageType;
+                this.DefaultPumpType = base.ActiveFarm.Defaults.DefaultPumpType;
+            }
         }
 
         //Validates the value if it is negative

@@ -6,8 +6,8 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.DataTransferObjects
     [TestClass]
     public class DefaultManureCompositionDTOTests
     {
-        private DefaultManureCompositionData _dataClassInstance;
-        private DefaultManureCompositionDTO _manureCompositionDTO;
+        private DefaultManureCompositionData _dataClassInstance = null!;
+        private DefaultManureCompositionDTO _manureCompositionDTO = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

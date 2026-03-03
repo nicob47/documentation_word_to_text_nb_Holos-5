@@ -1,12 +1,14 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers.Animals;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Animals
 {
     [TestClass]
     public class Table_22_Livestock_Coefficients_Sheep_Provider_Test
     {
-        private Table_22_Livestock_Coefficients_Sheep_Provider _provider;
+        private Table_22_Livestock_Coefficients_Sheep_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

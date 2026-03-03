@@ -1,6 +1,8 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers.Economics;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Economics
 {
     [TestClass]
@@ -8,7 +10,7 @@ namespace H.Core.Test.Providers.Economics
     {
         #region Fields
 
-        private Feed_Costs_For_Beef_Provider _provider;
+        private Feed_Costs_For_Beef_Provider _provider = null!;
 
         #endregion
 

@@ -11,7 +11,7 @@ namespace H.Core.Services.LandManagement
         {
             var result = new EconomicsResultsViewItem();
             result.Name = viewItem.Name + " (" + viewItem.Year + ") " + " (" + viewItem.CropTypeString + ")";
-            result.ComponentName = fieldSystemComponent.Name;
+            result.ComponentName = fieldSystemComponent.Name ?? string.Empty;
             result.Year = viewItem.Year;
             result.GroupingString = Properties.Resources.TitleCrops;
 

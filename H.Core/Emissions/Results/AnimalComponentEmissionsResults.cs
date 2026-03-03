@@ -719,12 +719,12 @@ namespace H.Core.Emissions.Results
         /// <summary>
         /// The farm which created the emissions.
         /// </summary>
-        public Farm Farm { get; set; }
+        public Farm Farm { get; set; } = null!;
 
         /// <summary>
         /// The animal component which created the emissions.
         /// </summary>
-        public ComponentBase Component { get; set; }
+        public ComponentBase Component { get; set; } = null!;
 
         /// <summary>
         /// A collection of <see cref="AnimalGroupEmissionResults"/>. There will be one instance for each animal group in the component.

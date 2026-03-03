@@ -22,6 +22,6 @@ namespace H.Core.Providers.Climate
         /// <summary>
         /// The source where the data is collected from
         /// </summary>
-        public string Source { get; set; }
+        public string Source { get; set; } = string.Empty;
     }
 }

@@ -20,6 +20,8 @@ using Moq;
 using System.Collections.ObjectModel;
 using GroupEmissionsByDay = H.Core.Emissions.Results.GroupEmissionsByDay;
 
+#nullable disable
+
 #endregion
 
 namespace H.Core.Test.Services
@@ -29,11 +31,11 @@ namespace H.Core.Test.Services
     {
         #region Fields
 
-        private FieldResultsService _resultsService;
-        private Mock<IAnimalService> _mockAnimalResultsService;
-        private N2OEmissionFactorCalculator _n2OEmissionFactorCalculator;
-        private ICBMSoilCarbonCalculator _iCbmSoilCarbonCalculator;
-        private IPCCTier2SoilCarbonCalculator _ipccSoilCarbonCalculator;
+        private FieldResultsService _resultsService = null!;
+        private Mock<IAnimalService> _mockAnimalResultsService = null!;
+        private new N2OEmissionFactorCalculator _n2OEmissionFactorCalculator = null!;
+        private new ICBMSoilCarbonCalculator _iCbmSoilCarbonCalculator = null!;
+        private IPCCTier2SoilCarbonCalculator _ipccSoilCarbonCalculator = null!;
 
         #endregion
 

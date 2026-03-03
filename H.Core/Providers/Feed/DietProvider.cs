@@ -82,7 +82,7 @@ namespace H.Core.Providers.Feed
 
         private IEnumerable<Diet> CreateDairyHeiferDiets()
         {
-            var dairyIngredients = _feedIngredientProvider.GetDairyFeedIngredients().ToList();
+            var dairyIngredients = _feedIngredientProvider.GetDairyFeedIngredients()!.ToList();
 
             var diets = new List<Diet>();
 
@@ -117,7 +117,7 @@ namespace H.Core.Providers.Feed
 
         private IEnumerable<Diet> CreateDairyDryCowDiets()
         {
-            var dairyIngredients = _feedIngredientProvider.GetDairyFeedIngredients().ToList();
+            var dairyIngredients = _feedIngredientProvider.GetDairyFeedIngredients()!.ToList();
 
             var diets = new List<Diet>();
 
@@ -130,11 +130,11 @@ namespace H.Core.Providers.Feed
 
                 Ingredients = new ObservableCollection<FeedIngredient>()
                 {
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CornYellowSilageNormal), 48),
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.GrassLegumeMixturesPredomLegumesSilageMidMaturity), 23),
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CornYellowGrainCrackedDry), 12),
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CanolaMealMechExtracted), 9),
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CornYellowGlutenMealDried), 8),                   
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CornYellowSilageNormal), 48)!,
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.GrassLegumeMixturesPredomLegumesSilageMidMaturity), 23)!,
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CornYellowGrainCrackedDry), 12)!,
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CanolaMealMechExtracted), 9)!,
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.CornYellowGlutenMealDried), 8)!,
                 },
 
                 Forage = 52.4,
@@ -150,9 +150,9 @@ namespace H.Core.Providers.Feed
 
                 Ingredients = new ObservableCollection<FeedIngredient>()
                 {
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.GrassLegumeMixturesPredomLegumesHayMidMaturity), 57),
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.BarleyGrainRolled), 38),
-                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.SoybeanMealExpellers), 5),
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.GrassLegumeMixturesPredomLegumesHayMidMaturity), 57)!,
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.BarleyGrainRolled), 38)!,
+                    _feedIngredientProvider.CopyIngredient((FeedIngredient)dairyIngredients.Single(x => x.IngredientType == IngredientType.SoybeanMealExpellers), 5)!,
                 },
 
                 Forage = 90.2,
@@ -164,7 +164,7 @@ namespace H.Core.Providers.Feed
 
         private IEnumerable<Diet> CreateDairyLactatingCowDiets()
         {
-            var dairyIngredients = _feedIngredientProvider.GetDairyFeedIngredients().ToList();
+            var dairyIngredients = _feedIngredientProvider.GetDairyFeedIngredients()!.ToList();
 
             var diets = new List<Diet>();
 
@@ -212,7 +212,7 @@ namespace H.Core.Providers.Feed
 
         private IEnumerable<Diet> CreateBeefBackgroundingDiets()
         {
-            var beefIngredients = _feedIngredientProvider.GetBeefFeedIngredients().ToList();
+            var beefIngredients = _feedIngredientProvider.GetBeefFeedIngredients()!.ToList();
 
             var diets = new List<Diet>();
 

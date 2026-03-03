@@ -92,7 +92,7 @@ namespace H.Core.Providers.Soil
             var results = new List<EcodistrictDefaultsData>();
 
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.EcodistrictToEcozoneMapping);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.EcodistrictToEcozoneMapping)!;
             foreach (var line in fileLines.Skip(1))
             {
                 var ecodistrictId = int.Parse(line[0], cultureInfo);

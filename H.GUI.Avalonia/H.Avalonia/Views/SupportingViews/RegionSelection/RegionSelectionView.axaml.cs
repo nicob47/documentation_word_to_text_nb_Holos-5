@@ -8,25 +8,25 @@ namespace H.Avalonia.Views.SupportingViews.RegionSelection
     {
         #region Fields
 
-        private RegionSelectionViewModel _regionSelectionViewModel;
+        private RegionSelectionViewModel? _regionSelectionViewModel;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Parameterless constructor required by the Avalonia XAML loader.
+        /// </summary>
+        public RegionSelectionView()
+        {
+            InitializeComponent();
+        }
+
         public RegionSelectionView(RegionSelectionViewModel regionSelectionViewModel)
         {
             InitializeComponent();
-
-            if (regionSelectionViewModel != null)
-            {
-                _regionSelectionViewModel = regionSelectionViewModel;
-                DataContext = _regionSelectionViewModel;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(regionSelectionViewModel));
-            }
+            _regionSelectionViewModel = regionSelectionViewModel ?? throw new ArgumentNullException(nameof(regionSelectionViewModel));
+            DataContext = _regionSelectionViewModel;
         }
 
         #endregion

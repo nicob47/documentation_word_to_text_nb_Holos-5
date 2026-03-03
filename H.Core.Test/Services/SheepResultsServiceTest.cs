@@ -7,7 +7,7 @@ namespace H.Core.Test.Services
     {
         #region Fields
         
-        private SheepResultsService _resultsService; 
+        private SheepResultsService _resultsService = null!;
         
         #endregion
 

@@ -19,7 +19,7 @@ namespace H.Core.Models.LandManagement.Fields
         private SoilReductionFactors _soilReductionFactor;
         private FertilizerBlends _fertilizerBlend;
 
-        private ObservableCollection<FertilizerApplicationViewItem> _fertilizerApplicationViewItems;
+        private ObservableCollection<FertilizerApplicationViewItem> _fertilizerApplicationViewItems = null!;
         public double NO3NFromMineralizationLeaching;
         public double NH4FromSyntheticNitogenVolatilized;
 
@@ -135,13 +135,13 @@ namespace H.Core.Models.LandManagement.Fields
 
         #region Event Handlers
 
-        private void FertilizerApplicationViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FertilizerApplicationViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.RaisePropertyChanged(nameof(this.HasFertilizerApplicationViewItems));
 
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                if (e.NewItems[0] is FertilizerApplicationViewItem addedItem)
+                if (e.NewItems?[0] is FertilizerApplicationViewItem addedItem)
                 {
                     addedItem.PropertyChanged += FertilizerApplicationViewItemOnPropertyChanged;
                 }
@@ -153,14 +153,14 @@ namespace H.Core.Models.LandManagement.Fields
             }
         }
 
-        private void FertilizerApplicationViewItemOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FertilizerApplicationViewItemOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is FertilizerApplicationViewItem fertilizerApplicationViewItem)
             {
-                if (e.PropertyName.Equals(nameof(FertilizerApplicationViewItem.AmountOfNitrogenApplied)) ||
+                if (e.PropertyName != null && (e.PropertyName.Equals(nameof(FertilizerApplicationViewItem.AmountOfNitrogenApplied)) ||
                     e.PropertyName.Equals(nameof(FertilizerApplicationViewItem.AmountOfPotassiumApplied)) ||
                     e.PropertyName.Equals(nameof(FertilizerApplicationViewItem.AmountOfSulphurApplied)) ||
-                    e.PropertyName.Equals(nameof(FertilizerApplicationViewItem.AmountOfPhosphorusApplied)))
+                    e.PropertyName.Equals(nameof(FertilizerApplicationViewItem.AmountOfPhosphorusApplied))))
                 {
                     // When the component amounts of the fertilizer blend changes, we need to update the total application rates for the year (sum up individual rates)
                     this.UpdateApplicationRateTotals();

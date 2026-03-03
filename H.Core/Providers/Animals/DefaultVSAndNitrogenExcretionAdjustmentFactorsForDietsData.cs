@@ -4,7 +4,7 @@
     {
         #region Properties
 
-        public string Name { get; set; }        
+        public string Name { get; set; } = string.Empty;
         public double VSAdjustment { get; set; }
         public double NitrogenExcretedAdjustment { get; set; }
         #endregion

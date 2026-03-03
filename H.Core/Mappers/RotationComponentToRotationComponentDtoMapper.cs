@@ -9,7 +9,6 @@ public class RotationComponentToRotationComponentDtoMapper : Profile
     public RotationComponentToRotationComponentDtoMapper()
     {
         CreateMap<RotationComponent, RotationComponentDto>()
-            .ForMember(dest => dest.FieldArea, opt => opt.MapFrom(src => 
-                src.FieldSystemComponent != null ? src.FieldSystemComponent.FieldArea : 0));
+            .ForMember(dest => dest.FieldArea, opt => opt.MapFrom(src => src.FieldSystemComponent.FieldArea));
     }
 }

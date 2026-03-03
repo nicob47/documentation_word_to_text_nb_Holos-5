@@ -43,7 +43,7 @@ public class DefaultStorageService : IStorageService
         return Storage.ApplicationData.Farms.ToList();
     }
 
-    public bool SetActiveFarm(Farm farm)
+    public bool SetActiveFarm(Farm? farm)
     {
         if (farm != null)
         {
@@ -66,7 +66,7 @@ public class DefaultStorageService : IStorageService
         return false;
     }
 
-    public void AddFarm(Farm farm)
+    public void AddFarm(Farm? farm)
     {
         if (farm != null)
         {
@@ -77,7 +77,7 @@ public class DefaultStorageService : IStorageService
             }
             else
             {
-                if (Storage.ApplicationData.Farms.Any(x => x.Name.Equals(importedFarmName)))
+                if (Storage.ApplicationData.Farms.Any(x => x.Name != null && x.Name.Equals(importedFarmName)))
                 {
                     farm.Name = farm.Name + $"_Imported_{DateTime.Now.ToShortDateString()}";
                 }

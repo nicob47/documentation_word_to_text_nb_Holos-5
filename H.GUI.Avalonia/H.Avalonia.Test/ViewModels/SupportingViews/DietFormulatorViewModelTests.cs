@@ -1,4 +1,4 @@
-using H.Avalonia.ViewModels.SupportingViews;
+﻿using H.Avalonia.ViewModels.SupportingViews;
 using H.Core.Providers.Feed;
 using H.Core.Services.DietService;
 using H.Core.Services.StorageService;
@@ -11,10 +11,10 @@ namespace H.Avalonia.Test.ViewModels.SupportingViews
     [TestClass]
     public class DietFormulatorViewModelTests
     {
-        private DietFormulatorViewModel _viewModel;
-        private Mock<IDietService> _mockDietService;
-        private Mock<IRegionManager> _mockRegionManager;
-        private Mock<IStorageService> _mockStorageService;
+        private DietFormulatorViewModel _viewModel = null!;
+        private Mock<IDietService> _mockDietService = null!;
+        private Mock<IRegionManager> _mockRegionManager = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
 
         [TestInitialize]
         public void TestInitialize()

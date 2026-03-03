@@ -79,7 +79,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                 });
 
                 // Show success notification to the user
-                NotificationManager.ShowToast(H.Core.Properties.Resources.LabelSuccess, H.Core.Properties.Resources.LabelFarmExportSuccess, NotificationType.Success);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.LabelSuccess, H.Core.Properties.Resources.LabelFarmExportSuccess, NotificationType.Success);
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                 Debug.WriteLine($"Error exporting farms: {ex.Message}");
                 
                 // Show error notification to the user with the exception message
-                NotificationManager.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
             }
         }
         
@@ -102,7 +102,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             if(file == null)
             {
                 // Show error notification for missing file selection
-                NotificationManager.ShowToast(H.Core.Properties.Resources.ErrorError, H.Core.Properties.Resources.ErrorNoFileSelected, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.ErrorError, H.Core.Properties.Resources.ErrorNoFileSelected, NotificationType.Error);
                 return;
             }
             

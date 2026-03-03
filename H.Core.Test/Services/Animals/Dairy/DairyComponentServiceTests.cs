@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Enumerations;
 using H.Core.Factories.Animals;
 using H.Core.Factories.Animals.Dairy;
@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Prism.Ioc;
 
+#nullable disable
+
 namespace H.Core.Test.Services.Animals.Dairy;
 
 /// <summary>
@@ -22,14 +24,14 @@ public class DairyComponentServiceTests
 {
     #region Fields
 
-    private DairyComponentService _sut;
-    private Mock<ILogger> _mockLogger;
-    private Mock<IContainerProvider> _mockContainerProvider;
-    private IMapper _dairyMapper;
-    private IMapper _animalGroupMapper;
-    private Farm _testFarm;
-    private DairyComponent _testDairyComponent;
-    private DairyComponentDto _testDairyComponentDto;
+    private DairyComponentService _sut = null!;
+    private Mock<ILogger> _mockLogger = null!;
+    private Mock<IContainerProvider> _mockContainerProvider = null!;
+    private IMapper _dairyMapper = null!;
+    private IMapper _animalGroupMapper = null!;
+    private Farm _testFarm = null!;
+    private DairyComponent _testDairyComponent = null!;
+    private DairyComponentDto _testDairyComponentDto = null!;
 
     #endregion
 
@@ -119,23 +121,23 @@ public class DairyComponentServiceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
-        // Arrange & Act
-        new DairyComponentService(null, _mockContainerProvider.Object);
-
-        // Assert - Exception expected
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            // Arrange & Act
+            new DairyComponentService(null, _mockContainerProvider.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullContainerProvider_ThrowsArgumentNullException()
     {
-        // Arrange & Act
-        new DairyComponentService(_mockLogger.Object, null);
-
-        // Assert - Exception expected
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            // Arrange & Act
+            new DairyComponentService(_mockLogger.Object, null);
+        });
     }
 
     #endregion
@@ -464,23 +466,23 @@ public class DairyComponentServiceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void GenerateAnimalGroups_WithNullDto_ThrowsArgumentNullException()
     {
-        // Arrange & Act
-        _sut.GenerateAnimalGroups(null, _testDairyComponent);
-
-        // Assert - Exception expected
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            // Arrange & Act
+            _sut.GenerateAnimalGroups(null, _testDairyComponent);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void GenerateAnimalGroups_WithNullComponent_ThrowsArgumentNullException()
     {
-        // Arrange & Act
-        _sut.GenerateAnimalGroups(_testDairyComponentDto, null);
-
-        // Assert - Exception expected
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            // Arrange & Act
+            _sut.GenerateAnimalGroups(_testDairyComponentDto, null);
+        });
     }
 
     [TestMethod]

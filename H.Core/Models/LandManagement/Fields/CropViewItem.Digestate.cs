@@ -8,11 +8,11 @@ namespace H.Core.Models.LandManagement.Fields
     {
         #region Fields
 
-        private ObservableCollection<DigestateApplicationViewItem> _digestateApplicationViewItems;
+        private ObservableCollection<DigestateApplicationViewItem> _digestateApplicationViewItems = null!;
 
         private double _digestateCarbonInputsPerHectare;
 
-        private BiogasAndMethaneProductionParametersData _biogasAndMethaneProductionParametersData;
+        private BiogasAndMethaneProductionParametersData _biogasAndMethaneProductionParametersData = null!;
 
         #endregion
 
@@ -75,7 +75,7 @@ namespace H.Core.Models.LandManagement.Fields
 
         #region Event Handlers
 
-        private void DigestateApplicationViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void DigestateApplicationViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasDigestateApplications = this.DigestateApplicationViewItems.Count > 0;
             this.RaisePropertyChanged(nameof(this.HasDigestateApplications));

@@ -13,7 +13,7 @@ namespace H.Core.Models.LandManagement.Fields
         private ResourceSourceLocation _sourceOfBales;
         private double _amount;
         private int _numberOfBales;
-        private double _moistureContentAsPercentage;
+
         private double _baleWeight;
         private Guid _fieldSourceGuid;
 

@@ -8,7 +8,7 @@ namespace H.Core.Test.Calculators.Emissions
     [TestClass]
     public class EnergyCarbonDioxideEmissionsCalculatorTest
     {
-        private EnergyCarbonDioxideEmissionsCalculator calc;
+        private EnergyCarbonDioxideEmissionsCalculator calc = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides

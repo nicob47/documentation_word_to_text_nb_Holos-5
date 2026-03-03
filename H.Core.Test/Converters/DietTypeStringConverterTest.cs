@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class DietTypeStringConverterTest
     {
-        private DietTypeStringConverter converter;
+        private DietTypeStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -27,7 +27,7 @@ namespace H.Core.Test.Converters
         public void ConvertReturnsException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<Exception>(() => converter.Convert("m7"));
+            Assert.ThrowsExactly<Exception>(() => converter.Convert("m7"));
         }
 
         [TestMethod]

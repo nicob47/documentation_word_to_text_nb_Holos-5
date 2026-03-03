@@ -24,7 +24,7 @@ namespace H.Core.Providers.Shelterbelt
         {
             var cultureInfo = H.Infrastructure.InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.SlcToHardinessZone;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<SlcToHardinessZoneData>();
             foreach (var line in filelines.Skip(1))
             {

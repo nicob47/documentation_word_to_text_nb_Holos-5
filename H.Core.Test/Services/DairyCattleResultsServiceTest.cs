@@ -12,7 +12,7 @@ namespace H.Core.Test.Services
     {
         #region Fields
         
-        private DairyCattleResultsService _dairyCattleResultsService;
+        private DairyCattleResultsService _dairyCattleResultsService = null!;
 
         #endregion
 
@@ -61,7 +61,9 @@ namespace H.Core.Test.Services
                     NitrogenExcretionAdjustFactorForDiet = 1,
                 },
 
+#pragma warning disable CS0618
                 FeedIntakeAmount = 1,
+#pragma warning restore CS0618
                 GainCoefficient = 1,
                 GainCoefficientA = 1,
                 GainCoefficientB = 1,
@@ -103,7 +105,9 @@ namespace H.Core.Test.Services
             var animalList = new List<AnimalComponentBase>();
             animalList.Add(swineComponent);
 
-            var roundingDigits = 2;
+#pragma warning disable CS0219
+            var _roundingDigits = 2;
+#pragma warning restore CS0219
             //var results = _dairyCattleResultsService.CalculateResultsForAnimalComponents(animalList, new Core.Models.Farm());
 
 

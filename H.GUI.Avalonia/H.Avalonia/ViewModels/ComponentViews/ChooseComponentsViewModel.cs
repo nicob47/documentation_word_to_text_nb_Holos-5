@@ -21,12 +21,14 @@ using H.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Prism.Commands;
+using Avalonia.Controls.Notifications;
+using H.Avalonia.Services;
 
 namespace H.Avalonia.ViewModels.ComponentViews
 {
     public class ComponentGroup
     {
-        public string CategoryName { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
         public ObservableCollection<ComponentBase> Components { get; set; } = new ObservableCollection<ComponentBase>();
     }
 
@@ -34,13 +36,13 @@ namespace H.Avalonia.ViewModels.ComponentViews
     {
         #region Fields
 
-        private string _selectedComponentTitle;
-        private string _selectedComponentDescription;
+        private string? _selectedComponentTitle;
+        private string? _selectedComponentDescription;
 
-        private ComponentBase _selectedComponent;
+        private ComponentBase? _selectedComponent;
 
-        private ObservableCollection<ComponentBase> _availableComponents;
-        private ObservableCollection<ComponentGroup> _groupedComponents;
+        private ObservableCollection<ComponentBase> _availableComponents = null!;
+        private ObservableCollection<ComponentGroup> _groupedComponents = null!;
 
         #endregion
 
@@ -55,8 +57,9 @@ namespace H.Avalonia.ViewModels.ComponentViews
             InitializeCommands();
         }
 
-        public ChooseComponentsViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IStorageService storageService, ILogger logger) : base(regionManager, eventAggregator, storageService, logger)
+        public ChooseComponentsViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IStorageService storageService, ILogger logger, INotificationManagerService notificationManager) : base(regionManager, eventAggregator, storageService, logger)
         {
+            this.NotificationManager = notificationManager;
             this.PropertyChanged += OnPropertyChanged;
             this.AvailableComponents = new ObservableCollection<ComponentBase>();
             InitializeAvailableComponents();
@@ -69,13 +72,13 @@ namespace H.Avalonia.ViewModels.ComponentViews
 
         #region Properties
 
-        public string SelectedComponentTitle
+        public string? SelectedComponentTitle
         {
             get => _selectedComponentTitle;
             set => SetProperty(ref _selectedComponentTitle, value);
         }
 
-        public string SelectedComponentDescription
+        public string? SelectedComponentDescription
         {
             get => _selectedComponentDescription;
             set => SetProperty(ref _selectedComponentDescription, value);
@@ -93,13 +96,13 @@ namespace H.Avalonia.ViewModels.ComponentViews
             private set => SetProperty(ref _groupedComponents, value);
         }
 
-        public ComponentBase SelectedComponent
+        public ComponentBase? SelectedComponent
         {
             get => _selectedComponent;
             set => SetProperty(ref _selectedComponent, value);
         }
 
-        public DelegateCommand<ComponentBase> SelectComponentCommand { get; private set; }
+        public DelegateCommand<ComponentBase> SelectComponentCommand { get; private set; } = null!;
 
         #endregion
 
@@ -117,7 +120,7 @@ namespace H.Avalonia.ViewModels.ComponentViews
             base.OnNavigatedFrom(navigationContext);
         }
 
-        public void InitializeViewModel()
+        public override void InitializeViewModel()
         {
             this.SelectedComponent = this.AvailableComponents.First();
         }
@@ -131,9 +134,9 @@ namespace H.Avalonia.ViewModels.ComponentViews
             SelectComponentCommand = new DelegateCommand<ComponentBase>(OnSelectComponent);
         }
 
-        private void OnSelectComponent(ComponentBase component)
+        private void OnSelectComponent(ComponentBase? component)
         {
-            if (component != null)
+            if (component is not null)
             {
                 SelectedComponent = component;
             }
@@ -249,23 +252,38 @@ namespace H.Avalonia.ViewModels.ComponentViews
         {
             if (e.PropertyName is nameof(this.SelectedComponent))
             {
-                this.SelectedComponentTitle = this.SelectedComponent.ComponentType.GetDescription();
-                this.SelectedComponentDescription = this.SelectedComponent.ComponentDescriptionString;
+                if (this.SelectedComponent is not null)
+                {
+                    this.SelectedComponentTitle = this.SelectedComponent.ComponentType.GetDescription();
+                    this.SelectedComponentDescription = this.SelectedComponent.ComponentDescriptionString;
+                }
             }
         }
 
         public void OnAddComponentExecute()
         {
-            base.EventAggregator.GetEvent<ComponentAddedEvent>().Publish(this.SelectedComponent);
+            if (this.SelectedComponent is not null)
+            {
+                base.EventAggregator?.GetEvent<ComponentAddedEvent>().Publish(this.SelectedComponent);
+
+                var componentName = this.SelectedComponent.ComponentType.GetDescription();
+                this.NotificationManager?.ShowToast(
+                    H.Core.Properties.Resources.ToastTitleComponentAdded,
+                    string.Format(H.Core.Properties.Resources.ToastMessageComponentAddedToFarm, componentName),
+                    NotificationType.Success);
+            }
         }
 
         public void OnFinishedAddingComponentsExecute()
         {
-            var view = this.RegionManager.Regions[UiRegions.ContentRegion].ActiveViews.Single();
-            this.RegionManager.Regions[UiRegions.ContentRegion].Deactivate(view);
-            this.RegionManager.Regions[UiRegions.ContentRegion].Remove(view);
+            var view = this.RegionManager?.Regions[UiRegions.ContentRegion].ActiveViews.Single();
+            if (view != null)
+            {
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Deactivate(view);
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Remove(view);
+            }
 
-            base.EventAggregator.GetEvent<EditingComponentsCompletedEvent>().Publish();
+            base.EventAggregator?.GetEvent<EditingComponentsCompletedEvent>().Publish();
         }
 
         #endregion

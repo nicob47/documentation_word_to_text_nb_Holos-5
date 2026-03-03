@@ -7,17 +7,19 @@ using H.Core.Services.StorageService;
 using Moq;
 using Prism.Regions;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews.FileMenuViews
 {
     [TestClass]
     public class FileExportFarmViewModelTest
     {
-        private Mock<IStorageService> _mockStorageService;
-        private Mock<IRegionManager> _mockRegionManager;
-        private Mock<INotificationManagerService> _mockNotificationService;
-        private Mock<IStorageFile> _mockFile;
-        private Mock<Stream> _mockStream;
-        private FileExportFarmViewModel _viewModel;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private Mock<IRegionManager> _mockRegionManager = null!;
+        private Mock<INotificationManagerService> _mockNotificationService = null!;
+        private Mock<IStorageFile> _mockFile = null!;
+        private Mock<Stream> _mockStream = null!;
+        private FileExportFarmViewModel _viewModel = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -112,7 +114,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.FileMenuViews
         // Helper class to capture data before disposal
         private class TestMemoryStream : MemoryStream
         {
-            public Action<MemoryStream> OnDispose { get; set; }
+            public Action<MemoryStream> OnDispose { get; set; } = null!;
 
             protected override void Dispose(bool disposing)
             {

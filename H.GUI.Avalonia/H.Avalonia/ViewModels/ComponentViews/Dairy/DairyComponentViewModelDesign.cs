@@ -1,3 +1,4 @@
+using H.Core.Factories.Animals;
 using H.Core.Factories.Animals.Dairy;
 using H.Core.Models.Animals.Dairy;
 using H.Core.Services.Animals.Dairy;
@@ -134,6 +135,23 @@ public class DairyComponentViewModelDesign : DairyComponentViewModel
         // Dry groups - representing different management approaches
         dairyDto.DryPopulationGroups.Add(new DairyPopulationGroup("Far-off Dry", 8));
         dairyDto.DryPopulationGroups.Add(new DairyPopulationGroup("Close-up Dry", 10));
+
+        // Management practices are auto-initialized in the DairyComponentDto constructor
+        // with sensible defaults for each stage. Add an extra custom practice to demonstrate
+        // the dynamic add/remove capability in the designer.
+        dairyDto.CalfManagementPractices.Add(new ManagementPeriodDto
+        {
+            Name = "Phase 3: Transition Period",
+            ManureStateType = ManureStateType.SolidStorage,
+            HousingType = HousingType.HousedInBarnSolid,
+        });
+
+        dairyDto.LactatingManagementPractices.Add(new ManagementPeriodDto
+        {
+            Name = "Phase 5: Extended Lactation",
+            ManureStateType = ManureStateType.LiquidNoCrust,
+            HousingType = HousingType.FreeStallBarnSlurryScraping,
+        });
 
         // Set Calf stage as selected for design-time visualization of Step 2 and Step 3
         IsCalfSelected = true;

@@ -8,8 +8,8 @@ namespace H.Core.Services
         List<Tuple<DateTime, DateTime>> GetTimePeriodOpenings(IEnumerable<ITimePeriodItem> itemsInTimePeriod,
                                                               DateTime minimumDate, DateTime maximumDate);
 
-        Tuple<DateTime, DateTime> GetFirstTimePeriodOpening(IEnumerable<ITimePeriodItem> itemsInTimePeriod,
-                                                            DateTime minimumDate, DateTime maximumDate);
+        Tuple<DateTime, DateTime>? GetFirstTimePeriodOpening(IEnumerable<ITimePeriodItem> itemsInTimePeriod,
+                                                             DateTime minimumDate, DateTime maximumDate);
 
         bool TimePeriodHasOpenings(IEnumerable<ITimePeriodItem> itemsInTimePeriod, DateTime minimumDate,
                                    DateTime maximumDate);

@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.Fertilizer
     {
         #region Fields
 
-        private Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider _provider;
+        private Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider _provider = null!;
 
         #endregion
 

@@ -8,24 +8,24 @@ namespace H.Avalonia.Views.SupportingViews.CountrySelection
     {
         #region Fields
 
-        private CountrySelectionViewModel _countrySelectionViewModel;
+        private CountrySelectionViewModel? _countrySelectionViewModel;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Parameterless constructor required by the Avalonia XAML loader.
+        /// </summary>
+        public CountrySelectionView()
+        {
+            InitializeComponent();
+        }
+
         public CountrySelectionView(CountrySelectionViewModel countrySelectionViewModel)
         {
             InitializeComponent();
-
-            if (countrySelectionViewModel != null)
-            {
-                _countrySelectionViewModel = countrySelectionViewModel;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(countrySelectionViewModel));
-            }
+            _countrySelectionViewModel = countrySelectionViewModel ?? throw new ArgumentNullException(nameof(countrySelectionViewModel));
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace H.Core.Models.Animals
     {
         #region Fields
 
-        private ObservableCollection<AnimalGroup> _groups;
+        private ObservableCollection<AnimalGroup> _groups = null!;
 
         #endregion
 
@@ -90,7 +90,7 @@ namespace H.Core.Models.Animals
         /// <param name="youngAnimalGroup">The group of young animals that belong the a parent group.</param>
         /// <param name="parentGroupType">The <see cref="AnimalType"/>of the parent <see cref="AnimalGroup"/></param>
         /// <returns>A single <see cref="AnimalGroup"/> that is the parent of the specified young animal group or null if no associated parent group was found</returns>
-        public AnimalGroup GetAssociatedParentGroup(
+        public AnimalGroup? GetAssociatedParentGroup(
             AnimalGroup youngAnimalGroup,
             AnimalType parentGroupType)
         {
@@ -123,12 +123,12 @@ namespace H.Core.Models.Animals
         /// <param name="youngAnimalGroup">The young <see cref="AnimalGroup"/> to search by</param>
         /// <param name="parentGroupType">The parent <see cref="AnimalType"/> to search by</param>
         /// <returns>The <see cref="ManagementPeriod"/> if found, null otherwise</returns>
-        public ManagementPeriod GetAssociatedManagementPeriodOfParentGroup(
+        public ManagementPeriod? GetAssociatedManagementPeriodOfParentGroup(
             DateTime dateTime,
             AnimalGroup youngAnimalGroup,
             AnimalType parentGroupType)
         {
-            var parentAnimalGroup = this.GetAssociatedParentGroup(
+            AnimalGroup? parentAnimalGroup = this.GetAssociatedParentGroup(
                 youngAnimalGroup: youngAnimalGroup,
                 parentGroupType: parentGroupType);
 
@@ -184,7 +184,7 @@ namespace H.Core.Models.Animals
             var animalGroups = this.Groups.Where(x => x.GroupType == animalType);
             foreach (var animalGroup in animalGroups)
             {
-                var managementPeriod = animalGroup.GetManagementPeriodByDate(dateTime);
+                ManagementPeriod? managementPeriod = animalGroup.GetManagementPeriodByDate(dateTime);
                 if (managementPeriod != null)
                 {
                     result.Add(managementPeriod);
@@ -257,14 +257,14 @@ namespace H.Core.Models.Animals
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is AnimalComponentBase animalComponent)
             {
             }
         }
 
-        private void GroupsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        private void GroupsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
             {
@@ -275,7 +275,7 @@ namespace H.Core.Models.Animals
             }
         }
 
-        private void AnimalGroupOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void AnimalGroupOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is AnimalGroup animalGroup)
             {

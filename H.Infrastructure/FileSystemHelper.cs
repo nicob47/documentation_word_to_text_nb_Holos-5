@@ -14,7 +14,7 @@ namespace H.Infrastructure
         //
         // 'isRecursiveScan' a boolean allowing me to accept subfolder scans
         //
-        public static StringCollection ListAllFiles(StringCollection allFiles, string path, string ext, bool isRecursiveScan)
+        public static StringCollection? ListAllFiles(StringCollection allFiles, string path, string ext, bool isRecursiveScan)
         {
             // listFilesCurrDir: Table containing the list of files in the 'path' folder
             string[] listFilesCurrDir;
@@ -39,7 +39,7 @@ namespace H.Infrastructure
                 }
             }
             // Clear the 'listFilesCurrDir' table for the next list of subfolders
-            listFilesCurrDir = null;
+            listFilesCurrDir = null!;
 
             // If you allow subfolders to be read
             if (isRecursiveScan)
@@ -59,7 +59,7 @@ namespace H.Infrastructure
                 }
 
                 // Clear the 'listDirCurrDir' table for the next list of subfolders
-                listDirCurrDir = null;
+                listDirCurrDir = null!;
 
             }
             // return 'allFiles'

@@ -23,7 +23,7 @@ namespace H.Core.Calculators.Nitrogen
         public IManureService ManureService { get; set; }
         public IDigestateService DigestateService { get; set; }
 
-        public IClimateProvider ClimateProvider { get; set; }
+        public IClimateProvider ClimateProvider { get; set; } = null!;
 
         public IAnimalEmissionFactorsProvider LivestockEmissionConversionFactorsProvider { get; set; }
         public IAnimalAmmoniaEmissionFactorProvider AnimalAmmoniaEmissionFactorProvider { get; set; }
@@ -124,10 +124,10 @@ namespace H.Core.Calculators.Nitrogen
         }
 
         public double CalculateSyntheticNitrogenEmissionFactor(
-            CropViewItem viewItem,
+            CropViewItem? viewItem,
             Farm farm)
         {
-            if (viewItem == null)
+            if (viewItem is null)
             {
                 return 0;
             }
@@ -169,10 +169,10 @@ namespace H.Core.Calculators.Nitrogen
         }
 
         public double CalculateOrganicNitrogenEmissionFactor(
-            CropViewItem viewItem,
+            CropViewItem? viewItem,
             Farm farm)
         {
-            if (viewItem == null)
+            if (viewItem is null)
             {
                 return 0;
             }
@@ -207,10 +207,10 @@ namespace H.Core.Calculators.Nitrogen
         }
 
         public double GetEmissionFactorForCropResidues(
-            CropViewItem viewItem, 
+            CropViewItem? viewItem,
             Farm farm)
         {
-            if (viewItem == null)
+            if (viewItem is null)
             {
                 return 0;
             }

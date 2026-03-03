@@ -76,7 +76,7 @@ namespace H.Avalonia.ViewModels.Results
                     case var _ when selectedOption == H.Core.Properties.Resources.LabelManureManagement:
                         base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
                         break;
-                    case var _ when selectedOption == H.Core.Properties.Resources.Economics:
+                    case var _ when selectedOption == H.Core.Properties.Resources.TitleEconomics:
                         base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleEmissionsPieChart:

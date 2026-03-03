@@ -37,11 +37,12 @@
                     <StackPanel>
                         <!-- Card Header -->
                         <StackPanel Margin="0,0,0,20">
-                            <TextBlock Text="{x:Static properties:Resources.TabHeaderGeneral}" 
-                                      FontSize="18" FontWeight="Bold" 
-                                      Foreground="#2C3E50" Margin="0,0,0,4"/>
-                            <TextBlock Text="Configure basic crop parameters including yield and irrigation" 
-                                      FontSize="12" Foreground="Gray" 
+                            <TextBlock Text="{x:Static properties:Resources.TabHeaderGeneral}"
+                                      FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
+                                      FontFamily="{StaticResource GcdsHeadingFont}"
+                                      Foreground="{StaticResource GcdsTextPrimaryBrush}" Margin="0,0,0,4"/>
+                            <TextBlock Text="Configure basic crop parameters including yield and irrigation"
+                                      FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                       FontStyle="Italic"/>
                         </StackPanel>
                         
@@ -65,9 +66,10 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <TextBlock Grid.Column="0"
-                                          Text="{x:Static properties:Resources.TabHeaderResidues}" 
-                                          FontSize="18" FontWeight="Bold" 
-                                          Foreground="#2C3E50"/>
+                                          Text="{x:Static properties:Resources.TabHeaderResidues}"
+                                          FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
+                                          FontFamily="{StaticResource GcdsHeadingFont}"
+                                          Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
                                 
                                 <!-- Small Advanced Indicator -->
                                 <Border Grid.Column="1" 
@@ -83,8 +85,8 @@
                                 </Border>
                             </Grid>
                             
-                            <TextBlock Text="Set biomass coefficients for different crop components" 
-                                      FontSize="12" Foreground="Gray" 
+                            <TextBlock Text="Set biomass coefficients for different crop components"
+                                      FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                       FontStyle="Italic"/>
                         </StackPanel>
                         
@@ -108,9 +110,10 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <TextBlock Grid.Column="0"
-                                          Text="{x:Static properties:Resources.TabHeaderFertilizer}" 
-                                          FontSize="18" FontWeight="Bold" 
-                                          Foreground="#2C3E50"/>
+                                          Text="{x:Static properties:Resources.TabHeaderFertilizer}"
+                                          FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
+                                          FontFamily="{StaticResource GcdsHeadingFont}"
+                                          Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
                                 
                                 <!-- Small Advanced Indicator -->
                                 <Border Grid.Column="1" 
@@ -126,21 +129,21 @@
                                 </Border>
                             </Grid>
                             
-                            <TextBlock Text="Configure fertilizer application settings and schedules" 
-                                      FontSize="12" Foreground="Gray" 
+                            <TextBlock Text="Configure fertilizer application settings and schedules"
+                                      FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                       FontStyle="Italic"/>
                         </StackPanel>
                         
                         <!-- Card Content -->
-                        <Border Background="#F8F9FA" CornerRadius="8" Padding="20" BorderBrush="#E9ECEF" BorderThickness="1">
+                        <Border Background="{StaticResource GcdsBgLightBrush}" CornerRadius="8" Padding="20" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
                                 <TextBlock Text="??" FontSize="48" HorizontalAlignment="Center" Opacity="0.7"/>
-                                <TextBlock Text="Fertilizer Configuration" 
-                                          FontSize="16" FontWeight="SemiBold" 
-                                          HorizontalAlignment="Center" Foreground="#6C757D"/>
-                                <TextBlock Text="This section will be implemented in a future update" 
-                                          FontSize="12" HorizontalAlignment="Center" 
-                                          Foreground="#6C757D" FontStyle="Italic"/>
+                                <TextBlock Text="Fertilizer Configuration"
+                                          FontSize="{StaticResource GcdsFontSizeBody}" FontWeight="SemiBold"
+                                          HorizontalAlignment="Center" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                <TextBlock Text="This section will be implemented in a future update"
+                                          FontSize="{StaticResource GcdsFontSizeSmall}" HorizontalAlignment="Center"
+                                          Foreground="{StaticResource GcdsTextSecondaryBrush}" FontStyle="Italic"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

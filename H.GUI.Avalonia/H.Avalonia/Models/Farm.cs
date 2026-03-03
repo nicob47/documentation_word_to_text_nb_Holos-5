@@ -22,7 +22,7 @@ public class Farm
     #region Properties
 
     public IList<ComponentBase> Components { get; set; }
-    public ComponentBase SelectedComponent { get; set; }
+    public ComponentBase SelectedComponent { get; set; } = null!;
 
     #endregion
 }

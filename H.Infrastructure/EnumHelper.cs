@@ -21,7 +21,7 @@ namespace H.Infrastructure
                                             nameof(enumerationValue));
             }
 
-            var memberInfo = type.GetMember(enumerationValue.ToString());
+            var memberInfo = type.GetMember(enumerationValue.ToString()!);
             if (memberInfo.Length > 0)
             {
                 var attrs = memberInfo[0]
@@ -33,7 +33,7 @@ namespace H.Infrastructure
                 }
             }
 
-            return enumerationValue.ToString();
+            return enumerationValue.ToString()!;
         }
         public static IEnumerable<T> GetValues<T>()
         {

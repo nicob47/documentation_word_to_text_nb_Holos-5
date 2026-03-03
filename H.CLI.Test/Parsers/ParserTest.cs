@@ -90,7 +90,7 @@ namespace H.CLI.Test.Parsers
             };
 
     
-            Assert.ThrowsException<IndexOutOfRangeException>(() => parser.Parse(fileList));
+            Assert.ThrowsExactly<IndexOutOfRangeException>(() => parser.Parse(fileList));
         }
 
         
@@ -116,7 +116,7 @@ namespace H.CLI.Test.Parsers
             };
 
      
-            Assert.ThrowsException<IndexOutOfRangeException>(() => parser.Parse(fileList));
+            Assert.ThrowsExactly<IndexOutOfRangeException>(() => parser.Parse(fileList));
         }
 
     }

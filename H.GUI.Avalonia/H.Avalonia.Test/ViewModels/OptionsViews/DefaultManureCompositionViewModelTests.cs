@@ -9,22 +9,24 @@ using Moq;
 using Prism.Events;
 using Prism.Regions;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews
 {
     [TestClass]
     public class DefaultManureCompositionViewModelTests
     {
-        private DefaultManureCompositionViewModel _viewModel;
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IRegionManager> _mockRegionManager;
-        private IRegionManager _regionManagerMock;
-        private Mock<IEventAggregator> _mockEventAggregator;
-        private IEventAggregator _eventAggregatorMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private ApplicationData _applicationData;
-        private Mock<ILogger> _mockLogger;
+        private DefaultManureCompositionViewModel _viewModel = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IRegionManager> _mockRegionManager = null!;
+        private IRegionManager _regionManagerMock = null!;
+        private Mock<IEventAggregator> _mockEventAggregator = null!;
+        private IEventAggregator _eventAggregatorMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private ApplicationData _applicationData = null!;
+        private Mock<ILogger> _mockLogger = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -128,7 +130,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews
         [TestMethod]
         public void TestConstructuroThrowsExceptionOnNullConstructorParameter()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new DefaultManureCompositionViewModel(null, null, null, null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new DefaultManureCompositionViewModel(null, null, null, null));
         }
     }
 }

@@ -12,10 +12,10 @@ namespace H.Avalonia.ViewModels.SupportingViews
     {
         #region Fields
 
-        private readonly IFeedIngredientProvider _feedIngredientProvider;
-        private ObservableCollection<IFeedIngredient> _ingredients;
-        private IFeedIngredient _selectedIngredient;
-        private string _searchText;
+        private readonly IFeedIngredientProvider _feedIngredientProvider = null!;
+        private ObservableCollection<IFeedIngredient> _ingredients = null!;
+        private IFeedIngredient _selectedIngredient = null!;
+        private string _searchText = string.Empty;
         private AnimalType _selectedAnimalType;
 
         #endregion

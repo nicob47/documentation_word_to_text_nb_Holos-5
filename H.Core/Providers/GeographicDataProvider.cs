@@ -47,7 +47,7 @@ namespace H.Core.Providers
             Trace.TraceInformation($"{nameof(GeographicDataProvider)} has been initialized.");
         }
 
-        public SoilData GetPredominantSoilDataByPolygonId(int polygonId)
+        public SoilData? GetPredominantSoilDataByPolygonId(int polygonId)
         {
             return _soilDataProvider.GetPredominantSoilDataByPolygonId(polygonId);
         }
@@ -81,7 +81,7 @@ namespace H.Core.Providers
 
             result = new GeographicData
             {
-                DefaultSoilData = predominantSoilDataByPolygonId,
+                DefaultSoilData = predominantSoilDataByPolygonId ?? new SoilData(),
                 SoilDataForAllComponentsWithinPolygon = allSoilData.ToList(),           
             };
 

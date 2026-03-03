@@ -36,12 +36,12 @@ namespace H.Avalonia.ViewModels.Results
         /// <summary>
         /// A command that triggers when a user clicks the back button on the page.
         /// </summary>
-        public DelegateCommand GoBackCommand { get; set; }
+        public DelegateCommand GoBackCommand { get; set; } = null!;
 
         /// <summary>
         /// A command that triggers when a user clicks the export to csv button on the page.
         /// </summary>
-        public DelegateCommand<object> ExportToCsvCommand { get; set; }
+        public DelegateCommand<object> ExportToCsvCommand { get; set; } = null!;
 
         /// <summary>
         /// A bool that checks if data extraction is currently processing or not. Returns true if data is still processing, return false otherwise.

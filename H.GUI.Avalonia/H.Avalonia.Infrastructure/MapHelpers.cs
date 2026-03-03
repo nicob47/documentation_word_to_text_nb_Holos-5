@@ -31,7 +31,7 @@ namespace H.Avalonia.Infrastructure
         /// <exception cref="NullReferenceException">Thrown when the retrieved data is null.</exception>
         public async Task<(double latitude, double longitude)> GetLocationFromAddressAsync(string? address)
         {
-            string bingUrl = $"http://dev.virtualearth.net/REST/v1/Locations?q={Uri.EscapeDataString(address)}&key={_bingApiKey}";
+            string bingUrl = $"http://dev.virtualearth.net/REST/v1/Locations?q={Uri.EscapeDataString(address ?? string.Empty)}&key={_bingApiKey}";
             try
             {
                 var point = (latitude: 0d, longitude: 0d);

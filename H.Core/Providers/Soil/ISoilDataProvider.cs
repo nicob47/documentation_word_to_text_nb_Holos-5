@@ -3,7 +3,7 @@
     public interface ISoilDataProvider
     {
         void Initialize();
-        SoilData GetPredominantSoilDataByPolygonId(int polygonId);
+        SoilData? GetPredominantSoilDataByPolygonId(int polygonId);
         IEnumerable<SoilData> GetAllSoilDataForAllComponentsWithinPolygon(int polygonId);
         List<int> GetPolygonIdList();
         string GetEcodistrictName(int polygonId);

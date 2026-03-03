@@ -24,19 +24,19 @@ namespace H.Core.Services
 
         public void CheckInitialization(Farm farm)
         {
-            if (farm == null)
+            if (farm is null)
             {
                 return;
             }
 
-            if (farm.DefaultSoilData == null)
+            if (farm.DefaultSoilData is null)
             {
                 return;
             }
 
             var soilData = farm.DefaultSoilData;
 
-            if (farm.ClimateData == null)
+            if (farm.ClimateData is null)
             {
                 return;
             }
@@ -44,7 +44,7 @@ namespace H.Core.Services
             var climateData = farm.ClimateData;
 
             var barnTemperature = climateData.BarnTemperatureData;
-            if (barnTemperature == null || barnTemperature.IsInitialized == false)
+            if (barnTemperature is null || barnTemperature.IsInitialized == false)
             {
                 barnTemperature = _indoorTemperatureProvider.GetIndoorTemperature(soilData.Province);
                 barnTemperature.IsInitialized = true;

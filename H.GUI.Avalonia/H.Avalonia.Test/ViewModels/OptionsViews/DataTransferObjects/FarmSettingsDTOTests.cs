@@ -9,12 +9,12 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.DataTransferObjects
     [TestClass]
     public class FarmSettingsDTOTests
     {
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private ApplicationData _applicationData;
-        private FarmSettingsDTO _farmSettingsDTO;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private ApplicationData _applicationData = null!;
+        private FarmSettingsDTO _farmSettingsDTO = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

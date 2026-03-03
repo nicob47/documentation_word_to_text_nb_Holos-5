@@ -135,7 +135,7 @@ namespace H.Core.Services
             return this.GetMonthString((int) month);
         }
 
-        public Tuple<DateTime, DateTime> GetFirstTimePeriodOpening(IEnumerable<ITimePeriodItem> itemsInTimePeriod,
+        public Tuple<DateTime, DateTime>? GetFirstTimePeriodOpening(IEnumerable<ITimePeriodItem> itemsInTimePeriod,
                                                                    DateTime minimumDate, DateTime maximumDate)
         {
             return this.GetTimePeriodOpenings(itemsInTimePeriod, minimumDate, maximumDate)

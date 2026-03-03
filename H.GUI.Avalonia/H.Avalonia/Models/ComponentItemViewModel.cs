@@ -9,7 +9,7 @@ namespace H.Avalonia.Models;
 /// </summary>
 public class ComponentItemViewModel : ModelBase
 {
-    private ComponentBase _component;
+    private ComponentBase? _component;
     private bool _isSelected;
 
     public ComponentItemViewModel(ComponentBase component)
@@ -23,7 +23,7 @@ public class ComponentItemViewModel : ModelBase
     /// <summary>
     /// The wrapped ComponentBase instance
     /// </summary>
-    public ComponentBase Component
+    public ComponentBase? Component
     {
         get => _component;
         set => SetProperty(ref _component, value);
@@ -32,7 +32,7 @@ public class ComponentItemViewModel : ModelBase
     /// <summary>
     /// Indicates whether this component is currently selected in the UI
     /// </summary>
-    public bool IsSelected
+    public new bool IsSelected
     {
         get => _isSelected;
         set => SetProperty(ref _isSelected, value);
@@ -46,7 +46,7 @@ public class ComponentItemViewModel : ModelBase
         get => _component?.Name ?? string.Empty;
         set
         {
-            if (_component != null)
+            if (_component is not null)
             {
                 _component.Name = value;
             }
@@ -90,7 +90,7 @@ public class ComponentItemViewModel : ModelBase
 
     public void Cleanup()
     {
-        if (_component != null)
+        if (_component is not null)
         {
             _component.PropertyChanged -= OnComponentPropertyChanged;
         }

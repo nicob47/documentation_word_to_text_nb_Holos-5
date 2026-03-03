@@ -334,13 +334,13 @@ namespace H.Core.Calculators.Carbon
 
             currentYearViewItem.TFac = this.CalculateAverageAnnualTemperatureFactor(
                 monthlyAverageTemperatures: temperaturesForYear,
-                maximumTemperatureForDecomposition: maximumTemperature.Value,
-                optimumTemperatureForDecomposition: optimumTemperature.Value);
+                maximumTemperatureForDecomposition: maximumTemperature!.Value,
+                optimumTemperatureForDecomposition: optimumTemperature!.Value);
 
             this.SetMonthlyTemperatureFactors(
                 monthlyAverageTemperatures: temperaturesForYear,
-                maximumTemperatureForDecomposition: maximumTemperature.Value,
-                optimumTemperatureForDecomposition: optimumTemperature.Value,
+                maximumTemperatureForDecomposition: maximumTemperature!.Value,
+                optimumTemperatureForDecomposition: optimumTemperature!.Value,
                 currentYearViewItem);
 
             var slopeParameter = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(
@@ -350,18 +350,18 @@ namespace H.Core.Calculators.Carbon
             currentYearViewItem.WFac = this.CalculateAnnualWaterFactor(
                 monthlyTotalPrecipitations: precipitationsForYear,
                 monthlyTotalEvapotranspirations: evapotranspirationsForYear,
-                slopeParameter: slopeParameter.Value);
+                slopeParameter: slopeParameter!.Value);
 
             this.SetMonthlyWaterFactors(
                 monthlyTotalPrecipitations: precipitationsForYear,
                 monthlyTotalEvapotranspirations: evapotranspirationsForYear,
-                slopeParameter: slopeParameter.Value,
+                slopeParameter: slopeParameter!.Value,
                 viewItem: currentYearViewItem);
         }
 
         public void CalculatePools(
             CropViewItem currentYearViewItem,
-            CropViewItem previousYearViewItem,
+            CropViewItem? previousYearViewItem,
             Farm farm,
             bool isEquilibriumYear = false)
         {
@@ -380,7 +380,7 @@ namespace H.Core.Calculators.Carbon
                 currentYearIpccTier2Results = currentYearViewItem.IpccTier2NitrogenResults;
             }
 
-            if (isEquilibriumYear == false)
+            if (isEquilibriumYear == false && previousYearViewItem != null)
             {
                 if (this.CalculationMode == CalculationModes.Carbon)
                 {
@@ -392,13 +392,13 @@ namespace H.Core.Calculators.Carbon
                 }
             }
 
-            var f1 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionMetabolicDMActivePool, currentYearViewItem.TillageType).Value;
-            var f2 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionStructuralDMActivePool, currentYearViewItem.TillageType).Value;
-            var f3 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionStructuralDMSlowPool, currentYearViewItem.TillageType).Value;
-            var f5 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionActiveDecayToPassive, currentYearViewItem.TillageType).Value;
-            var f6 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionSlowDecayToPassive, currentYearViewItem.TillageType).Value;
-            var f7 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionSlowDecayToActive, currentYearViewItem.TillageType).Value;
-            var f8 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionPassiveDecayToActive, currentYearViewItem.TillageType).Value;
+            var f1 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionMetabolicDMActivePool, currentYearViewItem.TillageType)!.Value;
+            var f2 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionStructuralDMActivePool, currentYearViewItem.TillageType)!.Value;
+            var f3 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionStructuralDMSlowPool, currentYearViewItem.TillageType)!.Value;
+            var f5 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionActiveDecayToPassive, currentYearViewItem.TillageType)!.Value;
+            var f6 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionSlowDecayToPassive, currentYearViewItem.TillageType)!.Value;
+            var f7 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionSlowDecayToActive, currentYearViewItem.TillageType)!.Value;
+            var f8 = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.FractionPassiveDecayToActive, currentYearViewItem.TillageType)!.Value;
 
             var f4 = this.CalculateAmountToSlowPool(
                 fractionDecayActivePoolToPassivePool: f5,
@@ -422,8 +422,8 @@ namespace H.Core.Calculators.Carbon
                 totalInputs: inputs,
                 ligninContent: currentYearViewItem.LigninContent);
 
-            var activePoolDecayRateConstant = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.DecayRateActive, currentYearViewItem.TillageType).Value;
-            var tillageFactor = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.TillageModifier, currentYearViewItem.TillageType).Value;
+            var activePoolDecayRateConstant = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.DecayRateActive, currentYearViewItem.TillageType)!.Value;
+            var tillageFactor = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.TillageModifier, currentYearViewItem.TillageType)!.Value;
 
             currentYearIpccTier2Results.ActivePoolDecayRate = this.CalculateActivePoolDecayRate(
                 activePoolDecayRateConstant: activePoolDecayRateConstant,
@@ -432,7 +432,7 @@ namespace H.Core.Calculators.Carbon
                 sand: currentYearViewItem.Sand,
                 tillageFactor: tillageFactor);
 
-            var slowPoolDecayRateConstant = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.DecayRateSlow, currentYearViewItem.TillageType).Value;
+            var slowPoolDecayRateConstant = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.DecayRateSlow, currentYearViewItem.TillageType)!.Value;
 
             currentYearIpccTier2Results.SlowPoolDecayRate = this.CalculateSlowPoolDecayRate(
                 slowPoolDecayRateConstant: slowPoolDecayRateConstant,
@@ -440,7 +440,7 @@ namespace H.Core.Calculators.Carbon
                 waterFactor: currentYearViewItem.WFac,
                 tillageFactor: tillageFactor);
 
-            var passivePoolDecayRateConstant = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.DecayRatePassive, currentYearViewItem.TillageType).Value;
+            var passivePoolDecayRateConstant = _globallyCalibratedModelParametersProvider.GetGloballyCalibratedModelParametersInstance(ModelParameters.DecayRatePassive, currentYearViewItem.TillageType)!.Value;
 
             currentYearIpccTier2Results.PassivePoolDecayRate = this.CalculatePassivePoolDecayRate(
                 passivePoolDecayRateConstant: passivePoolDecayRateConstant,

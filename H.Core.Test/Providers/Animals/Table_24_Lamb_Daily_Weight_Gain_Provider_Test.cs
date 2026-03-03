@@ -5,7 +5,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_24_Lamb_Daily_Weight_Gain_Provider_Test
     {
-        private Table_24_Lamb_Daily_Weight_Gain_Provider _provider;
+        private Table_24_Lamb_Daily_Weight_Gain_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

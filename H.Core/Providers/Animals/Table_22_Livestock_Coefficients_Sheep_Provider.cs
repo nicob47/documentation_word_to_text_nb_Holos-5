@@ -66,7 +66,7 @@ namespace H.Core.Providers.Animals
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.SheepCoefficients;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<Table_22_Livestock_Coefficients_Sheep_Data>();
             foreach (var line in filelines.Skip(1))
             {

@@ -8,7 +8,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
     {
         #region Fields
 
-        SoilSettingsDTO _data;
+        SoilSettingsDTO _data = null!;
 
         #endregion
 
@@ -16,7 +16,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
         public SoilSettingsViewModel() { }
         public SoilSettingsViewModel(IStorageService storageService) : base(storageService)
         {
-            Data = new SoilSettingsDTO(StorageService);
+            Data = new SoilSettingsDTO(StorageService!);
         }
         #endregion
 
@@ -34,7 +34,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
         {
             if (!IsInitialized)
             {
-                Data = new SoilSettingsDTO(StorageService);
+                Data = new SoilSettingsDTO(StorageService!);
                 IsInitialized = true;
             }
         }

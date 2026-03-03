@@ -1,6 +1,8 @@
 ﻿using H.Core.Providers.Soil;
 using H.Core.Enumerations;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Soil
 {
     /// <summary>
@@ -11,7 +13,7 @@ namespace H.Core.Test.Providers.Soil
     {
         #region Fields
 
-        private static Table_8_Globally_Calibrated_Model_Parameters_Provider _provider;
+        private static Table_8_Globally_Calibrated_Model_Parameters_Provider _provider = null!;
 
         #endregion
 

@@ -9,7 +9,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
     {
         #region Fields
 
-        private UserSettingsDTO _data;
+        private UserSettingsDTO? _data;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         #region Properties
 
-        public UserSettingsDTO Data
+        public UserSettingsDTO? Data
         {
             get => _data;
             set => SetProperty(ref _data, value);
@@ -39,7 +39,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         public void Initialize()
         {
-            Data = new UserSettingsDTO(base.StorageService);
+            Data = new UserSettingsDTO(base.StorageService!);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -69,7 +69,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
                 disposableData.Dispose();
                 _data = null;
             }
-            else if (_data != null)
+            else if (_data is not null)
             {
                 // Even if it doesn't implement IDisposable, clear the reference to help GC
                 _data = null;

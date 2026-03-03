@@ -52,15 +52,15 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         protected override void InitializeData()
         {
-            if (base.ActiveFarm.ClimateData.EvapotranspirationData != null)
+            if (base.ActiveFarm?.ClimateData?.EvapotranspirationData is not null)
             {
-                this.Data = base.ActiveFarm.ClimateData.EvapotranspirationData;
+                this.Data = base.ActiveFarm!.ClimateData.EvapotranspirationData;
                 this.Data.PropertyChanged -= DataOnPropertyChanged;
                 this.Data.PropertyChanged += DataOnPropertyChanged;
             }
             else
             {
-                throw new ArgumentNullException(nameof(base.ActiveFarm.ClimateData.EvapotranspirationData));
+                throw new ArgumentNullException(nameof(Data));
             }
             base.BuildChart();
         }

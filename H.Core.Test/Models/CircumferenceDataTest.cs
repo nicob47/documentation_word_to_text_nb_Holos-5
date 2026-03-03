@@ -19,8 +19,8 @@ namespace H.Core.Test.Models
             Assert.AreNotSame(a.ValidColumns, b.ValidColumns);
             Assert.AreNotSame(a.QuickAccessColumns, b.QuickAccessColumns);
             Assert.AreNotSame(a.InvalidColumns, b.InvalidColumns);
-            Assert.AreNotSame(a.UserCircumference, b.UserCircumference);
-            Assert.AreNotSame(a.CircumferenceGenerationOverriden, b.CircumferenceGenerationOverriden);
+            Assert.AreEqual(a.UserCircumference, b.UserCircumference);
+            Assert.AreEqual(a.CircumferenceGenerationOverriden, b.CircumferenceGenerationOverriden);
 
             //Identical
             if (!this.DeepEqual(a.Table, b.Table))
@@ -90,8 +90,8 @@ namespace H.Core.Test.Models
             Assert.AreNotSame(a.ValidColumns, b.ValidColumns);
             Assert.AreNotSame(a.QuickAccessColumns, b.QuickAccessColumns);
             Assert.AreNotSame(a.InvalidColumns, b.InvalidColumns);
-            Assert.AreNotSame(a.UserCircumference, b.UserCircumference);
-            Assert.AreNotSame(a.CircumferenceGenerationOverriden, b.CircumferenceGenerationOverriden);
+            Assert.AreEqual(a.UserCircumference, b.UserCircumference);
+            Assert.AreEqual(a.CircumferenceGenerationOverriden, b.CircumferenceGenerationOverriden);
 
             //Identical
             if (!this.DeepEqual(a.Table, b.Table))

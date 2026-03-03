@@ -28,7 +28,7 @@ namespace H.Core.Providers.Plants
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.SoilCarbonEmissions;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<SoilCarbonEmissionsData>();
             foreach (var line in filelines.Skip(1))
             {

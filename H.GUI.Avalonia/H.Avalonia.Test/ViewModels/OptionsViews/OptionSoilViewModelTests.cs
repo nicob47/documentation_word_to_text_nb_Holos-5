@@ -5,18 +5,24 @@ using H.Core.Services.StorageService;
 using Moq;
 using Prism.Regions;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews
 {
     [TestClass]
     public class OptionSoilViewModelTests
     {
-        private SoilSettingsViewModel _viewModel;
-        private Mock<IRegionManager> _mockRegionManager;
-        private IRegionManager _regionManagerMock;
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
+        private SoilSettingsViewModel _viewModel = null!;
+#pragma warning disable CS0414
+        private Mock<IRegionManager> _mockRegionManager = null!;
+#pragma warning restore CS0414
+#pragma warning disable CS0414
+        private IRegionManager _regionManagerMock = null!;
+#pragma warning restore CS0414
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -67,7 +73,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews
         [TestMethod]
         public void TestConstructuroThrowsExceptionOnNullConstructorParameter()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new SoilSettingsViewModel(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new SoilSettingsViewModel(null));
         }
 
     }

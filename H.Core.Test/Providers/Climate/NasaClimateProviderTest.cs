@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Climate
     {
         #region Fields
 
-        private NasaClimateProvider _nasaClimateProvider;
+        private NasaClimateProvider _nasaClimateProvider = null!;
 
         #endregion
 

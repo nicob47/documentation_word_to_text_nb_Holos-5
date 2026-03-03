@@ -14,22 +14,22 @@ namespace H.Core.Test.Services.Animals
     {
         #region Fields
 
-        private DigestateService _sut;
-        private Mock<IADCalculator> _mockAdCalculator;
-        private Mock<IAnimalService> _mockAnimalService;
-        private List<DigestorDailyOutput> _dailyResults;
+        private DigestateService _sut = null!;
+        private Mock<IADCalculator> _mockAdCalculator = null!;
+        private Mock<IAnimalService> _mockAnimalService = null!;
+        private List<DigestorDailyOutput> _dailyResults = null!;
         private DigestateState _state;
         private DateTime _date;
-        private Farm _farm;
-        private AnaerobicDigestionComponent _adComponent;
-        private DigestateApplicationViewItem _livestockDigestateApplication;
-        private DigestateApplicationViewItem _importedDigestateApplication;
-        private FieldSystemComponent _fieldSystemComponent;
-        private CropViewItem _cropViewItem;
-        private DigestorDailyOutput _dailyOutput1;
-        private DigestorDailyOutput _dailyOutput2;
-        private DigestorDailyOutput _dailyOutput3;
-        private DigestorDailyOutput _dailyOutput4;
+        private Farm _farm = null!;
+        private AnaerobicDigestionComponent _adComponent = null!;
+        private DigestateApplicationViewItem _livestockDigestateApplication = null!;
+        private DigestateApplicationViewItem _importedDigestateApplication = null!;
+        private FieldSystemComponent _fieldSystemComponent = null!;
+        private CropViewItem _cropViewItem = null!;
+        private DigestorDailyOutput _dailyOutput1 = null!;
+        private DigestorDailyOutput _dailyOutput2 = null!;
+        private DigestorDailyOutput _dailyOutput3 = null!;
+        private DigestorDailyOutput _dailyOutput4 = null!;
 
         #endregion
 

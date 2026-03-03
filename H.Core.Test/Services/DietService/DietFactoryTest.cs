@@ -1,4 +1,4 @@
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Properties;
 using H.Core.Providers.Feed;
 using H.Core.Services.DietService;
@@ -13,7 +13,7 @@ public class DietFactoryTest
 {
     #region Fields
 
-    private IDietFactory _sut;
+    private IDietFactory _sut = null!;
 
     #endregion
 
@@ -70,7 +70,7 @@ public class DietFactoryTest
     [TestMethod]
     public void Create_Parameterless_ThrowsNotImplementedException()
     {
-        Assert.ThrowsException<NotImplementedException>(() => _sut.Create());
+        Assert.ThrowsExactly<NotImplementedException>(() => _sut.Create());
     }
 
     [TestMethod]

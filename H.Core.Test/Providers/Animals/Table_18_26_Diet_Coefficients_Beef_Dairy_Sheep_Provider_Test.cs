@@ -1,6 +1,8 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers.Animals;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Animals
 {
     [TestClass]
@@ -8,8 +10,8 @@ namespace H.Core.Test.Providers.Animals
     {
         #region Fields
 
-        private static Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider _dietCoefficientsProvider;
-        private Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data _dietCoefficientsData;
+        private static Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider _dietCoefficientsProvider = null!;
+        private Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data _dietCoefficientsData = null!;
 
         #endregion
 

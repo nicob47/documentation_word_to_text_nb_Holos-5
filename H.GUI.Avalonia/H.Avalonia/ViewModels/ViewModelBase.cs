@@ -15,9 +15,11 @@ namespace H.Avalonia.ViewModels
     {
         #region Fields
 
-        protected bool IsInitialized;
+        protected new bool IsInitialized;
 
+#pragma warning disable CS0618 // Storage is obsolete but still required during migration
         private Storage? _storagePlaceholder;
+#pragma warning restore CS0618
         private IEventAggregator? _eventAggregator;
         private IRegionManager? _regionManager;
         private IStorageService? _storageService;
@@ -292,11 +294,13 @@ namespace H.Avalonia.ViewModels
 
         #region Properties
 
+#pragma warning disable CS0618 // Storage is obsolete but still required during migration
         public Storage? StoragePlaceholder
         {
             get => _storagePlaceholder;
             set => SetProperty(ref _storagePlaceholder, value);
         }
+#pragma warning restore CS0618
 
         /// <summary>
         /// The notification manager that handles displaying notifications on the page.

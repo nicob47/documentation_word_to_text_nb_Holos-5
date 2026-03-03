@@ -10,15 +10,17 @@ using H.Core.Providers.Soil;
 using H.Core.Services;
 using Moq;
 
+#nullable disable
+
 namespace H.Core.Test.Services
 {
     [TestClass]
     public class FarmResultsService_NEWTests
     {
-        private ClimateProvider _climateProvider;
-        private Mock<ISlcClimateProvider> _mockSlcClimateProvider;
-        private ISlcClimateProvider _slcClimateProviderMock;
-        private FarmResultsService_NEW _farmResultsService;
+        private ClimateProvider _climateProvider = null!;
+        private Mock<ISlcClimateProvider> _mockSlcClimateProvider = null!;
+        private ISlcClimateProvider _slcClimateProviderMock = null!;
+        private FarmResultsService_NEW _farmResultsService = null!;
 
 
         [ClassInitialize]

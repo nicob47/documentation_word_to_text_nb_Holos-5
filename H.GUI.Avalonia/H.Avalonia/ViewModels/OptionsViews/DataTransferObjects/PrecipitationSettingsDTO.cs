@@ -203,13 +203,13 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
 
         public void InitializePrecipitationData()
         {
-            if (base.ActiveFarm.ClimateData.PrecipitationData != null)
+            if (base.ActiveFarm?.ClimateData?.PrecipitationData is not null)
             {
-                this.PrecipitationData = ActiveFarm.ClimateData.PrecipitationData;
+                this.PrecipitationData = base.ActiveFarm!.ClimateData.PrecipitationData;
             }
             else
             {
-                throw new ArgumentNullException(nameof(base.ActiveFarm.ClimateData.PrecipitationData));
+                throw new ArgumentNullException(nameof(PrecipitationData));
             }
         }
 

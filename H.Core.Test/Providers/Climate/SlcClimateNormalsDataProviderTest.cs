@@ -4,6 +4,8 @@ using H.Core.Enumerations;
 using H.Core.Providers;
 using H.Core.Providers.Climate;
 
+#nullable disable
+
 #endregion
 
 namespace H.Core.Test.Providers.Climate
@@ -13,7 +15,7 @@ namespace H.Core.Test.Providers.Climate
     {
         #region Fields
 
-        private static SlcClimateDataProvider _sut;
+        private static SlcClimateDataProvider _sut = null!;
 
         private const int ProblemPolygon = 500025;
 

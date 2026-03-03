@@ -26,9 +26,9 @@ namespace H.Avalonia.Views.SupportingViews.Disclaimer
 
         private void Button_OnClick(object? sender, RoutedEventArgs e)
         {
-            if (this.ViewModel.OkCommand.CanExecute(null))
+            if (this.ViewModel?.OkCommand.CanExecute(null!) == true)
             {
-                this.ViewModel.OkCommand.Execute(null);
+                this.ViewModel.OkCommand.Execute(null!);
             }
         } 
 

@@ -10,7 +10,7 @@ public class FieldComponentDtoFactoryTest
 {
     #region Fields
 
-    private IFieldFactory _factory;
+    private IFieldFactory _factory = null!;
 
     #endregion
 

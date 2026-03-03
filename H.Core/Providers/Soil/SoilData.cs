@@ -26,9 +26,9 @@ namespace H.Core.Providers.Soil
         private double _proportionOfSoilOrganicCarbon;
         private double _bulkDensity;
 
-        private string _soilName;
-        private string _ecodistrictName;
-        private string _soilSubGroup;
+        private string _soilName = string.Empty;
+        private string _ecodistrictName = string.Empty;
+        private string _soilSubGroup = string.Empty;
 
         private SoilDrainageClasses _drainageClass;
         private SoilTexture _soilTexture;

@@ -13,7 +13,7 @@ namespace H.CLI.Test.Processors
     public class FieldProccessorTest : UnitTestBase
     {
         private readonly string testPath = ".\\Test";
-        private FieldProcessor _sut;
+        private FieldProcessor _sut = null!;
         
 
         [TestInitialize]

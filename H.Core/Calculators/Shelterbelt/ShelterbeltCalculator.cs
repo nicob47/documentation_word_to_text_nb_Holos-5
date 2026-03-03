@@ -448,7 +448,7 @@ namespace H.Core.Calculators.Shelterbelt
 
             // At this point, each trannum will have had a default circumference based on ideal trees. The user can now override the circumference values
             // for each individual year and the view model will recalculate the biomass/carbon values.
-            var circumferencePerTree = trannumData.CircumferenceData.UserCircumference;
+            var circumferencePerTree = trannumData.CircumferenceData!.UserCircumference;
 
             var agtRatio = _shelterbeltAgTRatioProvider.GetAboveGroundBiomassTotalTreeBiomassRatio(
                 treeSpecies: trannumData.TreeSpecies,

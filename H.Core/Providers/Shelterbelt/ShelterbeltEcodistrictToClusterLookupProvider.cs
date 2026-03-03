@@ -14,7 +14,7 @@ namespace H.Core.Providers.Shelterbelt
             HTraceListener.AddTraceListener();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.LookupEcodistrictClusters;
-            var fileLines = CsvResourceReader.GetFileLines(filename);
+            var fileLines = CsvResourceReader.GetFileLines(filename)!;
 
             foreach (var line in fileLines.Skip(1))
             {

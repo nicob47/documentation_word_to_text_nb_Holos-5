@@ -5,7 +5,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class ConverterBaseTest
     {
-        private CropTypeStringConverter _converter;
+        private CropTypeStringConverter _converter = null!;
 
         [TestInitialize]
         public void Initialize()

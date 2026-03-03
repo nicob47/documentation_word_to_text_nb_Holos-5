@@ -79,7 +79,7 @@ namespace H.Core.Models.Infrastructure
 
         #region Event Handlers
 
-        private void CropResiduesSubstrateViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void CropResiduesSubstrateViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasCropSubstrateViewItems = this.CropResiduesSubstrateViewItems.Count > 0;
         }
@@ -89,7 +89,7 @@ namespace H.Core.Models.Infrastructure
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManureSubstrateViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void ManureSubstrateViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasManureSubstrateViewItems = this.ManureSubstrateViewItems.Count > 0;
             
@@ -100,7 +100,7 @@ namespace H.Core.Models.Infrastructure
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FarmResiduesSubstrateViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FarmResiduesSubstrateViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasFarmResiduesSubstrateViewItems = this.FarmResiduesSubstrateViewItems.Count > 0;
         }

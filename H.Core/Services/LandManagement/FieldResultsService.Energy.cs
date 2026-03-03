@@ -97,7 +97,7 @@ namespace H.Core.Services.LandManagement
         {
             var results = new CropEnergyResults();
 
-            if (viewItem == null)
+            if (viewItem is null)
             {
                 return results;
             }

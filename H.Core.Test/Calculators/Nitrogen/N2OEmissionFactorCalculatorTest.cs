@@ -6,6 +6,8 @@ using H.Core.Providers.Animals;
 using Moq;
 using NitrogenFertilizerType = H.Core.Enumerations.NitrogenFertilizerType;
 
+#nullable disable
+
 namespace H.Core.Test.Calculators.Nitrogen
 {
     [TestClass]
@@ -13,10 +15,10 @@ namespace H.Core.Test.Calculators.Nitrogen
     {
         #region Fields
 
-        private N2OEmissionFactorCalculator _sut;
-        private Table_36_Livestock_Emission_Conversion_Factors_Data _emissionFactors;
-        private Farm _farm;
-        private CropViewItem _viewItem;
+        private N2OEmissionFactorCalculator _sut = null!;
+        private Table_36_Livestock_Emission_Conversion_Factors_Data _emissionFactors = null!;
+        private Farm _farm = null!;
+        private CropViewItem _viewItem = null!;
 
         #endregion
 

@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.AnaerobicDigestion
     {
         #region Fields
 
-        BiodegradedFractionDuringStorageProvider _provider;
+        BiodegradedFractionDuringStorageProvider _provider = null!;
 
         #endregion
 

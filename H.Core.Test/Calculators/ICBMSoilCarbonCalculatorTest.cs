@@ -12,6 +12,8 @@ using H.Core.Providers.Evapotranspiration;
 using H.Core.Providers.Precipitation;
 using H.Core.Providers.Soil;
 
+#nullable disable
+
 #endregion
 
 namespace H.Core.Test.Calculators
@@ -124,7 +126,9 @@ namespace H.Core.Test.Calculators
             const double annualPrecipitation = 806;
             const double annualPotentialEvapotranspiration = 618;
             const double proportionOfPrecipitationMayToSeptember = 0.04;
-            const double moistureContent = 13;
+#pragma warning disable CS0219
+            const double _moistureContent = 13;
+#pragma warning restore CS0219
             const double carbonConcentration = 0.45;
 
             var result = _sut.CalculateProductivity(

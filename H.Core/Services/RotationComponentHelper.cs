@@ -107,6 +107,7 @@ namespace H.Core.Services
                 var name = rotationComponent.Name + " [Field #" + fieldNumber + "] - " + cropName;
                 mapping.FieldSystemComponent.Name = name;
                 var fieldComponentFromFarm = farm.GetFieldSystemComponent(mapping.FieldSystemComponent.Guid);
+                if (fieldComponentFromFarm == null) continue;
                 fieldComponentFromFarm.Name = name;
 
                 fieldComponentFromFarm.GroupPath = rotationComponent.Name;

@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Climate
     {
 
         #region Fields
-        private static Table_54_Global_Warming_Emissions_Potential_Provider _provider;
+        private static Table_54_Global_Warming_Emissions_Potential_Provider _provider = null!;
         #endregion
 
         #region Initialization

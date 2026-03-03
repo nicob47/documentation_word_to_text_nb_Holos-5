@@ -64,12 +64,7 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
     public void InitializeComponent(Farm farm, DairyComponent dairyComponent)
     {
         base.InitializeComponent(farm, dairyComponent);
-        
-        if (dairyComponent == null)
-        {
-            return;
-        }
-        
+
         // Add any dairy-specific initialization here
         // For example, setting default herd parameters
     }
@@ -163,15 +158,8 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
     /// <param name="forceRegeneration">If true, clears existing groups and regenerates. If false, only generates if component has no groups.</param>
     public void GenerateAnimalGroups(DairyComponentDto dairyDto, DairyComponent dairyComponent, bool forceRegeneration = false)
     {
-        if (dairyDto == null)
-        {
-            throw new ArgumentNullException(nameof(dairyDto));
-        }
-
-        if (dairyComponent == null)
-        {
-            throw new ArgumentNullException(nameof(dairyComponent));
-        }
+        ArgumentNullException.ThrowIfNull(dairyDto);
+        ArgumentNullException.ThrowIfNull(dairyComponent);
 
         // DATA PRESERVATION: Only generate groups if explicitly requested OR component is empty
         var hasExistingGroups = dairyComponent.Groups.Any();

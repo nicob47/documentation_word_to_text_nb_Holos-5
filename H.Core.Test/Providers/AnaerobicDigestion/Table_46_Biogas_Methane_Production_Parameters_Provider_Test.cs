@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.AnaerobicDigestion
     public class Table_46_Biogas_Methane_Production_Parameters_Provider_Test
     {
         #region Fields
-        private static Table_46_Biogas_Methane_Production_Parameters_Provider _provider;
+        private static Table_46_Biogas_Methane_Production_Parameters_Provider _provider = null!;
         #endregion
 
         #region Initialization

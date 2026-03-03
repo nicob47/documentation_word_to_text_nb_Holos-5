@@ -12,7 +12,7 @@ namespace H.Core.Test.Calculators
     {
         #region Fields
 
-        private TillageFactorCalculator _calculator;
+        private TillageFactorCalculator _calculator = null!;
 
         #endregion
 

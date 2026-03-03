@@ -71,7 +71,7 @@ public class RotationComponentService : ComponentServiceBase, IRotationComponent
     {
         base.InitializeComponent(farm, rotationComponent);
 
-        if (rotationComponent == null)
+        if (rotationComponent is null)
         {
             return;
         }

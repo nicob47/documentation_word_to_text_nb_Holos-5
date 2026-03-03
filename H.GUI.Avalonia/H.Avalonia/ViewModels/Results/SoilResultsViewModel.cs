@@ -26,12 +26,12 @@ namespace H.Avalonia.ViewModels.Results
         
         private readonly IRegionManager? _regionManager;
         private IRegionNavigationJournal? _navigationJournal;
-        private readonly ExportHelpers _exportHelpers;
-        private readonly KmlHelpers _kmlHelpers;
-        private readonly GeographicDataProvider _geographicDataProvider;
-        private readonly SoilResultsViewItemMap _soilResultsViewItemMap;
-        private SoilResultsViewItem _singleSoilResultsViewItem;
-        private CancellationTokenSource _cancellationTokenSource;
+        private readonly ExportHelpers _exportHelpers = null!;
+        private readonly KmlHelpers _kmlHelpers = null!;
+        private readonly GeographicDataProvider _geographicDataProvider = null!;
+        private readonly SoilResultsViewItemMap _soilResultsViewItemMap = null!;
+        private SoilResultsViewItem _singleSoilResultsViewItem = null!;
+        private CancellationTokenSource _cancellationTokenSource = null!;
 
         #endregion
 
@@ -41,7 +41,9 @@ namespace H.Avalonia.ViewModels.Results
         {
         }
 
+#pragma warning disable CS0618 // Storage is obsolete but still required during migration
         public SoilResultsViewModel(IRegionManager regionManager, INotificationManagerService notificationManager ,ExportHelpers exportHelpers, KmlHelpers kmlHelpers, GeographicDataProvider geographicDataProvider, Storage storage, IStorageService storageService) : base(regionManager, notificationManager, storageService)
+#pragma warning restore CS0618
         {
             this.StoragePlaceholder = storage;
 
@@ -75,7 +77,7 @@ namespace H.Avalonia.ViewModels.Results
         /// <summary>
         /// Allows the user to select which soil they want to use as a <see cref="Farm"/>-level default
         /// </summary>
-        public DelegateCommand ChooseSelectedSoilCommand { get; set; }
+        public DelegateCommand ChooseSelectedSoilCommand { get; set; } = null!;
 
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace H.Avalonia.ViewModels.Results
             try
             {
                 _exportHelpers.ExportPath = file.Path.AbsolutePath;
-                if (StoragePlaceholder.ShowSingleCoordinateResults)
+                if (StoragePlaceholder != null && StoragePlaceholder.ShowSingleCoordinateResults)
                 {
                     _exportHelpers.ExportToCSV(SingleSoilResultsViewItems, _soilResultsViewItemMap);
                 }
@@ -151,7 +153,7 @@ namespace H.Avalonia.ViewModels.Results
             }
             catch (IOException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, NotificationType.Error);
             }
         }
 
@@ -165,17 +167,18 @@ namespace H.Avalonia.ViewModels.Results
             var cancellationToken = _cancellationTokenSource.Token;
             try
             {
+                if (StoragePlaceholder == null) return;
                 if (StoragePlaceholder.ShowSingleCoordinateResults)
                 {
-                    var sourceCollection = new ObservableCollection<SoilViewItem> 
+                    var sourceCollection = new ObservableCollection<SoilViewItem>
                     {
                         StoragePlaceholder.SingleSoilViewItem
 
-                    }; 
-                    
+                    };
+
                     await AddViewItemsToCollection(cancellationToken, sourceCollection, SingleSoilResultsViewItems);
                 }
-                else
+                else if (StoragePlaceholder.SoilViewItems != null)
                 {
                     await AddViewItemsToCollection(cancellationToken, StoragePlaceholder.SoilViewItems, SoilResultsViewItems);
                 }
@@ -224,15 +227,18 @@ namespace H.Avalonia.ViewModels.Results
         /// </summary>
         private void OnChooseSelectedSoilExecute()
         {
-            base.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(MyComponentsView));
-            var view = this.RegionManager.Regions[UiRegions.ContentRegion].ActiveViews.Single();
-            this.RegionManager.Regions[UiRegions.ContentRegion].Deactivate(view);
-            this.RegionManager.Regions[UiRegions.ContentRegion].Remove(view);
+            base.RegionManager?.RequestNavigate(UiRegions.SidebarRegion, nameof(MyComponentsView));
+            var view = this.RegionManager?.Regions[UiRegions.ContentRegion].ActiveViews.Single();
+            if (view != null)
+            {
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Deactivate(view);
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Remove(view);
+            }
         }
 
         private void OnClickSwitchToClimateView()
         {
-            this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ClimateDataView));
+            this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(ClimateDataView));
         }
 
         #endregion

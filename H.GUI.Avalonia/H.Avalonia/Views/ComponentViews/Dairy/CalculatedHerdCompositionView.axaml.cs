@@ -20,7 +20,7 @@ namespace H.Avalonia.Views.ComponentViews.Dairy
         /// <summary>
         /// Handles click event for the Calf herd stage card
         /// </summary>
-        private void OnCalfCardClick(object sender, PointerPressedEventArgs e)
+        private void OnCalfCardClick(object? sender, PointerPressedEventArgs e)
         {
             if (DataContext is DairyComponentViewModel viewModel)
             {
@@ -31,7 +31,7 @@ namespace H.Avalonia.Views.ComponentViews.Dairy
         /// <summary>
         /// Handles click event for the Heifer herd stage card
         /// </summary>
-        private void OnHeiferCardClick(object sender, PointerPressedEventArgs e)
+        private void OnHeiferCardClick(object? sender, PointerPressedEventArgs e)
         {
             if (DataContext is DairyComponentViewModel viewModel)
             {
@@ -42,7 +42,7 @@ namespace H.Avalonia.Views.ComponentViews.Dairy
         /// <summary>
         /// Handles click event for the Lactating herd stage card
         /// </summary>
-        private void OnLactatingCardClick(object sender, PointerPressedEventArgs e)
+        private void OnLactatingCardClick(object? sender, PointerPressedEventArgs e)
         {
             if (DataContext is DairyComponentViewModel viewModel)
             {
@@ -53,7 +53,7 @@ namespace H.Avalonia.Views.ComponentViews.Dairy
         /// <summary>
         /// Handles click event for the Dry herd stage card
         /// </summary>
-        private void OnDryCardClick(object sender, PointerPressedEventArgs e)
+        private void OnDryCardClick(object? sender, PointerPressedEventArgs e)
         {
             if (DataContext is DairyComponentViewModel viewModel)
             {

@@ -53,7 +53,7 @@ namespace H.Core.Providers.Energy
         /// Unit of measurement of the electricity value of the data instance is kg CO2 kWh-1</returns>
         public Table_49_Electricity_Conversion_Defaults_Data GetElectricityConversionData(int year, Province province)
         {
-            Table_49_Electricity_Conversion_Defaults_Data data = this.Data.Find(x => (x.Year == year) && (x.Province == province));
+            Table_49_Electricity_Conversion_Defaults_Data? data = this.Data.Find(x => (x.Year == year) && (x.Province == province));
 
             if (data != null)
             {
@@ -106,8 +106,8 @@ namespace H.Core.Providers.Energy
 
             else
             {
-                Table_49_Electricity_Conversion_Defaults_Data data = this.Data.Find(x => (x.Year == year) && (x.Province == province));
-                return data.ElectricityValue;
+                Table_49_Electricity_Conversion_Defaults_Data? data = this.Data.Find(x => (x.Year == year) && (x.Province == province));
+                return data?.ElectricityValue ?? 0;
             }
 
         }
@@ -125,7 +125,7 @@ namespace H.Core.Providers.Energy
             var results = new List<Table_49_Electricity_Conversion_Defaults_Data>();
 
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ElectricityConversionValues);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ElectricityConversionValues)!;
 
             // Read the province names from the file and create a dictionary with the provinces and corresponding indices.
             string[] provinceNames = fileLines.ElementAt(0);

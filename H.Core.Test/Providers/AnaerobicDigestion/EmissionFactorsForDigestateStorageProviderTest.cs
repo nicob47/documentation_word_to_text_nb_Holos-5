@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.AnaerobicDigestion
     public class EmissionFactorsForDigestateStorageProviderTest
     {
         #region Fields
-        private static EmissionFactorsForDigestateStorageProvider _provider;
+        private static EmissionFactorsForDigestateStorageProvider _provider = null!;
         #endregion
 
         #region Initialization

@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.Animals
     {
         #region Fields
 
-        private Table_21_Average_Milk_Production_Dairy_Cows_Provider _provider;
+        private Table_21_Average_Milk_Production_Dairy_Cows_Provider _provider = null!;
 
         #endregion
 

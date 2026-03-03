@@ -30,7 +30,7 @@ namespace H.Core.Providers.Soil
 
         #region Properties
 
-        public event EventHandler FinishedReadingFile;
+        public event EventHandler? FinishedReadingFile;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace H.Core.Providers.Soil
             return _cache.Values.ToList();
         }
 
-        public SmallAreaYieldData GetData(int year, int polygon, CropType cropType, Province province)
+        public SmallAreaYieldData? GetData(int year, int polygon, CropType cropType, Province province)
         {
             CropType lookupCropType = cropType;
             if (cropType.IsPerennial())
@@ -88,7 +88,7 @@ namespace H.Core.Providers.Soil
             }
         }
 
-        public SmallAreaYieldData GetUpdatedData(int year, int polygon, CropType cropType, Province province)
+        public SmallAreaYieldData? GetUpdatedData(int year, int polygon, CropType cropType, Province province)
         {
             if (_updatedYields.ContainsKey((year: year, polygon: polygon, cropType: cropType, province: province)))
             {
@@ -107,7 +107,7 @@ namespace H.Core.Providers.Soil
         private void ReadFile()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SmallAreaYields);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SmallAreaYields)!;
 
             foreach (var line in fileLines.Skip(1))
             {
@@ -415,7 +415,7 @@ namespace H.Core.Providers.Soil
         /// </summary>
         private void ReadUpdatedYields()
         {
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.UpdatedSmallAreaYields).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.UpdatedSmallAreaYields)!.ToList();
 
             var crops = fileLines.ElementAt(0).Skip(5).ToList();
 

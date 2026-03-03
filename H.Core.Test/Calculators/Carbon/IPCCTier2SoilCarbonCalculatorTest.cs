@@ -6,6 +6,8 @@ using H.Core.Providers.Soil;
 using H.Core.Providers.Climate;
 using H.Core.Calculators.Nitrogen;
 
+#nullable disable
+
 namespace H.Core.Test.Calculators.Carbon
 {
     /// <summary>
@@ -41,15 +43,15 @@ namespace H.Core.Test.Calculators.Carbon
 
         #region Fields
 
-        private IPCCTier2SoilCarbonCalculator _sut;
+        private IPCCTier2SoilCarbonCalculator _sut = null!;
 
-        private static List<TestClimateData> _monthlyTestData;
-        private static List<TestFactorData> _annualTestData;
-        private static List<CropViewItem> _annualCarbonData;
+        private static List<TestClimateData> _monthlyTestData = null!;
+        private static List<TestFactorData> _annualTestData = null!;
+        private static List<CropViewItem> _annualCarbonData = null!;
 
-        private static  ClimateData climateData;
+        private static  ClimateData climateData = null!;
 
-        private Table_8_Globally_Calibrated_Model_Parameters_Provider _globallyCalibratedModelParametersProvider;
+        private Table_8_Globally_Calibrated_Model_Parameters_Provider _globallyCalibratedModelParametersProvider = null!;
         private static TillageType _tillageType;
 
         private double _f1;
@@ -63,7 +65,7 @@ namespace H.Core.Test.Calculators.Carbon
         private double _slowPoolDecayRateConstant;
         private double _passivePoolDecayRateConstant;
         private double _tillageFactor;
-        private static CropViewItem _averageRunInValuesAndInitialStocks;
+        private static CropViewItem _averageRunInValuesAndInitialStocks = null!;
 
         private const double Latitude = 49.6;
         private const double Longitude = 112.8;

@@ -121,7 +121,7 @@ namespace H.Avalonia.Services
             InputValidation(street, municipality, postalCode, county, country);
             street = PrepareStreetStringForApi(street);
             // If no cached data, get data from Nominatim API and cache it.
-            string content = this.GetCachedData(street, municipality, province, postalCode, county, country);
+            string? content = this.GetCachedData(street, municipality, province, postalCode, county, country);
             if (string.IsNullOrWhiteSpace(content))
             {
                 content = await GetAndCacheNominatimData(street, municipality, province, postalCode, county, country);
@@ -146,15 +146,19 @@ namespace H.Avalonia.Services
         /// <param name="county">The county of the address to geocode and get coordinates</param>
         /// <param name="country">The country of the address to geocode and get coordinates for, defaults to Canada.</param>
         /// <returns>JObject containing all the data returned from the Nominatim API for the given address</returns>
-        public async Task <JObject> GetApiContent(string street, string municipality, Province province, string postalCode, string? county = null, string country = "Canada")
+        public async Task <JObject?> GetApiContent(string street, string municipality, Province province, string postalCode, string? county = null, string country = "Canada")
         {
             InputValidation(street, municipality, postalCode, county, country);
             street = PrepareStreetStringForApi(street);
             // If no cached data, get data from Nominatim API and cache it.
-            string content = this.GetCachedData(street, municipality, province, postalCode, county, country);
+            string? content = this.GetCachedData(street, municipality, province, postalCode, county, country);
             if (string.IsNullOrWhiteSpace(content))
             {
                 content = await GetAndCacheNominatimData(street, municipality, province, postalCode, county, country);
+            }
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                return null;
             }
             return JArray.Parse(content).FirstOrDefault() as JObject;
         }
@@ -215,7 +219,7 @@ namespace H.Avalonia.Services
             municipality = Uri.EscapeDataString(municipality);
             string cityParameter = $"&city={municipality}";
 
-            string provinceString = Uri.EscapeDataString(province.ToString());
+            string provinceString = Uri.EscapeDataString(FormatProvinceStringForApiCall(province));
             string stateParameter = $"&state={provinceString}";
 
             postalCode = Uri.EscapeDataString(postalCode);
@@ -240,6 +244,25 @@ namespace H.Avalonia.Services
         }
 
         /// <summary>
+        /// Takes in province enum and outputs province in string form containing spaces if province contains space in name (Nova Scotia) as converting enum directly to string lacks space and causes issue wih API call
+        /// </summary>
+        /// <param name="province">The province being converted to api formatted string</param>
+        /// <returns>The formatted province string</returns>
+        private string FormatProvinceStringForApiCall(Province province)
+        {
+            switch (province)
+            {
+                case Province.NovaScotia:
+                    return "Nova Scotia";
+                case Province.PrinceEdwardIsland:
+                    return "Prince Edward Island";
+                default:
+                    return province.ToString();
+            }
+
+        }
+
+        /// <summary>
         /// Returns geocoding data for the specified address from the Nominatim API and caches the result.
         /// </summary>
         /// <param name="street">The street address used in the api call</param>
@@ -249,7 +272,7 @@ namespace H.Avalonia.Services
         /// <param name="county">The county used in the api call</param>
         /// <param name="country">The country used in the api call</param>
         /// <returns>A JSON string containing the geocoding data for the specified address if the API call is successful; otherwise, returns null.</returns>
-        private async Task<string> GetAndCacheNominatimData(string street, string municipality, Province province, string postalCode, string? county, string country)
+        private async Task<string?> GetAndCacheNominatimData(string street, string municipality, Province province, string postalCode, string? county, string country)
         {
             // Check if request is locked out due to previous request being made too recently
             if (((DateTime.Now - _lastApiRequestTime).TotalSeconds < ApiLockoutSeconds))
@@ -269,7 +292,7 @@ namespace H.Avalonia.Services
             }
 
             string apiUrl = GetCorrectApiUrl(street, municipality, province, postalCode, county, country);
-            string content = null;
+            string? content = null;
             try 
             {
                 // Run a task that forces the Nominatim API to timeout if the timeout property isn't able to gracefully time out the API call. If the API
@@ -350,7 +373,7 @@ namespace H.Avalonia.Services
             {
                 countyStringAppend = $"_{county}";
             }
-            var joinedAddress = street+"_"+municipality+countyStringAppend+"_"+province+"_"+postalCode+"_"+country;
+            var joinedAddress = (street+"_"+municipality+countyStringAppend+"_"+province+"_"+postalCode+"_"+country).ToLower();
             // Sanitize address for file name, replace common address characters with underscores.
             var invalidCharacters = Path.GetInvalidFileNameChars();
             var cleanedFileName = invalidCharacters.Aggregate(joinedAddress, (current, c) => current.Replace(c, '_')).Replace(" ", "_").Replace(",", "");
@@ -370,7 +393,7 @@ namespace H.Avalonia.Services
         /// <param name="county">The county used in the naming of the cache file to be retrieved</param>
         /// <param name="country">The country used in the naming of the cache file to be retrieved, defaults to Canada.</param>
         /// <returns>Returns JSON array in string format from a previous Nominatim API call.</returns>
-        private string GetCachedData(string street, string municipality, Province province, string postalCode, string? county, string country)
+        private string? GetCachedData(string street, string municipality, Province province, string postalCode, string? county, string country)
         {
             var path = GetCachePath(street, municipality, province, postalCode, county, country);
             if (File.Exists(path))
@@ -406,22 +429,36 @@ namespace H.Avalonia.Services
         private (double latitude, double longitude) ParseNominatimApiContentForCoordinates(string content)
         {
             // Initially read as JArray since Nominatim returns an array of one JSON object.
-            JObject jObject = JArray.Parse(content).FirstOrDefault() as JObject;
+            JObject? jObject = JArray.Parse(content).FirstOrDefault() as JObject;
             // Access properties from the JObject
-            var lat = double.Parse(jObject["lat"]?.ToString());
-            var lon = double.Parse(jObject["lon"]?.ToString());
+            var lat = double.Parse(jObject?["lat"]?.ToString() ?? "0");
+            var lon = double.Parse(jObject?["lon"]?.ToString() ?? "0");
             return (latitude: lat, longitude: lon);
         }
 
+        /// <summary>
+        /// Validates the input for the geocoding request to ensure it is in a format that can be processed and to prevent malicious input. Street, municipality, postal code, county, and country are all validated with different criteria to allow for the best possible formatting for the Nominatim API and to prevent malicious input.
+        /// </summary>
+        /// <param name="street">The street address to be validated.</param>
+        /// <param name="municipality">The municipality to be validated.</param>
+        /// <param name="postalCode">The postal code to be validated.</param>
+        /// <param name="county">The county to be validated.</param>
+        /// <param name="country">The country to be validated.</param>
         private void InputValidation(string street, string municipality, string postalCode, string? county, string country)
         {
             street = InputValidation(street, InputValidationType.Address);
             municipality = InputValidation(municipality, InputValidationType.Municipality);
             postalCode = InputValidation(postalCode, InputValidationType.PostalCode);
-            county = InputValidation(county, InputValidationType.County);
+            county = InputValidation(county ?? string.Empty, InputValidationType.County);
             country = InputValidation(country, InputValidationType.Country);
         }
 
+        /// <summary>
+        /// Validates the input string based on an <see cref="InputValidationType"/> to validate string based on what type of address component it is
+        /// </summary>
+        /// <param name="inputString">The address component</param>
+        /// <param name="inputType">The type of address component, defaults to general formatting</param>
+        /// <returns>Sanitized input string based on parameters defined by <see cref="InputValidationType"/>.</returns>
         private string InputValidation(string inputString, InputValidationType inputType = InputValidationType.General)
         {
             // Basic null/whitespace check
@@ -437,6 +474,11 @@ namespace H.Avalonia.Services
             return ApplySpecificValidation(inputString, inputType);
         }
 
+        /// <summary>
+        /// Check for blacklisted patterns existing in the string and remove them
+        /// </summary>
+        /// <param name="input">The string to be checked for malicious patterns</param>
+        /// <returns>Input string sanitized of blacklisted patterns</returns>
         private string RemoveMaliciousPatterns(string input)
         {
             // Remove common injection patterns
@@ -473,6 +515,12 @@ namespace H.Avalonia.Services
             return input;
         }
 
+        /// <summary>
+        /// Based on the type of <see cref="InputValidationType"/> validate the string to allow only certain characters
+        /// </summary>
+        /// <param name="input">The string to be validated</param>
+        /// <param name="inputType">The type of validation to apply to the input string</param>
+        /// <returns>Returns string containing only whitelisted characters</returns>
         private string ApplySpecificValidation(string input, InputValidationType inputType)
         {
             switch (inputType)

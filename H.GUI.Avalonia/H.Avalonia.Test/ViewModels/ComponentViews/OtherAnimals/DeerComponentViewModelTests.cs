@@ -12,13 +12,13 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
     [TestClass]
     public class DeerComponentViewModelTests
     {
-        private DeerComponentViewModel _viewModel;
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private ApplicationData _applicationData;
-        private Mock<IAnimalComponentService> _mockAnimalComponentService;
+        private DeerComponentViewModel _viewModel = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private ApplicationData _applicationData = null!;
+        private Mock<IAnimalComponentService> _mockAnimalComponentService = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

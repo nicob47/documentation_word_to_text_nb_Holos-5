@@ -11,10 +11,10 @@ namespace H.Avalonia.ViewModels.SupportingViews
     {
         #region Fields
 
-        private readonly IDietService _dietService;
-        private ObservableCollection<IDietDto> _diets;
-        private IDietDto _selectedDiet;
-        private string _searchText;
+        private readonly IDietService _dietService = null!;
+        private ObservableCollection<IDietDto> _diets = null!;
+        private IDietDto _selectedDiet = null!;
+        private string _searchText = string.Empty;
 
         #endregion
 

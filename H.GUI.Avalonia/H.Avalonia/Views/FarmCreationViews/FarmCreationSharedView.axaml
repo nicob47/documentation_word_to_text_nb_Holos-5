@@ -10,8 +10,8 @@
 		<TextBlock Text="{x:Static properties:Resources.LabelCreateNewFarm}"
 		   HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969" />
 		<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 20">
-			<TextBox Text="{Binding Path=FarmName}" Watermark="{x:Static properties:Resources.WatermarkYourFarmName}" Margin="0 15 0 0" Foreground="#696969" BorderBrush="#EDEDED" BorderThickness="2" FontWeight="SemiBold"/>
-			<TextBox Text="{Binding Path=FarmComments}"  Watermark="{x:Static properties:Resources.WatermarkComments}" Margin="0 15 0 0" Foreground="#696969"  BorderBrush="#EDEDED" FontWeight="SemiBold" BorderThickness="2" AcceptsReturn="True" TextWrapping="Wrap"/>
+			<TextBox Text="{Binding Path=FarmName}" Watermark="{x:Static properties:Resources.WatermarkYourFarmName}" Margin="0 15 0 0" Foreground="#696969" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
+			<TextBox Text="{Binding Path=FarmComments}"  Watermark="{x:Static properties:Resources.WatermarkComments}" Margin="0 15 0 0" Foreground="#696969"  BorderBrush="{StaticResource GcdsBorderLightBrush}" FontWeight="SemiBold" BorderThickness="2" AcceptsReturn="True" TextWrapping="Wrap"/>
 			<Button Content="{x:Static properties:Resources.ButtonCreateNewFarm}" Margin="0 15 0 0"
                     Command="{Binding Path=OnCreateNewFarmExecute}">
 			</Button>

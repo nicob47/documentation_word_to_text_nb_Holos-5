@@ -3,6 +3,8 @@
 using H.Core.Enumerations;
 using H.Core.Providers.Soil;
 
+#nullable disable
+
 #endregion
 
 namespace H.Core.Test.Providers.Soil
@@ -14,7 +16,7 @@ namespace H.Core.Test.Providers.Soil
 
         private const int PolygonId = 729003;
 
-        private static ISoilDataProvider _sut;
+        private static ISoilDataProvider _sut = null!;
 
         #endregion
 

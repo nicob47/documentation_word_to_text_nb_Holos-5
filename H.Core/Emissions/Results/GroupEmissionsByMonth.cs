@@ -47,7 +47,7 @@ namespace H.Core.Emissions.Results
         /// </summary>
         public List<GroupEmissionsByDay> DailyEmissions { get; }
 
-        public MonthsAndDaysData MonthsAndDaysData { get; set; }
+        public MonthsAndDaysData MonthsAndDaysData { get; set; } = null!;
 
         public int Month
         {
@@ -1399,7 +1399,7 @@ namespace H.Core.Emissions.Results
         /// </summary>
         public double MonthlyLambProduced { get; set; }
 
-        public Table_30_Default_Bedding_Material_Composition_Data BeddingMaterialComposition { get; set; }
+        public Table_30_Default_Bedding_Material_Composition_Data BeddingMaterialComposition { get; set; } = null!;
 
         /// <summary>
         /// Total carbon dioxide emissions associated with this <see cref="AnimalGroup"/>.

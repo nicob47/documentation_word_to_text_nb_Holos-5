@@ -5,7 +5,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_30_Default_Bedding_Material_Composition_Provider_Test
     {
-        private Core.Providers.Animals.Table_30_Default_Bedding_Material_Composition_Provider _provider;
+        private Core.Providers.Animals.Table_30_Default_Bedding_Material_Composition_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

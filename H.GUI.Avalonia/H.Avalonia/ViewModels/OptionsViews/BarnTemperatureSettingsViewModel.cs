@@ -53,15 +53,15 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         protected override void InitializeData()
         {
-            if (base.ActiveFarm.ClimateData.BarnTemperatureData != null)
+            if (base.ActiveFarm?.ClimateData?.BarnTemperatureData is not null)
             {
-                this.Data = base.ActiveFarm.ClimateData.BarnTemperatureData;
+                this.Data = base.ActiveFarm!.ClimateData.BarnTemperatureData;
                 this.Data.PropertyChanged -= DataOnPropertyChanged;
                 this.Data.PropertyChanged += DataOnPropertyChanged;
             }
             else
             {
-                throw new ArgumentNullException(nameof(base.ActiveFarm.ClimateData.BarnTemperatureData));
+                throw new ArgumentNullException(nameof(Data));
             }
             base.BuildChart();
         }
@@ -70,7 +70,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         #region Event Handlers
 
-        private void DataOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DataOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is TemperatureData)
             {

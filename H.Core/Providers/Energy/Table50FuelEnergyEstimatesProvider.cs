@@ -17,7 +17,7 @@ namespace H.Core.Providers.Energy
         private readonly SoilFunctionalCategoryStringConverter _soilFunctionalCategoryStringConverter;
         private readonly TillageTypeStringConverter _tillageTypeStringConverter;
         private readonly CropTypeStringConverter _cropTypeStringConverter;
-        private readonly ILogger _logger;
+        private readonly ILogger _logger = null!;
 
         #endregion
 
@@ -72,9 +72,9 @@ namespace H.Core.Providers.Energy
                 cropType = CropType.Fallow;
             }
 
-            Table50FuelEnergyEstimatesData data = this.Data.Find(x => (x.Province == province) && (x.SoilFunctionalCategory == soilLookupType)
+            Table50FuelEnergyEstimatesData? data = this.Data.Find(x => (x.Province == province) && (x.SoilFunctionalCategory == soilLookupType)
                                                             && (x.TillageType == tillageType) && (x.CropType == cropType));
-            
+
             // If instance is found return the instance
             if (data != null)
             {
@@ -123,7 +123,7 @@ namespace H.Core.Providers.Energy
         {
             var results = new List<Table50FuelEnergyEstimatesData>();
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.FuelEnergyEstimates);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.FuelEnergyEstimates)!;
 
             // A new dictionary is created to store the column headers of the file.
             // Key = Cell location of an entry

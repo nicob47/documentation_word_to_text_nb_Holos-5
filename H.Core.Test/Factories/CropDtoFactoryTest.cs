@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories.Crops;
 using H.Core.Mappers;
 using H.Core.Models;
@@ -13,7 +13,7 @@ public class CropDtoFactoryTest
 {
     #region Fields
 
-    private ICropFactory _factory;
+    private ICropFactory _factory = null!;
 
     #endregion
 

@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.Animals
     {
         #region Fields
 
-        private static Table_41_Poultry_NExcretionRate_Parameter_Values_Provider _provider;
+        private static Table_41_Poultry_NExcretionRate_Parameter_Values_Provider _provider = null!;
 
 
         #endregion

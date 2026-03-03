@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class AnimalTypeStringConverterTest
     {
-        private AnimalTypeStringConverter converter;
+        private AnimalTypeStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides

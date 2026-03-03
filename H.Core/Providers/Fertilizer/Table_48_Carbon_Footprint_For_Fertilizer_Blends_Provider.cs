@@ -58,7 +58,7 @@ namespace H.Core.Providers.Fertilizer
         public Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data GetData(FertilizerBlends blend)
         {
             var cachedItem = _cache.SingleOrDefault(item => item.FertilizerBlend == blend);
-            if (cachedItem != null)
+            if (cachedItem is not null)
             {
                 return _blendMapper.Map<Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data>(cachedItem);
             }
@@ -78,7 +78,7 @@ namespace H.Core.Providers.Fertilizer
         private IEnumerable<Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data> BuildCache()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.FertilizerBlends);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.FertilizerBlends)!;
             var result = new List<Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data>();
 
             foreach (var line in fileLines.Skip(3))

@@ -32,7 +32,7 @@ namespace H.Core.Services.Animals
             ManagementPeriod managementPeriod,
             DateTime dateTime,
             AnimalComponentBase cowCalfComponent,
-            GroupEmissionsByDay previousDaysEmissions,
+            GroupEmissionsByDay? previousDaysEmissions,
             AnimalGroup animalGroup,
             Farm farm)
         {
@@ -271,7 +271,7 @@ namespace H.Core.Services.Animals
             AnimalComponentBase cowCalfComponent,
             ManagementPeriod managementPeriod,
             DateTime dateTime,
-            GroupEmissionsByDay previousDaysEmissions,
+            GroupEmissionsByDay? previousDaysEmissions,
             AnimalGroup animalGroup,
             Farm farm)
         {
@@ -572,7 +572,7 @@ namespace H.Core.Services.Animals
                 return;
             }
 
-            var energyConversionFactor = _energyConversionDefaultsProvider.GetElectricityConversionValue(groupEmissionsByMonth.MonthsAndDaysData.Year, farm.DefaultSoilData.Province);
+            var energyConversionFactor = _energyConversionDefaultsProvider.GetElectricityConversionValue(groupEmissionsByMonth.MonthsAndDaysData.Year, farm.DefaultSoilData!.Province);
             groupEmissionsByMonth.MonthlyEnergyCarbonDioxide = this.CalculateTotalCarbonDioxideEmissionsFromHousedBeefOperations(
                 numberOfCattle: groupEmissionsByMonth.MonthsAndDaysData.ManagementPeriod.NumberOfAnimals,
                 numberOfDaysInMonth: groupEmissionsByMonth.MonthsAndDaysData.DaysInMonth,
@@ -597,7 +597,7 @@ namespace H.Core.Services.Animals
             AnimalComponentBase animalComponentBase,
             ManagementPeriod managementPeriod,
             DateTime dateTime,
-            GroupEmissionsByDay previousDaysEmissions,
+            GroupEmissionsByDay? previousDaysEmissions,
             AnimalGroup animalGroup,
             Farm farm)
         {

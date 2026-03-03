@@ -279,7 +279,7 @@ namespace H.Core.Calculators.Climate
         /// <returns>Crop Coefficient</returns>
         public double CalculateCropCoefficient(double maxTemperature, double minTemperature, CropType cropType)
         {
-            var cropCoefficient = _growingDegreeCropCoefficientsProvider.GetByCropType(cropType);
+            var cropCoefficient = _growingDegreeCropCoefficientsProvider.GetByCropType(cropType)!;
 
             var a = cropCoefficient.A;
             var b = cropCoefficient.B;

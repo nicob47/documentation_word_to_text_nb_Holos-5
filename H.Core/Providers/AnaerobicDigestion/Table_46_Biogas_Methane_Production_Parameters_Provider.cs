@@ -39,9 +39,9 @@ namespace H.Core.Providers.AnaerobicDigestion
         #endregion
 
         #region Properties
-        private List<Table_46_Biogas_Methane_Production_Manure_Data> ManureData { get; set; }
-        private List<Table_46_Biogas_Methane_Production_FarmResidue_Data> FarmResiduesData { get; set; }
-        private List<Table_46_Biogas_Methane_Production_CropResidue_Data> CropResiduesData { get; set; }
+        private List<Table_46_Biogas_Methane_Production_Manure_Data> ManureData { get; set; } = new();
+        private List<Table_46_Biogas_Methane_Production_FarmResidue_Data> FarmResiduesData { get; set; } = new();
+        private List<Table_46_Biogas_Methane_Production_CropResidue_Data> CropResiduesData { get; set; } = new();
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace H.Core.Providers.AnaerobicDigestion
                 lookupAnimalType = animalType;
             }
 
-            BiogasAndMethaneProductionParametersData data = this.ManureData.Find(x => (x.AnimalType == lookupAnimalType) && (x.BeddingType == beddingMaterial));
+            BiogasAndMethaneProductionParametersData? data = this.ManureData.Find(x => (x.AnimalType == lookupAnimalType) && (x.BeddingType == beddingMaterial));
 
             if (data != null)
             {
@@ -112,7 +112,7 @@ namespace H.Core.Providers.AnaerobicDigestion
         /// <returns>Returns a single instance of <see cref="BiogasAndMethaneProductionParametersData"/> based on the parameters specified. Returns an empty instance otherwise.</returns>
         public BiogasAndMethaneProductionParametersData GetBiogasMethaneProductionInstance(FarmResidueType residueType)
         {
-            BiogasAndMethaneProductionParametersData data = this.FarmResiduesData.Find(x => x.ResidueType == residueType);
+            BiogasAndMethaneProductionParametersData? data = this.FarmResiduesData.Find(x => x.ResidueType == residueType);
 
             if (data != null)
             {
@@ -142,7 +142,7 @@ namespace H.Core.Providers.AnaerobicDigestion
             List<Table_46_Biogas_Methane_Production_FarmResidue_Data> residueData = new List<Table_46_Biogas_Methane_Production_FarmResidue_Data>();
 
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ParametersBiogasMethaneProduction);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ParametersBiogasMethaneProduction)!;
 
             double biomethanePotential, methaneFraction, volatileSolids, totalSolids, totalNitrogen;
 

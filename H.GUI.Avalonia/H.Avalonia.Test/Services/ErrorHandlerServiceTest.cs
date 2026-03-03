@@ -5,19 +5,23 @@ using H.Avalonia.Services;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
 
+#nullable disable
+
 namespace H.Avalonia.Test.Services
 {
     [TestClass]
     public class ErrorHandlerServiceTest
     {
-        private ErrorHandlerService _service;
-        private Mock<ILogger> _mockLogger;
-        private ILogger _loggerMock;
-        private Mock<IEventAggregator> _mockEventAggregator;
-        private IEventAggregator _eventAggregatorMock;
-        private Mock<INotificationManagerService> _mockNotificationManager;
-        private INotificationManagerService _notificationManagerMock;
-        private Mock<PubSubEvent<ValidationErrorOccurredEvent>> _mockEvent;
+        private ErrorHandlerService _service = null!;
+        private Mock<ILogger> _mockLogger = null!;
+        private ILogger _loggerMock = null!;
+        private Mock<IEventAggregator> _mockEventAggregator = null!;
+        private IEventAggregator _eventAggregatorMock = null!;
+        private Mock<INotificationManagerService> _mockNotificationManager = null!;
+        private INotificationManagerService _notificationManagerMock = null!;
+#pragma warning disable CS0414
+        private Mock<PubSubEvent<ValidationErrorOccurredEvent>> _mockEvent = null!;
+#pragma warning restore CS0414
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -46,17 +50,17 @@ namespace H.Avalonia.Test.Services
         [TestMethod]
         public void TestConstructorNullLogger()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new ErrorHandlerService(null, _eventAggregatorMock, _notificationManagerMock));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new ErrorHandlerService(null, _eventAggregatorMock, _notificationManagerMock));
         }
         [TestMethod]
         public void TestConstructorNullEventAggregator()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new ErrorHandlerService(_loggerMock, null, _notificationManagerMock));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new ErrorHandlerService(_loggerMock, null, _notificationManagerMock));
         }
         [TestMethod]
         public void TestConstructorNullNotificationManager()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new ErrorHandlerService(_loggerMock, _eventAggregatorMock, null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new ErrorHandlerService(_loggerMock, _eventAggregatorMock, null));
         }
         [TestMethod]
         public void TestConstructorInitialization()

@@ -18,7 +18,7 @@ namespace H.Core.Test.Services
     {
         #region Fields
 
-        private BeefCattleResultsService _resultsService;
+        private BeefCattleResultsService _resultsService = null!;
 
         #endregion
 
@@ -126,7 +126,9 @@ namespace H.Core.Test.Services
                 NumberOfAnimals = 100,
                 Name = "BeefFinishingHeiferGroup1Period1",
                 Start = new DateTime(1996, 4, 25),
+#pragma warning disable CS0618
                 FeedIntakeAmount = 1,
+#pragma warning restore CS0618
                 StartWeight = 20,
                 EndWeight = 50,
                 GainCoefficient = 1,
@@ -195,7 +197,9 @@ namespace H.Core.Test.Services
            // var firstMonthlyEmission = groupMonthlyEmissions[0];
 
             // First Monthly Emission Calculations
-            var roundingDigits = 2;
+#pragma warning disable CS0219
+            var _roundingDigits = 2;
+#pragma warning restore CS0219
             //Assert.AreEqual(Math.Round(firstMonthlyEmission.EntericMethaneEmission, roundingDigits), -956.88);
             //Assert.AreEqual(Math.Round(firstMonthlyEmission.ManureDirectN2ONEmission, roundingDigits), -4.68);
             //Assert.AreEqual(Math.Round(firstMonthlyEmission.ManureIndirectN2ONEmission, roundingDigits), -4.68);

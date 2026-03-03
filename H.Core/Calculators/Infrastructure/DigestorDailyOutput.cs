@@ -6,7 +6,7 @@ namespace H.Core.Calculators.Infrastructure
     {
         public DateTime Date { get; set; }
 
-        public GroupEmissionsByDay GroupEmissionsByDay { get; set; }
+        public GroupEmissionsByDay GroupEmissionsByDay { get; set; } = null!;
 
         /*
          * Flows

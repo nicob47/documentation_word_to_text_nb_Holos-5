@@ -68,7 +68,7 @@ namespace H.Core.Providers.Plants
                 lookupType = CropType.Rye;
             }
 
-            Table_9_Nitrogen_Lignin_Content_In_Crops_Data data = this.Data.Find(x => x.CropType == lookupType);
+            Table_9_Nitrogen_Lignin_Content_In_Crops_Data? data = this.Data.Find(x => x.CropType == lookupType);
 
             if (data != null)
             {
@@ -101,7 +101,7 @@ namespace H.Core.Providers.Plants
             var cropInstances = new List<Table_9_Nitrogen_Lignin_Content_In_Crops_Data>();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.NitrogenLinginContentsInSteadyStateMethods);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.NitrogenLinginContentsInSteadyStateMethods)!;
 
             foreach (string[] line in fileLines.Skip(1).Take(58))
             {

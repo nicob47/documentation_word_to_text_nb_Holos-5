@@ -127,7 +127,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
         }
         public int CarbonModellingEquilibriumYear
         {
-            get => ActiveFarm.CarbonModellingEquilibriumYear;
+            get => ActiveFarm?.CarbonModellingEquilibriumYear ?? 0;
             set
             {
                 ValidateYear(value, nameof(CarbonModellingEquilibriumYear));
@@ -135,13 +135,16 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
                 {
                     return;
                 }
-                ActiveFarm.CarbonModellingEquilibriumYear = value;
+                if (ActiveFarm is not null)
+                {
+                    ActiveFarm.CarbonModellingEquilibriumYear = value;
+                }
                 RaisePropertyChanged(nameof(CarbonModellingEquilibriumYear));
             }
         }
 
         //Collection of all soil textures for combo box
-        public ObservableCollection<SoilTexture> SoilTextures { get; set; }
+        public ObservableCollection<SoilTexture> SoilTextures { get; set; } = null!;
         #endregion
 
         #region Methods
@@ -173,7 +176,10 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
         public void ManageData()
         {
             //Binds the soil data from the active farm
-            BindingSoilData = ActiveFarm.DefaultSoilData;
+            if (ActiveFarm is not null)
+            {
+                BindingSoilData = ActiveFarm.DefaultSoilData!;
+            }
 
             //Populate the soil texture collection
             SoilTextures = new ObservableCollection<SoilTexture>();
@@ -187,14 +193,19 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
             }
 
             //Listens for changes to the soil data
-            BindingSoilData.PropertyChanged -= OnSoilDataPropertyChanged;
-            BindingSoilData.PropertyChanged += OnSoilDataPropertyChanged;
+            if (BindingSoilData is not null)
+            {
+                BindingSoilData.PropertyChanged -= OnSoilDataPropertyChanged;
+                BindingSoilData.PropertyChanged += OnSoilDataPropertyChanged;
+            }
         }
         #endregion
 
         #region Event Handlers
-        public void OnSoilDataPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public void OnSoilDataPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (ActiveFarm?.DefaultSoilData is null) return;
+
             if (e.PropertyName == nameof(BulkDensity))
             {
                 BulkDensity = ActiveFarm.DefaultSoilData.BulkDensity;

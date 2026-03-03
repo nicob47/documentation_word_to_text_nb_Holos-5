@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class TreeSpeciesStringConverterTest
     {
-        private TreeSpeciesStringConverter converter;
+        private TreeSpeciesStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides

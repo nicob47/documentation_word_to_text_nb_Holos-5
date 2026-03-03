@@ -25,7 +25,7 @@ namespace H.Core.Providers.Plants
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.EnergyRequirementsForCrops;
-            var filelines = CsvResourceReader.GetFileLines(filename).ToList();
+            var filelines = CsvResourceReader.GetFileLines(filename)!.ToList();
             var result = new List<Duplicate_EnergyRequirementsForCropsData>();
 
             const int startingRowIndex = 4;

@@ -98,7 +98,7 @@ namespace H.Core.Providers.Animals.Table_69
 
         protected void ReadFile(CsvResourceNames resourceName)
         {
-            var fileLines = CsvResourceReader.GetFileLines(resourceName).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(resourceName)!.ToList();
 
             this.ReadLines(fileLines);
         }

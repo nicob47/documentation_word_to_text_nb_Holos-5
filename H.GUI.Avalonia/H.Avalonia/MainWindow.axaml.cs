@@ -14,8 +14,7 @@ namespace H.Avalonia
 
         private void OnOpened(object? sender, EventArgs e)
         {
-            if (ViewModel != null)
-                ViewModel.NotificationManagerService.Initialize(this);
+            ViewModel?.NotificationManagerService.Initialize(this);
         }
 
         private MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;

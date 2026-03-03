@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.Plants
     public class Table_9_Nitrogen_Lignin_Content_In_Crops_Provider_Test
     {
         #region Fields
-        private static Table_9_Nitrogen_Lignin_Content_In_Crops_Provider _provider;
+        private static Table_9_Nitrogen_Lignin_Content_In_Crops_Provider _provider = null!;
         #endregion
 
         #region Initialization

@@ -16,7 +16,7 @@ namespace H.Core.Services.Animals
         double GetVolumeAvailableForExport(int year, Farm farm, AnimalType animalType);
         List<ManureApplicationTypes> GetValidManureApplicationTypes();
         List<ManureLocationSourceType> GetValidManureLocationSourceTypes();
-        List<ManureStateType> GetValidManureStateTypes(Farm farm, ManureLocationSourceType locationSourceType, AnimalType animalType);
+        List<ManureStateType> GetValidManureStateTypes(Farm? farm, ManureLocationSourceType locationSourceType, AnimalType animalType);
         void SetValidManureStateTypes(ManureItemBase manureItemBase, Farm farm);
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace H.Core.Services.Animals
         /// </summary>
         double GetTotalVolumeOfManureExported(int year, Farm farm, AnimalType animalType);
         int GetYearHighestVolumeRemaining(AnimalType animalType);
-        DefaultManureCompositionData GetManureCompositionData(ManureItemBase manureItemBase, Farm farm);
+        DefaultManureCompositionData GetManureCompositionData(ManureItemBase? manureItemBase, Farm? farm);
 
         /// <summary>
         /// Returns total TAN created by all animals on farm in specified year

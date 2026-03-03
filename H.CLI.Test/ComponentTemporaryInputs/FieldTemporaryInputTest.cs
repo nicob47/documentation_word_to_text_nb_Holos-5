@@ -12,84 +12,84 @@ namespace H.CLI.Test.ComponentTemporaryInputs
         public void TestConvertToComponentProperties_ExpectInvalidPropertyNameException()
         {
          
-            Assert.ThrowsException<InvalidPropertyNameException>(() => fieldTempInput.ConvertToComponentProperties("NotAValidPropertyName", null, "FieldName", 1, 1, "fileName"));
+            Assert.ThrowsExactly<InvalidPropertyNameException>(() => fieldTempInput.ConvertToComponentProperties("NotAValidPropertyName", null, "FieldName", 1, 1, "fileName"));
         }
 
         [TestMethod] 
         public void TestConvertToComponentProperties_ExpectException_InvalidResponseType()
         {
             
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("IsIrrigated", null, "NotYesOrNo", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("IsIrrigated", null, "NotYesOrNo", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidManureLocationSourceType()
         {
             
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureLocationSourceType", null, "NotAValidManureLocationSourceType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureLocationSourceType", null, "NotAValidManureLocationSourceType", 1, 1, "fileName"));
         }
 
         
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_ManureStateType()
         {
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureStateType", null, "NotAValidManureStateType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureStateType", null, "NotAValidManureStateType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidManureApplicationType()
         {
         
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureApplicationType", null, "NotAValidManureApplicationType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureApplicationType", null, "NotAValidManureApplicationType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidCoverCropTerminationType()
         {
           
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CoverCropTerminationType", null, "NotAValidCoverCropTerminationType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CoverCropTerminationType", null, "NotAValidCoverCropTerminationType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidCoverCropType()
         {
          
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CoverCropType", null, "NotAValidCoverCropType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CoverCropType", null, "NotAValidCoverCropType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidManureAnimalSourceType()
         {
           
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureAnimalSourceType", null, "NotAValidManureAnimalSourceType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("ManureAnimalSourceType", null, "NotAValidManureAnimalSourceType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidIrrigationType()
         {
             
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("IrrigationType", null, "NotAValidIrrigationType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("IrrigationType", null, "NotAValidIrrigationType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidCropType()
         {
            
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CropType", null, "NotAValidCropType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CropType", null, "NotAValidCropType", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidHarvestMethod()
         {
             
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("HarvestMethod", null, "NotAValidHarvestMethod", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("HarvestMethod", null, "NotAValidHarvestMethod", 1, 1, "fileName"));
         }
 
         [TestMethod]
         public void TestConvertToComponentProperties_ExpectException_InvalidTillageType()
         {
            
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("TillageType", null, "NotAValidTillageType", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("TillageType", null, "NotAValidTillageType", 1, 1, "fileName"));
         }
 
         [TestMethod]
@@ -145,7 +145,7 @@ namespace H.CLI.Test.ComponentTemporaryInputs
         public void TestConvertToComponentProperties_ExpectFormatException_ValueIsEmpty()
         {
         
-            Assert.ThrowsException<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CropType", null, " ", 1, 1, "fileName"));
+            Assert.ThrowsExactly<FormatException>(() => fieldTempInput.ConvertToComponentProperties("CropType", null, " ", 1, 1, "fileName"));
         }
 
     }

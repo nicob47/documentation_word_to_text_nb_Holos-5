@@ -23,7 +23,7 @@ namespace H.Core.Models.LandManagement.Fields
         private ManureAnimalSourceTypes _manureAnimalSourceType;
         private ManureApplicationTypes _manureApplicationTypes;
 
-        private ObservableCollection<ManureApplicationTypes> _availableManureApplicationTypes;
+        private ObservableCollection<ManureApplicationTypes> _availableManureApplicationTypes = null!;
 
         #endregion
 
@@ -136,7 +136,7 @@ namespace H.Core.Models.LandManagement.Fields
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {                     
         }
 

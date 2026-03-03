@@ -103,14 +103,14 @@ namespace H.Core.Calculators.Carbon
             double fieldArea);
 
         CropViewItem SetCarbonInputs(
-            CropViewItem previousYearViewItem,
+            CropViewItem? previousYearViewItem,
             CropViewItem currentYearViewItem,
-            CropViewItem nextYearViewItem,
+            CropViewItem? nextYearViewItem,
             Farm farm);
 
         /// <summary>
         /// Calculates the plant carbon in the agricultural product for the given species grown in the given year.
-        /// 
+        ///
         /// C_p
         ///
         /// </summary>
@@ -119,14 +119,14 @@ namespace H.Core.Calculators.Carbon
         /// <param name="farm">The <see cref="Farm"/> being considered</param>
         /// <returns>The total above ground carbon input</returns>
         double CalculatePlantCarbonInAgriculturalProduct(
-            CropViewItem previousYearViewItem, 
-            CropViewItem currentYearViewItem, 
+            CropViewItem? previousYearViewItem,
+            CropViewItem currentYearViewItem,
             Farm farm);
 
         void CalculateNitrogenAtInterval(
             CropViewItem previousYearResults,
             CropViewItem currentYearResults,
-            CropViewItem nextYearResults,
+            CropViewItem? nextYearResults,
             Farm farm,
             int yearIndex);
     }

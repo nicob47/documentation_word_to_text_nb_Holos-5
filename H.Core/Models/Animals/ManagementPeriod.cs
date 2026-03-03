@@ -16,8 +16,8 @@ namespace H.Core.Models.Animals
     {
         #region Fields
 
-        private Diet _selectedDiet;
-        private Diet _displayDiet;
+        private Diet _selectedDiet = null!;
+        private Diet _displayDiet = null!;
 
         private DateTime _start;
         private DateTime _end;
@@ -25,8 +25,8 @@ namespace H.Core.Models.Animals
         private TimeSpan _duration;
 
         private DietAdditiveType _dietAdditive;
-        private ManureDetails _manureDetails;
-        private HousingDetails _housingDetails;
+        private ManureDetails _manureDetails = null!;
+        private HousingDetails _housingDetails = null!;
         private AnimalType _animalType;
         private AnimalType _dietGroupType;
         private ProductionStages _productionStage;
@@ -35,7 +35,7 @@ namespace H.Core.Models.Animals
         private int _numberOfYoungAnimals;
         private int _numberOfDays;
         
-        private string _groupName;
+        private string _groupName = string.Empty;
 
         private double _energyRequiredForMilk;
         private double _energyRequiredForWool;

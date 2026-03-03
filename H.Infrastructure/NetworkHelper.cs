@@ -9,7 +9,9 @@ namespace H.Infrastructure
         {
             try
             {
+#pragma warning disable SYSLIB0014 // WebClient is obsolete — HttpClient migration deferred
                 using (var client = new WebClient())
+#pragma warning restore SYSLIB0014
                 using (client.OpenRead("https://google.com/generate_204"))
                 {
                     Trace.TraceInformation($"{nameof(NetworkHelper)}.{nameof(IsConnectedToInternet)} : Successfully connected to the internet");

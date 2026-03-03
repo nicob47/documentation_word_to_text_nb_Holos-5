@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Enumerations;
 using H.Core.Factories;
 using H.Core.Mappers;
@@ -13,6 +13,8 @@ using H.Core.Factories.Fields;
 using Microsoft.Extensions.Logging;
 using H.Core.Models;
 
+#nullable disable
+
 namespace H.Core.Test.Services.LandManagement;
 
 [TestClass]
@@ -20,12 +22,12 @@ public class FieldComponentServiceTest
 {
     #region Fields
 
-    private IFieldComponentService _fieldComponentService;
+    private IFieldComponentService _fieldComponentService = null!;
     
-    private Mock<IFieldFactory> _mockFieldComponentDtoFactory;
-    private Mock<ICropFactory> _mockCropFactory;
-    private Mock<ITransferService<CropViewItem, CropDto>> _mockCropTransferService;
-    private Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>> _mockFieldTransferService;
+    private Mock<IFieldFactory> _mockFieldComponentDtoFactory = null!;
+    private Mock<ICropFactory> _mockCropFactory = null!;
+    private Mock<ITransferService<CropViewItem, CropDto>> _mockCropTransferService = null!;
+    private Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>> _mockFieldTransferService = null!;
 
     #endregion
 
@@ -126,7 +128,6 @@ public class FieldComponentServiceTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullFieldFactory_ThrowsArgumentNullException()
     {
         // Arrange: null fieldFactory but valid other dependencies
@@ -136,20 +137,20 @@ public class FieldComponentServiceTest
         var mockCropTransferService = new Mock<ITransferService<CropViewItem, CropDto>>();
         var mockFieldTransferService = new Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>>();
 
-        // Act: attempt to create instance with null fieldFactory
-        var service = new FieldComponentService(
-            fieldFactory,
-            mockCropFactory.Object,
-            mockLogger.Object,
-            mockCropTransferService.Object,
-            mockFieldTransferService.Object
-        );
-
-        // Assert: exception attribute handles verification
+        // Act & Assert
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            var service = new FieldComponentService(
+                fieldFactory,
+                mockCropFactory.Object,
+                mockLogger.Object,
+                mockCropTransferService.Object,
+                mockFieldTransferService.Object
+            );
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullCropFactory_ThrowsArgumentNullException()
     {
         // Arrange: null cropFactory but valid other dependencies
@@ -159,20 +160,20 @@ public class FieldComponentServiceTest
         var mockCropTransferService = new Mock<ITransferService<CropViewItem, CropDto>>();
         var mockFieldTransferService = new Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>>();
 
-        // Act: attempt to create instance with null cropFactory
-        var service = new FieldComponentService(
-            mockFieldFactory.Object,
-            cropFactory,
-            mockLogger.Object,
-            mockCropTransferService.Object,
-            mockFieldTransferService.Object
-        );
-
-        // Assert: exception attribute handles verification
+        // Act & Assert
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            var service = new FieldComponentService(
+                mockFieldFactory.Object,
+                cropFactory,
+                mockLogger.Object,
+                mockCropTransferService.Object,
+                mockFieldTransferService.Object
+            );
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         // Arrange: null logger but valid other dependencies
@@ -182,20 +183,20 @@ public class FieldComponentServiceTest
         var mockCropTransferService = new Mock<ITransferService<CropViewItem, CropDto>>();
         var mockFieldTransferService = new Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>>();
 
-        // Act: attempt to create instance with null logger
-        var service = new FieldComponentService(
-            mockFieldFactory.Object,
-            mockCropFactory.Object,
-            logger,
-            mockCropTransferService.Object,
-            mockFieldTransferService.Object
-        );
-
-        // Assert: exception attribute handles verification
+        // Act & Assert
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            var service = new FieldComponentService(
+                mockFieldFactory.Object,
+                mockCropFactory.Object,
+                logger,
+                mockCropTransferService.Object,
+                mockFieldTransferService.Object
+            );
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullCropTransferService_ThrowsArgumentNullException()
     {
         // Arrange: null cropTransferService but valid other dependencies
@@ -205,20 +206,20 @@ public class FieldComponentServiceTest
         ITransferService<CropViewItem, CropDto> cropTransferService = null;
         var mockFieldTransferService = new Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>>();
 
-        // Act: attempt to create instance with null cropTransferService
-        var service = new FieldComponentService(
-            mockFieldFactory.Object,
-            mockCropFactory.Object,
-            mockLogger.Object,
-            cropTransferService,
-            mockFieldTransferService.Object
-        );
-
-        // Assert: exception attribute handles verification
+        // Act & Assert
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            var service = new FieldComponentService(
+                mockFieldFactory.Object,
+                mockCropFactory.Object,
+                mockLogger.Object,
+                cropTransferService,
+                mockFieldTransferService.Object
+            );
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullFieldTransferService_ThrowsArgumentNullException()
     {
         // Arrange: null fieldTransferService but valid other dependencies
@@ -228,16 +229,17 @@ public class FieldComponentServiceTest
         var mockCropTransferService = new Mock<ITransferService<CropViewItem, CropDto>>();
         ITransferService<FieldSystemComponent, FieldSystemComponentDto> fieldTransferService = null;
 
-        // Act: attempt to create instance with null fieldTransferService
-        var service = new FieldComponentService(
-            mockFieldFactory.Object,
-            mockCropFactory.Object,
-            mockLogger.Object,
-            mockCropTransferService.Object,
-            fieldTransferService
-        );
-
-        // Assert: exception attribute handles verification
+        // Act & Assert
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            var service = new FieldComponentService(
+                mockFieldFactory.Object,
+                mockCropFactory.Object,
+                mockLogger.Object,
+                mockCropTransferService.Object,
+                fieldTransferService
+            );
+        });
     }
 
     [TestMethod]
@@ -871,17 +873,17 @@ public class FieldComponentServiceTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(NullReferenceException))]
     public void GetCropViewItemFromDto_WithNullDto_Throws()
     {
         // Arrange: a null DTO parameter is provided (documents current behavior)
         ICropDto cropDto = null;
         var fieldComponent = new FieldSystemComponent() { CropViewItems = new ObservableCollection<CropViewItem> { new CropViewItem() } };
 
-        // Act: calling the method with null DTO is expected to throw a NullReferenceException
-        _fieldComponentService.GetCropViewItemFromDto(cropDto, fieldComponent);
-
-        // Assert: exception attribute on the test method handles verification
+        // Act & Assert
+        Assert.ThrowsExactly<NullReferenceException>(() =>
+        {
+            _fieldComponentService.GetCropViewItemFromDto(cropDto, fieldComponent);
+        });
     }
 
     #endregion
@@ -1004,7 +1006,9 @@ public class FieldComponentServiceTest
         _fieldComponentService.AddCropDtoToSystem(fieldComponent, cropDto);
 
         // Assert: factory was invoked with the same dto instance
+#pragma warning disable CS0252
         _mockCropFactory.Verify(x => x.CreateCropViewItem(It.Is<ICropDto>(d => d == cropDto)), Times.Once);
+#pragma warning restore CS0252
     }
 
     [TestMethod]

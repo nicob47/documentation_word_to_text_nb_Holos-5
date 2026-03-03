@@ -410,7 +410,7 @@ namespace H.Core.Models.Animals
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is ManureDetails manureDetails)
             {

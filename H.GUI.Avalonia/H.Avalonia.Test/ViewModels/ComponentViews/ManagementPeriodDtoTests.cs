@@ -6,7 +6,7 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews
     [TestClass]
     public class ManagementPeriodDtoTests
     {
-        private ManagementPeriodDto _dto;
+        private ManagementPeriodDto _dto = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

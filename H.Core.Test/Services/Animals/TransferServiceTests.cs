@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using AutoMapper;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Enumerations;
@@ -10,6 +10,8 @@ using H.Core.Services.Animals;
 using H.Infrastructure;
 using Moq;
 
+#nullable disable
+
 namespace H.Core.Test.Services.Animals
 {
     public class TestModel : ModelBase 
@@ -19,10 +21,12 @@ namespace H.Core.Test.Services.Animals
 
     public class TestDto : IDto
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public Guid Guid { get; set; }
         public double Weight { get; set; }
-        public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning disable CS0067
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067
     }
 
     [TestClass]

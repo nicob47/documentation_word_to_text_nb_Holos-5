@@ -10,9 +10,9 @@ namespace H.Core.Services.LandManagement
     {
         public class AdjoiningYears
         {
-            public CropViewItem PreviousYearViewItem { get; set; }
-            public CropViewItem CurrentYearViewItem { get; set; }
-            public CropViewItem NextYearViewItem { get; set; }
+            public CropViewItem? PreviousYearViewItem { get; set; }
+            public CropViewItem CurrentYearViewItem { get; set; } = null!;
+            public CropViewItem? NextYearViewItem { get; set; }
         }
 
         #region Public Methods
@@ -35,7 +35,7 @@ namespace H.Core.Services.LandManagement
             var viewItemsForYear = viewItems.Where(x => x.Year == year).OrderBy(x => x.Year).ToList();
 
             var mainCropForCurrentYear = this.GetMainCropForYear(viewItemsForYear, year, fieldSystemComponent);
-            if (mainCropForCurrentYear.CropType.IsPerennial())
+            if (mainCropForCurrentYear != null && mainCropForCurrentYear.CropType.IsPerennial())
             {
                 // Items with same stand id
                 var perennialItemsInStand = viewItems.Where(x =>
@@ -56,7 +56,7 @@ namespace H.Core.Services.LandManagement
                 return new AdjoiningYears()
                 {
                     PreviousYearViewItem = null,
-                    CurrentYearViewItem = mainCropForCurrentYear,
+                    CurrentYearViewItem = mainCropForCurrentYear!,
                     NextYearViewItem = null,
                 };
             }
@@ -271,12 +271,12 @@ namespace H.Core.Services.LandManagement
         {
             var fieldSystemComponent = farm.GetFieldSystemComponent(componentId);
 
-            // Get the field system component that will be used to calculate the equilibrium year            
+            // Get the field system component that will be used to calculate the equilibrium year
             var sizeOfFirstRotationForField =
                 detailViewItems.OrderBy(viewItem => viewItem.Year).First().SizeOfFirstRotationForField;
-            if (sizeOfFirstRotationForField == 0)
+            if (sizeOfFirstRotationForField == 0 && fieldSystemComponent != null)
             {
-                // Was not set during creation of old farm                
+                // Was not set during creation of old farm
                 sizeOfFirstRotationForField = fieldSystemComponent.SizeOfFirstRotationInField();
             }
 
@@ -432,7 +432,7 @@ namespace H.Core.Services.LandManagement
             return result;
         }
 
-        private FieldSystemComponent GetLeftMostComponent(FieldSystemComponent fieldSystemComponent, Farm farm)
+        private FieldSystemComponent? GetLeftMostComponent(FieldSystemComponent fieldSystemComponent, Farm farm)
         {
             var currentFieldComponent = new FieldSystemComponent();
 
@@ -446,7 +446,7 @@ namespace H.Core.Services.LandManagement
                 currentFieldComponent = farm.GetFieldSystemComponent(currentComponentId);
             }
 
-            if (currentFieldComponent.HistoricalComponents.Any())
+            if (currentFieldComponent != null && currentFieldComponent.HistoricalComponents.Any())
             {
                 return currentFieldComponent.HistoricalComponents.Cast<FieldSystemComponent>().OrderBy(x => x.StartYear)
                     .First();
@@ -468,7 +468,7 @@ namespace H.Core.Services.LandManagement
             var fieldSystemComponent = farm.GetFieldSystemComponent(fieldSystemGuid);
 
             // Need to get leftmost component here
-            var leftMost = this.GetLeftMostComponent(fieldSystemComponent, farm);
+            var leftMost = this.GetLeftMostComponent(fieldSystemComponent!, farm)!;
 
             // Create run in period items
             var runInPeriodItems = this.GetRunInPeriodItems(farm, leftMost.CropViewItems, leftMost.StartYear,
@@ -550,7 +550,7 @@ namespace H.Core.Services.LandManagement
                 var energyResults = this.CalculateCropEnergyResults(cropViewItem, farm);
                 cropViewItem.CropEnergyResults = energyResults;
                 cropViewItem.EstimatesOfProductionResultsViewItem =
-                    this.CalculateEstimateOfProduction(cropViewItem, fieldSystemComponent);
+                    this.CalculateEstimateOfProduction(cropViewItem, fieldSystemComponent!);
             }
         }
 

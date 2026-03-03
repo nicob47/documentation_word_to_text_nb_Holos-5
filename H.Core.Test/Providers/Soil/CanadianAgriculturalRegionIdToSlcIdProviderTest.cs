@@ -5,7 +5,7 @@ namespace H.Core.Test.Providers.Soil
     [TestClass]
     public class CanadianAgriculturalRegionIdToSlcIdProviderTest
     {
-        private CanadianAgriculturalRegionIdToSlcIdProvider _idProvider;
+        private CanadianAgriculturalRegionIdToSlcIdProvider _idProvider = null!;
 
         [TestInitialize]
         public void TestInitialize()

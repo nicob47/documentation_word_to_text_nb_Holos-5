@@ -73,6 +73,13 @@ namespace H.Avalonia.Views
 
         #region Constructors
 
+        /// <summary>
+        /// Parameterless constructor required by the Avalonia XAML loader.
+        /// </summary>
+        public SoilDataView() : this(Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance)
+        {
+        }
+
         public SoilDataView(ILogger logger)
         {
             _logger = logger;
@@ -91,7 +98,7 @@ namespace H.Avalonia.Views
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnAttachedToVisualTree(e);
-            _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            if (_viewModel is not null) _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
         #endregion
@@ -119,7 +126,7 @@ namespace H.Avalonia.Views
                 case nameof(_viewModel.SelectedProvince):
                     {
                         if (_polygonLayer != null) SoilTabMap.Map.Layers.Remove(_polygonLayer);
-                        if (_viewModel.SelectedProvince != Province.SelectProvince)
+                        if (_viewModel is not null && _viewModel.SelectedProvince != Province.SelectProvince)
                         {
                             _polygonLayer = new RasterizingTileLayer(CreateLayer(_viewModel.SelectedProvince), minTiles: 400, maxTiles: 800, renderFormat: RenderFormat.WebP);
                             SoilTabMap.Map.Layers.Add(_polygonLayer);
@@ -250,7 +257,7 @@ namespace H.Avalonia.Views
         /// </summary>
         private void NavigateToPoint()
         {
-            SoilTabMap.Map.Navigator.CenterOnAndZoomTo(_viewModel.NavigationPoint, resolution: 9);
+            if (_viewModel is not null) SoilTabMap.Map.Navigator.CenterOnAndZoomTo(_viewModel.NavigationPoint, resolution: 9);
         }
 
         /// <summary>
@@ -266,7 +273,7 @@ namespace H.Avalonia.Views
             // Add a new point to the map as a GeometryFeature
             _pointsLayer?.Features.Add(new GeometryFeature
             {
-                Geometry = new Point(_viewModel.NavigationPoint.X, _viewModel.NavigationPoint.Y)
+                Geometry = _viewModel is not null ? new Point(_viewModel.NavigationPoint.X, _viewModel.NavigationPoint.Y) : null
             });
             // To notify the map that a redraw is needed.
             _pointsLayer?.DataHasChanged();
@@ -327,6 +334,7 @@ namespace H.Avalonia.Views
         private ILayer CreateLayer(Province province)
         {
             _logger.LogDebug("Drawing " + province + " polygons on top of " + nameof(SoilDataView) + " map.");
+            if (_viewModel is null) return new Layer("Polygons");
             var polygons = _viewModel.WktPolygonMap[province];
             return new Layer("Polygons")
             {

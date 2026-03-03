@@ -14,12 +14,12 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
     {
         #region Fields
 
-        private BisonComponentViewModel _viewModel;
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private ApplicationData _applicationData;
+        private BisonComponentViewModel _viewModel = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private ApplicationData _applicationData = null!;
 
         #endregion
 

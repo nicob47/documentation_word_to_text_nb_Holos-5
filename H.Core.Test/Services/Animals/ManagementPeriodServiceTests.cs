@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Enumerations;
 using H.Core.Factories;
@@ -17,8 +17,8 @@ namespace H.Core.Test.Services.Animals
     {
         #region Fields
 
-        private ManagementPeriodService _service;
-        private Mock<IManagementPeriodFactory> _mockManagementPeriodFactory;
+        private ManagementPeriodService _service = null!;
+        private Mock<IManagementPeriodFactory> _mockManagementPeriodFactory = null!;
 
         #endregion
 

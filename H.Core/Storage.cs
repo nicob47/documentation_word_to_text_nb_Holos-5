@@ -12,7 +12,7 @@ namespace H.Core
     {
         #region Fields
 
-        private ApplicationData _applicationData;
+        private ApplicationData _applicationData = null!;
 
         private const string StorageFileName = "json-data.json";
         private const string exportedFileExtension = ".json";
@@ -28,7 +28,7 @@ namespace H.Core
         private const int MaxNumberOfLogs = 7;
 
         private readonly SemaphoreSlim _asyncSaveSemaphore = new SemaphoreSlim(1, 1);
-        private string _bulkImportProgressMessage;
+        private string _bulkImportProgressMessage = string.Empty;
 
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace H.Core
         /// An array that stores the names of the holos backup files. The array is populated inside the <see cref="GetBackupFiles"/> method. The array
         /// is sorted in descending order based on file creation time. Therefore, the backups are stored oldest -> newest with the latest backup at index 0.
         /// </summary>
-        private FileInfo[] _backupFilesInDirectory { get; set; }
+        private FileInfo[] _backupFilesInDirectory { get; set; } = Array.Empty<FileInfo>();
         #endregion
 
         #region Constructors
@@ -86,7 +86,7 @@ namespace H.Core
         /// <summary>
         /// A task that handles the async save process.
         /// </summary>
-        public Task SaveTask { get; set; }
+        public Task SaveTask { get; set; } = Task.CompletedTask;
 
         public string BulkImportProgressMessage
         {
@@ -105,7 +105,7 @@ namespace H.Core
                 var path = GetFullPathToStorageFile();
                 this.SaveInternal(path);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Saving to the expected file location might fail if the file is already opened by another process (backup software etc.)
 
@@ -242,7 +242,7 @@ namespace H.Core
                     // Serializer and deserializer must both have this set to Auto
                     serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                    return serializer.Deserialize<ApplicationData>(reader);
+                    return serializer.Deserialize<ApplicationData>(reader)!;
                 }
             }
         }
@@ -478,7 +478,7 @@ namespace H.Core
                         // Serializer and deserializer must both have this set to Auto
                         serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                       return serializer.Deserialize<List<Farm>>(reader);
+                       return serializer.Deserialize<List<Farm>>(reader) ?? Enumerable.Empty<Farm>();
                     }
                 }
             }
@@ -513,7 +513,7 @@ namespace H.Core
                             // Serializer and deserializer must both have this set to Auto
                             serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                            return serializer.Deserialize<List<Farm>>(reader);
+                            return (IEnumerable<Farm>)(serializer.Deserialize<List<Farm>>(reader) ?? new List<Farm>());
                         }
                     }
                 });
@@ -545,6 +545,7 @@ namespace H.Core
 
             foreach (var file in files)
             {
+                if (file == null) continue;
                 var farmsFromFile = this.GetFarmsFromExportFile(file);
                 result.AddRange(farmsFromFile);
             }
@@ -570,6 +571,7 @@ namespace H.Core
             var totalFarms = files.Count;
             foreach (var file in files)
             {
+                if (file == null) continue;
                 BulkImportProgressMessage = string.Format(H.Core.Properties.Resources.MessageBulkImportProgress, farmNumber, totalFarms);
                 var farmsFromFile = await GetFarmsFromExportFileAsync(file);
                 result.AddRange(farmsFromFile);
@@ -585,7 +587,7 @@ namespace H.Core
             foreach (var farmToImport in farmsToImport)
             {
                 var importedFarmName = farmToImport.Name;
-                if (this.ApplicationData.Farms.Any(x => x.Name.Equals(importedFarmName)))
+                if (this.ApplicationData.Farms.Any(x => x.Name != null && x.Name.Equals(importedFarmName)))
                 {
                     farmToImport.Name = farmToImport.Name + $"_Imported_{DateTime.Now.ToShortDateString()}";
                 }

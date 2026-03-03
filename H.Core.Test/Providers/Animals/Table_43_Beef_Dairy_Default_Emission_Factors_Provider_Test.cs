@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_43_Beef_Dairy_Default_Emission_Factors_Provider_Test
     {
-        private Table_43_Beef_Dairy_Default_Emission_Factors_Provider _provider;
+        private Table_43_Beef_Dairy_Default_Emission_Factors_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

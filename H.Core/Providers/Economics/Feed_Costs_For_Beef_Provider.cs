@@ -43,7 +43,7 @@ namespace H.Core.Providers.Economics
         /// </summary>
         /// <param name="dietType">The Diet Type for which we need the beef feed cost.</param>
         /// <returns>An instance of <see cref="Feed_Costs_For_Beef_Data"/> representing a row in the .csv file. If nothing is found, returns null.</returns>
-        public Feed_Costs_For_Beef_Data GetFeedCostByDietType(DietType dietType)
+        public Feed_Costs_For_Beef_Data? GetFeedCostByDietType(DietType dietType)
         {
             var data = FeedCostsForBeefData.Find(diet => diet.DietType == dietType);
 
@@ -65,7 +65,7 @@ namespace H.Core.Providers.Economics
         {
             var fileData = new List<Feed_Costs_For_Beef_Data>();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.BeefFeedCost);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.BeefFeedCost)!;
 
             foreach (var line in fileLines.Skip(1))
             {

@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.Soil
     {
         #region Fields
 
-        private static EcodistrictDefaultsProvider _provider; 
+        private static EcodistrictDefaultsProvider _provider = null!;
 
         #endregion
 

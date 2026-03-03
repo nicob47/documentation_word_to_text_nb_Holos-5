@@ -20,7 +20,7 @@ namespace H.Core.Emissions.Results
         private double _upstreamEnergyCarbonDioxideFromHerbicideUse;
         private double _upstreamEnergyFromFertilizerProduction;
 
-        private ObservableCollection<MonthlyManureSpreadingEmissions> _manureSpreadingResults;
+        private ObservableCollection<MonthlyManureSpreadingEmissions> _manureSpreadingResults = new();
 
         #endregion
 

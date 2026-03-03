@@ -1330,7 +1330,7 @@ namespace H.Core.Providers.Feed
 
         public static FeedIngredient CopyFeedIngredient(FeedIngredient ingredient)
         {
-            return _ingredientMapper.Map<FeedIngredient>(ingredient);
+            return _ingredientMapper!.Map<FeedIngredient>(ingredient);
         }
 
         public static FeedIngredient ConvertFeedIngredientToImperial(FeedIngredient ingredient)

@@ -27,11 +27,14 @@ namespace H.Core.Helpers
                 var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 if (config.AppSettings.Settings.AllKeys.Contains(settingName))
                 {
-                    var setting = config.AppSettings.Settings[settingName].Value;
-                    result = setting.Equals("true", StringComparison.InvariantCultureIgnoreCase) || setting.Equals("t", StringComparison.InvariantCultureIgnoreCase) || setting.Equals("1", StringComparison.InvariantCultureIgnoreCase);
+                    var setting = config.AppSettings.Settings[settingName]?.Value;
+                    if (setting != null)
+                    {
+                        result = setting.Equals("true", StringComparison.InvariantCultureIgnoreCase) || setting.Equals("t", StringComparison.InvariantCultureIgnoreCase) || setting.Equals("1", StringComparison.InvariantCultureIgnoreCase);
+                    }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -54,14 +57,14 @@ namespace H.Core.Helpers
                 var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 if (config.AppSettings.Settings.AllKeys.Contains(settingName))
                 {
-                    var setting = config.AppSettings.Settings[settingName].Value;
-                    if (setting.Equals("ireland", StringComparison.InvariantCultureIgnoreCase))
+                    var setting = config.AppSettings.Settings[settingName]?.Value;
+                    if (setting != null && setting.Equals("ireland", StringComparison.InvariantCultureIgnoreCase))
                     {
                         countryVersion = CountryVersion.Ireland;
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -84,14 +87,14 @@ namespace H.Core.Helpers
                 var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 if (config.AppSettings.Settings.AllKeys.Contains(settingName))
                 {
-                    var setting = config.AppSettings.Settings[settingName].Value;
-                    if (setting.Equals("french", StringComparison.InvariantCultureIgnoreCase))
+                    var setting = config.AppSettings.Settings[settingName]?.Value;
+                    if (setting != null && setting.Equals("french", StringComparison.InvariantCultureIgnoreCase))
                     {
                         language = Languages.French;
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -121,7 +124,7 @@ namespace H.Core.Helpers
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Handle exceptions as needed
             }

@@ -10,7 +10,7 @@ namespace H.Core.Models.Infrastructure
 
         private AnaerobicDigestorSeparatorType _separatorType;
 
-        private AnaerobicDigestionViewItem _anaerobicDigestionViewItem;
+        private AnaerobicDigestionViewItem _anaerobicDigestionViewItem = null!;
 
         // Methane potential based on hydraulic retention time and kinetic hydrolysis rate
         private double _hydrolysisRateOfManureDuringDigestion;
@@ -32,7 +32,7 @@ namespace H.Core.Models.Infrastructure
 
         // Electricity and heat production through a combined heat and power (CHP) system
         private double _fractionPrimaryEnergyConvertedToElectricity;
-        private double _fractionPrimaryEnergyConvertedToHeat;
+        private double _fractionPrimaryEnergyConvertedToHeat = 0;
 
         // Direct injection into the gas grid:
         private double _fractionOfMethaneLostInUpgradingPlants;
@@ -54,7 +54,7 @@ namespace H.Core.Models.Infrastructure
         private bool _isCentrifugeType;
         private bool _isLiquidSolidSeparated;
 
-        private ObservableCollection<ADManagementPeriodViewItem> _managementPeriodViewItems;
+        private ObservableCollection<ADManagementPeriodViewItem> _managementPeriodViewItems = null!;
 
         #endregion
 

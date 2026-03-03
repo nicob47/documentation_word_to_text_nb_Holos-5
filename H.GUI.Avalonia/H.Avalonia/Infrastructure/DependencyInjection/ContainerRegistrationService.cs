@@ -130,7 +130,9 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             _logger.LogDebug("Registering storage services");
             
             // V5 object
+#pragma warning disable CS0618 // Storage is obsolete but still required during migration
             containerRegistry.RegisterSingleton<Storage>();
+#pragma warning restore CS0618
 
             // V4 object
             containerRegistry.RegisterSingleton<IStorage, H.Core.Storage>();

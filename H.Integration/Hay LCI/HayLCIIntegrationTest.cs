@@ -18,6 +18,8 @@ using H.Core.Calculators.Carbon;
 using H.Core.Calculators.Nitrogen;
 using H.Core.Test;
 
+#nullable disable
+
 namespace H.Integration.Hay_LCI
 {
     [TestClass]
@@ -55,23 +57,23 @@ namespace H.Integration.Hay_LCI
 
         #region Fields
 
-        private static Defaults? _defaults;
-        private static ClimateNormalCalculator? _climateNormalCalculator;
-        private static NasaClimateProvider? _nasaClimateProvider;
-        private static GeographicDataProvider? _geograhicDataProvider;
-        private static FertilizerBlendConverter? _fertilizerBlendConverter;
-        private static FieldResultsService? _fieldResultsService;
-        private static GlobalSettings? _globalSettings;
+        private static Defaults _defaults;
+        private static ClimateNormalCalculator _climateNormalCalculator;
+        private static NasaClimateProvider _nasaClimateProvider;
+        private static GeographicDataProvider _geograhicDataProvider;
+        private static FertilizerBlendConverter _fertilizerBlendConverter;
+        private new static FieldResultsService _fieldResultsService;
+        private static GlobalSettings _globalSettings;
         private static int SimulationStartYear = 2009;
         private static int SimulationEndYear = 2018;
-        private List<Table1Item>? _fertilizerRates;
-        private List<Table2Item>? _manureRates;
-        private static List<DefaultManureCompositionData>? _manureCompositionTypes;
+        private List<Table1Item> _fertilizerRates;
+        private List<Table2Item> _manureRates;
+        private static List<DefaultManureCompositionData> _manureCompositionTypes;
         private Dictionary<Farm, List<CropViewItem>> _nonIrrigatedResultsByFarm = new Dictionary<Farm, List<CropViewItem>>();
         private Dictionary<Farm, List<CropViewItem>> _irrigatedResultsByFarm = new Dictionary<Farm, List<CropViewItem>>();
-        private string? _baseOutputDirectory;
+        private string _baseOutputDirectory;
         private bool _usingIrrigation;
-        private List<Table3Item>? _slcList;
+        private List<Table3Item> _slcList;
 
         #endregion
 

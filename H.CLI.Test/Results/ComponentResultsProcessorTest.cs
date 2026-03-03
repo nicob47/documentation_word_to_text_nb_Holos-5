@@ -20,7 +20,7 @@ namespace H.CLI.Test.Results
     public class ComponentResultsProcessorTest : UnitTestBase
     {
         private Storage storage = new Storage();
-        private ComponentResultsProcessor _componentResultsProcessor;
+        private ComponentResultsProcessor _componentResultsProcessor = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
@@ -57,7 +57,9 @@ namespace H.CLI.Test.Results
                         Start = new DateTime(1996, 4, 25),
                         End = new DateTime(1996, 5, 25),
                                                                 
+#pragma warning disable CS0618
                         FeedIntakeAmount = 1,
+#pragma warning restore CS0618
 
                         SelectedDiet = new Diet()
                         {
@@ -110,7 +112,9 @@ namespace H.CLI.Test.Results
                         Start = new DateTime(1996, 4, 25),
                         End = new DateTime(1996, 6, 25),
                                                                 
+#pragma warning disable CS0618
                         FeedIntakeAmount = 1,
+#pragma warning restore CS0618
 
                         SelectedDiet = new Diet()
                         {
@@ -225,7 +229,9 @@ namespace H.CLI.Test.Results
             var roundingDigits = 2;
 
             Directory.CreateDirectory("H.CLI.TestFiles");
-            var pathToOutputResults = "H.CLI.TestFiles";
+#pragma warning disable CS0219
+            var _pathToOutputResults = "H.CLI.TestFiles";
+#pragma warning restore CS0219
 
             var applicationData = new ApplicationData();
             applicationData.DisplayUnitStrings = new DisplayUnitStrings();
@@ -299,7 +305,9 @@ namespace H.CLI.Test.Results
                         Name = "CowCalfGroup1Period1",
                         Start = new DateTime(1996, 4, 25),
                         End = new DateTime(1996, 5, 25),
+#pragma warning disable CS0618
                         FeedIntakeAmount = 1,
+#pragma warning restore CS0618
                         StartWeight = 20,
                         EndWeight = 30,
                         SelectedDiet = new Diet()
@@ -352,7 +360,9 @@ namespace H.CLI.Test.Results
                         Name = "HeiferGroup1Period1",
                         Start = new DateTime(1996, 4, 25),
                         NumberOfDays = 30,                                                
+#pragma warning disable CS0618
                         FeedIntakeAmount = 1,
+#pragma warning restore CS0618
                         StartWeight = 20,
                         EndWeight = 30,
 
@@ -462,10 +472,14 @@ namespace H.CLI.Test.Results
 
             var totals = new FeedEstimateResults();
 
-            var roundingDigits = 2;
+#pragma warning disable CS0219
+            var _roundingDigits = 2;
+#pragma warning restore CS0219
 
             Directory.CreateDirectory("H.CLI.TestFiles");
-            var pathToOutputResults = "H.CLI.TestFiles";
+#pragma warning disable CS0219
+            var _pathToOutputResults = "H.CLI.TestFiles";
+#pragma warning restore CS0219
             results.WriteEmissionsToFiles(_storage.ApplicationData);
 
             //////////////Totals/////////////////////////

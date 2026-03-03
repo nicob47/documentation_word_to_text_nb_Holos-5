@@ -31,6 +31,6 @@ namespace H.Core.Services.Climate
         /// </summary>
         /// <param name="dailyClimateDto">DTO used to create the new domain object.</param>
         /// <returns>New domain object instance.</returns>
-        DailyClimateData CreateDataFromDto(DailyClimateDto dailyClimateDto);
+        DailyClimateData? CreateDataFromDto(DailyClimateDto? dailyClimateDto);
     }
 }

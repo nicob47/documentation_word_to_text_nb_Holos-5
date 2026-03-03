@@ -39,11 +39,11 @@ namespace H.Core.Services.Animals
         #region Private Methods
 
         protected override GroupEmissionsByDay CalculateDailyEmissions(
-            AnimalComponentBase animalComponentBase, 
-            ManagementPeriod managementPeriod, 
-            DateTime dateTime, 
-            GroupEmissionsByDay previousDaysEmissions, 
-            AnimalGroup animalGroup, 
+            AnimalComponentBase animalComponentBase,
+            ManagementPeriod managementPeriod,
+            DateTime dateTime,
+            GroupEmissionsByDay? previousDaysEmissions,
+            AnimalGroup animalGroup,
             Farm farm)
         {
             var dailyEmissions = new GroupEmissionsByDay();

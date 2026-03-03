@@ -4,7 +4,7 @@ namespace H.Core.Providers.Feed;
 
 public interface IFeedIngredient
 {
-    string IngredientTypeString { get; set; }
+    string? IngredientTypeString { get; set; }
     IngredientType IngredientType { get; set; }
     double Sugars { get; set; }
     double SolubleCrudeProtein { get; set; }
@@ -16,7 +16,7 @@ public interface IFeedIngredient
     double Fat { get; set; }
     double TotalDigestibleNutrient { get; set; }
     double Starch { get; set; }
-    string IFN { get; set; }
+    string? IFN { get; set; }
     double Cost { get; set; }
     double Forage { get; set; }
     double RDP { get; set; }
@@ -108,7 +108,7 @@ public interface IFeedIngredient
     double VitB7 { get; set; }
     double VitB12 { get; set; }
     double PercentageInDiet { get; set; }
-    string FeedNumber { get; set; }
+    string? FeedNumber { get; set; }
     DairyFeedClassType DairyFeedClass { get; set; }
     double PAF { get; set; }
     double NEL_ThreeX { get; set; }
@@ -161,8 +161,8 @@ public interface IFeedIngredient
     double ProDigestSID { get; set; }
     double SerDigestSID { get; set; }
     double TyrDigestSID { get; set; }
-    string AAFCO { get; set; }
-    string AAFCO2010 { get; set; }
+    string? AAFCO { get; set; }
+    string? AAFCO2010 { get; set; }
     double ATTDPhosphorus { get; set; }
     double STTDPhosphorus { get; set; }
     double Biotin { get; set; }

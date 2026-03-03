@@ -29,13 +29,13 @@ public interface IStorageService
     /// </summary>
     /// <param name="farm">The <see cref="Farm"/> to be used as the active farm</param>
     /// <returns><see langword="true"/> if setting the active farm; <see langword="false"/> otherwise</returns>
-    bool SetActiveFarm(Farm farm);
+    bool SetActiveFarm(Farm? farm);
 
     /// <summary>
     /// Add a new farm to storage
     /// </summary>
     /// <param name="farm">The new <see cref="Farm"/> that will be added to storage</param>
-    void AddFarm(Farm farm);
+    void AddFarm(Farm? farm);
 
     #endregion
 }

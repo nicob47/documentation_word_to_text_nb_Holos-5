@@ -25,7 +25,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
 
         #region Event Handlers
 
-        private void OnCircumferenceDataPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnCircumferenceDataPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             this.RaisePropertyChanged(nameof(this.CircumferenceData));
         }
@@ -196,7 +196,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             return this.TreeSpecies.GetDescription();
         }
 
-        public string GetCorrectName()
+        public string? GetCorrectName()
         {
             if (this.NameIsFromUser)
             {

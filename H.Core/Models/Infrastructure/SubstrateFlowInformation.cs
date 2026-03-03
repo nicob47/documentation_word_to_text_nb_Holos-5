@@ -15,8 +15,8 @@ namespace H.Core.Models.Infrastructure
     {
         public AnimalType AnimalType { get; set; }
         public SubstrateType SubstrateType { get; set; }
-        public ManagementPeriod ManagementPeriod { get; set; }
-        public AnaerobicDigestionComponent Component { get; set; }
+        public ManagementPeriod ManagementPeriod { get; set; } = null!;
+        public AnaerobicDigestionComponent Component { get; set; } = null!;
 
         /// <summary>
         /// (kg day^-1)

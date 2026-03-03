@@ -40,7 +40,7 @@ namespace H.Core.Providers.Irrigation
             foreach (var month in months)
             {
                 var irrigationForMonth = this.GetMonthlyAverageIrrigationDataInstance(month, province);
-                var amount = irrigationForMonth.IrrigationVolume;
+                var amount = irrigationForMonth?.IrrigationVolume ?? 0;
 
                 result += amount;
             }
@@ -54,10 +54,10 @@ namespace H.Core.Providers.Irrigation
         /// <param name="month">The month for which we need the data instance</param>
         /// <param name="province">The year for which we need the data instance</param>
         /// <returns>Returns the data instance based on the month and year. Returns null when nothing is found</returns>
-        public Table_4_Monthly_Irrigation_Water_Application_Data GetMonthlyAverageIrrigationDataInstance(Months month, Province province)
+        public Table_4_Monthly_Irrigation_Water_Application_Data? GetMonthlyAverageIrrigationDataInstance(Months month, Province province)
         {
-            Table_4_Monthly_Irrigation_Water_Application_Data irrigationWaterApplicationData = this.Data.Find(x => (x.Month == month) && (x.Province == province));
-            
+            Table_4_Monthly_Irrigation_Water_Application_Data? irrigationWaterApplicationData = this.Data.Find(x => (x.Month == month) && (x.Province == province));
+
             if (irrigationWaterApplicationData != null)
             {
                 return irrigationWaterApplicationData;
@@ -94,7 +94,7 @@ namespace H.Core.Providers.Irrigation
         private List<Table_4_Monthly_Irrigation_Water_Application_Data> ReadFile()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.IrrigationByMonth);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.IrrigationByMonth)!;
 
             var results = new List<Table_4_Monthly_Irrigation_Water_Application_Data>();
 

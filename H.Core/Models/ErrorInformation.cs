@@ -9,7 +9,7 @@ namespace H.Core.Models
         /// Gets the exception associated with the message object.
         /// Is not required and may be null.
         /// </summary>
-        public Exception Exception { get; }
+        public Exception? Exception { get; }
         /// <summary>
         /// Indicates whether error is critical and if system should attempt to recover or halt operation.
         /// Is not required and defaults to false.
@@ -20,7 +20,7 @@ namespace H.Core.Models
 
         #region Constructors
 
-        public ErrorInformation(string message, Exception exception = null, bool isCritical = false)
+        public ErrorInformation(string message, Exception? exception = null, bool isCritical = false)
         {
             base.Message = message;
             Exception = exception;

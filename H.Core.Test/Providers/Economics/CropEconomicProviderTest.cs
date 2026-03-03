@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Economics
     {
         #region Fields
 
-        private CropEconomicsProvider _provider;
+        private CropEconomicsProvider _provider = null!;
 
         #endregion
 

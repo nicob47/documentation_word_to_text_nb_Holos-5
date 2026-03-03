@@ -8,16 +8,18 @@ using H.Core.Providers.Climate;
 using H.Core.Services;
 using H.Core.Services.LandManagement;
 
+#nullable disable
+
 namespace H.Core.Test.Integration
 {
     [TestClass]
     public class FieldComponentIntegrationTest : UnitTestBase
     {
-        private GeographicDataProvider _geographicDataProvider;
-        private GlobalSettings _globalSettings;
-        private RotationComponentHelper _rotationComponentHelper;
-        private ApplicationData _applicationData;
-        private NasaClimateProvider _nasaClimateProvider;
+        private GeographicDataProvider _geographicDataProvider = null!;
+        private GlobalSettings _globalSettings = null!;
+        private RotationComponentHelper _rotationComponentHelper = null!;
+        private ApplicationData _applicationData = null!;
+        private NasaClimateProvider _nasaClimateProvider = null!;
 
         [TestInitialize]
         public void TestInitialize()
@@ -153,7 +155,9 @@ namespace H.Core.Test.Integration
 
             var fieldComponent = new FieldSystemComponent()
             {
+#pragma warning disable CS0612
                 FieldName = "Tony - East of Lane",
+#pragma warning restore CS0612
                 FieldArea = 54.78,
                 BeginOrderingAtStartYearOfRotation = false,
                 StartYear = 1985,

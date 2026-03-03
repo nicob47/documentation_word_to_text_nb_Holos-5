@@ -7,8 +7,8 @@ namespace H.Infrastructure.Test
     [TestClass]
     public class KmlHelpersTest
     {
-        private static GeographicDataProvider _geographicDataProvider;
-        private static KmlHelpers _kmlHelpers;
+        private static GeographicDataProvider _geographicDataProvider = null!;
+        private static KmlHelpers _kmlHelpers = null!;
 
 
         private List<Vector> CoordinateList = new List<Vector>()

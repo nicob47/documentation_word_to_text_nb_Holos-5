@@ -1,4 +1,4 @@
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Providers.Feed;
 using H.Core.Services.DietService;
 using Microsoft.Extensions.Logging;
@@ -11,8 +11,8 @@ public class DietServiceTest
 {
     #region Fields
 
-    private IDietService _sut;
-    private Mock<IDietFactory> _mockDietFactory;
+    private IDietService _sut = null!;
+    private Mock<IDietFactory> _mockDietFactory = null!;
 
     #endregion
 

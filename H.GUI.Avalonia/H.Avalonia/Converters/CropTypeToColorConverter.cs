@@ -15,7 +15,7 @@ public class CropTypeToColorConverter : IValueConverter
 {
     private static readonly ICropColorService _cropColorService = new CropColorService();
 
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is CropType cropType)
         {
@@ -27,15 +27,15 @@ public class CropTypeToColorConverter : IValueConverter
             catch
             {
                 // Return default color if parsing fails
-                return Brush.Parse("#F5F5F5");
+                return Brush.Parse("#f2f2f2");
             }
         }
 
         // Return default light gray for invalid values
-        return Brush.Parse("#F5F5F5");
+        return Brush.Parse("#f2f2f2");
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException("CropTypeToColorConverter only supports one-way conversion.");
     }

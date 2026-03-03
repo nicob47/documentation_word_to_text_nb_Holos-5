@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class SoilTextureStringConverterTest
     {
-        private SoilTextureStringConverter converter;
+        private SoilTextureStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -42,10 +42,12 @@ namespace H.Core.Test.Converters
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
         public void ConvertReturnsException()
         {
-            converter.Convert("beer");
+            Assert.ThrowsExactly<Exception>(() =>
+            {
+                converter.Convert("beer");
+            });
         }
 
         #region Additional test attributes

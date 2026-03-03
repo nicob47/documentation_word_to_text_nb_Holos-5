@@ -43,7 +43,7 @@
                     <ItemsControl ItemsSource="{Binding Path=SelectedFieldSystemComponentDto.CropDtos}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="15" />
+                                <StackPanel Orientation="Horizontal" Spacing="16" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
@@ -53,7 +53,7 @@
                                 <Button Background="Transparent"
                                         BorderThickness="0"
                                         Padding="0"
-                                        Margin="5"
+                                        Margin="4"
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch"
                                         Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).SetSelectedCropCommand}"
@@ -89,7 +89,7 @@
                                             <StackPanel Spacing="4">
                                                 <TextBlock Text="Select crop"
                                                            FontSize="11"
-                                                           Foreground="Gray"
+                                                           Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                                            FontWeight="SemiBold"
                                                            HorizontalAlignment="Left" />
 

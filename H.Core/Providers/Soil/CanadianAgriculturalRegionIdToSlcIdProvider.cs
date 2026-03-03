@@ -31,7 +31,7 @@ namespace H.Core.Providers.Soil
 
             foreach (var filename in files)
             {
-                var filelines = CsvResourceReader.GetFileLines(filename);                
+                var filelines = CsvResourceReader.GetFileLines(filename)!;
                 int i;
 
                 foreach (var line in filelines.Skip(1))

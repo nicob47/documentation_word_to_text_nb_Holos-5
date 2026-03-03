@@ -30,7 +30,36 @@ namespace H.Core.Factories.Animals
         private double _liveWeightChangeOfPregnantAnimal;
         private double _liveWeightOfYoungAtWeaningAge;
         private double _liveWeightOfYoungAtBirth;
-        private ManureStateType _manureStateType;
+        private ManureStateType _manureStateType = ManureStateType.NotSelected;
+        private HousingType _housingType = HousingType.NotSelected;
+
+        // Housing-related fields (from HousingDetails)
+        private BeddingMaterialType _beddingMaterialType = BeddingMaterialType.None;
+        private double _userDefinedBeddingRate;
+        private double _activityCoefficientOfFeedingSituation;
+        private double _baselineMaintenanceCoefficient;
+
+        // Manure-related fields (from ManureDetails)
+        private double _methaneConversionFactor;
+        private double _volatilizationFraction;
+        private double _n2ODirectEmissionFactor;
+        private double _leachingFraction;
+        private double _emissionFactorVolatilization;
+        private double _emissionFactorLeaching;
+        private double _ashContentOfManure = 8;
+        private double _methaneProducingCapacityOfManure;
+        private double _volatileSolidExcretion;
+        private double _fractionOfNitrogenInManure;
+        private double _fractionOfCarbonInManure;
+        private double _fractionOfPhosphorusInManure;
+
+        // Diet-related fields
+        private DietAdditiveType _dietAdditiveType = DietAdditiveType.None;
+        private DietType _selectedDietType = DietType.None;
+        private double _crudeProtein;
+        private double _forage;
+        private double _totalDigestibleNutrient;
+        private double _dailyDryMatterFeedIntakeOfFeed;
 
         #endregion
 
@@ -212,6 +241,228 @@ namespace H.Core.Factories.Animals
         {
             get => _manureStateType;
             set => SetProperty(ref _manureStateType, value);
+        }
+
+        /// <summary>
+        /// The type of housing facility used during this management period.
+        /// </summary>
+        public HousingType HousingType
+        {
+            get => _housingType;
+            set => SetProperty(ref _housingType, value);
+        }
+
+        // ─── Housing-related properties (from HousingDetails) ───
+
+        /// <summary>
+        /// The type of bedding material used in the housing facility.
+        /// </summary>
+        public BeddingMaterialType BeddingMaterialType
+        {
+            get => _beddingMaterialType;
+            set => SetProperty(ref _beddingMaterialType, value);
+        }
+
+        /// <summary>
+        /// User-defined bedding application rate (kg head⁻¹ day⁻¹)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Kilograms)]
+        public double UserDefinedBeddingRate
+        {
+            get => _userDefinedBeddingRate;
+            set => SetProperty(ref _userDefinedBeddingRate, value);
+        }
+
+        /// <summary>
+        /// Activity coefficient for the feeding situation (dimensionless)
+        /// </summary>
+        public double ActivityCoefficientOfFeedingSituation
+        {
+            get => _activityCoefficientOfFeedingSituation;
+            set => SetProperty(ref _activityCoefficientOfFeedingSituation, value);
+        }
+
+        /// <summary>
+        /// Baseline maintenance coefficient (MJ kg⁻¹ day⁻¹)
+        /// </summary>
+        public double BaselineMaintenanceCoefficient
+        {
+            get => _baselineMaintenanceCoefficient;
+            set => SetProperty(ref _baselineMaintenanceCoefficient, value);
+        }
+
+        // ─── Manure-related properties (from ManureDetails) ───
+
+        /// <summary>
+        /// Methane conversion factor for the manure management system (dimensionless, 0-1)
+        /// </summary>
+        public double MethaneConversionFactor
+        {
+            get => _methaneConversionFactor;
+            set => SetProperty(ref _methaneConversionFactor, value);
+        }
+
+        /// <summary>
+        /// Fraction of nitrogen lost through volatilization (dimensionless, 0-1)
+        /// </summary>
+        public double VolatilizationFraction
+        {
+            get => _volatilizationFraction;
+            set => SetProperty(ref _volatilizationFraction, value);
+        }
+
+        /// <summary>
+        /// Direct N₂O emission factor for the manure management system (dimensionless)
+        /// </summary>
+        public double N2ODirectEmissionFactor
+        {
+            get => _n2ODirectEmissionFactor;
+            set => SetProperty(ref _n2ODirectEmissionFactor, value);
+        }
+
+        /// <summary>
+        /// Fraction of nitrogen lost through leaching (dimensionless, 0-1)
+        /// </summary>
+        public double LeachingFraction
+        {
+            get => _leachingFraction;
+            set => SetProperty(ref _leachingFraction, value);
+        }
+
+        /// <summary>
+        /// Emission factor for volatilization (kg N₂O-N per kg N)
+        /// </summary>
+        public double EmissionFactorVolatilization
+        {
+            get => _emissionFactorVolatilization;
+            set => SetProperty(ref _emissionFactorVolatilization, value);
+        }
+
+        /// <summary>
+        /// Emission factor for leaching (kg N₂O-N per kg N)
+        /// </summary>
+        public double EmissionFactorLeaching
+        {
+            get => _emissionFactorLeaching;
+            set => SetProperty(ref _emissionFactorLeaching, value);
+        }
+
+        /// <summary>
+        /// Ash content of manure (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double AshContentOfManure
+        {
+            get => _ashContentOfManure;
+            set => SetProperty(ref _ashContentOfManure, value);
+        }
+
+        /// <summary>
+        /// Maximum methane producing capacity of manure (m³ CH₄ kg⁻¹ VS)
+        /// </summary>
+        public double MethaneProducingCapacityOfManure
+        {
+            get => _methaneProducingCapacityOfManure;
+            set => SetProperty(ref _methaneProducingCapacityOfManure, value);
+        }
+
+        /// <summary>
+        /// Volatile solid excretion rate (kg kg⁻¹)
+        /// </summary>
+        public double VolatileSolidExcretion
+        {
+            get => _volatileSolidExcretion;
+            set => SetProperty(ref _volatileSolidExcretion, value);
+        }
+
+        /// <summary>
+        /// Fraction of nitrogen in manure (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double FractionOfNitrogenInManure
+        {
+            get => _fractionOfNitrogenInManure;
+            set => SetProperty(ref _fractionOfNitrogenInManure, value);
+        }
+
+        /// <summary>
+        /// Fraction of carbon in manure (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double FractionOfCarbonInManure
+        {
+            get => _fractionOfCarbonInManure;
+            set => SetProperty(ref _fractionOfCarbonInManure, value);
+        }
+
+        /// <summary>
+        /// Fraction of phosphorus in manure (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double FractionOfPhosphorusInManure
+        {
+            get => _fractionOfPhosphorusInManure;
+            set => SetProperty(ref _fractionOfPhosphorusInManure, value);
+        }
+
+        // ─── Diet-related properties ───
+
+        /// <summary>
+        /// The type of diet additive used during this management period.
+        /// </summary>
+        public DietAdditiveType DietAdditiveType
+        {
+            get => _dietAdditiveType;
+            set => SetProperty(ref _dietAdditiveType, value);
+        }
+
+        /// <summary>
+        /// The selected predefined diet type for this management period.
+        /// </summary>
+        public DietType SelectedDietType
+        {
+            get => _selectedDietType;
+            set => SetProperty(ref _selectedDietType, value);
+        }
+
+        /// <summary>
+        /// Crude protein content of the selected diet (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double CrudeProtein
+        {
+            get => _crudeProtein;
+            set => SetProperty(ref _crudeProtein, value);
+        }
+
+        /// <summary>
+        /// Forage content of the selected diet (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double Forage
+        {
+            get => _forage;
+            set => SetProperty(ref _forage, value);
+        }
+
+        /// <summary>
+        /// Total digestible nutrient content of the selected diet (%)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Percentage)]
+        public double TotalDigestibleNutrient
+        {
+            get => _totalDigestibleNutrient;
+            set => SetProperty(ref _totalDigestibleNutrient, value);
+        }
+
+        /// <summary>
+        /// Daily dry matter feed intake (kg head⁻¹ day⁻¹)
+        /// </summary>
+        [Units(MetricUnitsOfMeasurement.Kilograms)]
+        public double DailyDryMatterFeedIntakeOfFeed
+        {
+            get => _dailyDryMatterFeedIntakeOfFeed;
+            set => SetProperty(ref _dailyDryMatterFeedIntakeOfFeed, value);
         }
 
         #endregion

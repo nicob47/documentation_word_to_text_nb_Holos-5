@@ -26,10 +26,6 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
     /// </summary>
     private AnimalComponentBase? _selectedAnimalComponent;
 
-    /// <summary>
-    /// The selected management period
-    /// </summary>
-    private ManagementPeriod? _selectedManagementPeriod;
 
     private ObservableCollection<ManagementPeriodDto>? _managementPeriodDtos;
 
@@ -41,9 +37,9 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
     protected IAnimalComponentService? AnimalComponentService;
     protected IManagementPeriodService? ManagementPeriodService;
     protected AnimalType _animalType;
-    protected ObservableCollection<AnimalGroup> _animalGroups;
+    protected ObservableCollection<AnimalGroup> _animalGroups = null!;
 
-    protected ObservableCollection<AnimalGroupDto> _animalGroupDtos;
+    protected ObservableCollection<AnimalGroupDto> _animalGroupDtos = null!;
 
     #endregion
 
@@ -88,12 +84,12 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
     /// <summary>
     /// Command to add a new management period with default values.
     /// </summary>
-    public ICommand AddManagementPeriodCommand { get; private set; }
+    public ICommand AddManagementPeriodCommand { get; private set; } = null!;
 
     /// <summary>
     /// Command to add a new animal group with default values.
     /// </summary>
-    public ICommand AddAnimalGroupDtoCommand { get; private set; }
+    public ICommand AddAnimalGroupDtoCommand { get; private set; } = null!;
 
     #endregion
 
@@ -160,9 +156,9 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
     {
         Logger?.LogInformation("Navigation started. Parameters: {ParameterCount}", navigationContext?.Parameters?.Count ?? 0);
         
-        base.OnNavigatedTo(navigationContext);
+        base.OnNavigatedTo(navigationContext!);
 
-        if (navigationContext.Parameters.ContainsKey(GuiConstants.ComponentKey))
+        if (navigationContext != null && navigationContext.Parameters.ContainsKey(GuiConstants.ComponentKey))
         {
             var parameter = navigationContext.Parameters[GuiConstants.ComponentKey];
             
@@ -231,14 +227,16 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
         
         try
         {
-            Farm currentFarm = StorageService.GetActiveFarm();
+            Farm? currentFarm = StorageService?.GetActiveFarm();
             Logger?.LogDebug("Retrieved active farm: {FarmName}", currentFarm?.Name ?? "Unknown");
-            
+
+            if (currentFarm is null) return;
             var existingManagementPeriods = currentFarm.GetAllManagementPeriods();
-            
+
             Logger?.LogInformation("Found {PeriodCount} existing management periods", existingManagementPeriods?.Count ?? 0);
 
             int addedCount = 0;
+            if (existingManagementPeriods == null) return;
             foreach (var managementPeriod in existingManagementPeriods)
             {
                 var newManagementPeriodViewModel = new ManagementPeriodDto();
@@ -262,11 +260,11 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
         }
     }
 
-    protected void InitializeAnimalComponent(AnimalComponentBase animalComponent)
+    protected void InitializeAnimalComponent(AnimalComponentBase? animalComponent)
     {
         Logger?.LogDebug("Starting component initialization: {ComponentName}", animalComponent?.Name ?? "null");
 
-        if (animalComponent == null)
+        if (animalComponent is null)
         {
             Logger?.LogWarning("Component is null, exiting initialization");
             return;
@@ -300,8 +298,8 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
     private void OnAnimalComponentDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         Logger?.LogDebug("DTO property changed: {PropertyName}", e.PropertyName ?? "Unknown");
-        
-        if (sender is IAnimalComponentDto dto)
+
+        if (sender is IAnimalComponentDto dto && _selectedAnimalComponent is not null)
         {
             Logger?.LogDebug("Transferring changes to domain object");
             try

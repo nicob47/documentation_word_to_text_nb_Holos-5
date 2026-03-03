@@ -9,9 +9,9 @@ public abstract class ComponentServiceBase : IComponentService
 {
     #region Fields
 
-    protected ILogger Logger;
-    protected IContainerProvider ContainerProvider;
-    protected IUnitsOfMeasurementCalculator UnitsOfMeasurementCalculator;
+    protected ILogger Logger = null!;
+    protected IContainerProvider ContainerProvider = null!;
+    protected IUnitsOfMeasurementCalculator UnitsOfMeasurementCalculator = null!;
 
     #endregion
 
@@ -99,17 +99,17 @@ public abstract class ComponentServiceBase : IComponentService
         var proposedName = component.ComponentNameDisplayString;
 
         // While the names are the same, try and make a unique name for this component.
-        while (farm.Components.Where(x => string.IsNullOrWhiteSpace(x.Name) == false).Any(y => y.Name.Equals(proposedName)))
+        while (farm.Components.Where(x => string.IsNullOrWhiteSpace(x.Name) == false).Any(y => y.Name!.Equals(proposedName)))
         {
             proposedName = component.ComponentNameDisplayString + " #" + (i++);
         }
 
-        return proposedName;
+        return proposedName!;
     }
 
-    public void InitializeComponent(Farm farm, ComponentBase component)
+    public void InitializeComponent(Farm farm, ComponentBase? component)
     {
-        if (component == null)
+        if (component is null)
         {
             Logger.LogError($"Called with null {nameof(component)} parameter");
 
@@ -123,7 +123,7 @@ public abstract class ComponentServiceBase : IComponentService
             return;
         }
 
-        Logger.LogDebug("Initializing component: {ComponentName}", component?.Name ?? "(name not set)");
+        Logger.LogDebug("Initializing component: {ComponentName}", component.Name ?? "(name not set)");
 
         component.IsInitialized = true;
         component.Name = this.GetUniqueComponentName(farm, component);

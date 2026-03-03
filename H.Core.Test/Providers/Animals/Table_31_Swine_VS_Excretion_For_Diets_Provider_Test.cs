@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_31_Swine_VS_Excretion_For_Diets_Provider_Test
     {
-        private Table_31_Swine_VS_Excretion_For_Diets_Provider _provider;
+        private Table_31_Swine_VS_Excretion_For_Diets_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

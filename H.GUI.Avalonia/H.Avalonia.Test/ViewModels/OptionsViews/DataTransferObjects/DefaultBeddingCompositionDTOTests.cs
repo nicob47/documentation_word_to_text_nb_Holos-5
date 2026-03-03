@@ -9,9 +9,9 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews.DataTransferObjects
     [TestClass]
     public class DefaultBeddingCompositionDTOTests
     {
-        private DefaultBeddingCompositionDTO _viewModel;
-        private Mock<IUnitsOfMeasurementCalculator> _mockUnitsCalculator;
-        private IUnitsOfMeasurementCalculator _unitsCalculatorMock;
+        private DefaultBeddingCompositionDTO _viewModel = null!;
+        private Mock<IUnitsOfMeasurementCalculator> _mockUnitsCalculator = null!;
+        private IUnitsOfMeasurementCalculator _unitsCalculatorMock = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

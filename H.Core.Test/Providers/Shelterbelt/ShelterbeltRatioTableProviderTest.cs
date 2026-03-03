@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Shelterbelt
     [TestClass]
     public class ShelterbeltRatioTableProviderTest
     {
-        private ShelterbeltAgTRatioProvider _provider;
+        private ShelterbeltAgTRatioProvider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

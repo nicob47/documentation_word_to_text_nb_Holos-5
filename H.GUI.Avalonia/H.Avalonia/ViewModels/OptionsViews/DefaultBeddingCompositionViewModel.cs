@@ -73,16 +73,18 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         public void Initialize()
         {
+            if (base.ActiveFarm is null) return;
+
             foreach (var dataClassInstance in base.ActiveFarm.DefaultsCompositionOfBeddingMaterials)
             {
-                var dto = new DefaultBeddingCompositionDTO(dataClassInstance, _unitsCalculator);
+                var dto = new DefaultBeddingCompositionDTO(dataClassInstance, _unitsCalculator!);
                 dto.SetInitializationFlag(true);
                 dto.TotalNitrogenKilogramsDryMatter = dataClassInstance.TotalNitrogenKilogramsDryMatter;
                 dto.TotalPhosphorusKilogramsDryMatter = dataClassInstance.TotalPhosphorusKilogramsDryMatter;
                 dto.TotalCarbonKilogramsDryMatter = dataClassInstance.TotalCarbonKilogramsDryMatter;
                 dto.CarbonToNitrogenRatio = dataClassInstance.CarbonToNitrogenRatio;
                 dto.SetInitializationFlag(false);
-                this.BeddingCompositionDTOs.Add(dto);
+                this.BeddingCompositionDTOs?.Add(dto);
             }
         }
 
@@ -92,7 +94,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
             if (!IsInitialized)
             {
-                this.BeddingCompositionDTOs.Clear();
+                this.BeddingCompositionDTOs?.Clear();
                 this.Initialize();
                 base.IsInitialized = true;
             }
@@ -105,6 +107,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         private void SetStrings()
         {
+            if (StorageService == null) return;
             var displayUnits = StorageService.Storage.ApplicationData.DisplayUnitStrings;
             this.NitrogenConcentrationHeader = H.Core.Properties.Resources.LabelTotalNitrogen + " " + displayUnits.KilogramsNitrogenPerKilogramDryMatter;
             this.PhosphorusConcentrationHeader = H.Core.Properties.Resources.LabelTotalPhosphorus + " " + displayUnits.KilogramsPhosphorusPerKilogramDryMatter;
@@ -119,6 +122,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
         {
             if (e.PropertyName == nameof(IUnitsOfMeasurementCalculator.IsMetric))
             {
+                if (BeddingCompositionDTOs == null) return;
                 foreach (var dto in BeddingCompositionDTOs)
                 {
                     dto.UpdateUnitsOfMeasurementDependentProperties();

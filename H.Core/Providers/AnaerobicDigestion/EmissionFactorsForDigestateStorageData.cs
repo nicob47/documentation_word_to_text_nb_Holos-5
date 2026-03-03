@@ -23,6 +23,6 @@ namespace H.Core.Providers.AnaerobicDigestion
         /// <summary>
         /// Provides an explanation regarding the emission factor e.g. what it is a fraction of.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }

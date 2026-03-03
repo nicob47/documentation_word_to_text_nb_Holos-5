@@ -136,7 +136,7 @@ namespace H.Core.Providers
         /// <returns>EvapotranspirationData</returns>
         public EvapotranspirationData GetEvapotranspirationDataByPolygonId(int polygonId, TimeFrame timeFrame)
         {
-            EvapotranspirationData result;
+            EvapotranspirationData? result;
             //get the appropriate data for the timeframe
             switch (timeFrame)
             {
@@ -160,7 +160,7 @@ namespace H.Core.Providers
                     result = _evapotranspirationDataList.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
             }
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -178,7 +178,7 @@ namespace H.Core.Providers
         /// <returns>PrecipitationData</returns>
         public PrecipitationData GetPrecipitationDataByPolygonId(int polygonId, TimeFrame timeFrame)
         {
-            PrecipitationData result;
+            PrecipitationData? result;
             switch (timeFrame)
             {
                 case TimeFrame.NineteenFiftyToNineteenEighty:
@@ -201,7 +201,7 @@ namespace H.Core.Providers
                     result = _precipitationDataList.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
             }
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -219,7 +219,7 @@ namespace H.Core.Providers
         /// <returns>TemperatureData</returns>
         public TemperatureData GetTemperatureDataByPolygonId(int polygonId, TimeFrame timeFrame)
         {
-            TemperatureData result;
+            TemperatureData? result;
             switch (timeFrame)
             {
                 case TimeFrame.NineteenFiftyToNineteenEighty:
@@ -242,7 +242,7 @@ namespace H.Core.Providers
                     result = _temperatureDataList.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
             }
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -271,14 +271,14 @@ namespace H.Core.Providers
 
             //read the info from file
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines1950 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1950_1980).Skip(1).ToList();
-            var fileLines1960 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1960_1990).Skip(1).ToList();
-            var fileLines1970 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1970_2000).Skip(1).ToList();
-            var fileLines1980 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1980_2010).Skip(1).ToList();
-            var fileLines1990 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1990_2017).Skip(1).ToList();
+            var fileLines1950 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1950_1980)!.Skip(1).ToList();
+            var fileLines1960 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1960_1990)!.Skip(1).ToList();
+            var fileLines1970 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1970_2000)!.Skip(1).ToList();
+            var fileLines1980 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1980_2010)!.Skip(1).ToList();
+            var fileLines1990 = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon1990_2017)!.Skip(1).ToList();
 
             // the old file to read
-            var originalSLCFileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon).Skip(1).ToList();
+            var originalSLCFileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ClimateNormalsByPolygon)!.Skip(1).ToList();
 
             //the intermediate climate data for each timeframe
             var projections1950 = MakeProjections(cultureInfo, fileLines1950);

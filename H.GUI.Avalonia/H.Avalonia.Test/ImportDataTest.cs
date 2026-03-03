@@ -8,9 +8,11 @@ namespace H.Avalonia.Test
     [TestClass]
     public class ImportDataTest
     {
-        private static ImportHelpers _importHelpers;
-        private static ClimateDataViewModel _climateDataViewModel;
-        private static ClimateViewItemMap _climateViewItemMap;
+        private static ImportHelpers _importHelpers = null!;
+#pragma warning disable CS0414
+        private static ClimateDataViewModel _climateDataViewModel = null!;
+#pragma warning restore CS0414
+        private static ClimateViewItemMap _climateViewItemMap = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)

@@ -9,9 +9,9 @@ namespace H.Core.Test.Calculators.Climate
     {
         #region Fields
 
-        private ClimateNormalCalculator _calculator;
-        private NasaClimateProvider _nasaClimateProvider;
-        private List<DailyClimateData> _dailyClimateData;
+        private ClimateNormalCalculator _calculator = null!;
+        private NasaClimateProvider _nasaClimateProvider = null!;
+        private List<DailyClimateData> _dailyClimateData = null!;
 
         #endregion
 

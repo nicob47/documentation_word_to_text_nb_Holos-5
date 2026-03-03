@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class ProvinceStringConverterTest
     {
-        private ProvinceStringConverter converter;
+        private ProvinceStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides

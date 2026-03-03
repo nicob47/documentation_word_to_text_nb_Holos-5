@@ -22,7 +22,7 @@
 		
 		
 			<Button Content="{x:Static properties:Resources.ButtonOpen}" HorizontalContentAlignment="Center" Width="155" HorizontalAlignment="Center" Command="{Binding NavigateToNextPage}" Margin="0 20" />
-			<!--<Border BorderBrush="#EDEDED" Width="455" BorderThickness="0,0,0,1" Margin="0,20" />-->
+			<!--<Border BorderBrush="{StaticResource GcdsBorderLightBrush}" Width="455" BorderThickness="0,0,0,1" Margin="0,20" />-->
 			<Button Classes="back-button" Content="{x:Static properties:Resources.ButtonGoBack}"  HorizontalAlignment="Center" Command="{Binding NavigateToPreviousPage}"/>
 	</StackPanel>
 

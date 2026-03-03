@@ -43,6 +43,6 @@ namespace H.Avalonia.Services
         /// <param name="county">The county of the address to geocode and get coordinates</param>
         /// <param name="country">The country of the address to geocode and get coordinates for, defaults to Canada.</param>
         /// <returns>JObject containing all the data returned from the Nominatim API for the given address</returns>
-        Task<JObject> GetApiContent(string street, string municipality, Province province, string postalCode, string? county = null, string country = "Canada");
+        Task<JObject?> GetApiContent(string street, string municipality, Province province, string postalCode, string? county = null, string country = "Canada");
     }
 }

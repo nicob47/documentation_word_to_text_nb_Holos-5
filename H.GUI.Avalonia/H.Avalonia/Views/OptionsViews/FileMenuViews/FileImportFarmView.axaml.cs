@@ -23,7 +23,7 @@ public partial class FileImportFarmView : UserControl
             vm.SelectedFarms = Enumerable.Cast<H.Core.Models.Farm>(FarmsDataGrid.SelectedItems).ToList();
         }
     }
-    private async void OnSelectFarmOption_Clicked(object sender, RoutedEventArgs args)
+    private async void OnSelectFarmOption_Clicked(object? sender, RoutedEventArgs args)
     {
         // Get top level from the current control.
         var topLevel = TopLevel.GetTopLevel(this);
@@ -63,7 +63,7 @@ public partial class FileImportFarmView : UserControl
         }
     }
 
-    private async void OnSelectFolderOption_Clicked(object sender, RoutedEventArgs args)
+    private async void OnSelectFolderOption_Clicked(object? sender, RoutedEventArgs args)
     {
         // Get top level from the current control.
         var topLevel = TopLevel.GetTopLevel(this);

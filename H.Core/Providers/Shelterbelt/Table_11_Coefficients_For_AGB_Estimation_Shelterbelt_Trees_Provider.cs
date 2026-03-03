@@ -28,7 +28,7 @@ namespace H.Core.Providers.Shelterbelt
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.CoefficientsForAboveGroundBiomassEstimationForShelterbeltTreeSpecies;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<Table_11_Coefficients_For_AGB_Estimation_Shelterbelt_Trees_Data>();
 
             foreach (var line in filelines.Skip(1))

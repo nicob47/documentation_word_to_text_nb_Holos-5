@@ -8,7 +8,7 @@ namespace H.Core.Test.Calculators.Emissions
     [TestClass]
     public class Table_57_58_Expression_Of_Uncertainty_Calculator_Test
     {
-        private Table_57_58_Expression_Of_Uncertainty_Calculator calc;
+        private Table_57_58_Expression_Of_Uncertainty_Calculator calc = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides

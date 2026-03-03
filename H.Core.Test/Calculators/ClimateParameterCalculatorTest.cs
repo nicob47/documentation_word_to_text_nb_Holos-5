@@ -2,12 +2,14 @@
 using H.Core.Calculators.Climate;
 using H.Infrastructure;
 
+#nullable disable
+
 namespace H.Core.Test.Calculators
 {
     [TestClass]
     public class ClimateParameterCalculatorTest
     {
-        private ClimateParameterCalculator _sut;
+        private ClimateParameterCalculator _sut = null!;
 
         [TestInitialize]
         public void TestInitialize()

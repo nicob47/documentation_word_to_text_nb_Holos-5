@@ -71,9 +71,9 @@ namespace H.Core.Calculators.Carbon
         /// (kg C ha^-1)
         /// </summary>
         public double CalculateInputsFromSupplementalHayFedToGrazingAnimals(
-            CropViewItem previousYearViewItem,
+            CropViewItem? previousYearViewItem,
             CropViewItem currentYearViewItem,
-            CropViewItem nextYearViewItems,
+            CropViewItem? nextYearViewItems,
             Farm farm)
         {
             var result = 0.0;

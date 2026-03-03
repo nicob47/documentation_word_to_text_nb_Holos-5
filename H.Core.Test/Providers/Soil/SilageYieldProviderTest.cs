@@ -1,6 +1,8 @@
 ﻿using H.Core.Providers.Soil;
 using H.Core.Enumerations;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Soil
 {
     [TestClass]
@@ -8,7 +10,7 @@ namespace H.Core.Test.Providers.Soil
     {
         #region Fields
 
-        private static SilageYieldProvider _provider;
+        private static SilageYieldProvider _provider = null!;
 
         #endregion
 

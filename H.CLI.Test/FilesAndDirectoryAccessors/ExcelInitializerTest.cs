@@ -9,7 +9,7 @@ namespace H.CLI.Test.FilesAndDirectoryAccessors
     [TestClass]
     public class ExcelInitializerTest
     {
-        string[][] fileLines;
+        string[][] fileLines = null!;
 
         [TestInitialize]
         public void Initialize()

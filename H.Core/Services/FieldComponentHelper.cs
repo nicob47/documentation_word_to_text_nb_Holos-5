@@ -123,10 +123,12 @@ namespace H.Core.Services
 
         public void InitializeSoilAvailableSoilTypes(Farm farm, FieldSystemComponent component)
         {
+            if (farm.GeographicData?.SoilDataForAllComponentsWithinPolygon == null) return;
+            if (component.SoilDataAvailableForField == null) return;
             foreach (var soilData in farm.GeographicData.SoilDataForAllComponentsWithinPolygon)
             {
                 // Add this type of soil if it does not already exist
-                if (component.SoilDataAvailableForField.FirstOrDefault(x => x.SoilGreatGroup == soilData.SoilGreatGroup) == null)
+                if (!component.SoilDataAvailableForField.Any(x => x.SoilGreatGroup == soilData.SoilGreatGroup))
                 {
                     // We don't model organic soil at this time
                     if (soilData.SoilFunctionalCategory != SoilFunctionalCategory.Organic)
@@ -159,7 +161,7 @@ namespace H.Core.Services
 
         public FieldSystemComponent Replicate(FieldSystemComponent component)
         {
-            var fieldSystemComponent = (FieldSystemComponent)Activator.CreateInstance(typeof(FieldSystemComponent));
+            var fieldSystemComponent = (FieldSystemComponent)Activator.CreateInstance(typeof(FieldSystemComponent))!;
 
             this.Replicate(component, fieldSystemComponent);
 
@@ -179,6 +181,7 @@ namespace H.Core.Services
         {
             var to = copyTo as FieldSystemComponent;
             var from = copyFrom as FieldSystemComponent;
+            if (to == null || from == null) return;
 
             to.FieldArea = from.FieldArea;
             to.StartYear = from.StartYear;

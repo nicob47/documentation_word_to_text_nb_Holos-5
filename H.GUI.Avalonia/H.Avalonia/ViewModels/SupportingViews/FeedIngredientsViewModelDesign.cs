@@ -90,7 +90,7 @@ namespace H.Avalonia.ViewModels.SupportingViews
     /// </summary>
     public class DesignTimeFeedIngredient : IFeedIngredient
     {
-        public string IngredientTypeString { get; set; }
+        public string? IngredientTypeString { get; set; } = string.Empty;
         public IngredientType IngredientType { get; set; }
         public double Sugars { get; set; }
         public double SolubleCrudeProtein { get; set; }
@@ -102,7 +102,7 @@ namespace H.Avalonia.ViewModels.SupportingViews
         public double Fat { get; set; }
         public double TotalDigestibleNutrient { get; set; }
         public double Starch { get; set; }
-        public string IFN { get; set; }
+        public string? IFN { get; set; } = string.Empty;
         public double Cost { get; set; }
         public double Forage { get; set; }
         public double RDP { get; set; }
@@ -185,7 +185,7 @@ namespace H.Avalonia.ViewModels.SupportingViews
         public double GLY { get; set; }
         public double PRO { get; set; }
         public double SER { get; set; }
-        public string FeedNumber { get; set; }
+        public string? FeedNumber { get; set; } = string.Empty;
         public DairyFeedClassType DairyFeedClass { get; set; }
         public double PAF { get; set; }
         public double NEL_ThreeX { get; set; }
@@ -246,8 +246,8 @@ namespace H.Avalonia.ViewModels.SupportingViews
         public double ProDigestSID { get; set; }
         public double SerDigestSID { get; set; }
         public double TyrDigestSID { get; set; }
-        public string AAFCO { get; set; }
-        public string AAFCO2010 { get; set; }
+        public string? AAFCO { get; set; } = string.Empty;
+        public string? AAFCO2010 { get; set; } = string.Empty;
         public double ATTDPhosphorus { get; set; }
         public double STTDPhosphorus { get; set; }
         public double Biotin { get; set; }

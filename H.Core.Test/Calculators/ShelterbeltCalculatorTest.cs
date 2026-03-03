@@ -8,7 +8,7 @@ namespace H.Core.Test.Calculators
     {
         #region Initialization
 
-        private ShelterbeltCalculator calc;
+        private ShelterbeltCalculator calc = null!;
 
         [TestInitialize]
         public void Initialize()

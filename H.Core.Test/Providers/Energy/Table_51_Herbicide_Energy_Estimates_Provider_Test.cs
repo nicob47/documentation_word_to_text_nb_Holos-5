@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.Energy
     public class Table_51_Herbicide_Energy_Estimates_Provider_Test
     {
         #region Fields
-        private static Table_51_Herbicide_Energy_Estimates_Provider _provider;
+        private static Table_51_Herbicide_Energy_Estimates_Provider _provider = null!;
         #endregion
 
         #region Initialization

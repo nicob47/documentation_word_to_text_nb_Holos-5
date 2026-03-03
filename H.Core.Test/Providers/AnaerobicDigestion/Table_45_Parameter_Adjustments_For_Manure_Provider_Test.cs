@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.AnaerobicDigestion
     {
         #region Fields
 
-        private Table_45_Parameter_Adjustments_For_Manure_Provider _provider;
+        private Table_45_Parameter_Adjustments_For_Manure_Provider _provider = null!;
 
         #endregion
 

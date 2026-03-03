@@ -1,10 +1,12 @@
-using H.Core.Factories.Climate;
+﻿using H.Core.Factories.Climate;
 using H.Core.Models.Climate;
 using H.Core.Providers.Climate;
 using H.Core.Services.Climate;
 using H.Core.Services.Animals;
 using Microsoft.Extensions.Logging;
 using Moq;
+
+#nullable disable
 
 namespace H.Core.Test.Services.Climate
 {
@@ -13,11 +15,11 @@ namespace H.Core.Test.Services.Climate
     {
         #region Fields
 
-        private ClimateService _climateService;
-        private Mock<IDailyClimateDataFactory> _mockFactory;
-        private Mock<ITransferService<DailyClimateData, DailyClimateDto>> _mockTransferService;
-        private Mock<ILogger> _mockLogger;
-        private Mock<IClimateProvider> _mockClimateProvider;
+        private ClimateService _climateService = null!;
+        private Mock<IDailyClimateDataFactory> _mockFactory = null!;
+        private Mock<ITransferService<DailyClimateData, DailyClimateDto>> _mockTransferService = null!;
+        private Mock<ILogger> _mockLogger = null!;
+        private Mock<IClimateProvider> _mockClimateProvider = null!;
 
         #endregion
 
@@ -49,43 +51,43 @@ namespace H.Core.Test.Services.Climate
         #region Constructor Tests
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_WithNullFactory_ThrowsArgumentNullException()
         {
-            // Act
-            new ClimateService(null, _mockTransferService.Object, _mockLogger.Object, _mockClimateProvider.Object);
-
-            // Assert - ExpectedException attribute handles this
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
+            {
+                // Act
+                new ClimateService(null, _mockTransferService.Object, _mockLogger.Object, _mockClimateProvider.Object);
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_WithNullTransferService_ThrowsArgumentNullException()
         {
-            // Act
-            new ClimateService(_mockFactory.Object, null, _mockLogger.Object, _mockClimateProvider.Object);
-
-            // Assert - ExpectedException attribute handles this
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
+            {
+                // Act
+                new ClimateService(_mockFactory.Object, null, _mockLogger.Object, _mockClimateProvider.Object);
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_WithNullLogger_ThrowsArgumentNullException()
         {
-            // Act
-            new ClimateService(_mockFactory.Object, _mockTransferService.Object, null, _mockClimateProvider.Object);
-
-            // Assert - ExpectedException attribute handles this
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
+            {
+                // Act
+                new ClimateService(_mockFactory.Object, _mockTransferService.Object, null, _mockClimateProvider.Object);
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_WithNullClimateProvider_ThrowsArgumentNullException()
         {
-            // Act
-            new ClimateService(_mockFactory.Object, _mockTransferService.Object, _mockLogger.Object, null);
-
-            // Assert - ExpectedException attribute handles this
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
+            {
+                // Act
+                new ClimateService(_mockFactory.Object, _mockTransferService.Object, _mockLogger.Object, null);
+            });
         }
 
         [TestMethod]

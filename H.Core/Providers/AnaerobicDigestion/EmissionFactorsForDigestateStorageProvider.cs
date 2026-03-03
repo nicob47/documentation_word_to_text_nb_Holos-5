@@ -44,7 +44,7 @@ namespace H.Core.Providers.AnaerobicDigestion
         /// <returns>Returns a single instance of <see cref="EmissionFactorsForDigestateStorageData"/> . If nothing found, returns an empty instance.</returns>
         public EmissionFactorsForDigestateStorageData GetEmissionFactorInstance(EmissionTypes emissionType, DigestateState emissionOrigin)
         {
-            EmissionFactorsForDigestateStorageData data = this.Data.Find(x => (x.EmissionType == emissionType) && (x.EmissionOrigin == emissionOrigin));
+            EmissionFactorsForDigestateStorageData? data = this.Data.Find(x => (x.EmissionType == emissionType) && (x.EmissionOrigin == emissionOrigin));
 
             if (data != null)
             {
@@ -80,7 +80,7 @@ namespace H.Core.Providers.AnaerobicDigestion
             var results = new List<EmissionFactorsForDigestateStorageData>();
 
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.EmissionFactorsForDigestateStorage);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.EmissionFactorsForDigestateStorage)!;
 
             foreach (string[] line in fileLines.Skip(1))
             {

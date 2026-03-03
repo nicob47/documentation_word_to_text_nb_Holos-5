@@ -6318,6 +6318,12 @@ Please note: emissions related to the deposition or application of livestock man
   <data name="ToastMessageSavedSuccessfully" xml:space="preserve">
     <value>Holos saved successfully.</value>
   </data>
+  <data name="ToastTitleComponentAdded" xml:space="preserve">
+    <value>Component Added</value>
+  </data>
+  <data name="ToastMessageComponentAddedToFarm" xml:space="preserve">
+    <value>{0} has been added to your farm.</value>
+  </data>
   <data name="LabelSave" xml:space="preserve">
     <value>Save</value>
   </data>

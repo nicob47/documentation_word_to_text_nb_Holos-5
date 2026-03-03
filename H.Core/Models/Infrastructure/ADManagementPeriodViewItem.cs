@@ -21,13 +21,13 @@ namespace H.Core.Models.Infrastructure
 
         #region Properties
 
-        public ManagementPeriod ManagementPeriod { get; set; }
-        public AnimalComponentBase AnimalComponent { get; set; }
-        public AnimalGroup AnimalGroup { get; set; }
+        public ManagementPeriod ManagementPeriod { get; set; } = null!;
+        public AnimalComponentBase AnimalComponent { get; set; } = null!;
+        public AnimalGroup AnimalGroup { get; set; } = null!;
 
-        public string ManureStateTypeString { get; set; }
-        public string AnimalTypeString { get; set; }
-        public string ComponentName { get; set; }
+        public string ManureStateTypeString { get; set; } = string.Empty;
+        public string AnimalTypeString { get; set; } = string.Empty;
+        public string ComponentName { get; set; } = string.Empty;
 
         public bool IsSelected
         {

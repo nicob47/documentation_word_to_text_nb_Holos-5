@@ -6,15 +6,17 @@ using Moq;
 using Avalonia.Controls.Notifications;
 using Avalonia.Headless;
 
+#nullable disable
+
 namespace H.Avalonia.Test.Services
 {
     [TestClass]
     public class NotificationManagerServiceTest
     {
-        private NotificationManagerService _service;
-        private Mock<ILogger> _mockLogger;
-        private ILogger _loggerMock;
-        private Window _window;
+        private NotificationManagerService _service = null!;
+        private Mock<ILogger> _mockLogger = null!;
+        private ILogger _loggerMock = null!;
+        private Window _window = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -46,14 +48,14 @@ namespace H.Avalonia.Test.Services
         [TestMethod]
         public void TestConstructorThrowsExceptionOnNullParameter()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new NotificationManagerService(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new NotificationManagerService(null));
         }
 
         [TestMethod]
         public void TestInitializeMethodForNullWindow()
         {
             _service = new NotificationManagerService(_loggerMock);
-            Assert.ThrowsException<ArgumentNullException>(() => _service.Initialize(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => _service.Initialize(null));
         }
 
         [TestMethod]

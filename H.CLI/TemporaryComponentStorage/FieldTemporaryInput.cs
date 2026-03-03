@@ -15,7 +15,7 @@ namespace H.CLI.TemporaryComponentStorage
         #region Fields
 
         private readonly UnitsOfMeasurementCalculator _unitsOfMeasurementCalculator = new UnitsOfMeasurementCalculator();
-        private InputHelper _inputHelper = new InputHelper();
+        private new InputHelper _inputHelper = new InputHelper();
         private bool ThrowExceptionOnNegativeInput = false;
 
         #endregion
@@ -400,7 +400,7 @@ namespace H.CLI.TemporaryComponentStorage
         }
 
         // Look for the missing headers and apply the default values for the associated property
-        public void FinalSettings(IComponentKeys componentKeys)
+        public new void FinalSettings(IComponentKeys componentKeys)
         {
             if (componentKeys.MissingHeaders.ContainsKey(Properties.Resources.Key_NitrogenFixation) && componentKeys.MissingHeaders[Properties.Resources.Key_NitrogenFixation])
             {
@@ -419,7 +419,7 @@ namespace H.CLI.TemporaryComponentStorage
         //Make sure to add the appropriate key to the list of keys in the FieldKeys class.
         #region Properties
         //The Guid refers to the Perennial Stand Group GUID
-        public Guid Guid { get; set; }
+        public new Guid Guid { get; set; }
         public Guid PerennialStandID { get; set; }
         public Guid FieldSystemComponentGuid { get; set; }
         //RowId refers to the Perennial Stand Group ID

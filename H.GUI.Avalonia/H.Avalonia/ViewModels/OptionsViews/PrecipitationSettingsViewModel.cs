@@ -10,7 +10,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
     {
         #region Fields
 
-        private PrecipitationSettingsDTO _data;
+        private PrecipitationSettingsDTO _data = null!;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         protected override void InitializeData()
         {
-            this.Data = new PrecipitationSettingsDTO(base.StorageService);
+            this.Data = new PrecipitationSettingsDTO(base.StorageService!);
             this.Data.PropertyChanged -= this.DataOnPropertyChanged;
             this.Data.PropertyChanged += this.DataOnPropertyChanged;
             base.BuildChart();
@@ -63,7 +63,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         #region Event Handlers
 
-        private void DataOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DataOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             base.BuildChart();
         }

@@ -1,4 +1,4 @@
-using H.Avalonia.ViewModels.ComponentViews.LandManagement;
+﻿using H.Avalonia.ViewModels.ComponentViews.LandManagement;
 using H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation;
 using H.Core.Factories.Crops;
 using H.Core.Factories.Rotations;
@@ -13,6 +13,8 @@ using Moq;
 using Prism.Events;
 using Prism.Regions;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.ComponentViews.LandManagement;
 
 /// <summary>
@@ -24,16 +26,16 @@ public class RotationComponentViewModelTests
 {
     #region Fields
 
-    private RotationComponentViewModel _viewModel;
-    private Mock<IRegionManager> _mockRegionManager;
-    private Mock<IEventAggregator> _mockEventAggregator;
-    private Mock<IStorageService> _mockStorageService;
-    private Mock<IFieldComponentService> _mockFieldComponentService;
-    private Mock<IRotationComponentService> _mockRotationComponentService;
-    private Mock<ILogger> _mockLogger;
-    private Mock<ICropFactory> _mockCropFactory;
-    private Mock<ICropColorService> _mockCropColorService;
-    private Farm _testFarm;
+    private RotationComponentViewModel _viewModel = null!;
+    private Mock<IRegionManager> _mockRegionManager = null!;
+    private Mock<IEventAggregator> _mockEventAggregator = null!;
+    private Mock<IStorageService> _mockStorageService = null!;
+    private Mock<IFieldComponentService> _mockFieldComponentService = null!;
+    private Mock<IRotationComponentService> _mockRotationComponentService = null!;
+    private Mock<ILogger> _mockLogger = null!;
+    private Mock<ICropFactory> _mockCropFactory = null!;
+    private Mock<ICropColorService> _mockCropColorService = null!;
+    private Farm _testFarm = null!;
 
     #endregion
 
@@ -130,115 +132,129 @@ public class RotationComponentViewModelTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullRegionManager_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null region manager dependency
-        new RotationComponentViewModel(
-            null,
-            _mockEventAggregator.Object,
-            _mockStorageService.Object,
-            _mockFieldComponentService.Object,
-            _mockRotationComponentService.Object,
-            _mockLogger.Object,
-            _mockCropFactory.Object,
-            _mockCropColorService.Object);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                null,
+                _mockEventAggregator.Object,
+                _mockStorageService.Object,
+                _mockFieldComponentService.Object,
+                _mockRotationComponentService.Object,
+                _mockLogger.Object,
+                _mockCropFactory.Object,
+                _mockCropColorService.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullEventAggregator_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null event aggregator dependency
-        new RotationComponentViewModel(
-            _mockRegionManager.Object,
-            null,
-            _mockStorageService.Object,
-            _mockFieldComponentService.Object,
-            _mockRotationComponentService.Object,
-            _mockLogger.Object,
-            _mockCropFactory.Object,
-            _mockCropColorService.Object);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                _mockRegionManager.Object,
+                null,
+                _mockStorageService.Object,
+                _mockFieldComponentService.Object,
+                _mockRotationComponentService.Object,
+                _mockLogger.Object,
+                _mockCropFactory.Object,
+                _mockCropColorService.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullStorageService_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null storage service dependency
-        new RotationComponentViewModel(
-            _mockRegionManager.Object,
-            _mockEventAggregator.Object,
-            null,
-            _mockFieldComponentService.Object,
-            _mockRotationComponentService.Object,
-            _mockLogger.Object,
-            _mockCropFactory.Object,
-            _mockCropColorService.Object);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                _mockRegionManager.Object,
+                _mockEventAggregator.Object,
+                null,
+                _mockFieldComponentService.Object,
+                _mockRotationComponentService.Object,
+                _mockLogger.Object,
+                _mockCropFactory.Object,
+                _mockCropColorService.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullFieldComponentService_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null field component service dependency
-        new RotationComponentViewModel(
-            _mockRegionManager.Object,
-            _mockEventAggregator.Object,
-            _mockStorageService.Object,
-            null,
-            _mockRotationComponentService.Object,
-            _mockLogger.Object,
-            _mockCropFactory.Object,
-            _mockCropColorService.Object);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                _mockRegionManager.Object,
+                _mockEventAggregator.Object,
+                _mockStorageService.Object,
+                null,
+                _mockRotationComponentService.Object,
+                _mockLogger.Object,
+                _mockCropFactory.Object,
+                _mockCropColorService.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullLogger_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null logger dependency
-        new RotationComponentViewModel(
-            _mockRegionManager.Object,
-            _mockEventAggregator.Object,
-            _mockStorageService.Object,
-            _mockFieldComponentService.Object,
-            _mockRotationComponentService.Object,
-            null,
-            _mockCropFactory.Object,
-            _mockCropColorService.Object);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                _mockRegionManager.Object,
+                _mockEventAggregator.Object,
+                _mockStorageService.Object,
+                _mockFieldComponentService.Object,
+                _mockRotationComponentService.Object,
+                null,
+                _mockCropFactory.Object,
+                _mockCropColorService.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullCropFactory_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null crop factory dependency
-        new RotationComponentViewModel(
-            _mockRegionManager.Object,
-            _mockEventAggregator.Object,
-            _mockStorageService.Object,
-            _mockFieldComponentService.Object,
-            _mockRotationComponentService.Object,
-            _mockLogger.Object,
-            null,
-            _mockCropColorService.Object);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                _mockRegionManager.Object,
+                _mockEventAggregator.Object,
+                _mockStorageService.Object,
+                _mockFieldComponentService.Object,
+                _mockRotationComponentService.Object,
+                _mockLogger.Object,
+                null,
+                _mockCropColorService.Object);
+        });
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullCropColorService_ShouldThrowArgumentNullException()
     {
         // Verify that the constructor enforces non-null crop color service dependency
-        new RotationComponentViewModel(
-            _mockRegionManager.Object,
-            _mockEventAggregator.Object,
-            _mockStorageService.Object,
-            _mockFieldComponentService.Object,
-            _mockRotationComponentService.Object,
-            _mockLogger.Object,
-            _mockCropFactory.Object,
-            null);
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            new RotationComponentViewModel(
+                _mockRegionManager.Object,
+                _mockEventAggregator.Object,
+                _mockStorageService.Object,
+                _mockFieldComponentService.Object,
+                _mockRotationComponentService.Object,
+                _mockLogger.Object,
+                _mockCropFactory.Object,
+                null);
+        });
     }
 
     #endregion

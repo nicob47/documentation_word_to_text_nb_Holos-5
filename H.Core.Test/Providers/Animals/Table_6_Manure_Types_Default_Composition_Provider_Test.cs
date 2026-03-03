@@ -1,12 +1,14 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers.Animals;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Animals
 {
     [TestClass]
     public class Table_6_Manure_Types_Default_Composition_Provider_Test
     {
-        private static Table_6_Manure_Types_Default_Composition_Provider _provider;
+        private static Table_6_Manure_Types_Default_Composition_Provider _provider = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)

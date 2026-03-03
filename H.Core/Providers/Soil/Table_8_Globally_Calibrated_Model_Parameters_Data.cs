@@ -37,6 +37,6 @@ namespace H.Core.Providers.Soil
         /// <summary>
         /// The description of the parameter.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }

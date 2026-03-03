@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.Soil
     [TestClass]
     public class Table_13_Soil_N2O_Emission_Factors_Provider_Test
     {
-        private Table_13_Soil_N2O_Emission_Factors_Provider _provider;
+        private Table_13_Soil_N2O_Emission_Factors_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

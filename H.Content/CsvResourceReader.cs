@@ -14,7 +14,7 @@ namespace H.Content
     {
         #region Public Methods        
 
-        public static IEnumerable<string[]> GetFileLines(CsvResourceNames csvResourceName)
+        public static IEnumerable<string[]>? GetFileLines(CsvResourceNames csvResourceName)
         {
             switch (csvResourceName)
             {

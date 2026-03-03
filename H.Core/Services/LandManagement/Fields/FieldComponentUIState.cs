@@ -31,7 +31,7 @@ public class FieldComponentUIState
     /// <typeparam name="T">The type to cast to</typeparam>
     /// <param name="key">The state key</param>
     /// <returns>The typed value, or default(T) if not found or wrong type</returns>
-    public T GetAdditionalState<T>(string key)
+    public T? GetAdditionalState<T>(string key)
     {
         if (AdditionalState.TryGetValue(key, out var value) && value is T typedValue)
         {

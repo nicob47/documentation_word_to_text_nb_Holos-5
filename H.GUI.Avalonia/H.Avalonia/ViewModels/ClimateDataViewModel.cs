@@ -28,43 +28,43 @@ namespace H.Avalonia.ViewModels
     public class ClimateDataViewModel : ViewModelBase, IDataGridFeatures
     {
         private IRegionNavigationJournal? _navigationJournal;
-        private readonly IDialogService _dialogService;
-        private readonly ImportHelpers _importHelper;
-        private readonly ClimateViewItemMap _climateViewItemMap;
-        private INotificationManagerService _notificationManager;
-        private IClimateService _climateService;
-        private ObservableCollection<ClimateViewItem> _climateViewItems;
+        private readonly IDialogService _dialogService = null!;
+        private readonly ImportHelpers _importHelper = null!;
+        private readonly ClimateViewItemMap _climateViewItemMap = null!;
+
+        private IClimateService _climateService = null!;
+        private ObservableCollection<ClimateViewItem> _climateViewItems = null!;
 
         /// <summary>
         /// Allows navigation from the current view to the <see cref="SoilResultsView"/>.
         /// </summary>
-        public DelegateCommand OnGetClimateDataCommand { get; set; }
+        public DelegateCommand OnGetClimateDataCommand { get; set; } = null!;
 
         /// <summary>
         /// A command that adds rows to the grid displayed on <see cref="ClimateDataView"/>. Each row indicates <see cref="ClimateViewItem"/>.
         /// </summary>
-        public DelegateCommand AddRowCommand { get; set; }
+        public DelegateCommand AddRowCommand { get; set; } = null!;
 
         /// <summary>
         /// A command that removes rows to the grid displayed on <see cref="ClimateDataView"/>. Each row indicates <see cref="ClimateViewItem"/>.
         /// </summary>
-        public DelegateCommand<object> DeleteRowCommand { get; set; }
+        public DelegateCommand<object> DeleteRowCommand { get; set; } = null!;
 
         /// <summary>
         /// Deletes a row that is currently marked as selected by the user.
         /// </summary>
-        public DelegateCommand DeleteSelectedRowsCommand { get; set; }
+        public DelegateCommand DeleteSelectedRowsCommand { get; set; } = null!;
 
         /// <summary>
         /// Import climate data from a csv file. The csv file must have the following columns:
         /// Latitude, Longitude, Start Year, End Year, Julian day start, Julian day end (respectively).
         /// </summary>
-        public DelegateCommand<object> ImportFromCsvCommand { get; set; }
+        public DelegateCommand<object> ImportFromCsvCommand { get; set; } = null!;
 
         /// <summary>
         /// Toggles the select all row command. This command either selects or deselects all the rows currently displayed in the grid.
         /// </summary>
-        public DelegateCommand ToggleSelectAllRowsCommand { get; set; }
+        public DelegateCommand ToggleSelectAllRowsCommand { get; set; } = null!;
 
         /// <summary>
         /// A bool that indicates if all climate data items are selected in the grid. Returns true if all items are selected, returns false otherwise.
@@ -235,7 +235,7 @@ namespace H.Avalonia.ViewModels
         /// </summary>
         private void OnGetClimateDataExecute()
         {
-            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ClimateResultsView), new NavigationParameters() { { "ClimateViewItems", this.ClimateViewItems } });
+            base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(ClimateResultsView), new NavigationParameters() { { "ClimateViewItems", this.ClimateViewItems } });
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace H.Avalonia.ViewModels
         /// </summary>
         private void OnAddRowExecute()
         {
-            if (base.ActiveFarm != null)
+            if (base.ActiveFarm is not null)
             {
                 var climateViewItem = new ClimateViewItem()
                 {
@@ -322,15 +322,15 @@ namespace H.Avalonia.ViewModels
             }
             catch (HeaderValidationException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.InvalidHeaderTitle, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.InvalidHeaderTitle, e.Message, NotificationType.Error);
             }
             catch (TypeConverterException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.InvalidCSVContentTitle, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.InvalidCSVContentTitle, e.Message, NotificationType.Error);
             }
             catch (IOException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, NotificationType.Error);
             }
         }
 

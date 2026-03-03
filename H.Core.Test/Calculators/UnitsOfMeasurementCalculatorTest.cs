@@ -9,7 +9,7 @@ namespace H.Core.Test.Calculators
     [TestClass]
     public class UnitsOfMeasurementCalculatorTest
     {
-        private UnitsOfMeasurementCalculator _calculator;
+        private UnitsOfMeasurementCalculator _calculator = null!;
 
         [TestInitialize]
         public void TestInitialize()
@@ -308,12 +308,14 @@ namespace H.Core.Test.Calculators
             Assert.AreEqual(0.0278, Math.Round(convertedValue, 4));
         }
 
-        [ExpectedException(typeof(ArgumentException))]
         [TestMethod]
         public void ConvertValueToMetricFromImperial_ThrowException()
         {
-            var convertedValue = _calculator.ConvertValueToMetricFromImperial(
-                ImperialUnitsOfMeasurement.BritishThermalUnitPerPound, 50);
+            Assert.ThrowsExactly<ArgumentException>(() =>
+            {
+                var convertedValue = _calculator.ConvertValueToMetricFromImperial(
+                    ImperialUnitsOfMeasurement.BritishThermalUnitPerPound, 50);
+            });
         }
 
         //(50 grains/lbs / (15.432 grains)/1000/1 mg) * (2.205lbs/kg) = 7144.2457 mg/kg

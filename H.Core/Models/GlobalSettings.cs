@@ -16,15 +16,15 @@ namespace H.Core.Models
     {
         #region Fields
 
-        private Farm _activeFarm;
-        private ObservableCollection<Farm> _farmsForComparison;
+        private Farm _activeFarm = null!;
+        private ObservableCollection<Farm> _farmsForComparison = null!;
         private bool _enableMultiFarmComparison;
-        private Defaults _multiFarmComparisonDefaults;
-        private ManagementPeriod _multiFarmManagementPeriod;
+        private Defaults _multiFarmComparisonDefaults = null!;
+        private ManagementPeriod _multiFarmManagementPeriod = null!;
 
-        private FieldSystemDetailsColumnsVisibility _fieldSystemDetailsColumnsVisibility;
-        private FieldResultsColumnsVisibility _fieldResultsColumnsVisibility;
-        private ManureModelColumnsVisibility _manureModelColumnVisibility;
+        private FieldSystemDetailsColumnsVisibility _fieldSystemDetailsColumnsVisibility = null!;
+        private FieldResultsColumnsVisibility _fieldResultsColumnsVisibility = null!;
+        private ManureModelColumnsVisibility _manureModelColumnVisibility = null!;
         #endregion
 
         #region Constructors

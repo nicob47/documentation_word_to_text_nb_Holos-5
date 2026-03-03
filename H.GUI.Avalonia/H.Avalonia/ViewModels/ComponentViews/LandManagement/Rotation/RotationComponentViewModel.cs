@@ -47,50 +47,50 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// <summary>
         /// Service for managing field component operations (initialization, validation, transfer between DTO and model)
         /// </summary>
-        private readonly IFieldComponentService _fieldComponentService;
-        
+        private readonly IFieldComponentService? _fieldComponentService;
+
         /// <summary>
         /// Service for managing rotation component operations and data transfer
         /// </summary>
-        private readonly IRotationComponentService _rotationComponentService;
-        
+        private readonly IRotationComponentService? _rotationComponentService;
+
         /// <summary>
         /// Factory for creating new crop DTOs with proper initialization
         /// </summary>
-        private readonly ICropFactory _cropFactory;
-        
+        private readonly ICropFactory? _cropFactory;
+
         /// <summary>
         /// Service providing color codes and display names for different crop types
         /// </summary>
-        private readonly ICropColorService _cropColorService;
+        private readonly ICropColorService? _cropColorService;
         
         /// <summary>
         /// The domain model object representing the rotation component being edited
         /// </summary>
-        private RotationComponent _selectedRotationComponent;
+        private RotationComponent? _selectedRotationComponent;
         
         /// <summary>
         /// Data transfer object containing rotation parameters (start year, end year, number of fields, field area)
         /// This DTO is bound to the view and includes validation logic
         /// </summary>
-        private IRotationComponentDto _selectedRotationComponentDto;
+        private IRotationComponentDto? _selectedRotationComponentDto;
         
         /// <summary>
         /// Collection of field component DTOs (one per crop in rotation, used for field system integration)
         /// </summary>
-        private ObservableCollection<IFieldComponentDto> _fieldComponentDtos;
-        
+        private ObservableCollection<IFieldComponentDto> _fieldComponentDtos = null!;
+
         /// <summary>
         /// Collection of crop DTOs representing the rotation sequence (Step 2 timeline)
         /// Each crop represents one year in the rotation cycle
         /// </summary>
-        private ObservableCollection<ICropDto> _cropDtos;
-        
+        private ObservableCollection<ICropDto> _cropDtos = null!;
+
         /// <summary>
         /// Collection of field assignment rows for the preview grid (Step 3)
         /// Each row represents one field, containing year/crop assignments
         /// </summary>
-        private ObservableCollection<FieldAssignmentRow> _fieldAssignmentRows;
+        private ObservableCollection<FieldAssignmentRow> _fieldAssignmentRows = null!;
         
         /// <summary>
         /// The direction in which crops shift across fields in the rotation.
@@ -100,11 +100,6 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         private RotationShiftDirection _shiftDirection = RotationShiftDirection.RightShift;
 
-        /// <summary>
-        /// Flag to track if the crop selection came from clicking a preview grid cell
-        /// This is used to determine if auto-scrolling should occur
-        /// </summary>
-        private bool _selectionFromGridCell = false;
 
         #endregion
 
@@ -142,45 +137,11 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             ICropFactory cropFactory,
             ICropColorService cropColorService) : base(regionManager, eventAggregator, storageService, logger)
         {
-            // Validate and store crop factory dependency
-            if (cropFactory != null)
-            {
-                _cropFactory = cropFactory;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(cropFactory));
-            }
-
-            // Validate and store field component service dependency
-            if (fieldComponentService != null)
-            {
-                _fieldComponentService = fieldComponentService;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(fieldComponentService));
-            }
-
-            // Validate and store rotation component service dependency
-            if (rotationComponentService != null)
-            {
-                _rotationComponentService = rotationComponentService;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(rotationComponentService));
-            }
-
-            // Validate and store crop color service dependency
-            if (cropColorService != null)
-            {
-                _cropColorService = cropColorService;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(cropColorService));
-            }
+            // Validate and store dependencies
+            _cropFactory = cropFactory ?? throw new ArgumentNullException(nameof(cropFactory));
+            _fieldComponentService = fieldComponentService ?? throw new ArgumentNullException(nameof(fieldComponentService));
+            _rotationComponentService = rotationComponentService ?? throw new ArgumentNullException(nameof(rotationComponentService));
+            _cropColorService = cropColorService ?? throw new ArgumentNullException(nameof(cropColorService));
 
             // Initialize collections and commands
             this.Construct();
@@ -212,8 +173,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// <summary>
         /// The currently selected crop DTO that is being edited in Step 3
         /// </summary>
-        private ICropDto _selectedCropDto;
-        public ICropDto SelectedCropDto
+        private ICropDto? _selectedCropDto;
+        public ICropDto? SelectedCropDto
         {
             get => _selectedCropDto;
             set
@@ -254,14 +215,14 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// Format: "Field 1", "Field 2", etc.
         /// Used to display context information in Step 4 about which field is being edited.
         /// </summary>
-        private string _selectedFieldName;
-        public string SelectedFieldName
+        private string? _selectedFieldName;
+        public string? SelectedFieldName
         {
             get => _selectedFieldName;
             set => SetProperty(ref _selectedFieldName, value);
         }
 
-        public IRotationComponentDto SelectedRotationComponentDto
+        public IRotationComponentDto? SelectedRotationComponentDto
         {
             get => _selectedRotationComponentDto;
             set
@@ -339,22 +300,22 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// <summary>
         /// Command to add a new crop to the rotation
         /// </summary>
-        public ICommand AddCropToRotationCommand { get; private set; }
+        public ICommand AddCropToRotationCommand { get; private set; } = null!;
 
         /// <summary>
         /// Command to set the selected crop when a timeline card is clicked
         /// </summary>
-        public ICommand SetSelectedCropCommand { get; private set; }
+        public ICommand SetSelectedCropCommand { get; private set; } = null!;
 
         /// <summary>
         /// Command to set the selected crop when a preview grid cell is clicked
         /// </summary>
-        public ICommand SetSelectedCropFromCellCommand { get; private set; }
+        public ICommand SetSelectedCropFromCellCommand { get; private set; } = null!;
 
         /// <summary>
         /// Command to remove a specific crop from the rotation
         /// </summary>
-        public ICommand RemoveSpecificCropCommand { get; private set; }
+        public ICommand RemoveSpecificCropCommand { get; private set; } = null!;
 
         #endregion
 
@@ -389,9 +350,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             this.InitializeRotationComponent(rotationComponent);
         }
 
-        public void InitializeRotationComponent(RotationComponent rotationComponent)
+        public void InitializeRotationComponent(RotationComponent? rotationComponent)
         {
-            if (rotationComponent == null)
+            if (rotationComponent is null)
             {
                 return;
             }
@@ -400,7 +361,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             _selectedRotationComponent = rotationComponent;
 
             // Build a DTO to represent the model/domain object
-            var rotationComponentDto = _rotationComponentService.TransferToRotationComponentDto(rotationComponent);
+            var rotationComponentDto = _rotationComponentService?.TransferToRotationComponentDto(rotationComponent);
+            if (rotationComponentDto is null) return;
 
             // Listen for changes on the DTO so we can validate user input before assigning values to the model
             rotationComponentDto.PropertyChanged += this.RotationComponentDtoOnPropertyChanged;
@@ -480,6 +442,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             }
 
             // Extract rotation parameters
+            if (SelectedRotationComponentDto == null) return;
+
             var crops = CropDtos.ToList();
             var rotationLength = crops.Count; // Number of crops in the rotation sequence
             var startYear = SelectedRotationComponentDto.StartYear;
@@ -533,9 +497,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
 
                     // Create a unique crop DTO instance for this specific cell
                     // This ensures each cell has its own independent data that can be edited separately
-                    ICropDto cellCropDto = null;
+                    ICropDto? cellCropDto = null;
                     
-                    if (_cropFactory != null)
+                    if (_cropFactory is not null)
                     {
                         // Use the factory's CreateDtoFromDtoTemplate method to copy properties
                         // This leverages AutoMapper for proper property copying
@@ -560,7 +524,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         CropType = sourceCrop.CropType, // Store crop type for selection matching in Step 3
                         CropDto = cellCropDto, // Store reference to the unique crop DTO for this cell
                         CropDisplay = _cropColorService?.GetCropDisplayName(sourceCrop.CropType) ?? sourceCrop.CropType.ToString(),
-                        CropBackground = _cropColorService != null 
+                        CropBackground = _cropColorService is not null
                             ? Brush.Parse(_cropColorService.GetCropColorHex(sourceCrop.CropType))
                             : Brush.Parse("#F5F5F5"),
                         IsSelected = false // Initialize to not selected (updated when user clicks timeline card)
@@ -659,7 +623,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         /// <param name="assignment">The year crop assignment to find</param>
         /// <returns>The field name (e.g., "Field 1"), or null if not found</returns>
-        private string FindFieldNameForAssignment(YearCropAssignment assignment)
+        private string? FindFieldNameForAssignment(YearCropAssignment? assignment)
         {
             if (FieldAssignmentRows == null || assignment == null)
             {
@@ -711,7 +675,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         // the service will renumber to 2020, 2021 (was 2022)
                         if (this.CropDtos != null && this.CropDtos.Any())
                         {
-                            _fieldComponentService.ResetAllYears(this.CropDtos);
+                            _fieldComponentService?.ResetAllYears(this.CropDtos);
                         }
 
                         // Clear grid cell selection and hide Step 4
@@ -724,13 +688,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         // Handle timeline selection management
                         // If we just deleted the selected timeline card, we need to select a different one
                         var wasSelected = cropDto.IsSelected;
-                        if (wasSelected && this.CropDtos.Any())
+                        if (wasSelected && this.CropDtos?.Any() == true)
                         {
                             // Select the last crop in the remaining sequence
                             var newSelectedCrop = this.CropDtos.Last();
                             UpdateCropSelectionStates(newSelectedCrop);
                         }
-                        else if (!this.CropDtos.Any())
+                        else if (this.CropDtos?.Any() != true)
                         {
                             // No crops remain, clear all selections
                             UpdateCropSelectionStates(null);
@@ -757,7 +721,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// - All crops are deleted and we need to clear selection
         /// </summary>
         /// <param name="selectedCrop">The crop DTO to mark as selected, or null to clear all selections</param>
-        private void UpdateCropSelectionStates(ICropDto selectedCrop)
+        private void UpdateCropSelectionStates(ICropDto? selectedCrop)
         {
             if (this.CropDtos != null)
             {
@@ -845,19 +809,20 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         private void OnAddCropToRotation()
         {
-            if (_cropFactory == null)
+            if (_cropFactory is null)
             {
                 return;
             }
 
             // Get the active farm
             var farm = this.ActiveFarm;
-            if (farm == null)
+            if (farm is null)
             {
                 return;
             }
 
             // Create a new crop DTO using the factory with farm initialization
+            if (_cropFactory is null) return;
             var newCropDto = _cropFactory.CreateDto(farm);
 
             // Set the year based on existing crops or rotation start year
@@ -892,7 +857,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// <summary>
         /// Handles changes to the CropDtos collection (add/remove)
         /// </summary>
-        private void OnCropDtosCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnCropDtosCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             // Subscribe to property changes on newly added items
             if (e.NewItems != null)
@@ -929,7 +894,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
     /// <summary>
     /// Handles property changes on individual crop DTOs
     /// </summary>
-    private void OnCropDtoPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void OnCropDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         // Regenerate field assignments when CropType changes
         if (e.PropertyName == nameof(ICropDto.CropType))
@@ -938,7 +903,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         }
 
         // Handle copying values to similar crops
-        if (sender is ICropDto cropDto)
+        if (sender is ICropDto cropDto && e.PropertyName != null)
         {
             CopyValuesToSimilarCrops(cropDto, e.PropertyName);
         }
@@ -948,9 +913,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
     /// Handles property changes on the currently selected crop DTO (the one being edited in Step 4).
     /// This is separate from OnCropDtoPropertyChanged which handles changes to crops in the timeline (Step 2).
     /// </summary>
-    private void OnSelectedCropDtoPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void OnSelectedCropDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (sender is ICropDto cropDto)
+        if (sender is ICropDto cropDto && e.PropertyName != null)
         {
             // Handle copying values to similar crops when properties change
             CopyValuesToSimilarCrops(cropDto, e.PropertyName);
@@ -1134,7 +1099,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
     /// <summary>
     /// Handles property changes on the RotationComponentDto
     /// </summary>
-    private void OnRotationDtoPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void OnRotationDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
             // Regenerate field assignments if relevant properties change
             if (e.PropertyName == nameof(IRotationComponentDto.StartYear) ||
@@ -1170,12 +1135,12 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                  * we should not proceed with the transfer of user input from the DTO to the model until the validation errors are fixed
                  */
 
-                if (!rotationComponentDto.HasErrors)
+                if (!rotationComponentDto.HasErrors && _selectedRotationComponent is not null)
                 {
                     try
                     {
                         // A property on the DTO has been changed by the user, assign the new value to the system object after any unit conversion (if necessary)
-                        _rotationComponentService.TransferRotationDtoToSystem(rotationComponentDto, _selectedRotationComponent);
+                        _rotationComponentService?.TransferRotationDtoToSystem(rotationComponentDto, _selectedRotationComponent);
                     }
                     catch (Exception exception)
                     {

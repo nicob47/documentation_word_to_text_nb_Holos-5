@@ -23,7 +23,7 @@ namespace H.Core.Providers.Shelterbelt
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.ShelterbeltHardinessZoneLookup;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<Table_12_Shelterbelt_Hardiness_Zone_Lookup_Data>();
             TreeSpeciesStringConverter speciesConverter = new TreeSpeciesStringConverter();
             HardinessZoneStringConverter hardinessConverter = new HardinessZoneStringConverter();

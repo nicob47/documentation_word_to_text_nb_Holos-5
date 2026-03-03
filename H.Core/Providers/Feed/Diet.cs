@@ -48,7 +48,7 @@ namespace H.Core.Providers.Feed
         private AnimalType _animalType;
         private EntericMethanEmissionMethodologies _selectedMethaneEmissionMethodology;
 
-        private ObservableCollection<FeedIngredient> _ingredients;
+        private ObservableCollection<FeedIngredient> _ingredients = null!;
         private static MapperConfiguration _dietMapperConfiguration;
         private static MapperConfiguration _ingredientMapperConfiguration;
         private static IMapper _dietMapper;
@@ -128,7 +128,7 @@ namespace H.Core.Providers.Feed
             set { SetProperty(ref _ingredients, value, this.UpdateTotals); }
         }
 
-        public string Comments { get; set; }
+        public string Comments { get; set; } = string.Empty;
 
         /// <summary>
         /// TDN
@@ -475,9 +475,9 @@ namespace H.Core.Providers.Feed
         /// </summary>
         /// <param name="dietToCopy">the diet to copy</param>
         /// <returns>a copied diet</returns>
-        public static Diet CopyDiet(Diet dietToCopy)
+        public static Diet CopyDiet(Diet? dietToCopy)
         {
-            if (dietToCopy == null)
+            if (dietToCopy is null)
             {
                 return new Diet();
             }
@@ -665,25 +665,25 @@ namespace H.Core.Providers.Feed
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is Diet diet)
             {
             }
         }
 
-        private void FeedIngredientsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FeedIngredientsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                if (e.NewItems[0] is FeedIngredient feedIngredient)
+                if (e.NewItems?[0] is FeedIngredient feedIngredient)
                 {
                     feedIngredient.PropertyChanged += this.FeedIngredientOnPropertyChanged;
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                if (e.OldItems[0] is FeedIngredient feedIngredient)
+                if (e.OldItems?[0] is FeedIngredient feedIngredient)
                 {
                     feedIngredient.PropertyChanged -= this.FeedIngredientOnPropertyChanged;
                 }
@@ -693,7 +693,7 @@ namespace H.Core.Providers.Feed
             this.UpdateTotals();
         }
 
-        private void FeedIngredientOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void FeedIngredientOnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             // Need to update diet totals when an ingredient is modified
             this.UpdateTotals();

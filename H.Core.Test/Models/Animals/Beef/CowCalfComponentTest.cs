@@ -3,6 +3,8 @@ using H.Core.Enumerations;
 using H.Core.Models.Animals;
 using H.Core.Models.Animals.Beef;
 
+#nullable disable
+
 namespace H.Core.Test.Models.Animals.Beef
 {
     [TestClass]

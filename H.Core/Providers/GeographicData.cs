@@ -15,9 +15,9 @@ namespace H.Core.Providers
     {
         #region Fields
 
-        private SoilData _defaultSoilData;
-        private List<CustomUserYieldData> _customYieldData;
-        private List<SoilData> _soilDataForAllComponentsWithinPolygon;
+        private SoilData _defaultSoilData = null!;
+        private List<CustomUserYieldData> _customYieldData = null!;
+        private List<SoilData> _soilDataForAllComponentsWithinPolygon = null!;
         private HardinessZone _hardinessZone;
 
         #endregion

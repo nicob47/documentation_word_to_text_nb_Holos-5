@@ -8,7 +8,7 @@ namespace H.Core.Models.LandManagement.Fields
 
         private double _totalCarbonLossesFromGrazingAnimals;
 
-        private ObservableCollection<GrazingViewItem> _grazingViewItems;
+        private ObservableCollection<GrazingViewItem> _grazingViewItems = null!;
 
         #endregion
 

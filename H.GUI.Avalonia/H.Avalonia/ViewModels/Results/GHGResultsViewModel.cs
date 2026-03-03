@@ -11,8 +11,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
 {
     #region Fields
 
-    private ObservableCollection<ResultDto> _results;
-    private ILogger _logger;
+    private ObservableCollection<ResultDto> _results = null!;
+    private ILogger _logger = null!;
 
     #endregion
 

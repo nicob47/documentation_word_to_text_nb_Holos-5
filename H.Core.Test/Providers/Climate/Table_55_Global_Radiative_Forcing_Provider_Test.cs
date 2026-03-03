@@ -1,13 +1,15 @@
 ﻿using H.Core.Providers.Climate;
 using H.Core.Enumerations;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Climate
 {
     [TestClass]
     public class Table_55_Global_Radiative_Forcing_Provider_Test
     {
         #region Fields
-        private static Table_55_Global_Radiative_Forcing_Provider _provider;
+        private static Table_55_Global_Radiative_Forcing_Provider _provider = null!;
         #endregion
 
         #region Initialization

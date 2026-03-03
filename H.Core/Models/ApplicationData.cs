@@ -12,9 +12,9 @@ namespace H.Core.Models
     {
         #region Fields
 
-        private GlobalSettings _globalSettings;
-        private DisplayUnitStrings _displayDisplayUnitStrings;
-        private IList<Farm> _farms;
+        private GlobalSettings _globalSettings = null!;
+        private DisplayUnitStrings _displayDisplayUnitStrings = null!;
+        private IList<Farm> _farms = null!;
 
         #endregion
 

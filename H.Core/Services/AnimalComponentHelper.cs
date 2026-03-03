@@ -108,7 +108,7 @@ namespace H.Core.Services
             return result;
         }
         
-        public string GetUniqueGroupName(IEnumerable<AnimalGroup> animalGroups, AnimalGroup animalGroup, string suggestedName = null)
+        public string GetUniqueGroupName(IEnumerable<AnimalGroup> animalGroups, AnimalGroup animalGroup, string? suggestedName = null)
         {
             var i = 1;
 
@@ -199,7 +199,7 @@ namespace H.Core.Services
 
         public AnimalComponentBase ReplicateAnimalComponent(AnimalComponentBase component)
         {
-            var animalComponent = (AnimalComponentBase)Activator.CreateInstance(component.GetType());
+            var animalComponent = (AnimalComponentBase)Activator.CreateInstance(component.GetType())!;
 
             this.ReplicateAnimalComponent(animalComponent, component);
             animalComponent.Name = component.Name;
@@ -218,12 +218,14 @@ namespace H.Core.Services
         {
             // The component to copy to
             var to = destination as AnimalComponentBase;
+            if (to == null) return;
 
             // Clear any groups on existing component since we want both collections have the same groups
             to.Groups.Clear();
 
             // The component to copy from
             var from = source as AnimalComponentBase;
+            if (from == null) return;
 
             foreach (var animalGroup in from.Groups)
             {
@@ -282,12 +284,12 @@ namespace H.Core.Services
             var proposedName = component.ComponentNameDisplayString;
 
             // While the names are the same, try and make a unique name for this component.
-            while (farm.Components.Where(x => string.IsNullOrWhiteSpace(x.Name) == false).Any(y => y.Name.Equals(proposedName)))
-            {                
+            while (farm.Components.Where(x => string.IsNullOrWhiteSpace(x.Name) == false).Any(y => y.Name!.Equals(proposedName)))
+            {
                 proposedName = component.ComponentNameDisplayString + " #" + (i++);
             }
 
-            return proposedName;
+            return proposedName ?? string.Empty;
         }
 
         #endregion

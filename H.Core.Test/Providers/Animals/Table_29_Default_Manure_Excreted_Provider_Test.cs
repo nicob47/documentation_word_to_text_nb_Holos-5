@@ -8,7 +8,7 @@ namespace H.Core.Test.Providers.Animals
     {
         #region Fields
         
-        private static Table_29_Default_Manure_Excreted_Provider _sut; 
+        private static Table_29_Default_Manure_Excreted_Provider _sut = null!;
 
         #endregion
 

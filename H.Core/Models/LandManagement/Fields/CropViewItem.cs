@@ -26,7 +26,7 @@ namespace H.Core.Models.LandManagement.Fields
         private int _yearOfTillageChange;
         private int _numberOfPesticidePasses;
 
-        private string _fieldName;
+        private string _fieldName = string.Empty;
 
         private bool _manureApplied;
         private bool _underSownCropsUsed;
@@ -105,8 +105,8 @@ namespace H.Core.Models.LandManagement.Fields
         private FallowTypes _selectedFallowType;
         private IrrigationType _irrigationType;
         private CropType _cropType;
-        private CropType _grasslandType;
-        private CropEconomicData _cropEconomicData;
+
+        private CropEconomicData _cropEconomicData = null!;
         private NitrogenFertilizerType _nitrogenFertilizerType;
         private FertilizerApplicationMethodologies _fertilizerApplicationMethodology;
         private Seasons _seasonOfFertilizerApplication;
@@ -128,12 +128,12 @@ namespace H.Core.Models.LandManagement.Fields
         private double _manureCarbonPerHectare;
         private double _ligninContent;
 
-        private string _timePeriodCategoryString;
-        private string _managementPeriodName;
-        private string _cropTypeString;
-        private string _harvestMethodString;
-        private string _tillageTypeString;
-        private string _cropTypeStringWithYear;
+        private string _timePeriodCategoryString = string.Empty;
+        private string _managementPeriodName = string.Empty;
+        private string _cropTypeString = string.Empty;
+        private string _harvestMethodString = string.Empty;
+        private string _tillageTypeString = string.Empty;
+        private string _cropTypeStringWithYear = string.Empty;
 
         #endregion
 
@@ -644,7 +644,7 @@ namespace H.Core.Models.LandManagement.Fields
             set { SetProperty(ref _manureStateType, value); }
         }
 
-        public DefaultManureCompositionData ManureCompositionData { get; set; }
+        public DefaultManureCompositionData ManureCompositionData { get; set; } = null!;
 
         public FallowTypes SelectedFallowType
         {
@@ -1280,7 +1280,7 @@ namespace H.Core.Models.LandManagement.Fields
 
             foreach (var manureApplication in manureApplicationViewItems)
             {
-                var carbonFraction = manureApplication.DefaultManureCompositionData.CarbonContent;
+                var carbonFraction = manureApplication.DefaultManureCompositionData?.CarbonContent ?? 0;
                 var volumeOfManure = manureApplication.AmountOfManureAppliedPerHectare;
                 var area = this.Area;
 
@@ -1300,27 +1300,27 @@ namespace H.Core.Models.LandManagement.Fields
 
         #region Event Handlers
 
-        private void GrazingViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void GrazingViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasGrazingViewItems = this.GrazingViewItems.Count > 0;
         }
 
-        private void ManureApplicationViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void ManureApplicationViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasManureApplicationViewItems = this.ManureApplicationViewItems.Count > 0;
         }
 
-        private void HayImportViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void HayImportViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasHayImportViewItems = this.HayImportViewItems.Count > 0;
         }
 
-        private void HarvestViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void HarvestViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             this.HasHarvestViewItems = this.HarvestViewItems.Count > 0;
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
         }
 

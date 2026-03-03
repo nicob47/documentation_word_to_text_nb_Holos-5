@@ -5,19 +5,19 @@
     /// </summary>
     internal class ComponentTableData
     {
-        private string _soilNameIdentifier;
+        private string _soilNameIdentifier = string.Empty;
 
 
         public int PolygonId { get; set; }
         public int ComponentNumber { get; set; }
         public int PercentageOfPolygonOccupiedByComponent { get; set; }
-        public string SlopeGradient { get; set; }
-        public string Stone { get; set; }
-        public string LocalSurfaceForm { get; set; }
-        public string ProvinceCode { get; set; }
-        public string SoilCode { get; set; }
-        public string SoilCodeModifier { get; set; }
-        public string TypeOfSoilProfile { get; set; }
+        public string SlopeGradient { get; set; } = string.Empty;
+        public string Stone { get; set; } = string.Empty;
+        public string LocalSurfaceForm { get; set; } = string.Empty;
+        public string ProvinceCode { get; set; } = string.Empty;
+        public string SoilCode { get; set; } = string.Empty;
+        public string SoilCodeModifier { get; set; } = string.Empty;
+        public string TypeOfSoilProfile { get; set; } = string.Empty;
 
         /// <summary>
         /// Component table uses 'NF' to indicate Newfoundland but soil layer and soil name tables use 'NL'.

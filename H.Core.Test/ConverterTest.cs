@@ -3,6 +3,8 @@ using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Models;
 using H.Infrastructure;
 
+#nullable disable
+
 namespace H.Core.Test
 {
     [TestClass]
@@ -42,9 +44,13 @@ namespace H.Core.Test
     public class ViewModel : ModelBase
     {
         private IUnitsOfMeasurementCalculator _calculator = new UnitsOfMeasurementCalculator();
-        private InputViewClass _inputViewClass;
-        private InputViewClass _algorithmInputViewClass;
-        private Farm _activeFarm;
+        private InputViewClass _inputViewClass = null!;
+#pragma warning disable CS0414
+        private InputViewClass _algorithmInputViewClass = null!;
+#pragma warning restore CS0414
+#pragma warning disable CS0414
+        private Farm _activeFarm = null!;
+#pragma warning restore CS0414
         public InputViewClass InputViewClass
         {
             get => _inputViewClass;

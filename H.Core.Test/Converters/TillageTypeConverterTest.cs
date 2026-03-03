@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class TillageTypeConverterTest
     {
-        private TillageTypeStringConverter converter;
+        private TillageTypeStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -33,7 +33,7 @@ namespace H.Core.Test.Converters
         public void ConvertReturnsException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<Exception>(() => converter.Convert("-"));
+            Assert.ThrowsExactly<Exception>(() => converter.Convert("-"));
         }
 
         [TestMethod]

@@ -37,7 +37,7 @@ namespace H.Core.Providers.Shelterbelt
             CsvResourceNames resourceName)
         {
             var result = new List<ShelterbeltEcodistrictLookupTableData>();
-            var filelines = CsvResourceReader.GetFileLines(resourceName);
+            var filelines = CsvResourceReader.GetFileLines(resourceName)!;
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 
             foreach (var line in filelines.Skip(1))

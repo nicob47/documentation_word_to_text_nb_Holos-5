@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.Energy
     public class Table_49_Electricity_Conversion_Defaults_Provider_Test
     {
         #region Fields
-        private static Table_49_Electricity_Conversion_Defaults_Provider _provider;
+        private static Table_49_Electricity_Conversion_Defaults_Provider _provider = null!;
         private const int FirstYear = 1990;
         private const int LastYear = 2018;
         #endregion

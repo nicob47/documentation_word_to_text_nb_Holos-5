@@ -94,7 +94,7 @@ namespace H.Core.Models.Animals
         /// <summary>
         /// A string to indicate which groups of animals are paired together.
         /// </summary>
-        public string GroupPairingDescription { get; set; }
+        public string GroupPairingDescription { get; set; } = string.Empty;
 
         /// <summary>
         /// (kg)
@@ -129,7 +129,7 @@ namespace H.Core.Models.Animals
 
         public double GetNumberOfAnimalsInFirstManagementPeriodByProductionStage(ProductionStages productionStage)
         {
-            var firstManagementPeriod = this.ManagementPeriods.OrderBy(x => x.Start).Where(x => x.ProductionStage == productionStage).FirstOrDefault();
+            ManagementPeriod? firstManagementPeriod = this.ManagementPeriods.OrderBy(x => x.Start).Where(x => x.ProductionStage == productionStage).FirstOrDefault();
             if (firstManagementPeriod != null)
             {
                 return firstManagementPeriod.NumberOfAnimals;
@@ -169,7 +169,7 @@ namespace H.Core.Models.Animals
             {
                 if (i == 0)
                 {
-                    var firstManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(i);
+                    ManagementPeriod? firstManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(i);
                     if (firstManagementPeriod != null)
                     {
                         startingNumber = firstManagementPeriod.NumberOfAnimals;
@@ -178,7 +178,7 @@ namespace H.Core.Models.Animals
 
                 if (i == this.ManagementPeriods.Count - 1)
                 {
-                    var lastManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(i);
+                    ManagementPeriod? lastManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(i);
                     if (lastManagementPeriod != null)
                     {
                         endingNumber = lastManagementPeriod.NumberOfAnimals;
@@ -205,7 +205,7 @@ namespace H.Core.Models.Animals
 
         public int GetNumberOfAnimalDuringMonth(int month, int year)
         {
-            var managementPeriod = this.GetManagementPeriodByMonthAndYear(month, year);
+            ManagementPeriod? managementPeriod = this.GetManagementPeriodByMonthAndYear(month, year);
             if (managementPeriod != null)
             {
                 return managementPeriod.NumberOfAnimals;
@@ -223,7 +223,7 @@ namespace H.Core.Models.Animals
         {
             var result = 0;
 
-            var managementPeriod = this.GetManagementPeriodByDate(dateTime);
+            ManagementPeriod? managementPeriod = this.GetManagementPeriodByDate(dateTime);
             if (managementPeriod != null)
             {
                 result = managementPeriod.NumberOfAnimals;
@@ -238,10 +238,10 @@ namespace H.Core.Models.Animals
         /// </summary>
         /// <param name="dateTime">The <see cref="DateTime"/> to search by</param>
         /// <returns>The <see cref="ManagementPeriod"/> that contains the given <see cref="DateTime"/>, or null if the <see cref="ManagementPeriod"/> doesn't exist</returns>
-        public ManagementPeriod GetManagementPeriodByDate(DateTime dateTime)
+        public ManagementPeriod? GetManagementPeriodByDate(DateTime dateTime)
         {
 
-            var result = this.ManagementPeriods.OrderBy(managementPeriod => managementPeriod.Start).FirstOrDefault(managementPeriod => managementPeriod.Start <= dateTime && managementPeriod.End >= dateTime);
+            ManagementPeriod? result = this.ManagementPeriods.OrderBy(managementPeriod => managementPeriod.Start).FirstOrDefault(managementPeriod => managementPeriod.Start <= dateTime && managementPeriod.End >= dateTime);
             if (result != null)
             {
                 return result;
@@ -256,9 +256,9 @@ namespace H.Core.Models.Animals
         /// <summary>
         /// Returns the management period that contains the given month and year.
         /// </summary>
-        public ManagementPeriod GetManagementPeriodByMonthAndYear(int month, int year)
+        public ManagementPeriod? GetManagementPeriodByMonthAndYear(int month, int year)
         {
-            var managementPeriod = this.ManagementPeriods.OrderBy(x => x.Start).FirstOrDefault(x => x.Start.Year >= year && x.Start.Month <= month);
+            ManagementPeriod? managementPeriod = this.ManagementPeriods.OrderBy(x => x.Start).FirstOrDefault(x => x.Start.Year >= year && x.Start.Month <= month);
             if (managementPeriod != null)
             {
                 return managementPeriod;
@@ -287,7 +287,7 @@ namespace H.Core.Models.Animals
             {
                 // Need to update subsequent management period start dates
                 var currentManagementPeriod = this.ManagementPeriods.ElementAt(index);
-                var nextManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(index + 1);
+                ManagementPeriod? nextManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(index + 1);
                 if (nextManagementPeriod != null)
                 {
                     nextManagementPeriod.Start = currentManagementPeriod.End.AddDays(1);
@@ -311,7 +311,7 @@ namespace H.Core.Models.Animals
             {
                 // Need to update subsequent management period start weights
                 var currentManagementPeriod = this.ManagementPeriods.ElementAt(index);
-                var nextManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(index + 1);
+                ManagementPeriod? nextManagementPeriod = this.ManagementPeriods.ElementAtOrDefault(index + 1);
                 if (nextManagementPeriod != null)
                 {
                     nextManagementPeriod.StartWeight = currentManagementPeriod.EndWeight;  
@@ -329,15 +329,15 @@ namespace H.Core.Models.Animals
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
         }
 
-        protected virtual void ManagementPeriodsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        protected virtual void ManagementPeriodsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
             {
-                var item = notifyCollectionChangedEventArgs.NewItems[0];
+                var item = notifyCollectionChangedEventArgs.NewItems?[0];
                 if (item is ManagementPeriod managementPeriod)
                 {
                     managementPeriod.PropertyChanged += ManagementPeriodOnPropertyChanged;
@@ -358,26 +358,26 @@ namespace H.Core.Models.Animals
             }
         }
 
-        private void ManagementPeriodOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void ManagementPeriodOnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (sender is ManagementPeriod managementPeriod)
             {
-                if (propertyChangedEventArgs.PropertyName.Equals(nameof(ManagementPeriod.NumberOfDays)))
+                if (propertyChangedEventArgs.PropertyName != null && propertyChangedEventArgs.PropertyName.Equals(nameof(ManagementPeriod.NumberOfDays)))
                 {
                     // Get index of the ManagementPeriod that sent the PropertyChanged event
-                    var index = this.ManagementPeriods.IndexOf(this.ManagementPeriods.SingleOrDefault(x => x.Guid == managementPeriod.Guid));
+                    var index = this.ManagementPeriods.IndexOf(this.ManagementPeriods.SingleOrDefault(x => x.Guid == managementPeriod.Guid)!);
                     if (index >= 0)
                     {
                         this.UpdateSubsequentStartDates(index);
                     }
                 }
 
-                if (propertyChangedEventArgs.PropertyName.Equals(nameof(ManagementPeriod.EndWeight)))
+                if (propertyChangedEventArgs.PropertyName != null && propertyChangedEventArgs.PropertyName.Equals(nameof(ManagementPeriod.EndWeight)))
                 {
                     // Get index of the ManagementPeriod that sent the PropertyChanged event
-                    var index = this.ManagementPeriods.IndexOf(this.ManagementPeriods.SingleOrDefault(x => x.Guid == managementPeriod.Guid));
+                    var index = this.ManagementPeriods.IndexOf(this.ManagementPeriods.SingleOrDefault(x => x.Guid == managementPeriod.Guid)!);
                     if (index >= 0)
-                    {                        
+                    {
                         this.UpdateSubsequentStartWeights(index);
                     }
                 }

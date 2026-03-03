@@ -14,7 +14,7 @@ namespace H.Core.Models.LandManagement.Fields
         private Guid _animalComponentGuid;
         private Guid _animalGroupGuid;
 
-        private string _managementPeriodName;
+        private string _managementPeriodName = string.Empty;
 
         #endregion
 

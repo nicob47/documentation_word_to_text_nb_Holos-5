@@ -57,7 +57,7 @@ namespace H.Core.Providers.Carbon
         /// <summary>
         /// Get residue values for a specified set of crop parameters
         /// </summary>
-        public Table_7_Relative_Biomass_Information_Data GetResidueData(IrrigationType irrigationType,
+        public Table_7_Relative_Biomass_Information_Data? GetResidueData(IrrigationType irrigationType,
                                           double irrigationAmount,
                                           CropType cropType,
                                           SoilFunctionalCategory soilFunctionalCategory,
@@ -112,7 +112,7 @@ namespace H.Core.Providers.Carbon
         public IEnumerable<Table_7_Relative_Biomass_Information_Data> GetData()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ResidueDataFile);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.ResidueDataFile)!;
             var cropTypeStringConverter = new CropTypeStringConverter();
             var tillageTypeConverter = new TillageTypeStringConverter();
             var provinceStringConverter = new ProvinceStringConverter();

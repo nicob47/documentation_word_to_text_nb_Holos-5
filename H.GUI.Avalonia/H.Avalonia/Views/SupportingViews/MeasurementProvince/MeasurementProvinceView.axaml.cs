@@ -8,24 +8,24 @@ namespace H.Avalonia.Views.SupportingViews.MeasurementProvince
     {
         #region Fields
 
-        private MeasurementProvinceViewModel _measurementProvinceViewModel;
+        private MeasurementProvinceViewModel? _measurementProvinceViewModel;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Parameterless constructor required by the Avalonia XAML loader.
+        /// </summary>
+        public MeasurementProvinceView()
+        {
+            InitializeComponent();
+        }
+
         public MeasurementProvinceView(MeasurementProvinceViewModel measurementProvinceViewModel)
         {
             InitializeComponent();
-
-            if (measurementProvinceViewModel != null)
-            {
-                _measurementProvinceViewModel = measurementProvinceViewModel;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(measurementProvinceViewModel));
-            }
+            _measurementProvinceViewModel = measurementProvinceViewModel ?? throw new ArgumentNullException(nameof(measurementProvinceViewModel));
         }
 
         #endregion

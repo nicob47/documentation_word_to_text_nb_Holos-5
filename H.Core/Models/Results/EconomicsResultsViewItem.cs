@@ -10,9 +10,9 @@ namespace H.Core.Models.Results
 
         private double _totalVariableCost;
         private double _totalFixedCost;
-        private Farm _farm;
-        private CropEconomicData _cropEconomicData;
-        private CropViewItem _cropViewItem;
+        private Farm _farm = null!;
+        private CropEconomicData _cropEconomicData = null!;
+        private CropViewItem _cropViewItem = null!;
 
         private double _profit;
         private double _revenues;
@@ -34,7 +34,7 @@ namespace H.Core.Models.Results
             }
         }
 
-        private void ValueOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ValueOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             base.RaisePropertyChanged(e.PropertyName);
         }

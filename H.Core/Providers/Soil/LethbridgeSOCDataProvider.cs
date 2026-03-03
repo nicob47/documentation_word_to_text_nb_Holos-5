@@ -21,7 +21,7 @@ namespace H.Core.Providers.Soil
         private List<SOCData> BuildLethbridgeSOCDataCache()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var filelines = CsvResourceReader.GetFileLines(CsvResourceNames.CondensedLethbridgeSOCData).ToList();
+            var filelines = CsvResourceReader.GetFileLines(CsvResourceNames.CondensedLethbridgeSOCData)!.ToList();
             double parseResult = 0;
             int parseResultInt = 0;
 

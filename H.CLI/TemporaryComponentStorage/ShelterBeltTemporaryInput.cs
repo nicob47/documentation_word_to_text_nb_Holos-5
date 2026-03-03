@@ -123,7 +123,7 @@ namespace H.CLI.TemporaryComponentStorage
                 propertyInfo.SetValue(this, Convert.ChangeType(value, propertyInfo.PropertyType, CLILanguageConstants.culture), null);
         }
 
-        public void FinalSettings(IComponentKeys componentKeys)
+        public new void FinalSettings(IComponentKeys componentKeys)
         {
         }
         #endregion
@@ -131,9 +131,9 @@ namespace H.CLI.TemporaryComponentStorage
         //When adding a new property, follow the format: NewProperty. If you add a new property here, make sure to add the
         //appropriate key to the list of keys in the ShelterBeltKeys class.
         #region Properties
-        public string Name { get; set; }
+        public new string Name { get; set; }
         //The GUID refers to the Row ID, the GroupId is just used for our GUIDComponentHandler
-        public Guid Guid { get; set; }
+        public new Guid Guid { get; set; }
         public int GroupId { get; set; }
         public int RowID { get; set; }
         public int PlantYear { get; set; }

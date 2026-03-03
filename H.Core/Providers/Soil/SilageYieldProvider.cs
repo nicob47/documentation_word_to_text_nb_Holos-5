@@ -43,9 +43,9 @@ namespace H.Core.Providers.Soil
         /// <param name="year">The year for which the yield value is needed.</param>
         /// <param name="province">The province for which the yield value is needed. </param>
         /// <returns>Returns a single instance of SmallAreaYieldData given the year and province. If nothing is found, returns null.</returns>
-        public SmallAreaYieldData GetDataInstance(int year, Province province)
+        public SmallAreaYieldData? GetDataInstance(int year, Province province)
         {
-            SmallAreaYieldData data = this.Data.Find(x => (x.Year == year) && (x.Province == province));
+            SmallAreaYieldData? data = this.Data.Find(x => (x.Year == year) && (x.Province == province));
 
             if (data != null)
             {
@@ -82,7 +82,7 @@ namespace H.Core.Providers.Soil
             var cornSillageInstances = new List<SmallAreaYieldData>();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SilageYields);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SilageYields)!;
 
             // Get the location of each province inside the csv file.
             // Dictionary Key = Column Number of the province.

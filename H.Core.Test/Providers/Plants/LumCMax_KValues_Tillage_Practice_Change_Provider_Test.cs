@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Plants
     [TestClass]
     public class LumCMax_KValues_Tillage_Practice_Change_Provider_Test
     {
-        private LumCMax_KValues_Tillage_Practice_Change_Provider _provider;
+        private LumCMax_KValues_Tillage_Practice_Change_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

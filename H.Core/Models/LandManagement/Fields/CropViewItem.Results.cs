@@ -6,11 +6,11 @@ namespace H.Core.Models.LandManagement.Fields
     {
         #region Fields
 
-        private IPCCTier2Results _carbonResults;
-        private IPCCTier2Results _nitrogenResults;
+        private IPCCTier2Results _carbonResults = null!;
+        private IPCCTier2Results _nitrogenResults = null!;
 
-        private MonthlyValueBase<double> _monthlyIpccTier2WaterFactors;
-        private MonthlyValueBase<double> _monthlyIpccTier2TemperatureFactors;
+        private MonthlyValueBase<double> _monthlyIpccTier2WaterFactors = null!;
+        private MonthlyValueBase<double> _monthlyIpccTier2TemperatureFactors = null!;
 
         #endregion
 
@@ -504,7 +504,7 @@ namespace H.Core.Models.LandManagement.Fields
         /// </summary>
         public double TotalIndirectNitrousOxidePerHectareExcludingRemainingAmounts { get; set; }
 
-        public CropEnergyResults CropEnergyResults { get; set; }
+        public CropEnergyResults CropEnergyResults { get; set; } = null!;
 
         /// <summary>
         /// (kg NH3-N ha^-1)

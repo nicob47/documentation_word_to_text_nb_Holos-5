@@ -7,7 +7,7 @@ namespace H.Core.Test.Models
     {
         #region Fields
 
-        private ManureTank _sut;
+        private ManureTank _sut = null!;
 
         #endregion
 

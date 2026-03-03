@@ -7,7 +7,7 @@ namespace H.Core.Models
     {
         #region Fields
 
-        private FieldSystemComponent _fieldSystemComponent;
+        private FieldSystemComponent _fieldSystemComponent = null!;
 
         private double _directN2OEmissions;
         private double _indirectN2OEmissions;

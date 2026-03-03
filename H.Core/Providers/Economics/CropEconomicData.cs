@@ -33,8 +33,8 @@ namespace H.Core.Providers.Economics
         private CropType _cropType;
         private CropType _viewItemCropType;
         private SoilFunctionalCategory _soilSoilFunctionalCategory;
-        private string _fertilizerBlend;
-        private string _dataSourceUrl;
+        private string _fertilizerBlend = string.Empty;
+        private string _dataSourceUrl = string.Empty;
         private EconomicMeasurementUnits _unit;
         private double _herbicideCost;
         private double _nitrogenCostPerTonne;
@@ -297,7 +297,7 @@ namespace H.Core.Providers.Economics
             set => SetProperty(ref _totalVariableCostPerUnit, value);
         }
 
-        public List<string> PropertiesUserCanUpdate { get; }
+        public List<string> PropertiesUserCanUpdate { get; } = new();
 
         
 
@@ -330,7 +330,7 @@ namespace H.Core.Providers.Economics
             };
 
             var props = GetType().GetProperties().Where(propInfo => variableProperties.Contains(propInfo.Name));
-            var numbers = props.Select(prop => (double)prop.GetValue(this));
+            var numbers = props.Select(prop => (double)(prop.GetValue(this) ?? 0.0));
             var sum = numbers.Sum();
             this.TotalVariableCostPerUnit = sum;
         }
@@ -421,7 +421,7 @@ namespace H.Core.Providers.Economics
 
         #region Event Handlers
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is CropEconomicData cropEconomicData)
             {

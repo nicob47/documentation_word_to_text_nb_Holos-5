@@ -9,7 +9,7 @@ namespace H.Avalonia.Infrastructure.Dialogs
     /// </summary>
     public class DeleteRowDialogViewModel : BindableBase, IDialogAware
     {
-        private string _message;
+        private string _message = string.Empty;
 
         public DeleteRowDialogViewModel()
         {

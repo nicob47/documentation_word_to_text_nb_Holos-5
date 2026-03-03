@@ -35,7 +35,7 @@ namespace H.Core.Providers.Plants
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.CropFactors;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<CropFactorsData>();
             foreach (var line in filelines.Skip(1))
             {

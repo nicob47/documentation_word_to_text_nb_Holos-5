@@ -11,7 +11,7 @@ namespace H.Core.Models.LandManagement.Fields
         #region Fields
 
         private FertilizerApplicationMethodologies _fertilizerApplicationMethodology;
-        private Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data _carbonFootprintForFertilizerBlendsData;
+        private Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data _carbonFootprintForFertilizerBlendsData = null!;
         private Seasons _seasonOfApplication;
 
 
@@ -159,29 +159,29 @@ namespace H.Core.Models.LandManagement.Fields
 
         #region Event Handlers
 
-        private void FertilizerBlendDataOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FertilizerBlendDataOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data fertilizerBlendData)
             {
-                if (e.PropertyName.Equals(nameof(FertilizerBlendData.PercentageNitrogen)))
+                if (e.PropertyName != null && e.PropertyName.Equals(nameof(FertilizerBlendData.PercentageNitrogen)))
                 {
                     // When the percentage of N is changed, the amount of nitrogen applied from the amount of product applied will change
                     this.UpdateAmountOfNitrogenApplied();
                 }
 
-                if (e.PropertyName.Equals(nameof(FertilizerBlendData.PercentagePhosphorus)))
+                if (e.PropertyName != null && e.PropertyName.Equals(nameof(FertilizerBlendData.PercentagePhosphorus)))
                 {
                     // When the percentage of P is changed, the amount of phosphorus applied from the amount of product applied will change
                     this.UpdateAmountOfPhosphorusApplied();
                 }
 
-                if (e.PropertyName.Equals(nameof(FertilizerBlendData.PercentagePotassium)))
+                if (e.PropertyName != null && e.PropertyName.Equals(nameof(FertilizerBlendData.PercentagePotassium)))
                 {
                     // When the percentage of K is changed, the amount of potassium applied from the amount of product applied will change
                     this.UpdateAmountOfPotassiumApplied();
                 }
 
-                if (e.PropertyName.Equals(nameof(FertilizerBlendData.PercentageSulphur)))
+                if (e.PropertyName != null && e.PropertyName.Equals(nameof(FertilizerBlendData.PercentageSulphur)))
                 {
                     // When the percentage of S is changed, the amount of sulphur applied from the amount of product applied will change
                     this.UpdateAmountOfSulphurApplied();
@@ -189,9 +189,9 @@ namespace H.Core.Models.LandManagement.Fields
             }
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals(nameof(AmountOfBlendedProductApplied)))
+            if (e.PropertyName != null && e.PropertyName.Equals(nameof(AmountOfBlendedProductApplied)))
             {
                 this.UpdateAmountOfNitrogenApplied();
                 this.UpdateAmountOfPhosphorusApplied();

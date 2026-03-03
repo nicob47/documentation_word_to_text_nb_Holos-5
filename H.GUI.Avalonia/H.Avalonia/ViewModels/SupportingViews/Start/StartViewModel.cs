@@ -113,7 +113,7 @@ namespace H.Avalonia.ViewModels.SupportingViews.Start
 
         #region Private Methods
 
-        private void OnBackgroundWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void OnBackgroundWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             if (sender is BackgroundWorker backgroundWorker)
             {
@@ -122,19 +122,19 @@ namespace H.Avalonia.ViewModels.SupportingViews.Start
                 this.InvokeOnUiThread(() => { this.IsBusy = false; });
 
                 // When first installed, user will have no farms. Show the create new farm view.
-                if (StorageService.GetAllFarms().Any() == false)
+                if (StorageService?.GetAllFarms().Any() == false)
                 {
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FarmCreationView));
+                    base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(FarmCreationView));
                 }
                 else
                 {
                     // If this is not the first run after installation (there is at least one farm), show the farm options view.
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
+                    base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
                 }
             }
         }
 
-        private void OnBackgroundWorkerDoWork(object sender, DoWorkEventArgs e)
+        private void OnBackgroundWorkerDoWork(object? sender, DoWorkEventArgs e)
         {
             try
             {
@@ -149,12 +149,12 @@ namespace H.Avalonia.ViewModels.SupportingViews.Start
                 this.IsBusyMessage = H.Core.Properties.Resources.MessageLoadingPleaseWait;
 
                 this.ProgressValue = 0;
-                _geographicDataProvider.Initialize();
+                _geographicDataProvider?.Initialize();
                 
                 this.ProgressValue = 25;
 
                 this.ProgressValue = 50;
-                _smallAreaYieldProvider.Initialize();
+                _smallAreaYieldProvider?.Initialize();
 
                 //base.InvokeOnUiThread(() => _mapViewModel.LoadMapFrameworkElements());
                 

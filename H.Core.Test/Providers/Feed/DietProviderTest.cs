@@ -11,7 +11,7 @@ namespace H.Core.Test.Providers.Feed
     {
         #region Fields
 
-        private DietProvider _provider;
+        private DietProvider _provider = null!;
 
         #endregion
 

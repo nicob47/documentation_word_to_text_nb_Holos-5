@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
@@ -16,9 +16,9 @@ public class AnimalComponentServiceTests
 {
     #region Fields
 
-    private AnimalComponentService _service;
-    private Mock<IAnimalComponentFactory> _mockAnimalComponentFactory;
-    private Mock<ITransferService<AnimalComponentBase, AnimalComponentDto>> _mockTransferService;
+    private AnimalComponentService _service = null!;
+    private Mock<IAnimalComponentFactory> _mockAnimalComponentFactory = null!;
+    private Mock<ITransferService<AnimalComponentBase, AnimalComponentDto>> _mockTransferService = null!;
 
     #endregion
 

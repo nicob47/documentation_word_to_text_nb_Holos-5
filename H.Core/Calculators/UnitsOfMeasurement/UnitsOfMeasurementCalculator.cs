@@ -63,11 +63,11 @@ namespace H.Core.Calculators.UnitsOfMeasurement
         #endregion
 
         #region Fields
-        private readonly IStorageService _storageService;
+        private readonly IStorageService _storageService = null!;
         private const int roundingDigits = 4;
         private const int roundingSixDigits = 6;
         private bool _isMetric;
-        private string _kilogramsPerHectareString;
+        private string _kilogramsPerHectareString = string.Empty;
         private const double YardsToMetersFactor = 0.9144;
         private const double KgToLbsFactor = 2.205;
         private const double GramsToGrainsFactor = 15.432;

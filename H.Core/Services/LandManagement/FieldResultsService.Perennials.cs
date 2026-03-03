@@ -37,7 +37,7 @@ namespace H.Core.Services.LandManagement
 
                     if (i == 0)
                     {
-                        if (mainCropForYear != null)
+                        if (mainCropForYear is not null)
                         {
                             mainCropForYear.YearInPerennialStand = position;
                             mainCropForYear.PerennialStandLength = totalLength;
@@ -45,8 +45,8 @@ namespace H.Core.Services.LandManagement
                             continue;
                         }
 
-                        // If year == 1, consider secondary crop as first year in stand        
-                        if (secondaryCropForYear != null)
+                        // If year == 1, consider secondary crop as first year in stand
+                        if (secondaryCropForYear is not null)
                         {
                             secondaryCropForYear.YearInPerennialStand = position;
                             secondaryCropForYear.PerennialStandLength = totalLength;
@@ -56,7 +56,7 @@ namespace H.Core.Services.LandManagement
                     }
                     else
                     {
-                        if (mainCropForYear != null && mainCropForYear.CropType.IsPerennial())
+                        if (mainCropForYear is not null && mainCropForYear.CropType.IsPerennial())
                         {
                             mainCropForYear.YearInPerennialStand = position;
                             mainCropForYear.PerennialStandLength = totalLength;
@@ -114,7 +114,7 @@ namespace H.Core.Services.LandManagement
                 var mainCrop = viewItems.Single(x => x.Year == year && x.IsSecondaryCrop == false);
                 var secondaryCrop = viewItems.SingleOrDefault(x => x.Year == year && x.IsSecondaryCrop == true);
 
-                if (secondaryCrop == null)
+                if (secondaryCrop is null)
                 {
                     // Consider case where only one crop grown in the year (no undersown or cover crop)
 
@@ -222,7 +222,7 @@ namespace H.Core.Services.LandManagement
             foreach (var cropViewItem in viewItemsForField)
             {
                 var nextYear = cropViewItem.Year + 1;
-                var hasCropInNextYear = viewItemsForField.SingleOrDefault(x => x.Year == nextYear && x.IsSecondaryCrop == false) != null;
+                var hasCropInNextYear = viewItemsForField.Any(x => x.Year == nextYear && x.IsSecondaryCrop == false);
 
                 if (cropViewItem.CropType.IsPerennial() && cropViewItem.IsFinalYearInPerennialStand() && hasCropInNextYear == false)
                 {

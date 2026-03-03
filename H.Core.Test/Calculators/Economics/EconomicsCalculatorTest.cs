@@ -9,15 +9,17 @@ using H.Core.Models.Results;
 using H.Core.Services.LandManagement;
 using Moq;
 
+#nullable disable
+
 namespace H.Core.Test.Calculators.Economics
 {
     [TestClass]
     public class EconomicsCalculatorTest
     {
-        private EconomicsCalculator _calculator;
-        private Farm _barleyFarm;
-        private Mock<IFieldResultsService> _mockFieldResultsService;
-        private CropEconomicsProvider _econProvider;
+        private EconomicsCalculator _calculator = null!;
+        private Farm _barleyFarm = null!;
+        private Mock<IFieldResultsService> _mockFieldResultsService = null!;
+        private CropEconomicsProvider _econProvider = null!;
         private const double MetricArea = 45;
         private const double ImperialArea = 111.1974;
 

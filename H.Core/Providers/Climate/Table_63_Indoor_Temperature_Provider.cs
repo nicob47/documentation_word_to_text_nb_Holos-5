@@ -36,7 +36,7 @@ namespace H.Core.Providers.Climate
         public IndoorTemperatureData GetIndoorTemperature(Province province)
         {
             var result = _data.SingleOrDefault(x => x.Province == province);
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -54,7 +54,7 @@ namespace H.Core.Providers.Climate
             var list = new List<IndoorTemperatureData>();
 
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.IndoorBarnTemperatures).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.IndoorBarnTemperatures)!.ToList();
 
             var dataRows = fileLines.Skip(2).Take(12);
             foreach (var line in dataRows)

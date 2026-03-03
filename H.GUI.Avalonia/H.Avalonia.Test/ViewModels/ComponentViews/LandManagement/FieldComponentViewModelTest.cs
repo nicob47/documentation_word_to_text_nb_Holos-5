@@ -13,6 +13,8 @@ using Moq;
 using Prism.Events;
 using Prism.Regions;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.ComponentViews.LandManagement;
 
 [TestClass]
@@ -20,10 +22,10 @@ public class FieldComponentViewModelTest
 {
     #region Fields
 
-    private FieldComponentViewModel _viewModel;
-    private Mock<IFieldFactory> _mockFieldComponentDtoFactory;
-    private Mock<IFieldComponentService> _mockFieldComponentService;
-    private Mock<ICropFactory> _mockCropFactory;
+    private FieldComponentViewModel _viewModel = null!;
+    private Mock<IFieldFactory> _mockFieldComponentDtoFactory = null!;
+    private Mock<IFieldComponentService> _mockFieldComponentService = null!;
+    private Mock<ICropFactory> _mockCropFactory = null!;
 
     #endregion
 

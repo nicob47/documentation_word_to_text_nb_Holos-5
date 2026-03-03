@@ -5,22 +5,26 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using SharpKml.Dom.Xal;
 
+#nullable disable
+
 
 namespace H.Avalonia.Test.Services
 {
     [TestClass]
     public class NominatimGeocoderServiceTest
     {
-        private static NominatimGeocoderService _nominatimGeocoderService;
-        private Mock<ILogger> _mockLogger;
-        private ILogger _loggerMock;
-        private Mock<INotificationManagerService> _mockNotificationManagerService;
-        private INotificationManagerService _notificationManagerServiceMock;
+        private static NominatimGeocoderService _nominatimGeocoderService = null!;
+        private Mock<ILogger> _mockLogger = null!;
+        private ILogger _loggerMock = null!;
+        private Mock<INotificationManagerService> _mockNotificationManagerService = null!;
+        private INotificationManagerService _notificationManagerServiceMock = null!;
         private string _streetAddress = "5403 1 Ave South";
         private string _municipality = "Lethbridge";
         private Province _province = Province.Alberta;
         private string _postalCode = "T1J 4B1";
+#pragma warning disable CS0414
         private string _country = "Canada";
+#pragma warning restore CS0414
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
@@ -34,7 +38,7 @@ namespace H.Avalonia.Test.Services
             var path = Path.GetTempPath();
             var invalidCharacters = Path.GetInvalidFileNameChars();
             var cleanedFileName = invalidCharacters.Aggregate("5403 1 Ave S, Lethbridge, Alberta, T1J 4B1, Canada", (current, c) => current.Replace(c, '_')).Replace(" ", "_").Replace(",", "");
-            var filename = $"nominatim_geocoder_data_address_{cleanedFileName}";
+            var filename = $"nominatim_geocoder_data_address_{cleanedFileName}".ToLower();
             var fullPath = Path.Combine(path, filename);
             if (File.Exists(fullPath))
             {
@@ -67,13 +71,13 @@ namespace H.Avalonia.Test.Services
         [TestMethod]
         public void TestConstructorNullLogger()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new NominatimGeocoderService(null, _notificationManagerServiceMock));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new NominatimGeocoderService(null, _notificationManagerServiceMock));
         }
 
         [TestMethod]
         public void TestConstructorNullNotificationManager()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new NominatimGeocoderService(_loggerMock, null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new NominatimGeocoderService(_loggerMock, null));
         }
 
         [TestMethod]

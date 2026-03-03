@@ -29,7 +29,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
         #region Fields
 
         private ObservableCollection<RowData> _rowData;
-        private string _fakeName;
+        private string _fakeName = string.Empty;
         private HardinessZone hardinessZone;
         private int ecoDistrictId;
         private ObservableCollection<TrannumData> _trannumData;
@@ -119,8 +119,9 @@ namespace H.Core.Models.LandManagement.Shelterbelt
                 {
                     foreach (var treeGroup in row.TreeGroupData)
                     {
+                        var treeGroupName = treeGroup.GetCorrectName() ?? string.Empty;
                         bool saw;
-                        seen.TryGetValue(treeGroup.GetCorrectName(), out saw);
+                        seen.TryGetValue(treeGroupName, out saw);
                         if (!saw)
                         {
                             if (woke)
@@ -132,15 +133,16 @@ namespace H.Core.Models.LandManagement.Shelterbelt
                                 woke = true;
                             }
 
-                            genauto += treeGroup.GetCorrectName();
-                            seen[treeGroup.GetCorrectName()] = true;
+                            genauto += treeGroupName;
+                            seen[treeGroupName] = true;
                         }
                     }
                 }
                 else
                 {
+                    var rowName = row.GetCorrectName() ?? string.Empty;
                     bool saw;
-                    seen.TryGetValue(row.GetCorrectName(), out saw);
+                    seen.TryGetValue(rowName, out saw);
                     if (!saw)
                     {
                         if (woke)
@@ -152,8 +154,8 @@ namespace H.Core.Models.LandManagement.Shelterbelt
                             woke = true;
                         }
 
-                        genauto += row.GetCorrectName();
-                        seen[row.GetCorrectName()] = true;
+                        genauto += rowName;
+                        seen[rowName] = true;
                     }
                 }
             }
@@ -161,7 +163,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             return genauto;
         }
 
-        public string GetCorrectName()
+        public string? GetCorrectName()
         {
             if (this.NameIsFromUser)
             {

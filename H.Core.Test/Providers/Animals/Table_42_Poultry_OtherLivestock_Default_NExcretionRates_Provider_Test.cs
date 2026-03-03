@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Animals
 
         #region Fields
 
-        private static Table_42_Poultry_OtherLivestock_Default_NExcretionRates_Provider _provider;
+        private static Table_42_Poultry_OtherLivestock_Default_NExcretionRates_Provider _provider = null!;
 
         #endregion
 

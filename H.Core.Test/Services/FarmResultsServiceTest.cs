@@ -15,6 +15,8 @@ using H.Core.Services.Animals;
 using Moq;
 using Prism.Events;
 
+#nullable disable
+
 namespace H.Core.Test.Services
 {
     [TestClass]
@@ -22,7 +24,7 @@ namespace H.Core.Test.Services
     {
         #region Fields
 
-        private FarmResultsService _farmResultsService;
+        private FarmResultsService _farmResultsService = null!;
 
         #endregion
 

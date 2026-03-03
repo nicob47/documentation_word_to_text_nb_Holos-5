@@ -14,12 +14,12 @@ namespace H.Core.Providers.Climate
     {
         #region Fields
 
-        private PrecipitationData _precipitationData;
-        private TemperatureData _temperatureData;
-        private EvapotranspirationData _evapotranspirationData;
-        private TemperatureData _barnTemperatureData;
+        private PrecipitationData _precipitationData = null!;
+        private TemperatureData _temperatureData = null!;
+        private EvapotranspirationData _evapotranspirationData = null!;
+        private TemperatureData _barnTemperatureData = null!;
 
-        private ObservableCollection<DailyClimateData> _dailyClimateData;
+        private ObservableCollection<DailyClimateData> _dailyClimateData = null!;
 
         /// <summary>
         /// Use a dictionary to lookup daily values since using a list with so many items is expensive
@@ -55,11 +55,14 @@ namespace H.Core.Providers.Climate
             }
         }
 
-        private void DailyClimateData_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void DailyClimateData_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                var addedItem = e.NewItems[0] as DailyClimateData;
+                if (e.NewItems?[0] is not DailyClimateData addedItem)
+                {
+                    return;
+                }
 
                 var monthAndYearKey = new Tuple<int, int>(addedItem.Year, addedItem.Date.Month);
                 var monthYearAndDayKey = new Tuple<int, int, int>(addedItem.Year, addedItem.Date.Month, addedItem.Date.Day);

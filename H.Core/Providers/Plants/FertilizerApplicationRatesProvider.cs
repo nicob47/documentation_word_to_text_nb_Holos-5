@@ -35,7 +35,7 @@ namespace H.Core.Providers.Plants
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.FertilizerApplicationRates;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<FertilizerApplicationRatesData>();
             foreach (var line in filelines.Skip(1))
             {

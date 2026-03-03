@@ -1,4 +1,4 @@
-using H.Core.Models;
+﻿using H.Core.Models;
 using H.Core.Providers.Energy;
 using H.Core.Services.Initialization;
 using H.Infrastructure.Services;
@@ -12,10 +12,10 @@ namespace H.Core.Test.Services.Initialization
     {
         #region Fields
 
-        private Mock<ICacheService> _cacheServiceMock;
-        private Mock<ITable50FuelEnergyEstimatesProvider> _table50ProviderMock;
-        private CropInitializationService _service;
-        private Mock<ILogger> _mockLogger;
+        private Mock<ICacheService> _cacheServiceMock = null!;
+        private Mock<ITable50FuelEnergyEstimatesProvider> _table50ProviderMock = null!;
+        private CropInitializationService _service = null!;
+        private Mock<ILogger> _mockLogger = null!;
 
         #endregion
 

@@ -123,7 +123,7 @@ namespace H.Core.Providers.Soil
             return _componentTableDataList.Select(x => x.PolygonId).Distinct().ToList();
         }
 
-        public SoilData GetPredominantSoilDataByPolygonId(int polygonId)
+        public SoilData? GetPredominantSoilDataByPolygonId(int polygonId)
         {
             if (this.GetFirstNonLitterLayer(polygonId) == null)
             {
@@ -461,28 +461,28 @@ namespace H.Core.Providers.Soil
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.ProvinceCode;
+            return layer!.ProvinceCode;
         }
 
         private string GetProvinceCodeByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.ProvinceCode;
+            return layer!.ProvinceCode;
         }
 
         private double GetProportionOfClayInSoil(int polygonId)
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.TotalClay / 100.0;
+            return layer!.TotalClay / 100.0;
         }
 
         private double GetProportionOfClayInSoilByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.TotalClay / 100.0;
+            return layer!.TotalClay / 100.0;
         }
 
         /// <summary>
@@ -493,7 +493,7 @@ namespace H.Core.Providers.Soil
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
             // Values from table are in cm - convert to mm since climate parameter calculations need input to be in mm.
-            var result = (layer.LowerDepth - layer.UpperDepth) * 10;
+            var result = (layer!.LowerDepth - layer.UpperDepth) * 10;
 
             return result;
         }
@@ -506,7 +506,7 @@ namespace H.Core.Providers.Soil
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
             // Values from table are in cm - convert to mm since climate parameter calculations need input to be in mm.
-            var result = (layer.LowerDepth - layer.UpperDepth) * 10;
+            var result = (layer!.LowerDepth - layer.UpperDepth) * 10;
 
             return result;
         }
@@ -515,28 +515,28 @@ namespace H.Core.Providers.Soil
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.OrganicCarbon;
+            return layer!.OrganicCarbon;
         }
 
         private double GetPercentageSoilOrganicCarbonByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.OrganicCarbon;
+            return layer!.OrganicCarbon;
         }
 
         private double GetBulkDensity(int polygonId)
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.BulkDensity;
+            return layer!.BulkDensity;
         }
 
         private double GetBulkDensityByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.BulkDensity;
+            return layer!.BulkDensity;
         }
 
         private string GetParentMaterialTexture(int polygonId)
@@ -620,28 +620,28 @@ namespace H.Core.Providers.Soil
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.PHAsPerProjectReport;
+            return layer!.PHAsPerProjectReport;
         }
 
         private double GetSoilCec(int polygonId)
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.CationExchangeCapacity;
+            return layer!.CationExchangeCapacity;
         }
 
         private double GetSoilPhByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.PHAsPerProjectReport;
+            return layer!.PHAsPerProjectReport;
         }
 
         private double GetSoilCecByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.CationExchangeCapacity;
+            return layer!.CationExchangeCapacity;
         }
 
         private SoilGreatGroupType GetSoilGreatGroup(int polygonId)
@@ -715,14 +715,14 @@ namespace H.Core.Providers.Soil
         {
             var layer = this.GetFirstNonLitterLayer(polygonId);
 
-            return layer.TotalSand / 100.0;
+            return layer!.TotalSand / 100.0;
         }
 
         private double GetProportionOfSandInSoilByComponent(ComponentTableData componentTableData)
         {
             var layer = this.GetFirstNonLitterLayer(componentTableData);
 
-            return layer.TotalSand / 100.0;
+            return layer!.TotalSand / 100.0;
         }
 
         private List<SoilGreatGroupData> GetSoilGreatGroupTable()
@@ -1073,7 +1073,7 @@ namespace H.Core.Providers.Soil
         {
             var results = new Dictionary<int, EcodistrictNamesTableData>();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CanSisEcodistrictNamesTable)
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CanSisEcodistrictNamesTable)!
                                              .Skip(1)
                                              .ToList();
             var result = from line in fileLines
@@ -1096,7 +1096,7 @@ namespace H.Core.Providers.Soil
         {
             var results = new Dictionary<int, PolygonAttributeTableData>();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CanSisPolygonAttributeTable)
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CanSisPolygonAttributeTable)!
                                              .Skip(1)
                                              .ToList();
             var result = from line in fileLines
@@ -1134,7 +1134,7 @@ namespace H.Core.Providers.Soil
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             foreach (var csvResourceName in csvResourceNames)
             {
-                var fileLines = CsvResourceReader.GetFileLines(csvResourceName)
+                var fileLines = CsvResourceReader.GetFileLines(csvResourceName)!
                                                  .Skip(1)
                                                  .ToList();
 
@@ -1182,7 +1182,7 @@ namespace H.Core.Providers.Soil
         private List<ComponentTableData> GetComponentDataTable()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CanSisComponentTable)
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CanSisComponentTable)!
                                              .Skip(1)
                                              .ToList();
             var result = from line in fileLines
@@ -1225,7 +1225,7 @@ namespace H.Core.Providers.Soil
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             foreach (var csvResourceName in csvResourceNames)
             {
-                var fileLines = CsvResourceReader.GetFileLines(csvResourceName)
+                var fileLines = CsvResourceReader.GetFileLines(csvResourceName)!
                                                  .Skip(1)
                                                  .ToList();
 
@@ -1349,7 +1349,7 @@ namespace H.Core.Providers.Soil
         /// <summary>
         /// Get first non-litter layer using the soil name identifier from the soil component.
         /// </summary>
-        private SoilLayerTableData GetFirstNonLitterLayer(ComponentTableData componentTableData)
+        private SoilLayerTableData? GetFirstNonLitterLayer(ComponentTableData componentTableData)
         {
             var soilNameIdentifier = componentTableData.SoilNameIdentifier;
 
@@ -1367,7 +1367,7 @@ namespace H.Core.Providers.Soil
         /// <summary>
         /// Get first non-litter layer using a polygon as a lookup key.
         /// </summary>
-        private SoilLayerTableData GetFirstNonLitterLayer(int polygonId)
+        private SoilLayerTableData? GetFirstNonLitterLayer(int polygonId)
         {
             var components = this.GetAllSoilComponents(polygonId);
             foreach (var component in components)
@@ -1386,7 +1386,7 @@ namespace H.Core.Providers.Soil
             return null;
         }
 
-        private SoilLayerTableData GetAppropriateLayer(IEnumerable<SoilLayerTableData> entries)
+        private SoilLayerTableData? GetAppropriateLayer(IEnumerable<SoilLayerTableData> entries)
         {
             // Select first item since there may be more than one match.
             var levelOneSoilData = entries.FirstOrDefault(x => x.LayerNumber.Equals("1") && x.UpperDepth >= 0);
@@ -1412,7 +1412,7 @@ namespace H.Core.Providers.Soil
         /// <summary>
         /// Gets the first non-litter layer by using the soil name identifier as a lookup key into the soil layer table.
         /// </summary>
-        private SoilLayerTableData GetFirstNonLitterLayerBySoilNameIdentifier(string soilNameIdentifier)
+        private SoilLayerTableData? GetFirstNonLitterLayerBySoilNameIdentifier(string soilNameIdentifier)
         {
             if (_firstNonLitterLayerCache.ContainsKey(soilNameIdentifier))
             {
@@ -1429,7 +1429,7 @@ namespace H.Core.Providers.Soil
 
                     if (_firstNonLitterLayerCache.ContainsKey(soilNameIdentifier) == false)
                     {
-                        _firstNonLitterLayerCache.Add(soilNameIdentifier, layer);
+                        _firstNonLitterLayerCache.Add(soilNameIdentifier, layer!);
                     }
 
                     return layer;
@@ -1440,7 +1440,7 @@ namespace H.Core.Providers.Soil
                 }
 
                 var nativeProfileEntries = entriesBySoilNameIdentifier.Where(x => x.TypeOfSoilProfile.Equals(NativeTypeSoilProfile));
-                
+
                 if (nativeProfileEntries.Any())
                 {
                     var layer = this.GetAppropriateLayer(nativeProfileEntries);
@@ -1448,7 +1448,7 @@ namespace H.Core.Providers.Soil
 
                     if (_firstNonLitterLayerCache.ContainsKey(soilNameIdentifier) == false)
                     {
-                        _firstNonLitterLayerCache.Add(soilNameIdentifier, layer);
+                        _firstNonLitterLayerCache.Add(soilNameIdentifier, layer!);
                     }
 
                     return layer;
@@ -1490,7 +1490,7 @@ namespace H.Core.Providers.Soil
             return result;
         }
 
-        private ComponentTableData GetLargestComponentWithinPolygon(int polygonId)
+        private ComponentTableData? GetLargestComponentWithinPolygon(int polygonId)
         {
             var componentTableDataWithCommonPolygonId = _componentTableDataList.Where(x => x.PolygonId == polygonId).ToList();
             if (componentTableDataWithCommonPolygonId.Any())
@@ -1514,14 +1514,14 @@ namespace H.Core.Providers.Soil
             }
         }
 
-        private SoilNameTableData GetSoilNameTableData(ComponentTableData componentTableData)
+        private SoilNameTableData? GetSoilNameTableData(ComponentTableData componentTableData)
         {
             var soilNameIdentifier = componentTableData.SoilNameIdentifier;
 
             return this.GetSoilNameTableDataBySoilNameIdentifier(soilNameIdentifier);
         }
 
-        private SoilNameTableData GetSoilNameTableData(int polygonId)
+        private SoilNameTableData? GetSoilNameTableData(int polygonId)
         {
             var largestComponentWithinPolygon = this.GetAllSoilComponents(polygonId);
             foreach (var data in largestComponentWithinPolygon)
@@ -1539,7 +1539,7 @@ namespace H.Core.Providers.Soil
             return null;
         }
 
-        private SoilNameTableData GetSoilNameTableDataBySoilNameIdentifier(string soilNameIdentifier)
+        private SoilNameTableData? GetSoilNameTableDataBySoilNameIdentifier(string soilNameIdentifier)
         {
             var provinceCode = soilNameIdentifier.Substring(0, 2);
             var province = _provinceStringConverter.Convert(provinceCode);

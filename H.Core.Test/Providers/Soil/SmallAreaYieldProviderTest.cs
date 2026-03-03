@@ -1,6 +1,8 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers.Soil;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Soil
 {
     [TestClass]
@@ -113,7 +115,9 @@ namespace H.Core.Test.Providers.Soil
         [TestMethod]
         public void GetDataReturnsNull()
         {
-            const int year = 2018;
+#pragma warning disable CS0219
+            const int _year = 2018;
+#pragma warning restore CS0219
             const Province province = Province.PrinceEdwardIsland;
             const int polygon = 538001;
 
@@ -128,7 +132,9 @@ namespace H.Core.Test.Providers.Soil
         [TestMethod]
         public void GetDataReturnsNullWhenPolygonIsNotFound()
         {
-            const int year = 2008;
+#pragma warning disable CS0219
+            const int _year = 2008;
+#pragma warning restore CS0219
             const Province province = Province.PrinceEdwardIsland;
             const int polygon = 538001;
 

@@ -178,6 +178,11 @@ namespace H.Core.Calculators.Nitrogen
             }
 
             var field = farm.GetFieldSystemComponent(viewItem.FieldSystemComponentGuid);
+            if (field == null)
+            {
+                return 0;
+            }
+
             var areaOfThisField = field.FieldArea;
 
             // The total N2O-N that is left over and must be associated with this field so that all manure is applied to the fields in the same year (nothing is remaining to be applied)
@@ -205,6 +210,11 @@ namespace H.Core.Calculators.Nitrogen
             }
 
             var field = farm.GetFieldSystemComponent(viewItem.FieldSystemComponentGuid);
+            if (field == null)
+            {
+                return 0;
+            }
+
             var areaOfThisField = field.FieldArea;
 
             // The total volume that is left over and must be associated with this field so that all manure is applied to the fields in the same year (nothing is remaining to be applied)
@@ -680,7 +690,7 @@ namespace H.Core.Calculators.Nitrogen
             var typesOfManureUsed = this.ManureService.GetManureCategoriesProducedOnFarm(farm).Where(x => x.IsSheepType() || x.IsSwineType() || x.IsOtherAnimalType());
             foreach (var animalType in typesOfManureUsed)
             {
-                var volatilizationFractionForLandApplication = this.LivestockEmissionConversionFactorsProvider.GetVolatilizationFractionForLandApplication(animalType, farm.DefaultSoilData.Province, year);
+                var volatilizationFractionForLandApplication = this.LivestockEmissionConversionFactorsProvider.GetVolatilizationFractionForLandApplication(animalType, farm.DefaultSoilData!.Province, year);
 
                 var createdByType = this.ManureService.GetTotalNitrogenCreated(year, animalType);
                 var usedByType = this.ManureService.GetTotalNitrogenAppliedToAllFields(year);
@@ -759,7 +769,7 @@ namespace H.Core.Calculators.Nitrogen
                 var nitrogenExported = totalNitrogenFromExport.Value;
                 var volatilizationFraction = this.LivestockEmissionConversionFactorsProvider.GetVolatilizationFractionForLandApplication(
                     animalType: manureType,
-                    province: farm.DefaultSoilData.Province,
+                    province: farm.DefaultSoilData!.Province,
                     year);
 
                 dictionary[manureType] = nitrogenExported * volatilizationFraction;
@@ -783,7 +793,7 @@ namespace H.Core.Calculators.Nitrogen
             {
                 var animalType = manureImport.AnimalType;
                 var totalNitrogen = manureImport.AmountOfNitrogenAppliedPerHectare * cropViewItem.Area;
-                var volatilizationFractionForLandApplication = LivestockEmissionConversionFactorsProvider.GetVolatilizationFractionForLandApplication(animalType, farm.DefaultSoilData.Province, year);
+                var volatilizationFractionForLandApplication = LivestockEmissionConversionFactorsProvider.GetVolatilizationFractionForLandApplication(animalType, farm.DefaultSoilData!.Province, year);
                 var emissions = (totalNitrogen * volatilizationFractionForLandApplication);
 
                 if (dictionary.ContainsKey(animalType))

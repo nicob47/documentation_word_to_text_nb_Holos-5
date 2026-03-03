@@ -12,7 +12,7 @@ namespace H.Core.Test.Calculators.Nitrogen
     {
         #region Fields
 
-        private ICBMSoilCarbonCalculator _calculator;
+        private ICBMSoilCarbonCalculator _calculator = null!;
 
         #endregion
 

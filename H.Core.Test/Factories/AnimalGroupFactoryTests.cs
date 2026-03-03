@@ -1,10 +1,12 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
 using H.Core.Models;
 using Moq;
 using Prism.Ioc;
+
+#nullable disable
 
 namespace H.Core.Test.Factories;
 
@@ -13,9 +15,9 @@ public class AnimalGroupFactoryTests
 {
     #region Fields
 
-    private AnimalGroupFactory _sut;
-    private Mock<IContainerProvider> _mockContainerProvider;
-    private IMapper _mockMapper;
+    private AnimalGroupFactory _sut = null!;
+    private Mock<IContainerProvider> _mockContainerProvider = null!;
+    private IMapper _mockMapper = null!;
 
     #endregion
 

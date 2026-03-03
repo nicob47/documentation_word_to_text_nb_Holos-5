@@ -10,7 +10,7 @@ namespace H.Core.Test.Services.LandManagement
     {
         #region Fields
 
-        private IrrigationService _sut;
+        private IrrigationService _sut = null!;
 
         #endregion
 

@@ -1,4 +1,4 @@
-using H.Avalonia.ViewModels.ComponentViews.Dairy;
+﻿using H.Avalonia.ViewModels.ComponentViews.Dairy;
 using H.Core;
 using H.Core.Factories.Animals.Dairy;
 using H.Core.Models;
@@ -11,6 +11,8 @@ using Moq;
 using Prism.Events;
 using Prism.Regions;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.ComponentViews.Dairy;
 
 /// <summary>
@@ -22,15 +24,15 @@ public class DairyComponentViewModelTests
 {
     #region Fields
 
-    private DairyComponentViewModel _viewModel;
-    private Mock<IRegionManager> _mockRegionManager;
-    private Mock<IEventAggregator> _mockEventAggregator;
-    private Mock<IStorageService> _mockStorageService;
-    private Mock<IDairyComponentService> _mockDairyComponentService;
-    private Mock<ILogger> _mockLogger;
-    private Farm _testFarm;
-    private DairyComponent _testDairyComponent;
-    private DairyComponentDto _testDairyComponentDto;
+    private DairyComponentViewModel _viewModel = null!;
+    private Mock<IRegionManager> _mockRegionManager = null!;
+    private Mock<IEventAggregator> _mockEventAggregator = null!;
+    private Mock<IStorageService> _mockStorageService = null!;
+    private Mock<IDairyComponentService> _mockDairyComponentService = null!;
+    private Mock<ILogger> _mockLogger = null!;
+    private Farm _testFarm = null!;
+    private DairyComponent _testDairyComponent = null!;
+    private DairyComponentDto _testDairyComponentDto = null!;
 
     #endregion
 
@@ -121,18 +123,18 @@ public class DairyComponentViewModelTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Constructor_WithNullDairyComponentService_ThrowsArgumentNullException()
     {
-        // Arrange & Act
-        var viewModel = new DairyComponentViewModel(
-            _mockRegionManager.Object,
-            _mockEventAggregator.Object,
-            _mockStorageService.Object,
-            null, // Null dairy component service
-            _mockLogger.Object);
-
-        // Assert - Exception expected
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            // Arrange & Act
+            var viewModel = new DairyComponentViewModel(
+                _mockRegionManager.Object,
+                _mockEventAggregator.Object,
+                _mockStorageService.Object,
+                null!, // Null dairy component service
+                _mockLogger.Object);
+        });
     }
 
     [TestMethod]
@@ -351,7 +353,9 @@ public class DairyComponentViewModelTests
     {
         // Arrange
         _viewModel.InitializeDairyComponent(_testDairyComponent);
+#pragma warning disable CS0618
         _mockDairyComponentService.ResetCalls(); // Reset to clear the initialization call
+#pragma warning restore CS0618
 
         // Act
         _viewModel.SelectedDairyComponentDto.TotalMilkingCows = 150;
@@ -370,7 +374,9 @@ public class DairyComponentViewModelTests
     {
         // Arrange
         _viewModel.InitializeDairyComponent(_testDairyComponent);
+#pragma warning disable CS0618
         _mockDairyComponentService.ResetCalls(); // Reset to clear the initialization call
+#pragma warning restore CS0618
 
         // Act - Set invalid value that should trigger validation error
         _viewModel.SelectedDairyComponentDto.TotalMilkingCows = -10; // Invalid: negative value
@@ -388,7 +394,9 @@ public class DairyComponentViewModelTests
     {
         // Arrange
         _viewModel.InitializeDairyComponent(_testDairyComponent);
+#pragma warning disable CS0618
         _mockDairyComponentService.ResetCalls(); // Reset to clear the initialization call
+#pragma warning restore CS0618
         _viewModel.Dispose();
 
         // Act
@@ -411,7 +419,9 @@ public class DairyComponentViewModelTests
             .Throws(new InvalidOperationException("Test exception"));
 
         _viewModel.InitializeDairyComponent(_testDairyComponent);
+#pragma warning disable CS0618
         _mockLogger.ResetCalls(); // Reset to clear previous log calls
+#pragma warning restore CS0618
 
         // Act
         _viewModel.SelectedDairyComponentDto.TotalMilkingCows = 150;

@@ -8,7 +8,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
     {
         #region Fields
 
-        private DefaultManureCompositionData _dataClassInstance;
+        private DefaultManureCompositionData _dataClassInstance = null!;
         private double _moistureContent;
         private double _nitrogenFraction;
         private double _carbonFraction;
@@ -24,9 +24,9 @@ namespace H.Avalonia.ViewModels.OptionsViews.DataTransferObjects
         /// This class is a view model wrapper over <see cref="DefaultManureCompositionData"/> that provides data validation 
         /// </summary>
         /// <param name="dataClassInstance"></param>
-        public DefaultManureCompositionDTO(DefaultManureCompositionData dataClassInstance)
+        public DefaultManureCompositionDTO(DefaultManureCompositionData? dataClassInstance)
         {
-            if (dataClassInstance != null)
+            if (dataClassInstance is not null)
             {
                 _dataClassInstance = dataClassInstance;
             }

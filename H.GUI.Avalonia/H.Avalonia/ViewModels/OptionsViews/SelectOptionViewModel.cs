@@ -4,7 +4,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 {
     public class SelectOptionViewModel : ViewModelBase
     {
-        private readonly IRegionManager _regionManager;
+        private readonly IRegionManager _regionManager = null!;
         public SelectOptionViewModel()
         {
 

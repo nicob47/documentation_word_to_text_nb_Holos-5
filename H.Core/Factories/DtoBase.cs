@@ -17,13 +17,13 @@ public abstract class DtoBase : ErrorValidationBase, IDto
 
     #region Properties
 
-    public string? Name
+    public new string? Name
     {
         get => _name;
         set => SetProperty(ref _name, value);
     }
 
-    public Guid Guid
+    public new Guid Guid
     {
         get => _guid;
         set => SetProperty(ref _guid, value);

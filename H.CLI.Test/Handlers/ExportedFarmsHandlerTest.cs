@@ -11,7 +11,7 @@ namespace H.CLI.Test.Handlers
     {
         #region Fields
 
-        private ExportedFarmsHandler _handler;
+        private ExportedFarmsHandler _handler = null!;
 
         #endregion
 

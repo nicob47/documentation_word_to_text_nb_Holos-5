@@ -1,4 +1,4 @@
-using H.Core.Factories.FarmFactory;
+﻿using H.Core.Factories.FarmFactory;
 using H.Core.Providers.Feed;
 using H.Core.Services.DietService;
 using H.Infrastructure.Services;
@@ -12,7 +12,7 @@ public class FarmFactoryTest
 {
     #region Fields
 
-    private IFarmFactory _sut;
+    private IFarmFactory _sut = null!;
 
     #endregion
 

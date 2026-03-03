@@ -22,7 +22,7 @@ namespace H.Core.Providers.Shelterbelt
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.ShelterbeltEcodistrictLookupTable;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<ShelterbeltEcodistrictLookupTableData>();
             TreeSpeciesStringConverter converter = new TreeSpeciesStringConverter();
             foreach (var line in filelines.Skip(1))

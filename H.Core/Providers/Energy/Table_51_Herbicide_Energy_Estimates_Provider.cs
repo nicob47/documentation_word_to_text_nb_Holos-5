@@ -62,7 +62,7 @@ namespace H.Core.Providers.Energy
                 cropType = CropType.Fallow;
             }
 
-            Table_51_Herbicide_Energy_Estimates_Data data = Data.Find(x => (x.Province == provinceName) && (x.SoilFunctionalCategory == soilLookupType) 
+            Table_51_Herbicide_Energy_Estimates_Data? data = Data.Find(x => (x.Province == provinceName) && (x.SoilFunctionalCategory == soilLookupType)
                                                             && (x.TillageType == tillageType) && (x.CropType == cropType));
 
             // If instance is found return the instance
@@ -112,7 +112,7 @@ namespace H.Core.Providers.Energy
         {
             var results = new List<Table_51_Herbicide_Energy_Estimates_Data>();
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.HerbicideEnergyEstimates);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.HerbicideEnergyEstimates)!;
 
             // A new dictionary is created to store the column headers of the file.
             // Key = Cell location of an entry

@@ -12,7 +12,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
     {
         #region Event Handlers
 
-        private void OnCircumferenceDataPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnCircumferenceDataPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             this.RaisePropertyChanged(nameof(this.CircumferenceData));
         }
@@ -27,13 +27,13 @@ namespace H.Core.Models.LandManagement.Shelterbelt
         private double _treeSpacing;
         private double _treeCount;
         private TreeSpecies _treeSpecies;
-        private CircumferenceData _circumferenceData;
+        private CircumferenceData? _circumferenceData;
         private double _year;
         private double _aboveGroundCarbonKgPerTree;
         private double _belowGroundCarbonKgPerTree;
-        private string _shelterbeltName;
-        private string _rowName;
-        private string _treeGroupName;
+        private string _shelterbeltName = string.Empty;
+        private string _rowName = string.Empty;
+        private string _treeGroupName = string.Empty;
         private Guid _shelterbeltGuid;
         private Guid _rowGuid;
         private int _age;
@@ -82,7 +82,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
         /// <param name="row">The row this trannum represents.</param>
         /// <param name="treeGroup">The treegroup this trannum represents.</param>
         /// <param name="year">The year this trannum represents.</param>
-        public TrannumData(ShelterbeltComponent shelterbeltComponent, RowData row, TreeGroupData treeGroup, double year)
+        public TrannumData(ShelterbeltComponent? shelterbeltComponent, RowData? row, TreeGroupData? treeGroup, double year)
         {
             if (shelterbeltComponent == null || row == null || treeGroup == null)
             {
@@ -104,28 +104,28 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             this.Year = year;
             if (shelterbeltComponent.NameIsFromUser)
             {
-                this.ShelterbeltName = shelterbeltComponent.Name;
+                this.ShelterbeltName = shelterbeltComponent.Name ?? string.Empty;
             }
             else
             {
-                this.ShelterbeltName = shelterbeltComponent.GetCorrectName();
+                this.ShelterbeltName = shelterbeltComponent.GetCorrectName() ?? string.Empty;
             }
             if (row.NameIsFromUser)
             {
-                this.RowName = row.Name;
+                this.RowName = row.Name ?? string.Empty;
             }
             else
             {
-                this.RowName = row.GetCorrectName();
+                this.RowName = row.GetCorrectName() ?? string.Empty;
             }
 
             if (treeGroup.NameIsFromUser)
             {
-                this.TreeGroupName = treeGroup.Name;
+                this.TreeGroupName = treeGroup.Name ?? string.Empty;
             }
             else
             {
-                this.TreeGroupName = treeGroup.GetCorrectName();
+                this.TreeGroupName = treeGroup.GetCorrectName() ?? string.Empty;
             }
             this.ShelterbeltGuid = shelterbeltComponent.Guid;
             this.RowGuid = row.Guid;
@@ -188,7 +188,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
         /// </summary>
         public HardinessZone HardinessZone { get; set; }
 
-        public TreeGroupData TreeGroupData { get; set; }
+        public TreeGroupData TreeGroupData { get; set; } = null!;
 
         public double RowLength
         {
@@ -214,7 +214,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             set { this.SetProperty(ref _treeSpecies, value); }
         }
 
-        public CircumferenceData CircumferenceData
+        public CircumferenceData? CircumferenceData
         {
             get { return _circumferenceData; }
             set
@@ -391,7 +391,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             return this.TreeGroupName + " - " + this.Year;
         }
 
-        public string GetCorrectName()
+        public string? GetCorrectName()
         {
             if (this.NameIsFromUser)
             {

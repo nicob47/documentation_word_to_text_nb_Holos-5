@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Prism.Ioc;
 
+#nullable disable
+
 #endregion
 
 namespace H.Core.Test.Providers.Feed {
@@ -18,7 +20,7 @@ namespace H.Core.Test.Providers.Feed {
 
         #region Fields
 
-        private FeedIngredientProvider _sut;
+        private FeedIngredientProvider _sut = null!;
 
         #endregion
 

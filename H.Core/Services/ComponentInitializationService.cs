@@ -96,6 +96,12 @@ public class ComponentInitializationService : IComponentInitializationService
         {
             _rotationComponentService.InitializeComponent(activeFarm, rotationComponent);
         }
+        else
+        {
+            // Fallback for component types without a dedicated service (e.g. Shelterbelt, Anaerobic Digestion).
+            // Uses the base InitializeComponent which assigns a unique Name and marks the component as initialized.
+            ((IComponentService)_fieldComponentService).InitializeComponent(activeFarm, componentBase);
+        }
     } 
 
     #endregion

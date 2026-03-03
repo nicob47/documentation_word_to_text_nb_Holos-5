@@ -50,7 +50,7 @@ namespace H.Core.Providers.Climate
         /// Unit of measurement of instances's values = Global Warming Potential</returns>
         public Table_54_Global_Warming_Emissions_Potential_Data GetGlobalWarmingEmissionsInstance (int year, EmissionTypes emissionType)
         {
-            Table_54_Global_Warming_Emissions_Potential_Data data = this.Data.Find(x => (x.Year == year) && (x.EmissionType == emissionType));
+            Table_54_Global_Warming_Emissions_Potential_Data? data = this.Data.Find(x => (x.Year == year) && (x.EmissionType == emissionType));
 
             if (data != null)
             {
@@ -87,7 +87,7 @@ namespace H.Core.Providers.Climate
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             const int NumberOfHeaders = 1;
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.GlobalWarmingPotential);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.GlobalWarmingPotential)!;
 
             // Dictionary Key = Column number where the data is located.
             // Dictionary Value = The value of the particular emission type as read from csv file.

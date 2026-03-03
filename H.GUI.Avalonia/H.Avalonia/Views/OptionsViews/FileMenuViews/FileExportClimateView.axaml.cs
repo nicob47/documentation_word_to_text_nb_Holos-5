@@ -21,7 +21,7 @@ public partial class FileExportClimateView : UserControl
         }
     }
 
-    private async void ExportButton_OnClick(object sender, RoutedEventArgs e)
+    private async void ExportButton_OnClick(object? sender, RoutedEventArgs e)
     {
         if (DataContext is FileExportClimateViewModel vm)
         {
@@ -63,7 +63,7 @@ public partial class FileExportClimateView : UserControl
 
     public class ExportClimateData
     {
-        public IStorageFile File { get; set; }
-        public H.Core.Models.Farm Farm { get; set; }
+        public IStorageFile File { get; set; } = null!;
+        public H.Core.Models.Farm Farm { get; set; } = null!;
     }
 }

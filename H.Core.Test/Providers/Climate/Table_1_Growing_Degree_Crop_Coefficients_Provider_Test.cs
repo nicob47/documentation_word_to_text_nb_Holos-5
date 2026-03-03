@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Climate
     [TestClass]
     public class Table_1_Growing_Degree_Crop_Coefficients_Provider_Test
     {
-        private Table_1_Growing_Degree_Crop_Coefficients_Provider _provider;
+        private Table_1_Growing_Degree_Crop_Coefficients_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

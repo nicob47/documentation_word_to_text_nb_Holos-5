@@ -3,6 +3,8 @@ using H.Core.Providers.Energy;
 using Microsoft.Extensions.Logging;
 using Moq;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Energy
 {
     [TestClass]
@@ -10,7 +12,7 @@ namespace H.Core.Test.Providers.Energy
     {
         #region Fields
 
-        private ITable50FuelEnergyEstimatesProvider _provider;
+        private ITable50FuelEnergyEstimatesProvider _provider = null!;
 
         #endregion
 

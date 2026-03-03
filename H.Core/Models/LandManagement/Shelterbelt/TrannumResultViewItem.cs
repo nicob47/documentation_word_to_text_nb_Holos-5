@@ -28,9 +28,9 @@ namespace H.Core.Models.LandManagement.Shelterbelt
 
         #region Properties
 
-        public ShelterbeltComponent ShelterbeltComponent { get; set; }
+        public ShelterbeltComponent ShelterbeltComponent { get; set; } = null!;
 
-        public TrannumData TrannumData { get; set; }
+        public TrannumData TrannumData { get; set; } = null!;
 
         public int Year { get; set; }
 

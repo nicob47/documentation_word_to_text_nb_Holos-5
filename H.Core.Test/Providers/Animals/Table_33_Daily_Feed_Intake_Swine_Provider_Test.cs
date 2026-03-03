@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class Table_33_Daily_Feed_Intake_Swine_Provider_Test
     {
-        private Table_33_Daily_Feed_Intake_Swine_Provider _provider;
+        private Table_33_Daily_Feed_Intake_Swine_Provider _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

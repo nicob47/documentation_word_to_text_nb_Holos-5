@@ -193,8 +193,9 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null &&
-                    this.GetSingleYearViewItem().CropType.IsAnnual())
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null &&
+                    viewItem.CropType.IsAnnual())
                 {
                     return true;
                 }
@@ -207,8 +208,9 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null &&
-                    this.GetSingleYearViewItem().CropType.IsFallow())
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null &&
+                    viewItem.CropType.IsFallow())
                 {
                     return true;
                 }
@@ -221,8 +223,9 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null &&
-                    this.GetSingleYearViewItem().CropType.IsGrassland())
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null &&
+                    viewItem.CropType.IsGrassland())
                 {
                     return true;
                 }
@@ -235,9 +238,10 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null &&
-                    this.GetSingleYearViewItem().CropType.IsGrassland() &&
-                    this.GetSingleYearViewItem().IsNativeGrassland == true)
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null &&
+                    viewItem.CropType.IsGrassland() &&
+                    viewItem.IsNativeGrassland == true)
                 {
                     return true;
                 }
@@ -250,8 +254,9 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null &&
-                    this.GetSingleYearViewItem().CropType.IsPerennial())
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null &&
+                    viewItem.CropType.IsPerennial())
                 {
                     return true;
                 }
@@ -264,7 +269,8 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null && this.GetSingleYearViewItem().CropType.IsPasture())
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null && viewItem.CropType.IsPasture())
                 {
                     return true;
                 }
@@ -277,7 +283,8 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get
             {
-                if (this.GetSingleYearViewItem() != null && this.GetSingleYearViewItem().AmountOfIrrigation > 0)
+                var viewItem = this.GetSingleYearViewItem();
+                if (viewItem != null && viewItem.AmountOfIrrigation > 0)
                 {
                     return true;
                 }
@@ -291,7 +298,7 @@ namespace H.Core.Models.LandManagement.Fields
         /// </summary>
         public bool IsPastPerennial
         {
-            get { return this.IsAnnual && this.GetSingleYearViewItem().IsBrokenGrassland; }
+            get { return this.IsAnnual && this.GetSingleYearViewItem()!.IsBrokenGrassland; }
         }
 
         public bool IsCurrentPerennial
@@ -314,7 +321,7 @@ namespace H.Core.Models.LandManagement.Fields
         /// Since this component supports multi-year and single year modes (ICBM vs non-ICBM) this method returns the correct view (the most recent item) item when farm is in single-year mode.
         /// </summary>
         /// <returns>The most recent view items for the field, or null if there are no items defined for the field</returns>
-        public CropViewItem GetSingleYearViewItem()
+        public CropViewItem? GetSingleYearViewItem()
         {
             var mostRecentViewItem = this.CropViewItems.OrderByDescending(viewItem => viewItem.Year).FirstOrDefault();
 
@@ -376,13 +383,12 @@ namespace H.Core.Models.LandManagement.Fields
             ManagementPeriod managementPeriod)
         {
             var housingDetails = managementPeriod.HousingDetails;
-            var isNonNullPasture = housingDetails.PastureLocation != null;
-            if (isNonNullPasture == false)
+            if (housingDetails.PastureLocation == null)
             {
                 return false;
             }
 
-            var isMatchingLocation = housingDetails.PastureLocation.Name.Equals(this.Name);
+            var isMatchingLocation = (housingDetails.PastureLocation.Name ?? string.Empty).Equals(this.Name);
 
             return isMatchingLocation;
         }
@@ -464,13 +470,13 @@ namespace H.Core.Models.LandManagement.Fields
 
         #region Event Handlers
 
-        private void CropViewItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        private void CropViewItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             this.UpdateTimelineInformationString();
 
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
             {
-                var addedItem = notifyCollectionChangedEventArgs.NewItems[0];
+                var addedItem = notifyCollectionChangedEventArgs.NewItems?[0];
                 if (addedItem is CropViewItem viewItem)
                 {
                     viewItem.PropertyChanged += CropViewItemOnPropertyChanged;
@@ -483,11 +489,11 @@ namespace H.Core.Models.LandManagement.Fields
             this.RaisePropertyChanged(nameof(this.CropViewItemsMaxThree));
         }
 
-        private void CropViewItemOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void CropViewItemOnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (sender is CropViewItem viewItem)
             {
-                if (propertyChangedEventArgs.PropertyName.Equals(nameof(CropViewItem.CropType)))
+                if (propertyChangedEventArgs.PropertyName != null && propertyChangedEventArgs.PropertyName.Equals(nameof(CropViewItem.CropType)))
                 {
                     base.RaisePropertyChanged(nameof(this.IsAnnual));
                     base.RaisePropertyChanged(nameof(this.IsFallow));
@@ -506,11 +512,11 @@ namespace H.Core.Models.LandManagement.Fields
 
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (sender is FieldSystemComponent fieldSystemComponent)
             {
-                if (propertyChangedEventArgs.PropertyName.Equals(nameof(this.CropString)))
+                if (propertyChangedEventArgs.PropertyName != null && propertyChangedEventArgs.PropertyName.Equals(nameof(this.CropString)))
                 {
                     this.UpdateTimelineInformationString();
                 }

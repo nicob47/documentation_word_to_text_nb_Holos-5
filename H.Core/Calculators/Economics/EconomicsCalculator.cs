@@ -18,7 +18,7 @@ namespace H.Core.Calculators.Economics
 
         private readonly CropEconomicsProvider _provider = new CropEconomicsProvider();
         private readonly UnitsOfMeasurementCalculator _unitsCalculator = new UnitsOfMeasurementCalculator();
-        private readonly IFieldResultsService _fieldResultsService;
+        private readonly IFieldResultsService _fieldResultsService = null!;
 
         private const double MetricFixedHerbicideCost = 3.52;
         private const double MetricVariableHerbicideCost = 3.06;
@@ -48,7 +48,7 @@ namespace H.Core.Calculators.Economics
 
         #region Properties
 
-        public IEnumerable<EconomicsResultsViewItem> EconomicViewItems { get; set; }
+        public IEnumerable<EconomicsResultsViewItem> EconomicViewItems { get; set; } = Enumerable.Empty<EconomicsResultsViewItem>();
         public MeasurementSystemType MeasurementSystem { get; set; }
 
         #endregion
@@ -67,7 +67,7 @@ namespace H.Core.Calculators.Economics
         public bool ExportEconomicsDataToFile(Farm farm, string path, bool exportFromGui,
             ApplicationData applicationData,
             FarmEmissionResults farmEmissionResults,
-            string languageAddon = null)
+            string? languageAddon = null)
         {
             this.MeasurementSystem = farm.MeasurementSystemType;
 
@@ -150,7 +150,7 @@ namespace H.Core.Calculators.Economics
 
                 var viewItem = orderedByYear.Last();
 
-                if (viewItem.CropEconomicData == null)
+                if (viewItem.CropEconomicData is null)
                 {
                     Trace.TraceError($"{nameof(EconomicsCalculator)}.{nameof(CalculateCropResults)}: {nameof(CropEconomicData)} is null for {viewItem.CropType.GetDescription()}");
                     continue;
@@ -462,7 +462,7 @@ namespace H.Core.Calculators.Economics
 
         private bool EconomicDataExistsForProvinceOrCrop(Farm farm)
         {
-            if (!HasEconDataForProvince(farm.DefaultSoilData.Province))
+            if (!HasEconDataForProvince(farm.DefaultSoilData!.Province))
             {
                 return false;
             }
@@ -484,11 +484,11 @@ namespace H.Core.Calculators.Economics
             resultsViewItem.Revenues = this.CalculateRevenue(resultsViewItem.CropEconomicData.ExpectedMarketPrice, resultsViewItem.Harvest);
         }
 
-        private void ResultsViewItemOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ResultsViewItemOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is EconomicsResultsViewItem resultsViewItem)
             {
-                if (e.PropertyName.Equals(nameof(CropEconomicData.ExpectedMarketPrice)))
+                if (e.PropertyName != null && e.PropertyName.Equals(nameof(CropEconomicData.ExpectedMarketPrice)))
                 {
                     this.CalculateRevenues(resultsViewItem);
                     this.CalculateFieldComponentsProfit(resultsViewItem, resultsViewItem.Farm.MeasurementSystemType);

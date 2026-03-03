@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
@@ -7,13 +7,15 @@ using Moq;
 using Prism.Ioc;
 using IManagementPeriodDto = H.Core.Factories.Animals.IManagementPeriodDto;
 
+#nullable disable
+
 namespace H.Core.Test.Factories;
 
 [TestClass]
 public class ManagementPeriodFactoryTests
 {
-    private Mock<IContainerProvider> _mockContainerProvider;
-    private ManagementPeriodFactory _factory;
+    private Mock<IContainerProvider> _mockContainerProvider = null!;
+    private ManagementPeriodFactory _factory = null!;
 
     #region Initialization
 
@@ -62,7 +64,7 @@ public class ManagementPeriodFactoryTests
     public void Constructor_WithNullContainerProvider_ThrowsArgumentNullException()
     {
         // Arrange, Act & Assert
-        Assert.ThrowsException<ArgumentNullException>(() => new ManagementPeriodFactory(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new ManagementPeriodFactory(null));
     }
 
     [TestMethod]

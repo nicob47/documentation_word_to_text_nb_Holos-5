@@ -209,9 +209,9 @@ namespace H.Core.Models.LandManagement.Shelterbelt
         public void RemoveTree(int tree)
         {
             this.InvalidRows.Push(tree);
-            _table[tree] = null;
-            this.InvalidColumns[tree] = null;
-            this.ValidColumns[tree] = null;
+            _table[tree] = null!;
+            this.InvalidColumns[tree] = null!;
+            this.ValidColumns[tree] = null!;
             this.ValidRows[tree] = false;
             this.RebuildQuickAccessInformation();
             this.RaiseCircumferenceGenerationChangesAndToggleUserCircumferenceOverride();
@@ -382,7 +382,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             {
                 if (a == null)
                 {
-                    result.Add(null);
+                    result.Add(null!);
                 }
                 else
                 {
@@ -413,7 +413,7 @@ namespace H.Core.Models.LandManagement.Shelterbelt
             {
                 if (a == null)
                 {
-                    result.Add(null);
+                    result.Add(null!);
                 }
                 else
                 {

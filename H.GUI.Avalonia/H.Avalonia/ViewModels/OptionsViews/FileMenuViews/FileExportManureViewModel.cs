@@ -16,12 +16,12 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
         /// <summary>
         /// Service for handling manure-related calculations and data operations
         /// </summary>
-        private readonly IManureService _manureService;
-        
+        private readonly IManureService _manureService = null!;
+
         /// <summary>
         /// Service for managing farm results and calculations data
         /// </summary>
-        private readonly IFarmResultsService _farmResultsService;
+        private readonly IFarmResultsService _farmResultsService = null!;
         #endregion
 
         #region Constructors

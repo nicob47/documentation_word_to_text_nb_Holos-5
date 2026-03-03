@@ -127,13 +127,13 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                         this.StorageService.AddFarm(farm);
                     }
                 }
-                NotificationManager.ShowToast(H.Core.Properties.Resources.LabelSuccess, H.Core.Properties.Resources.LabelFarmImportSuccess, NotificationType.Success);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.LabelSuccess, H.Core.Properties.Resources.LabelFarmImportSuccess, NotificationType.Success);
                 IsFarmImported = true;
             }
             catch (Exception ex)
             {
                 Trace.TraceError($"Error importing farms: {ex.Message}");
-                NotificationManager.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
             }
         }
 

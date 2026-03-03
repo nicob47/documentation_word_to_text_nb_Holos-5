@@ -1,4 +1,4 @@
-using H.Core.Factories.Animals.Dairy;
+﻿using H.Core.Factories.Animals.Dairy;
 
 namespace H.Avalonia.Test.ViewModels.ComponentViews.Dairy;
 
@@ -11,7 +11,7 @@ public class DairyComponentDtoTests
 {
     #region Fields
 
-    private DairyComponentDto _dto;
+    private DairyComponentDto _dto = null!;
 
     #endregion
 

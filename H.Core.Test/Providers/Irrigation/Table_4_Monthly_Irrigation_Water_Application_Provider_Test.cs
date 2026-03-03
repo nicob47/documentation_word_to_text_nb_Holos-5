@@ -1,13 +1,15 @@
 ﻿using H.Core.Providers.Irrigation;
 using H.Core.Enumerations;
 
+#nullable disable
+
 namespace H.Core.Test.Providers.Irrigation
 {
     [TestClass]
     public class Table_4_Monthly_Irrigation_Water_Application_Provider_Test
     {
         #region Fields
-        private static Table_4_Monthly_Irrigation_Water_Application_Provider _waterApplicationProvider;
+        private static Table_4_Monthly_Irrigation_Water_Application_Provider _waterApplicationProvider = null!;
         #endregion
 
         #region Initalization

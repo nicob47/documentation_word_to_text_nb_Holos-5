@@ -8,7 +8,7 @@ namespace H.Core.Test.Calculators.Nitrogen
     {
         #region Fields
 
-        private IPCCTier2SoilCarbonCalculator _sut;
+        private IPCCTier2SoilCarbonCalculator _sut = null!;
 
         #endregion
 

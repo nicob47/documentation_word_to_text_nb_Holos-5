@@ -28,34 +28,34 @@ public class FieldComponentViewModel : ViewModelBase
     /// <summary>
     /// The selected field
     /// </summary>
-    private FieldSystemComponent _selectedFieldSystemComponent;
+    private FieldSystemComponent? _selectedFieldSystemComponent;
 
     /// <summary>
     /// The field DTO that is bound to the view and is based on the values from the <see cref="_selectedFieldSystemComponent"/> model object
     /// </summary>
-    private IFieldComponentDto _selectedFieldSystemComponentDto;
+    private IFieldComponentDto? _selectedFieldSystemComponentDto;
 
     /// <summary>
     /// The selected crop
     /// </summary>
-    private CropViewItem _selectedCropViewItem;
+    private CropViewItem? _selectedCropViewItem;
 
     /// <summary>
     /// The crop DTO that is bound to the view and is based on the values from the <see cref="_selectedCropViewItem"/>
     /// </summary>
-    private ICropDto _selectedCropDto;
+    private ICropDto? _selectedCropDto;
 
     /// <summary>
     /// A service class to perform domain/business logic on field and crop DTOs/objects
     /// </summary>
-    private readonly IFieldComponentService _fieldComponentService;
+    private readonly IFieldComponentService? _fieldComponentService;
 
     /// <summary>
     /// A logger instance
     /// </summary>
-    private readonly ILogger _logger;
+    private readonly ILogger? _logger;
 
-    private readonly ICropFactory _cropFactory;
+    private readonly ICropFactory? _cropFactory;
 
     #endregion
 
@@ -78,32 +78,9 @@ public class FieldComponentViewModel : ViewModelBase
         ILogger logger,
         ICropFactory cropFactory) : base(regionManager, eventAggregator, storageService, logger)
     {
-        if (cropFactory != null)
-        {
-            _cropFactory = cropFactory; 
-        }
-        else
-        {
-            throw new ArgumentNullException(nameof(cropFactory));
-        }
-
-        if (logger != null)
-        {
-            _logger = logger;
-        }
-        else
-        {
-            throw new ArgumentNullException(nameof(logger));
-        }
-
-        if (fieldComponentService != null)
-        {
-            _fieldComponentService = fieldComponentService;
-        }
-        else
-        {
-            throw new ArgumentNullException(nameof(fieldComponentService));
-        }
+        _cropFactory = cropFactory ?? throw new ArgumentNullException(nameof(cropFactory));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _fieldComponentService = fieldComponentService ?? throw new ArgumentNullException(nameof(fieldComponentService));
 
         this.Construct();
 
@@ -120,27 +97,27 @@ public class FieldComponentViewModel : ViewModelBase
     /// <summary>
     /// Responsible for handling the addition of new crops
     /// </summary>
-    public DelegateCommand<object> AddCropCommand { get; set; }
+    public DelegateCommand<object> AddCropCommand { get; set; } = null!;
 
     /// <summary>
     /// Responsible for handling the removal of crops
     /// </summary>
-    public DelegateCommand<object> RemoveCropCommand { get; set; }
+    public DelegateCommand<object> RemoveCropCommand { get; set; } = null!;
 
     /// <summary>
     /// Responsible for setting the selected crop when a card is clicked in the timeline view
     /// </summary>
-    public DelegateCommand<object> SetSelectedCropCommand { get; set; }
+    public DelegateCommand<object> SetSelectedCropCommand { get; set; } = null!;
 
     /// <summary>
     /// Responsible for removing a specific crop from the timeline cards
     /// </summary>
-    public DelegateCommand<object> RemoveSpecificCropCommand { get; set; }
+    public DelegateCommand<object> RemoveSpecificCropCommand { get; set; } = null!;
 
     /// <summary>
     /// The selected <see cref="SelectedFieldSystemComponentDto"/>
     /// </summary>
-    public IFieldComponentDto SelectedFieldSystemComponentDto
+    public IFieldComponentDto? SelectedFieldSystemComponentDto
     {
         get => _selectedFieldSystemComponentDto;
         set => SetProperty(ref _selectedFieldSystemComponentDto, value);
@@ -149,7 +126,7 @@ public class FieldComponentViewModel : ViewModelBase
     /// <summary>
     /// The selected <see cref="CropDto"/>
     /// </summary>
-    public ICropDto SelectedCropDto
+    public ICropDto? SelectedCropDto
     {
         get => _selectedCropDto;
         set 
@@ -237,9 +214,9 @@ public class FieldComponentViewModel : ViewModelBase
     /// Initializes the field component and sets up event handlers
     /// </summary>
     /// <param name="fieldSystemComponent">The field component to initialize</param>
-    private void InitializeFieldComponent(FieldSystemComponent fieldSystemComponent)
+    private void InitializeFieldComponent(FieldSystemComponent? fieldSystemComponent)
     {
-        if (fieldSystemComponent == null)
+        if (fieldSystemComponent is null)
         {
             return;
         }
@@ -248,7 +225,8 @@ public class FieldComponentViewModel : ViewModelBase
         _selectedFieldSystemComponent = fieldSystemComponent;
 
         // Build a DTO to represent the model/domain object
-        var fieldComponentDto = _fieldComponentService.TransferToFieldComponentDto(_selectedFieldSystemComponent);
+        var fieldComponentDto = _fieldComponentService?.TransferToFieldComponentDto(_selectedFieldSystemComponent);
+        if (fieldComponentDto is null) return;
 
         // Listen for changes on the DTO so we can validate user input before assigning values to the model
         fieldComponentDto.PropertyChanged += FieldSystemComponentDtoOnPropertyChanged;
@@ -262,7 +240,7 @@ public class FieldComponentViewModel : ViewModelBase
     /// </summary>
     private bool AddCropCanExecute(object arg)
     {
-        return !IsDisposed && _selectedFieldSystemComponent != null;
+        return !IsDisposed && _selectedFieldSystemComponent is not null;
     }
 
     /// <summary>
@@ -297,14 +275,17 @@ public class FieldComponentViewModel : ViewModelBase
                 // Ensure consecutive ordering (by year) of all crops now that one has been removed
                 if (this.SelectedFieldSystemComponentDto?.CropDtos != null)
                 {
-                    _fieldComponentService.ResetAllYears(this.SelectedFieldSystemComponentDto.CropDtos);
+                    _fieldComponentService?.ResetAllYears(this.SelectedFieldSystemComponentDto.CropDtos);
                 }
 
                 // Update command states
                 this.RemoveCropCommand?.RaiseCanExecuteChanged();
 
                 // Remove from the system
-                _fieldComponentService.RemoveCropFromSystem(_selectedFieldSystemComponent, cropDto);
+                if (_selectedFieldSystemComponent is not null)
+                {
+                    _fieldComponentService?.RemoveCropFromSystem(_selectedFieldSystemComponent, cropDto);
+                }
 
                 // If the removed crop was selected, clear or select another crop
                 if (this.SelectedCropDto == cropDto)
@@ -353,7 +334,10 @@ public class FieldComponentViewModel : ViewModelBase
                 try
                 {
                     // A property on the DTO has been changed by the user, assign the new value to the system object after any unit conversion (if necessary)
-                    _fieldComponentService.TransferFieldDtoToSystem(fieldSystemComponentDto, _selectedFieldSystemComponent);
+                    if (_selectedFieldSystemComponent is not null)
+                    {
+                        _fieldComponentService?.TransferFieldDtoToSystem(fieldSystemComponentDto, _selectedFieldSystemComponent);
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -382,12 +366,14 @@ public class FieldComponentViewModel : ViewModelBase
             {
                 try
                 {
-                    var viewItem = _fieldComponentService.GetCropViewItemFromDto(cropDto, _selectedFieldSystemComponent);
+                    CropViewItem? viewItem = _selectedFieldSystemComponent is not null
+                        ? _fieldComponentService?.GetCropViewItemFromDto(cropDto, _selectedFieldSystemComponent)
+                        : null;
 
-                    if (viewItem != null)
+                    if (viewItem is not null)
                     {
                         // Persist the changes to the system
-                        _fieldComponentService.TransferCropDtoToSystem(cropDto, viewItem);
+                        _fieldComponentService?.TransferCropDtoToSystem(cropDto, viewItem);
                     }
                 }
                 catch (Exception ex)
@@ -420,12 +406,15 @@ public class FieldComponentViewModel : ViewModelBase
             // Ensure consecutive ordering (by year) of all crops now that one has been removed
             if (this.SelectedFieldSystemComponentDto?.CropDtos != null)
             {
-                _fieldComponentService.ResetAllYears(this.SelectedFieldSystemComponentDto.CropDtos);
+                _fieldComponentService?.ResetAllYears(this.SelectedFieldSystemComponentDto.CropDtos);
             }
 
             this.RemoveCropCommand?.RaiseCanExecuteChanged();
 
-            _fieldComponentService.RemoveCropFromSystem(_selectedFieldSystemComponent, dtoToRemove);
+            if (_selectedFieldSystemComponent is not null)
+            {
+                _fieldComponentService?.RemoveCropFromSystem(_selectedFieldSystemComponent, dtoToRemove);
+            }
         }
         catch (Exception ex)
         {
@@ -437,7 +426,7 @@ public class FieldComponentViewModel : ViewModelBase
     {
         if (IsDisposed) return;
 
-        if (e.PropertyName.Equals(nameof(SelectedCropDto)))
+        if (e.PropertyName != null && e.PropertyName.Equals(nameof(SelectedCropDto)))
         {
             RemoveCropCommand?.RaiseCanExecuteChanged();
 
@@ -449,7 +438,10 @@ public class FieldComponentViewModel : ViewModelBase
 
                 try
                 {
-                    _selectedCropViewItem = _fieldComponentService.GetCropViewItemFromDto(this.SelectedCropDto, _selectedFieldSystemComponent);
+                    if (_selectedFieldSystemComponent is not null)
+                    {
+                        _selectedCropViewItem = _fieldComponentService?.GetCropViewItemFromDto(this.SelectedCropDto, _selectedFieldSystemComponent);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -464,13 +456,15 @@ public class FieldComponentViewModel : ViewModelBase
     /// Determines which crop should be selected based on saved state and existing crops
     /// </summary>
     /// <returns>The crop DTO to select, or null if no existing crops should be selected</returns>
-    private ICropDto DetermineSelectedCrop()
+    private ICropDto? DetermineSelectedCrop()
     {
         // If there are no crops associated with the field, return null to trigger AddCropDto
         if (this.SelectedFieldSystemComponentDto?.CropDtos?.Any() != true)
             return null;
 
-        var savedState = _fieldComponentService.GetUIState(_selectedFieldSystemComponent.Guid);
+        FieldComponentUIState? savedState = _selectedFieldSystemComponent is not null
+            ? _fieldComponentService?.GetUIState(_selectedFieldSystemComponent.Guid)
+            : null;
 
         // First, try to restore the previously selected crop from saved state
         var selectedCrop = TryRestoreFromSavedState(savedState);
@@ -485,13 +479,14 @@ public class FieldComponentViewModel : ViewModelBase
     /// </summary>
     private void AddCropDto()
     {
-        if (IsDisposed || base.ActiveFarm == null || this.SelectedFieldSystemComponentDto == null) return;
+        if (IsDisposed || base.ActiveFarm is null || this.SelectedFieldSystemComponentDto is null) return;
 
         try
         {
+            if (_cropFactory is null) return;
             var dto = _cropFactory.CreateDto(base.ActiveFarm);
 
-            _fieldComponentService.InitializeCropDto(this.SelectedFieldSystemComponentDto, dto);
+            _fieldComponentService?.InitializeCropDto(this.SelectedFieldSystemComponentDto, dto);
 
             // Use this as the new selected instance
             this.SelectedCropDto = dto;
@@ -499,9 +494,11 @@ public class FieldComponentViewModel : ViewModelBase
             // If disabled before, enable this command now so that the user can remove a DTO
             this.RemoveCropCommand?.RaiseCanExecuteChanged();
 
-            _fieldComponentService.AddCropDtoToSystem(_selectedFieldSystemComponent, dto);
-
-            _selectedCropViewItem = _fieldComponentService.GetCropViewItemFromDto(dto, _selectedFieldSystemComponent);
+            if (_selectedFieldSystemComponent is not null)
+            {
+                _fieldComponentService?.AddCropDtoToSystem(_selectedFieldSystemComponent, dto);
+                _selectedCropViewItem = _fieldComponentService?.GetCropViewItemFromDto(dto, _selectedFieldSystemComponent);
+            }
         }
         catch (Exception ex)
         {
@@ -547,7 +544,7 @@ public class FieldComponentViewModel : ViewModelBase
     /// </summary>
     private void SaveCurrentUIState()
     {
-        if (_selectedFieldSystemComponent != null && _fieldComponentService != null)
+        if (_selectedFieldSystemComponent is not null && _fieldComponentService is not null)
         {
             try
             {
@@ -561,7 +558,7 @@ public class FieldComponentViewModel : ViewModelBase
                 // additionalState["ScrollPosition"] = someScrollPosition;
                 // additionalState["ExpandedSection"] = someExpandedState;
 
-                _fieldComponentService.SaveUIState(
+                _fieldComponentService?.SaveUIState(
                     _selectedFieldSystemComponent.Guid,
                     _selectedCropDto?.Guid,
                     additionalState);
@@ -581,11 +578,11 @@ public class FieldComponentViewModel : ViewModelBase
     /// </summary>
     /// <param name="savedState">The saved UI state</param>
     /// <returns>The restored crop DTO, or null if not found</returns>
-    private ICropDto TryRestoreFromSavedState(FieldComponentUIState savedState)
+    private ICropDto? TryRestoreFromSavedState(FieldComponentUIState? savedState)
     {
         if (savedState?.SelectedCropGuid.HasValue == true)
         {
-            var restoredCrop = this.SelectedFieldSystemComponentDto.CropDtos
+            var restoredCrop = this.SelectedFieldSystemComponentDto?.CropDtos?
                 .FirstOrDefault(dto => dto.Guid == savedState.SelectedCropGuid.Value);
 
             if (restoredCrop != null)
@@ -602,17 +599,17 @@ public class FieldComponentViewModel : ViewModelBase
     /// Gets the default selected crop using fallback logic
     /// </summary>
     /// <returns>The default crop DTO to select</returns>
-    private ICropDto GetDefaultSelectedCrop()
+    private ICropDto? GetDefaultSelectedCrop()
     {
         // Check if we can restore last selected item (legacy fallback)
         if (this.SelectedCropDto != null &&
-            this.SelectedFieldSystemComponentDto.CropDtos.Contains(this.SelectedCropDto))
+            this.SelectedFieldSystemComponentDto?.CropDtos?.Contains(this.SelectedCropDto) == true)
         {
             return this.SelectedCropDto;
         }
 
         // Default to first crop
-        return this.SelectedFieldSystemComponentDto.CropDtos.First();
+        return this.SelectedFieldSystemComponentDto?.CropDtos?.FirstOrDefault();
     }
 
     /// <summary>
@@ -620,9 +617,9 @@ public class FieldComponentViewModel : ViewModelBase
     /// </summary>
     private void UpdateSelectedCropViewItem()
     {
-        if (this.SelectedCropDto != null)
+        if (this.SelectedCropDto is not null && _selectedFieldSystemComponent is not null)
         {
-            _selectedCropViewItem = _fieldComponentService.GetCropViewItemFromDto(
+            _selectedCropViewItem = _fieldComponentService?.GetCropViewItemFromDto(
                 this.SelectedCropDto,
                 _selectedFieldSystemComponent);
         }
@@ -632,7 +629,7 @@ public class FieldComponentViewModel : ViewModelBase
     /// Updates the IsSelected property on all crops based on the currently selected crop
     /// </summary>
     /// <param name="selectedCrop">The currently selected crop DTO</param>
-    private void UpdateCropSelectionStates(ICropDto selectedCrop)
+    private void UpdateCropSelectionStates(ICropDto? selectedCrop)
     {
         if (this.SelectedFieldSystemComponentDto?.CropDtos != null)
         {

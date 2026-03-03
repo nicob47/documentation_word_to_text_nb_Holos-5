@@ -27,7 +27,9 @@ namespace H.CLI.Results
     {
         #region Fields
 
+        #pragma warning disable CS0169
         private readonly Storage _storage;
+        #pragma warning restore CS0169
         public List<KeyValuePair<string, List<AnimalComponentEmissionsResults>>> _animalEmissionResultsForAllFarms { get; set; } = new List<KeyValuePair<string, List<AnimalComponentEmissionsResults>>>();
         private readonly EnergyCarbonDioxideEmissionsCalculator _energyCalculator;
         private readonly Table_57_58_Expression_Of_Uncertainty_Calculator _uncertaintyCalculator;
@@ -316,7 +318,7 @@ namespace H.CLI.Results
                     File.WriteAllText(path, stringBuilder.ToString(), Encoding.UTF8);
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             }
@@ -520,7 +522,7 @@ namespace H.CLI.Results
                         File.WriteAllText(path, stringBuilder.ToString(), Encoding.UTF8);
                     }
 
-                    catch(Exception e)
+                    catch(Exception)
                     {
 
                     }
@@ -2036,7 +2038,7 @@ namespace H.CLI.Results
                     File.WriteAllText(path, stringBuilder.ToString(), Encoding.UTF8);
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }

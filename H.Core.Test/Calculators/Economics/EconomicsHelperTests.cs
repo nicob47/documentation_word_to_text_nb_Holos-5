@@ -3,14 +3,16 @@ using H.Core.Enumerations;
 using H.Core.Models;
 using H.Core.Providers.Economics;
 
+#nullable disable
+
 namespace H.Core.Test.Calculators.Economics
 {
     [TestClass()]
     public class EconomicsHelperTests
     {
-        private EconomicsHelper _economicsHelper;
-        private CropEconomicsProvider _economicsProvider;
-        private Farm _farm;
+        private EconomicsHelper _economicsHelper = null!;
+        private CropEconomicsProvider _economicsProvider = null!;
+        private Farm _farm = null!;
 
         [TestInitialize]
         public void Initialize()

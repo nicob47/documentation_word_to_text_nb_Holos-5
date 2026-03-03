@@ -14,7 +14,7 @@ public class BoolToBackgroundConverter : IValueConverter
     {
         if (value is bool isSelected)
         {
-            return isSelected ? Brush.Parse("#E3F2FD") : Brush.Parse("White");
+            return isSelected ? Brush.Parse("#ebf2fa") : Brush.Parse("White");
         }
         
         return Brush.Parse("White");
@@ -35,10 +35,10 @@ public class BoolToBorderBrushConverter : IValueConverter
     {
         if (value is bool isSelected)
         {
-            return isSelected ? Brush.Parse("DodgerBlue") : Brush.Parse("LightGray");
+            return isSelected ? Brush.Parse("#1f497a") : Brush.Parse("#8c8c8c");
         }
         
-        return Brush.Parse("LightGray");
+        return Brush.Parse("#8c8c8c");
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -125,8 +125,8 @@ public class WidthMinusMarginConverter : IValueConverter
     {
         if (value is double width)
         {
-            // DefaultUserControlMargin is typically 6,6,6,6, so subtract 12 (left + right)
-            return Math.Max(0, width - 12);
+            // DefaultUserControlMargin is 8,8,8,8, so subtract 16 (left + right)
+            return Math.Max(0, width - 16);
         }
         
         return value;

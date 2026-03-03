@@ -17,7 +17,7 @@ public partial class CropDto : DtoBase, ICropDto
     private double _amountOfIrrigation;
     private int _year;
     private CropType _cropType;
-    private ObservableCollection<CropType> _cropTypes;
+    private ObservableCollection<CropType> _cropTypes = new();
     private double _wetYield;
     private bool _isSelected;
     private bool _herbicideUsed;

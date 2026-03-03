@@ -47,9 +47,9 @@ namespace H.Core.Providers.Soil
         /// <param name="parameter">The parameter whose instance we need to find.</param>
         /// <param name="tillageType">The tillage type for that given parameter. Either Conventional, No-Till, Reduced or All.</param>
         /// <returns>Returns a single data instance of Table_8_Globally_Calibrated_Model_Parameters_Data that corresponds to a parameter in the data file.</returns>
-        public Table_8_Globally_Calibrated_Model_Parameters_Data GetGloballyCalibratedModelParametersInstance(ModelParameters parameter, TillageType tillageType)
+        public Table_8_Globally_Calibrated_Model_Parameters_Data? GetGloballyCalibratedModelParametersInstance(ModelParameters parameter, TillageType tillageType)
         {
-            Table_8_Globally_Calibrated_Model_Parameters_Data data = this.Data.Find(x => (x.Parameter == parameter) && (x.TillageType == tillageType));
+            Table_8_Globally_Calibrated_Model_Parameters_Data? data = this.Data.Find(x => (x.Parameter == parameter) && (x.TillageType == tillageType));
 
             if (data != null)
             {
@@ -85,7 +85,7 @@ namespace H.Core.Providers.Soil
             var results = new List<Table_8_Globally_Calibrated_Model_Parameters_Data>();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CalibratedModelParameters);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.CalibratedModelParameters)!;
 
             foreach (string[] line in fileLines.Skip(1))
             {

@@ -5,7 +5,7 @@ namespace H.Avalonia.Test
     [TestClass]
     public class NasaClimateProviderTest
     {
-        private static NasaClimateProvider _nasaClimateProvider;
+        private static NasaClimateProvider _nasaClimateProvider = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)

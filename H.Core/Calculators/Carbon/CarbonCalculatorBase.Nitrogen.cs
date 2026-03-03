@@ -10,15 +10,15 @@ namespace H.Core.Calculators.Carbon
     {
         #region Fields
 
-        public N2OEmissionFactorCalculator N2OEmissionFactorCalculator { get; set; }
-        protected IClimateProvider _climateProvider;
+        public N2OEmissionFactorCalculator N2OEmissionFactorCalculator { get; set; } = null!;
+        protected IClimateProvider _climateProvider = null!;
 
         #endregion
 
         #region Properties
 
-        public CropViewItem PreviousYearResults { get; set; }
-        public CropViewItem CurrentYearResults { get; set; }
+        public CropViewItem PreviousYearResults { get; set; } = null!;
+        public CropViewItem CurrentYearResults { get; set; } = null!;
         public int YearIndex { get; set; }
         public int Year { get; set; }
 
@@ -747,7 +747,7 @@ namespace H.Core.Calculators.Carbon
             this.CalculateActualAmountsLeached(fractionLeach,  emissionFactorLeaching, farm);
 
             var volatilizationFractionSoil = N2OEmissionFactorCalculator.CalculateFractionOfNitrogenLostByVolatilization(currentYearResults, farm);
-            var emissionFactorForVolatilization = farm.DefaultSoilData.Province.GetRegion() == Region.WesternCanada ? 0.005 : 0.014;
+            var emissionFactorForVolatilization = farm.DefaultSoilData!.Province.GetRegion() == Region.WesternCanada ? 0.005 : 0.014;
 
             this.CalculateVolatilization(volatilizationFractionSoil, emissionFactorForVolatilization, farm);
             this.CalculateActualVolatilization(volatilizationFractionSoil, emissionFactorForVolatilization, farm);

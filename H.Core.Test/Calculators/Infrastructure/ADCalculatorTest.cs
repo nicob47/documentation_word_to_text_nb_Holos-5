@@ -13,17 +13,17 @@ namespace H.Core.Test.Calculators.Infrastructure
     {
         #region Fields
 
-        private ADCalculator _sut;
-        private Farm _farm;
-        private List<AnimalComponentEmissionsResults> _animalComponentResults;
-        private GroupEmissionsByDay _day1Emissions;
-        private GroupEmissionsByDay _day2Emissions;
-        private AnaerobicDigestionComponent _component;
-        private ManagementPeriod _managementPeriod1;
-        private ManagementPeriod _managementPeriod2;
-        private FarmResiduesSubstrateViewItem _farmResidue1;
-        private FarmResiduesSubstrateViewItem _farmResidue2;
-        private BiogasAndMethaneProductionParametersData _biogasData;
+        private ADCalculator _sut = null!;
+        private Farm _farm = null!;
+        private List<AnimalComponentEmissionsResults> _animalComponentResults = null!;
+        private GroupEmissionsByDay _day1Emissions = null!;
+        private GroupEmissionsByDay _day2Emissions = null!;
+        private AnaerobicDigestionComponent _component = null!;
+        private ManagementPeriod _managementPeriod1 = null!;
+        private ManagementPeriod _managementPeriod2 = null!;
+        private FarmResiduesSubstrateViewItem _farmResidue1 = null!;
+        private FarmResiduesSubstrateViewItem _farmResidue2 = null!;
+        private BiogasAndMethaneProductionParametersData _biogasData = null!;
 
         #endregion
 

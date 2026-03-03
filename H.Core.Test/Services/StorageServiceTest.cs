@@ -1,4 +1,4 @@
-using H.Core.Models;
+﻿using H.Core.Models;
 using H.Core.Services.StorageService;
 
 namespace H.Core.Test.Services;
@@ -8,10 +8,10 @@ public class StorageServiceTest
 {
     #region Fields
 
-    private IStorageService _storageService;
-    private GlobalSettings _globalSettings;
-    private ApplicationData _applicationData;
-    private Storage _storage;
+    private IStorageService _storageService = null!;
+    private GlobalSettings _globalSettings = null!;
+    private ApplicationData _applicationData = null!;
+    private Storage _storage = null!;
 
     #endregion
 

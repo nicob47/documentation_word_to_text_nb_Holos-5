@@ -34,7 +34,7 @@ namespace H.Core.Services.Animals
             AnimalComponentBase animalComponentBase,
             ManagementPeriod managementPeriod,
             DateTime dateTime,
-            GroupEmissionsByDay previousDaysEmissions,
+            GroupEmissionsByDay? previousDaysEmissions,
             AnimalGroup animalGroup,
             Farm farm)
         {
@@ -333,7 +333,7 @@ namespace H.Core.Services.Animals
                 return;
             }
 
-            var energyConversionFactor  = _energyConversionDefaultsProvider.GetElectricityConversionValue(groupEmissionsByMonth.MonthsAndDaysData.Year, farm.DefaultSoilData.Province);
+            var energyConversionFactor  = _energyConversionDefaultsProvider.GetElectricityConversionValue(groupEmissionsByMonth.MonthsAndDaysData.Year, farm.DefaultSoilData!.Province);
             groupEmissionsByMonth.MonthlyEnergyCarbonDioxide = this.CalculateTotalEnergyCarbonDioxideEmissionsFromPoultryOperations(
                 numberOfAnimals: groupEmissionsByMonth.MonthsAndDaysData.ManagementPeriod.NumberOfAnimals,
                 numberOfDays: groupEmissionsByMonth.MonthsAndDaysData.DaysInMonth,

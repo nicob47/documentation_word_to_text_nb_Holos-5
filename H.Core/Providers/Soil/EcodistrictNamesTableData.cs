@@ -19,7 +19,7 @@ namespace H.Core.Providers.Soil
         #region Properties
 
         public int EcodistrictId { get; set; }
-        public string EcodistrictName { get; set; }
+        public string EcodistrictName { get; set; } = string.Empty;
 
         #endregion
 

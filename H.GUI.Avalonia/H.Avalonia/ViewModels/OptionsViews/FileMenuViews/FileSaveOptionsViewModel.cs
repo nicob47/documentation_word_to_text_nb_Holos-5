@@ -13,8 +13,8 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
     {
         #region Fields
 
-        private string _newFarmName;
-        private IFarmResultsService_NEW _farmResultsService;
+        private string _newFarmName = string.Empty;
+        private IFarmResultsService_NEW _farmResultsService = null!;
         private bool _runValidationFlag;
 
         #endregion
@@ -73,7 +73,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             {
                 base.AddError(propertyName, H.Core.Properties.Resources.ErrorNameCannotBeEmpty);
             }
-            else if (base.StorageService.Storage.ApplicationData.Farms.Any(x => x.Name == farmName))
+            else if (base.StorageService?.Storage.ApplicationData.Farms.Any(x => x.Name == farmName) == true)
             {
                 base.AddError(propertyName, H.Core.Properties.Resources.ErrorFarmNameInUse);
             }
@@ -85,13 +85,16 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
 
         private async void OnSaveExecute()
         {
-            await base.StorageService.Storage.SaveAsync();
-            NotificationManager.ShowToast(H.Core.Properties.Resources.ToastTitleSaveSuccess, H.Core.Properties.Resources.ToastMessageSavedSuccessfully, NotificationType.Success);
+            if (base.StorageService != null)
+            {
+                await base.StorageService.Storage.SaveAsync();
+            }
+            NotificationManager?.ShowToast(H.Core.Properties.Resources.ToastTitleSaveSuccess, H.Core.Properties.Resources.ToastMessageSavedSuccessfully, NotificationType.Success);
         }
 
         private bool CanExecuteSave()
         {
-            if (base.StorageService.Storage.SaveTask != null && base.StorageService.Storage.SaveTask.Status.Equals(TaskStatus.Running)) return false;
+            if (base.StorageService?.Storage.SaveTask != null && base.StorageService.Storage.SaveTask.Status.Equals(TaskStatus.Running)) return false;
 
             return true;
         }
@@ -102,13 +105,14 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             {
                 return;
             }
+            if (base.ActiveFarm is null || base.StorageService == null) return;
             var replicatedFarm = _farmResultsService.ReplicateFarm(base.ActiveFarm);
             replicatedFarm.Name = this.NewFarmName;
             base.StorageService.Storage.ApplicationData.Farms.Add(replicatedFarm);
             _runValidationFlag = false;
             this.NewFarmName = string.Empty;
             _runValidationFlag = true;
-            NotificationManager.ShowToast(H.Core.Properties.Resources.ToastTitleSaveSuccess, H.Core.Properties.Resources.ToastMessageSavedSuccessfully, NotificationType.Success);
+            NotificationManager?.ShowToast(H.Core.Properties.Resources.ToastTitleSaveSuccess, H.Core.Properties.Resources.ToastMessageSavedSuccessfully, NotificationType.Success);
         }
 
         #endregion

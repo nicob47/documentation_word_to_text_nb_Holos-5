@@ -9,8 +9,8 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class PropertyConverterTest
     {
-        private PropertyConverter<Field> _converter;
-        private Field _field;
+        private PropertyConverter<Field> _converter = null!;
+        private Field _field = null!;
         [TestInitialize]
         public void TestInitialize()
         {

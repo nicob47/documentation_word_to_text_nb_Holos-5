@@ -9,7 +9,7 @@ namespace H.Core.Test.Converters
     [TestClass]
     public class EcozoneStringConverterTest
     {
-        private EcozoneStringConverter converter;
+        private EcozoneStringConverter converter = null!;
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -27,7 +27,7 @@ namespace H.Core.Test.Converters
         public void ConvertReturnsException()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<Exception>(() => converter.Convert("Alligator"));
+            Assert.ThrowsExactly<Exception>(() => converter.Convert("Alligator"));
         }
 
         [TestMethod]

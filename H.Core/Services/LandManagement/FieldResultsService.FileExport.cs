@@ -54,7 +54,7 @@ namespace H.Core.Services.LandManagement
             string filePath;
             if (exportedFromGui)
             {
-                filePath = path.ToString();
+                filePath = path.ToString() ?? string.Empty;
             }
             else
             {

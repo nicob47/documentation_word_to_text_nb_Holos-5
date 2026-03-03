@@ -12,8 +12,8 @@ namespace H.Core.Models.LandManagement.Rotation
     public class MappedFieldComponents : ModelBase
     {
 
-        private CropViewItem _cropViewItem;
-        private FieldSystemComponent _fieldSystemComponent;
+        private CropViewItem _cropViewItem = null!;
+        private FieldSystemComponent _fieldSystemComponent = null!;
 
         public CropViewItem CropViewItem
         {
@@ -54,9 +54,9 @@ namespace H.Core.Models.LandManagement.Rotation
         private bool _keepRotationOnSingleField;
         private bool _shiftLeft;
         
-        private FieldSystemComponent _fieldSystemComponent;
+        private FieldSystemComponent _fieldSystemComponent = null!;
 
-        private ObservableCollection<MappedFieldComponents> _fieldSystemComponentsMappedByViewItems;
+        private ObservableCollection<MappedFieldComponents> _fieldSystemComponentsMappedByViewItems = null!;
 
         #endregion
 

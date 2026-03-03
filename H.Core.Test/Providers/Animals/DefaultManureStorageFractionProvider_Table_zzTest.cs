@@ -6,7 +6,7 @@ namespace H.Core.Test.Providers.Animals
     [TestClass]
     public class DefaultManureStorageFractionProvider_Table_zzTest
     {
-        private DefaultManureStorageFractionProvider_Table_zz _provider;
+        private DefaultManureStorageFractionProvider_Table_zz _provider = null!;
 
         [TestInitialize]
         public void TestInitialize()

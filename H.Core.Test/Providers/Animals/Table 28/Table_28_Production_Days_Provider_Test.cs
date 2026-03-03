@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Animals.Table_28
     {
         #region Fields
 
-        private ITable_28_Production_Days_Provider _sut;
+        private ITable_28_Production_Days_Provider _sut = null!;
 
         #endregion
 

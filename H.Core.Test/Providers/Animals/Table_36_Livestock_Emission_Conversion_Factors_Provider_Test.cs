@@ -9,7 +9,7 @@ namespace H.Core.Test.Providers.Animals
     {
         #region Fields
         
-        private Table_36_Livestock_Emission_Conversion_Factors_Provider _provider; 
+        private Table_36_Livestock_Emission_Conversion_Factors_Provider _provider = null!;
 
         #endregion
 

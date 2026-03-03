@@ -103,7 +103,7 @@ namespace H.Infrastructure
 
         #region Public Methods
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
             {
@@ -140,12 +140,12 @@ namespace H.Infrastructure
             }
         }
 
-        public static bool operator ==(ModelBase left, ModelBase right)
+        public static bool operator ==(ModelBase? left, ModelBase? right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ModelBase? left, ModelBase right)
+        public static bool operator !=(ModelBase? left, ModelBase? right)
         {
             return !Equals(left, right);
         }

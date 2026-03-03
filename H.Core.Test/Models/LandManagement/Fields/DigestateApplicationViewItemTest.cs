@@ -7,7 +7,7 @@ namespace H.Core.Test.Models.LandManagement.Fields
     {
         #region Fields
 
-        private DigestateApplicationViewItem _sut;
+        private DigestateApplicationViewItem _sut = null!;
 
         #endregion
 

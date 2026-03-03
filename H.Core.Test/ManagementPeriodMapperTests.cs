@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
@@ -9,9 +9,9 @@ namespace H.Core.Test;
 [TestClass]
 public class ManagementPeriodMapperTests
 {
-    private IMapper _dtoToDtoMapper;
-    private IMapper _domainToDtoMapper;
-    private IMapper _dtoToDomainMapper;
+    private IMapper _dtoToDtoMapper = null!;
+    private IMapper _domainToDtoMapper = null!;
+    private IMapper _dtoToDomainMapper = null!;
 
     [TestInitialize]
     public void TestInitialize()

@@ -49,7 +49,7 @@ namespace H.Core.Services.LandManagement
         private readonly IMapper _hayImportViewItemMapper;
         private readonly IMapper _fertilizerViewItemMapper;
         private readonly IMapper _digestateViewItemMapper;
-        private readonly IMapper _grazingViewItemMapper;
+
 
         private readonly Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider _carbonFootprintForFertilizerBlendsProvider = new Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider();
         private readonly Table_9_Nitrogen_Lignin_Content_In_Crops_Provider _slopeProviderTable = new Table_9_Nitrogen_Lignin_Content_In_Crops_Provider();
@@ -227,7 +227,7 @@ namespace H.Core.Services.LandManagement
                 {
                     var fieldGuid = groupingByFieldSystem.Key;
                     var fieldSystemComponent = farm.GetFieldSystemComponent(fieldGuid);
-                    if (fieldSystemComponent == null)
+                    if (fieldSystemComponent is null)
                     {
                         continue;
                     }
@@ -345,7 +345,7 @@ namespace H.Core.Services.LandManagement
             return Math.Round(result, DefaultNumberOfDecimalPlaces);
         }
 
-        public Table_7_Relative_Biomass_Information_Data GetResidueData(CropViewItem cropViewItem, Farm farm)
+        public Table_7_Relative_Biomass_Information_Data? GetResidueData(CropViewItem cropViewItem, Farm farm)
         {
             var soilData = farm.GetPreferredSoilData(cropViewItem);
 

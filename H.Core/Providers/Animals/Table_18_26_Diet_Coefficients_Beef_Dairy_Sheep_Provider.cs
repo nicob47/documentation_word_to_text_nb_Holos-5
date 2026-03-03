@@ -39,17 +39,17 @@ namespace H.Core.Providers.Animals
         /// <param name="dietType">The type of diet corresponding to the animal.</param>
         /// <returns>Returns a corresponding instance of <see cref="Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data"/> if data is found, otherwise
         /// returns null.</returns>
-        public Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data GetDietCoefficientsDataInstance(AnimalType animalType, 
+        public Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data? GetDietCoefficientsDataInstance(AnimalType animalType,
                                                                                                    DietType dietType)
         {
-            Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data dataInstance = _fileData.FirstOrDefault(x => 
-                                                                                                        x.AnimalType == animalType && 
+            Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data? dataInstance = _fileData.FirstOrDefault(x =>
+                                                                                                        x.AnimalType == animalType &&
                                                                                                         x.DietType == dietType);
             if (dataInstance != null)
             {
                 return dataInstance;
             }
-            
+
             dataInstance = _fileData.Find(x => x.AnimalType == animalType);
 
             if (dataInstance == null)
@@ -72,7 +72,7 @@ namespace H.Core.Providers.Animals
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.DietCoefficientsForDairyBeefSheep;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Data>();
 
 

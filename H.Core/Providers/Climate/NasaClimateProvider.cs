@@ -150,7 +150,7 @@ namespace H.Core.Providers.Climate
 
             JObject jObject = JObject.Parse(content);
 
-            var featuresValueArray = (JObject)jObject["properties"];
+            var featuresValueArray = jObject["properties"] as JObject;
             if (featuresValueArray == null)
             {
                 // This can occur when NASA takes the API offline for maintenance
@@ -159,20 +159,20 @@ namespace H.Core.Providers.Climate
             }
 
             // Precipitation and its enumerator to access the next data
-            var rain = (JObject)featuresValueArray["parameter"]["PRECTOTCORR"];
-            var rainE = rain.GetEnumerator();
+            var rain = (JObject?)featuresValueArray["parameter"]?["PRECTOTCORR"];
+            var rainE = rain!.GetEnumerator();
 
             // Temperature and its enumerator to access the next data
-            var temperature = (JObject)featuresValueArray["parameter"]["T2M"];
-            var temperatureE = temperature.GetEnumerator();
+            var temperature = (JObject?)featuresValueArray["parameter"]?["T2M"];
+            var temperatureE = temperature!.GetEnumerator();
 
             // Humidity and its enumerator to access the next data
-            var relativeHumidity = (JObject)featuresValueArray["parameter"]["RH2M"];
-            var relativeHumidityE = relativeHumidity.GetEnumerator();
+            var relativeHumidity = (JObject?)featuresValueArray["parameter"]?["RH2M"];
+            var relativeHumidityE = relativeHumidity!.GetEnumerator();
 
             // Radiation and its enumerator to access the next data
-            var solarRadiation = (JObject)featuresValueArray["parameter"]["ALLSKY_SFC_SW_DWN"];
-            var solarRadiationE = solarRadiation.GetEnumerator();
+            var solarRadiation = (JObject?)featuresValueArray["parameter"]?["ALLSKY_SFC_SW_DWN"];
+            var solarRadiationE = solarRadiation!.GetEnumerator();
 
             // Creating a temp file for the NASA data
 
@@ -190,10 +190,10 @@ namespace H.Core.Providers.Climate
                 }
 
                 data.Year = int.Parse(rainE.Current.Key.Substring(0, 4));
-                data.MeanDailyAirTemperature = (double)temperatureE.Current.Value;
-                data.MeanDailyPrecipitation = (double)rainE.Current.Value;
-                data.RelativeHumidity = (double)relativeHumidityE.Current.Value;
-                data.SolarRadiation = (double)solarRadiationE.Current.Value; // Note: Nasa provides this value with units of measurement of MJ/m^2/day which is what the evapotranspiration calculator expects. No conversion is needed here
+                data.MeanDailyAirTemperature = (double)temperatureE.Current.Value!;
+                data.MeanDailyPrecipitation = (double)rainE.Current.Value!;
+                data.RelativeHumidity = (double)relativeHumidityE.Current.Value!;
+                data.SolarRadiation = (double)solarRadiationE.Current.Value!; // Note: Nasa provides this value with units of measurement of MJ/m^2/day which is what the evapotranspiration calculator expects. No conversion is needed here
                 data.MeanDailyPET = _evapotranspirationCalculator.CalculateReferenceEvapotranspiration(data.MeanDailyAirTemperature, data.SolarRadiation, data.RelativeHumidity);
                 data.JulianDay = julian++;
 
@@ -307,7 +307,9 @@ namespace H.Core.Providers.Climate
         private string GetNasaApiString(string url)
         {
             Trace.TraceInformation($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)} : Trying to access NASA API.");
+#pragma warning disable SYSLIB0014 // WebClient is obsolete — HttpClient migration deferred
             var webClient = new WebClient();
+#pragma warning restore SYSLIB0014
             string content = webClient.DownloadString(url);
             if (content != string.Empty)
             {

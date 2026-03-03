@@ -2,19 +2,26 @@
 using Avalonia.Platform.Storage;
 using CsvHelper;
 using CsvHelper.TypeConversion;
+using FastExpressionCompiler.LightExpression;
 using H.Avalonia.Infrastructure;
 using H.Avalonia.Infrastructure.Dialogs;
 using H.Avalonia.Models;
 using H.Avalonia.Models.ClassMaps;
+using H.Avalonia.Services;
 using H.Avalonia.Views;
 using H.Core.Enumerations;
+using H.Core.Services;
+using H.Core.Services.StorageService;
+using H.Infrastructure.Controls.ValueConverters;
 using Mapsui;
 using Mapsui.Extensions;
+using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using Prism.Commands;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using SharpKml.Dom.Xal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,25 +30,19 @@ using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FastExpressionCompiler.LightExpression;
-using H.Avalonia.Services;
-using H.Core.Services;
-using H.Core.Services.StorageService;
-using H.Infrastructure.Controls.ValueConverters;
-using Microsoft.Extensions.Logging;
-using SharpKml.Dom.Xal;
 using SoilResultsView = H.Avalonia.Views.ResultViews.SoilResultsView;
 
 namespace H.Avalonia.ViewModels
 {
     public class SoilDataViewModel : ViewModelBase, IDataGridFeatures
     {
-        private readonly IRegionManager _regionManager;
+        private readonly IRegionManager _regionManager = null!;
         private IRegionNavigationJournal? _navigationJournal;
-        private readonly MapHelpers _mapHelpers;
-        private readonly IDialogService _dialogService;
-        private readonly IDefaultGeocoderService _defaultGeocoderService;
+        private readonly MapHelpers _mapHelpers = null!;
+        private readonly IDialogService _dialogService = null!;
+        private readonly IDefaultGeocoderService _defaultGeocoderService = null!;
         private double _longitude;
         private double _latitude;
         
@@ -57,11 +58,11 @@ namespace H.Avalonia.ViewModels
         private string _ruralMunicipality = string.Empty;
         private string _ruralPostalCode = string.Empty;
         
-        private MPoint _navigationPoint;
-        private ImportHelpers _importHelper;
-        private SoilViewItemMap _soilViewItemMap;
+        private MPoint _navigationPoint = null!;
+        private ImportHelpers _importHelper = null!;
+        private SoilViewItemMap _soilViewItemMap = null!;
 
-        private ObservableCollection<Province> _provinces;
+        private ObservableCollection<Province> _provinces = null!;
 
         public bool HasViewItems => StoragePlaceholder?.SoilViewItems != null && StoragePlaceholder.SoilViewItems.Any();
 
@@ -73,12 +74,12 @@ namespace H.Avalonia.ViewModels
         private bool _stepTwoLongLatSelected;
         private bool _stepTwoRightClickMapSelected = true;
 
-        private readonly KmlHelpers _kmlHelpers;
+        private readonly KmlHelpers _kmlHelpers = null!;
 
         public readonly Dictionary<Province, List<Polygon>> WktPolygonMap = new();
         private bool _isDataProcessing;
         private Province _selectedProvince;
-        private ICountrySettings _countrySettings;
+        private ICountrySettings _countrySettings = null!;
 
         /// <summary>
         /// Boolean that indicates if the address search option is selected in step two of the location selection process.
@@ -255,7 +256,7 @@ namespace H.Avalonia.ViewModels
         }
 
         /// <summary>
-        /// Boolean that indicates if all address data has been entered by the user or if user exceeded failed search attempts.
+        /// Boolean that indicates if all address data has been entered by the user following valid address protocols, or if user exceeded failed search attempts.
         /// </summary>
         public bool IsAddressSearchEnabled
         {
@@ -266,14 +267,14 @@ namespace H.Avalonia.ViewModels
                     return (SelectedProvince != Province.SelectProvince &&
                      !string.IsNullOrWhiteSpace(StreetAddress) &&
                      !string.IsNullOrWhiteSpace(Municipality) &&
-                     !string.IsNullOrWhiteSpace(PostalCode));
+                     !string.IsNullOrWhiteSpace(PostalCode)) && IsPostalCodeValid(PostalCode);
                 }
                 else
                 {
                     return (SelectedProvince != Province.SelectProvince &&
                      !string.IsNullOrWhiteSpace(RuralRoadName) &&
                      !string.IsNullOrWhiteSpace(RuralMunicipality) &&
-                     !string.IsNullOrWhiteSpace(RuralPostalCode));
+                     !string.IsNullOrWhiteSpace(RuralPostalCode)) && IsPostalCodeValid(PostalCode);
                 }
             }
 
@@ -333,17 +334,19 @@ namespace H.Avalonia.ViewModels
         /// <param name="kmlHelpers">A set of methods that help us process .kml files.</param>
         /// <param name="dialogService">A Prism dialogService object that helps us display dialogs to the user.</param>
         /// <param name="countrySettings"></param>
+#pragma warning disable CS0618 // Storage is obsolete but still required during migration
         public SoilDataViewModel(
-            IRegionManager regionManager, 
-            ImportHelpers importHelper, 
-            KmlHelpers kmlHelpers, 
-            IDialogService dialogService, 
+            IRegionManager regionManager,
+            ImportHelpers importHelper,
+            KmlHelpers kmlHelpers,
+            IDialogService dialogService,
             ICountrySettings countrySettings,
             IStorageService storageService,
             Storage storage,
             INotificationManagerService notificationManager,
             ILogger logger,
             IDefaultGeocoderService defaultGeocoderService) : base(regionManager, storageService, notificationManager, logger)
+#pragma warning restore CS0618
         {
             if (countrySettings != null)
             {
@@ -437,59 +440,59 @@ namespace H.Avalonia.ViewModels
         /// <summary>
         /// Command switches the current <see cref="SoilDataView"/> from the single coordinate tab to the results section.
         /// </summary>
-        public DelegateCommand SwitchToResultsViewFromSingleCoordinateCommand { get; set; }
+        public DelegateCommand SwitchToResultsViewFromSingleCoordinateCommand { get; set; } = null!;
 
         /// <summary>
         /// Command switches the current <see cref="SoilDataView"/> from the multiple coordinate tab to the results section.
         /// </summary>
-        public DelegateCommand SwitchToResultsViewFromMultiCoordinateCommand { get; set; }
+        public DelegateCommand SwitchToResultsViewFromMultiCoordinateCommand { get; set; } = null!;
 
         /// <summary>
         /// Selects or deselects all rows added to the grid by the user.
         /// </summary>
-        public DelegateCommand ToggleSelectAllRowsCommand { get; set; }
+        public DelegateCommand ToggleSelectAllRowsCommand { get; set; } = null!;
 
         /// <summary>
         /// Adds a row to the grid displayed to the user.
         /// </summary>
-        public DelegateCommand AddRowCommand { get; set; }
+        public DelegateCommand AddRowCommand { get; set; } = null!;
 
         /// <summary>
         /// Triggered by the user when they click the delete icon next to a row. Deletes that specific row only.
         /// </summary>
-        public DelegateCommand<object> DeleteRowCommand { get; set; }
+        public DelegateCommand<object> DeleteRowCommand { get; set; } = null!;
 
         /// <summary>
         /// Imports inputs from a csv file for which soil data is required. This csv file must have the following headers:
         /// Longitude, Latitude
         /// </summary>
-        public DelegateCommand<object> ImportFromCsvCommand { get; set; }
+        public DelegateCommand<object> ImportFromCsvCommand { get; set; } = null!;
 
         /// <summary>
         /// Deletes a selection of rows that are marked as selected by the user.
         /// </summary>
-        public DelegateCommand DeleteSelectedRowsCommand { get; set; }
+        public DelegateCommand DeleteSelectedRowsCommand { get; set; } = null!;
 
         /// <summary>
         /// Get the coordinates of a location based on the address specified by the user.
         /// </summary>
-        public DelegateCommand GetCoordinatesFromAddressCommand { get; set; }
+        public DelegateCommand GetCoordinatesFromAddressCommand { get; set; } = null!;
 
         /// <summary>
         /// Get the address of a location based on the coordinates specified by the user.
         /// </summary>
-        public DelegateCommand GetAddressFromCoordinateCommand { get; set; }
+        public DelegateCommand GetAddressFromCoordinateCommand { get; set; } = null!;
 
         /// <summary>
         /// Updates the point that the user wants to navigate to when the user clicks a specific area on the world map.
         /// </summary>
-        public DelegateCommand<MPoint> UpdateNavigationPointCommand { get; private set; }
+        public DelegateCommand<MPoint> UpdateNavigationPointCommand { get; private set; } = null!;
 
         /// <summary>
         /// Updates the <see cref="Latitude"/>, <see cref="Longitude"/> and <see cref="Address"/> fields when the user selects
         /// a new navigation point.
         /// </summary>
-        public DelegateCommand UpdateInformationFromNavigationPointCommand { get; private set; }
+        public DelegateCommand UpdateInformationFromNavigationPointCommand { get; private set; } = null!;
 
         /// <summary>
         /// Triggered when the <see cref="Storage.SoilViewItems"/> changes. This method raises CanExecuteChanged events for the various
@@ -612,15 +615,15 @@ namespace H.Avalonia.ViewModels
             }
             catch (HeaderValidationException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.InvalidHeaderTitle, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.InvalidHeaderTitle, e.Message, NotificationType.Error);
             }
             catch (TypeConverterException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.InvalidCSVContentTitle, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.InvalidCSVContentTitle, e.Message, NotificationType.Error);
             }
             catch (IOException e)
             {
-                NotificationManager.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.FileInUse, e.Message, NotificationType.Error);
             }
         }
 
@@ -629,7 +632,7 @@ namespace H.Avalonia.ViewModels
         /// </summary>
         private void OnDeleteSelectedRows()
         {
-            if (!StoragePlaceholder.SoilViewItems.Any()) return;
+            if (StoragePlaceholder?.SoilViewItems == null || !StoragePlaceholder.SoilViewItems.Any()) return;
             var message = Core.Properties.Resources.RowDeleteMessage;
             _dialogService.ShowMessageDialog(nameof(DeleteRowDialog), message, r =>
             {
@@ -652,11 +655,14 @@ namespace H.Avalonia.ViewModels
         /// </summary>
         private void SetCoordinates()
         {
-            var activeFarm = this.StorageService.GetActiveFarm();
-            if (activeFarm != null)
+            if (this.StorageService != null)
             {
-                activeFarm.Latitude = this.Latitude;
-                activeFarm.Longitude = this.Longitude;
+                var activeFarm = this.StorageService.GetActiveFarm();
+                if (activeFarm is not null)
+                {
+                    activeFarm.Latitude = this.Latitude;
+                    activeFarm.Longitude = this.Longitude;
+                }
             }
         }
 
@@ -667,6 +673,7 @@ namespace H.Avalonia.ViewModels
         {
             this.SetCoordinates();
 
+            if (StoragePlaceholder == null) return;
             StoragePlaceholder.SingleSoilViewItem.Latitude = Latitude;
             StoragePlaceholder.SingleSoilViewItem.Longitude = Longitude;
             StoragePlaceholder.ShowSingleCoordinateResults = true;
@@ -681,6 +688,7 @@ namespace H.Avalonia.ViewModels
         {
             this.SetCoordinates();
 
+            if (StoragePlaceholder == null) return;
             StoragePlaceholder.ShowMultipleCoordinateResults = true;
             StoragePlaceholder.ShowSingleCoordinateResults = false;
             _regionManager.RequestNavigate(UiRegions.ContentRegion, nameof(SoilResultsView));
@@ -705,7 +713,7 @@ namespace H.Avalonia.ViewModels
             {
                 // Call the geocoding service to get coordinates from the address, return early if problem encountered.
                 var coordinates = (latitude: 0d, longitude: 0d);
-                Logger.LogInformation($"Attempting coordinate acquisition from address in {nameof(SoilDataViewModel)}.{nameof(OnGetCoordinates)}");
+                Logger?.LogInformation($"Attempting coordinate acquisition from address in {nameof(SoilDataViewModel)}.{nameof(OnGetCoordinates)}");
                 // Join civic numbering and road name as geocoder does not have separate parameter field for civic numbering.
                 if (IsComplexRuralAddressMode)
                     coordinates = await _defaultGeocoderService.GetCoordinates(RuralCivicNumbering+" "+RuralRoadName, RuralMunicipality, SelectedProvince, RuralPostalCode, RuralCounty);
@@ -713,18 +721,18 @@ namespace H.Avalonia.ViewModels
                     coordinates = await _defaultGeocoderService.GetCoordinates(StreetAddress, Municipality, SelectedProvince, PostalCode);
                 if (coordinates.latitude == 0 || coordinates.longitude == 0)
                 {
-                    Logger.LogDebug($@"Cannot find the coordinate from the address entered.");
+                    Logger?.LogDebug($@"Cannot find the coordinate from the address entered.");
                     return;
                 }
-                Logger.LogInformation($"Coordinate acquired from address in {nameof(SoilDataViewModel)}.{nameof(OnGetCoordinates)}");
+                Logger?.LogInformation($"Coordinate acquired from address in {nameof(SoilDataViewModel)}.{nameof(OnGetCoordinates)}");
                 Latitude = coordinates.latitude;
                 Longitude = coordinates.longitude;
                 NavigationPoint = GetNavigationPoint();
             }
             catch (ArgumentOutOfRangeException e)
             {
-                Logger.LogError($@"{e.Message}. Exception thrown in {nameof(OnGetCoordinates)} by class {nameof(SoilDataViewModel)}");
-                NotificationManager.ShowToast(H.Core.Properties.Resources.InvalidAddress, Core.Properties.Resources.MessageIncorrectAddress, NotificationType.Error);
+                Logger?.LogError($@"{e.Message}. Exception thrown in {nameof(OnGetCoordinates)} by class {nameof(SoilDataViewModel)}");
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.InvalidAddress, Core.Properties.Resources.MessageIncorrectAddress, NotificationType.Error);
             }
         }
          
@@ -788,6 +796,17 @@ namespace H.Avalonia.ViewModels
                     WktPolygonMap.TryAdd(province, result);
                 }
             });
+        }
+
+        /// <summary>
+        /// Validates postal code input based on the pattern required for Canadian postal codes. The pattern is as follows: Letter, Digit, Letter, Space (optional), Digit, Letter, Digit.
+        /// </summary>
+        /// <param name="postalCode">The postal code to be validated.</param>
+        /// <returns>True if postal code follows Canadian postal code patterns, false otherwise.</returns>
+        private bool IsPostalCodeValid(string postalCode)
+        {
+            var regex = new Regex(@"^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$", RegexOptions.IgnoreCase);
+            return regex.IsMatch(postalCode ?? string.Empty);
         }
     }
 }

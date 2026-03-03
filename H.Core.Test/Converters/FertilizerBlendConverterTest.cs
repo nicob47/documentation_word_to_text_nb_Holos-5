@@ -7,7 +7,7 @@ namespace H.Core.Test.Converters
     {
         #region Fields
 
-        private FertilizerBlendConverter _converter;
+        private FertilizerBlendConverter _converter = null!;
 
         #endregion
 

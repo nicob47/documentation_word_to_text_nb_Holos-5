@@ -11,7 +11,7 @@ namespace H.Core.Providers.Shelterbelt
         public double DiameterCM { get; set; }
         public double RootsBiomassKgPerTree { get; set; }
         public double FinerootsKgCperTree { get; set; }
-        public string ClusterId { get; set; }
+        public string ClusterId { get; set; } = string.Empty;
 
         public bool IsValid()
         {

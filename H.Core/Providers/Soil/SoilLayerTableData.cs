@@ -7,20 +7,20 @@ namespace H.Core.Providers.Soil
     /// </summary>
     internal class SoilLayerTableData
     {
-        public string SoilNameIdentifier { get; set; }
-        public string ProvinceCode { get; set; }
-        public string SoilCode { get; set; }
-        public string SoilCodeModifier { get; set; }
-        public string TypeOfSoilProfile { get; set; }
-        public string LayerNumber { get; set; }
+        public string SoilNameIdentifier { get; set; } = string.Empty;
+        public string ProvinceCode { get; set; } = string.Empty;
+        public string SoilCode { get; set; } = string.Empty;
+        public string SoilCodeModifier { get; set; } = string.Empty;
+        public string TypeOfSoilProfile { get; set; } = string.Empty;
+        public string LayerNumber { get; set; } = string.Empty;
         public int UpperDepth { get; set; }
         public int LowerDepth { get; set; }
-        public string HorizonLithologicalDiscontinuity { get; set; }
-        public string HorizonMasterCode { get; set; }
-        public string HorizonSuffix { get; set; }
-        public string HorizonModifier { get; set; }
+        public string HorizonLithologicalDiscontinuity { get; set; } = string.Empty;
+        public string HorizonMasterCode { get; set; } = string.Empty;
+        public string HorizonSuffix { get; set; } = string.Empty;
+        public string HorizonModifier { get; set; } = string.Empty;
         public int CoarseFragments { get; set; }
-        public string DominantSandFraction { get; set; }
+        public string DominantSandFraction { get; set; } = string.Empty;
         public int VeryFineSand { get; set; }
         public int TotalSand { get; set; }
         public int TotalSilt { get; set; }

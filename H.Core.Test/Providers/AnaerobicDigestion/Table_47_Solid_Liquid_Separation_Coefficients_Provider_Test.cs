@@ -7,7 +7,7 @@ namespace H.Core.Test.Providers.AnaerobicDigestion
     public class Table_47_Solid_Liquid_Separation_Coefficients_Provider_Test
     {
         #region Fields
-        Table_47_Solid_Liquid_Separation_Coefficients_Provider _provider;
+        Table_47_Solid_Liquid_Separation_Coefficients_Provider _provider = null!;
         #endregion
 
         #region Initialization

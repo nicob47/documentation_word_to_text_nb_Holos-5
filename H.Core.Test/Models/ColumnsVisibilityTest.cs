@@ -1,5 +1,7 @@
 ﻿using H.Core.Models;
 
+#nullable disable
+
 namespace H.Core.Test.Models
 {
     [TestClass]

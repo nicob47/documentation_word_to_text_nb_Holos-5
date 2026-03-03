@@ -29,7 +29,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock Text="Show details:"/>
-                    <ToggleSwitch/>
+                    <ToggleSwitch IsChecked="{Binding ShowDetails}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="10">
@@ -39,6 +39,10 @@
                         <ComboBoxItem>2025</ComboBoxItem>
                         <ComboBoxItem>2024</ComboBoxItem>
                         <ComboBoxItem>2023</ComboBoxItem>
+                        <ComboBoxItem>2022</ComboBoxItem>
+                        <ComboBoxItem>2021</ComboBoxItem>
+                        <ComboBoxItem>2020</ComboBoxItem>
+                        <ComboBoxItem>2019</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
 

@@ -22,7 +22,7 @@ public partial class FileExportFarmView : UserControl
         }
     }
 
-    private async void SaveFileButton_Clicked(object sender, RoutedEventArgs args)
+    private async void SaveFileButton_Clicked(object? sender, RoutedEventArgs args)
     {
         
         if(DataContext is FileExportFarmViewModel vm)

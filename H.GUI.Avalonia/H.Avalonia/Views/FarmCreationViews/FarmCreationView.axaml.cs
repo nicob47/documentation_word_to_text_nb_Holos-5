@@ -8,7 +8,7 @@ namespace H.Avalonia.Views.FarmCreationViews
     {
         #region Fields
 
-        private FarmCreationViewModel _farmCreationViewModel;
+        private FarmCreationViewModel? _farmCreationViewModel;
 
         #endregion
 
@@ -22,16 +22,7 @@ namespace H.Avalonia.Views.FarmCreationViews
         public FarmCreationView(FarmCreationViewModel farmCreationViewModel)
         {
             InitializeComponent();
-
-            if (farmCreationViewModel != null)
-            {
-                _farmCreationViewModel = farmCreationViewModel;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(farmCreationViewModel));
-            }
-
+            _farmCreationViewModel = farmCreationViewModel ?? throw new ArgumentNullException(nameof(farmCreationViewModel));
         }
 
         #endregion

@@ -53,7 +53,7 @@ namespace H.Core.Services.Animals
         };
 
         private readonly IMapper _manureCompositionMapper;
-        private List<AnimalComponentEmissionsResults> _animalComponentEmissionsResults;
+        private List<AnimalComponentEmissionsResults> _animalComponentEmissionsResults = new();
 
         #endregion
 
@@ -294,13 +294,13 @@ namespace H.Core.Services.Animals
         }
 
         public List<ManureStateType> GetValidManureStateTypes(
-            Farm farm,
+            Farm? farm,
             ManureLocationSourceType locationSourceType,
             AnimalType animalType)
         {
             var result = new List<ManureStateType>();
 
-            if (farm == null)
+            if (farm is null)
             {
                 return result;
             }
@@ -482,7 +482,7 @@ namespace H.Core.Services.Animals
             var inputsFromLocalManure = 0d;
 
             var field = farm.GetFieldSystemComponent(viewItem.FieldSystemComponentGuid);
-            if (field == null)
+            if (field is null)
             {
                 return 0;
             }
@@ -673,7 +673,7 @@ namespace H.Core.Services.Animals
             {
                 var nitrogenContent = 0d;
                 var amountOfManure = manureExportViewItem.Amount;
-                if (manureExportViewItem.DefaultManureCompositionData != null)
+                if (manureExportViewItem.DefaultManureCompositionData is not null)
                 {
                     nitrogenContent = manureExportViewItem.DefaultManureCompositionData.NitrogenContent;
                 }
@@ -706,7 +706,7 @@ namespace H.Core.Services.Animals
             {
                 var carbonContent = 0d;
                 var amountOfManure = manureExportViewItem.Amount;
-                if (manureExportViewItem.DefaultManureCompositionData != null)
+                if (manureExportViewItem.DefaultManureCompositionData is not null)
                 {
                     carbonContent = manureExportViewItem.DefaultManureCompositionData.CarbonContent;
                 }
@@ -726,7 +726,7 @@ namespace H.Core.Services.Animals
             {
                 var nitrogenContent = 0d;
                 var amountOfManure = manureExportViewItem.Amount;
-                if (manureExportViewItem.DefaultManureCompositionData != null)
+                if (manureExportViewItem.DefaultManureCompositionData is not null)
                 {
                     nitrogenContent = manureExportViewItem.DefaultManureCompositionData.NitrogenContent;
                 }
@@ -769,9 +769,9 @@ namespace H.Core.Services.Animals
             }
         }
 
-        public DefaultManureCompositionData GetManureCompositionData(ManureItemBase manureItemBase, Farm farm)
+        public DefaultManureCompositionData GetManureCompositionData(ManureItemBase? manureItemBase, Farm? farm)
         {
-            if (manureItemBase != null && farm != null)
+            if (manureItemBase is not null && farm is not null)
             {
                 var manureComposition = farm.GetManureCompositionData(
                     manureStateType: manureItemBase.ManureStateType,
@@ -793,7 +793,7 @@ namespace H.Core.Services.Animals
             var amount = 0d;
 
             var tank = _manureTanks.SingleOrDefault(x => x.AnimalType == animalType && x.Year == year);
-            if (tank != null)
+            if (tank is not null)
             {
                 amount = tank.VolumeRemainingInTank;
             }
@@ -840,7 +840,7 @@ namespace H.Core.Services.Animals
             var result = new List<MonthlyManureSpreadingData>();
 
             var field = farm.GetFieldSystemComponent(viewItem.FieldSystemComponentGuid);
-            if (field == null || (field.HasLivestockManureApplicationsInYear(viewItem.Year) == false && field.HasImportedManureApplicationsInYear(viewItem.Year) == false))
+            if (field is null || (field.HasLivestockManureApplicationsInYear(viewItem.Year) == false && field.HasImportedManureApplicationsInYear(viewItem.Year) == false))
             {
                 return result;
             }
@@ -853,7 +853,7 @@ namespace H.Core.Services.Animals
                 if (totalVolume == 0)
                 {
                     var calculatedVolumePerHectare = manureApplicationViewItem.AmountOfNitrogenAppliedPerHectare;
-                    if (manureApplicationViewItem.DefaultManureCompositionData.NitrogenContent > 0)
+                    if (manureApplicationViewItem.DefaultManureCompositionData != null && manureApplicationViewItem.DefaultManureCompositionData.NitrogenContent > 0)
                     {
                         totalVolume = calculatedVolumePerHectare / manureApplicationViewItem.DefaultManureCompositionData.NitrogenContent;
                     }
@@ -982,7 +982,7 @@ namespace H.Core.Services.Animals
         private ManureTank GetManureTankInternal(AnimalType animalType, int year, ManureStateType manureStateType)
         {
             var tank = _manureTanks.SingleOrDefault(x => x.AnimalType.GetCategory() == animalType.GetCategory() && x.Year == year && x.ManureStateType == manureStateType);
-            if (tank == null)
+            if (tank is null)
             {
                 // If no tank exists for this year, create one now
                 tank = new ManureTank() { AnimalType = animalType, Year = year, ManureStateType = manureStateType };

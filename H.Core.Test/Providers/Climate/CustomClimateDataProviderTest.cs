@@ -11,7 +11,7 @@ namespace H.Core.Test.Providers.Climate
     {
         #region Fields
 
-        private CustomFileClimateDataProvider _provider;
+        private CustomFileClimateDataProvider _provider = null!;
 
         #endregion
 

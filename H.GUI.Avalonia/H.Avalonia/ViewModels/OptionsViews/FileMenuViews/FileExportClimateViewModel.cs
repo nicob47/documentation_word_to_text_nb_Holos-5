@@ -77,7 +77,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                 });
 
                 // Show success notification to the user with the exported file name
-                NotificationManager.ShowToast(H.Core.Properties.Resources.LabelSuccess, String.Format(H.Core.Properties.Resources.ExportClimateDataSuccess, file.Name), NotificationType.Success);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.LabelSuccess, String.Format(H.Core.Properties.Resources.ExportClimateDataSuccess, file.Name), NotificationType.Success);
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                 Debug.WriteLine($"Error exporting farms: {ex.Message}");
                 
                 // Show error notification to the user with the exception message
-                NotificationManager.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
             }
         }
 
@@ -110,7 +110,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             else
             {
                 // Show error notification for invalid or missing export data
-                NotificationManager.ShowToast(H.Core.Properties.Resources.ErrorError, H.Core.Properties.Resources.ErrorNoDataForExport, NotificationType.Error);
+                NotificationManager?.ShowToast(H.Core.Properties.Resources.ErrorError, H.Core.Properties.Resources.ErrorNoDataForExport, NotificationType.Error);
             }
         }
         #endregion

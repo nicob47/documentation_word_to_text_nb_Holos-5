@@ -9,20 +9,22 @@ using Moq;
 using Prism.Events;
 using H.Avalonia.Events;
 
+#nullable disable
+
 namespace H.Avalonia.Test.ViewModels.OptionsViews
 {
     [TestClass]
     public class SoilN2OBreakdownSettingsViewModelTest
     {
-        private SoilN2OBreakdownSettingsViewModel _viewModel;
-        private Mock<IStorageService> _mockStorageService;
-        private IStorageService _storageServiceMock;
-        private Mock<IStorage> _mockStorage;
-        private IStorage _storageMock;
-        private Mock<IErrorHandlerService> _mockErrorHandlerService;
-        private IErrorHandlerService _errorHandlerServiceMock;
-        private Mock<IEventAggregator> _mockEventAggregator;
-        private IEventAggregator _eventAggregatorMock;
+        private SoilN2OBreakdownSettingsViewModel _viewModel = null!;
+        private Mock<IStorageService> _mockStorageService = null!;
+        private IStorageService _storageServiceMock = null!;
+        private Mock<IStorage> _mockStorage = null!;
+        private IStorage _storageMock = null!;
+        private Mock<IErrorHandlerService> _mockErrorHandlerService = null!;
+        private IErrorHandlerService _errorHandlerServiceMock = null!;
+        private Mock<IEventAggregator> _mockEventAggregator = null!;
+        private IEventAggregator _eventAggregatorMock = null!;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -71,7 +73,7 @@ namespace H.Avalonia.Test.ViewModels.OptionsViews
         [TestMethod]
         public void TestConstructorThrowsExceptionOnNullParameter()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new SoilN2OBreakdownSettingsViewModel(null, null, null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new SoilN2OBreakdownSettingsViewModel(null, null, null));
         }
 
         [TestMethod]

@@ -41,7 +41,7 @@ namespace H.Core.Providers.Plants
         /// <param name="animalType">The AnimalType for which data is needed</param>
         /// <returns>Returns an instance of <see cref="Table_10_Default_Values_For_Steady_State_Method_Data"/> with values for the specified animal type.
         /// If no data is found, returns null</returns>
-        public Table_10_Default_Values_For_Steady_State_Method_Data GetSteadyStateMethodValueForAnimalGroup(AnimalType animalType)
+        public Table_10_Default_Values_For_Steady_State_Method_Data? GetSteadyStateMethodValueForAnimalGroup(AnimalType animalType)
         {
             var data = DefaultValuesData.Find(x => x.AnimalType == animalType);
 
@@ -61,7 +61,7 @@ namespace H.Core.Providers.Plants
         private List<Table_10_Default_Values_For_Steady_State_Method_Data> ReadFile()
         {
             var fileData = new List<Table_10_Default_Values_For_Steady_State_Method_Data>();
-            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SteadyStateMethodDefaultNValues);
+            IEnumerable<string[]> fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.SteadyStateMethodDefaultNValues)!;
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 
             foreach (string[] line in fileLines.Skip(1))

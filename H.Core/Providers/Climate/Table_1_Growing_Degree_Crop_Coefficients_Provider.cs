@@ -27,7 +27,7 @@ namespace H.Core.Providers.Climate
         private List<Table_1_Growing_Degree_Crop_Coefficients_Data> BuildCache()
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.GrowingDegreeCoefficients).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.GrowingDegreeCoefficients)!.ToList();
             var converter = new CropTypeStringConverter();
             double parseResult = 0;
 
@@ -54,7 +54,7 @@ namespace H.Core.Providers.Climate
             return _cache;
         }
 
-        public Table_1_Growing_Degree_Crop_Coefficients_Data GetByCropType(CropType cropType)
+        public Table_1_Growing_Degree_Crop_Coefficients_Data? GetByCropType(CropType cropType)
         {
             var result = _cache.FirstOrDefault(x => x.Crop == cropType);
             if (result != null)

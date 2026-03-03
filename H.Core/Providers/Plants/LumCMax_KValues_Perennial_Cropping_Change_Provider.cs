@@ -78,7 +78,7 @@ namespace H.Core.Providers.Plants
         {
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.LumCMaxAndKValuesForPerennialCroppingChange;
-            var filelines = CsvResourceReader.GetFileLines(filename);
+            var filelines = CsvResourceReader.GetFileLines(filename)!;
             var result = new List<LumCMax_KValues_Perennial_Cropping_Change_Data>();
 
             foreach (var line in filelines.Skip(1))

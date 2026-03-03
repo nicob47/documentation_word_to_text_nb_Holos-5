@@ -36,8 +36,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// Format: Four-digit year as string (e.g., "2020", "2025")
         /// Displayed in the top section of each cell in smaller, gray text.
         /// </summary>
-        public string Year { get; set; }
-        
+        public string Year { get; set; } = string.Empty;
+
         /// <summary>
         /// Human-readable crop name with emoji icon for display in the UI.
         /// Format: "{CropName} {Emoji}"
@@ -48,8 +48,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// 
         /// Displayed in the bottom section of each cell with text wrapping/trimming.
         /// </summary>
-        public string CropDisplay { get; set; }
-        
+        public string CropDisplay { get; set; } = string.Empty;
+
         /// <summary>
         /// Background color brush for the cell, based on crop category.
         /// 
@@ -64,7 +64,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// Provided by the ICropColorService.GetCropColorHex() method.
         /// This creates visual consistency across the timeline (Step 2) and preview (Step 3).
         /// </summary>
-        public IBrush CropBackground { get; set; }
+        public IBrush CropBackground { get; set; } = null!;
         
         /// <summary>
         /// The actual crop type enumeration value for this assignment.
@@ -83,7 +83,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// Reference to the actual crop DTO from the rotation sequence.
         /// This allows the cell to provide the crop data for editing when clicked.
         /// </summary>
-        public ICropDto CropDto { get; set; }
+        public ICropDto CropDto { get; set; } = null!;
         
         /// <summary>
         /// Indicates whether this cell represents the currently selected crop type from the timeline.

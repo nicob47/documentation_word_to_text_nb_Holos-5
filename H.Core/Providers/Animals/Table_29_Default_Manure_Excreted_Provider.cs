@@ -70,7 +70,7 @@ namespace H.Core.Providers.Animals
 
         private void ReadFile()
         {
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.PercentageTotalManureProduced).ToList();
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.PercentageTotalManureProduced)!.ToList();
             foreach (var line in fileLines.Skip(1))
             {
                 if (string.IsNullOrWhiteSpace(line[0]) || line.Any(string.IsNullOrWhiteSpace))

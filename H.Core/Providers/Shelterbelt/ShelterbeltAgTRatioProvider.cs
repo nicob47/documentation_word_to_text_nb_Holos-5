@@ -28,7 +28,7 @@ namespace H.Core.Providers.Shelterbelt
 
         private void GetLines()
         {
-            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.AboveGroundBiomassTotalTreeBiomassRatios);
+            var fileLines = CsvResourceReader.GetFileLines(CsvResourceNames.AboveGroundBiomassTotalTreeBiomassRatios)!;
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
 
             foreach (var line in fileLines.Skip(2))
