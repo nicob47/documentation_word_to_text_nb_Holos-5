@@ -152,7 +152,7 @@
                                                               SelectedItem="{Binding SelectedCropTypeItem}"
                                                               ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
                                                               HorizontalAlignment="Stretch"
-                                                              MinWidth="196"
+                                                              MinWidth="220"
                                                               MaxDropDownHeight="320"/>
                                                 </StackPanel>
                                             </StackPanel>

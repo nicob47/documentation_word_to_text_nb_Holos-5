@@ -5,7 +5,8 @@ namespace H.Core.Services.CropColorService;
 /// <summary>
 /// Default implementation of <see cref="ICropColorService"/>.
 /// Provides consistent color coding and display names for crop types across the application.
-/// Uses the CropTypeExtensions class to determine crop categories.
+/// Uses the CropTypeExtensions class to determine crop categories, with explicit fallbacks
+/// for crop types that do not match those extension methods.
 /// </summary>
 public class CropColorService : ICropColorService
 {
@@ -13,62 +14,65 @@ public class CropColorService : ICropColorService
 
     /// <summary>
     /// Gets the hexadecimal color code for a given crop type based on its category.
-    /// Uses CropTypeExtensions methods to determine the crop category.
     /// </summary>
     /// <param name="cropType">The crop type to get the color for</param>
     /// <returns>Hexadecimal color string (e.g., "#FFF3E0")</returns>
     public string GetCropColorHex(CropType cropType)
     {
-        // Fallow - Gray (check first as it's most specific)
+        // Fallow - Gray
         if (cropType.IsFallow())
-        {
             return "#FAFAFA";
-        }
 
         // Cereals/Small Grains - Orange
         if (cropType.IsSmallGrains())
-        {
             return "#FFF3E0";
-        }
 
         // Oilseeds - Green
         if (cropType.IsOilSeed())
-        {
             return "#E8F5E9";
-        }
 
         // Pulses - Blue
         if (cropType.IsPulseCrop())
-        {
             return "#E3F2FD";
-        }
 
         // Forages/Perennials - Purple
         if (cropType.IsPerennial())
-        {
             return "#F3E5F5";
-        }
 
         // Root crops - Light Brown
         if (cropType.IsRootCrop())
-        {
             return "#EFEBE9";
-        }
 
         // Silage crops - Light Yellow
         if (cropType.IsSilageCrop())
-        {
             return "#FFFDE7";
-        }
 
-        // Default - Light gray
-        return "#F5F5F5";
+        // Explicit fallbacks for crop types not covered by the extension methods above
+        return cropType switch
+        {
+            // Cereals
+            CropType.Rye or CropType.Corn or CropType.Durum
+                => "#FFF3E0",
+
+            // Oilseeds
+            CropType.FlaxSeed or CropType.Sunflower or CropType.SunflowerSeed or CropType.MustardSeed
+                => "#E8F5E9",
+
+            // Pulses
+            CropType.Peas or CropType.Beans or CropType.DryBean or CropType.FabaBeans
+                => "#E3F2FD",
+
+            // Forages
+            CropType.AlfalfaMedicagoSativaL or CropType.AlfalfaHay or CropType.GrassHay
+                => "#F3E5F5",
+
+            // Default - Light gray
+            _ => "#F5F5F5",
+        };
     }
 
     /// <summary>
     /// Gets the display name for a crop type.
-    /// The colored background of cells provides visual distinction between crop categories,
-    /// so icons/emojis are not necessary.
     /// </summary>
     /// <param name="cropType">The crop type to get the display name for</param>
     /// <returns>Display name (e.g., "Wheat", "Canola")</returns>
@@ -88,7 +92,7 @@ public class CropColorService : ICropColorService
             CropType.Corn => "Corn",
             CropType.GrainCorn => "Grain Corn",
             CropType.SilageCorn => "Silage Corn",
-            
+
             // Oilseeds
             CropType.Canola => "Canola",
             CropType.Flax => "Flax",
@@ -98,7 +102,7 @@ public class CropColorService : ICropColorService
             CropType.Soybeans => "Soybeans",
             CropType.Mustard => "Mustard",
             CropType.MustardSeed => "Mustard Seed",
-            
+
             // Pulses
             CropType.Peas => "Peas",
             CropType.DryPeas => "Dry Peas",
@@ -109,7 +113,7 @@ public class CropColorService : ICropColorService
             CropType.Chickpeas => "Chickpeas",
             CropType.FabaBeans => "Faba Beans",
             CropType.ColouredWhiteFabaBeans => "Coloured White Faba Beans",
-            
+
             // Forages
             CropType.AlfalfaMedicagoSativaL => "Alfalfa",
             CropType.AlfalfaHay => "Alfalfa Hay",
@@ -119,11 +123,11 @@ public class CropColorService : ICropColorService
             CropType.Forage => "Forage",
             CropType.GrassHay => "Grass Hay",
             CropType.PerennialForages => "Perennial Forages",
-            
+
             // Fallow
             CropType.Fallow => "Fallow",
             CropType.SummerFallow => "Summer Fallow",
-            
+
             // Default fallback
             _ => cropType.ToString()
         };
