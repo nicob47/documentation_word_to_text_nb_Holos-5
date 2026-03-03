@@ -11,8 +11,10 @@ namespace H.Avalonia.DataTemplates;
 /// <summary>
 /// A data template selector for the crop type ComboBox that renders category headers
 /// (string items) differently from selectable crop type items (CropType enum values).
-/// Headers appear as bold, full-width, non-interactive labels with a category colour strip.
-/// Crop items appear as coloured pill badges matching the Step 3 preview grid colours.
+///
+/// Design goal: keep the list flat and easy to scan.
+///   • Headers  — small ALL-CAPS label with a coloured left border strip; not interactive.
+///   • Crop items — plain text with a coloured 10×10 square dot on the left; no nested pill border.
 /// </summary>
 public sealed class CropGroupedItemDataTemplate : IDataTemplate
 {
@@ -25,66 +27,74 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
     public Control? Build(object? param)
     {
         if (param is string header)
-        {
             return BuildHeader(header);
-        }
 
         if (param is CropType cropType)
-        {
             return BuildCropItem(cropType);
-        }
 
         return null;
     }
 
-    // -------------------------------------------------------------------------
-    // Header: bold category label with a left colour accent strip
-    // -------------------------------------------------------------------------
+    // ─── Category header ──────────────────────────────────────────────────────
+    // Renders as:  ▌ CEREALS
+    // IsHitTestVisible=false prevents it from being selected.
     private static Control BuildHeader(string categoryName)
     {
-        // Determine colour from category name
         var colorHex = GetCategoryColorHex(categoryName);
 
-        // Left accent strip
-        var accent = new Border
+        // 3px solid left border strip
+        var strip = new Border
         {
-            Width = 4,
-            CornerRadius = new CornerRadius(2),
-            Background = Brush.Parse(colorHex),
-            Margin = new Thickness(0, 2, 8, 2),
+            Width = 3,
+            Background = Brush.Parse(colorHex == "#FAFAFA" ? "#BBBBBB" : colorHex),
+            Margin = new Thickness(0, 0, 8, 0),
             VerticalAlignment = VerticalAlignment.Stretch,
         };
 
         var label = new TextBlock
         {
-            Text = categoryName,
+            Text = categoryName.ToUpperInvariant(),
+            FontSize = 10,
             FontWeight = FontWeight.Bold,
-            FontSize = 11,
-            Foreground = Brush.Parse("#555555"),
+            Foreground = Brush.Parse("#888888"),
             VerticalAlignment = VerticalAlignment.Center,
+            LetterSpacing = 0.5,
         };
 
-        var row = new DockPanel { Margin = new Thickness(4, 6, 4, 2) };
-        DockPanel.SetDock(accent, Dock.Left);
-        row.Children.Add(accent);
+        var row = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Margin = new Thickness(2, 8, 0, 2),
+        };
+        row.Children.Add(strip);
         row.Children.Add(label);
 
-        // Wrap in a non-interactive container (IsHitTestVisible=false makes it non-selectable)
         return new Border
         {
-            Background = Brush.Parse("#F8F8F8"),
             IsHitTestVisible = false,
             Child = row,
         };
     }
 
-    // -------------------------------------------------------------------------
-    // Crop item: coloured pill matching Step 3 preview grid colours
-    // -------------------------------------------------------------------------
+    // ─── Crop item ────────────────────────────────────────────────────────────
+    // Renders as:  ■ Canola       (coloured 10×10 square + plain text, no pill border)
     private static Control BuildCropItem(CropType cropType)
     {
         var colorHex = _colorService.GetCropColorHex(cropType);
         var displayName = _colorService.GetCropDisplayName(cropType);
+
+        // Small colour square — same palette as Step 3 grid
+        var dot = new Border
+        {
+            Width = 10,
+            Height = 10,
+            CornerRadius = new CornerRadius(2),
+            Background = Brush.Parse(colorHex),
+            BorderBrush = Brush.Parse("#CCCCCC"),
+            BorderThickness = new Thickness(0.5),
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(0, 0, 8, 0),
+        };
 
         var label = new TextBlock
         {
@@ -93,28 +103,27 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        return new Border
+        var row = new StackPanel
         {
-            Background = Brush.Parse(colorHex),
-            Padding = new Thickness(6, 3),
-            CornerRadius = new CornerRadius(3),
-            Margin = new Thickness(-4, 1, -4, 1),
-            Child = label,
+            Orientation = Orientation.Horizontal,
+            VerticalAlignment = VerticalAlignment.Center,
         };
+        row.Children.Add(dot);
+        row.Children.Add(label);
+
+        return row;
     }
 
-    // -------------------------------------------------------------------------
-    // Map category name → hex (mirrors CropColorService logic)
-    // -------------------------------------------------------------------------
+    // ─── Category → hex colour ────────────────────────────────────────────────
     private static string GetCategoryColorHex(string categoryName) => categoryName switch
     {
-        "Cereals"  => "#FFF3E0",
-        "Oilseeds" => "#E8F5E9",
-        "Pulses"   => "#E3F2FD",
-        "Forages"  => "#F3E5F5",
-        "Fallow"   => "#FAFAFA",
+        "Cereals"    => "#FFF3E0",
+        "Oilseeds"   => "#E8F5E9",
+        "Pulses"     => "#E3F2FD",
+        "Forages"    => "#F3E5F5",
+        "Fallow"     => "#FAFAFA",
         "Root Crops" => "#EFEBE9",
-        "Silage"   => "#FFFDE7",
-        _          => "#F5F5F5",
+        "Silage"     => "#FFFDE7",
+        _            => "#F5F5F5",
     };
 }
