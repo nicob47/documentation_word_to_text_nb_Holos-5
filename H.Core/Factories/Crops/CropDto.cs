@@ -38,16 +38,18 @@ public partial class CropDto : DtoBase, ICropDto
         {
             CropType.NotSelected,
 
-            // Cereals - Orange
+            // Cereals - Orange (IsSmallGrains + explicit fallbacks for Rye/Corn/Durum)
             CropType.Wheat,
             CropType.Barley,
             CropType.Oats,
             CropType.Rye,
             CropType.Corn,
             CropType.GrainCorn,
-            CropType.SilageCorn,
             CropType.Triticale,
             CropType.Durum,
+
+            // Silage - Yellow (IsSilageCrop)
+            CropType.SilageCorn,
 
             // Oilseeds - Green
             CropType.Canola,
