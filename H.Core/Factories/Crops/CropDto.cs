@@ -230,6 +230,7 @@ public partial class CropDto : DtoBase, ICropDto
         if (cropType == CropType.NotSelected)
             return null;
 
+        // Check explicit extension methods first
         if (cropType.IsFallow())
             return "Fallow";
 
@@ -251,7 +252,29 @@ public partial class CropDto : DtoBase, ICropDto
         if (cropType.IsSilageCrop())
             return "Silage";
 
-        return "Other";
+        // Explicit fallbacks for crop types that don't match the extension methods
+        // but are present in ValidCropTypes — keeps them out of the "Other" bucket.
+        return cropType switch
+        {
+            // Cereals not covered by IsSmallGrains()
+            CropType.Rye or CropType.Corn or CropType.Durum
+                => "Cereals",
+
+            // Oilseeds not covered by IsOilSeed()
+            CropType.FlaxSeed or CropType.Sunflower or CropType.SunflowerSeed
+            or CropType.MustardSeed
+                => "Oilseeds",
+
+            // Pulses not covered by IsPulseCrop()
+            CropType.Peas or CropType.Beans or CropType.DryBean or CropType.FabaBeans
+                => "Pulses",
+
+            // Forages / perennials not covered by IsPerennial()
+            CropType.AlfalfaMedicagoSativaL or CropType.AlfalfaHay or CropType.GrassHay
+                => "Forages",
+
+            _ => "Other",
+        };
     }
 
     #endregion

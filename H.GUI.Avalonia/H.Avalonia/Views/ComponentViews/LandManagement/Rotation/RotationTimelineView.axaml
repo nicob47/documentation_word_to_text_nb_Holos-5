@@ -24,6 +24,21 @@
         <dataTemplates:CropGroupedItemDataTemplate x:Key="CropGroupedItemDataTemplate"/>
     </UserControl.Resources>
 
+    <UserControl.Styles>
+        <!-- White popup background for the crop ComboBox so category colours read clearly -->
+        <Style Selector="ComboBox.crop-selector /template/ Border#Background">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <!-- Override ComboBoxItem default background to white in the crop dropdown -->
+        <Style Selector="ComboBox.crop-selector ComboBoxItem">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="0,2"/>
+        </Style>
+        <Style Selector="ComboBox.crop-selector ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#EBF2FA"/>
+        </Style>
+    </UserControl.Styles>
+
     <!-- Step 2: Build Rotation Timeline -->
     <Border x:Name="StepContainerBorder" Classes="step-container">
         <StackPanel>
@@ -132,11 +147,12 @@
                                                          non-interactive dividers and CropType values as coloured pill badges.
                                                          SelectedCropTypeItem syncs back to CropDto.CropType; setting it to a
                                                          header string is silently ignored by the DTO. -->
-                                                    <ComboBox ItemsSource="{Binding GroupedCropItems}"
+                                                    <ComboBox Classes="crop-selector"
+                                                              ItemsSource="{Binding GroupedCropItems}"
                                                               SelectedItem="{Binding SelectedCropTypeItem}"
                                                               ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
                                                               HorizontalAlignment="Stretch"
-                                                              MinWidth="160"
+                                                              MinWidth="180"
                                                               MaxDropDownHeight="320"/>
                                                 </StackPanel>
                                             </StackPanel>
