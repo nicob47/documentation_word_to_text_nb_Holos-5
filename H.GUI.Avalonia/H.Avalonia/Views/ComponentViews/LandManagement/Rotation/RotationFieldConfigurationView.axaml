@@ -27,7 +27,7 @@
                    Foreground="{StaticResource GcdsTextPrimaryBrush}"
                    Margin="0,0,0,12"/>
 
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" RowSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="160"/>
                 <ColumnDefinition MinWidth="120"/>
