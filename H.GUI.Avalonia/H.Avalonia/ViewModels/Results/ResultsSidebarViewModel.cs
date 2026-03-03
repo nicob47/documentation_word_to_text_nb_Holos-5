@@ -17,6 +17,7 @@ namespace H.Avalonia.ViewModels.Results
         #region Fields
 
         private object _selectedItem;
+        private bool _isBasicMode;
 
         #endregion
 
@@ -36,6 +37,20 @@ namespace H.Avalonia.ViewModels.Results
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
         }
+
+        public bool IsBasicMode
+        {
+            get => _isBasicMode;
+            set
+            {
+                if (SetProperty(ref _isBasicMode, value))
+                {
+                    OnBasicModeChanged();
+                }
+            }
+        }
+
+        public bool IsAdvancedMode => !IsBasicMode;
 
         #endregion
 
@@ -102,6 +117,24 @@ namespace H.Avalonia.ViewModels.Results
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             this.PropertyChanged += OnSelectedOptionChanged;
+        }
+
+        private void OnBasicModeChanged()
+        {
+            // Notify that IsAdvancedMode has also changed
+            RaisePropertyChanged(nameof(IsAdvancedMode));
+
+            // Navigate to appropriate view based on mode
+            if (IsBasicMode)
+            {
+                // Navigate to summary report view
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+            }
+            else
+            {
+                // Navigate back to detailed results
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+            }
         }
 
         #endregion
