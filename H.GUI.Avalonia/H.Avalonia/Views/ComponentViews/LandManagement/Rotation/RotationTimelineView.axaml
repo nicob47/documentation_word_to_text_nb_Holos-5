@@ -29,10 +29,11 @@
         <Style Selector="ComboBox.crop-selector /template/ Border#Background">
             <Setter Property="Background" Value="White"/>
         </Style>
-        <!-- Override ComboBoxItem default background to white in the crop dropdown -->
+        <!-- Override ComboBoxItem: white background, stretch content to full width -->
         <Style Selector="ComboBox.crop-selector ComboBoxItem">
             <Setter Property="Background" Value="White"/>
             <Setter Property="Padding" Value="0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         </Style>
         <Style Selector="ComboBox.crop-selector ComboBoxItem:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="#EBF2FA"/>

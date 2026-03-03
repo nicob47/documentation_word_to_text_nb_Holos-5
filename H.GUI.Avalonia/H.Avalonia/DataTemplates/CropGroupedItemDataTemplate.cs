@@ -57,6 +57,7 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
             Background = Brush.Parse("#EEEEEE"),
             Padding = new Thickness(0, 5, 0, 5),
             IsHitTestVisible = false,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
             Child = label,
         };
     }
@@ -87,7 +88,7 @@ public sealed class CropGroupedItemDataTemplate : IDataTemplate
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        var row = new DockPanel { LastChildFill = true };
+        var row = new DockPanel { LastChildFill = true, HorizontalAlignment = HorizontalAlignment.Stretch };
         DockPanel.SetDock(accent, Dock.Left);
         row.Children.Add(accent);
         row.Children.Add(label);
