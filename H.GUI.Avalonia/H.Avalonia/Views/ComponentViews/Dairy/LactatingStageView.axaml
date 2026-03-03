@@ -75,18 +75,18 @@
               IsVisible="{Binding SelectedLactatingPractice, Converter={x:Static ObjectConverters.IsNotNull}}"
               DataContext="{Binding SelectedLactatingPractice}">
 
-    <!-- Housing Card -->
+    <!-- ── Housing Card ── -->
     <Border Classes="step-card">
-      <StackPanel Grid.IsSharedSizeScope="True">
+      <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
         <TextBlock Text="Housing" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
                    FontFamily="{StaticResource GcdsHeadingFont}" Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                   Margin="0,0,0,12"/>
+                   Margin="0,0,0,4"/>
 
-        <!-- Housing Type (Basic) -->
-        <Grid Margin="0,0,0,8">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="HLabel"/>
-            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Housing type:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <ComboBox Grid.Column="1"
@@ -101,80 +101,78 @@
           </ComboBox>
         </Grid>
 
-        <!-- Advanced Housing Options -->
-        <StackPanel IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairyViews:DairyComponentView}, FallbackValue=False}">
-          <Separator Margin="0,8,0,12" Background="{StaticResource GcdsBorderDefaultBrush}"/>
-          <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                     FontWeight="SemiBold" Margin="0,0,0,8"/>
+        <Separator Background="{StaticResource GcdsBorderDefaultBrush}" Margin="0,4,0,0"/>
+        <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="SemiBold"/>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="HLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="140"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Bedding material:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <ComboBox Grid.Column="1"
-                      ItemsSource="{Binding #RootPanel.DataContext.BeddingMaterialTypes}"
-                      SelectedItem="{Binding BeddingMaterialType}"
-                      HorizontalAlignment="Stretch">
-              <ComboBox.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
-                </DataTemplate>
-              </ComboBox.ItemTemplate>
-            </ComboBox>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Bedding material:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <ComboBox Grid.Column="1"
+                    ItemsSource="{Binding #RootPanel.DataContext.BeddingMaterialTypes}"
+                    SelectedItem="{Binding BeddingMaterialType}"
+                    HorizontalAlignment="Stretch">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="HLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Bedding rate:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.00" Increment="0.1"
-                           Value="{Binding UserDefinedBeddingRate}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="kg/hd/day" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Bedding rate:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.00" Increment="0.1"
+                         Value="{Binding UserDefinedBeddingRate}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="kg/hd/day" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="HLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Activity coefficient:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="2" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding ActivityCoefficientOfFeedingSituation}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Activity coefficient:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="2" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding ActivityCoefficientOfFeedingSituation}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="HLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Maintenance coefficient:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="2" FormatString="0.000" Increment="0.001"
-                           Value="{Binding BaselineMaintenanceCoefficient}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="MJ/kg/day" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
-        </StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Maintenance coefficient:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="2" FormatString="0.000" Increment="0.001"
+                         Value="{Binding BaselineMaintenanceCoefficient}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="MJ/kg/day" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
       </StackPanel>
     </Border>
 
-    <!-- Manure Handling Card -->
+    <!-- ── Manure Handling Card ── -->
     <Border Classes="step-card">
-      <StackPanel Grid.IsSharedSizeScope="True">
+      <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
         <TextBlock Text="Manure Handling" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
                    FontFamily="{StaticResource GcdsHeadingFont}" Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                   Margin="0,0,0,12"/>
+                   Margin="0,0,0,4"/>
 
-        <!-- Manure System (Basic) -->
-        <Grid Margin="0,0,0,0">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Manure system:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <ComboBox Grid.Column="1"
@@ -189,159 +187,162 @@
           </ComboBox>
         </Grid>
 
-        <!-- Advanced Manure Options -->
-        <StackPanel IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairyViews:DairyComponentView}, FallbackValue=False}">
-          <Separator Margin="0,8,0,12" Background="{StaticResource GcdsBorderDefaultBrush}"/>
-          <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                     FontWeight="SemiBold" Margin="0,0,0,8"/>
+        <Separator Background="{StaticResource GcdsBorderDefaultBrush}" Margin="0,4,0,0"/>
+        <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="SemiBold"/>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Methane conversion factor:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding MethaneConversionFactor}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Methane conversion factor:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding MethaneConversionFactor}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Volatilization fraction:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding VolatilizationFraction}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Volatilization fraction:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding VolatilizationFraction}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="N2O emission factor:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.0001"
-                           Value="{Binding N2ODirectEmissionFactor}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="N2O emission factor:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.0001"
+                         Value="{Binding N2ODirectEmissionFactor}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Leaching fraction:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding LeachingFraction}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Leaching fraction:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding LeachingFraction}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="EF volatilization:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.000" Increment="0.001"
-                           Value="{Binding EmissionFactorVolatilization}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="EF volatilization:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.000" Increment="0.001"
+                         Value="{Binding EmissionFactorVolatilization}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="EF leaching:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.0001"
-                           Value="{Binding EmissionFactorLeaching}" HorizontalAlignment="Stretch"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="EF leaching:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.0001"
+                         Value="{Binding EmissionFactorLeaching}" HorizontalAlignment="Stretch"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Ash content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
-                           Value="{Binding AshContentOfManure}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Ash content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
+                         Value="{Binding AshContentOfManure}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="CH4 capacity:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding MethaneProducingCapacityOfManure}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="m3/kg VS" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="CH4 capacity:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding MethaneProducingCapacityOfManure}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="m3/kg VS" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="VS excretion:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding VolatileSolidExcretion}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="kg/kg" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="VS excretion:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding VolatileSolidExcretion}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="kg/kg" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="N content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding FractionOfNitrogenInManure}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="N content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding FractionOfNitrogenInManure}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="C content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding FractionOfCarbonInManure}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="C content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding FractionOfCarbonInManure}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="P content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.001"
-                           Value="{Binding FractionOfPhosphorusInManure}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
-        </StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="P content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.001"
+                         Value="{Binding FractionOfPhosphorusInManure}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
       </StackPanel>
     </Border>
 
-    <!-- Diet Card -->
+    <!-- ── Diet Card ── -->
     <Border Classes="step-card">
-      <StackPanel Grid.IsSharedSizeScope="True">
+      <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
         <TextBlock Text="Diet" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
                    FontFamily="{StaticResource GcdsHeadingFont}" Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                   Margin="0,0,0,12"/>
+                   Margin="0,0,0,4"/>
 
-        <!-- Diet Type (Basic) -->
-        <Grid Margin="0,0,0,8">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="DLabel"/>
-            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Diet type:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <ComboBox Grid.Column="1"
@@ -356,50 +357,46 @@
           </ComboBox>
         </Grid>
 
-        <!-- Read-only Nutritional Summary -->
-        <Border Background="{StaticResource GcdsSelectionBgBrush}" CornerRadius="4" Padding="12" Margin="0,4,0,0">
-          <StackPanel Grid.IsSharedSizeScope="True">
+        <!-- Nutritional Summary -->
+        <Border Background="{StaticResource GcdsSelectionBgBrush}" CornerRadius="6" Padding="12">
+          <StackPanel Grid.IsSharedSizeScope="True" Spacing="6">
             <TextBlock Text="Nutritional Summary" FontSize="{StaticResource GcdsFontSizeSmall}" FontWeight="SemiBold"
-                       Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,8"/>
-
-            <Grid Margin="0,0,0,4">
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+            <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="NLabel"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" MinWidth="60" SharedSizeGroup="NInput"/>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="NUnit"/>
               </Grid.ColumnDefinitions>
               <TextBlock Grid.Column="0" Text="Crude protein:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
               <TextBlock Grid.Column="1" Text="{Binding CrudeProtein, StringFormat='{}{0:0.0}'}" FontSize="{StaticResource GcdsFontSizeSmall}" VerticalAlignment="Center"/>
               <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="4,0,0,0"/>
             </Grid>
-
-            <Grid Margin="0,0,0,4">
+            <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="NLabel"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" MinWidth="60" SharedSizeGroup="NInput"/>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="NUnit"/>
               </Grid.ColumnDefinitions>
               <TextBlock Grid.Column="0" Text="Forage:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
               <TextBlock Grid.Column="1" Text="{Binding Forage, StringFormat='{}{0:0.0}'}" FontSize="{StaticResource GcdsFontSizeSmall}" VerticalAlignment="Center"/>
               <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="4,0,0,0"/>
             </Grid>
-
-            <Grid Margin="0,0,0,4">
+            <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="NLabel"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" MinWidth="60" SharedSizeGroup="NInput"/>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="NUnit"/>
               </Grid.ColumnDefinitions>
               <TextBlock Grid.Column="0" Text="TDN:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
               <TextBlock Grid.Column="1" Text="{Binding TotalDigestibleNutrient, StringFormat='{}{0:0.0}'}" FontSize="{StaticResource GcdsFontSizeSmall}" VerticalAlignment="Center"/>
               <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="4,0,0,0"/>
             </Grid>
-
-            <Grid Margin="0,0,0,0">
+            <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="NLabel"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" MinWidth="60" SharedSizeGroup="NInput"/>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="NUnit"/>
               </Grid.ColumnDefinitions>
               <TextBlock Grid.Column="0" Text="DMI:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
               <TextBlock Grid.Column="1" Text="{Binding DailyDryMatterFeedIntakeOfFeed, StringFormat='{}{0:0.0}'}" FontSize="{StaticResource GcdsFontSizeSmall}" VerticalAlignment="Center"/>
@@ -408,57 +405,54 @@
           </StackPanel>
         </Border>
 
-        <!-- Advanced Diet Options -->
-        <StackPanel IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairyViews:DairyComponentView}, FallbackValue=False}">
-          <Separator Margin="0,12,0,12" Background="{StaticResource GcdsBorderDefaultBrush}"/>
-          <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                     FontWeight="SemiBold" Margin="0,0,0,8"/>
+        <Separator Background="{StaticResource GcdsBorderDefaultBrush}" Margin="0,4,0,0"/>
+        <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="SemiBold"/>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="DLabel"/>
-              <ColumnDefinition Width="*" MaxWidth="300"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Diet additive:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <ComboBox Grid.Column="1"
-                      ItemsSource="{Binding #RootPanel.DataContext.DietAdditiveTypes}"
-                      SelectedItem="{Binding DietAdditiveType}"
-                      HorizontalAlignment="Stretch">
-              <ComboBox.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
-                </DataTemplate>
-              </ComboBox.ItemTemplate>
-            </ComboBox>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Diet additive:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <ComboBox Grid.Column="1"
+                    ItemsSource="{Binding #RootPanel.DataContext.DietAdditiveTypes}"
+                    SelectedItem="{Binding DietAdditiveType}"
+                    HorizontalAlignment="Stretch">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
 
-          <!-- Custom Diet Formulator (stubbed) -->
-          <Border Background="{StaticResource GcdsSelectionBgBrush}" CornerRadius="6" Padding="12" Margin="0,4,0,0">
-            <StackPanel>
-              <TextBlock Text="Custom Diet Formulator" FontSize="{StaticResource GcdsFontSizeSmall}" FontWeight="SemiBold"
-                         Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,4"/>
-              <TextBlock Text="Custom diet formulation will be available in a future update."
-                         FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                         FontStyle="Italic" TextWrapping="Wrap"/>
-            </StackPanel>
-          </Border>
-        </StackPanel>
+        <Button IsEnabled="False"
+                HorizontalAlignment="Left"
+                Padding="12,8"
+                ToolTip.Tip="Custom diet formulation (coming soon)">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <Path Data="M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z"
+                  Fill="{StaticResource GcdsTextSecondaryBrush}" Width="14" Height="14" Stretch="Uniform"/>
+            <TextBlock Text="Custom Diet Formulator" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+          </StackPanel>
+        </Button>
       </StackPanel>
     </Border>
 
-    <!-- Animal Details Card (Advanced only) -->
-    <Border Classes="step-card"
-            IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairyViews:DairyComponentView}, FallbackValue=False}">
-      <StackPanel Grid.IsSharedSizeScope="True">
+    <!-- ── Animal Details Card ── -->
+    <Border Classes="step-card">
+      <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
         <TextBlock Text="Animal Details" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
                    FontFamily="{StaticResource GcdsHeadingFont}" Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                   Margin="0,0,0,12"/>
+                   Margin="0,0,0,4"/>
 
-        <Grid Margin="0,0,0,8">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="ALabel"/>
-            <ColumnDefinition Width="Auto" MinWidth="120"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Start weight:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="2000" FormatString="0.0" Increment="1"
@@ -466,11 +460,11 @@
           <TextBlock Grid.Column="2" Text="kg" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
         </Grid>
 
-        <Grid Margin="0,0,0,8">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="ALabel"/>
-            <ColumnDefinition Width="Auto" MinWidth="120"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="End weight:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="2000" FormatString="0.0" Increment="1"
@@ -478,11 +472,11 @@
           <TextBlock Grid.Column="2" Text="kg" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
         </Grid>
 
-        <Grid Margin="0,0,0,0">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="ALabel"/>
-            <ColumnDefinition Width="Auto" MinWidth="120"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Daily gain:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="10" FormatString="0.00" Increment="0.01"
@@ -492,19 +486,18 @@
       </StackPanel>
     </Border>
 
-    <!-- Milk Production Card (unique to Lactating) -->
+    <!-- ── Milk Production Card (unique to Lactating) ── -->
     <Border Classes="step-card">
-      <StackPanel Grid.IsSharedSizeScope="True">
+      <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
         <TextBlock Text="Milk Production" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
                    FontFamily="{StaticResource GcdsHeadingFont}" Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                   Margin="0,0,0,12"/>
+                   Margin="0,0,0,4"/>
 
-        <!-- Basic Milk Production Properties -->
-        <Grid Margin="0,0,0,8">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="MPLabel"/>
-            <ColumnDefinition Width="Auto" MinWidth="120"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Milk production:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
@@ -512,11 +505,11 @@
           <TextBlock Grid.Column="2" Text="kg/day" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
         </Grid>
 
-        <Grid Margin="0,0,0,8">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="MPLabel"/>
-            <ColumnDefinition Width="Auto" MinWidth="120"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Milk fat content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="10" FormatString="0.0" Increment="0.1"
@@ -524,11 +517,11 @@
           <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
         </Grid>
 
-        <Grid Margin="0,0,0,0">
+        <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="MPLabel"/>
-            <ColumnDefinition Width="Auto" MinWidth="120"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
           </Grid.ColumnDefinitions>
           <TextBlock Grid.Column="0" Text="Milk protein content:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="10" FormatString="0.0" Increment="0.1"
@@ -536,36 +529,33 @@
           <TextBlock Grid.Column="2" Text="%" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
         </Grid>
 
-        <!-- Advanced Milk Production Options -->
-        <StackPanel IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairyViews:DairyComponentView}, FallbackValue=False}">
-          <Separator Margin="0,12,0,12" Background="{StaticResource GcdsBorderDefaultBrush}"/>
-          <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                     FontWeight="SemiBold" Margin="0,0,0,8"/>
+        <Separator Background="{StaticResource GcdsBorderDefaultBrush}" Margin="0,4,0,0"/>
+        <TextBlock Text="Advanced" FontSize="{StaticResource GcdsFontSizeSmall}"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="SemiBold"/>
 
-          <Grid Margin="0,0,0,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MPLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Gain coefficient A:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.01"
-                           Value="{Binding GainCoefficientA}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="MJ/kg" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Gain coefficient A:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.01"
+                         Value="{Binding GainCoefficientA}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="MJ/kg" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
 
-          <Grid Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" SharedSizeGroup="MPLabel"/>
-              <ColumnDefinition Width="Auto" MinWidth="120"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Gain coefficient B:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.01"
-                           Value="{Binding GainCoefficientB}" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Column="2" Text="MJ/kg2" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
-          </Grid>
-        </StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Gain coefficient B:" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0000" Increment="0.01"
+                         Value="{Binding GainCoefficientB}" HorizontalAlignment="Stretch"/>
+          <TextBlock Grid.Column="2" Text="MJ/kg²" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </Grid>
       </StackPanel>
     </Border>
 

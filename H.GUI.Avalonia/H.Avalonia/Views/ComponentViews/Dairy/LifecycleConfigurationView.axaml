@@ -77,7 +77,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.CalfPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="⚠️ No Groups Defined"
+                      <TextBlock Text="No Groups Defined"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -116,7 +116,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="⚠️ No Group Selected"
+                    <TextBlock Text="No Group Selected"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -197,7 +197,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.HeiferPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="⚠️ No Groups Defined"
+                      <TextBlock Text="No Groups Defined"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -239,7 +239,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="⚠️ No Group Selected"
+                    <TextBlock Text="No Group Selected"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -320,7 +320,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.LactatingPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="⚠️ No Groups Defined"
+                      <TextBlock Text="No Groups Defined"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -359,7 +359,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="⚠️ No Group Selected"
+                    <TextBlock Text="No Group Selected"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -440,7 +440,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.DryPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="⚠️ No Groups Defined"
+                      <TextBlock Text="No Groups Defined"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -479,7 +479,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="⚠️ No Group Selected"
+                    <TextBlock Text="No Group Selected"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
@@ -516,7 +516,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                 </Border>
                 <!-- Title and Description -->
                 <TextBlock Text="Management Practices Configuration" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="⬆️ Click a stage card above to configure management practices" 
+                <TextBlock Text="Click a stage card above to configure management practices" 
                           FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0" FontWeight="SemiBold"/>
               </StackPanel>
             </Border>

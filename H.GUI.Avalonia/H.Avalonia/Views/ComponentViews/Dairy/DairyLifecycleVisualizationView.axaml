@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -71,15 +71,15 @@
         </Border>
 
         <!-- Arrow 1: Calf to Heifer -->
-        <Path Canvas.Left="210" 
-              Canvas.Top="165"
-              Stroke="#424242" 
+        <Path Canvas.Left="205"
+              Canvas.Top="170"
+              Stroke="#424242"
               StrokeThickness="3"
-              Data="M 0,0 L 60,0 M 55,-5 L 60,0 L 55,5"/>
-        <TextBlock Canvas.Left="220" 
-                   Canvas.Top="145"
-                   Text="Weaning" 
-                   FontSize="10" 
+              Data="M 0,0 L 70,0 M 65,-5 L 70,0 L 65,5"/>
+        <TextBlock Canvas.Left="215"
+                   Canvas.Top="150"
+                   Text="Weaning"
+                   FontSize="10"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontStyle="Italic"/>
 
@@ -116,15 +116,15 @@
         </Border>
 
         <!-- Arrow 2: Heifer to Lactating (straight horizontal) -->
-        <Path Canvas.Left="460" 
-              Canvas.Top="165"
-              Stroke="#424242" 
+        <Path Canvas.Left="455"
+              Canvas.Top="170"
+              Stroke="#424242"
               StrokeThickness="3"
-              Data="M 0,0 L 60,0 M 55,-5 L 60,0 L 55,5"/>
-        <TextBlock Canvas.Left="463" 
-                   Canvas.Top="145"
-                   Text="First Calving" 
-                   FontSize="10" 
+              Data="M 0,0 L 70,0 M 65,-5 L 70,0 L 65,5"/>
+        <TextBlock Canvas.Left="458"
+                   Canvas.Top="150"
+                   Text="First Calving"
+                   FontSize="10"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontWeight="Bold"/>
 
@@ -161,15 +161,15 @@
         </Border>
 
         <!-- Arrow 3: Lactating to Dry (straight horizontal) -->
-        <Path Canvas.Left="730" 
-              Canvas.Top="165"
-              Stroke="#424242" 
+        <Path Canvas.Left="725"
+              Canvas.Top="170"
+              Stroke="#424242"
               StrokeThickness="3"
-              Data="M 0,0 L 60,0 M 55,-5 L 60,0 L 55,5"/>
-        <TextBlock Canvas.Left="738" 
-                   Canvas.Top="145"
-                   Text="Drying Off" 
-                   FontSize="10" 
+              Data="M 0,0 L 70,0 M 65,-5 L 70,0 L 65,5"/>
+        <TextBlock Canvas.Left="730"
+                   Canvas.Top="150"
+                   Text="Drying Off"
+                   FontSize="10"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontWeight="Bold"/>
 
@@ -206,16 +206,27 @@
         </Border>
 
         <!-- Arrow 4: Dry back to Lactating (curved up - completing the cycle) -->
-        <Path Canvas.Left="505" 
+        <!-- Arc curve only (dashed): from Dry left (795) to Lactating right (725) -->
+        <Path Canvas.Left="720"
               Canvas.Top="95"
-              Stroke="#424242" 
+              Stroke="#424242"
               StrokeThickness="3"
               StrokeDashArray="4,2"
-              Data="M 380,0 Q 350,-40 10,-40 Q -30,-40 -30,0 M -35,-5 L -30,0 L -35,5"/>
-        <TextBlock Canvas.Left="645" 
+              Data="M 75,5 Q 37,-45 0,5"/>
+        <!-- Arrowhead pointing left-and-slightly-down to match curve arrival angle -->
+        <Path Canvas.Left="716"
+              Canvas.Top="91"
+              Stroke="#424242"
+              StrokeThickness="3"
+              Data="M 8,0 L 0,5 L 8,10">
+          <Path.RenderTransform>
+            <RotateTransform Angle="-35" CenterX="4" CenterY="5"/>
+          </Path.RenderTransform>
+        </Path>
+        <TextBlock Canvas.Left="645"
                    Canvas.Top="35"
-                   Text="CALVING - Cycle Repeats" 
-                   FontSize="11" 
+                   Text="CALVING - Cycle Repeats"
+                   FontSize="11"
                    Foreground="#D32F2F"
                    FontWeight="Bold"/>
 
@@ -226,8 +237,9 @@
               StrokeThickness="2"
               StrokeDashArray="3,2"
               Data="M 0,0 L 0,50 M -5,45 L 0,50 L 5,45"/>
-        <Border Canvas.Left="545" 
+        <Border Canvas.Left="545"
                 Canvas.Top="300"
+                Width="160"
                 Background="#FFEBEE"
                 BorderBrush="{Binding IsCullingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                 BorderThickness="{Binding IsCullingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
@@ -249,14 +261,15 @@
         </Border>
 
         <!-- Replacement Arrow from Heifer up to replace culled -->
-        <Path Canvas.Left="365" 
+        <Path Canvas.Left="365"
               Canvas.Top="245"
-              Stroke="#2E7D32" 
+              Stroke="#2E7D32"
               StrokeThickness="2"
               StrokeDashArray="3,2"
               Data="M 0,0 L 0,50 M -5,45 L 0,50 L 5,45"/>
-        <Border Canvas.Left="270" 
+        <Border Canvas.Left="285"
                 Canvas.Top="300"
+                Width="160"
                 Background="#E8F5E9"
                 BorderBrush="{Binding IsReplacementSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                 BorderThickness="{Binding IsReplacementSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
@@ -296,7 +309,7 @@
                        FontWeight="Bold"
                        Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
             <Button Grid.Column="1"
-                    Content="✕"
+                    Content="X"
                     Background="Transparent"
                     BorderThickness="0"
                     FontSize="14"

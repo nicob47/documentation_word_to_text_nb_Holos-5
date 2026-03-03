@@ -6,6 +6,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Disable shared Roslyn compiler so VBCSCompiler.exe doesn't hold file locks -->
+  <!-- Disable Avalonia XAML IL debug info so original.pdb is never generated -->
+  <PropertyGroup>
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <AvaloniaXamlIlDebugInfo>false</AvaloniaXamlIlDebugInfo>
+  </PropertyGroup>
+
+  <!-- Clean up Avalonia XAML compiler intermediate files before each build
+       to prevent 'original.pdb is locked by another process' errors -->
+  <Target Name="CleanAvaloniaObj" BeforeTargets="BeforeBuild">
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
+  </Target>
+
   <ItemGroup>
     <None Remove="Resources\Alberta_No_Styles.kml" />
     <None Remove="Resources\BC_No_Styles.kml" />

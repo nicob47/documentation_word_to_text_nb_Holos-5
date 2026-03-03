@@ -49,22 +49,27 @@ public class SelectAllOnFocusBehavior : Behavior<NumericUpDown>
 
     /// <summary>
     /// Handles the GotFocus event by selecting all text in the NumericUpDown's inner TextBox.
+    /// Only fires when focus lands inside this specific control, not from a bubbled event.
     /// </summary>
     private void OnGotFocus(object? sender, GotFocusEventArgs e)
     {
-        if (sender is NumericUpDown numericUpDown)
+        if (sender is not NumericUpDown numericUpDown)
+            return;
+
+        // Find the inner TextBox for this specific NumericUpDown
+        var textBox = FindTextBoxInTemplate(numericUpDown);
+        if (textBox == null)
+            return;
+
+        // Ignore bubbled focus events — only act when focus landed on our own inner TextBox
+        if (e.Source is not TextBox sourceTb || sourceTb != textBox)
+            return;
+
+        // Use a dispatcher to ensure the selection happens after the control is fully focused
+        Dispatcher.UIThread.Post(() =>
         {
-            // Use a dispatcher to ensure the selection happens after the control is fully focused
-            Dispatcher.UIThread.Post(() =>
-            {
-                // Find the inner TextBox within the NumericUpDown template
-                var textBox = FindTextBoxInTemplate(numericUpDown);
-                if (textBox != null)
-                {
-                    textBox.SelectAll();
-                }
-            }, DispatcherPriority.Input);
-        }
+            textBox.SelectAll();
+        }, DispatcherPriority.Input);
     }
 
     /// <summary>

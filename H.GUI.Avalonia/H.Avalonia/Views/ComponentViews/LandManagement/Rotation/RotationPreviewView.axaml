@@ -98,6 +98,7 @@
                                                             <Border Background="{Binding CropBackground}"
                                                                     Padding="8,8"
                                                                     Width="120"
+                                                                    Height="80"
                                                                     CornerRadius="4"
                                                                     BorderBrush="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderBrushConverter}}"
                                                                     BorderThickness="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderThicknessConverter}}">
@@ -106,7 +107,7 @@
                                                                         <Setter Property="Opacity" Value="0.85"/>
                                                                     </Style>
                                                                 </Border.Styles>
-                                                                <StackPanel Spacing="4">
+                                                                <StackPanel Spacing="4" VerticalAlignment="Center">
                                                                     <!-- Year label -->
                                                                     <TextBlock Text="{Binding Year}"
                                                                                FontSize="12"

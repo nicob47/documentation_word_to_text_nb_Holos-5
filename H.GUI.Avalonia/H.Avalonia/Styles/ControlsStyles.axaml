@@ -558,4 +558,14 @@
 			</i:BehaviorCollectionTemplate>
 		</Setter>
 	</Style>
+	<!-- Ensure only the focused/hovered NumericUpDown shows a highlight border -->
+	<Style Selector="NumericUpDown /template/ TextBox">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderLightBrush}"/>
+	</Style>
+	<Style Selector="NumericUpDown:focus-within /template/ TextBox">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+	</Style>
+	<Style Selector="NumericUpDown:pointerover /template/ TextBox">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
+	</Style>
 </Styles>
