@@ -127,7 +127,19 @@
                                                     <ComboBox ItemsSource="{Binding ValidCropTypes}"
                                                               SelectedItem="{Binding CropType}"
                                                               MinWidth="140"
-                                                              HorizontalAlignment="Stretch" />
+                                                              HorizontalAlignment="Stretch">
+                                                        <ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Border Background="{Binding Converter={StaticResource CropTypeToColorConverter}}"
+                                                                        Padding="6,3"
+                                                                        CornerRadius="3"
+                                                                        Margin="-8,0">
+                                                                    <TextBlock Text="{Binding}"
+                                                                               FontSize="13"/>
+                                                                </Border>
+                                                            </DataTemplate>
+                                                        </ComboBox.ItemTemplate>
+                                                    </ComboBox>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>
