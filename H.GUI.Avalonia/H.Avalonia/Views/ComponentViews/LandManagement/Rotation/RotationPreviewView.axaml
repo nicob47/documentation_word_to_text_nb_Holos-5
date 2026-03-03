@@ -98,7 +98,7 @@
                                                             <Border Background="{Binding CropBackground}"
                                                                     Padding="8,8"
                                                                     Width="120"
-                                                                    Height="64"
+                                                                    Height="72"
                                                                     CornerRadius="4"
                                                                     BorderBrush="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderBrushConverter}}"
                                                                     BorderThickness="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderThicknessConverter}}">
