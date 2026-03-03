@@ -135,7 +135,8 @@
                                                     <ComboBox ItemsSource="{Binding GroupedCropItems}"
                                                               SelectedItem="{Binding SelectedCropTypeItem}"
                                                               ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
-                                                              Width="180"
+                                                              HorizontalAlignment="Stretch"
+                                                              MinWidth="160"
                                                               MaxDropDownHeight="320"/>
                                                 </StackPanel>
                                             </StackPanel>
