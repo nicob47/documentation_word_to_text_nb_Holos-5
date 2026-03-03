@@ -13,14 +13,48 @@
   <PropertyGroup>
     <UseSharedCompilation>false</UseSharedCompilation>
     <XamlILDebugInfo>false</XamlILDebugInfo>
+    <!-- Belt-and-suspenders: also disable line numbers in the IL emitter -->
+    <AvaloniaXamlIlForceEnableLineNumbers>false</AvaloniaXamlIlForceEnableLineNumbers>
   </PropertyGroup>
 
-  <!-- Clean up Avalonia XAML compiler intermediate files before each build
-       to prevent 'original.pdb is locked by another process' errors -->
-  <Target Name="CleanAvaloniaObj" BeforeTargets="BeforeBuild">
-    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot;&quot;"
+  <!-- Prevent 'original.pdb / original.dll is locked' errors caused by
+       MSBuild worker node reuse.
+
+       When Avalonia's XAML IL compiler runs (AfterCompile), it copies the
+       Roslyn output DLL to $(IntermediateOutputPath)Avalonia\original.dll
+       (and the PDB to original.pdb) before patching the assembly in-place.
+       MSBuild keeps worker nodes alive between builds (node reuse), so the
+       node from the previous build still holds those files open, causing an
+       IOException on the next build.
+
+       Fix: Redirect AvaloniaXamlOriginalCopyFilePath to a build-session-
+       unique file name using a timestamp.  Each build writes to a fresh path,
+       so there is never a conflict with what the previous worker node holds.
+       Old original_*.dll / original_*.pdb files are cleaned up at BeforeBuild. -->
+
+  <!-- Set AvaloniaXamlOriginalCopyFilePath to a build-session-unique path
+       inside a Target so that $(IntermediateOutputPath) is fully resolved.
+       This target must run before CompileAvaloniaXaml. -->
+  <Target Name="SetAvaloniaOriginalCopyPath" BeforeTargets="CompileAvaloniaXaml">
+    <PropertyGroup>
+      <_AvaloniaBuildStamp>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_AvaloniaBuildStamp>
+      <AvaloniaXamlOriginalCopyFilePath>$(IntermediateOutputPath)Avalonia\original_$(_AvaloniaBuildStamp).dll</AvaloniaXamlOriginalCopyFilePath>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CleanAvaloniaOriginalBackups" BeforeTargets="BeforeBuild">
+    <!-- Kill published / self-contained executable if running -->
+    <Exec Command="taskkill /F /IM H.Avalonia.exe 2&gt;nul"
           ContinueOnError="true" IgnoreExitCode="true"/>
+    <!-- Delete stale original_*.dll / original_*.pdb backup files from obj\Avalonia\ -->
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original_*.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original_*.dll&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original_*.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original_*.pdb&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
+    <!-- Also clean legacy 'original.dll' / 'original.pdb' from before this fix -->
     <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot;&quot;"
+          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot;&quot;"
           ContinueOnError="true" IgnoreExitCode="true"/>
   </Target>
 
