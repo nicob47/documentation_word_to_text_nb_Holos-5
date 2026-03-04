@@ -106,6 +106,7 @@ jobs:
           --no-build --configuration Release
           --logger "trx;LogFileName=H.Avalonia.Test.trx"
           --results-directory TestResults
+          --filter "TestCategory!=Integration"
 
       - name: Publish test results
         uses: actions/upload-artifact@v4

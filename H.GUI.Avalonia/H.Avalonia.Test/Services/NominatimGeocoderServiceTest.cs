@@ -81,6 +81,7 @@ namespace H.Avalonia.Test.Services
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGeocoderLongLat()
         {
             _nominatimGeocoderService = new NominatimGeocoderService(_loggerMock, _notificationManagerServiceMock);
@@ -90,6 +91,7 @@ namespace H.Avalonia.Test.Services
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGeocoderGetApiContent()
         {
             _nominatimGeocoderService = new NominatimGeocoderService(_loggerMock, _notificationManagerServiceMock);
@@ -101,6 +103,7 @@ namespace H.Avalonia.Test.Services
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestCachingOfGeocodedData()
         {
             // Test that after geocoding an address, it is cached
