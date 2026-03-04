@@ -11,9 +11,48 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # ── Security: scans the dependency diff on PRs for known CVEs ────────────
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: always
+
+  # ── Security: scans all packages (direct + transitive) for CVEs ──────────
+  vulnerability-scan:
+    name: Vulnerability Scan
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore Holos.sln
+
+      - name: Scan for vulnerable packages
+        run: dotnet list Holos.sln package --vulnerable --include-transitive
+
+  # ── Build and test ────────────────────────────────────────────────────────
   build-and-test:
     name: Build & Test (.NET 9 / Windows)
     runs-on: windows-latest
+    needs: vulnerability-scan
 
     steps:
       - name: Checkout
