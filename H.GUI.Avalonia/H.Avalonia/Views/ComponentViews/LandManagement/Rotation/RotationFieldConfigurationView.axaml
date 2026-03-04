@@ -20,12 +20,6 @@
 
     <!-- Field Configuration Section -->
     <StackPanel x:Name="FieldConfigurationPanel" Grid.IsSharedSizeScope="True">
-        <TextBlock x:Name="FieldConfigurationTitleTextBlock"
-                   Text="Field Configuration"
-                   FontWeight="Bold"
-                   FontFamily="{StaticResource GcdsHeadingFont}"
-                   Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                   Margin="0,0,0,12"/>
 
         <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
