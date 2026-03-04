@@ -29,7 +29,6 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="8"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -49,15 +48,15 @@
                    Content=""/>
 
             <!-- Field Area -->
-            <Label Grid.Row="2" Grid.Column="0"
+            <Label Grid.Row="1" Grid.Column="0"
                    Content="Area:"
                    Classes="input-label"/>
             <NumericUpDown x:Name="FieldAreaInputNumericUpDown"
-                           Grid.Row="2" Grid.Column="1"
+                           Grid.Row="1" Grid.Column="1"
                            Minimum="0.1"
                            Value="{Binding Path=SelectedRotationComponentDto.FieldArea}"/>
             <Label x:Name="FieldAreaUnitLabel"
-                   Grid.Row="2" Grid.Column="2"
+                   Grid.Row="1" Grid.Column="2"
                    Classes="unit-label"
                    Content="{Binding Path=StorageService.Storage.ApplicationData.DisplayUnitStrings.HectaresString}"/>
         </Grid>
