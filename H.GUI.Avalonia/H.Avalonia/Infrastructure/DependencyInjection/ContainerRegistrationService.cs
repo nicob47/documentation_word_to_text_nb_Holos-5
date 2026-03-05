@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using AutoMapper;
 using H.Avalonia.Infrastructure.Dialogs;
 using H.Avalonia.Infrastructure.MapperServices;
@@ -240,7 +241,16 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
         {
             _logger.LogDebug("Registering results views");
 
+            
+            containerRegistry.RegisterForNavigation<ResultsSummaryView, ResultsSummaryViewModel>();
+            containerRegistry.RegisterForNavigation<MultiYearCarbonModellingView, MultiYearCarbonModellingViewModel>();
+            containerRegistry.RegisterForNavigation<EstimatesOfProductionView, EstimatesOfProductionViewModel>();
+            containerRegistry.RegisterForNavigation<FeedEstimateReportView, FeedEstimateReportViewModel>();
+            containerRegistry.RegisterForNavigation<ManureManagementResultsView, ManureManagementResultsViewModel>();
             containerRegistry.RegisterForNavigation<EmissionPieChartView, EmissionPieChartViewModel>();
+            containerRegistry.RegisterForNavigation<OverallEmissionsResultsView, OverallEmissionsResultsViewModel>();
+            containerRegistry.RegisterForNavigation<ComponentEmissionsResultsView, ComponentEmissionsResultsViewModel>();
+            containerRegistry.RegisterForNavigation<DetailedEmissionsReportResultsView, DetailedEmissionsReportResultsViewModel>();
 
             _logger.LogDebug("Completed registration of results views");
         }

@@ -17,7 +17,8 @@ namespace H.Avalonia.ViewModels.Results
         #region Fields
 
         private object _selectedItem;
-        private bool _isBasicMode;
+        private bool _isAdvancedMode = false;
+        private object _lastSelectedAdvancedItem;
 
         #endregion
 
@@ -38,19 +39,29 @@ namespace H.Avalonia.ViewModels.Results
             set => SetProperty(ref _selectedItem, value);
         }
 
-        public bool IsBasicMode
+        public object LastSelectedAdvancedItem
         {
-            get => _isBasicMode;
+            get => _lastSelectedAdvancedItem;
             set
             {
-                if (SetProperty(ref _isBasicMode, value))
+                if (!IsAdvancedMode)
                 {
-                    OnBasicModeChanged();
+                    SetProperty(ref _lastSelectedAdvancedItem, value);
                 }
             }
         }
 
-        public bool IsAdvancedMode => !IsBasicMode;
+        public bool IsAdvancedMode
+        {
+            get => _isAdvancedMode;
+            set
+            {
+                if (SetProperty(ref _isAdvancedMode, value))
+                {
+                    OnResultModeChanged();
+                }
+            }
+        }
 
         #endregion
 
@@ -80,31 +91,29 @@ namespace H.Avalonia.ViewModels.Results
                 switch (selectedOption)
                 {
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleMultiYearCarbonModelling:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(MultiYearCarbonModellingView));
+
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleEstimatesOfProduction:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EstimatesOfProductionView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleFeedEstimateReport:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FeedEstimateReportView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.LabelManureManagement:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
-                        break;
-                    case var _ when selectedOption == H.Core.Properties.Resources.TitleEconomics:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ManureManagementResultsView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleEmissionsPieChart:
                         base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EmissionPieChartView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleOverallEmissions:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(OverallEmissionsResultsView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleComponentEmissions:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ComponentEmissionsResultsView));
                         break;
                     case var _ when selectedOption == H.Core.Properties.Resources.TitleDetailedEmissionsReport:
-                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                        base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(DetailedEmissionsReportResultsView));
                         break;
                 }
             }
@@ -117,23 +126,22 @@ namespace H.Avalonia.ViewModels.Results
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             this.PropertyChanged += OnSelectedOptionChanged;
+            SelectedItem = new ListBoxItem { Content = H.Core.Properties.Resources.TitleMultiYearCarbonModelling };
         }
 
-        private void OnBasicModeChanged()
+        private void OnResultModeChanged()
         {
-            // Notify that IsAdvancedMode has also changed
-            RaisePropertyChanged(nameof(IsAdvancedMode));
-
-            // Navigate to appropriate view based on mode
-            if (IsBasicMode)
+            // Store current advanced tab, navigate to summary when switching to basic
+            if (!IsAdvancedMode)
             {
-                // Navigate to summary report view
-                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                //_lastSelectedAdvancedItem = _selectedItem;
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
             }
+            // Restore last advanced tab if switching back to advanced
             else
             {
-                // Navigate back to detailed results
-                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
+                //SelectedItem = _lastSelectedAdvancedItem;
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(MultiYearCarbonModellingView));
             }
         }
 

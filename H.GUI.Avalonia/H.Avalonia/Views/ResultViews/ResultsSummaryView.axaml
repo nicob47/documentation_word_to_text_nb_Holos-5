@@ -1,0 +1,521 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
+             x:Class="H.Avalonia.Views.ResultViews.ResultsSummaryView">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" MaxWidth="900">
+            
+            <!-- Document Title -->
+            <TextBlock Text="Farm GHG Emissions Summary Report" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="#1f497a"
+                       Margin="0,0,0,30"
+                       TextAlignment="Center"/>
+
+            <!-- 1. Farm Profile -->
+            <Border x:Name="FarmProfileSection"
+                    Background="#f8f9fa" 
+                    BorderBrush="#dee2e6" 
+                    BorderThickness="1" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="1. Farm Profile" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock Text="Farm Overview" 
+                               FontSize="16" 
+                               FontWeight="SemiBold" 
+                               Foreground="#34495e"
+                               Margin="0,0,0,10"/>
+                    
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="14"
+                               Margin="0,0,0,15">
+                        <Run Text="This report summarizes the greenhouse gas emissions profile for "/>
+                        <Run Text="{Binding FarmName}" FontWeight="Bold"/>
+                        <Run Text=", located in "/>
+                        <Run Text="{Binding Location}" FontWeight="Bold"/>
+                        <Run Text=". The farm encompasses "/>
+                        <Run Text="{Binding TotalArea, StringFormat='{}{0:N1}'}" FontWeight="Bold"/>
+                        <Run Text=" hectares of agricultural land and represents a mixed farming operation typical of the region."/>
+                    </TextBlock>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" Margin="0,10,0,0">
+                        <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,5">
+                            <TextBlock Text="Total Farm Area:" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="{Binding TotalArea, StringFormat='{}{0:N1} hectares'}" FontSize="13" Foreground="#666"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Grid.Row="0" Margin="0,5">
+                            <TextBlock Text="Location:" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="{Binding Location}" FontSize="13" Foreground="#666"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,5">
+                            <TextBlock Text="Primary Crops:" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="{Binding PrimaryCrops}" TextWrapping="Wrap" FontSize="13" Foreground="#666"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,5">
+                            <TextBlock Text="Livestock:" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="{Binding LivestockTypes}" TextWrapping="Wrap" FontSize="13" Foreground="#666"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 2. Annual Production Summary -->
+            <Border x:Name="AnnualProductionSection"
+                    Background="#f8f9fa" 
+                    BorderBrush="#dee2e6" 
+                    BorderThickness="1" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="2. Annual Production Summary" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="14" 
+                               LineHeight="22"
+                               Margin="0,0,0,15">
+                        The farm's annual production represents a diverse agricultural output, combining crop and livestock enterprises. These production figures form the basis for calculating emission intensities and evaluating the environmental efficiency of farm operations.
+                    </TextBlock>
+
+                    <TextBlock Text="Crop Production" 
+                               FontSize="16" 
+                               FontWeight="SemiBold" 
+                               Foreground="#34495e"
+                               Margin="0,10,0,10"/>
+
+                    <Grid ColumnDefinitions="2*,*,*" RowDefinitions="Auto,Auto,Auto,Auto" 
+                          Margin="10,0,0,0">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Category" FontWeight="Bold" FontSize="13" Margin="0,5"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="Production" FontWeight="Bold" FontSize="13" Margin="0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Text="Unit" FontWeight="Bold" FontSize="13" Margin="10,5,0,5" HorizontalAlignment="Right"/>
+                        
+                        <Rectangle Grid.ColumnSpan="3" Grid.Row="0" Height="1" Fill="#dee2e6" Margin="0,8,0,0" VerticalAlignment="Bottom"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Total Grain" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TotalGrainProduction, StringFormat='{}{0:N1}'}" FontSize="13" Margin="0,8" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" Text="tonnes" FontSize="13" Margin="10,8,0,8" HorizontalAlignment="Right"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Total Forage" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding TotalForageProduction, StringFormat='{}{0:N1}'}" FontSize="13" Margin="0,8" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="2" Text="tonnes DM" FontSize="13" Margin="10,8,0,8" HorizontalAlignment="Right"/>
+                    </Grid>
+
+                    <TextBlock Text="Livestock Production" 
+                               FontSize="16" 
+                               FontWeight="SemiBold" 
+                               Foreground="#34495e"
+                               Margin="0,20,0,10"/>
+
+                    <Grid ColumnDefinitions="2*,*,*" RowDefinitions="Auto,Auto,Auto" 
+                          Margin="10,0,0,0">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Category" FontWeight="Bold" FontSize="13" Margin="0,5"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="Production" FontWeight="Bold" FontSize="13" Margin="0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Text="Unit" FontWeight="Bold" FontSize="13" Margin="10,5,0,5" HorizontalAlignment="Right"/>
+                        
+                        <Rectangle Grid.ColumnSpan="3" Grid.Row="0" Height="1" Fill="#dee2e6" Margin="0,8,0,0" VerticalAlignment="Bottom"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Total Beef" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TotalBeefProduction, StringFormat='{}{0:N0}'}" FontSize="13" Margin="0,8" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" Text="kg" FontSize="13" Margin="10,8,0,8" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 3. Total GHG Emissions -->
+            <Border x:Name="TotalGHGEmissionsSection"
+                    Background="#fff3cd" 
+                    BorderBrush="#ffc107" 
+                    BorderThickness="2" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="3. Total GHG Emissions" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="14" 
+                               LineHeight="22"
+                               Margin="0,0,0,15">
+                        The total greenhouse gas emissions represent the combined impact of all farming activities, expressed in carbon dioxide equivalents (CO₂e). This metric allows for comparison across different emission sources and farming systems.
+                    </TextBlock>
+
+                    <Grid ColumnDefinitions="*,*,*" Margin="0,10">
+                        <Border Grid.Column="0" Background="White" CornerRadius="6" Padding="15" Margin="5">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Total Emissions" FontSize="12" Foreground="#666" TextAlignment="Center" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding TotalGHGEmissions, StringFormat='{}{0:N1}'}" 
+                                           FontSize="24" 
+                                           FontWeight="Bold" 
+                                           Foreground="#e74c3c"
+                                           TextAlignment="Center"/>
+                                <TextBlock Text="tonnes CO₂e/year" FontSize="11" Foreground="#666" TextAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border Grid.Column="1" Background="White" CornerRadius="6" Padding="15" Margin="5">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Per Hectare" FontSize="12" Foreground="#666" TextAlignment="Center" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding EmissionsPerHectare, StringFormat='{}{0:N2}'}" 
+                                           FontSize="24" 
+                                           FontWeight="Bold" 
+                                           Foreground="#e67e22"
+                                           TextAlignment="Center"/>
+                                <TextBlock Text="tonnes CO₂e/ha" FontSize="11" Foreground="#666" TextAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border Grid.Column="2" Background="White" CornerRadius="6" Padding="15" Margin="5">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Net Carbon Balance" FontSize="12" Foreground="#666" TextAlignment="Center" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding NetCarbonBalance, StringFormat='{}{0:N1}'}" 
+                                           FontSize="24" 
+                                           FontWeight="Bold" 
+                                           Foreground="#27ae60"
+                                           TextAlignment="Center"/>
+                                <TextBlock Text="tonnes CO₂e/year" FontSize="11" Foreground="#666" TextAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="13" 
+                               FontStyle="Italic"
+                               Foreground="#856404"
+                               Margin="0,10,0,0">
+                        Note: A negative net carbon balance indicates that carbon sequestration partially offsets gross emissions.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- 4. Emissions Breakdown by Category -->
+            <Border x:Name="EmissionsBreakdownSection"
+                    Background="#f8f9fa" 
+                    BorderBrush="#dee2e6" 
+                    BorderThickness="1" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="4. Emissions Breakdown by Category" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="14" 
+                               LineHeight="22"
+                               Margin="0,0,0,15">
+                        Understanding the sources of emissions is critical for targeting reduction strategies. The following breakdown identifies the major contributors to the farm's carbon footprint.
+                    </TextBlock>
+
+                    <!-- Emissions bars -->
+                    <StackPanel Margin="0,10,0,0">
+                        <!-- Enteric Fermentation -->
+                        <Grid ColumnDefinitions="200,*,80" Margin="0,10">
+                            <TextBlock Grid.Column="0" Text="Enteric Fermentation" FontSize="13" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#e8eef7" Height="30" CornerRadius="4" Margin="10,0">
+                                <Border Background="#3498db" 
+                                        Height="30" 
+                                        CornerRadius="4"    
+                                        HorizontalAlignment="Left"
+                                        Width="{Binding EntericFermentationWidth}"/>
+                            </Border>
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding EntericFermentationPercent, StringFormat='{}{0:F1}%'}" 
+                                       FontSize="13" 
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <!-- Manure Management -->
+                        <Grid ColumnDefinitions="200,*,80" Margin="0,10">
+                            <TextBlock Grid.Column="0" Text="Manure Management" FontSize="13" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#e8eef7" Height="30" CornerRadius="4" Margin="10,0">
+                                <Border Background="#e67e22" 
+                                        Height="30" 
+                                        CornerRadius="4"
+                                        HorizontalAlignment="Left"
+                                        Width="{Binding ManureManagementWidth}"/>
+                            </Border>
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding ManureManagementPercent, StringFormat='{}{0:F1}%'}" 
+                                       FontSize="13" 
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <!-- Soil N2O -->
+                        <Grid ColumnDefinitions="200,*,80" Margin="0,10">
+                            <TextBlock Grid.Column="0" Text="Soil N₂O Emissions" FontSize="13" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#e8eef7" Height="30" CornerRadius="4" Margin="10,0">
+                                <Border Background="#27ae60" 
+                                        Height="30" 
+                                        CornerRadius="4"
+                                        HorizontalAlignment="Left"
+                                        Width="{Binding SoilN2OWidth}"/>
+                            </Border>
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding SoilN2OPercent, StringFormat='{}{0:F1}%'}" 
+                                       FontSize="13" 
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <!-- Energy Use -->
+                        <Grid ColumnDefinitions="200,*,80" Margin="0,10">
+                            <TextBlock Grid.Column="0" Text="Energy Use" FontSize="13" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#e8eef7" Height="30" CornerRadius="4" Margin="10,0">
+                                <Border Background="#95a5a6" 
+                                        Height="30" 
+                                        CornerRadius="4"
+                                        HorizontalAlignment="Left"
+                                        Width="{Binding EnergyUseWidth}"/>
+                            </Border>
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding EnergyUsePercent, StringFormat='{}{0:F1}%'}" 
+                                       FontSize="13" 
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- 5. Carbon Sequestration Summary -->
+            <Border x:Name="CarbonSequestrationSection"
+                    Background="#d4edda" 
+                    BorderBrush="#28a745" 
+                    BorderThickness="2" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="5. Carbon Sequestration Summary" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="14" 
+                               LineHeight="22"
+                               Margin="0,0,0,15">
+                        Carbon sequestration represents the farm's capacity to remove atmospheric CO₂ and store it in biomass and soil. These natural climate solutions provide an important offset to farm emissions.
+                    </TextBlock>
+
+                    <Border Background="White" CornerRadius="6" Padding="20" Margin="0,10,0,15">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="Total Annual Carbon Sequestration" FontSize="14" Foreground="#666" TextAlignment="Center" Margin="0,0,0,8"/>
+                            <TextBlock Text="{Binding TotalCarbonSequestered, StringFormat='{}{0:N1}'}" 
+                                       FontSize="32" 
+                                       FontWeight="Bold" 
+                                       Foreground="#28a745"
+                                       TextAlignment="Center"/>
+                            <TextBlock Text="tonnes CO₂e/year" FontSize="13" Foreground="#666" TextAlignment="Center" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="Sequestration by Land Use" 
+                               FontSize="16" 
+                               FontWeight="SemiBold" 
+                               Foreground="#155724"
+                               Margin="0,15,0,10"/>
+
+                    <Grid ColumnDefinitions="*,*,*" Margin="0,5">
+                        <Border Grid.Column="0" Background="White" CornerRadius="6" Padding="12" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Shelterbelts" FontSize="12" Foreground="#666" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding ShelterbeltsSequestration, StringFormat='{}{0:N1}'}" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           Foreground="#28a745"/>
+                                <TextBlock Text="tonnes CO₂e" FontSize="10" Foreground="#666" Margin="0,3,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Background="White" CornerRadius="6" Padding="12" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Pastureland" FontSize="12" Foreground="#666" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding PasturelandSequestration, StringFormat='{}{0:N1}'}" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           Foreground="#28a745"/>
+                                <TextBlock Text="tonnes CO₂e" FontSize="10" Foreground="#666" Margin="0,3,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Background="White" CornerRadius="6" Padding="12" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Cropped Land" FontSize="12" Foreground="#666" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding CroppedLandSequestration, StringFormat='{}{0:N1}'}" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           Foreground="#28a745"/>
+                                <TextBlock Text="tonnes CO₂e" FontSize="10" Foreground="#666" Margin="0,3,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 6. Manure Management Overview -->
+            <Border x:Name="ManureManagementSection"
+                    Background="#f8f9fa" 
+                    BorderBrush="#dee2e6" 
+                    BorderThickness="1" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="6. Manure Management Overview" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="14" 
+                               LineHeight="22"
+                               Margin="0,0,0,15">
+                        Manure management practices significantly influence farm emissions, particularly methane (CH₄) and nitrous oxide (N₂O). The choice of storage and handling systems determines emission rates and nutrient recovery potential.
+                    </TextBlock>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,10">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Storage System:" FontWeight="SemiBold" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding ManureStorageType}" FontSize="13" Margin="10,8"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Annual Manure Production:" FontWeight="SemiBold" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TotalManureProduced, StringFormat='{}{0:N0} tonnes/year'}" FontSize="13" Margin="10,8"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="N₂O Emissions from Manure:" FontWeight="SemiBold" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding ManureN2OEmissions, StringFormat='{}{0:N1} tonnes CO₂e/year'}" FontSize="13" Margin="10,8"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="CH₄ Emissions from Manure:" FontWeight="SemiBold" FontSize="13" Margin="0,8"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding ManureCH4Emissions, StringFormat='{}{0:N1} tonnes CO₂e/year'}" FontSize="13" Margin="10,8"/>
+                    </Grid>
+
+                    <TextBlock TextWrapping="Wrap" 
+                               FontSize="13" 
+                               FontStyle="Italic"
+                               Foreground="#666"
+                               Margin="0,15,0,0">
+                        Improved manure storage and handling can reduce emissions while maintaining or improving nutrient value for crop production.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- 7. Key Findings and Recommendations -->
+            <Border x:Name="KeyFindingsSection"
+                    Background="#e7f3ff" 
+                    BorderBrush="#007bff" 
+                    BorderThickness="2" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="7. Key Findings and Recommendations" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,15"/>
+                    
+                    <TextBlock Text="Key Findings" 
+                               FontSize="18" 
+                               FontWeight="SemiBold" 
+                               Foreground="#004085"
+                               Margin="0,10,0,10"/>
+
+                    <StackPanel Margin="15,0,0,15">
+                        <Border Background="White" CornerRadius="6" Padding="12" Margin="0,5">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20">
+                                <Run Text="•  " FontWeight="Bold" FontSize="16"/>
+                                <Run Text="{Binding KeyFinding1}"/>
+                            </TextBlock>
+                        </Border>
+
+                        <Border Background="White" CornerRadius="6" Padding="12" Margin="0,5">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20">
+                                <Run Text="•  " FontWeight="Bold" FontSize="16"/>
+                                <Run Text="{Binding KeyFinding2}"/>
+                            </TextBlock>
+                        </Border>
+
+                        <Border Background="White" CornerRadius="6" Padding="12" Margin="0,5">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20">
+                                <Run Text="•  " FontWeight="Bold" FontSize="16"/>
+                                <Run Text="{Binding KeyFinding3}"/>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <TextBlock Text="Recommendations for Emission Reduction" 
+                               FontSize="18" 
+                               FontWeight="SemiBold" 
+                               Foreground="#004085"
+                               Margin="0,15,0,10"/>
+
+                    <StackPanel Margin="15,0,0,0">
+                        <Border Background="White" CornerRadius="6" Padding="12" Margin="0,5">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20">
+                                <Run Text="1.  " FontWeight="Bold" FontSize="14"/>
+                                <Run Text="{Binding Recommendation1}"/>
+                            </TextBlock>
+                        </Border>
+
+                        <Border Background="White" CornerRadius="6" Padding="12" Margin="0,5">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20">
+                                <Run Text="2.  " FontWeight="Bold" FontSize="14"/>
+                                <Run Text="{Binding Recommendation2}"/>
+                            </TextBlock>
+                        </Border>
+
+                        <Border Background="White" CornerRadius="6" Padding="12" Margin="0,5">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20">
+                                <Run Text="3.  " FontWeight="Bold" FontSize="14"/>
+                                <Run Text="{Binding Recommendation3}"/>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Footer -->
+            <TextBlock TextWrapping="Wrap" 
+                       FontSize="11" 
+                       Foreground="#999"
+                       TextAlignment="Center"
+                       Margin="0,20,0,30">
+                This report was generated using Holos - A whole-farm GHG emissions model developed by Agriculture and Agri-Food Canada. For detailed methodology and assumptions, please refer to the advanced results views.
+            </TextBlock>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

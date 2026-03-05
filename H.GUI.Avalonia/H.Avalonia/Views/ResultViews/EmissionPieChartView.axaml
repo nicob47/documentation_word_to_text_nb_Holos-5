@@ -14,11 +14,12 @@
                 Padding="16,12"
                 Margin="5,5,5,5"
                 Grid.Row="1"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                MinHeight="250">
 			<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 					<StackPanel Orientation="Vertical" Margin="10">
 						<TextBlock Text="Units of Measurement:" Margin="0 0 0 5"/>
-						<ComboBox>
+						<ComboBox SelectedIndex="0">
 							<ComboBoxItem>Kg CO2e</ComboBoxItem>
 							<ComboBoxItem>Mg CO2e</ComboBoxItem>
 							<ComboBoxItem>Kg GHGs</ComboBoxItem>
@@ -34,7 +35,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock Text="Year: "/>
-                    <ComboBox>
+                    <ComboBox SelectedIndex="0">
                         <ComboBoxItem>2026</ComboBoxItem>
                         <ComboBoxItem>2025</ComboBoxItem>
                         <ComboBoxItem>2024</ComboBoxItem>

@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-		<Grid Grid.Row="0" Grid.Column="0" Name="MyResultsHeaderHeaderGrid" HorizontalAlignment="Stretch">
+		<Grid Grid.Row="0" Grid.Column="0" Name="MyResultsHeaderHeaderGrid" HorizontalAlignment="Stretch" MinWidth="300">
 			<StackPanel Margin="10,10,10,5" VerticalAlignment="Center">
 				<Border Background="#F8F9FA" 
 					   BorderBrush="#E9ECEF" 
@@ -27,17 +27,16 @@
 
                     <Grid HorizontalAlignment="Stretch" RowDefinitions="*,*">
 						<TextBlock Grid.Row="0" Classes="title-textblock" Text="{x:Static properties:Resources.TitleResults}" HorizontalAlignment="Left"/>
-                        <ToggleSwitch Grid.Row="1" IsChecked="{Binding IsBasicMode, Mode=TwoWay}" OffContent="{x:Static properties:Resources.LabelBasicMode}" OnContent="{x:Static properties:Resources.LabelAdvancedMode}" ToolTip.Tip="Toggle between Basic and Advanced results view" HorizontalAlignment="Left" Margin="20, 0, 0, 0"/>
+                        <ToggleSwitch Grid.Row="1" IsChecked="{Binding IsAdvancedMode, Mode=TwoWay}" OffContent="{x:Static properties:Resources.LabelBasicMode}" OnContent="{x:Static properties:Resources.LabelAdvancedMode}" ToolTip.Tip="Toggle between Basic and Advanced results view" HorizontalAlignment="Left" Margin="20, 0, 0, 0"/>
 						<Button Grid.Row="1" HorizontalAlignment="Right" Padding="5" Margin="10,0" Background="Transparent" Classes="back-button" CornerRadius="50" Command="{Binding Path=OnOptionsExecute}">
-							<Image Source="avares://H.Avalonia/Assets/Images/Icons/Gear-icon.png" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
+							<Image Source="avares://H.Avalonia/Assets/Images/Icons/Gear-icon.png" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip.Tip="Settings"/>
 						</Button>
 					</Grid>
-
 				</Border>
 			</StackPanel>
 		</Grid>
         <!-- Basic Mode: Chapter headings for summary navigation -->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" IsVisible="{Binding IsBasicMode}">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" IsVisible="{Binding !IsAdvancedMode}">
             <Border Background="#F8F9FA" 
                     BorderBrush="#E9ECEF" 
                     BorderThickness="1" 
@@ -58,7 +57,7 @@
             </Border>
         </ScrollViewer>
         <!-- Advanced Mode -->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" IsVisible="{Binding !IsBasicMode}">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" IsVisible="{Binding IsAdvancedMode}">
             <Border Background="#F8F9FA" 
                     BorderBrush="#E9ECEF" 
                     BorderThickness="1" 
@@ -71,7 +70,6 @@
                         <ListBoxItem Content="{x:Static properties:Resources.TitleEstimatesOfProduction}"/>
                         <ListBoxItem Content="{x:Static properties:Resources.TitleFeedEstimateReport}"/>
                         <ListBoxItem Content="{x:Static properties:Resources.LabelManureManagement}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleEconomics}"/>
                         <ListBoxItem Content="{x:Static properties:Resources.TitleEmissionsPieChart}"/>
                         <ListBoxItem Content="{x:Static properties:Resources.TitleOverallEmissions}"/>
                         <ListBoxItem Content="{x:Static properties:Resources.TitleComponentEmissions}"/>
