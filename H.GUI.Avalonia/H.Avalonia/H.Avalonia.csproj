@@ -102,6 +102,7 @@
     <ProjectReference Include="..\..\H.Content\H.Content.csproj" />
     <ProjectReference Include="..\..\H.Core\H.Core.csproj" />
     <ProjectReference Include="..\..\H.Infrastructure\H.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\H.Localization\H.Localization.csproj" />
     <ProjectReference Include="..\H.Avalonia.Core\H.Avalonia.Core.csproj" />
     <ProjectReference Include="..\H.Avalonia.Infrastructure\H.Avalonia.Infrastructure.csproj" />
   </ItemGroup>

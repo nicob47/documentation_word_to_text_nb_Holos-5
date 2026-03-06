@@ -1,6 +1,7 @@
 using H.Core.Enumerations;
 using H.Core.Properties;
 using H.Infrastructure;
+using H.Localization;
 using Prism.Events;
 using Prism.Regions;
 using System;
@@ -16,11 +17,11 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
 
         private Languages _selectedLanguage;
 
-        private string _aboutHolosString = string.Empty;
-        private string _toBeKeptInformedString = string.Empty;
-        private string _disclaimerRtfString = string.Empty;
-        private string _versionString = string.Empty;
-        private string _disclaimerWordString = string.Empty;
+        private string _aboutHolosString;
+        private string _toBeKeptInformedString;
+        private string _disclaimerTitle;
+        private string _disclaimerText;
+        private string _versionString;
 
         private DelegateCommand<object> _okCommand = null!;
 
@@ -60,7 +61,13 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
         public Languages SelectedLanguage
         {
             get { return _selectedLanguage; }
-            set { SetProperty(ref _selectedLanguage, value); }
+            set
+            {
+                if (SetProperty(ref _selectedLanguage, value))
+                {
+                    OnLanguageChanged();
+                }
+            }
         }
 
         public string AboutHolosString
@@ -75,15 +82,16 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
             set { SetProperty(ref _toBeKeptInformedString, value); }
         }
 
-        public string DisclaimerRtfString
+        public string DisclaimerTitle
         {
-            get { return _disclaimerRtfString; }
-            set { SetProperty(ref _disclaimerRtfString, value); }
+            get { return _disclaimerTitle; }
+            set { SetProperty(ref _disclaimerTitle, value); }
         }
-        public string DisclaimerWordString
+
+        public string DisclaimerText
         {
-            get { return _disclaimerWordString; }
-            set { SetProperty(ref _disclaimerWordString, value); }
+            get { return _disclaimerText; }
+            set { SetProperty(ref _disclaimerText, value); }
         }
 
         public string VersionString
@@ -116,33 +124,51 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
 
         private void UpdateDisplay()
         {
-            if (_countrySettings.Version == CountryVersion.Canada)
+            // Set initial selected language
+            _selectedLanguage = _countrySettings?.Language ?? Languages.English;
+
+            // Set language culture for localization
+            var culture = _selectedLanguage == Languages.French ? "fr" : "en";
+            LanguageManager.SetLanguage(culture);
+
+            // Set language setting
+            Settings.Default.DisplayLanguage = _selectedLanguage.GetDescription();
+
+            // Get country-specific strings from localization
+            RefreshLocalizedStrings();
+        }
+
+        private void OnLanguageChanged()
+        {
+            // Update culture for localization
+            var culture = _selectedLanguage == Languages.French ? "fr" : "en";
+            LanguageManager.SetLanguage(culture);
+
+            // Update settings
+            Settings.Default.DisplayLanguage = _selectedLanguage.GetDescription();
+
+            // Refresh country-specific strings
+            RefreshLocalizedStrings();
+        }
+
+        private void RefreshLocalizedStrings()
+        {
+            // Get country-specific strings from localization
+            if (_countrySettings?.Version == CountryVersion.Canada)
             {
-                if (_countrySettings.Language == Languages.English)
-                {
-                    this.AboutHolosString = "HOLOS - a tool to estimate and reduce greenhouse gas emissions from farms";
-                    this.ToBeKeptInformedString = "To be kept informed about  future versions, please send your contact information (including email address) to holos@agr.gc.ca";
-                    this.DisclaimerRtfString = Resources.Disclaimer_English_TXT;
-
-                    this.DisclaimerWordString = "Disclaimer";
-                    Settings.Default.DisplayLanguage = Languages.English.GetDescription();
-                }
-                else
-                {
-                    this.AboutHolosString = "Holos - outil d'évaluation et de réduction des émissions de gaz à effet de serre des fermes agricoles";
-                    this.ToBeKeptInformedString = "Pour être informé de la publication des prochaines versions du logiciel, faites parvenir vos coordonnées (y compris votre adresse électronique) à holos@agr.gc.ca";
-                    this.DisclaimerRtfString = Resources.Disclaimer_French_TXT;
-                    this.DisclaimerWordString = "Avis de non-responsabilité";
-
-                    Settings.Default.DisplayLanguage = Languages.French.GetDescription();
-                }
+                this.AboutHolosString = LocalizationService.Instance["AboutHolos"];
+                this.ToBeKeptInformedString = LocalizationService.Instance["ToBeKeptInformed"];
             }
             else
             {
-                this.AboutHolosString = "HOLOS-IE - a tool to estimate and reduce greenhouse gas emissions from farms";
-                this.ToBeKeptInformedString = "To be kept informed about  future versions, please send your contact information (including email address) to ibrahim.khalil1@ucd.ie";
-                this.DisclaimerRtfString = Resources.Disclaimer_English_TXT;
+                // Ireland version
+                this.AboutHolosString = LocalizationService.Instance["AboutHolosIE"];
+                this.ToBeKeptInformedString = LocalizationService.Instance["ToBeKeptInformedIE"];
             }
+
+            // Common localized strings
+            this.DisclaimerTitle = LocalizationService.Instance["DisclaimerTitle"];
+            this.DisclaimerText = LocalizationService.Instance["DisclaimerText"];
         }
 
         #endregion
