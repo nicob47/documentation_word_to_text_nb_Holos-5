@@ -1,4 +1,4 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,11 +20,11 @@
       
       <!-- Title -->
       <StackPanel Grid.Row="0" Margin="0,0,0,24">
-        <TextBlock Text="Dairy Cattle Lifecycle" 
+        <TextBlock Text="{Binding [Label_DairyCattleLifecycle].Value, Source={StaticResource Loc}}" 
                    FontSize="20" 
                    FontWeight="Bold" 
                    HorizontalAlignment="Center"/>
-        <TextBlock Text="Understanding the journey from birth to productive milking cow" 
+        <TextBlock Text="{Binding [Label_DairyCattleLifecycleDesc].Value, Source={StaticResource Loc}}" 
                    FontSize="13" 
                    Foreground="{StaticResource GcdsTextSecondaryBrush}" 
                    HorizontalAlignment="Center"
@@ -51,18 +51,18 @@
                 Cursor="Hand"
                 PointerPressed="Calf_PointerPressed">
           <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="CALF" 
+            <TextBlock Text="{Binding [Label_Calf].Value, Source={StaticResource Loc}}" 
                        FontSize="16" 
                        FontWeight="Bold" 
                        HorizontalAlignment="Center"
                        Foreground="#1976D2"
                        Margin="0,0,0,8"/>
-            <TextBlock Text="Birth - 4 months" 
+            <TextBlock Text="{Binding [Label_BirthToFourMonths].Value, Source={StaticResource Loc}}" 
                        FontSize="11" 
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
-            <TextBlock Text="Milk &amp; Starter Feed" 
+            <TextBlock Text="{Binding [Label_MilkAndStarterFeed].Value, Source={StaticResource Loc}}" 
                        FontSize="10" 
                        Foreground="#888"
                        FontStyle="Italic"
@@ -78,7 +78,7 @@
               Data="M 0,0 L 70,0 M 65,-5 L 70,0 L 65,5"/>
         <TextBlock Canvas.Left="215"
                    Canvas.Top="150"
-                   Text="Weaning"
+                   Text="{Binding [Label_Weaning].Value, Source={StaticResource Loc}}"
                    FontSize="10"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontStyle="Italic"/>
@@ -96,18 +96,18 @@
                 Cursor="Hand"
                 PointerPressed="Heifer_PointerPressed">
           <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="HEIFER" 
+            <TextBlock Text="{Binding [Label_Heifer].Value, Source={StaticResource Loc}}" 
                        FontSize="16" 
                        FontWeight="Bold" 
                        HorizontalAlignment="Center"
                        Foreground="#7B1FA2"
                        Margin="0,0,0,8"/>
-            <TextBlock Text="4 mo - First Calving" 
+            <TextBlock Text="{Binding [Label_FourMonthsToFirstCalving].Value, Source={StaticResource Loc}}" 
                        FontSize="11" 
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
-            <TextBlock Text="Growing Phase" 
+            <TextBlock Text="{Binding [Label_GrowingPhase].Value, Source={StaticResource Loc}}" 
                        FontSize="10" 
                        Foreground="#888"
                        FontStyle="Italic"
@@ -123,7 +123,7 @@
               Data="M 0,0 L 70,0 M 65,-5 L 70,0 L 65,5"/>
         <TextBlock Canvas.Left="458"
                    Canvas.Top="150"
-                   Text="First Calving"
+                   Text="{Binding [Label_FirstCalving].Value, Source={StaticResource Loc}}"
                    FontSize="10"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontWeight="Bold"/>
@@ -141,18 +141,18 @@
                 Cursor="Hand"
                 PointerPressed="Lactating_PointerPressed">
           <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="LACTATING COW" 
+            <TextBlock Text="{Binding [Label_LactatingCow].Value, Source={StaticResource Loc}}" 
                        FontSize="16" 
                        FontWeight="Bold" 
                        HorizontalAlignment="Center"
                        Foreground="#388E3C"
                        Margin="0,0,0,8"/>
-            <TextBlock Text="Milk Production" 
+            <TextBlock Text="{Binding [Label_MilkProduction].Value, Source={StaticResource Loc}}" 
                        FontSize="11" 
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
-            <TextBlock Text="~305 days lactation" 
+            <TextBlock Text="{Binding [Label_LactationDays].Value, Source={StaticResource Loc}}" 
                        FontSize="10" 
                        Foreground="#888"
                        FontStyle="Italic"
@@ -168,7 +168,7 @@
               Data="M 0,0 L 70,0 M 65,-5 L 70,0 L 65,5"/>
         <TextBlock Canvas.Left="730"
                    Canvas.Top="150"
-                   Text="Drying Off"
+                   Text="{Binding [Label_DryingOff].Value, Source={StaticResource Loc}}"
                    FontSize="10"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontWeight="Bold"/>
@@ -186,18 +186,18 @@
                 Cursor="Hand"
                 PointerPressed="Dry_PointerPressed">
           <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="DRY COW" 
+            <TextBlock Text="{Binding [Label_DryCow].Value, Source={StaticResource Loc}}" 
                        FontSize="16" 
                        FontWeight="Bold" 
                        HorizontalAlignment="Center"
                        Foreground="#F57C00"
                        Margin="0,0,0,8"/>
-            <TextBlock Text="Pre-Calving Rest" 
+            <TextBlock Text="{Binding [Label_PreCalvingRest].Value, Source={StaticResource Loc}}" 
                        FontSize="11" 
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,4"/>
-            <TextBlock Text="~60 days" 
+            <TextBlock Text="{Binding [Label_DryCowDays].Value, Source={StaticResource Loc}}" 
                        FontSize="10" 
                        Foreground="#888"
                        FontStyle="Italic"
@@ -225,7 +225,7 @@
         </Path>
         <TextBlock Canvas.Left="645"
                    Canvas.Top="35"
-                   Text="CALVING - Cycle Repeats"
+                   Text="{Binding [Label_CalvingCycleRepeats].Value, Source={StaticResource Loc}}"
                    FontSize="11"
                    Foreground="#D32F2F"
                    FontWeight="Bold"/>
@@ -248,12 +248,12 @@
                 Cursor="Hand"
                 PointerPressed="Culling_PointerPressed">
           <StackPanel>
-            <TextBlock Text="CULLING" 
+            <TextBlock Text="{Binding [Label_Culling].Value, Source={StaticResource Loc}}" 
                        FontSize="12" 
                        FontWeight="Bold"
                        Foreground="#D32F2F"
                        HorizontalAlignment="Center"/>
-            <TextBlock Text="Based on replacement rate" 
+            <TextBlock Text="{Binding [Label_BasedOnReplacementRate].Value, Source={StaticResource Loc}}" 
                        FontSize="9" 
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"/>
@@ -278,12 +278,12 @@
                 Cursor="Hand"
                 PointerPressed="Replacement_PointerPressed">
           <StackPanel>
-            <TextBlock Text="REPLACEMENT" 
+            <TextBlock Text="{Binding [Label_Replacement].Value, Source={StaticResource Loc}}" 
                        FontSize="12" 
                        FontWeight="Bold"
                        Foreground="#2E7D32"
                        HorizontalAlignment="Center"/>
-            <TextBlock Text="Heifers enter herd" 
+            <TextBlock Text="{Binding [Label_HeifersEnterHerd].Value, Source={StaticResource Loc}}" 
                        FontSize="9" 
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
                        HorizontalAlignment="Center"/>

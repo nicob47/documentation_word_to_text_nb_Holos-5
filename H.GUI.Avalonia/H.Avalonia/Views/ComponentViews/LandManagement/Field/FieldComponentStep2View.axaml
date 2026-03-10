@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:field="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Field"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Field.FieldComponentStep2View">
@@ -16,24 +17,24 @@
         <StackPanel Margin="0,0,0,20">
             <!-- Step Badge -->
             <Border Classes="step-badge" HorizontalAlignment="Left">
-                <TextBlock Text="Step 2" Classes="step-badge-text" />
+                <TextBlock Text="{Binding [Label_StepTwo].Value, Source={StaticResource Loc}}" Classes="step-badge-text" />
             </Border>
 
             <!-- Step Description below badge -->
-            <TextBlock Text="Enter field history"
+            <TextBlock Text="{Binding [Label_EnterFieldHistory].Value, Source={StaticResource Loc}}"
                        Classes="step-number-description"
                        Margin="0,8,0,0" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0,10">
-            <Button Command="{Binding AddCropCommand}" Classes="add-group" Content="Add Crop" />
+            <Button Command="{Binding AddCropCommand}" Classes="add-group" Content="{Binding [Button_AddCropToField].Value, Source={StaticResource Loc}}" />
         </StackPanel>
 
         <!-- Timeline Container -->
         <Border Classes="timeline-container">
             <StackPanel>
                 <!-- Timeline Header -->
-                <TextBlock Text="Field History Timeline" Classes="timeline-header" />
+                <TextBlock Text="{Binding [Label_FieldHistoryTimeline].Value, Source={StaticResource Loc}}" Classes="timeline-header" />
 
                 <!-- Timeline Scrollable Area -->
                 <ScrollViewer HorizontalScrollBarVisibility="Auto"
@@ -64,30 +65,30 @@
                                             <!-- Top row with Year Badge and Delete Button in same DockPanel for perfect alignment -->
                                             <DockPanel LastChildFill="False">
                                                 <!-- Year Badge -->
-                                                <Border Classes="year-badge" 
+                                                <Border Classes="year-badge"
                                                         DockPanel.Dock="Left"
                                                         VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding Path=Year}" 
+                                                    <TextBlock Text="{Binding Path=Year}"
                                                                Classes="year-badge-text"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Center" />
                                                 </Border>
-                                                
+
                                                 <!-- Delete Button -->
-                                                <Button  Classes="delete-button"
-                                                         DockPanel.Dock="Right"
+                                                <Button Classes="delete-button"
+                                                        DockPanel.Dock="Right"
                                                         VerticalAlignment="Center"
                                                         Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).RemoveSpecificCropCommand}"
                                                         CommandParameter="{Binding}">
-                                                    <TextBlock Name="DeleteTextBlock" 
+                                                    <TextBlock Name="DeleteTextBlock"
                                                                Classes="delete-text"
-                                                               Text="Delete"/>
+                                                               Text="{Binding [Label_Delete].Value, Source={StaticResource Loc}}"/>
                                                 </Button>
                                             </DockPanel>
-                                            
+
                                             <!-- Crop Type Section -->
                                             <StackPanel Spacing="4">
-                                                <TextBlock Text="Select crop"
+                                                <TextBlock Text="{Binding [Label_SelectCrop].Value, Source={StaticResource Loc}}"
                                                            FontSize="11"
                                                            Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                                            FontWeight="SemiBold"
@@ -106,9 +107,8 @@
                     </ItemsControl>
                 </ScrollViewer>
 
-
                 <!-- Timeline Navigation Hint -->
-                <TextBlock Text="Tip: Scroll horizontally to view all crops, selected crop will be highlighted"
+                <TextBlock Text="{Binding [Label_TimelineScrollHint].Value, Source={StaticResource Loc}}"
                            Classes="timeline-hint" />
             </StackPanel>
         </Border>

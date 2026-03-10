@@ -3,6 +3,7 @@ using System.Collections;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI
 {
@@ -32,10 +33,10 @@ namespace H.CLI
             {
                 throw new Exception(string.Format("Cannot find the key: {0} in the resource file: {1}", value, resourceManager.BaseName));
             }
-            //workaround for getting rid of the prepended "Key_" or "Settings_"
-            if (resourceEntry.Key.ToString().StartsWith("Key_"))
-                return resourceEntry.Key.ToString().Replace("Key_", "");
-            else return resourceEntry.Key.ToString().Replace("Settings_", "");
+            // Strip the prefix (e.g. "Column_", "Key_", "Settings_") to get the bare property name
+            var keyStr = resourceEntry.Key.ToString();
+            var underscoreIdx = keyStr.IndexOf('_');
+            return underscoreIdx >= 0 ? keyStr.Substring(underscoreIdx + 1) : keyStr;
         }
     }
 }

@@ -5,6 +5,7 @@ using H.CLI.UserInput;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Converters;
 using H.Core.Enumerations;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.TemporaryComponentStorage
 {
@@ -32,8 +33,8 @@ namespace H.CLI.TemporaryComponentStorage
             Console.ForegroundColor = ConsoleColor.White;
             if (String.IsNullOrEmpty(value))
             {
-                Console.WriteLine(String.Format(Properties.Resources.EmptyDataInput, row + 1, col + 1, filePath));
-                throw new FormatException(String.Format(Properties.Resources.EmptyDataInput, row + 1, col + 1, filePath));
+                Console.WriteLine(String.Format(AppStrings.Error_EmptyDataInput, row + 1, col + 1, filePath));
+                throw new FormatException(String.Format(AppStrings.Error_EmptyDataInput, row + 1, col + 1, filePath));
             }
   
             var propertyInfo = this.GetType().GetProperty(key);
@@ -57,11 +58,11 @@ namespace H.CLI.TemporaryComponentStorage
                 if (convertedIntValue < 0)
                 {
                     Console.WriteLine(String.Format
-                                               (Properties.Resources.NegativeInteger, value,
+                                               (AppStrings.Error_NegativeInteger, value,
                                                row + 1, col + 1, filePath));
 
                     throw new FormatException(String.Format
-                                               (Properties.Resources.NegativeInteger, value,
+                                               (AppStrings.Error_NegativeInteger, value,
                                                row + 1, col + 1, filePath));
                 }
 
@@ -93,7 +94,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    Console.WriteLine(String.Format(Properties.Resources.InvalidTreeSpecies, value, row + 1, col + 1, filePath));
+                    Console.WriteLine(String.Format(AppStrings.Error_InvalidTreeSpecies, value, row + 1, col + 1, filePath));
                 }
                
             }
@@ -114,8 +115,8 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    Console.WriteLine(String.Format(Properties.Resources.InvalidHardinessZone, value, row + 1, col + 1, filePath));
-                    throw new FormatException(String.Format(Properties.Resources.InvalidHardinessZone, value, row + 1, col + 1, filePath));
+                    Console.WriteLine(String.Format(AppStrings.Error_InvalidHardinessZone, value, row + 1, col + 1, filePath));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidHardinessZone, value, row + 1, col + 1, filePath));
                 }
             }
 

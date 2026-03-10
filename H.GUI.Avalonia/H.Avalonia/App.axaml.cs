@@ -13,6 +13,7 @@ using H.Core.Enumerations;
 using H.Core.Providers;
 using H.Core.Services;
 using H.Infrastructure;
+using H.Localization;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Prism.DryIoc;
@@ -106,6 +107,11 @@ namespace H.Avalonia
         /// <summary>
         /// Performs post-initialization setup including language configuration and view region registration.
         /// Called after all services are registered and the container is ready for use.
+        ///
+        /// <para><b>Language restoration:</b> <see cref="SetLanguage"/> is called first
+        /// to restore the user's previously chosen language from <c>app.config</c> before
+        /// any views are created. This ensures the Disclaimer screen (and all subsequent views)
+        /// display in the correct language from the moment they appear.</para>
         /// </summary>
         protected override void OnInitialized()
         {
@@ -130,8 +136,30 @@ namespace H.Avalonia
         }
 
         /// <summary>
-        /// Configures application language and culture settings based on country settings.
-        /// Sets culture for both Avalonia and Core resource dictionaries.
+        /// Restores the user's language preference on application startup.
+        ///
+        /// <para><b>How the persisted language is read:</b></para>
+        /// <list type="number">
+        ///   <item>
+        ///     <see cref="ICountrySettings"/> is registered as a singleton.
+        ///     Its constructor calls <see cref="H.Core.Helpers.ConfigurationFileHelper.GetLanguage"/>
+        ///     to read the <c>"Language"</c> appSetting from <c>app.config</c>.
+        ///   </item>
+        ///   <item>
+        ///     If the persisted value is <c>"french"</c>, the <see cref="Languages.French"/>
+        ///     branch runs, calling <see cref="LanguageManager.SetLanguage"/> with <c>"fr"</c>.
+        ///   </item>
+        ///   <item>
+        ///     <c>LanguageManager.SetLanguage</c> sets thread cultures and
+        ///     <see cref="LocalizationService.Instance.CurrentCulture"/>, triggering a
+        ///     <see cref="LocalizationService.Refresh"/> that propagates to every
+        ///     <see cref="LocalizedString"/> → the UI starts in French.
+        ///   </item>
+        /// </list>
+        ///
+        /// <para><b>Legacy resource classes:</b> <c>H.Avalonia.Resources.Culture</c> and
+        /// <c>H.Core.Properties.Resources.Culture</c> are also set so that any ViewModels
+        /// still using the older <c>{x:Static}</c> pattern display correctly.</para>
         /// </summary>
         private void SetLanguage()
         {
@@ -140,6 +168,12 @@ namespace H.Avalonia
 
             if (language == Languages.French)
             {
+                // Update thread cultures and LocalizationService so that all
+                // LocalizedString.Value lookups return French strings at startup.
+                LanguageManager.SetLanguage("fr");
+
+                // Keep explicit culture assignments on legacy resource classes that may still
+                // be referenced by ViewModels not yet migrated to AppStrings.
                 H.Avalonia.Resources.Culture = InfrastructureConstants.FrenchCultureInfo;
                 H.Core.Properties.Resources.Culture = InfrastructureConstants.FrenchCultureInfo;
             }

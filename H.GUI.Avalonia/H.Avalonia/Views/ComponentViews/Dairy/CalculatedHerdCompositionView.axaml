@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:dairy="clr-namespace:H.Avalonia.Views.ComponentViews.Dairy"
@@ -21,12 +22,12 @@
 
 <!-- Parent container for Steps 1 and 2 -->
 <StackPanel>
-  
+
   <!-- Step 1: Select a Stage -->
   <Border x:Name="MainContainerBorder"
-          Classes="step-container" 
-          Background="#E8F5E9" 
-          BorderBrush="#43A047" 
+          Classes="step-container"
+          Background="#E8F5E9"
+          BorderBrush="#43A047"
           Margin="0,0,0,20">
     <StackPanel x:Name="MainStackPanel">
       <!-- Step Header -->
@@ -35,24 +36,24 @@
                   Classes="step-header">
         <!-- Step Badge -->
         <Border Classes="step-badge" HorizontalAlignment="Left">
-          <TextBlock Text="Step 1" Classes="step-badge-text"/>
+          <TextBlock Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
         </Border>
-        
+
         <!-- Title -->
         <TextBlock x:Name="HeaderTitleTextBlock"
-                   Text="Define Steady-State Herd Composition"
+                   Text="{Binding [Label_DefineSteadyStateHerdComposition].Value, Source={StaticResource Loc}}"
                    Classes="step-number-description"
                    Margin="0,12,0,0"/>
-        
+
         <!-- Description -->
         <TextBlock x:Name="HeaderDescriptionTextBlock"
-                   Text="Click on a stage card below to configure its population, duration, and management practices" 
+                   Text="{Binding [Label_ClickStageCardBelowDesc].Value, Source={StaticResource Loc}}"
                    FontSize="13"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    TextWrapping="Wrap"
                    Margin="0,12,0,0"/>
       </StackPanel>
-      
+
       <!-- Main Content with Cards and Calculations -->
       <StackPanel x:Name="MainContentStackPanel">
         <!-- Stage Cards Row with Integrated Calculations -->
@@ -64,21 +65,21 @@
                   Background="{Binding IsCalfSelected, Converter={StaticResource BoolToBackgroundConverter}}"
                   BorderBrush="{Binding IsCalfSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                   BorderThickness="{Binding IsCalfSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
-                  CornerRadius="8" 
-                  Padding="12" 
+                  CornerRadius="8"
+                  Padding="12"
                   Margin="4"
                   Cursor="Hand"
                   PointerPressed="OnCalfCardClick">
             <StackPanel x:Name="CalfContentStackPanel">
               <!-- Header with Title -->
               <TextBlock x:Name="CalfTitleTextBlock"
-                         Text="CALF" 
-                         FontSize="16" 
-                         FontWeight="Bold" 
-                         Foreground="#1976D2" 
-                         HorizontalAlignment="Center" 
+                         Text="{Binding [Label_Calf].Value, Source={StaticResource Loc}}"
+                         FontSize="16"
+                         FontWeight="Bold"
+                         Foreground="#1976D2"
+                         HorizontalAlignment="Center"
                          Margin="0,4,0,8"/>
-              
+
               <!-- Display Values -->
               <StackPanel HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center"
@@ -87,7 +88,7 @@
                        FontSize="20"
                        FontWeight="Bold"
                        Foreground="#1976D2"/>
-                  <Run Text=" animals"
+                  <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
@@ -96,36 +97,36 @@
                        FontSize="14"
                        FontWeight="SemiBold"
                        Foreground="#1976D2"/>
-                  <Run Text=" days"
+                  <Run Text="{Binding [Label_DaysUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
           </Border>
-          
-          
+
+
           <!-- Heifers -->
           <Border Grid.Column="1"
                   x:Name="HeiferStageBorder"
                   Background="{Binding IsHeiferSelected, Converter={StaticResource BoolToBackgroundConverter}}"
                   BorderBrush="{Binding IsHeiferSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                   BorderThickness="{Binding IsHeiferSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
-                  CornerRadius="8" 
-                  Padding="12" 
+                  CornerRadius="8"
+                  Padding="12"
                   Margin="4"
                   Cursor="Hand"
                   PointerPressed="OnHeiferCardClick">
             <StackPanel x:Name="HeiferContentStackPanel">
               <!-- Header with Title -->
               <TextBlock x:Name="HeiferTitleTextBlock"
-                         Text="HEIFER" 
-                         FontSize="16" 
-                         FontWeight="Bold" 
-                         Foreground="#7B1FA2" 
-                         HorizontalAlignment="Center" 
+                         Text="{Binding [Label_Heifer].Value, Source={StaticResource Loc}}"
+                         FontSize="16"
+                         FontWeight="Bold"
+                         Foreground="#7B1FA2"
+                         HorizontalAlignment="Center"
                          Margin="0,4,0,8"/>
-              
+
               <!-- Display Values -->
               <StackPanel HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center"
@@ -134,7 +135,7 @@
                        FontSize="20"
                        FontWeight="Bold"
                        Foreground="#7B1FA2"/>
-                  <Run Text=" animals"
+                  <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
@@ -143,35 +144,35 @@
                        FontSize="14"
                        FontWeight="SemiBold"
                        Foreground="#7B1FA2"/>
-                  <Run Text=" days"
+                  <Run Text="{Binding [Label_DaysUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
           </Border>
-          
+
           <!-- Lactating -->
           <Border Grid.Column="2"
                   x:Name="LactatingStageBorder"
                   Background="{Binding IsLactatingSelected, Converter={StaticResource BoolToBackgroundConverter}}"
                   BorderBrush="{Binding IsLactatingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                   BorderThickness="{Binding IsLactatingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
-                  CornerRadius="8" 
-                  Padding="12" 
+                  CornerRadius="8"
+                  Padding="12"
                   Margin="4"
                   Cursor="Hand"
                   PointerPressed="OnLactatingCardClick">
             <StackPanel x:Name="LactatingContentStackPanel">
               <!-- Header with Title -->
               <TextBlock x:Name="LactatingTitleTextBlock"
-                         Text="LACTATING" 
-                         FontSize="16" 
-                         FontWeight="Bold" 
-                         Foreground="#388E3C" 
-                         HorizontalAlignment="Center" 
+                         Text="{Binding [Label_Lactating].Value, Source={StaticResource Loc}}"
+                         FontSize="16"
+                         FontWeight="Bold"
+                         Foreground="#388E3C"
+                         HorizontalAlignment="Center"
                          Margin="0,4,0,8"/>
-              
+
               <!-- Display Values -->
               <StackPanel HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center"
@@ -180,7 +181,7 @@
                        FontSize="20"
                        FontWeight="Bold"
                        Foreground="#388E3C"/>
-                  <Run Text=" animals"
+                  <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
@@ -189,36 +190,36 @@
                        FontSize="14"
                        FontWeight="SemiBold"
                        Foreground="#388E3C"/>
-                  <Run Text=" days"
+                  <Run Text="{Binding [Label_DaysUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
           </Border>
-          
-          
+
+
           <!-- Dry -->
           <Border Grid.Column="3"
                   x:Name="DryStageBorder"
                   Background="{Binding IsDrySelected, Converter={StaticResource BoolToBackgroundConverter}}"
                   BorderBrush="{Binding IsDrySelected, Converter={StaticResource BoolToBorderBrushConverter}}"
                   BorderThickness="{Binding IsDrySelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
-                  CornerRadius="8" 
-                  Padding="12" 
+                  CornerRadius="8"
+                  Padding="12"
                   Margin="4"
                   Cursor="Hand"
                   PointerPressed="OnDryCardClick">
             <StackPanel x:Name="DryContentStackPanel">
               <!-- Header with Title -->
               <TextBlock x:Name="DryTitleTextBlock"
-                         Text="DRY" 
-                         FontSize="16" 
-                         FontWeight="Bold" 
-                         Foreground="#F57C00" 
-                         HorizontalAlignment="Center" 
+                         Text="{Binding [Label_Dry].Value, Source={StaticResource Loc}}"
+                         FontSize="16"
+                         FontWeight="Bold"
+                         Foreground="#F57C00"
+                         HorizontalAlignment="Center"
                          Margin="0,4,0,8"/>
-              
+
               <!-- Display Values -->
               <StackPanel HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center"
@@ -227,7 +228,7 @@
                        FontSize="20"
                        FontWeight="Bold"
                        Foreground="#F57C00"/>
-                  <Run Text=" animals"
+                  <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
@@ -236,42 +237,42 @@
                        FontSize="14"
                        FontWeight="SemiBold"
                        Foreground="#F57C00"/>
-                  <Run Text=" days"
+                  <Run Text="{Binding [Label_DaysUnit].Value, Source={StaticResource Loc}}"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </TextBlock>
               </StackPanel>
             </StackPanel>
           </Border>
-          
+
           <!-- Total -->
           <Border x:Name="TotalBorder"
-                  Grid.Column="4" 
-                  Background="#43A047" 
-                  CornerRadius="8" 
-                  Padding="16" 
+                  Grid.Column="4"
+                  Background="#43A047"
+                  CornerRadius="8"
+                  Padding="16"
                   Margin="4"
                   VerticalAlignment="Stretch">
             <StackPanel x:Name="TotalContentStackPanel"
                         VerticalAlignment="Center">
               <TextBlock x:Name="TotalTitleTextBlock"
-                         Text="TOTAL" 
-                         FontSize="14" 
-                         FontWeight="Bold" 
-                         Foreground="White" 
-                         HorizontalAlignment="Center" 
+                         Text="{Binding [Label_Total].Value, Source={StaticResource Loc}}"
+                         FontSize="14"
+                         FontWeight="Bold"
+                         Foreground="White"
+                         HorizontalAlignment="Center"
                          Margin="0,0,0,4"/>
               <TextBlock x:Name="TotalCountTextBlockk06"
-                         Text="{Binding SelectedDairyComponentDto.TotalSteadyStateHerdSize, StringFormat='{}{0}'}" 
-                         FontSize="24" 
-                         FontWeight="Bold" 
-                         Foreground="White" 
+                         Text="{Binding SelectedDairyComponentDto.TotalSteadyStateHerdSize, StringFormat='{}{0}'}"
+                         FontSize="24"
+                         FontWeight="Bold"
+                         Foreground="White"
                          HorizontalAlignment="Center"
                          Margin="0,0,0,2"/>
               <TextBlock x:Name="TotalLabelTextBlock"
-                         Text="animals" 
-                         FontSize="10" 
-                         Foreground="White" 
+                         Text="{Binding [Label_Animals].Value, Source={StaticResource Loc}}"
+                         FontSize="10"
+                         Foreground="White"
                          HorizontalAlignment="Center"/>
             </StackPanel>
           </Border>
@@ -279,7 +280,7 @@
       </StackPanel>
     </StackPanel>
   </Border>
-  
+
   <!-- Step 2: Population and Duration Configuration (shows when a stage is selected) -->
   <Border Classes="step-container"
           Background="{StaticResource GcdsWarningBgBrush}"
@@ -291,16 +292,16 @@
       <StackPanel Orientation="Vertical" Classes="step-header">
         <!-- Step Badge -->
         <Border Classes="step-badge" HorizontalAlignment="Left">
-          <TextBlock Text="Step 2" Classes="step-badge-text"/>
+          <TextBlock Text="{Binding [Label_StepTwo].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
         </Border>
 
         <!-- Title -->
-        <TextBlock Text="Configure Stage Population and Duration"
+        <TextBlock Text="{Binding [Label_ConfigureStagePoplAndDuration].Value, Source={StaticResource Loc}}"
                    Classes="step-number-description"
                    Margin="0,12,0,0"/>
 
         <!-- Description -->
-        <TextBlock Text="Enter the steady-state population and duration for the selected stage"
+        <TextBlock Text="{Binding [Label_EnterSteadyStatePopDesc].Value, Source={StaticResource Loc}}"
                    FontSize="13"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    TextWrapping="Wrap"
@@ -309,14 +310,14 @@
 
       <!-- Mode Toggle -->
       <StackPanel Margin="0,20,0,20">
-        <TextBlock Text="How many animal groups would you like to create?"
+        <TextBlock Text="{Binding [Label_HowManyAnimalGroups].Value, Source={StaticResource Loc}}"
                    Classes="section-heading"/>
         <StackPanel Orientation="Horizontal">
-          <RadioButton Content="A single animal group"
+          <RadioButton Content="{Binding [Label_ASingleAnimalGroup].Value, Source={StaticResource Loc}}"
                        IsChecked="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode, Converter={StaticResource InverseBooleanConverter}}"
                        GroupName="PopulationMode"
                        Margin="0,0,20,0"/>
-          <RadioButton Content="Multiple groups"
+          <RadioButton Content="{Binding [Label_MultipleGroups].Value, Source={StaticResource Loc}}"
                        IsChecked="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}"
                        GroupName="PopulationMode"/>
         </StackPanel>
@@ -324,7 +325,7 @@
 
       <!-- Input Controls for Each Stage -->
       <StackPanel Margin="0,0,0,0">
-              
+
         <!-- ====== CALF STAGE ====== -->
         <StackPanel IsVisible="{Binding IsCalfSelected}"
                     Margin="0,0,0,20">
@@ -336,131 +337,129 @@
               <ColumnDefinition Width="Auto" MinWidth="120" SharedSizeGroup="InputColumn"/>
               <ColumnDefinition Width="Auto" SharedSizeGroup="UnitColumn"/>
             </Grid.ColumnDefinitions>
-              
-                <TextBlock Grid.Column="0" Text="How long do calves remain in this stage?"
-                           Classes="input-label-text"
-                           Margin="0,0,8,0"/>
-                <NumericUpDown Grid.Column="1"
-                               Value="{Binding SelectedDairyComponentDto.CalfStageDurationDays}"
-                               Minimum="30" Maximum="365"
-                               FormatString="0" Increment="5"
-                               Margin="8,0"
-                               HorizontalAlignment="Stretch"/>
-                <TextBlock Grid.Column="2" Text="days"
-                           VerticalAlignment="Center" Margin="8,0,0,0"/>
-              </Grid>
 
-              <!-- SIMPLE MODE -->
-              <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode, Converter={StaticResource InverseBooleanConverter}}">
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn"/>
-                    <ColumnDefinition Width="Auto" MinWidth="120" SharedSizeGroup="InputColumn"/>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="UnitColumn"/>
-                  </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongCalvesRemain].Value, Source={StaticResource Loc}}"
+                         Classes="input-label-text"
+                         Margin="0,0,8,0"/>
+              <NumericUpDown Grid.Column="1"
+                             Value="{Binding SelectedDairyComponentDto.CalfStageDurationDays}"
+                             Minimum="30" Maximum="365"
+                             FormatString="0" Increment="5"
+                             Margin="8,0"
+                             HorizontalAlignment="Stretch"/>
+              <TextBlock Grid.Column="2" Text="{Binding [Label_Days].Value, Source={StaticResource Loc}}"
+                         VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
 
-                    <TextBlock Grid.Column="0" Text="How many calves are in the herd?"
-                               Classes="input-label-text"
-                               Margin="0,0,8,0"/>
-                    <NumericUpDown Grid.Column="1"
-                                   Value="{Binding SelectedDairyComponentDto.SteadyStateCalves}"
-                                   Minimum="0" Maximum="10000"
-                                   FormatString="0" Increment="1"
-                                   Margin="8,0"
-                                   HorizontalAlignment="Stretch"/>
-                    <TextBlock Grid.Column="2" Text="head"
-                               VerticalAlignment="Center" Margin="8,0,0,0"/>
+            <!-- SIMPLE MODE -->
+            <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode, Converter={StaticResource InverseBooleanConverter}}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn"/>
+                  <ColumnDefinition Width="Auto" MinWidth="120" SharedSizeGroup="InputColumn"/>
+                  <ColumnDefinition Width="Auto" SharedSizeGroup="UnitColumn"/>
+                </Grid.ColumnDefinitions>
+
+                  <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyCalvesInHerd].Value, Source={StaticResource Loc}}"
+                             Classes="input-label-text"
+                             Margin="0,0,8,0"/>
+                  <NumericUpDown Grid.Column="1"
+                                 Value="{Binding SelectedDairyComponentDto.SteadyStateCalves}"
+                                 Minimum="0" Maximum="10000"
+                                 FormatString="0" Increment="1"
+                                 Margin="8,0"
+                                 HorizontalAlignment="Stretch"/>
+                  <TextBlock Grid.Column="2" Text="{Binding [Label_Head].Value, Source={StaticResource Loc}}"
+                             VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </Grid>
+            </StackPanel>
+
+              <!-- ADVANCED MODE -->
+              <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}">
+                <TextBlock Text="{Binding [Label_AnimalGroupsHeader].Value, Source={StaticResource Loc}}"
+                           Classes="section-heading"/>
+
+                <!-- Helpful explanation -->
+                <TextBlock Text="{Binding [Label_MultipleGroupsExplanation].Value, Source={StaticResource Loc}}"
+                           TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                           FontStyle="Italic" Margin="0,0,0,12" LineHeight="18"/>
+
+                <!-- Groups List -->
+                <StackPanel IsVisible="{Binding SelectedDairyComponentDto.CalfPopulationGroups.Count}"
+                            Margin="0,0,0,12">
+                  <!-- Instruction text -->
+                  <TextBlock Text="{Binding [Label_EnterGroupNameDesc].Value, Source={StaticResource Loc}}"
+                             TextWrapping="Wrap" FontSize="11" Foreground="#888"
+                             FontStyle="Italic" Margin="0,0,0,12"/>
+
+                  <!-- Header Row -->
+                  <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="250"/>
+                      <ColumnDefinition Width="120"/>
+                      <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="{Binding [Label_GroupName].Value, Source={StaticResource Loc}}"
+                               FontWeight="Medium" FontSize="11"
+                               Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding [Label_AnimalsColumn].Value, Source={StaticResource Loc}}"
+                               FontWeight="Medium" FontSize="11"
+                               Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                    <TextBlock Grid.Column="2" Text="{Binding [Label_Actions].Value, Source={StaticResource Loc}}"
+                               FontWeight="Medium" FontSize="11"
+                               Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                   </Grid>
+
+                  <!-- Groups ItemsControl -->
+                  <ItemsControl ItemsSource="{Binding SelectedDairyComponentDto.CalfPopulationGroups}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Grid Margin="0,4">
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="Auto"/>
+                          </Grid.ColumnDefinitions>
+
+                          <!-- Group Name TextBox -->
+                          <TextBox Grid.Column="0"
+                                   Text="{Binding GroupName}"
+                                   Watermark="{Binding [Label_EnterGroupNameWatermark].Value, Source={StaticResource Loc}}"
+                                   Margin="0,0,8,0"/>
+
+                          <!-- Animals NumericUpDown -->
+                          <NumericUpDown Grid.Column="1"
+                                         Value="{Binding NumberOfAnimals}"
+                                         Minimum="0" Maximum="10000"
+                                         FormatString="0" Increment="1"
+                                         Margin="0,0,8,0"/>
+
+                          <!-- Delete Button -->
+                          <Button Grid.Column="2"
+                                  Command="{Binding $parent[ItemsControl].((dairyVm:DairyComponentViewModel)DataContext).RemoveGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Background="Transparent"
+                                  ToolTip.Tip="{Binding [Tooltip_RemoveGroup].Value, Source={StaticResource Loc}}"
+                                  Padding="4">
+                            <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+                                  Fill="Red" Width="16" Height="16" Stretch="Uniform"/>
+                          </Button>
+                        </Grid>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+
+                  <!-- Add Group Button -->
+                  <Button Content="{Binding [Button_AddNewGroup].Value, Source={StaticResource Loc}}"
+                          Command="{Binding AddCalfGroupCommand}"
+                          HorizontalAlignment="Left"
+                          Margin="0,12,0,0"
+                          Classes="accent"/>
+                </StackPanel>
               </StackPanel>
 
-                <!-- ADVANCED MODE -->
-                <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}">
-                  <TextBlock Text="Animal Groups:"
-                             Classes="section-heading"/>
-
-                  <!-- Helpful explanation -->
-                  <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
-                             FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
-                    <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
-                  </TextBlock>
-
-                  <!-- Groups List -->
-                  <StackPanel IsVisible="{Binding SelectedDairyComponentDto.CalfPopulationGroups.Count}"
-                              Margin="0,0,0,12">
-                    <!-- Instruction text -->
-                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888" 
-                               FontStyle="Italic" Margin="0,0,0,12">
-                      <Run Text="Enter a descriptive name for each group and specify the number of animals in that group."/>
-                    </TextBlock>
-
-                    <!-- Header Row -->
-                    <Grid Margin="0,0,0,8">
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="Auto"/>
-                      </Grid.ColumnDefinitions>
-
-                      <TextBlock Grid.Column="0" Text="Group Name"
-                                 FontWeight="Medium" FontSize="11"
-                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                      <TextBlock Grid.Column="1" Text="Animals"
-                                 FontWeight="Medium" FontSize="11"
-                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                      <TextBlock Grid.Column="2" Text="Actions"
-                                 FontWeight="Medium" FontSize="11"
-                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                    </Grid>
-
-                    <!-- Groups ItemsControl -->
-                    <ItemsControl ItemsSource="{Binding SelectedDairyComponentDto.CalfPopulationGroups}">
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                          <Grid Margin="0,4">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="250"/>
-                              <ColumnDefinition Width="120"/>
-                              <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Group Name TextBox -->
-                            <TextBox Grid.Column="0"
-                                     Text="{Binding GroupName}"
-                                     Watermark="Enter group name"
-                                     Margin="0,0,8,0"/>
-
-                            <!-- Animals NumericUpDown -->
-                            <NumericUpDown Grid.Column="1"
-                                           Value="{Binding NumberOfAnimals}"
-                                           Minimum="0" Maximum="10000"
-                                           FormatString="0" Increment="1"
-                                           Margin="0,0,8,0"/>
-
-                            <!-- Delete Button -->
-                            <Button Grid.Column="2"
-                                    Command="{Binding $parent[ItemsControl].((dairyVm:DairyComponentViewModel)DataContext).RemoveGroupCommand}"
-                                    CommandParameter="{Binding}"
-                                    Background="Transparent"
-                                    ToolTip.Tip="Remove group"
-                                    Padding="4">
-                              <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
-                                    Fill="Red" Width="16" Height="16" Stretch="Uniform"/>
-                            </Button>
-                          </Grid>
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                  </StackPanel>
-
-                    <!-- Add Group Button -->
-                    <Button Content="Add New Group"
-                            Command="{Binding AddCalfGroupCommand}"
-                            HorizontalAlignment="Left"
-                            Margin="0,12,0,0"
-                            Classes="accent"/>
-                  </StackPanel>
-                </StackPanel>
-        
         <!-- ====== HEIFER STAGE ====== -->
         <StackPanel IsVisible="{Binding IsHeiferSelected}"
                     Margin="0,0,0,20">
@@ -473,7 +472,7 @@
               <ColumnDefinition Width="Auto" SharedSizeGroup="UnitColumn"/>
             </Grid.ColumnDefinitions>
 
-              <TextBlock Grid.Column="0" Text="How long do heifers remain in this stage?"
+              <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongHeifersRemain].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
               <NumericUpDown Grid.Column="1"
@@ -481,7 +480,7 @@
                              Minimum="365" Maximum="1095"
                              FormatString="0" Increment="10"
                              HorizontalAlignment="Stretch"/>
-              <TextBlock Grid.Column="2" Text="days"
+              <TextBlock Grid.Column="2" Text="{Binding [Label_Days].Value, Source={StaticResource Loc}}"
                          VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
 
@@ -494,7 +493,7 @@
                   <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="How many heifers are in the herd?"
+                <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyHeifersInHerd].Value, Source={StaticResource Loc}}"
                            Classes="input-label-text"
                            Margin="0,0,8,0"/>
                 <NumericUpDown Grid.Column="1"
@@ -502,29 +501,27 @@
                                Minimum="0" Maximum="10000"
                                FormatString="0" Increment="1"
                                HorizontalAlignment="Stretch"/>
-                <TextBlock Grid.Column="2" Text="head"
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Head].Value, Source={StaticResource Loc}}"
                            VerticalAlignment="Center" Margin="8,0,0,0"/>
               </Grid>
             </StackPanel>
 
             <!-- ADVANCED MODE -->
             <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}">
-              <TextBlock Text="Animal Groups:"
+              <TextBlock Text="{Binding [Label_AnimalGroupsHeader].Value, Source={StaticResource Loc}}"
                          Classes="section-heading"/>
 
               <!-- Helpful explanation -->
-              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
-                         FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
-                <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
-              </TextBlock>
+              <TextBlock Text="{Binding [Label_MultipleGroupsExplanation].Value, Source={StaticResource Loc}}"
+                         TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                         FontStyle="Italic" Margin="0,0,0,12" LineHeight="18"/>
 
               <StackPanel IsVisible="{Binding SelectedDairyComponentDto.HeiferPopulationGroups.Count}"
                           Margin="0,0,0,12">
                 <!-- Instruction text -->
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888"
-                           FontStyle="Italic" Margin="0,0,0,12">
-                  <Run Text="Enter a descriptive name for each group and specify the number of animals in that group."/>
-                </TextBlock>
+                <TextBlock Text="{Binding [Label_EnterGroupNameDesc].Value, Source={StaticResource Loc}}"
+                           TextWrapping="Wrap" FontSize="11" Foreground="#888"
+                           FontStyle="Italic" Margin="0,0,0,12"/>
 
                 <Grid Margin="0,0,0,8">
                   <Grid.ColumnDefinitions>
@@ -533,11 +530,11 @@
                     <ColumnDefinition Width="Auto"/>
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Text="Group Name"
+                  <TextBlock Grid.Column="0" Text="{Binding [Label_GroupName].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                  <TextBlock Grid.Column="1" Text="Animals"
+                  <TextBlock Grid.Column="1" Text="{Binding [Label_AnimalsColumn].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                  <TextBlock Grid.Column="2" Text="Actions"
+                  <TextBlock Grid.Column="2" Text="{Binding [Label_Actions].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </Grid>
 
@@ -553,7 +550,7 @@
 
                         <TextBox Grid.Column="0"
                                  Text="{Binding GroupName}"
-                                 Watermark="Enter group name"
+                                 Watermark="{Binding [Label_EnterGroupNameWatermark].Value, Source={StaticResource Loc}}"
                                  Margin="0,0,8,0"/>
 
                         <NumericUpDown Grid.Column="1"
@@ -566,7 +563,7 @@
                                 Command="{Binding $parent[ItemsControl].((dairyVm:DairyComponentViewModel)DataContext).RemoveGroupCommand}"
                                 CommandParameter="{Binding}"
                                 Background="Transparent"
-                                ToolTip.Tip="Remove group"
+                                ToolTip.Tip="{Binding [Tooltip_RemoveGroup].Value, Source={StaticResource Loc}}"
                                 Padding="4">
                           <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
                                 Fill="Red" Width="16" Height="16" Stretch="Uniform"/>
@@ -576,8 +573,8 @@
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
               </StackPanel>
-              
-              <Button Content="Add New Group"
+
+              <Button Content="{Binding [Button_AddNewGroup].Value, Source={StaticResource Loc}}"
                       Command="{Binding AddHeiferGroupCommand}"
                       HorizontalAlignment="Left"
                       Margin="0,12,0,0"
@@ -597,7 +594,7 @@
               <ColumnDefinition Width="Auto" SharedSizeGroup="UnitColumn"/>
             </Grid.ColumnDefinitions>
 
-              <TextBlock Grid.Column="0" Text="How long is the lactation period?"
+              <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongLactationPeriod].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
               <NumericUpDown Grid.Column="1"
@@ -605,7 +602,7 @@
                              Minimum="200" Maximum="400"
                              FormatString="0" Increment="5"
                              HorizontalAlignment="Stretch"/>
-              <TextBlock Grid.Column="2" Text="days"
+              <TextBlock Grid.Column="2" Text="{Binding [Label_Days].Value, Source={StaticResource Loc}}"
                          VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
 
@@ -618,7 +615,7 @@
                   <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="How many lactating cows are in the herd?"
+                <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyLactatingCowsInHerd].Value, Source={StaticResource Loc}}"
                            Classes="input-label-text"
                            Margin="0,0,8,0"/>
                 <NumericUpDown Grid.Column="1"
@@ -626,29 +623,27 @@
                                Minimum="0" Maximum="10000"
                                FormatString="0" Increment="1"
                                HorizontalAlignment="Stretch"/>
-                <TextBlock Grid.Column="2" Text="head"
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Head].Value, Source={StaticResource Loc}}"
                            VerticalAlignment="Center" Margin="8,0,0,0"/>
               </Grid>
             </StackPanel>
 
             <!-- ADVANCED MODE -->
             <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}">
-              <TextBlock Text="Animal Groups:"
+              <TextBlock Text="{Binding [Label_AnimalGroupsHeader].Value, Source={StaticResource Loc}}"
                          Classes="section-heading"/>
 
               <!-- Helpful explanation -->
-              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
-                         FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
-                <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
-              </TextBlock>
+              <TextBlock Text="{Binding [Label_MultipleGroupsExplanation].Value, Source={StaticResource Loc}}"
+                         TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                         FontStyle="Italic" Margin="0,0,0,12" LineHeight="18"/>
 
               <StackPanel IsVisible="{Binding SelectedDairyComponentDto.LactatingPopulationGroups.Count}"
                           Margin="0,0,0,12">
                 <!-- Instruction text -->
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888" 
-                           FontStyle="Italic" Margin="0,0,0,12">
-                  <Run Text="Enter a descriptive name for each group and specify the number of animals in that group."/>
-                </TextBlock>
+                <TextBlock Text="{Binding [Label_EnterGroupNameDesc].Value, Source={StaticResource Loc}}"
+                           TextWrapping="Wrap" FontSize="11" Foreground="#888"
+                           FontStyle="Italic" Margin="0,0,0,12"/>
 
                 <Grid Margin="0,0,0,8">
                   <Grid.ColumnDefinitions>
@@ -657,11 +652,11 @@
                     <ColumnDefinition Width="Auto"/>
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Text="Group Name"
+                  <TextBlock Grid.Column="0" Text="{Binding [Label_GroupName].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                  <TextBlock Grid.Column="1" Text="Animals"
+                  <TextBlock Grid.Column="1" Text="{Binding [Label_AnimalsColumn].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                  <TextBlock Grid.Column="2" Text="Actions"
+                  <TextBlock Grid.Column="2" Text="{Binding [Label_Actions].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </Grid>
 
@@ -677,7 +672,7 @@
 
                         <TextBox Grid.Column="0"
                                  Text="{Binding GroupName}"
-                                 Watermark="Enter group name"
+                                 Watermark="{Binding [Label_EnterGroupNameWatermark].Value, Source={StaticResource Loc}}"
                                  Margin="0,0,8,0"/>
 
                         <NumericUpDown Grid.Column="1"
@@ -690,7 +685,7 @@
                                 Command="{Binding $parent[ItemsControl].((dairyVm:DairyComponentViewModel)DataContext).RemoveGroupCommand}"
                                 CommandParameter="{Binding}"
                                 Background="Transparent"
-                                ToolTip.Tip="Remove group"
+                                ToolTip.Tip="{Binding [Tooltip_RemoveGroup].Value, Source={StaticResource Loc}}"
                                 Padding="4">
                           <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
                                 Fill="Red" Width="16" Height="16" Stretch="Uniform"/>
@@ -700,8 +695,8 @@
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
               </StackPanel>
-              
-              <Button Content="Add New Group"
+
+              <Button Content="{Binding [Button_AddNewGroup].Value, Source={StaticResource Loc}}"
                       Command="{Binding AddLactatingGroupCommand}"
                       HorizontalAlignment="Left"
                       Margin="0,12,0,0"
@@ -721,7 +716,7 @@
               <ColumnDefinition Width="Auto" SharedSizeGroup="UnitColumn"/>
             </Grid.ColumnDefinitions>
 
-              <TextBlock Grid.Column="0" Text="How long is the dry period?"
+              <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongDryPeriod].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
               <NumericUpDown Grid.Column="1"
@@ -729,7 +724,7 @@
                              Minimum="0" Maximum="120"
                              FormatString="0" Increment="5"
                              HorizontalAlignment="Stretch"/>
-              <TextBlock Grid.Column="2" Text="days"
+              <TextBlock Grid.Column="2" Text="{Binding [Label_Days].Value, Source={StaticResource Loc}}"
                          VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
 
@@ -742,7 +737,7 @@
                   <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="How many dry cows are in the herd?"
+                <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyDryCowsInHerd].Value, Source={StaticResource Loc}}"
                            Classes="input-label-text"
                            Margin="0,0,8,0"/>
                 <NumericUpDown Grid.Column="1"
@@ -750,29 +745,27 @@
                                Minimum="0" Maximum="10000"
                                FormatString="0" Increment="1"
                                HorizontalAlignment="Stretch"/>
-                <TextBlock Grid.Column="2" Text="head"
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Head].Value, Source={StaticResource Loc}}"
                            VerticalAlignment="Center" Margin="8,0,0,0"/>
               </Grid>
             </StackPanel>
 
             <!-- ADVANCED MODE -->
             <StackPanel IsVisible="{Binding SelectedDairyComponentDto.UseAdvancedPopulationMode}">
-              <TextBlock Text="Animal Groups:"
+              <TextBlock Text="{Binding [Label_AnimalGroupsHeader].Value, Source={StaticResource Loc}}"
                          Classes="section-heading"/>
 
               <!-- Helpful explanation -->
-              <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" 
-                         FontStyle="Italic" Margin="0,0,0,12" LineHeight="18">
-                <Run Text="You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.)."/>
-              </TextBlock>
+              <TextBlock Text="{Binding [Label_MultipleGroupsExplanation].Value, Source={StaticResource Loc}}"
+                         TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                         FontStyle="Italic" Margin="0,0,0,12" LineHeight="18"/>
 
               <StackPanel IsVisible="{Binding SelectedDairyComponentDto.DryPopulationGroups.Count}"
                           Margin="0,0,0,12">
                 <!-- Instruction text -->
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888" 
-                           FontStyle="Italic" Margin="0,0,0,12">
-                  <Run Text="Enter a descriptive name for each group and specify the number of animals in that group."/>
-                </TextBlock>
+                <TextBlock Text="{Binding [Label_EnterGroupNameDesc].Value, Source={StaticResource Loc}}"
+                           TextWrapping="Wrap" FontSize="11" Foreground="#888"
+                           FontStyle="Italic" Margin="0,0,0,12"/>
 
                 <Grid Margin="0,0,0,8">
                   <Grid.ColumnDefinitions>
@@ -781,11 +774,11 @@
                     <ColumnDefinition Width="Auto"/>
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Text="Group Name"
+                  <TextBlock Grid.Column="0" Text="{Binding [Label_GroupName].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                  <TextBlock Grid.Column="1" Text="Animals"
+                  <TextBlock Grid.Column="1" Text="{Binding [Label_AnimalsColumn].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                  <TextBlock Grid.Column="2" Text="Actions"
+                  <TextBlock Grid.Column="2" Text="{Binding [Label_Actions].Value, Source={StaticResource Loc}}"
                              FontWeight="Medium" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </Grid>
 
@@ -801,7 +794,7 @@
 
                         <TextBox Grid.Column="0"
                                  Text="{Binding GroupName}"
-                                 Watermark="Enter group name"
+                                 Watermark="{Binding [Label_EnterGroupNameWatermark].Value, Source={StaticResource Loc}}"
                                  Margin="0,0,8,0"/>
 
                         <NumericUpDown Grid.Column="1"
@@ -814,7 +807,7 @@
                                 Command="{Binding $parent[ItemsControl].((dairyVm:DairyComponentViewModel)DataContext).RemoveGroupCommand}"
                                 CommandParameter="{Binding}"
                                 Background="Transparent"
-                                ToolTip.Tip="Remove group"
+                                ToolTip.Tip="{Binding [Tooltip_RemoveGroup].Value, Source={StaticResource Loc}}"
                                 Padding="4">
                           <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
                                 Fill="Red" Width="16" Height="16" Stretch="Uniform"/>
@@ -824,8 +817,8 @@
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
               </StackPanel>
-              
-              <Button Content="Add New Group"
+
+              <Button Content="{Binding [Button_AddNewGroup].Value, Source={StaticResource Loc}}"
                       Command="{Binding AddDryGroupCommand}"
                       HorizontalAlignment="Left"
                       Margin="0,12,0,0"
@@ -836,7 +829,7 @@
       </StackPanel>
     </StackPanel>
   </Border>
-        
+
 </StackPanel>
-  
+
 </UserControl>

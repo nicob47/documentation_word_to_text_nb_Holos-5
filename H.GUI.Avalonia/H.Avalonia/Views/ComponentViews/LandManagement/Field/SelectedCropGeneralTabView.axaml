@@ -28,7 +28,7 @@
 						<!-- Yield Row -->
 						<Label Grid.Row="0" 
                                Grid.Column="0" 
-                               Content="Yield (wet weight):"  
+                               Content="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}"  
                                Classes="input-label" />
 
 						<NumericUpDown Name="YieldNumericUpDown" 
@@ -45,7 +45,7 @@
 						<!-- Irrigation Row -->
 						<Label Grid.Row="1" 
                                Grid.Column="0" 
-                               Content="Amount of irrigation:" 
+                               Content="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}" 
                                Classes="input-label" />
 
 						<NumericUpDown Name="IrrigationNumericUpDown" 

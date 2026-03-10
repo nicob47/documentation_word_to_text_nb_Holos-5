@@ -31,6 +31,7 @@
 		<ProjectReference Include="..\H.Content\H.Content.csproj" />
 		<ProjectReference Include="..\H.Core\H.Core.csproj" />
 		<ProjectReference Include="..\H.Infrastructure\H.Infrastructure.csproj" />
+		<ProjectReference Include="..\H.Localization\H.Localization.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Update="Properties\Resources.resx">

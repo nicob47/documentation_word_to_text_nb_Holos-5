@@ -27,40 +27,3905 @@
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="AboutHolos" xml:space="preserve">
     <value>HOLOS - a tool to estimate and reduce greenhouse gas emissions from farms</value>
+    <comment>GUI (H.Localization) - app description</comment>
   </data>
   <data name="AboutHolosIE" xml:space="preserve">
     <value>HOLOS-IE - a tool to estimate and reduce greenhouse gas emissions from farms</value>
-  </data>
-  <data name="DisclaimerText" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Disclaimers\Disclaimer.en.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <comment>GUI (H.Localization) - app description IE variant</comment>
   </data>
   <data name="DisclaimerTitle" xml:space="preserve">
     <value>Disclaimer</value>
+    <comment>GUI (H.Localization) - dialog title</comment>
+  </data>
+  <data name="DisclaimerText" xml:space="preserve">
+    <value>Important Notices
+
+This software was designed primarily to encourage users to explore possible ways of reducing greenhouse gas emissions from farms. The estimates of emission are approximate, and may change appreciably as new scientific findings emerge. Agriculture and Agri-Food Canada does not warrant the reliability of this tool for uses other than education or exploratory gaming of possible practices.
+
+Copyright/Permission to Reproduce
+
+Material in this software were produced and/or compiled by Agriculture and Agri-Food Canada for the purpose of providing Canadians with information on greenhouse gas emissions from Canadian farms.
+
+The material in this software is covered by the provisions of the Copyright Act, by Canadian laws, policies, regulations and international agreements. Such provisions serve to identify the information source and, in specific instances, to prohibit reproduction of materials without written permission.
+
+Non-commercial Reproduction
+
+Information in this software has been posted with the intent that it be readily available for personal and public non-commercial use and may be reproduced, in part or in whole and by any means, without charge or further permission from Agriculture and Agri-Food Canada. We ask only that:
+
+- Users exercise due diligence in ensuring the accuracy of the materials reproduced;
+- Agriculture and Agri-Food Canada be identified as the source department; and,
+- The reproduction is not represented as an official version of the materials reproduced, nor as having been made, in affiliation with or with the endorsement of Agriculture and Agri-Food Canada.
+
+Commercial Reproduction
+
+Reproduction of multiple copies of material in this software, in whole or in part, for the purposes of commercial redistribution is prohibited except with written permission from the Government of Canada's copyright administrator, Communication Canada. Through the permission granting process, Communication Canada helps ensure individuals/organizations wishing to reproduce Government of Canada materials for commercial purposes have access to the most accurate, up-to-date versions. To obtain permission to reproduce materials on this CD for commercial purposes, please go to Communication Canada's "Applying for Copyright Clearance on Government of Canada Works" page.
+
+Communication Canada
+Canadian Government Publishing Directorate
+Constitution Square Building, 4th Floor, 350 Albert Street
+Ottawa, Ontario
+Canada
+K1A 1M4
+
+or
+
+copyright.droitdauteur@communication.gc.ca
+
+Questions or comments regarding this policy, or the administration of the Privacy Act in Agriculture and Agri-Food Canada may be directed to the Privacy Co-ordinator by e-mail to jacquesd@agr.gc.ca or by calling (613) 759-7083 or writing to:
+
+Danielle Jacques
+Acting Access to Information and Privacy Coordinator
+Agriculture and Agri-Food Canada
+930 Carling Avenue, Room 282
+Sir John Carling Building
+Ottawa, Ontario
+K1A 0C5
+
+If you are not satisfied with our response to your privacy concern, you may wish to contact the Office of the Privacy Commissioner.</value>
+    <comment>GUI (H.Localization) - full disclaimer body text (English)</comment>
   </data>
   <data name="LabelLanguage" xml:space="preserve">
     <value>Language</value>
+    <comment>GUI (H.Localization) - language selector label</comment>
   </data>
   <data name="LabelOk" xml:space="preserve">
     <value>OK</value>
+    <comment>GUI (H.Localization) - OK button label</comment>
   </data>
   <data name="ToBeKeptInformed" xml:space="preserve">
     <value>To be kept informed about future versions, please send your contact information (including email address) to holos@agr.gc.ca</value>
+    <comment>GUI (H.Localization) - contact info message</comment>
   </data>
   <data name="ToBeKeptInformedIE" xml:space="preserve">
     <value>To be kept informed about future versions, please send your contact information (including email address) to ibrahim.khalil1@ucd.ie</value>
+    <comment>GUI (H.Localization) - contact info message IE variant</comment>
+  </data>
+  <data name="Button_AddGroup" xml:space="preserve">
+    <value>Add Group</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_AddManagementPeriod" xml:space="preserve">
+    <value>Add Management Period</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_BeddingApplication" xml:space="preserve">
+    <value>Bedding Application Calculator</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_CreateNewFarm" xml:space="preserve">
+    <value>Create New Farm</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_GoBack" xml:space="preserve">
+    <value>Go Back</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_Import" xml:space="preserve">
+    <value>Import</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_Open" xml:space="preserve">
+    <value>Open</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Button_OpenExistingFarm" xml:space="preserve">
+    <value>Open Existing Farm</value>
+    <comment>GUI (H.Core) - button text</comment>
+  </data>
+  <data name="Column_AboveGroundCarbonInput" xml:space="preserve">
+    <value>Above Ground Carbon Input</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AboveGroundCStocksPerTree" xml:space="preserve">
+    <value>Above Ground C Stocks Per Tree</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AboveGroundResidueDryMatter" xml:space="preserve">
+    <value>Above Ground Residue Dry Matter</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ActivityCoefficient" xml:space="preserve">
+    <value>Activity Coefficient</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ActivityCoefficientOfFeedingSituation" xml:space="preserve">
+    <value>Activity Coefficient Of Feeding Situation</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ADG" xml:space="preserve">
+    <value>ADG</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Age" xml:space="preserve">
+    <value>Age</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Alfa" xml:space="preserve">
+    <value>Alfa = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AllFarms" xml:space="preserve">
+    <value>All Farms</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AllMonths" xml:space="preserve">
+    <value>All Months</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AmmoniaEmissionFactorForManureStorage" xml:space="preserve">
+    <value>Ammonia Emission Factor For Manure Storage</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AmountOfIrrigation" xml:space="preserve">
+    <value>Amount Of Irrigation</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AmountOfManureApplied" xml:space="preserve">
+    <value>Amount Of Manure Applied</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AnimalsAreMilkFedOnly" xml:space="preserve">
+    <value>Animals Are Milk Fed Only</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AnnualCrops" xml:space="preserve">
+    <value>#Annual Crops</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Area" xml:space="preserve">
+    <value>Area</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AshContent" xml:space="preserve">
+    <value>Ash Content</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AshContentOfDiet" xml:space="preserve">
+    <value>Ash Content Of Diet</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AverageCircumference" xml:space="preserve">
+    <value>Average Circumference</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_AverageDailyGain" xml:space="preserve">
+    <value>Average Daily Gain</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BelowGroundCarbonInput" xml:space="preserve">
+    <value>Below Ground Carbon Input</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BelowGroundCStocksPerTree" xml:space="preserve">
+    <value>Below Ground C Stocks Per Tree</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BelowGroundResidueDryMatter" xml:space="preserve">
+    <value>Below Ground Residue Dry Matter</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BiomassCoefficientExtraroot" xml:space="preserve">
+    <value>Biomass Coefficient Extraroot</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BiomassCoefficientProduct" xml:space="preserve">
+    <value>Biomass Coefficient Product</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BiomassCoefficientRoots" xml:space="preserve">
+    <value>Biomass Coefficient Roots</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_BiomassCoefficientStraw" xml:space="preserve">
+    <value>Biomass Coefficient Straw</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CA" xml:space="preserve">
+    <value>CA</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CarbonConcentration" xml:space="preserve">
+    <value>Carbon Concentration</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CarbonInputFromExtraroots" xml:space="preserve">
+    <value>Carbon Input From Extraroots</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CarbonInputFromProduct" xml:space="preserve">
+    <value>Carbon Input From Product</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CarbonInputFromRoots" xml:space="preserve">
+    <value>Carbon Input From Roots</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CarbonInputFromStraw" xml:space="preserve">
+    <value>Carbon Input From Straw</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CFTemp" xml:space="preserve">
+    <value>CF Temp</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ClimateParameter" xml:space="preserve">
+    <value>Climate Parameter</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CO2" xml:space="preserve">
+    <value>CO2 {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ComponentCategory" xml:space="preserve">
+    <value>Component Category</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ComponentGroupName" xml:space="preserve">
+    <value>Component Group Name</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ComponentName" xml:space="preserve">
+    <value>Component Name </value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CoverCrops" xml:space="preserve">
+    <value>#Cover Crops</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CoverCropsUsed" xml:space="preserve">
+    <value>Cover Crops Used</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CoverCropTerminationType" xml:space="preserve">
+    <value>Cover Crop Termination Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CoverCropType" xml:space="preserve">
+    <value>Cover Crop Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CowCalfPairingNumber" xml:space="preserve">
+    <value>Cow Calf Pairing Number</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CPlanting" xml:space="preserve">
+    <value>C_planting</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CropIsGrazed" xml:space="preserve">
+    <value>Crop Is Grazed</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CropType" xml:space="preserve">
+    <value>Crop Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CropYear" xml:space="preserve">
+    <value>Crop Year</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CrudeProtein" xml:space="preserve">
+    <value>Crude Protein</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CStocksPerTree" xml:space="preserve">
+    <value>C Stocks Per Tree</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CTreeType" xml:space="preserve">
+    <value>C_treetype</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CurrentYear" xml:space="preserve">
+    <value>Current Year</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_CutYear" xml:space="preserve">
+    <value>Cut Year</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DailyManureMethaneEmissionRate" xml:space="preserve">
+    <value>Daily Manure Methane Emission Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DailyTanExcretion" xml:space="preserve">
+    <value>Daily Tan Excretion</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DietAdditiveType" xml:space="preserve">
+    <value>Diet Additive Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DietaryNetEnergyConcentration" xml:space="preserve">
+    <value>Dietary Net Energy Concentration</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DigestateCarbonInputsPerHectare" xml:space="preserve">
+    <value>Digestate Carbon Inputs Per Hectare</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DirectN2O" xml:space="preserve">
+    <value>Direct N2O {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_DryMatterIntake" xml:space="preserve">
+    <value>Dry Matter Intake</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EcodistrictId" xml:space="preserve">
+    <value>Ecodistrict ID</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EmergenceDay" xml:space="preserve">
+    <value>EmergenceDay = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EmissionFactorLeaching" xml:space="preserve">
+    <value>Emission Factor Leaching</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EmissionFactorVolatilization" xml:space="preserve">
+    <value>Emission Factor Volatilization</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EndWeight" xml:space="preserve">
+    <value>End Weight</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EnergyCO2" xml:space="preserve">
+    <value>Energy CO2 {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EnergyRequiredToProduceMilk" xml:space="preserve">
+    <value>Energy Required To Produce Milk</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EnergyRequiredToProduceWool" xml:space="preserve">
+    <value>Energy Required To Produce Wool</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EntericCH4" xml:space="preserve">
+    <value>Enteric CH4 {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EnumOutputDirectory" xml:space="preserve">
+    <value>Output Directory</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_EvapotranspirationData" xml:space="preserve">
+    <value>#Evapotranspiration Data{0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FarmName" xml:space="preserve">
+    <value>Farm Name</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FarmTotal" xml:space="preserve">
+    <value>Farm Total</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Fat" xml:space="preserve">
+    <value>Fat</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FeedIntake" xml:space="preserve">
+    <value>Feed Intake</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FertilizerBlend" xml:space="preserve">
+    <value>Fertilizer Blend</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FieldSystemComponentGuid" xml:space="preserve">
+    <value>Field System Component Guid</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FinalWeight" xml:space="preserve">
+    <value>Final Weight</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FinalWeightOfCalves" xml:space="preserve">
+    <value>Final Weight Of Calves</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FodderCorn" xml:space="preserve">
+    <value>#Fodder Corn</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Forage" xml:space="preserve">
+    <value>Forage</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FPCM" xml:space="preserve">
+    <value>FPCM</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FractionLeaching" xml:space="preserve">
+    <value>Fraction Leaching</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FractionOfCarbonInManure" xml:space="preserve">
+    <value>Fraction Of Carbon In Manure</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FractionOfNitrogenInManure" xml:space="preserve">
+    <value>Fraction Of Nitrogen In Manure</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FractionOfOrganicNitrogenImmobilized" xml:space="preserve">
+    <value>Fraction Of Organic Nitrogen Immobilized</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FractionOfOrganicNitrogenMineralized" xml:space="preserve">
+    <value>Fraction Of Organic Nitrogen Mineralized</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FractionOfOrganicNitrogenNitrified" xml:space="preserve">
+    <value>Fraction Of Organic Nitrogen Nitrified</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_FuelEnergy" xml:space="preserve">
+    <value>Fuel Energy</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GainCoefficient" xml:space="preserve">
+    <value>Gain Coefficient</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GainCoefficientA" xml:space="preserve">
+    <value>Gain Coefficient A</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GainCoefficientB" xml:space="preserve">
+    <value>Gain Coefficient B</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GroupId" xml:space="preserve">
+    <value>Group Id</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GroupName" xml:space="preserve">
+    <value>Group Name</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GroupPairingNumber" xml:space="preserve">
+    <value>Group Pairing Number</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_GroupType" xml:space="preserve">
+    <value>Group Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_HardinessZone" xml:space="preserve">
+    <value>Hardiness Zone</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Harvest" xml:space="preserve">
+    <value>Harvest</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_HarvestMethod" xml:space="preserve">
+    <value>Harvest Method</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_HerbicideEnergy" xml:space="preserve">
+    <value>Herbicide Energy</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_HousingType" xml:space="preserve">
+    <value>Housing Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_IndirectN2O" xml:space="preserve">
+    <value>Indirect N2O {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_InitialWeight" xml:space="preserve">
+    <value>Initial Weight</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_InitialWeightOfCalves" xml:space="preserve">
+    <value>Initial Weight Of Calves</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_IrrigationType" xml:space="preserve">
+    <value>Irrigation Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_IsIrrigated" xml:space="preserve">
+    <value>Is Irrigated</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_IsPesticideUsed" xml:space="preserve">
+    <value>Is Pesticide Used</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Lamb" xml:space="preserve">
+    <value>Lamb</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_LandAppliedManure" xml:space="preserve">
+    <value>Land Applied Manure</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Lignin" xml:space="preserve">
+    <value>Lignin</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_LiveTreeCount" xml:space="preserve">
+    <value>Live Tree Count</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MaintenanceCoefficient" xml:space="preserve">
+    <value>Maintenance Coefficient</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManagementFactor" xml:space="preserve">
+    <value>Management Factor</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManagementPeriodDays" xml:space="preserve">
+    <value>Management Period Days</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManagementPeriodName" xml:space="preserve">
+    <value>Management Period Name</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManagementPeriodStartDate" xml:space="preserve">
+    <value>Management Period Start Date</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureAnimalSourceType" xml:space="preserve">
+    <value>Manure Animal Source Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureApplicationType" xml:space="preserve">
+    <value>Manure Application Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureApplied" xml:space="preserve">
+    <value>Manure Applied</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureCarbonInputsPerHectare" xml:space="preserve">
+    <value>Manure Carbon Inputs Per Hectare</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureCH4" xml:space="preserve">
+    <value>Manure CH4 {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureExcretionRate" xml:space="preserve">
+    <value>Manure Excretion Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureLocationSourceType" xml:space="preserve">
+    <value>Manure Location Source Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureManagement" xml:space="preserve">
+    <value>ManureManagement</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ManureStateType" xml:space="preserve">
+    <value>Manure State Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ME" xml:space="preserve">
+    <value>ME</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MethaneConversionFactor" xml:space="preserve">
+    <value>Methane Conversion Factor</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MethaneConversionFactorAdjusted" xml:space="preserve">
+    <value>Methane Conversion Factor Adjusted</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MethaneConversionFactorOfDiet" xml:space="preserve">
+    <value>Methane Conversion Factor Of Diet</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MethaneConversionFactorOfManure" xml:space="preserve">
+    <value>Methane Conversion Factor Of Manure</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MethaneProducingCapacityOfManure" xml:space="preserve">
+    <value>Methane Producing Capacity Of Manure</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Milk" xml:space="preserve">
+    <value>Milk</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MilkFatContent" xml:space="preserve">
+    <value>Milk Fat Content</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MilkProduction" xml:space="preserve">
+    <value>Milk Production</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MilkProtein" xml:space="preserve">
+    <value>Milk Protein</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MilkProteinContentAsPercentage" xml:space="preserve">
+    <value>Milk Protein Content As Percentage</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MoistureContentOfBeddingMaterial" xml:space="preserve">
+    <value>Moisture Content Of Bedding Material</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MoistureContentOfCrop" xml:space="preserve">
+    <value>Moisture Content Of Crop</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MoistureContentOfCropPercentage" xml:space="preserve">
+    <value>Moisture Content Of Crop Percentage</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MoistureResponseFunctionAtSaturation" xml:space="preserve">
+    <value>MoistureResponseFunctionAtSaturation = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_MoistureResponseFunctionAtWiltingPoint" xml:space="preserve">
+    <value>MoistureResponseFunctionAtWiltingPoint = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_N2ODirectEmissionFactor" xml:space="preserve">
+    <value>N2O Direct Emission Factor</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NameOfSettingsFile" xml:space="preserve">
+    <value>nameofsettingsfile</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NDF" xml:space="preserve">
+    <value>NDF</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenContent" xml:space="preserve">
+    <value>Nitrogen Content</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenContentInExtraroot" xml:space="preserve">
+    <value>Nitrogen Content In Extraroot</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenContentInProduct" xml:space="preserve">
+    <value>Nitrogen Content In Product</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenContentInRoots" xml:space="preserve">
+    <value>Nitrogen Content In Roots</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenContentInStraw" xml:space="preserve">
+    <value>Nitrogen Content In Straw</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenDeposit" xml:space="preserve">
+    <value>Nitrogen Deposit</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenExcretionAdjusted" xml:space="preserve">
+    <value>Nitrogen Excretion Adjusted</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenFertilizerRate" xml:space="preserve">
+    <value>Nitrogen Fertilizer Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NitrogenFixation" xml:space="preserve">
+    <value>Nitrogen Fixation</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfAnimals" xml:space="preserve">
+    <value>Number Of Animals</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfCalves" xml:space="preserve">
+    <value>Number Of Calves</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfCropsInRotation" xml:space="preserve">
+    <value>Number Of Crops In Rotation</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfLambs" xml:space="preserve">
+    <value>Number Of Lambs</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfPesticidePasses" xml:space="preserve">
+    <value>Number Of Pesticide Passes</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfTrees" xml:space="preserve">
+    <value># Trees</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_NumberOfYoungAnimals" xml:space="preserve">
+    <value>Number Of Young Animals</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_OutputDirectory" xml:space="preserve">
+    <value>OutputDirectory = C:\\Holos\\HolosCommandLineInterface\\Outputs</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Outputs" xml:space="preserve">
+    <value>Outputs</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PastureLocation" xml:space="preserve">
+    <value>Pasture Location</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentageOfProductReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>PercentageOfProductReturnedToSoilForAnnuals = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentageOfProductYieldReturnedToSoil" xml:space="preserve">
+    <value>PercentageOfProductYieldReturnedToSoil</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentageOfRootsReturnedToSoil" xml:space="preserve">
+    <value>PercentageOfRootsReturnedToSoil</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentageOfRootsReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>PercentageOfRootsReturnedToSoilForAnnuals = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentageOfStrawReturnedToSoil" xml:space="preserve">
+    <value>PercentageOfStrawReturnedToSoil</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentageOfStrawReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>PercentageOfStrawReturnedToSoilForAnnuals = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PercentMortality" xml:space="preserve">
+    <value>% Mortality</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PerennialCrops" xml:space="preserve">
+    <value>#Perennial Crops</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PerennialStandID" xml:space="preserve">
+    <value>Perennial Stand ID</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PerennialStandLength" xml:space="preserve">
+    <value>Perennial Stand Length</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PhaseNumber" xml:space="preserve">
+    <value>Phase Number</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PhosphorousFertilizerRate" xml:space="preserve">
+    <value>Phosphorous Fertilizer Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PlantCarbonInAgriculturalProduct" xml:space="preserve">
+    <value>Plant Carbon In Agricultural Product</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PlantedTreeCount" xml:space="preserve">
+    <value>Planted Tree Count</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PlantedTreeSpacing" xml:space="preserve">
+    <value>Planted Tree Spacing</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PlantYear" xml:space="preserve">
+    <value>Plant Year</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_PrecipitationData" xml:space="preserve">
+    <value>#Precipitation Data{0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ProductionStage" xml:space="preserve">
+    <value>Production Stage</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_ProportionOfIdealTree" xml:space="preserve">
+    <value>Proportion of ideal tree</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Rangeland" xml:space="preserve">
+    <value>#Rangeland</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Results" xml:space="preserve">
+    <value>_Results</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_RipeningDay" xml:space="preserve">
+    <value>RipeningDay = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_RootCrops" xml:space="preserve">
+    <value>#Root crops</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Row" xml:space="preserve">
+    <value>Row</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_RowId" xml:space="preserve">
+    <value>Row ID</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_RowLength" xml:space="preserve">
+    <value>Row Length</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_RowName" xml:space="preserve">
+    <value>Row Name</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Sand" xml:space="preserve">
+    <value>Sand</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Shelterbelt" xml:space="preserve">
+    <value>Shelterbelt</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_SilageCrops" xml:space="preserve">
+    <value>#Silage Crops</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_SizeOfFirstRotationForField" xml:space="preserve">
+    <value>Size Of First Rotation For Field</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_SoilData" xml:space="preserve">
+    <value>#Soil Data</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Species" xml:space="preserve">
+    <value>Species</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Starch" xml:space="preserve">
+    <value>Starch</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_StartWeight" xml:space="preserve">
+    <value>Start Weight</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_SubTotal" xml:space="preserve">
+    <value>Sub-total {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TDN" xml:space="preserve">
+    <value>TDN</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TemperatureData" xml:space="preserve">
+    <value>#Temperature Data{0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TFac" xml:space="preserve">
+    <value>TFac</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TillageFactor" xml:space="preserve">
+    <value>Tillage Factor</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TillageType" xml:space="preserve">
+    <value>Tillage Type</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TimePeriodCategoryString" xml:space="preserve">
+    <value>Time Period Category String</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TotalCarbonInputs" xml:space="preserve">
+    <value>Total Carbon Inputs</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TotalCarbonKilogramsDryMatterForBedding" xml:space="preserve">
+    <value>Total Carbon Kilograms Dry Matter For Bedding</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TotalNitrogenInputsForIpccTier2" xml:space="preserve">
+    <value>Total Nitrogen Inputs For Ipcc Tier 2</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_TotalNitrogenKilogramsDryMatterForBedding" xml:space="preserve">
+    <value>Total Nitrogen Kilograms Dry Matter For Bedding</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Totals" xml:space="preserve">
+    <value>Totals</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Uncertainty" xml:space="preserve">
+    <value>Uncertainty</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_UnderSownCropsUsed" xml:space="preserve">
+    <value>Under Sown Crops Used</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_UserDefinedBeddingRate" xml:space="preserve">
+    <value>User Defined Bedding Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Variance" xml:space="preserve">
+    <value>Variance = {0}</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_VolatileSolidAdjusted" xml:space="preserve">
+    <value>Volatile Solid Adjusted</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_VolatileSolids" xml:space="preserve">
+    <value>Volatile Solids</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_VolatileSolidsExcretion" xml:space="preserve">
+    <value>Volatile Solids Excretion</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_VolatilizationFraction" xml:space="preserve">
+    <value>Volatilization Fraction</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_WFac" xml:space="preserve">
+    <value>WFac</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_WoolProduction" xml:space="preserve">
+    <value>Wool Production</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Yards" xml:space="preserve">
+    <value>Yards</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_YearInPerennialStand" xml:space="preserve">
+    <value>Year In Perennial Stand</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_YearlyEntericMethaneRate" xml:space="preserve">
+    <value>Yearly Enteric Methane Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_YearlyManureMethaneRate" xml:space="preserve">
+    <value>Yearly Manure Methane Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_YearlyNitrogenExcretionRate" xml:space="preserve">
+    <value>Yearly Nitrogen Excretion Rate</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_YearOfObservation" xml:space="preserve">
+    <value>Year Of Observation</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Column_Yield" xml:space="preserve">
+    <value>Yield</value>
+    <comment>CLI - CSV column header</comment>
+  </data>
+  <data name="Error_CannotWriteToNetworkDrive" xml:space="preserve">
+    <value>Cannot write files to network drive: {0}</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_DirectoryNotFound" xml:space="preserve">
+    <value>Have you correctly inputed the path to the directory correctly?: {0}</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_DuplicateAnimalGroupTypes" xml:space="preserve">
+    <value>There should be one Group Type associated with each Group (Component Group Name). The Group Types: {0} refer to the same Group called {1}.  The error can be found in the file at {2}</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_EmptyDataInput" xml:space="preserve">
+    <value>There is an empty data value at Row: {0}, Column: {1} in {2}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_ExitAndRunHolosForFarmLocation" xml:space="preserve">
+    <value>1. Exit and run Holos to determine your Farm&apos;s location</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_FarmDoesNotContainAnyData" xml:space="preserve">
+    <value>The Farm: {0} does not contain any data for the Components. Therefore, there is no data to process!</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InputFileNotFound" xml:space="preserve">
+    <value>Error: input file {0} not found.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidBaseDirectory" xml:space="preserve">
+    <value>We cannot find the directory at {0}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidComponentDirectoryName" xml:space="preserve">
+    <value>The following Component Directory is invalid: {0} in the Farm: {1} and will not be processed. </value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidCoverCropTerminationType" xml:space="preserve">
+    <value>{0} is not a valid CoverCropTerminationType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidCoverCropType" xml:space="preserve">
+    <value>{0} is not a valid CoverCropType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidCropType" xml:space="preserve">
+    <value>{0} is not a valid CropType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidDataInput" xml:space="preserve">
+    <value>There is an invalid data input at Row: {0}, Column: {1}, at the location: {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidDate" xml:space="preserve">
+    <value>{0} is not a valid Date. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidDiet" xml:space="preserve">
+    <value>{0} is not a valid Diet. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidDietAdditiveType" xml:space="preserve">
+    <value>{0} is not a valid DietAdditiveType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidDirectory" xml:space="preserve">
+    <value>The directory at {0} cannot be found.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidHardinessZone" xml:space="preserve">
+    <value>{0} is not a valid HardinessZone. The error is found at Row: {1}, Column {2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidHarvestMethod" xml:space="preserve">
+    <value>{0} is not a valid HarvestMethod. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidHousingType" xml:space="preserve">
+    <value>{0} is not a valid Housing Type. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidIrrigationType" xml:space="preserve">
+    <value>{0} is not a valid IrrigationType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidManureAnimalSourceType" xml:space="preserve">
+    <value>{0} is not a valid ManureAnimalSourceType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidManureApplicationType" xml:space="preserve">
+    <value>{0} is not a valid ManureApplicationType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidManureLocationSourceType" xml:space="preserve">
+    <value>{0} is not a valid ManureLocationSourceType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidManureManagement" xml:space="preserve">
+    <value>{0} is not a valid Manure Management Type. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidManureStateType" xml:space="preserve">
+    <value>{0} is not a valid ManureStateType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidPropertyName" xml:space="preserve">
+    <value>Have you recently changed the name of one of the properties in the component at Row: {0} Column: {1} in {2}?</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidResponse" xml:space="preserve">
+    <value>{0} is not a valid Response. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidSettingsFilePath" xml:space="preserve">
+    <value>The path to the settings file cannot be found.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidTillageType" xml:space="preserve">
+    <value>{0} is not a valid TillageType. The error is found at Row:{1}, Column:{2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidTreeSpecies" xml:space="preserve">
+    <value>{0} is not a valid Tree Species. The error is found at Row: {1}, Column {2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_InvalidUnitsArgument" xml:space="preserve">
+    <value>Invalid -u argument: {0}</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_LanguageNotSupported" xml:space="preserve">
+    <value>The Language {0} is not supported by the Holos Command Line Interface. Please change the language on your operating system to either French (Canada) or English (Canada)</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_NegativeInteger" xml:space="preserve">
+    <value>{0} is not a valid data input. The error is found at Row: {1}, Column {2} in {3}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_NoFarmsToProcess" xml:space="preserve">
+    <value>There are no Farms that can be processed. Please create data input files for your Farms. Please press enter to exit</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_NoFileData" xml:space="preserve">
+    <value>The following file does not have any data to parse: {0}.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_NotAValidPolygonID" xml:space="preserve">
+    <value>{0} is not a valid Polygon ID</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_SameName" xml:space="preserve">
+    <value>ComponentsWithTheSameNameError: The following {0} file does not have a unique Component name: {1}. The name that is in conflict is {2}, please change the appropriate column that refers to the Components name in the mentioned file to be unique.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_SameNameMessage" xml:space="preserve">
+    <value>There are {0} {1} Components that have the same name in their data input files. Please change the files mentioned in the CLI to have unique names.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_SettingsFileNotFound" xml:space="preserve">
+    <value>Error: settings file {0} not found.</value>
+    <comment>CLI - error message</comment>
+  </data>
+  <data name="Error_UnknownEcozone" xml:space="preserve">
+    <value>Unknown ecozone &apos;{0}&apos;</value>
+    <comment>GUI (H.Avalonia.Core) - error message</comment>
+  </data>
+  <data name="Error_UnknownSoilTexture" xml:space="preserve">
+    <value>Unknown soil type &apos;{0}&apos;</value>
+    <comment>GUI (H.Avalonia.Core) - error message</comment>
+  </data>
+  <data name="Filename_ClimateDataExport" xml:space="preserve">
+    <value>Climate_Data</value>
+    <comment>GUI (H.Avalonia.Core) - default filename</comment>
+  </data>
+  <data name="Filename_DefaultBeefInput" xml:space="preserve">
+    <value>Beef</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultDairyInput" xml:space="preserve">
+    <value>Dairy</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultFieldsInput" xml:space="preserve">
+    <value>Fields</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultOtherLivestockInput" xml:space="preserve">
+    <value>Other Livestock</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultPoultryInput" xml:space="preserve">
+    <value>Poultry</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultSheepInput" xml:space="preserve">
+    <value>Sheep</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultShelterbeltInput" xml:space="preserve">
+    <value>Shelterbelts</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_DefaultSwineInput" xml:space="preserve">
+    <value>Swine</value>
+    <comment>CLI - default filename</comment>
+  </data>
+  <data name="Filename_ExportDefault" xml:space="preserve">
+    <value>Export File</value>
+    <comment>GUI (H.Avalonia.Core) - default filename</comment>
+  </data>
+  <data name="Filename_ImportDefault" xml:space="preserve">
+    <value>Import File</value>
+    <comment>GUI (H.Avalonia.Core) - default filename</comment>
+  </data>
+  <data name="Filename_SoilDataExport" xml:space="preserve">
+    <value>Soil_Data</value>
+    <comment>GUI (H.Avalonia.Core) - default filename</comment>
+  </data>
+  <data name="Heading_ChooseComponents" xml:space="preserve">
+    <value>Choose Components For Your Farm</value>
+    <comment>GUI (H.Core) - section heading</comment>
+  </data>
+  <data name="Heading_FertilizerTab" xml:space="preserve">
+    <value>Fertilizer</value>
+    <comment>GUI (H.Core) - section heading</comment>
+  </data>
+  <data name="Heading_GeneralTab" xml:space="preserve">
+    <value>General</value>
+    <comment>GUI (H.Core) - section heading</comment>
+  </data>
+  <data name="Heading_ICBMSettings" xml:space="preserve">
+    <value># ICBM/Climate</value>
+    <comment>CLI - section heading</comment>
+  </data>
+  <data name="Heading_MyComponents" xml:space="preserve">
+    <value>My Components</value>
+    <comment>GUI (H.Core) - section heading</comment>
+  </data>
+  <data name="Heading_ResiduesTab" xml:space="preserve">
+    <value>Residues</value>
+    <comment>GUI (H.Core) - section heading</comment>
+  </data>
+  <data name="Heading_SettingsFile" xml:space="preserve">
+    <value>#Polygon ID: {0}</value>
+    <comment>CLI - section heading</comment>
+  </data>
+  <data name="Label_About" xml:space="preserve">
+    <value>About</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_AboutHolos" xml:space="preserve">
+    <value>About Holos</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_AdditionalInformation" xml:space="preserve">
+    <value>Additional Information</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Address" xml:space="preserve">
+    <value>Address</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_AddRow" xml:space="preserve">
+    <value>Add row</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_AdvancedMode" xml:space="preserve">
+    <value>Advanced Mode</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_AnimalType" xml:space="preserve">
+    <value>Animal Type</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_April" xml:space="preserve">
+    <value>April</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_August" xml:space="preserve">
+    <value>August</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Back" xml:space="preserve">
+    <value>Back</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BasicMode" xml:space="preserve">
+    <value>Basic Mode</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BeddingType" xml:space="preserve">
+    <value>Bedding type:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BeddingTypeColumn" xml:space="preserve">
+    <value>Bedding type</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Biomass" xml:space="preserve">
+    <value>Biomass</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BiomassCoefficientExtraroots" xml:space="preserve">
+    <value>Biomass Coefficient Extraroots:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BiomassCoefficientProduct" xml:space="preserve">
+    <value>Biomass Coefficient Product:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BiomassCoefficientRoots" xml:space="preserve">
+    <value>Biomass Coefficient Roots:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BiomassCoefficientStraw" xml:space="preserve">
+    <value>Biomass Coefficient Straw:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_BulkDensity" xml:space="preserve">
+    <value>Bulk density</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CalculateMonthlyPPT" xml:space="preserve">
+    <value>Calculate Monthly PPT?</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CarbonConcentration" xml:space="preserve">
+    <value>Carbon concentration</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CarbonModelling" xml:space="preserve">
+    <value>Carbon Modelling</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CarbonModellingEquilibrium" xml:space="preserve">
+    <value>Carbon modelling equilibrium</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CarbonModellingStrategy" xml:space="preserve">
+    <value>Carbon modelling strategy</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CarbonToNitrogen" xml:space="preserve">
+    <value>C:N</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ClimateData" xml:space="preserve">
+    <value>Climate Data</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Comments" xml:space="preserve">
+    <value>Comments</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ComponentCategory" xml:space="preserve">
+    <value>Component category</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ConfinedNoBarn" xml:space="preserve">
+    <value>Confined no barn (feedlot)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Contributors" xml:space="preserve">
+    <value>Contributors</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Coordinates" xml:space="preserve">
+    <value>Coordinates</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CreateDefaultLethbridgeSettingsFile" xml:space="preserve">
+    <value>3. Create a settings file for your Farm based on the data corresponding to the Lethbridge, Alberta location.</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_CreatedOn" xml:space="preserve">
+    <value>Created On</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CreateNewFarm" xml:space="preserve">
+    <value>Create a new farm</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_CreateSettingsFileBasedOnPolygon" xml:space="preserve">
+    <value>2. You know your Polygon ID and would like to create a settings file based on your location</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_CrudeProtein" xml:space="preserve">
+    <value>Crude Protein (%)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_DailyDryMatterFeedIntake" xml:space="preserve">
+    <value>Daily Dry Matter Feed Intake (kg/day)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_December" xml:space="preserve">
+    <value>December</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_DietFormulator" xml:space="preserve">
+    <value>Diet Formulator</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_DietType" xml:space="preserve">
+    <value>Diet Type</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_DryMatter" xml:space="preserve">
+    <value>Dry matter</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Ecodistrict" xml:space="preserve">
+    <value>Ecodistrict</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_EditComponents" xml:space="preserve">
+    <value>Edit Components</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_EmissionFactorForLeachingAndRunoff" xml:space="preserve">
+    <value>Emission factor for leaching and runoff</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_EndDate" xml:space="preserve">
+    <value>End Date</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_EndYear" xml:space="preserve">
+    <value>End Year</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_EquilibriumCalculationStrategy" xml:space="preserve">
+    <value>Equilibrium year yield calculation strategy</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Export" xml:space="preserve">
+    <value>Export</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ExportFileWarning" xml:space="preserve">
+    <value>Exported files can only be imported in v5. Files exported from v5 are not compatable in v4</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ExportToCSV" xml:space="preserve">
+    <value>Export to CSV</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Farm" xml:space="preserve">
+    <value>Farm</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_FarmName" xml:space="preserve">
+    <value>Farm Name</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_February" xml:space="preserve">
+    <value>February</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_FindCoordinate" xml:space="preserve">
+    <value>Find Coordinate</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_FinishSelectComponent" xml:space="preserve">
+    <value>Finished Selecting Components</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Forage" xml:space="preserve">
+    <value>Forage (%)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_GeneralManagement" xml:space="preserve">
+    <value>General Management</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_GetClimateData" xml:space="preserve">
+    <value>Get Climate Data</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_GetCoordinates" xml:space="preserve">
+    <value>Get Coordinates</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_GetSoilData" xml:space="preserve">
+    <value>Get Soil Data</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Github" xml:space="preserve">
+    <value>Github</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_GrowingSeasonEvapotranspiration" xml:space="preserve">
+    <value>Growing season evapotranspiration</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_GrowingSeasonPrecipitation" xml:space="preserve">
+    <value>Growing season precipitation</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Guid" xml:space="preserve">
+    <value>Guid</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_HardinessZone" xml:space="preserve">
+    <value>Hardiness Zone</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_HolosExampleFarm" xml:space="preserve">
+    <value>HolosExampleFarm</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_HolosOfficialPage" xml:space="preserve">
+    <value>Holos official page</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_HousedInBarn" xml:space="preserve">
+    <value>Housed in barn</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_HousingManagement" xml:space="preserve">
+    <value>Housing Management</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_HousingType" xml:space="preserve">
+    <value>Housing type:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ImportFromCSV" xml:space="preserve">
+    <value>Import From CSV</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Irrigation" xml:space="preserve">
+    <value>Irrigation</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_January" xml:space="preserve">
+    <value>January</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_JulianEndDay" xml:space="preserve">
+    <value>Julian Day End</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_JulianStartDay" xml:space="preserve">
+    <value>Julian Day Start</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_July" xml:space="preserve">
+    <value>July</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_June" xml:space="preserve">
+    <value>June</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_KilogramPerKilogram" xml:space="preserve">
+    <value>kg kg^-1</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_KilogramsCarbonPerHectare" xml:space="preserve">
+    <value>kg C ha^-1</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_KilogramsN2ONPerKilogramN" xml:space="preserve">
+    <value>kg N2O-N (kg N)^-1</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ListOfValidDirectories" xml:space="preserve">
+    <value>Please make sure that the directories listed above are spelled correctly according to the list of valid Component Directory names below:</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ManagementPeriodName" xml:space="preserve">
+    <value>Management Period Name</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ManureHandlingSystem" xml:space="preserve">
+    <value>Manure handling system:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ManureHandlingSystemColumn" xml:space="preserve">
+    <value>Manure handling system</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ManureManagement" xml:space="preserve">
+    <value>Manure Management</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ManureType" xml:space="preserve">
+    <value>Manure Type</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_March" xml:space="preserve">
+    <value>March</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_May" xml:space="preserve">
+    <value>May</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_MethaneConversionFactor" xml:space="preserve">
+    <value>Methane Conversion Factor</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Millimeters" xml:space="preserve">
+    <value>mm</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ModifiedOn" xml:space="preserve">
+    <value>Modified On</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_MonthlyPPT" xml:space="preserve">
+    <value>Monthly PPT</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_MultipleCoordinates" xml:space="preserve">
+    <value>Multiple Coordinates</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_MultipleSelection" xml:space="preserve">
+    <value>Press CTRl+Click or SHIFT+Click for multiple selection</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_N2O" xml:space="preserve">
+    <value>N₂O</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_No" xml:space="preserve">
+    <value>No</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_NotApplicable" xml:space="preserve">
+    <value>Not Applicable</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_November" xml:space="preserve">
+    <value>November</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_NumberOfAnimals" xml:space="preserve">
+    <value>Number of animals:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_NumberOfDays" xml:space="preserve">
+    <value>Number of Days</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_October" xml:space="preserve">
+    <value>October</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Ok" xml:space="preserve">
+    <value>OK</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_OpenAnExistingFarm" xml:space="preserve">
+    <value>Open an existing farm</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_OrganicMatterSoil" xml:space="preserve">
+    <value>% Organic Matter in Soil</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_OrImportFromAFile" xml:space="preserve">
+    <value>Or import from a file</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_PastureHandlingSystem" xml:space="preserve">
+    <value>Pasture/range/paddock</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Percentage" xml:space="preserve">
+    <value>%</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_PercentageOfSoilOrganicCarbon" xml:space="preserve">
+    <value>Percentage of soil organic carbon</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_PercentClayInSoil" xml:space="preserve">
+    <value>% Clay in Soil</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Polygon" xml:space="preserve">
+    <value>Polygon</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ProductReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>Product returned to soil for annuals</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ProductReturnedToSoilForFodderCorn" xml:space="preserve">
+    <value>Product returned to soil for fodder corn</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ProductReturnedToSoilForPerennials" xml:space="preserve">
+    <value>Product returned to soil for perennials</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ProductReturnedToSoilForRootCrops" xml:space="preserve">
+    <value>Product returned to soil for root crops</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ProportionOfClayInSoil" xml:space="preserve">
+    <value>Proportion of clay in soil</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_ProportionOfSandInSoil" xml:space="preserve">
+    <value>Proportion of sand in soil</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Province" xml:space="preserve">
+    <value>Province</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_PumpType" xml:space="preserve">
+    <value>Pump type</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_RootsReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>Roots returned to soil for annuals</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_RootsReturnedToSoilForFodderCorn" xml:space="preserve">
+    <value>Roots returned to soil for fodder corn</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_RootsReturnedToSoilForPerennials" xml:space="preserve">
+    <value>Roots returned to soil for perennials</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_RunInPeriod" xml:space="preserve">
+    <value>Run in period</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SearchForFarms" xml:space="preserve">
+    <value>Search for farms...</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SelectAllRows" xml:space="preserve">
+    <value>Select All</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SelectProvince" xml:space="preserve">
+    <value>Select Province</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_September" xml:space="preserve">
+    <value>September</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SingleCoordinate" xml:space="preserve">
+    <value>Single Coordinate</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilCEC" xml:space="preserve">
+    <value>Soil cation exchange capacity</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilData" xml:space="preserve">
+    <value>Soil Data</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewCivicNumber" xml:space="preserve">
+    <value>Civic Number (Optional)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewCounty" xml:space="preserve">
+    <value>County (Optional)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewMunicipality" xml:space="preserve">
+    <value>Municipality</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewPostalCode" xml:space="preserve">
+    <value>Postal Code</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewRoadName" xml:space="preserve">
+    <value>Road Name</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewStepThree" xml:space="preserve">
+    <value>Select Soil Type</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewStepTwo" xml:space="preserve">
+    <value>Enter Your Location</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewStepTwoLatLong" xml:space="preserve">
+    <value>Latitude and longitude</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewStepTwoRightClickOnMap" xml:space="preserve">
+    <value>Right-click farm location on map</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewStepTwoRoadSearch" xml:space="preserve">
+    <value>Road Search</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilDataViewUrbanAddressFormatToggle" xml:space="preserve">
+    <value>Urban Address Format</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilFunctionalCategory" xml:space="preserve">
+    <value>Soil functional category</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilGreatGroup" xml:space="preserve">
+    <value>Soil Great Group</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilPh" xml:space="preserve">
+    <value>Soil pH</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SoilTexture" xml:space="preserve">
+    <value>Soil Texture</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SolidStorageHandlingSystem" xml:space="preserve">
+    <value>Solid storage (stockpiled)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StartYear" xml:space="preserve">
+    <value>Start Year</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Step1Text" xml:space="preserve">
+    <value>Define the animal groups for this component</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Step2" xml:space="preserve">
+    <value>Step 2:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Step2Text" xml:space="preserve">
+    <value>Define the management periods for the selected animal group</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Step3" xml:space="preserve">
+    <value>Step 3:</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Step3Text" xml:space="preserve">
+    <value>Define the management of this group of animals during the selected period of time</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StepOne" xml:space="preserve">
+    <value>Step 1</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StepThree" xml:space="preserve">
+    <value>Step 3</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StepTwo" xml:space="preserve">
+    <value>Step 2</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StrawReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>Straw returned to soil for annuals</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_StrawReturnedToSoilForRootCrops" xml:space="preserve">
+    <value>Straw returned to soil for root crops</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_SupplementalFeedingLoss" xml:space="preserve">
+    <value>Supplemental feeding loss</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_TopLayerThickness" xml:space="preserve">
+    <value>Top layer thickness</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_TotalDigestibleNutrient" xml:space="preserve">
+    <value>Total Digestible Nutrient (%)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_TotalPET" xml:space="preserve">
+    <value>Total PET</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_TotalPPT" xml:space="preserve">
+    <value>Total PPT</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Unitless" xml:space="preserve">
+    <value>(unitless)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UnitMiliEquivalentsPer100g" xml:space="preserve">
+    <value>(mEq 100g^-1)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UnitMm" xml:space="preserve">
+    <value>(mm)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UnitPercentage" xml:space="preserve">
+    <value>(%)</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UseCustomEquilibriumCarbonValue" xml:space="preserve">
+    <value>Use custom equilibrium carbon value</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UseCustomN2OEmissionFactor" xml:space="preserve">
+    <value>Use custom N₂O emission factor</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UseCustomRuninPeriodTillage" xml:space="preserve">
+    <value>Use custom run-in period tillage</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_UsefulLinks" xml:space="preserve">
+    <value>Useful Links</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_VolatilizationEmissionFactor" xml:space="preserve">
+    <value>Volatilization emission factor</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_WatermarkComments" xml:space="preserve">
+    <value>Comments</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_WatermarkNewFarmName" xml:space="preserve">
+    <value>New farm name</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_WatermarkYourFarmName" xml:space="preserve">
+    <value>Your Farm Name</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_WhatIsThePathToExportedFarms" xml:space="preserve">
+    <value>What is the full directory path to your exported farms?</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_WouldYouLikeToImportFarmsFromGui" xml:space="preserve">
+    <value>Do you have farms that you would like to import from the Holos GUI?</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_WouldYouLikeToOpenAnExistingFarmOrCreateANewOne" xml:space="preserve">
+    <value>Would you like to open an existing farm or create a new one?</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>GUI (H.Avalonia.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Years" xml:space="preserve">
+    <value>years</value>
+    <comment>GUI (H.Core) - field/control label</comment>
+  </data>
+  <data name="Label_Yes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Label_YesNo" xml:space="preserve">
+    <value> (yes/no)</value>
+    <comment>CLI - field/control label</comment>
+  </data>
+  <data name="Message_AnimalGeneralTab" xml:space="preserve">
+    <value>Basic information about this group of animals can be entered here. Values entered here will apply to the animals during the selected management period.</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_AnimalHousingTab" xml:space="preserve">
+    <value>Animal housing details can be entered on this tab. If animals are to be placed on a pasture, ensure at least one field component has been added to the farm and then set the &apos;Housing type&apos; to pasture. You can then specify which pasture the animals are to be placed.</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_AnimalManureTab" xml:space="preserve">
+    <value>Manure handling system details can be entered on this tab. To adjust optional manure handling system information, click the &apos;Show Additional Information&apos; button.</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_DataInputMistakeData" xml:space="preserve">
+    <value>There is a data input mistake at Row: {0} , Column: {1}. at the location: {2}.</value>
+    <comment>CLI - informational message</comment>
+  </data>
+  <data name="Message_DataInputMistakeHeader" xml:space="preserve">
+    <value>There is an input mistake with the header at Row: {0} in {1}. The header should be: {2}.</value>
+    <comment>CLI - informational message</comment>
+  </data>
+  <data name="Message_DataMissingOptionalHeader" xml:space="preserve">
+    <value>An optional header named &quot;{0}&quot; is missing. Holos will use a default value in {1}</value>
+    <comment>CLI - informational message</comment>
+  </data>
+  <data name="Message_DefaultBeddingComposition" xml:space="preserve">
+    <value>Default composition of bedding materials for beef and dairy cattle, swine, and poultry</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_DefaultManureComposition" xml:space="preserve">
+    <value>Manure types and default composition</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_EmptyAddress" xml:space="preserve">
+    <value>Address field is empty. Please try again.</value>
+    <comment>GUI (H.Avalonia.Core) - informational message</comment>
+  </data>
+  <data name="Message_IncorrectAddress" xml:space="preserve">
+    <value>The address entered was incorrect. Please try again.</value>
+    <comment>GUI (H.Avalonia.Core) - informational message</comment>
+  </data>
+  <data name="Message_IncorrectLocationSelected" xml:space="preserve">
+    <value>Cannot find the address for this coordinate. Please select a valid location.</value>
+    <comment>GUI (H.Avalonia.Core) - informational message</comment>
+  </data>
+  <data name="Message_InitialAfterInstallation" xml:space="preserve">
+    <value>Holos has created a template farm folder with the sample directories and data input files in the following directory: {0}. Please go into these folders and create your data files for your Farm. Please hit enter to exit the application.</value>
+    <comment>CLI - informational message</comment>
+  </data>
+  <data name="Message_InvalidCoordinateEntered" xml:space="preserve">
+    <value>An invalid coordinate was entered. Please check the latitude and longitude values and try again.</value>
+    <comment>GUI (H.Avalonia.Core) - informational message</comment>
+  </data>
+  <data name="Message_MonthlyBarnTemperatureBreakdownHeader" xml:space="preserve">
+    <value>Indoor temperatures for dairy barns on the farm</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_MonthlyTemperatureBreakdownHeader" xml:space="preserve">
+    <value>The monthly temperature averages for the farm.</value>
+    <comment>GUI (H.Core) - informational message</comment>
+  </data>
+  <data name="Message_RowDeleteConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete row(s)?</value>
+    <comment>GUI (H.Avalonia.Core) - informational message</comment>
+  </data>
+  <data name="Prompt_EnterChoice" xml:space="preserve">
+    <value>Please enter your choice:</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_ForFarmsFolderLocation" xml:space="preserve">
+    <value>Please enter the location of your &quot;Farms&quot; folder to run the Holos Command Line Interface</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_SelectPolygonOptions" xml:space="preserve">
+    <value>Please select one of the options below to continue processing</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_ToEnterPolygonID" xml:space="preserve">
+    <value>Please enter your Farm location ID (Polygon ID)</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_UserForLanguage" xml:space="preserve">
+    <value>Please enter the number corresponding to your preferred language (English = 1, French = 2)</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_UserForPolygonSelection" xml:space="preserve">
+    <value>In order to process the data for your Farm, the Holos Command Line Interface needs to know the location of your Farm to produce results. If you do not know your location of your Farm, please run Holos and determine the location by selecting your geographical area in the &apos;Setting Your Farm Location&apos; section. The Farm that does not have a settings file is: {0}</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_UserForUnitsOfMeasurement" xml:space="preserve">
+    <value>Please enter the number corresponding to your preferred units of measurement (Metric = 1, Imperial = 2)</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Prompt_UserToUsePreviousDirectory" xml:space="preserve">
+    <value>The previously entered directory containing your farms is: {0}
+Would you like to continue using this directory?</value>
+    <comment>CLI - CLI user prompt</comment>
+  </data>
+  <data name="Province_Alberta" xml:space="preserve">
+    <value>Alberta</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_BritishColumbia" xml:space="preserve">
+    <value>British Columbia</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Manitoba" xml:space="preserve">
+    <value>Manitoba</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_NewBrunswick" xml:space="preserve">
+    <value>New Brunswick</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Newfoundland" xml:space="preserve">
+    <value>Newfoundland</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_NorthwestTerritories" xml:space="preserve">
+    <value>Northwest Territories</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_NovaScotia" xml:space="preserve">
+    <value>Nova Scotia</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Nunavut" xml:space="preserve">
+    <value>Nunavut</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Ontario" xml:space="preserve">
+    <value>Ontario</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_PrinceEdwardIsland" xml:space="preserve">
+    <value>Prince Edward Island</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Quebec" xml:space="preserve">
+    <value>Quebec</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Saskatchewan" xml:space="preserve">
+    <value>Saskatchewan</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Province_Yukon" xml:space="preserve">
+    <value>Yukon</value>
+    <comment>GUI (H.Avalonia.Core) - province/territory name</comment>
+  </data>
+  <data name="Result_FarmCO2E" xml:space="preserve">
+    <value>_CO2EEmissions_</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_FarmEP" xml:space="preserve">
+    <value>_EstimatesOfProduction_</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_FarmFE" xml:space="preserve">
+    <value>_FeedEstimates_</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_FarmGHG" xml:space="preserve">
+    <value>_GHGEmissions_</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalAllFields" xml:space="preserve">
+    <value>ICBM_Results_All_Farms</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalCO2E" xml:space="preserve">
+    <value>totalresults_CO2EEmissions</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalCO2Shelterbelt" xml:space="preserve">
+    <value>Total CO2_shelterbelt</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalCShelterbelt" xml:space="preserve">
+    <value>Total C_shelterbelt</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalEP" xml:space="preserve">
+    <value>totalresults_EstimatesOfProduction</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalFE" xml:space="preserve">
+    <value>totalresults_FeedEstimates</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalForAllFarms" xml:space="preserve">
+    <value>TotalResultsForAllFarms</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Result_TotalGHG" xml:space="preserve">
+    <value>totalresults_GHGEmissions</value>
+    <comment>CLI - CLI result label</comment>
+  </data>
+  <data name="Settings_Alfa" xml:space="preserve">
+    <value>Alfa</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_AprilMeanTemperature" xml:space="preserve">
+    <value>April Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_AprilPotentialEvapotranspiration" xml:space="preserve">
+    <value>April Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_AprilPrecipitation" xml:space="preserve">
+    <value>April Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_AugustMeanTemperature" xml:space="preserve">
+    <value>August Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_AugustPotentialEvapotranspiration" xml:space="preserve">
+    <value>August Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_AugustPrecipitation" xml:space="preserve">
+    <value>August Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_BulkDensity" xml:space="preserve">
+    <value>Bulk Density</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_CarbonConcentration" xml:space="preserve">
+    <value>Carbon Concentration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_CarbonModellingStrategy" xml:space="preserve">
+    <value>Carbon modelling strategy</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_ClimateDataAcquisition" xml:space="preserve">
+    <value>Climate Data Acquisition</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_ClimateFilename" xml:space="preserve">
+    <value>Climate filename</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecemberMeanTemperature" xml:space="preserve">
+    <value>December Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecemberPotentialEvapotranspiration" xml:space="preserve">
+    <value>December Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecemberPrecipitation" xml:space="preserve">
+    <value>December Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecompositionMaximumTemperature" xml:space="preserve">
+    <value>Decomposition Maximum Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecompositionMinimumTemperature" xml:space="preserve">
+    <value>Decomposition Minimum Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecompositionRateConstantOldPool" xml:space="preserve">
+    <value>Decomposition Rate Constant Old Pool</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_DecompositionRateConstantYoungPool" xml:space="preserve">
+    <value>Decomposition Rate Constant Young Pool</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_Denitrification" xml:space="preserve">
+    <value>Denitrification</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_EcodistrictID" xml:space="preserve">
+    <value>Ecodistrict ID</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_EmergenceDay" xml:space="preserve">
+    <value>Emergence Day</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_EmissionFactorForLeachingAndRunOff" xml:space="preserve">
+    <value>Emission Factor For Leaching And Runoff</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_EmissionFactorForVolatilization" xml:space="preserve">
+    <value>Emission Factor For Volatilization</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_EnableCarbonModelling" xml:space="preserve">
+    <value>Enable Carbon Modelling</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_FebruaryMeanTemperature" xml:space="preserve">
+    <value>February Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_FebruaryPotentialEvapotranspiration" xml:space="preserve">
+    <value>February Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_FebruaryPrecipitation" xml:space="preserve">
+    <value>February Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_FractionOfNLostByVolatilization" xml:space="preserve">
+    <value>Fraction Of N Lost By Volatilization</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_HumificationCoefficientAboveGround" xml:space="preserve">
+    <value>Humification Coefficient Above Ground</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_HumificationCoefficientBelowGround" xml:space="preserve">
+    <value>Humification Coefficient Below Ground</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_HumificationCoefficientManure" xml:space="preserve">
+    <value>Humification Coefficient Manure</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JanuaryMeanTemperature" xml:space="preserve">
+    <value>January Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JanuaryPotentialEvapotranspiration" xml:space="preserve">
+    <value>January Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JanuaryPrecipitation" xml:space="preserve">
+    <value>January Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JulyMeanTemperature" xml:space="preserve">
+    <value>July Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JulyPotentialEvapotranspiration" xml:space="preserve">
+    <value>July Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JulyPrecipitation" xml:space="preserve">
+    <value>July Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JuneMeanTemperature" xml:space="preserve">
+    <value>June Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JunePotentialEvapotranspiration" xml:space="preserve">
+    <value>June Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_JunePrecipitation" xml:space="preserve">
+    <value>June Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MarchMeanTemperature" xml:space="preserve">
+    <value>March Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MarchPotentialEvapotranspiration" xml:space="preserve">
+    <value>March Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MarchPrecipitation" xml:space="preserve">
+    <value>March Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MayMeanTemperature" xml:space="preserve">
+    <value>May Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MayPotentialEvapotranspiration" xml:space="preserve">
+    <value>May Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MayPrecipitation" xml:space="preserve">
+    <value>May Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MicrobeDeath" xml:space="preserve">
+    <value>Microbe Death</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MoistureResponseFunctionAtSaturation" xml:space="preserve">
+    <value>Moisture Response Function At Saturation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_MoistureResponseFunctionAtWiltingPoint" xml:space="preserve">
+    <value>Moisture Response Function At Wilting Point</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_NORatio" xml:space="preserve">
+    <value>NO Ratio</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_NovemberMeanTemperature" xml:space="preserve">
+    <value>November Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_NovemberPotentialEvapotranspiration" xml:space="preserve">
+    <value>November Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_NovemberPrecipitation" xml:space="preserve">
+    <value>November Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_OctoberMeanTemperature" xml:space="preserve">
+    <value>October Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_OctoberPotentialEvapotranspiration" xml:space="preserve">
+    <value>October Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_OctoberPrecipitation" xml:space="preserve">
+    <value>October Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_OldPoolCarbonN" xml:space="preserve">
+    <value>Old Pool Carbon N</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>Percentage Of Product Returned To Soil For Annuals</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductReturnedToSoilForFodderCorn" xml:space="preserve">
+    <value>Percentage Of Product Returned To Soil For Fodder Corn</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductReturnedToSoilForPerennials" xml:space="preserve">
+    <value>Percentage Of Product Returned To Soil For Perennials</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductReturnedToSoilForRangelandDueToHarvestLoss" xml:space="preserve">
+    <value>Percentage Of Product Returned To Soil For Rangeland Due To Harvest Loss</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductReturnedToSoilForRootCrops" xml:space="preserve">
+    <value>Percentage Of Product Returned To Soil For Root Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductYieldReturnedToSoilForCoverCrops" xml:space="preserve">
+    <value>Percentage Of Product Yield Returned To Soil For Cover Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductYieldReturnedToSoilForCoverCropsForage" xml:space="preserve">
+    <value>Percentage Of Product Yield Returned To Soil For Cover Crops Forage</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductYieldReturnedToSoilForCoverCropsProduce" xml:space="preserve">
+    <value>Percentage Of Product Yield Returned To Soil For Cover Crops Produce</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfProductYieldReturnedToSoilForSilageCrops" xml:space="preserve">
+    <value>Percentage Of Product Yield Returned To Soil For Silage Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfRootsReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>Percentage Of Roots Returned To Soil For Annuals</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfRootsReturnedToSoilForCoverCrops" xml:space="preserve">
+    <value>Percentage Of Roots Returned To Soil For Cover Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfRootsReturnedToSoilForFodderCorn" xml:space="preserve">
+    <value>Percentage Of Roots Returned To Soil For Fodder Corn</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfRootsReturnedToSoilForPerennials" xml:space="preserve">
+    <value>Percentage Of Roots Returned To Soil For Perennials</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfRootsReturnedToSoilForRangeland" xml:space="preserve">
+    <value>Percentage Of Roots Returned To Soil For Rangeland</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfRootsReturnedToSoilForSilageCrops" xml:space="preserve">
+    <value>Percentage Of Roots Returned To Soil For Silage Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfStrawReturnedToSoilForAnnuals" xml:space="preserve">
+    <value>Percentage Of Straw Returned To Soil For Annuals</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfStrawReturnedToSoilForCoverCrops" xml:space="preserve">
+    <value>Percentage Of Straw Returned To Soil For Cover Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PercentageOfStrawReturnedToSoilForRootCrops" xml:space="preserve">
+    <value>Percentage Of Straw Returned To Soil For Root Crops</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_PolygonNumber" xml:space="preserve">
+    <value>Polygon Number</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_ProportionOfClayInSoil" xml:space="preserve">
+    <value>Proportion Of Clay In Soil</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_ProportionOfSandInSoil" xml:space="preserve">
+    <value>Proportion Of Sand In Soil</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_ProportionOfSoilOrganicCarbon" xml:space="preserve">
+    <value>Proportion Of Soil Organic Carbon</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_Province" xml:space="preserve">
+    <value>Province</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_RipeningDay" xml:space="preserve">
+    <value>Ripening Day</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_RunInPeriodYears" xml:space="preserve">
+    <value>Run In Period Years</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SeptemberMeanTemperature" xml:space="preserve">
+    <value>September Mean Temperature</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SeptemberPotentialEvapotranspiration" xml:space="preserve">
+    <value>September Potential Evapotranspiration</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SeptemberPrecipitation" xml:space="preserve">
+    <value>September Precipitation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SoilFunctionalCategory" xml:space="preserve">
+    <value>Soil functional category</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SoilGreatGroup" xml:space="preserve">
+    <value>Soil Great Group</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SoilPh" xml:space="preserve">
+    <value>Soil Ph</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_SoilTexture" xml:space="preserve">
+    <value>Soil Texture</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_TopLayerThickness" xml:space="preserve">
+    <value>Top Layer Thickness</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_UseClimateParameterInsteadOfManagementFactor" xml:space="preserve">
+    <value>Use climate parameter instead of management factor</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_Variance" xml:space="preserve">
+    <value>Variance</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_YearOfObservation" xml:space="preserve">
+    <value>Year Of Observation</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="Settings_YieldAssignmentMethod" xml:space="preserve">
+    <value>Yield Assignment Method</value>
+    <comment>CLI - settings file property</comment>
+  </data>
+  <data name="SoilTexture_Coarse" xml:space="preserve">
+    <value>Coarse</value>
+    <comment>GUI (H.Avalonia.Core) - soil texture value</comment>
+  </data>
+  <data name="SoilTexture_Fine" xml:space="preserve">
+    <value>Fine</value>
+    <comment>GUI (H.Avalonia.Core) - soil texture value</comment>
+  </data>
+  <data name="SoilTexture_Medium" xml:space="preserve">
+    <value>Medium</value>
+    <comment>GUI (H.Avalonia.Core) - soil texture value</comment>
+  </data>
+  <data name="SoilType_BlackChernozem" xml:space="preserve">
+    <value>Black Chernozem</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_BrownChernozem" xml:space="preserve">
+    <value>Brown Chernozem</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_DarkBrownChernozem" xml:space="preserve">
+    <value>Dark Brown Chernozem</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_DarkGrayChernozem" xml:space="preserve">
+    <value>Dark Gray Chernozem</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_DystricBrunisol" xml:space="preserve">
+    <value>Dystric Brunisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_EutricBrunisol" xml:space="preserve">
+    <value>Eutric Brunisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_FerroHumicPodzol" xml:space="preserve">
+    <value>Ferro Humic Podzol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Fibrisol" xml:space="preserve">
+    <value>Fibrisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Folisol" xml:space="preserve">
+    <value>Folisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Gleysol" xml:space="preserve">
+    <value>Gleysol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_GrayBrownLuvisol" xml:space="preserve">
+    <value>Gray Brown Luvisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_GrayLuvisol" xml:space="preserve">
+    <value>Gray Luvisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_HumicGleysol" xml:space="preserve">
+    <value>Humic Gleysol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_HumicPodzol" xml:space="preserve">
+    <value>Humic Podzol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_HumicRegosol" xml:space="preserve">
+    <value>Humic Regosol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_HumicVertisol" xml:space="preserve">
+    <value>Humic Vertisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Humisol" xml:space="preserve">
+    <value>Humisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_HumoFerricPodzol" xml:space="preserve">
+    <value>Humo Ferric Podzol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_LuvicGleysol" xml:space="preserve">
+    <value>Luvic Gleysol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_MelanicBrunisol" xml:space="preserve">
+    <value>Melanic Brunisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Mesisol" xml:space="preserve">
+    <value>Mesisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_OrganicCryosol" xml:space="preserve">
+    <value>Organic Cryosol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Regosol" xml:space="preserve">
+    <value>Regosol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Solod" xml:space="preserve">
+    <value>Solod</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_SolodizedSolonetz" xml:space="preserve">
+    <value>Solodized Solonetz</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Solonetz" xml:space="preserve">
+    <value>Solonetz</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_SombricBrunisol" xml:space="preserve">
+    <value>Sombric Brunisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_StaticCryosol" xml:space="preserve">
+    <value>Static Cryosol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_TurbicCryosol" xml:space="preserve">
+    <value>Turbic Cryosol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_VerticSolonetz" xml:space="preserve">
+    <value>Vertic Solonetz</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="SoilType_Vertisol" xml:space="preserve">
+    <value>Vertisol</value>
+    <comment>GUI (H.Avalonia.Core) - soil great group name</comment>
+  </data>
+  <data name="Status_AreExportedFarmsInDirectory" xml:space="preserve">
+    <value>Are your exported farms in your current farms directory?</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_ConversionFinished" xml:space="preserve">
+    <value>Conversion finished.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingBeefCattleInputFiles" xml:space="preserve">
+    <value>Creating beef cattle input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingDairyCattleInputFiles" xml:space="preserve">
+    <value>Creating dairy cattle input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingDefaultLethbridgeGeographicData" xml:space="preserve">
+    <value>The Holos Command Line Interface is creating a default settings file with the Farm location set to the following location: Lethbridge, Alberta. The settings file can be found in this location: {0}. Please refer to this location when you modify the settings file to match your Farm&apos;s location data</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingFieldInputFiles" xml:space="preserve">
+    <value>Creating field input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingOtherAnimalsInputFiles" xml:space="preserve">
+    <value>Creating other animal input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingPoultryInputFiles" xml:space="preserve">
+    <value>Creating poultry input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingSettingsFile" xml:space="preserve">
+    <value>Creating .SETTINGS file.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingSheepInputFiles" xml:space="preserve">
+    <value>Creating sheep input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_CreatingSwineInputFiles" xml:space="preserve">
+    <value>Creating swine input files.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_FileHasBeenParsed" xml:space="preserve">
+    <value>The following file has been parsed: {0}.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_GettingExportedFarms" xml:space="preserve">
+    <value>Reading exported farms...</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_InputFilesCreated" xml:space="preserve">
+    <value>{0} total component input files have been created for your imported farms.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_ParsingFiles" xml:space="preserve">
+    <value>Parsing files...</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_ParsingFinished" xml:space="preserve">
+    <value>Parsing has finished.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_ProcessingComplete" xml:space="preserve">
+    <value>Processing complete, press enter to exit the application.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_ReadingSettingsFile" xml:space="preserve">
+    <value>Reading the settings file...</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_SettingsFileWillBeCreatedHere" xml:space="preserve">
+    <value>The settings file will be created here: {0}</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_StartingComponentConversion" xml:space="preserve">
+    <value>Starting component conversion...</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_StartingConversion" xml:space="preserve">
+    <value>Starting conversion for {0}...</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_StartingIndividualComponentProcessing" xml:space="preserve">
+    <value>Starting the processing of the Components in the following Farm: {0}</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_StartingProcessing" xml:space="preserve">
+    <value>Starting processing of Farms</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_TotalFarmsFound" xml:space="preserve">
+    <value>{0} total farms found.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Status_TotalFarmsImported" xml:space="preserve">
+    <value>{0} total farms imported.</value>
+    <comment>CLI - CLI progress status</comment>
+  </data>
+  <data name="Text_AboutPage" xml:space="preserve">
+    <value>This application is a tool that provides users with access to climate and soil data for agricultural purposes. It is based on Holos, a tool developed by Agriculture and Agri-Food Canada to estimate greenhouse gas emissions from different farming practices. The application uses the NASA Power API to retrieve climate data for any location and time period, such as daily precipitation and evapotranspiration. The application also allows users to extract soil based data from Holos, such as soil group, soil texture, percent organic matter in soil, etc. The aim of this application is to allow users easy access to various soil and climate data without relying on the full  Holos application.</value>
+    <comment>GUI (H.Avalonia.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_ContributorsList" xml:space="preserve">
+    <value>Aaron McPherson
+Hassan Afzaal</value>
+    <comment>GUI (H.Avalonia.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_OptionSoilN2OBreakdown" xml:space="preserve">
+    <value>The monthly emissions distribution for the year. This distribution can be adjusted based on your farm&apos;s results. Please note that the addition of all montly percentages</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_OptionSoilView" xml:space="preserve">
+    <value>The Soil tab can be used to change the soil properties for the entire farm. The default values are shown for the current soil type. The soil for the farm can be customized by changing individual soil properties. In order to change the soil type for the specific field only, go to the specific field and select &apos;soil&apos; tab within the field.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_SaveAs" xml:space="preserve">
+    <value>Create a copy of the current farm with a new name.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_SaveHolos" xml:space="preserve">
+    <value>Save changes made to the current farm.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_SoilDataViewAddressSearchDisclaimer" xml:space="preserve">
+    <value>Road search will acquire the approximate location of the farm, once found, navigate on the map and right-click the exact location of the farm.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_SoilDataViewStepOneDesc" xml:space="preserve">
+    <value>Select the province in which the farm is located.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_SoilDataViewStepThreeDesc" xml:space="preserve">
+    <value>Once you&apos;ve entered your location, click below to retrieve soil data.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Text_SoilDataViewStepTwoDesc" xml:space="preserve">
+    <value>Right-click on the map, or enter coordinates to set farms location.</value>
+    <comment>GUI (H.Core) - body paragraph text</comment>
+  </data>
+  <data name="Title_Application" xml:space="preserve">
+    <value>Holos Data Extraction Tool</value>
+    <comment>GUI (H.Avalonia.Core) - dialog or window title</comment>
+  </data>
+  <data name="Title_DeleteRowDialog" xml:space="preserve">
+    <value>Delete Row</value>
+    <comment>GUI (H.Avalonia.Core) - dialog or window title</comment>
+  </data>
+  <data name="Title_GeneralTab" xml:space="preserve">
+    <value>General</value>
+    <comment>GUI (H.Core) - dialog or window title</comment>
+  </data>
+  <data name="Title_HousingTab" xml:space="preserve">
+    <value>Housing</value>
+    <comment>GUI (H.Core) - dialog or window title</comment>
+  </data>
+  <data name="Title_ManureTab" xml:space="preserve">
+    <value>Manure</value>
+    <comment>GUI (H.Core) - dialog or window title</comment>
+  </data>
+  <data name="Title_SaveAs" xml:space="preserve">
+    <value>Save As</value>
+    <comment>GUI (H.Core) - dialog or window title</comment>
+  </data>
+  <data name="Title_SaveHolos" xml:space="preserve">
+    <value>Save Holos</value>
+    <comment>GUI (H.Core) - dialog or window title</comment>
+  </data>
+
+  <!-- ═══ Shared: Advanced Options Toggle ═══ -->
+  <data name="Label_ShowAdvancedOptions" xml:space="preserve">
+    <value>Show Advanced Options</value>
+    <comment>GUI - advanced options toggle title used across all component views</comment>
+  </data>
+  <data name="Label_ShowAdvancedOptionsFieldDesc" xml:space="preserve">
+    <value>Display additional configuration options for detailed field management across all steps</value>
+    <comment>GUI - advanced options toggle description for the Field component</comment>
+  </data>
+  <data name="Label_ShowAdvancedOptionsRotationDesc" xml:space="preserve">
+    <value>Display additional configuration options for detailed crop rotation management</value>
+    <comment>GUI - advanced options toggle description for the Rotation component</comment>
+  </data>
+
+  <!-- ═══ Shared: Step badges ═══ -->
+  <data name="Label_StepFour" xml:space="preserve">
+    <value>Step 4</value>
+    <comment>GUI - step badge label</comment>
+  </data>
+
+  <!-- ═══ Shared: common input labels ═══ -->
+  <data name="Label_FieldSize" xml:space="preserve">
+    <value>Field size:</value>
+    <comment>GUI - Field component Step 1 input label</comment>
+  </data>
+  <data name="Label_Advanced" xml:space="preserve">
+    <value>ADVANCED</value>
+    <comment>GUI - badge shown on advanced-only cards</comment>
+  </data>
+
+  <!-- ═══ Rotation component — Step 1: Overview ═══ -->
+  <data name="Label_DefineRotationParameters" xml:space="preserve">
+    <value>Define Rotation Parameters</value>
+    <comment>GUI - Rotation Step 1 header description</comment>
+  </data>
+  <data name="Label_RotationParameters" xml:space="preserve">
+    <value>Rotation Parameters</value>
+    <comment>GUI - Rotation Step 1 card header</comment>
+  </data>
+  <data name="Label_ConfigureTimePeriodAndFieldSetup" xml:space="preserve">
+    <value>Configure the time period and field setup for this rotation</value>
+    <comment>GUI - Rotation Step 1 card sub-header</comment>
+  </data>
+  <data name="Label_TimePeriod" xml:space="preserve">
+    <value>Time Period</value>
+    <comment>GUI - Rotation Step 1 section header</comment>
+  </data>
+  <data name="Label_FieldConfiguration" xml:space="preserve">
+    <value>Field Configuration</value>
+    <comment>GUI - Rotation Step 1 section header</comment>
+  </data>
+  <data name="Label_RotationSummary" xml:space="preserve">
+    <value>Rotation Summary</value>
+    <comment>GUI - Rotation Step 1 advanced card header</comment>
+  </data>
+  <data name="Label_CalculatedTotalsForThisRotation" xml:space="preserve">
+    <value>Calculated totals for this rotation</value>
+    <comment>GUI - Rotation Step 1 advanced card sub-header</comment>
+  </data>
+  <data name="Label_TotalArea" xml:space="preserve">
+    <value>Total area:</value>
+    <comment>GUI - Rotation summary label</comment>
+  </data>
+  <data name="Label_YearsPerField" xml:space="preserve">
+    <value>Years/field:</value>
+    <comment>GUI - Rotation summary label</comment>
+  </data>
+  <data name="Label_CropYears" xml:space="preserve">
+    <value>Crop-years:</value>
+    <comment>GUI - Rotation summary label</comment>
+  </data>
+
+  <!-- ═══ Rotation component — Step 2: Timeline ═══ -->
+  <data name="Label_BuildYourRotationSequence" xml:space="preserve">
+    <value>Build Your Rotation Sequence</value>
+    <comment>GUI - Rotation Step 2 header</comment>
+  </data>
+  <data name="Label_AddCropsToRotationDesc" xml:space="preserve">
+    <value>Add crops to create your rotation timeline. Each crop represents one year in the sequence.</value>
+    <comment>GUI - Rotation Step 2 description</comment>
+  </data>
+  <data name="Button_AddCrop" xml:space="preserve">
+    <value>+ Add Crop</value>
+    <comment>GUI - button to add a crop to the rotation timeline</comment>
+  </data>
+  <data name="Label_CropsInSequence" xml:space="preserve">
+    <value>Crops in sequence:</value>
+    <comment>GUI - Rotation Step 2 crops count label</comment>
+  </data>
+  <data name="Label_RotationTimeline" xml:space="preserve">
+    <value>Rotation Timeline</value>
+    <comment>GUI - Rotation Step 2 timeline panel header</comment>
+  </data>
+  <data name="Label_SelectCrop" xml:space="preserve">
+    <value>Select crop</value>
+    <comment>GUI - label above the crop type ComboBox in a timeline card</comment>
+  </data>
+  <data name="Label_TimelineScrollHint" xml:space="preserve">
+    <value>Tip: Scroll horizontally to view all crops, selected crop will be highlighted</value>
+    <comment>GUI - hint text below the timeline</comment>
+  </data>
+  <data name="Label_AddAtLeastOneCrop" xml:space="preserve">
+    <value>Add at least one crop to create your rotation</value>
+    <comment>GUI - Rotation Step 2 empty-state message</comment>
+  </data>
+
+  <!-- ═══ Rotation component — Field Configuration (advanced) ═══ -->
+  <data name="Label_RotationShiftDirection" xml:space="preserve">
+    <value>Rotation shift direction:</value>
+    <comment>GUI - Rotation field config advanced section label</comment>
+  </data>
+  <data name="Label_NoShift" xml:space="preserve">
+    <value>No Shift</value>
+    <comment>GUI - Rotation shift direction option</comment>
+  </data>
+  <data name="Label_RightShift" xml:space="preserve">
+    <value>Right Shift</value>
+    <comment>GUI - Rotation shift direction option (right)</comment>
+  </data>
+  <data name="Label_LeftShift" xml:space="preserve">
+    <value>Left Shift</value>
+    <comment>GUI - Rotation shift direction option (left)</comment>
+  </data>
+
+  <!-- ═══ Rotation component — Step 3: Preview ═══ -->
+  <data name="Label_PreviewFieldAssignments" xml:space="preserve">
+    <value>Preview Field Assignments</value>
+    <comment>GUI - Rotation Step 3 header</comment>
+  </data>
+  <data name="Label_ReviewHowCropsDistributed" xml:space="preserve">
+    <value>Review how crops will be distributed across fields over time. Each row represents a field, each column represents a year.</value>
+    <comment>GUI - Rotation Step 3 description</comment>
+  </data>
+  <data name="Label_PreviewRequirements" xml:space="preserve">
+    <value>Preview requirements:</value>
+    <comment>GUI - Rotation Step 3 empty-state heading</comment>
+  </data>
+  <data name="Label_PreviewRequireFields" xml:space="preserve">
+    <value>Configure the number of fields in Step 1</value>
+    <comment>GUI - Rotation Step 3 empty-state requirement 1</comment>
+  </data>
+  <data name="Label_PreviewRequireCrops" xml:space="preserve">
+    <value>Add at least one crop in Step 2</value>
+    <comment>GUI - Rotation Step 3 empty-state requirement 2</comment>
+  </data>
+  <data name="Label_RotationShiftingEnabled" xml:space="preserve">
+    <value>Rotation shifting is enabled.</value>
+    <comment>GUI - Rotation Step 3 shift note</comment>
+  </data>
+  <data name="Label_RotationShiftingDesc" xml:space="preserve">
+    <value>Each field will grow a different sequence of crops, starting at different points in the rotation. This diversifies operational risk and distributes workload across the growing season.</value>
+    <comment>GUI - Rotation Step 3 shift description</comment>
+  </data>
+  <data name="Label_NextStep" xml:space="preserve">
+    <value>Next step:</value>
+    <comment>GUI - Rotation Step 3 guidance label</comment>
+  </data>
+  <data name="Label_NextStepPreviewDesc" xml:space="preserve">
+    <value>Click any cell in the preview grid to edit crop-specific details (yield, irrigation, etc.) for that field and year.</value>
+    <comment>GUI - Rotation Step 3 guidance description</comment>
+  </data>
+
+  <!-- ═══ Rotation component — Step 4: Edit Crop Details ═══ -->
+  <data name="Label_EditCropDetails" xml:space="preserve">
+    <value>Edit Crop Details</value>
+    <comment>GUI - Rotation Step 4 header</comment>
+  </data>
+  <data name="Label_EditCropDetailsDesc" xml:space="preserve">
+    <value>Configure yield and irrigation for each crop in your rotation. Click a cell in the preview grid above to edit its details.</value>
+    <comment>GUI - Rotation Step 4 description</comment>
+  </data>
+  <data name="Label_CurrentlyEditing" xml:space="preserve">
+    <value>Currently editing:</value>
+    <comment>GUI - Rotation Step 4 editing indicator label</comment>
+  </data>
+  <data name="Label_CropDetails" xml:space="preserve">
+    <value>Crop Details</value>
+    <comment>GUI - Rotation Step 4 crop editing section header</comment>
+  </data>
+  <data name="Label_ConfigureYieldForSelected" xml:space="preserve">
+    <value>Configure yield and irrigation for the selected crop</value>
+    <comment>GUI - Rotation Step 4 crop editing section sub-header</comment>
+  </data>
+  <data name="Label_CopyToSimilarCrops" xml:space="preserve">
+    <value>Copy to Similar Crops</value>
+    <comment>GUI - Rotation Step 4 copy toggle label</comment>
+  </data>
+  <data name="Label_CopyToSimilarCropsDesc" xml:space="preserve">
+    <value>When enabled, changes you make to yield, irrigation, and herbicide will be automatically copied to all other cells in this field (row) that have the same crop type.</value>
+    <comment>GUI - Rotation Step 4 copy toggle description</comment>
+  </data>
+  <data name="Label_CopyEnabled" xml:space="preserve">
+    <value>Copy enabled</value>
+    <comment>GUI - Rotation Step 4 toggle ON content</comment>
+  </data>
+  <data name="Label_CopyDisabled" xml:space="preserve">
+    <value>Copy disabled</value>
+    <comment>GUI - Rotation Step 4 toggle OFF content</comment>
+  </data>
+  <data name="Label_YieldWetWeight" xml:space="preserve">
+    <value>Yield (wet weight):</value>
+    <comment>GUI - Rotation Step 4 / Field crop editing label</comment>
+  </data>
+  <data name="Label_KgPerHa" xml:space="preserve">
+    <value>kg/ha</value>
+    <comment>GUI - unit label for yield</comment>
+  </data>
+  <data name="Label_AmountOfIrrigation" xml:space="preserve">
+    <value>Amount of irrigation:</value>
+    <comment>GUI - Rotation Step 4 / Field crop editing label</comment>
+  </data>
+  <data name="Label_HerbicideUsed" xml:space="preserve">
+    <value>Herbicide used:</value>
+    <comment>GUI - Rotation Step 4 / Field crop editing label</comment>
+  </data>
+  <data name="Label_ClickCellToEditDetails" xml:space="preserve">
+    <value>Click a cell in the preview grid (Step 3) to edit its details</value>
+    <comment>GUI - Rotation Step 4 empty-state message</comment>
+  </data>
+
+  <!-- ═══ Field component — Step 1 ═══ -->
+  <data name="Label_EnterBasicInfoForField" xml:space="preserve">
+    <value>Enter basic information for this field</value>
+    <comment>GUI - Field Step 1 header description</comment>
+  </data>
+  <data name="Label_FieldDetails" xml:space="preserve">
+    <value>Field Details</value>
+    <comment>GUI - Field Step 1 card header</comment>
+  </data>
+  <data name="Label_ConfigureAreaAndTimePeriod" xml:space="preserve">
+    <value>Configure the area and time period for this field</value>
+    <comment>GUI - Field Step 1 card sub-header</comment>
+  </data>
+
+  <!-- ═══ Field component — Step 2 ═══ -->
+  <data name="Label_EnterFieldHistory" xml:space="preserve">
+    <value>Enter field history</value>
+    <comment>GUI - Field Step 2 header description</comment>
+  </data>
+  <data name="Button_AddCropToField" xml:space="preserve">
+    <value>Add Crop</value>
+    <comment>GUI - Field Step 2 add crop button</comment>
+  </data>
+  <data name="Label_FieldHistoryTimeline" xml:space="preserve">
+    <value>Field History Timeline</value>
+    <comment>GUI - Field Step 2 timeline panel header</comment>
+  </data>
+
+  <!-- ═══ Field component — Step 3 ═══ -->
+  <data name="Label_DefineManagementPractices" xml:space="preserve">
+    <value>Define management practices for your selected crop</value>
+    <comment>GUI - Field Step 3 header description</comment>
+  </data>
+  <data name="Label_ConfigureBasicCropParameters" xml:space="preserve">
+    <value>Configure basic crop parameters including yield and irrigation</value>
+    <comment>GUI - Field Step 3 General card sub-header</comment>
+  </data>
+  <data name="Label_SetBiomassCoefficients" xml:space="preserve">
+    <value>Set biomass coefficients for different crop components</value>
+    <comment>GUI - Field Step 3 Residues card sub-header</comment>
+  </data>
+  <data name="Label_ConfigureFertilizerSettings" xml:space="preserve">
+    <value>Configure fertilizer application settings and schedules</value>
+    <comment>GUI - Field Step 3 Fertilizer card sub-header</comment>
+  </data>
+  <data name="Label_FertilizerConfiguration" xml:space="preserve">
+    <value>Fertilizer Configuration</value>
+    <comment>GUI - Field Step 3 Fertilizer placeholder header</comment>
+  </data>
+  <data name="Label_FertilizerComingSoon" xml:space="preserve">
+    <value>This section will be implemented in a future update</value>
+    <comment>GUI - Field Step 3 Fertilizer placeholder message</comment>
+  </data>
+
+  <!-- ═══ Shared: single/plural field labels ═══ -->
+  <data name="Label_Fields" xml:space="preserve">
+    <value>Fields:</value>
+    <comment>GUI - label for number-of-fields input and summary</comment>
+  </data>
+  <data name="Label_Field" xml:space="preserve">
+    <value>Field:</value>
+    <comment>GUI - label for a single field (e.g., Currently editing indicator)</comment>
+  </data>
+
+  <!-- ═══ Dairy: Advanced Options Toggle ═══ -->
+  <data name="Label_Basic" xml:space="preserve">
+    <value>Basic</value>
+    <comment>GUI - Dairy AdvancedOptionsToggle off-state label</comment>
+  </data>
+  <data name="Label_ShowAdvancedOptionsDairyDesc" xml:space="preserve">
+    <value>Display additional configuration options for detailed dairy operation management</value>
+    <comment>GUI - DairyComponentView advanced options expander description</comment>
+  </data>
+
+  <!-- ═══ Dairy: Stage View shared strings ═══ -->
+  <data name="Label_Practice" xml:space="preserve">
+    <value>Practice:</value>
+    <comment>GUI - Dairy stage view practice selector label</comment>
+  </data>
+  <data name="Button_AddPractice" xml:space="preserve">
+    <value>+ Add</value>
+    <comment>GUI - Dairy stage view add-practice button</comment>
+  </data>
+  <data name="Tooltip_RemoveSelectedPractice" xml:space="preserve">
+    <value>Remove selected practice</value>
+    <comment>GUI - Dairy stage view remove-practice button tooltip</comment>
+  </data>
+  <data name="Label_NoPracticesDefined" xml:space="preserve">
+    <value>No management practices defined. Click '+ Add' to create one.</value>
+    <comment>GUI - Dairy stage view empty-state message</comment>
+  </data>
+  <data name="Label_Housing" xml:space="preserve">
+    <value>Housing</value>
+    <comment>GUI - Dairy stage view Housing tab header</comment>
+  </data>
+  <data name="Label_ManureHandling" xml:space="preserve">
+    <value>Manure Handling</value>
+    <comment>GUI - Dairy stage view Manure Handling tab header</comment>
+  </data>
+  <data name="Label_Diet" xml:space="preserve">
+    <value>Diet</value>
+    <comment>GUI - Dairy stage view Diet tab header</comment>
+  </data>
+  <data name="Label_AnimalDetails" xml:space="preserve">
+    <value>Animal Details</value>
+    <comment>GUI - Dairy stage view Animal Details tab header</comment>
+  </data>
+  <data name="Label_BeddingMaterial" xml:space="preserve">
+    <value>Bedding material:</value>
+    <comment>GUI - Dairy stage view Housing advanced: bedding material label</comment>
+  </data>
+  <data name="Label_BeddingRate" xml:space="preserve">
+    <value>Bedding rate:</value>
+    <comment>GUI - Dairy stage view Housing advanced: bedding rate label</comment>
+  </data>
+  <data name="Label_KgHdDay" xml:space="preserve">
+    <value>kg/hd/day</value>
+    <comment>GUI - unit label: kilograms per head per day</comment>
+  </data>
+  <data name="Label_ActivityCoefficient" xml:space="preserve">
+    <value>Activity coefficient:</value>
+    <comment>GUI - Dairy stage view Housing advanced: activity coefficient of feeding situation</comment>
+  </data>
+  <data name="Label_MaintenanceCoefficient" xml:space="preserve">
+    <value>Maintenance coefficient:</value>
+    <comment>GUI - Dairy stage view Housing advanced: baseline maintenance coefficient</comment>
+  </data>
+  <data name="Label_MJkgDay" xml:space="preserve">
+    <value>MJ/kg/day</value>
+    <comment>GUI - unit label: megajoules per kilogram per day</comment>
+  </data>
+  <data name="Label_ManureSystem" xml:space="preserve">
+    <value>Manure system:</value>
+    <comment>GUI - Dairy stage view Manure tab: manure state type label</comment>
+  </data>
+  <data name="Label_VolatilizationFraction" xml:space="preserve">
+    <value>Volatilization fraction:</value>
+    <comment>GUI - Dairy stage view Manure advanced</comment>
+  </data>
+  <data name="Label_N2OEmissionFactor" xml:space="preserve">
+    <value>N2O emission factor:</value>
+    <comment>GUI - Dairy stage view Manure advanced</comment>
+  </data>
+  <data name="Label_LeachingFraction" xml:space="preserve">
+    <value>Leaching fraction:</value>
+    <comment>GUI - Dairy stage view Manure advanced</comment>
+  </data>
+  <data name="Label_EFVolatilization" xml:space="preserve">
+    <value>EF volatilization:</value>
+    <comment>GUI - Dairy stage view Manure advanced: emission factor for volatilization</comment>
+  </data>
+  <data name="Label_EFLeaching" xml:space="preserve">
+    <value>EF leaching:</value>
+    <comment>GUI - Dairy stage view Manure advanced: emission factor for leaching</comment>
+  </data>
+  <data name="Label_AshContent" xml:space="preserve">
+    <value>Ash content:</value>
+    <comment>GUI - Dairy stage view Manure advanced</comment>
+  </data>
+  <data name="Label_CH4Capacity" xml:space="preserve">
+    <value>CH4 capacity:</value>
+    <comment>GUI - Dairy stage view Manure advanced: methane producing capacity</comment>
+  </data>
+  <data name="Label_M3kgVS" xml:space="preserve">
+    <value>m3/kg VS</value>
+    <comment>GUI - unit label: cubic metres per kilogram volatile solids</comment>
+  </data>
+  <data name="Label_VSExcretion" xml:space="preserve">
+    <value>VS excretion:</value>
+    <comment>GUI - Dairy stage view Manure advanced: volatile solid excretion</comment>
+  </data>
+  <data name="Label_KgKg" xml:space="preserve">
+    <value>kg/kg</value>
+    <comment>GUI - unit label: kilograms per kilogram</comment>
+  </data>
+  <data name="Label_NContent" xml:space="preserve">
+    <value>N content:</value>
+    <comment>GUI - Dairy stage view Manure advanced: fraction of nitrogen in manure</comment>
+  </data>
+  <data name="Label_CContent" xml:space="preserve">
+    <value>C content:</value>
+    <comment>GUI - Dairy stage view Manure advanced: fraction of carbon in manure</comment>
+  </data>
+  <data name="Label_PContent" xml:space="preserve">
+    <value>P content:</value>
+    <comment>GUI - Dairy stage view Manure advanced: fraction of phosphorus in manure</comment>
+  </data>
+  <data name="Label_DietTypeLabel" xml:space="preserve">
+    <value>Diet type:</value>
+    <comment>GUI - Dairy stage view Diet tab: diet type form label (with colon)</comment>
+  </data>
+  <data name="Label_NutritionalSummary" xml:space="preserve">
+    <value>Nutritional Summary</value>
+    <comment>GUI - Dairy stage view Diet tab: nutritional summary section header</comment>
+  </data>
+  <data name="Label_TDN" xml:space="preserve">
+    <value>TDN:</value>
+    <comment>GUI - Dairy stage view Diet tab: total digestible nutrients label</comment>
+  </data>
+  <data name="Label_DMI" xml:space="preserve">
+    <value>DMI:</value>
+    <comment>GUI - Dairy stage view Diet tab: dry matter intake label</comment>
+  </data>
+  <data name="Label_DietAdditive" xml:space="preserve">
+    <value>Diet additive:</value>
+    <comment>GUI - Dairy stage view Diet advanced: diet additive type label</comment>
+  </data>
+  <data name="Tooltip_CustomDietFormulatorComingSoon" xml:space="preserve">
+    <value>Custom diet formulation (coming soon)</value>
+    <comment>GUI - Dairy stage view Diet tab: custom diet formulator button tooltip</comment>
+  </data>
+  <data name="Label_CustomDietFormulator" xml:space="preserve">
+    <value>Custom Diet Formulator</value>
+    <comment>GUI - Dairy stage view Diet tab: custom diet formulator button label</comment>
+  </data>
+  <data name="Label_StartWeight" xml:space="preserve">
+    <value>Start weight:</value>
+    <comment>GUI - Dairy stage view Animal Details: start weight label</comment>
+  </data>
+  <data name="Label_EndWeight" xml:space="preserve">
+    <value>End weight:</value>
+    <comment>GUI - Dairy stage view Animal Details: end weight label</comment>
+  </data>
+  <data name="Label_DailyGain" xml:space="preserve">
+    <value>Daily gain:</value>
+    <comment>GUI - Dairy stage view Animal Details: period daily gain label</comment>
+  </data>
+  <data name="Label_Kg" xml:space="preserve">
+    <value>kg</value>
+    <comment>GUI - unit label: kilograms</comment>
+  </data>
+  <data name="Label_KgPerDay" xml:space="preserve">
+    <value>kg/day</value>
+    <comment>GUI - unit label: kilograms per day</comment>
+  </data>
+
+  <!-- ═══ Dairy: Lactating Stage only ═══ -->
+  <data name="Label_MilkProduction" xml:space="preserve">
+    <value>Milk Production</value>
+    <comment>GUI - Dairy LactatingStageView Milk Production tab header</comment>
+  </data>
+  <data name="Label_MilkProductionLabel" xml:space="preserve">
+    <value>Milk production:</value>
+    <comment>GUI - Dairy LactatingStageView Milk Production tab: milk production input label</comment>
+  </data>
+  <data name="Label_MilkFatContent" xml:space="preserve">
+    <value>Milk fat content:</value>
+    <comment>GUI - Dairy LactatingStageView Milk Production tab</comment>
+  </data>
+  <data name="Label_MilkProteinContent" xml:space="preserve">
+    <value>Milk protein content:</value>
+    <comment>GUI - Dairy LactatingStageView Milk Production tab</comment>
+  </data>
+  <data name="Label_GainCoefficientA" xml:space="preserve">
+    <value>Gain coefficient A:</value>
+    <comment>GUI - Dairy LactatingStageView Milk Production advanced</comment>
+  </data>
+  <data name="Label_MJkg" xml:space="preserve">
+    <value>MJ/kg</value>
+    <comment>GUI - unit label: megajoules per kilogram</comment>
+  </data>
+  <data name="Label_GainCoefficientB" xml:space="preserve">
+    <value>Gain coefficient B:</value>
+    <comment>GUI - Dairy LactatingStageView Milk Production advanced</comment>
+  </data>
+  <data name="Label_MJkg2" xml:space="preserve">
+    <value>MJ/kg²</value>
+    <comment>GUI - unit label: megajoules per kilogram squared</comment>
+  </data>
+
+  <!-- ═══ Dairy: LifecycleConfigurationView stage headers ═══ -->
+  <data name="Label_ManagementPracticesCalfStage" xml:space="preserve">
+    <value>Management Practices - Calf Stage</value>
+    <comment>GUI - LifecycleConfigurationView Calf panel title</comment>
+  </data>
+  <data name="Label_ManagementPracticesCalfStageDesc" xml:space="preserve">
+    <value>Configure management practices for calf stage (birth to 4 months)</value>
+    <comment>GUI - LifecycleConfigurationView Calf panel description</comment>
+  </data>
+  <data name="Label_ManagementPracticesHeiferStage" xml:space="preserve">
+    <value>Management Practices - Heifer Stage</value>
+    <comment>GUI - LifecycleConfigurationView Heifer panel title</comment>
+  </data>
+  <data name="Label_ManagementPracticesHeiferStageDesc" xml:space="preserve">
+    <value>Configure management practices for heifer stage (4 months to first calving)</value>
+    <comment>GUI - LifecycleConfigurationView Heifer panel description</comment>
+  </data>
+  <data name="Label_ManagementPracticesLactatingStage" xml:space="preserve">
+    <value>Management Practices - Lactating Stage</value>
+    <comment>GUI - LifecycleConfigurationView Lactating panel title</comment>
+  </data>
+  <data name="Label_ManagementPracticesLactatingStageDesc" xml:space="preserve">
+    <value>Configure management practices for lactating cow stage (active milk production)</value>
+    <comment>GUI - LifecycleConfigurationView Lactating panel description</comment>
+  </data>
+  <data name="Label_ManagementPracticesDryStage" xml:space="preserve">
+    <value>Management Practices - Dry Stage</value>
+    <comment>GUI - LifecycleConfigurationView Dry panel title</comment>
+  </data>
+  <data name="Label_ManagementPracticesDryStageDesc" xml:space="preserve">
+    <value>Configure management practices for dry cow stage (pre-calving period)</value>
+    <comment>GUI - LifecycleConfigurationView Dry panel description</comment>
+  </data>
+  <data name="Label_SelectGroupToConfigure" xml:space="preserve">
+    <value>Select Group to Configure:</value>
+    <comment>GUI - LifecycleConfigurationView group selector heading</comment>
+  </data>
+  <data name="Label_YouHaveMultipleGroupsDesc" xml:space="preserve">
+    <value>You have multiple groups. Select which group's management practices you want to configure:</value>
+    <comment>GUI - LifecycleConfigurationView group selector description</comment>
+  </data>
+  <data name="Label_ChooseAGroup" xml:space="preserve">
+    <value>Choose a group...</value>
+    <comment>GUI - LifecycleConfigurationView group ComboBox placeholder</comment>
+  </data>
+  <data name="Label_AnimalsUnit" xml:space="preserve">
+    <value> animals</value>
+    <comment>GUI - inline Run unit label with leading space: " animals"</comment>
+  </data>
+  <data name="Label_NoGroupsDefined" xml:space="preserve">
+    <value>No Groups Defined</value>
+    <comment>GUI - LifecycleConfigurationView no-groups heading</comment>
+  </data>
+  <data name="Label_NoGroupsGoToStep2" xml:space="preserve">
+    <value>You haven't added any groups yet. Go back to Step 2 above and click 'Add New Group' to create groups before configuring management practices.</value>
+    <comment>GUI - LifecycleConfigurationView no-groups body text (replaces multi-Run bold formatting)</comment>
+  </data>
+  <data name="Label_NoGroupSelected" xml:space="preserve">
+    <value>No Group Selected</value>
+    <comment>GUI - LifecycleConfigurationView no-group-selected heading</comment>
+  </data>
+  <data name="Label_PleaseSelectGroupFromDropdown" xml:space="preserve">
+    <value>Please select a group from the dropdown above to configure its management practices.</value>
+    <comment>GUI - LifecycleConfigurationView no-group-selected body text</comment>
+  </data>
+  <data name="Label_ManagementPracticesConfiguration" xml:space="preserve">
+    <value>Management Practices Configuration</value>
+    <comment>GUI - LifecycleConfigurationView default (no stage selected) panel title</comment>
+  </data>
+  <data name="Label_ClickStageCardAboveDesc" xml:space="preserve">
+    <value>Click a stage card above to configure management practices</value>
+    <comment>GUI - LifecycleConfigurationView default panel sub-header</comment>
+  </data>
+  <data name="Label_SelectAStageToBegin" xml:space="preserve">
+    <value>Select a Stage to Begin</value>
+    <comment>GUI - LifecycleConfigurationView default panel inner heading</comment>
+  </data>
+  <data name="Label_ClickOnStageCardDesc1" xml:space="preserve">
+    <value>Click on one of the stage cards above (Calf, Heifer, Lactating, or Dry)</value>
+    <comment>GUI - LifecycleConfigurationView default panel instruction line 1</comment>
+  </data>
+  <data name="Label_ClickOnStageCardDesc2" xml:space="preserve">
+    <value>to configure its specific management practices and production parameters.</value>
+    <comment>GUI - LifecycleConfigurationView default panel instruction line 2</comment>
+  </data>
+
+  <!-- ═══ Dairy: CalculatedHerdCompositionView ═══ -->
+  <data name="Label_DefineSteadyStateHerdComposition" xml:space="preserve">
+    <value>Define Steady-State Herd Composition</value>
+    <comment>GUI - CalculatedHerdCompositionView Step 1 title</comment>
+  </data>
+  <data name="Label_ClickStageCardBelowDesc" xml:space="preserve">
+    <value>Click on a stage card below to configure its population, duration, and management practices</value>
+    <comment>GUI - CalculatedHerdCompositionView Step 1 description</comment>
+  </data>
+  <data name="Label_Calf" xml:space="preserve">
+    <value>CALF</value>
+    <comment>GUI - CalculatedHerdCompositionView Calf stage card title</comment>
+  </data>
+  <data name="Label_DaysUnit" xml:space="preserve">
+    <value> days</value>
+    <comment>GUI - inline Run unit label with leading space: " days"</comment>
+  </data>
+  <data name="Label_Heifer" xml:space="preserve">
+    <value>HEIFER</value>
+    <comment>GUI - CalculatedHerdCompositionView Heifer stage card title</comment>
+  </data>
+  <data name="Label_Lactating" xml:space="preserve">
+    <value>LACTATING</value>
+    <comment>GUI - CalculatedHerdCompositionView Lactating stage card title</comment>
+  </data>
+  <data name="Label_Dry" xml:space="preserve">
+    <value>DRY</value>
+    <comment>GUI - CalculatedHerdCompositionView Dry stage card title</comment>
+  </data>
+  <data name="Label_Total" xml:space="preserve">
+    <value>TOTAL</value>
+    <comment>GUI - CalculatedHerdCompositionView Total card title</comment>
+  </data>
+  <data name="Label_Animals" xml:space="preserve">
+    <value>animals</value>
+    <comment>GUI - CalculatedHerdCompositionView Total card standalone unit (no leading space)</comment>
+  </data>
+  <data name="Label_ConfigureStagePoplAndDuration" xml:space="preserve">
+    <value>Configure Stage Population and Duration</value>
+    <comment>GUI - CalculatedHerdCompositionView Step 2 title</comment>
+  </data>
+  <data name="Label_EnterSteadyStatePopDesc" xml:space="preserve">
+    <value>Enter the steady-state population and duration for the selected stage</value>
+    <comment>GUI - CalculatedHerdCompositionView Step 2 description</comment>
+  </data>
+  <data name="Label_HowManyAnimalGroups" xml:space="preserve">
+    <value>How many animal groups would you like to create?</value>
+    <comment>GUI - CalculatedHerdCompositionView mode toggle question</comment>
+  </data>
+  <data name="Label_ASingleAnimalGroup" xml:space="preserve">
+    <value>A single animal group</value>
+    <comment>GUI - CalculatedHerdCompositionView simple mode radio button</comment>
+  </data>
+  <data name="Label_MultipleGroups" xml:space="preserve">
+    <value>Multiple groups</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode radio button</comment>
+  </data>
+  <data name="Label_HowLongCalvesRemain" xml:space="preserve">
+    <value>How long do calves remain in this stage?</value>
+    <comment>GUI - CalculatedHerdCompositionView Calf stage duration question</comment>
+  </data>
+  <data name="Label_Days" xml:space="preserve">
+    <value>days</value>
+    <comment>GUI - unit label: days (standalone, no leading space)</comment>
+  </data>
+  <data name="Label_HowManyCalvesInHerd" xml:space="preserve">
+    <value>How many calves are in the herd?</value>
+    <comment>GUI - CalculatedHerdCompositionView Calf population question</comment>
+  </data>
+  <data name="Label_Head" xml:space="preserve">
+    <value>head</value>
+    <comment>GUI - unit label: head (number of animals)</comment>
+  </data>
+  <data name="Label_AnimalGroupsHeader" xml:space="preserve">
+    <value>Animal Groups:</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode groups section heading (with colon)</comment>
+  </data>
+  <data name="Label_MultipleGroupsExplanation" xml:space="preserve">
+    <value>You can add multiple groups to represent different animal cohorts with unique management practices. In Step 3, you'll select which group to configure management practices for (diet, housing, etc.).</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode explanation text</comment>
+  </data>
+  <data name="Label_EnterGroupNameDesc" xml:space="preserve">
+    <value>Enter a descriptive name for each group and specify the number of animals in that group.</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode group list instruction</comment>
+  </data>
+  <data name="Label_GroupName" xml:space="preserve">
+    <value>Group Name</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode group list header col 1</comment>
+  </data>
+  <data name="Label_AnimalsColumn" xml:space="preserve">
+    <value>Animals</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode group list header col 2</comment>
+  </data>
+  <data name="Label_Actions" xml:space="preserve">
+    <value>Actions</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode group list header col 3</comment>
+  </data>
+  <data name="Label_EnterGroupNameWatermark" xml:space="preserve">
+    <value>Enter group name</value>
+    <comment>GUI - CalculatedHerdCompositionView group TextBox watermark</comment>
+  </data>
+  <data name="Tooltip_RemoveGroup" xml:space="preserve">
+    <value>Remove group</value>
+    <comment>GUI - CalculatedHerdCompositionView group delete button tooltip</comment>
+  </data>
+  <data name="Button_AddNewGroup" xml:space="preserve">
+    <value>Add New Group</value>
+    <comment>GUI - CalculatedHerdCompositionView advanced mode add group button</comment>
+  </data>
+  <data name="Label_HowLongHeifersRemain" xml:space="preserve">
+    <value>How long do heifers remain in this stage?</value>
+    <comment>GUI - CalculatedHerdCompositionView Heifer stage duration question</comment>
+  </data>
+  <data name="Label_HowManyHeifersInHerd" xml:space="preserve">
+    <value>How many heifers are in the herd?</value>
+    <comment>GUI - CalculatedHerdCompositionView Heifer population question</comment>
+  </data>
+  <data name="Label_HowLongLactationPeriod" xml:space="preserve">
+    <value>How long is the lactation period?</value>
+    <comment>GUI - CalculatedHerdCompositionView Lactating stage duration question</comment>
+  </data>
+  <data name="Label_HowManyLactatingCowsInHerd" xml:space="preserve">
+    <value>How many lactating cows are in the herd?</value>
+    <comment>GUI - CalculatedHerdCompositionView Lactating population question</comment>
+  </data>
+  <data name="Label_HowLongDryPeriod" xml:space="preserve">
+    <value>How long is the dry period?</value>
+    <comment>GUI - CalculatedHerdCompositionView Dry stage duration question</comment>
+  </data>
+  <data name="Label_HowManyDryCowsInHerd" xml:space="preserve">
+    <value>How many dry cows are in the herd?</value>
+    <comment>GUI - CalculatedHerdCompositionView Dry population question</comment>
+  </data>
+
+  <!-- ═══ OtherAnimals Step 1 ═══ -->
+  <data name="Label_AnimalGroupsTitle" xml:space="preserve">
+    <value>Animal Groups</value>
+    <comment>GUI - OtherAnimalsStep1View timeline header (no colon)</comment>
+  </data>
+  <data name="Label_TipScrollHorizontally" xml:space="preserve">
+    <value>Tip: Scroll horizontally to view all groups, click on a group to select it</value>
+    <comment>GUI - OtherAnimalsStep1View timeline hint</comment>
+  </data>
+
+  <!-- ═══ ChooseComponentsView ═══ -->
+  <data name="Label_SelectCategoryToBrowse" xml:space="preserve">
+    <value>Select a category to browse available components</value>
+    <comment>GUI - ChooseComponentsView header subtitle</comment>
+  </data>
+  <data name="Label_ComponentsAvailable" xml:space="preserve">
+    <value>components available</value>
+    <comment>GUI - ChooseComponentsView category card component count suffix</comment>
+  </data>
+  <data name="Label_BackToCategories" xml:space="preserve">
+    <value>Back to Categories</value>
+    <comment>GUI - ChooseComponentsView back navigation button text</comment>
+  </data>
+  <data name="Button_AddToFarm" xml:space="preserve">
+    <value>+ Add to Farm</value>
+    <comment>GUI - ChooseComponentsView component card add button</comment>
+  </data>
+
+  <!-- ═══ MyComponentsView ═══ -->
+  <data name="Label_NoComponentsAddedYet" xml:space="preserve">
+    <value>No components added yet</value>
+    <comment>GUI - MyComponentsView empty-state heading</comment>
+  </data>
+  <data name="Label_ClickEditComponentsDesc" xml:space="preserve">
+    <value>Click 'Edit Components' below to add components to your farm</value>
+    <comment>GUI - MyComponentsView empty-state description</comment>
+  </data>
+  <data name="Label_TipStartWithFieldOrLivestock" xml:space="preserve">
+    <value>Tip: Start with field or livestock components</value>
+    <comment>GUI - MyComponentsView empty-state tip</comment>
+  </data>
+
+  <!-- ═══ Rotation: RotationFinalizeView ═══ -->
+  <data name="Label_FinalizeAndCreate" xml:space="preserve">
+    <value>Finalize and Create</value>
+    <comment>GUI - RotationFinalizeView Step 4 title</comment>
+  </data>
+  <data name="Button_CreateRotation" xml:space="preserve">
+    <value>Create Rotation</value>
+    <comment>GUI - RotationFinalizeView create rotation button</comment>
+  </data>
+
+  <data name="Label_SelectCountry" xml:space="preserve">
+    <value>Select Country</value>
+  </data>
+  <data name="Button_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Label_SelectRegion" xml:space="preserve">
+    <value>Select Region</value>
+  </data>
+  <data name="Label_SelectMeasurementType" xml:space="preserve">
+    <value>Select Measurement Type</value>
+  </data>
+  <data name="Label_SelectCounty" xml:space="preserve">
+    <value>Select County</value>
+  </data>
+  <data name="Label_SelectAnOption" xml:space="preserve">
+    <value>Select an option</value>
+  </data>
+  <data name="Label_LoadingData" xml:space="preserve">
+    <value>Loading Data</value>
+  </data>
+  <data name="Label_ChooseSelectedSoil" xml:space="preserve">
+    <value>Choose Selected Soil</value>
+  </data>
+  <data name="Label_ManageFarms" xml:space="preserve">
+    <value>Manage Farms</value>
+  </data>
+  <data name="Button_RemoveFarm" xml:space="preserve">
+    <value>Remove Farm</value>
+  </data>
+  <data name="Label_MonthlyPrecipitationAveragesDesc" xml:space="preserve">
+    <value>The monthly precipitation averages for the farm.</value>
+  </data>
+  <data name="Label_HolosOperationMode" xml:space="preserve">
+    <value>Holos Operation Mode</value>
+  </data>
+  <data name="Label_UnitsOfMeasurement" xml:space="preserve">
+    <value>Units of Measurement</value>
+  </data>
+  <data name="Label_ExportClimate" xml:space="preserve">
+    <value>Export Climate</value>
+  </data>
+  <data name="Label_ExportFarm" xml:space="preserve">
+    <value>Export Farm</value>
+  </data>
+  <data name="Label_ExportFarmProducedManure" xml:space="preserve">
+    <value>Export Farm Produced Manure</value>
+  </data>
+  <data name="Label_ExportManureDesc" xml:space="preserve">
+    <value>Manure produced by animals on this farm can be exported off-site. To export manure from this farm, click the 'Create Manure Export' button and specify the amount exported</value>
+  </data>
+  <data name="Button_CreateManureExport" xml:space="preserve">
+    <value>Create Manure Export</value>
+  </data>
+  <data name="Label_TotalManureProducedForAnimalType" xml:space="preserve">
+    <value>Total manure produced on farm for animal type:</value>
+  </data>
+  <data name="Label_ImportFarm" xml:space="preserve">
+    <value>Import Farm</value>
+  </data>
+  <data name="Label_SelectFarm" xml:space="preserve">
+    <value>Select Farm</value>
+  </data>
+  <data name="Label_BulkImportFarm" xml:space="preserve">
+    <value>Bulk Import Farm</value>
+  </data>
+  <data name="Label_SelectFolder" xml:space="preserve">
+    <value>Select Folder</value>
+  </data>
+  <data name="Label_FeedIngredients" xml:space="preserve">
+    <value>Feed Ingredients</value>
+  </data>
+  <data name="Label_SearchIngredients" xml:space="preserve">
+    <value>Search Ingredients</value>
+  </data>
+  <data name="Label_SearchIngredientsByIFN" xml:space="preserve">
+    <value>Search by ingredient name or IFN...</value>
+  </data>
+  <data name="Label_IngredientType" xml:space="preserve">
+    <value>Ingredient Type</value>
+  </data>
+  <data name="Label_IFN" xml:space="preserve">
+    <value>IFN</value>
+  </data>
+  <data name="Label_TDNPercent" xml:space="preserve">
+    <value>TDN %</value>
+  </data>
+  <data name="Label_FatPercent" xml:space="preserve">
+    <value>Fat %</value>
+  </data>
+  <data name="Label_CrudeFiberPercent" xml:space="preserve">
+    <value>Crude Fiber %</value>
+  </data>
+  <data name="Label_TotalIngredients" xml:space="preserve">
+    <value>Total Ingredients: </value>
+  </data>
+  <data name="Label_ForUnit" xml:space="preserve">
+    <value> for </value>
+  </data>
+  <data name="Label_SearchDietsWatermark" xml:space="preserve">
+    <value>Search diets...</value>
+  </data>
+  <data name="Label_TotalDiets" xml:space="preserve">
+    <value>Total Diets: </value>
+  </data>
+  <data name="Label_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Label_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Label_NewFarm" xml:space="preserve">
+    <value>New Farm</value>
+  </data>
+  <data name="Label_OpenFarm" xml:space="preserve">
+    <value>Open Farm</value>
+  </data>
+  <data name="Label_CloseFarm" xml:space="preserve">
+    <value>Close Farm</value>
+  </data>
+  <data name="Label_Farms" xml:space="preserve">
+    <value>Farms</value>
+  </data>
+  <data name="Label_SaveOptions" xml:space="preserve">
+    <value>Save Options</value>
+  </data>
+  <data name="Label_ExportFarms" xml:space="preserve">
+    <value>Export Farm(s)</value>
+  </data>
+  <data name="Label_ExportManure" xml:space="preserve">
+    <value>Export Manure</value>
+  </data>
+  <data name="Label_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Label_Soil" xml:space="preserve">
+    <value>Soil</value>
+  </data>
+  <data name="Label_Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="Label_BarnTemperatures" xml:space="preserve">
+    <value>Barn Temperatures</value>
+  </data>
+  <data name="Label_Diets" xml:space="preserve">
+    <value>Diets</value>
+  </data>
+  <data name="Label_Ingredients" xml:space="preserve">
+    <value>Ingredients</value>
+  </data>
+  <data name="Label_Precipitation" xml:space="preserve">
+    <value>Precipitation</value>
+  </data>
+  <data name="Label_Evapotranspiration" xml:space="preserve">
+    <value>Evapotranspiration</value>
+  </data>
+  <data name="Label_SoilN2OBreakdown" xml:space="preserve">
+    <value>Soil N2O Breakdown</value>
+  </data>
+  <data name="Label_DefaultBeddingComposition" xml:space="preserve">
+    <value>Default Bedding Composition</value>
+  </data>
+  <data name="Label_DefaultManureComposition" xml:space="preserve">
+    <value>Default Manure Composition</value>
+  </data>
+  <data name="Label_UserSettings" xml:space="preserve">
+    <value>User Settings</value>
+  </data>
+  <data name="Label_DairyCattleLifecycle" xml:space="preserve">
+    <value>Dairy Cattle Lifecycle</value>
+  </data>
+  <data name="Label_DairyCattleLifecycleDesc" xml:space="preserve">
+    <value>Understanding the journey from birth to productive milking cow</value>
+  </data>
+  <data name="Label_BirthToFourMonths" xml:space="preserve">
+    <value>Birth - 4 months</value>
+  </data>
+  <data name="Label_MilkAndStarterFeed" xml:space="preserve">
+    <value>Milk &amp; Starter Feed</value>
+  </data>
+  <data name="Label_Weaning" xml:space="preserve">
+    <value>Weaning</value>
+  </data>
+  <data name="Label_FourMonthsToFirstCalving" xml:space="preserve">
+    <value>4 mo - First Calving</value>
+  </data>
+  <data name="Label_GrowingPhase" xml:space="preserve">
+    <value>Growing Phase</value>
+  </data>
+  <data name="Label_FirstCalving" xml:space="preserve">
+    <value>First Calving</value>
+  </data>
+  <data name="Label_LactatingCow" xml:space="preserve">
+    <value>LACTATING COW</value>
+  </data>
+  <data name="Label_LactationDays" xml:space="preserve">
+    <value>~305 days lactation</value>
+  </data>
+  <data name="Label_DryingOff" xml:space="preserve">
+    <value>Drying Off</value>
+  </data>
+  <data name="Label_DryCow" xml:space="preserve">
+    <value>DRY COW</value>
+  </data>
+  <data name="Label_PreCalvingRest" xml:space="preserve">
+    <value>Pre-Calving Rest</value>
+  </data>
+  <data name="Label_DryCowDays" xml:space="preserve">
+    <value>~60 days</value>
+  </data>
+  <data name="Label_CalvingCycleRepeats" xml:space="preserve">
+    <value>CALVING - Cycle Repeats</value>
+  </data>
+  <data name="Label_Culling" xml:space="preserve">
+    <value>CULLING</value>
+  </data>
+  <data name="Label_BasedOnReplacementRate" xml:space="preserve">
+    <value>Based on replacement rate</value>
+  </data>
+  <data name="Label_Replacement" xml:space="preserve">
+    <value>REPLACEMENT</value>
+  </data>
+  <data name="Label_HeifersEnterHerd" xml:space="preserve">
+    <value>Heifers enter herd</value>
   </data>
 </root>

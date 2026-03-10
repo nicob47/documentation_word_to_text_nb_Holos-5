@@ -6,6 +6,7 @@ using H.CLI.UserInput;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Enumerations;
 using H.Core.Providers.Nitrogen;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.TemporaryComponentStorage
 {
@@ -34,8 +35,8 @@ namespace H.CLI.TemporaryComponentStorage
             Console.ForegroundColor = ConsoleColor.White;
             if (String.IsNullOrEmpty(value))
             {
-                Console.WriteLine(String.Format(Properties.Resources.EmptyDataInput, row + 1, col + 1, fileName));
-                throw new FormatException(String.Format(Properties.Resources.EmptyDataInput, row + 1, col + 1, fileName));
+                Console.WriteLine(String.Format(AppStrings.Error_EmptyDataInput, row + 1, col + 1, fileName));
+                throw new FormatException(String.Format(AppStrings.Error_EmptyDataInput, row + 1, col + 1, fileName));
             }
 
             var propertyInfo = this.GetType().GetProperty(prop);
@@ -65,9 +66,9 @@ namespace H.CLI.TemporaryComponentStorage
                 {
                     if (ThrowExceptionOnNegativeInput)
                     {
-                        Console.WriteLine(String.Format(Properties.Resources.NegativeInteger, value, row + 1, col + 1, fileName));
+                        Console.WriteLine(String.Format(AppStrings.Error_NegativeInteger, value, row + 1, col + 1, fileName));
 
-                        throw new FormatException(String.Format(Properties.Resources.NegativeInteger, value, row + 1, col + 1, fileName));
+                        throw new FormatException(String.Format(AppStrings.Error_NegativeInteger, value, row + 1, col + 1, fileName));
                     }
                     else
                     {
@@ -157,14 +158,14 @@ namespace H.CLI.TemporaryComponentStorage
                             IsPesticideUsed = (Response)Enum.Parse(typeof(Response), value, true);
                             break;
                         default:
-                            throw new FormatException(String.Format(Properties.Resources.InvalidResponse, value, row + 1, col + 1, fileName));
+                            throw new FormatException(String.Format(AppStrings.Error_InvalidResponse, value, row + 1, col + 1, fileName));
                     }
                     return;
                 }
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidResponse, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidResponse, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -184,7 +185,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidManureLocationSourceType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidManureLocationSourceType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -204,7 +205,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidManureStateType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidManureStateType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -225,7 +226,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidManureApplicationType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidManureApplicationType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -247,7 +248,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidCoverCropTerminationType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidCoverCropTerminationType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -267,7 +268,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidCoverCropType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidCoverCropType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -288,7 +289,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidManureAnimalSourceType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidManureAnimalSourceType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -309,7 +310,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidIrrigationType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidIrrigationType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -329,7 +330,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidCropType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidCropType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -350,7 +351,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidHarvestMethod, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidHarvestMethod, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -371,7 +372,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -391,7 +392,7 @@ namespace H.CLI.TemporaryComponentStorage
 
                 catch (Exception)
                 {
-                    throw new FormatException(String.Format(Properties.Resources.InvalidTillageType, value, row + 1, col + 1, fileName));
+                    throw new FormatException(String.Format(AppStrings.Error_InvalidTillageType, value, row + 1, col + 1, fileName));
                 }
             }
 
@@ -402,12 +403,12 @@ namespace H.CLI.TemporaryComponentStorage
         // Look for the missing headers and apply the default values for the associated property
         public new void FinalSettings(IComponentKeys componentKeys)
         {
-            if (componentKeys.MissingHeaders.ContainsKey(Properties.Resources.Key_NitrogenFixation) && componentKeys.MissingHeaders[Properties.Resources.Key_NitrogenFixation])
+            if (componentKeys.MissingHeaders.ContainsKey(AppStrings.Column_NitrogenFixation) && componentKeys.MissingHeaders[AppStrings.Column_NitrogenFixation])
             {
                 var nitrogenFixationProvider = new NitogenFixationProvider();
                 this.NitrogenFixation = nitrogenFixationProvider.GetNitrogenFixationResult(this.CropType).Fixation;
             }
-            if (componentKeys.MissingHeaders.ContainsKey(Properties.Resources.Key_NitrogenDeposit) && componentKeys.MissingHeaders[Properties.Resources.Key_NitrogenDeposit])
+            if (componentKeys.MissingHeaders.ContainsKey(AppStrings.Column_NitrogenDeposit) && componentKeys.MissingHeaders[AppStrings.Column_NitrogenDeposit])
             {
                 var defaultDeposit = 5;
                 this.NitrogenDeposit = defaultDeposit;

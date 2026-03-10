@@ -1,21 +1,21 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:viewSections="clr-namespace:H.Avalonia"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
 			 xmlns:farmCreationViews="clr-namespace:H.Avalonia.Views.FarmCreationViews"
 			 x:Class="H.Avalonia.Views.OptionsViews.FileMenuViews.FarmManagementView">
 	
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<TextBlock Text="Manage Farms"
+		<TextBlock Text="{Binding [Label_ManageFarms].Value, Source={StaticResource Loc}}"
                    HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969" />
 		
 		<farmCreationViews:FarmDataGridSharedView/>
 
 		<StackPanel HorizontalAlignment="Center">
-			<Button Content="Remove Farm" HorizontalContentAlignment="Center" Command="{Binding RemoveFarm}" Margin="0 60 0 0"/>
+			<Button Content="{Binding [Button_RemoveFarm].Value, Source={StaticResource Loc}}" HorizontalContentAlignment="Center" Command="{Binding RemoveFarm}" Margin="0 60 0 0"/>
 		</StackPanel>
 	</StackPanel>
 </UserControl>

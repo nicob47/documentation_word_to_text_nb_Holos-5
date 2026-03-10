@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"
              xmlns:rotationViews="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.Rotation"
              mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="400"
@@ -18,10 +19,10 @@
             <!-- Step Header -->
             <StackPanel x:Name="StepHeaderPanel" Margin="0,0,0,20">
                 <Border x:Name="StepBadgeBorder" Classes="step-badge" HorizontalAlignment="Left">
-                    <TextBlock x:Name="StepNumberTextBlock" Text="Step 1" Classes="step-badge-text"/>
+                    <TextBlock x:Name="StepNumberTextBlock" Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
                 </Border>
                 <TextBlock x:Name="StepDescriptionTextBlock"
-                           Text="Define Rotation Parameters"
+                           Text="{Binding [Label_DefineRotationParameters].Value, Source={StaticResource Loc}}"
                            Classes="step-number-description"
                            Margin="0,8,0,0"/>
             </StackPanel>
@@ -31,13 +32,13 @@
                 <StackPanel>
                     <!-- Card Header -->
                     <StackPanel Margin="0,0,0,20">
-                        <TextBlock Text="Rotation Parameters"
+                        <TextBlock Text="{Binding [Label_RotationParameters].Value, Source={StaticResource Loc}}"
                                    FontSize="{StaticResource GcdsFontSizeH6}"
                                    FontWeight="Bold"
                                    FontFamily="{StaticResource GcdsHeadingFont}"
                                    Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                    Margin="0,0,0,4"/>
-                        <TextBlock Text="Configure the time period and field setup for this rotation"
+                        <TextBlock Text="{Binding [Label_ConfigureTimePeriodAndFieldSetup].Value, Source={StaticResource Loc}}"
                                    FontSize="{StaticResource GcdsFontSizeSmall}"
                                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                    FontStyle="Italic"/>
@@ -52,7 +53,7 @@
                         <!-- Time Period group -->
                         <StackPanel>
                             <TextBlock x:Name="TimePeriodTitleTextBlock"
-                                       Text="Time Period"
+                                       Text="{Binding [Label_TimePeriod].Value, Source={StaticResource Loc}}"
                                        FontWeight="SemiBold"
                                        Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                        Margin="0,0,0,10"/>
@@ -68,7 +69,7 @@
 
                                 <!-- Start Year -->
                                 <Label Grid.Row="0" Grid.Column="0"
-                                       Content="Start year:"
+                                       Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
                                        Classes="input-label"/>
                                 <NumericUpDown x:Name="StartYearInputNumericUpDown"
                                                Grid.Row="0" Grid.Column="1"
@@ -80,7 +81,7 @@
 
                                 <!-- End Year -->
                                 <Label Grid.Row="1" Grid.Column="0"
-                                       Content="End year:"
+                                       Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
                                        Classes="input-label"/>
                                 <NumericUpDown x:Name="EndYearInputNumericUpDown"
                                                Grid.Row="1" Grid.Column="1"
@@ -98,7 +99,7 @@
 
                         <!-- Field Configuration group -->
                         <StackPanel>
-                            <TextBlock Text="Field Configuration"
+                            <TextBlock Text="{Binding [Label_FieldConfiguration].Value, Source={StaticResource Loc}}"
                                        FontWeight="SemiBold"
                                        Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                        Margin="0,0,0,10"/>
@@ -118,13 +119,13 @@
                 <StackPanel>
                     <StackPanel Margin="0,0,0,20">
                         <TextBlock x:Name="SummaryTitleTextBlock"
-                                   Text="Rotation Summary"
+                                   Text="{Binding [Label_RotationSummary].Value, Source={StaticResource Loc}}"
                                    FontSize="{StaticResource GcdsFontSizeH6}"
                                    FontWeight="Bold"
                                    FontFamily="{StaticResource GcdsHeadingFont}"
                                    Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                    Margin="0,0,0,4"/>
-                        <TextBlock Text="Calculated totals for this rotation"
+                        <TextBlock Text="{Binding [Label_CalculatedTotalsForThisRotation].Value, Source={StaticResource Loc}}"
                                    FontSize="{StaticResource GcdsFontSizeSmall}"
                                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                    FontStyle="Italic"/>
@@ -143,7 +144,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Total Area -->
-                        <Label Grid.Row="0" Grid.Column="0" Content="Total area:" Classes="input-label"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding [Label_TotalArea].Value, Source={StaticResource Loc}}" Classes="input-label"/>
                         <TextBlock x:Name="TotalAreaValueTextBlock"
                                    Grid.Row="0" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.TotalRotationArea, StringFormat='{}{0:F2} ha'}"
@@ -153,7 +154,7 @@
                                    Margin="0,0,0,4"/>
 
                         <!-- Number of Fields -->
-                        <Label Grid.Row="1" Grid.Column="0" Content="Fields:" Classes="input-label"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="{Binding [Label_Fields].Value, Source={StaticResource Loc}}" Classes="input-label"/>
                         <TextBlock x:Name="NumberOfFieldsValueTextBlock"
                                    Grid.Row="1" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.NumberOfFields}"
@@ -163,7 +164,7 @@
                                    Margin="0,0,0,4"/>
 
                         <!-- Years per Field -->
-                        <Label Grid.Row="2" Grid.Column="0" Content="Years/field:" Classes="input-label"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="{Binding [Label_YearsPerField].Value, Source={StaticResource Loc}}" Classes="input-label"/>
                         <TextBlock x:Name="YearsPerFieldValueTextBlock"
                                    Grid.Row="2" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.RotationLength}"
@@ -173,7 +174,7 @@
                                    Margin="0,0,0,4"/>
 
                         <!-- Total Crop-Years -->
-                        <Label Grid.Row="3" Grid.Column="0" Content="Crop-years:" Classes="input-label"/>
+                        <Label Grid.Row="3" Grid.Column="0" Content="{Binding [Label_CropYears].Value, Source={StaticResource Loc}}" Classes="input-label"/>
                         <TextBlock x:Name="TotalCropYearsValueTextBlock"
                                    Grid.Row="3" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.TotalCropYears}"

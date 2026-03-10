@@ -1,6 +1,7 @@
 ﻿using System;
 using H.CLI.ComponentKeys;
 using H.CLI.Interfaces;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Factories
 {
@@ -14,42 +15,42 @@ namespace H.CLI.Factories
         /// </summary>
         public IComponentKeys ComponentKeysCreator(string component)
         {
-            if (component.ToUpper() == Properties.Resources.DefaultShelterbeltInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultShelterbeltInput.ToUpper())
             {
                 return new ShelterBeltKeys();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultFieldsInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultFieldsInput.ToUpper())
             {
                 return new FieldKeys();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultSwineInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultSwineInput.ToUpper())
             {
                 return new SwineKeys();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultDairyInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultDairyInput.ToUpper())
             {
                 return new DairyCattleKeys();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultSheepInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultSheepInput.ToUpper())
             {
                 return new SheepKeys();
             }
 
 
-            if (component.ToUpper() == Properties.Resources.DefaultBeefInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultBeefInput.ToUpper())
             {
                 return new BeefCattleKeys();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultPoultryInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultPoultryInput.ToUpper())
             {
                 return new PoultryKeys();
             }
-            if (component.ToUpper() == Properties.Resources.DefaultOtherLivestockInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultOtherLivestockInput.ToUpper())
             {
                 return new OtherLivestockKeys();
             }

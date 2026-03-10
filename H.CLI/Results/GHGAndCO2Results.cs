@@ -7,6 +7,7 @@ using H.CLI.UserInput;
 using H.Core;
 using H.Core.Emissions.Results;
 using H.Core.Models;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Results
 {
@@ -105,30 +106,30 @@ namespace H.CLI.Results
             {
                 case 0:
                     return
-                    String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.CO2 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
+                    String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_CO2 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
                 case 1:
                     return
-                       String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.CO2 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
+                       String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_CO2 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
                 default:
                     throw new NotImplementedException();
             }
@@ -143,31 +144,31 @@ namespace H.CLI.Results
             switch (EmissionFileCounter)
             {
                 case 0:
-                    return String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.GroupType + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.GroupName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.CO2 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
+                    return String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_GroupType + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_GroupName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_CO2 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
                 case 1:
-                    return String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.GroupType + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.GroupName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.CO2 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
+                    return String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_GroupType + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_GroupName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_CO2 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
                 default:
                     throw new NotImplementedException();
             }

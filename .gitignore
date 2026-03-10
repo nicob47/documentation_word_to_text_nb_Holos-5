@@ -407,3 +407,29 @@ H.CLI/sync.ffs_db
 *.idea
 *.ffs_db
 /.claude/settings.local.json
+
+# Accidental output-redirect files (created when CMD-style "> nul" is run in bash)
+/nul
+/NUL
+/null
+
+# Editor / tool backup files in the solution root
+/~*.bak
+/~*.saved.bak
+
+# One-off development / migration scripts (not needed in the repo)
+/build-appstrings.ps1
+/gen-designer.ps1
+/update-axaml.ps1
+/update-cli.ps1
+/fix-misplaced-usings.ps1
+/fix-fqn-appstrings.ps1
+/check-keys.ps1
+/check-hcore-keys.ps1
+/patch-script.ps1
+/patch-script2.ps1
+/add-fr-translations.ps1
+/fix-fr-encoding.ps1
+
+# Screenshots captured during development/testing
+/Screenshots/

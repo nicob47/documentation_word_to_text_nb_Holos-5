@@ -72,9 +72,15 @@ namespace H.Core.Helpers
         }
 
         /// <summary>
-        /// Returns the system version being used. This is not the same as the version number
+        /// Reads the persisted language preference from <c>app.config</c>.
+        /// This is called by <see cref="H.Core.Services.CountrySettings"/> during construction
+        /// to initialize <see cref="H.Core.Services.ICountrySettings.Language"/>, which in turn
+        /// is read by <c>App.SetLanguage()</c> on startup to restore the user's language choice.
         /// </summary>
-        /// <returns>A value from the <see cref="CountryVersion"/> indicating which system version is enabled</returns>
+        /// <returns>
+        /// <see cref="Languages.French"/> if the <c>"Language"</c> appSetting equals
+        /// <c>"french"</c> (case-insensitive); otherwise <see cref="Languages.English"/>.
+        /// </returns>
         public static Languages GetLanguage()
         {
             Languages language = Languages.English;
@@ -99,6 +105,48 @@ namespace H.Core.Helpers
             }
 
             return language;
+        }
+
+        /// <summary>
+        /// Persists the user's language choice to the <c>"Language"</c> appSetting in
+        /// <c>app.config</c>. Called from <c>DisclaimerViewModel.OnLanguageChanged()</c>
+        /// whenever the user selects a different language.
+        ///
+        /// <para>
+        /// On the next application launch, <see cref="GetLanguage"/> reads this value
+        /// back, which populates <see cref="H.Core.Services.ICountrySettings.Language"/>,
+        /// and <c>App.SetLanguage()</c> uses it to call
+        /// <see cref="H.Localization.LanguageManager.SetLanguage"/> — completing the
+        /// round-trip persistence cycle.
+        /// </para>
+        /// </summary>
+        /// <param name="language">
+        /// The language identifier to persist — <c>"english"</c> or <c>"french"</c>.
+        /// </param>
+        public static void UpdateLanguage(string language)
+        {
+            const string settingName = "Language";
+            try
+            {
+                ConfigurationManager.RefreshSection("appSettings");
+
+                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                if (config.AppSettings.Settings.AllKeys.Contains(settingName))
+                {
+                    config.AppSettings.Settings[settingName].Value = language;
+                }
+                else
+                {
+                    config.AppSettings.Settings.Add(settingName, language);
+                }
+
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+            catch (Exception)
+            {
+                // Handle exceptions as needed
+            }
         }
 
         /// <summary>

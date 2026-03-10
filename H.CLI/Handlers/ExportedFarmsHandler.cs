@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Handlers
 {
@@ -84,8 +85,8 @@ namespace H.CLI.Handlers
             }
 
             Console.WriteLine();
-            Console.WriteLine(string.Format(Properties.Resources.InterpolatedTotalFarmsSuccessfullyImported, farms.Count));
-            Console.WriteLine(string.Format(Properties.Resources.LabelInputFilesHaveBeenCreatedAndStoredInYourFarmsDirectory, inputFilesForAllFarms.Count));
+            Console.WriteLine(string.Format(AppStrings.Status_TotalFarmsImported, farms.Count));
+            Console.WriteLine(string.Format(AppStrings.Status_InputFilesCreated, inputFilesForAllFarms.Count));
 
             return farms;
         }
@@ -127,7 +128,7 @@ namespace H.CLI.Handlers
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(Properties.Resources.InputFileNotFound, argValues.FolderName);
+                    Console.WriteLine(AppStrings.Error_InputFileNotFound, argValues.FolderName);
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
@@ -162,7 +163,7 @@ namespace H.CLI.Handlers
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(Properties.Resources.InputFileNotFound, argValues.FileName);
+                    Console.WriteLine(AppStrings.Error_InputFileNotFound, argValues.FileName);
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
@@ -188,7 +189,7 @@ namespace H.CLI.Handlers
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(String.Format(Properties.Resources.NotAValidPolygonID, argValues.PolygonID.ToString()));
+                Console.WriteLine(String.Format(AppStrings.Error_NotAValidPolygonID, argValues.PolygonID.ToString()));
                 throw new Exception("Not A Valid Polygon ID");
             }
             Console.ResetColor();
@@ -213,7 +214,7 @@ namespace H.CLI.Handlers
             }
             else
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingSettingsFile);
+                Console.WriteLine(AppStrings.Status_CreatingSettingsFile);
                 this.CreateSettingsFileForFarm(farmDirectoryPath, farm);
             }
 
@@ -223,9 +224,9 @@ namespace H.CLI.Handlers
 
             if (farm.FieldSystemComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingFieldInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingFieldInputFiles);
 
-                var pathToFieldComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultFieldsInputFolder;
+                var pathToFieldComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultFieldsInput;
                 var fieldKeys = new FieldKeys();
                 foreach (var fieldSystemComponent in farm.FieldSystemComponents)
                 {
@@ -273,9 +274,9 @@ namespace H.CLI.Handlers
 
             if (farm.BeefCattleComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingBeefCattleInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingBeefCattleInputFiles);
 
-                var pathToBeefCattleComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultBeefInputFolder;
+                var pathToBeefCattleComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultBeefInput;
                 foreach (var beefCattleComponent in farm.BeefCattleComponents)
                 {
                     var createdInputFile = _beefConverter.SetTemplateCSVFileBasedOnExportedFarm(
@@ -295,9 +296,9 @@ namespace H.CLI.Handlers
 
             if (farm.DairyComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingDairyCattleInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingDairyCattleInputFiles);
 
-                var pathToDairyCattleComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultDairyInputFolder;
+                var pathToDairyCattleComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultDairyInput;
                 foreach (var dairyComponent in farm.DairyComponents)
                 {
                     var createdInputFile = _dairyConverter.SetTemplateCSVFileBasedOnExportedFarm(
@@ -317,9 +318,9 @@ namespace H.CLI.Handlers
 
             if (farm.SwineComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingSwineInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingSwineInputFiles);
 
-                var pathToSwineComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultSwineInputFolder;
+                var pathToSwineComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultSwineInput;
                 foreach (var swineComponent in farm.SwineComponents)
                 {
                     var createdInputFile = _swineConverter.SetTemplateCSVFileBasedOnExportedFarm(
@@ -339,9 +340,9 @@ namespace H.CLI.Handlers
 
             if (farm.SheepComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingSheepInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingSheepInputFiles);
 
-                var pathToSheepComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultSheepInputFolder;
+                var pathToSheepComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultSheepInput;
                 foreach (var sheepComponent in farm.SheepComponents)
                 {
                     var createdInputFile = _sheepConverter.SetTemplateCSVFileBasedOnExportedFarm(
@@ -361,9 +362,9 @@ namespace H.CLI.Handlers
 
             if (farm.PoultryComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingPoultryInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingPoultryInputFiles);
 
-                var pathToPoultryComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultPoultryInputFolder;
+                var pathToPoultryComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultPoultryInput;
                 foreach (var poultryComponent in farm.PoultryComponents)
                 {
                     var createdInputFile = _poultryConverter.SetTemplateCSVFileBasedOnExportedFarm(
@@ -383,9 +384,9 @@ namespace H.CLI.Handlers
 
             if (farm.OtherLivestockComponents.Any())
             {
-                Console.WriteLine(Properties.Resources.LabelCreatingOtherAnimalsInputFiles);
+                Console.WriteLine(AppStrings.Status_CreatingOtherAnimalsInputFiles);
 
-                var pathToOtherAnimalComponents = farmDirectoryPath + @"\" + Properties.Resources.DefaultOtherLivestockInputFolder;
+                var pathToOtherAnimalComponents = farmDirectoryPath + @"\" + AppStrings.Filename_DefaultOtherLivestockInput;
                 foreach (var otherLivestockComponent in farm.OtherLivestockComponents)
                 {
                     var createdInputFile = _otherLiveStockConverter.SetTemplateCSVFileBasedOnExportedFarm(
@@ -424,9 +425,9 @@ namespace H.CLI.Handlers
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(Properties.Resources.SettingsFileNotFound, argValues.Settings);
+                Console.WriteLine(AppStrings.Error_SettingsFileNotFound, argValues.Settings);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(Properties.Resources.LabelCreatingSettingsFile);
+                Console.WriteLine(AppStrings.Status_CreatingSettingsFile);
                 this.CreateSettingsFileForFarm(farmDirectoryPath, farm);
             }
         }
@@ -435,23 +436,23 @@ namespace H.CLI.Handlers
         {
             // Ask the user if they have farms that they would like to import from the GUI (they must have already exported the farms to a .json file)
             Console.WriteLine();
-            Console.Write(Properties.Resources.LabelWouldYouLikeToImportFarmsFromTheGui);
-            Console.WriteLine(Properties.Resources.LabelYesNo);
+            Console.Write(AppStrings.Label_WouldYouLikeToImportFarmsFromGui);
+            Console.WriteLine(AppStrings.Label_YesNo);
 
             var response = Console.ReadLine();
             if (_inputHelper.IsYesResponse(response))
             {
                 // Prompt the user for the location of their exported farms
                 Console.WriteLine();
-                Console.Write(Properties.Resources.LabelAreYourExportedFarmsInCurrentFarmDirectory);
-                Console.WriteLine(Properties.Resources.LabelYesNo);
+                Console.Write(AppStrings.Status_AreExportedFarmsInDirectory);
+                Console.WriteLine(AppStrings.Label_YesNo);
                 var response2 = Console.ReadLine();
                 if (_inputHelper.IsYesResponse(response2))
                 {
                     return farmsFolderPath;
                 }
                 Console.WriteLine();
-                Console.WriteLine(Properties.Resources.LabelWhatIsThePathToYourExportedFarms);
+                Console.WriteLine(AppStrings.Label_WhatIsThePathToExportedFarms);
                 var pathToExportedFarms = Console.ReadLine();
 
                 return pathToExportedFarms;
@@ -470,10 +471,10 @@ namespace H.CLI.Handlers
         public List<Farm> GetExportedFarmsFromUserSpecifiedLocation(string path)
         {
             Console.WriteLine();
-            Console.WriteLine(Properties.Resources.LabelGettingExportedFarms);
+            Console.WriteLine(AppStrings.Status_GettingExportedFarms);
             var farms = _storage.GetExportedFarmsFromDirectoryRecursively(path);
 
-            Console.WriteLine(string.Format(Properties.Resources.InterpolatedTotalNumberOfFarmsFound, farms.Count()));
+            Console.WriteLine(string.Format(AppStrings.Status_TotalFarmsFound, farms.Count()));
 
             return farms.ToList();
         }

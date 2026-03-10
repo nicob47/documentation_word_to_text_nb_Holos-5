@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="700"
-             xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              xmlns:vm="clr-namespace:H.Avalonia.ViewModels.SupportingViews"
              xmlns:enums="clr-namespace:H.Core.Enumerations;assembly=H.Core"
              x:Class="H.Avalonia.Views.SupportingViews.FeedIngredientsView">
@@ -15,7 +15,7 @@
     <StackPanel Margin="20">
         
         <!-- Header -->
-        <TextBlock Text="Feed Ingredients" 
+        <TextBlock Text="{Binding [Label_FeedIngredients].Value, Source={StaticResource Loc}}" 
                    FontSize="24" 
                    FontWeight="Bold" 
                    Margin="0,0,0,20"
@@ -26,7 +26,7 @@
             
             <!-- Animal Type Selection -->
             <StackPanel Orientation="Vertical" Margin="0,0,20,0">
-                <TextBlock Text="{x:Static properties:Resources.LabelAnimalType}" 
+                <TextBlock Text="{Binding [Label_AnimalType].Value, Source={StaticResource Loc}}" 
                            FontWeight="SemiBold" 
                            Margin="0,0,0,5" />
                 <ComboBox Width="200" 
@@ -36,12 +36,12 @@
             
             <!-- Search Bar -->
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="Search Ingredients" 
+                <TextBlock Text="{Binding [Label_SearchIngredients].Value, Source={StaticResource Loc}}" 
                            FontWeight="SemiBold" 
                            Margin="0,0,0,5" />
                 <Grid Width="300" VerticalAlignment="Center">
                     <TextBox Text="{Binding SearchText}" 
-                             Watermark="Search by ingredient name or IFN..." 
+                             Watermark="{Binding [Label_SearchIngredientsByIFN].Value, Source={StaticResource Loc}}" 
                              VerticalContentAlignment="Center" 
                              VerticalAlignment="Center" 
                              Foreground="#696969" 
@@ -84,42 +84,42 @@
             <DataGrid.Columns>
                 
                 <!-- Ingredient Type -->
-                <DataGridTextColumn Header="Ingredient Type" 
+                <DataGridTextColumn Header="{Binding [Label_IngredientType].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding IngredientTypeString}" 
                                     Width="200"/>
                 
                 <!-- IFN -->
-                <DataGridTextColumn Header="IFN" 
+                <DataGridTextColumn Header="{Binding [Label_IFN].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding IFN}" 
                                     Width="Auto"/>
                 
                 <!-- Dry Matter -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelDryMatter}" 
+                <DataGridTextColumn Header="{Binding [Label_DryMatter].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding DryMatter, StringFormat='{}{0:F1}'}" 
                                     Width="SizeToHeader" />
                 
                 <!-- Crude Protein -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelCrudeProtein}" 
+                <DataGridTextColumn Header="{Binding [Label_CrudeProtein].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding CrudeProtein, StringFormat='{}{0:F1}'}" 
                                     Width="SizeToHeader" />
                 
                 <!-- Total Digestible Nutrient -->
-                <DataGridTextColumn Header="TDN %" 
+                <DataGridTextColumn Header="{Binding [Label_TDNPercent].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding TotalDigestibleNutrient, StringFormat='{}{0:F1}'}" 
                                     Width="SizeToHeader" />
                 
                 <!-- Fat -->
-                <DataGridTextColumn Header="Fat %" 
+                <DataGridTextColumn Header="{Binding [Label_FatPercent].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding Fat, StringFormat='{}{0:F1}'}" 
                                     Width="SizeToHeader" />
                 
                 <!-- Crude Fiber -->
-                <DataGridTextColumn Header="Crude Fiber %" 
+                <DataGridTextColumn Header="{Binding [Label_CrudeFiberPercent].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding CrudeFiber, StringFormat='{}{0:F1}'}" 
                                     Width="SizeToHeader" />
                 
                 <!-- Forage -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelForage}" 
+                <DataGridTextColumn Header="{Binding [Label_Forage].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding Forage, StringFormat='{}{0:F1}'}" 
                                     Width="SizeToHeader" />
                 
@@ -128,9 +128,9 @@
 
         <!-- Status Bar -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <TextBlock Text="Total Ingredients: " FontWeight="SemiBold" />
+            <TextBlock Text="{Binding [Label_TotalIngredients].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" />
             <TextBlock Text="{Binding Ingredients.Count}" FontWeight="Bold" />
-            <TextBlock Text=" for " FontWeight="SemiBold" Margin="10,0,0,0" />
+            <TextBlock Text="{Binding [Label_ForUnit].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" Margin="10,0,0,0" />
             <TextBlock Text="{Binding SelectedAnimalType}" FontWeight="Bold" />
         </StackPanel>
 

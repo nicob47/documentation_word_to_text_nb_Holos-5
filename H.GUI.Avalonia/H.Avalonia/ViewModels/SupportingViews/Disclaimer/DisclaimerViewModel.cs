@@ -1,4 +1,5 @@
 using H.Core.Enumerations;
+using H.Core.Helpers;
 using H.Core.Properties;
 using H.Infrastructure;
 using H.Localization;
@@ -122,35 +123,96 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
 
         #region Private Methods
 
+        /// <summary>
+        /// Sets the initial language when the Disclaimer screen is first displayed.
+        /// Reads the persisted language from <see cref="ICountrySettings"/> (which loads
+        /// from <c>app.config</c>) and applies it via <see cref="LanguageManager.SetLanguage"/>.
+        /// </summary>
         private void UpdateDisplay()
         {
-            // Set initial selected language
+            // Restore the language that was persisted during the previous session
             _selectedLanguage = _countrySettings?.Language ?? Languages.English;
 
-            // Set language culture for localization
+            // Apply the culture so LocalizationService returns the correct translations
             var culture = _selectedLanguage == Languages.French ? "fr" : "en";
             LanguageManager.SetLanguage(culture);
 
-            // Set language setting
+            // Keep legacy Settings in sync
             Settings.Default.DisplayLanguage = _selectedLanguage.GetDescription();
 
-            // Get country-specific strings from localization
+            // Load country-specific disclaimer strings
             RefreshLocalizedStrings();
         }
 
+        /// <summary>
+        /// Called when the user selects a different language on the Disclaimer screen.
+        /// This method is responsible for <b>three things</b>:
+        ///
+        /// <list type="number">
+        ///   <item>
+        ///     <b>Immediate UI update</b> — <see cref="LanguageManager.SetLanguage"/>
+        ///     sets thread cultures and <see cref="LocalizationService.Instance.CurrentCulture"/>,
+        ///     which fires <c>PropertyChanged</c> on every <see cref="LocalizedString"/>
+        ///     → all XAML bindings using <c>{Binding [Key].Value, Source={StaticResource Loc}}</c>
+        ///     refresh automatically.
+        ///   </item>
+        ///   <item>
+        ///     <b>Persistence</b> — The choice is saved in three places so it survives
+        ///     app restarts: (a) <c>Settings.Default.DisplayLanguage</c>,
+        ///     (b) the <see cref="ICountrySettings"/> singleton (used by <c>App.SetLanguage()</c>
+        ///     on startup), and (c) <c>app.config</c> via
+        ///     <see cref="ConfigurationFileHelper.UpdateLanguage"/> (the ultimate source
+        ///     that <c>CountrySettings</c> reads during construction).
+        ///   </item>
+        ///   <item>
+        ///     <b>Legacy sync</b> — Explicit <c>.Culture</c> assignments on
+        ///     <c>H.Avalonia.Resources</c> and <c>H.Core.Properties.Resources</c> keep
+        ///     any remaining <c>{x:Static}</c> bindings in sync.
+        ///   </item>
+        /// </list>
+        /// </summary>
         private void OnLanguageChanged()
         {
-            // Update culture for localization
+            // 1. Immediate UI update — sets thread cultures + triggers LocalizedString refresh
             var culture = _selectedLanguage == Languages.French ? "fr" : "en";
             LanguageManager.SetLanguage(culture);
 
-            // Update settings
+            // 2a. Persist to Settings.Default (legacy)
             Settings.Default.DisplayLanguage = _selectedLanguage.GetDescription();
 
-            // Refresh country-specific strings
+            // 2b. Update the DI singleton so App.SetLanguage() sees the correct value
+            //     during the current session (avoids requiring an app restart)
+            if (_countrySettings != null)
+            {
+                _countrySettings.Language = _selectedLanguage;
+            }
+
+            // 2c. Persist to app.config so CountrySettings reads it back on next launch
+            ConfigurationFileHelper.UpdateLanguage(_selectedLanguage == Languages.French ? "french" : "english");
+
+            // 3. Keep legacy resource classes in sync for any {x:Static} bindings
+            if (_selectedLanguage == Languages.French)
+            {
+                H.Avalonia.Resources.Culture = InfrastructureConstants.FrenchCultureInfo;
+                H.Core.Properties.Resources.Culture = InfrastructureConstants.FrenchCultureInfo;
+            }
+            else
+            {
+                H.Avalonia.Resources.Culture = null;
+                H.Core.Properties.Resources.Culture = null;
+            }
+
+            // Refresh any ViewModel-held strings (country-specific disclaimer text)
             RefreshLocalizedStrings();
         }
 
+        /// <summary>
+        /// Re-reads country-specific and common localized strings from the
+        /// <see cref="LocalizationService"/> and assigns them to ViewModel properties.
+        /// These properties are bound directly in the Disclaimer XAML (they are
+        /// <b>not</b> part of the <c>LocalizedString / LocalizationProvider</c> pipeline
+        /// because they require runtime branching on <see cref="CountryVersion"/>).
+        /// </summary>
         private void RefreshLocalizedStrings()
         {
             // Get country-specific strings from localization

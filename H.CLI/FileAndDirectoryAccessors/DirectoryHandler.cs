@@ -6,6 +6,7 @@ using System.Text;
 using H.CLI.TemporaryComponentStorage;
 using H.CLI.UserInput;
 using H.Core.Models;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.FileAndDirectoryAccessors
 {
@@ -38,7 +39,7 @@ namespace H.CLI.FileAndDirectoryAccessors
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.ForegroundColor = ConsoleColor.White;
-                throw new DirectoryNotFoundException(String.Format(Properties.Resources.InvalidDirectory, farmDirectoryPath));
+                throw new DirectoryNotFoundException(String.Format(AppStrings.Error_InvalidDirectory, farmDirectoryPath));
             }
 
             ValidateComponentDirectories(farmDirectoryPath);
@@ -56,11 +57,11 @@ namespace H.CLI.FileAndDirectoryAccessors
             {
                 foreach (var invalidDirectoryName in invalidDirectories)
                 {
-                    Console.WriteLine(String.Format(Properties.Resources.InvalidComponentDirectoryName, Path.GetFileName(invalidDirectoryName), farmDirectoryPath));
+                    Console.WriteLine(String.Format(AppStrings.Error_InvalidComponentDirectoryName, Path.GetFileName(invalidDirectoryName), farmDirectoryPath));
                 }
 
                 Console.WriteLine(Environment.NewLine);
-                Console.WriteLine(Properties.Resources.ListOfValidDirectories);
+                Console.WriteLine(AppStrings.Label_ListOfValidDirectories);
                 foreach (var validDirectory in _directoryKeys.directoryWeights.Keys)
                 {
 
@@ -107,8 +108,8 @@ namespace H.CLI.FileAndDirectoryAccessors
 
         public void ValidateAndCreateLandManagementDirectories(string baseOutputDirectory, string farmName)
         {
-            var listOfLandManagements = _directoryKeys.directoryWeights.Keys.Where(x => x == Properties.Resources.DefaultShelterbeltInputFolder || x == Properties.Resources.DefaultFieldsInputFolder);
-            var pathToFarmDirectory = baseOutputDirectory + @"\" + Properties.Resources.Outputs + @"\" + farmName + Properties.Resources.Results;
+            var listOfLandManagements = _directoryKeys.directoryWeights.Keys.Where(x => x == AppStrings.Filename_DefaultShelterbeltInput || x == AppStrings.Filename_DefaultFieldsInput);
+            var pathToFarmDirectory = baseOutputDirectory + @"\" + AppStrings.Column_Outputs + @"\" + farmName + AppStrings.Column_Results;
             foreach (var key in listOfLandManagements)
             {
                 var landManagementComponentPath = Path.GetFullPath(String.Format(@"{0}\{1}", pathToFarmDirectory, key));
@@ -128,7 +129,7 @@ namespace H.CLI.FileAndDirectoryAccessors
         {
             BuildSettingsFileString settingsFileString = new BuildSettingsFileString(farm);
 
-            var farmSettingsFilePath = farmDirectoryPath + @"\" + Properties.Resources.LabelFarm + ".settings";
+            var farmSettingsFilePath = farmDirectoryPath + @"\" + AppStrings.Label_Farm + ".settings";
 
             var stringBuilder = new StringBuilder();
             foreach (var key in settingsFileString.keys)
@@ -181,7 +182,7 @@ namespace H.CLI.FileAndDirectoryAccessors
             do
             {
                 Console.WriteLine();
-                Console.WriteLine(Properties.Resources.PromptForFarmsFolderLocation);
+                Console.WriteLine(AppStrings.Prompt_ForFarmsFolderLocation);
                 farmsFolderPath = Console.ReadLine();
             } while (!Directory.Exists(farmsFolderPath));
             File.WriteAllText(@"FarmsPathFile" + @"\" + "UserFarmsPath.txt", farmsFolderPath);
@@ -226,8 +227,8 @@ namespace H.CLI.FileAndDirectoryAccessors
                 var usePreviousDirectory = string.Empty;
                 do
                 {
-                    Console.Write(String.Format(Properties.Resources.PromptUserToUsePreviousDirectory, previousFarmsFolderPath));
-                    Console.WriteLine(Properties.Resources.LabelYesNo);
+                    Console.Write(String.Format(AppStrings.Prompt_UserToUsePreviousDirectory, previousFarmsFolderPath));
+                    Console.WriteLine(AppStrings.Label_YesNo);
 
                     usePreviousDirectory = Console.ReadLine();
                     if (_inputHelper.IsYesResponse(usePreviousDirectory))

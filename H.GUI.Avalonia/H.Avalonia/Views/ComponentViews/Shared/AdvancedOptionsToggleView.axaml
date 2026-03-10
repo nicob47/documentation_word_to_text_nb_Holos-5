@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="80"
              x:Class="H.Avalonia.Views.ComponentViews.Shared.AdvancedOptionsToggleView">
 
@@ -30,8 +31,8 @@
 			            Name="ShowAdvancedOptionsToggle"
 			            VerticalAlignment="Center"
 			            Margin="12,0,0,0"
-			            OffContent="Basic"
-			            OnContent="Advanced"
+			            OffContent="{Binding [Label_Basic].Value, Source={StaticResource Loc}}"
+			            OnContent="{Binding [Label_Advanced].Value, Source={StaticResource Loc}}"
 			            IsChecked="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"/>
 		</Grid>
 	</Border>
