@@ -6115,10 +6115,16 @@ Please note: emissions related to the deposition or application of livestock man
     <value>Name cannot be empty.</value>
   </data>
   <data name="ErrorStartDate" xml:space="preserve">
-    <value>Must be a valid date before the End Date.</value>
+    <value>Start date must be before the end date.</value>
   </data>
   <data name="ErrorEndDate" xml:space="preserve">
-    <value>Must be a valid date later than the Start Date.</value>
+    <value>End date must be after the start date.</value>
+  </data>
+  <data name="ErrorNumberOfDaysMustBeGreaterThanZero" xml:space="preserve">
+    <value>Number of days must be greater than 0.</value>
+  </data>
+  <data name="ErrorManagementPeriodsOverlap" xml:space="preserve">
+    <value>Date range overlaps with '{0}'. Management periods cannot have overlapping dates.</value>
   </data>
   <data name="ErrorMustBeGreaterThan0" xml:space="preserve">
     <value>Must be greater than 0.</value>

@@ -3,9 +3,7 @@
              xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:H.Avalonia"
-             xmlns:field="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.Field"
-             xmlns:fieldViews="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.Field"
+             xmlns:cropTabs="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.CropTabs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="950"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Field.SelectedCropTabView">
 
@@ -28,133 +26,34 @@
                        VerticalAlignment="Center"/>
         </StackPanel>
 
-        <!-- Card-based Content Section -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Spacing="20" Margin="10">
-
-                <!-- General Information Card (Always Visible) -->
-                <Border Classes="step-card">
-                    <StackPanel>
-                        <!-- Card Header -->
-                        <StackPanel Margin="0,0,0,20">
-                            <TextBlock Text="{Binding [Heading_GeneralTab].Value, Source={StaticResource Loc}}"
-                                      FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
-                                      FontFamily="{StaticResource GcdsHeadingFont}"
-                                      Foreground="{StaticResource GcdsTextPrimaryBrush}" Margin="0,0,0,4"/>
-                            <TextBlock Text="{Binding [Label_ConfigureBasicCropParameters].Value, Source={StaticResource Loc}}"
-                                      FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                                      FontStyle="Italic"/>
-                        </StackPanel>
-
-                        <!-- Card Content -->
-                        <field:SelectedCropGeneralTabView/>
-                    </StackPanel>
-                </Border>
-
-                <!-- Residues Information Card (Advanced Only) -->
-                <Border Classes="step-card"
-                       IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource FindAncestor, AncestorType=fieldViews:FieldComponentView}, FallbackValue=False}"
-                       BorderBrush="#FF8C00"
-                       BorderThickness="3,3,3,3">
-                    <StackPanel>
-                        <!-- Card Header with Advanced Indicator -->
-                        <StackPanel Margin="0,0,0,20">
-                            <Grid Margin="0,0,0,4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0"
-                                          Text="{Binding [Heading_ResiduesTab].Value, Source={StaticResource Loc}}"
-                                          FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
-                                          FontFamily="{StaticResource GcdsHeadingFont}"
-                                          Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
-
-                                <!-- Small Advanced Indicator -->
-                                <Border Grid.Column="1"
-                                       Background="#FF8C00"
-                                       CornerRadius="10"
-                                       Padding="6,2"
-                                       VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding [Label_Advanced].Value, Source={StaticResource Loc}}"
-                                              FontSize="8"
-                                              FontWeight="Bold"
-                                              Foreground="White"
-                                              HorizontalAlignment="Center"/>
-                                </Border>
-                            </Grid>
-
-                            <TextBlock Text="{Binding [Label_SetBiomassCoefficients].Value, Source={StaticResource Loc}}"
-                                      FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                                      FontStyle="Italic"/>
-                        </StackPanel>
-
-                        <!-- Card Content -->
-                        <field:SelectedCropResiduesTabView/>
-                    </StackPanel>
-                </Border>
-
-                <!-- Fertilizer Information Card (Advanced Only) -->
-                <Border Classes="step-card"
-                       IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource FindAncestor, AncestorType=fieldViews:FieldComponentView}, FallbackValue=False}"
-                       BorderBrush="#FF8C00"
-                       BorderThickness="3,3,3,3">
-                    <StackPanel>
-                        <!-- Card Header with Advanced Indicator -->
-                        <StackPanel Margin="0,0,0,20">
-                            <Grid Margin="0,0,0,4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0"
-                                          Text="{Binding [Heading_FertilizerTab].Value, Source={StaticResource Loc}}"
-                                          FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
-                                          FontFamily="{StaticResource GcdsHeadingFont}"
-                                          Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
-
-                                <!-- Small Advanced Indicator -->
-                                <Border Grid.Column="1"
-                                       Background="#FF8C00"
-                                       CornerRadius="10"
-                                       Padding="6,2"
-                                       VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding [Label_Advanced].Value, Source={StaticResource Loc}}"
-                                              FontSize="8"
-                                              FontWeight="Bold"
-                                              Foreground="White"
-                                              HorizontalAlignment="Center"/>
-                                </Border>
-                            </Grid>
-
-                            <TextBlock Text="{Binding [Label_ConfigureFertilizerSettings].Value, Source={StaticResource Loc}}"
-                                      FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                                      FontStyle="Italic"/>
-                        </StackPanel>
-
-                        <!-- Card Content -->
-                        <Border Background="{StaticResource GcdsBgLightBrush}" CornerRadius="8" Padding="20" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="1">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-                                <TextBlock Text="??" FontSize="48" HorizontalAlignment="Center" Opacity="0.7"/>
-                                <TextBlock Text="{Binding [Label_FertilizerConfiguration].Value, Source={StaticResource Loc}}"
-                                          FontSize="{StaticResource GcdsFontSizeBody}" FontWeight="SemiBold"
-                                          HorizontalAlignment="Center" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                                <TextBlock Text="{Binding [Label_FertilizerComingSoon].Value, Source={StaticResource Loc}}"
-                                          FontSize="{StaticResource GcdsFontSizeSmall}" HorizontalAlignment="Center"
-                                          Foreground="{StaticResource GcdsTextSecondaryBrush}" FontStyle="Italic"/>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </Border>
-
-                <!-- Placeholder for Future Advanced Cards -->
-                <!-- Additional advanced cards can be added here with the same pattern:
-                     IsVisible="{Binding ShowAdvancedOptionsToggle.IsChecked}" and orange header style -->
-
-            </StackPanel>
-        </ScrollViewer>
+        <!-- Crop Details TabControl -->
+        <TabControl Grid.Row="1"
+                    IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    DataContext="{Binding SelectedCropDto}"
+                    Background="White"
+                    MinHeight="450">
+            <TabItem Header="{Binding [Tab_General].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropGeneralTabView/></ScrollViewer>
+            </TabItem>
+            <TabItem Header="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropFertilizerTabView/></ScrollViewer>
+            </TabItem>
+            <TabItem Header="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropManureTabView/></ScrollViewer>
+            </TabItem>
+            <TabItem Header="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropGrazingTabView/></ScrollViewer>
+            </TabItem>
+            <TabItem Header="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropSoilTabView/></ScrollViewer>
+            </TabItem>
+            <TabItem Header="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropResidueTabView/></ScrollViewer>
+            </TabItem>
+            <TabItem Header="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}">
+                <ScrollViewer><cropTabs:CropEconomicsTabView/></ScrollViewer>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </UserControl>

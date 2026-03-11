@@ -1,0 +1,119 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropManureTabView">
+
+    <UserControl.Resources>
+        <infrastructure:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+
+    <Border Classes="step-card" Margin="16">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+
+            <!-- Manure applied -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ManureApplied].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding ManureApplied}"
+                              OnContent="{Binding [Label_Yes].Value, Source={StaticResource Loc}}"
+                              OffContent="{Binding [Label_No].Value, Source={StaticResource Loc}}"/>
+            </Grid>
+
+            <!-- Amount of manure applied -->
+            <Grid IsVisible="{Binding ManureApplied}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_AmountOfManureApplied].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                               Value="{Binding AmountOfManureApplied}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_KgPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Manure location source -->
+            <Grid IsVisible="{Binding ManureApplied}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ManureLocationSource].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.ManureLocationSourceTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                          SelectedItem="{Binding ManureLocationSourceType}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <!-- Manure animal source -->
+            <Grid IsVisible="{Binding ManureApplied}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ManureAnimalSource].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.ManureAnimalSourceTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                          SelectedItem="{Binding ManureAnimalSourceType}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <!-- Manure application type -->
+            <Grid IsVisible="{Binding ManureApplied}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ManureApplicationType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.ManureApplicationTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                          SelectedItem="{Binding ManureApplicationType}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <!-- Manure state type -->
+            <Grid IsVisible="{Binding ManureApplied}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ManureStateType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.ManureStateTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                          SelectedItem="{Binding ManureStateType}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -1462,6 +1462,10 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>Delete</value>
     <comment>GUI (H.Avalonia.Core) - field/control label</comment>
   </data>
+  <data name="Label_RemoveSelected" xml:space="preserve">
+    <value>Remove Selected</value>
+    <comment>GUI (H.Avalonia) - button to remove the currently selected management period</comment>
+  </data>
   <data name="Label_DietFormulator" xml:space="preserve">
     <value>Diet Formulator</value>
     <comment>GUI (H.Core) - field/control label</comment>
@@ -3927,5 +3931,219 @@ Hassan Afzaal</value>
   </data>
   <data name="Label_HeifersEnterHerd" xml:space="preserve">
     <value>Heifers enter herd</value>
+  </data>
+
+  <!-- ═══ Crop Tabs — shared by Rotation Step 4 & Field Step 3 ═══ -->
+
+  <!-- Tab headers -->
+  <data name="Tab_General" xml:space="preserve">
+    <value>General</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+  <data name="Tab_Fertilizer" xml:space="preserve">
+    <value>Fertilizer</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+  <data name="Tab_Manure" xml:space="preserve">
+    <value>Manure</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+  <data name="Tab_Grazing" xml:space="preserve">
+    <value>Grazing</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+  <data name="Tab_Soil" xml:space="preserve">
+    <value>Soil</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+  <data name="Tab_Residue" xml:space="preserve">
+    <value>Residue</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+  <data name="Tab_Economics" xml:space="preserve">
+    <value>Economics</value>
+    <comment>GUI - Crop details tab header</comment>
+  </data>
+
+  <!-- General tab labels -->
+  <data name="Label_DryYield" xml:space="preserve">
+    <value>Dry yield:</value>
+    <comment>GUI - Crop General tab</comment>
+  </data>
+  <data name="Label_KgDmPerHa" xml:space="preserve">
+    <value>kg DM/ha</value>
+    <comment>GUI - unit label for dry matter yield</comment>
+  </data>
+  <data name="Label_MoistureContent" xml:space="preserve">
+    <value>Moisture content of crop:</value>
+    <comment>GUI - Crop General tab</comment>
+  </data>
+  <data name="Label_TillageType" xml:space="preserve">
+    <value>Tillage type:</value>
+    <comment>GUI - Crop General tab</comment>
+  </data>
+  <data name="Label_HarvestMethod" xml:space="preserve">
+    <value>Harvest method:</value>
+    <comment>GUI - Crop General tab</comment>
+  </data>
+  <data name="Label_NumberOfPesticidePasses" xml:space="preserve">
+    <value>Number of pesticide passes:</value>
+    <comment>GUI - Crop General tab</comment>
+  </data>
+
+  <!-- Fertilizer tab labels -->
+  <data name="Label_NitrogenFertilizerRate" xml:space="preserve">
+    <value>Nitrogen fertilizer rate:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_KgNPerHa" xml:space="preserve">
+    <value>kg N/ha</value>
+    <comment>GUI - unit label for nitrogen rate</comment>
+  </data>
+  <data name="Label_PhosphorusFertilizerRate" xml:space="preserve">
+    <value>Phosphorus fertilizer rate:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_KgPPerHa" xml:space="preserve">
+    <value>kg P/ha</value>
+    <comment>GUI - unit label for phosphorus rate</comment>
+  </data>
+  <data name="Label_PotassiumFertilizerRate" xml:space="preserve">
+    <value>Potassium fertilizer rate:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_KgKPerHa" xml:space="preserve">
+    <value>kg K/ha</value>
+    <comment>GUI - unit label for potassium rate</comment>
+  </data>
+  <data name="Label_SulphurFertilizerRate" xml:space="preserve">
+    <value>Sulphur fertilizer rate:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_KgSPerHa" xml:space="preserve">
+    <value>kg S/ha</value>
+    <comment>GUI - unit label for sulphur rate</comment>
+  </data>
+  <data name="Label_NitrogenFertilizerType" xml:space="preserve">
+    <value>Nitrogen fertilizer type:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_FertilizerBlend" xml:space="preserve">
+    <value>Fertilizer blend:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_SoilReductionFactor" xml:space="preserve">
+    <value>Soil reduction factor:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+  <data name="Label_CustomReductionFactor" xml:space="preserve">
+    <value>Custom reduction factor:</value>
+    <comment>GUI - Crop Fertilizer tab</comment>
+  </data>
+
+  <!-- Manure tab labels -->
+  <data name="Label_ManureApplied" xml:space="preserve">
+    <value>Manure applied:</value>
+    <comment>GUI - Crop Manure tab</comment>
+  </data>
+  <data name="Label_AmountOfManureApplied" xml:space="preserve">
+    <value>Amount of manure applied:</value>
+    <comment>GUI - Crop Manure tab</comment>
+  </data>
+  <data name="Label_ManureLocationSource" xml:space="preserve">
+    <value>Manure location source:</value>
+    <comment>GUI - Crop Manure tab</comment>
+  </data>
+  <data name="Label_ManureAnimalSource" xml:space="preserve">
+    <value>Manure animal source:</value>
+    <comment>GUI - Crop Manure tab</comment>
+  </data>
+  <data name="Label_ManureApplicationType" xml:space="preserve">
+    <value>Manure application type:</value>
+    <comment>GUI - Crop Manure tab</comment>
+  </data>
+  <data name="Label_ManureStateType" xml:space="preserve">
+    <value>Manure state type:</value>
+    <comment>GUI - Crop Manure tab</comment>
+  </data>
+
+  <!-- Grazing tab labels -->
+  <data name="Label_CropIsGrazed" xml:space="preserve">
+    <value>Crop is grazed:</value>
+    <comment>GUI - Crop Grazing tab</comment>
+  </data>
+  <data name="Label_ForageUtilizationRate" xml:space="preserve">
+    <value>Forage utilization rate:</value>
+    <comment>GUI - Crop Grazing tab</comment>
+  </data>
+
+  <!-- Soil tab labels -->
+  <data name="Label_ClimateParameter" xml:space="preserve">
+    <value>Climate parameter:</value>
+    <comment>GUI - Crop Soil tab</comment>
+  </data>
+  <data name="Label_TillageFactor" xml:space="preserve">
+    <value>Tillage factor:</value>
+    <comment>GUI - Crop Soil tab</comment>
+  </data>
+  <data name="Label_ManagementFactor" xml:space="preserve">
+    <value>Management factor:</value>
+    <comment>GUI - Crop Soil tab</comment>
+  </data>
+
+  <!-- Residue tab labels -->
+  <data name="Label_BiomassCoefficients" xml:space="preserve">
+    <value>Biomass Coefficients</value>
+    <comment>GUI - Crop Residue tab section header</comment>
+  </data>
+  <data name="Label_PercentageReturnedToSoil" xml:space="preserve">
+    <value>Percentage Returned to Soil</value>
+    <comment>GUI - Crop Residue tab section header</comment>
+  </data>
+  <data name="Label_ProductYieldReturned" xml:space="preserve">
+    <value>Product yield returned:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_StrawReturned" xml:space="preserve">
+    <value>Straw returned:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_RootsReturned" xml:space="preserve">
+    <value>Roots returned:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_NitrogenContent" xml:space="preserve">
+    <value>Nitrogen Content</value>
+    <comment>GUI - Crop Residue tab section header</comment>
+  </data>
+  <data name="Label_NContentInProduct" xml:space="preserve">
+    <value>N content in product:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_NContentInStraw" xml:space="preserve">
+    <value>N content in straw:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_NContentInRoots" xml:space="preserve">
+    <value>N content in roots:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_NContentInExtraroot" xml:space="preserve">
+    <value>N content in extraroot:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+  <data name="Label_CarbonAndLignin" xml:space="preserve">
+    <value>Carbon &amp; Lignin</value>
+    <comment>GUI - Crop Residue tab section header</comment>
+  </data>
+  <data name="Label_LigninContent" xml:space="preserve">
+    <value>Lignin content:</value>
+    <comment>GUI - Crop Residue tab</comment>
+  </data>
+
+  <!-- Economics tab labels -->
+  <data name="Label_CropEconomicDataApplied" xml:space="preserve">
+    <value>Crop economic data applied:</value>
+    <comment>GUI - Crop Economics tab</comment>
   </data>
 </root>

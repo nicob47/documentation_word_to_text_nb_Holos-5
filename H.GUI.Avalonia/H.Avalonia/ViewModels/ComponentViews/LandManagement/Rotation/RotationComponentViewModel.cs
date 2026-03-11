@@ -318,6 +318,18 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         public ICommand RemoveSpecificCropCommand { get; private set; } = null!;
 
+        // ── Enum lists for crop tab ComboBoxes ──
+
+        public IReadOnlyList<TillageType> TillageTypes { get; } = Enum.GetValues<TillageType>();
+        public IReadOnlyList<HarvestMethods> HarvestMethodTypes { get; } = Enum.GetValues<HarvestMethods>();
+        public IReadOnlyList<NitrogenFertilizerType> NitrogenFertilizerTypes { get; } = Enum.GetValues<NitrogenFertilizerType>();
+        public IReadOnlyList<FertilizerBlends> FertilizerBlendTypes { get; } = Enum.GetValues<FertilizerBlends>();
+        public IReadOnlyList<SoilReductionFactors> SoilReductionFactorTypes { get; } = Enum.GetValues<SoilReductionFactors>();
+        public IReadOnlyList<ManureLocationSourceType> ManureLocationSourceTypes { get; } = Enum.GetValues<ManureLocationSourceType>();
+        public IReadOnlyList<ManureAnimalSourceTypes> ManureAnimalSourceTypes { get; } = Enum.GetValues<ManureAnimalSourceTypes>();
+        public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
+        public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
+
         #endregion
 
         #region Public Methods

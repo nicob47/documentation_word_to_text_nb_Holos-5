@@ -15,6 +15,8 @@ namespace H.Core.Factories.Animals
         private DateTime _start;
         private DateTime _end;
         private int _numberOfDays;
+        private int _numberOfAnimals = 20;
+        private bool _isRecalculating;
         
         private double _energyRequiredForMilk;
         private double _energyRequiredForWool;
@@ -90,6 +92,15 @@ namespace H.Core.Factories.Animals
         {
             get => _numberOfDays;
             set => SetProperty(ref _numberOfDays, value);
+        }
+
+        /// <summary>
+        /// The total number of animals in this management period.
+        /// </summary>
+        public int NumberOfAnimals
+        {
+            get => _numberOfAnimals;
+            set => SetProperty(ref _numberOfAnimals, value);
         }
 
         /// <summary>
@@ -509,7 +520,7 @@ namespace H.Core.Factories.Animals
         {
             if (NumberOfDays <= 0)
             {
-                AddError(nameof(NumberOfDays), H.Core.Properties.Resources.ErrorMustBeGreaterThan0);
+                AddError(nameof(NumberOfDays), H.Core.Properties.Resources.ErrorNumberOfDaysMustBeGreaterThanZero);
             }
             else
             {
@@ -553,6 +564,42 @@ namespace H.Core.Factories.Animals
             }
         }
 
+        private void RecalculateNumberOfDays()
+        {
+            if (_isRecalculating) return;
+
+            try
+            {
+                _isRecalculating = true;
+                if (Start != default && End != default && End > Start)
+                {
+                    NumberOfDays = (End - Start).Days;
+                }
+            }
+            finally
+            {
+                _isRecalculating = false;
+            }
+        }
+
+        private void RecalculateEndDate()
+        {
+            if (_isRecalculating) return;
+
+            try
+            {
+                _isRecalculating = true;
+                if (Start != default && NumberOfDays > 0)
+                {
+                    End = Start.AddDays(NumberOfDays);
+                }
+            }
+            finally
+            {
+                _isRecalculating = false;
+            }
+        }
+
         private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != null)
@@ -564,14 +611,19 @@ namespace H.Core.Factories.Animals
                 else if (e.PropertyName.Equals(nameof(NumberOfDays)))
                 {
                     this.ValidateNumberOfDays();
+                    this.RecalculateEndDate();
                 }
                 else if (e.PropertyName.Equals(nameof(Start)))
                 {
                     this.ValidateStart();
+                    this.ValidateEnd();
+                    this.RecalculateNumberOfDays();
                 }
                 else if (e.PropertyName.Equals(nameof(End)))
                 {
                     this.ValidateEnd();
+                    this.ValidateStart();
+                    this.RecalculateNumberOfDays();
                 }
                 else if (e.PropertyName.Equals(nameof(MilkFatContent)))
                 {

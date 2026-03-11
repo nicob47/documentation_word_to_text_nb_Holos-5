@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropSoilTabView">
+
+    <Border Classes="step-card" Margin="16">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+
+            <!-- Climate parameter -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ClimateParameter].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
+                               Value="{Binding ClimateParameter}" HorizontalAlignment="Stretch"/>
+            </Grid>
+
+            <!-- Tillage factor -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_TillageFactor].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
+                               Value="{Binding TillageFactor}" HorizontalAlignment="Stretch"/>
+            </Grid>
+
+            <!-- Management factor -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_ManagementFactor].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
+                               Value="{Binding ManagementFactor}" HorizontalAlignment="Stretch"/>
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</UserControl>

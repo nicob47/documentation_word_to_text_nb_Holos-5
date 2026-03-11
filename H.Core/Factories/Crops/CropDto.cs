@@ -93,6 +93,17 @@ public partial class CropDto : DtoBase, ICropDto
         this.HerbicideUsed = false;
         this.CopyToSimilarCrops = false;
 
+        // General defaults
+        this.TillageType = TillageType.Reduced;
+        this.HarvestMethod = HarvestMethods.CashCrop;
+        this.MoistureContentOfCropPercentage = 12;
+
+        // Fertilizer defaults
+        this.CustomReductionFactor = 1.0;
+
+        // Residue defaults
+        this.CarbonConcentration = 0.45;
+
         this.PropertyChanged += OnPropertyChanged;
     }
 

@@ -26,6 +26,12 @@ public abstract class ErrorValidationBase : ModelBase, INotifyDataErrorInfo
 
     public bool HasErrors => _errors.Any();
 
+    /// <summary>
+    /// A newline-separated summary of all active validation error messages.
+    /// </summary>
+    public string ValidationSummary => string.Join(Environment.NewLine,
+        _errors.SelectMany(kvp => kvp.Value));
+
     IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName)
     {
         return GetErrors(propertyName ?? string.Empty)!;
@@ -52,6 +58,7 @@ public abstract class ErrorValidationBase : ModelBase, INotifyDataErrorInfo
             _errors[propertyName].Add(error);
             OnErrorsChanged(propertyName);
             this.RaisePropertyChanged(nameof(HasErrors));
+            this.RaisePropertyChanged(nameof(ValidationSummary));
         }
     }
 
@@ -68,6 +75,7 @@ public abstract class ErrorValidationBase : ModelBase, INotifyDataErrorInfo
             _errors.Remove(propertyName);
             OnErrorsChanged(propertyName);
             this.RaisePropertyChanged(nameof(HasErrors));
+            this.RaisePropertyChanged(nameof(ValidationSummary));
         }
     }
 

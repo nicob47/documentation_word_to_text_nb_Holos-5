@@ -5,6 +5,7 @@ namespace H.Core.Factories.Animals;
 public interface IManagementPeriodDto : IDto
 {
     int NumberOfDays { get; set; }
+    int NumberOfAnimals { get; set; }
     DateTime Start { get; set; }
     DateTime End { get; set; }
 

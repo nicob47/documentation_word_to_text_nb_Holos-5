@@ -6377,7 +6377,25 @@ namespace H.Core.Properties {
                 return ResourceManager.GetString("ErrorMustBeGreaterThan0", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Number of days must be greater than 0..
+        /// </summary>
+        public static string ErrorNumberOfDaysMustBeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("ErrorNumberOfDaysMustBeGreaterThanZero", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Date range overlaps with &apos;{0}&apos;. Management periods cannot have overlapping dates..
+        /// </summary>
+        public static string ErrorManagementPeriodsOverlap {
+            get {
+                return ResourceManager.GetString("ErrorManagementPeriodsOverlap", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Must be greater than or equal to 0..
         /// </summary>

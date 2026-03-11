@@ -97,8 +97,9 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
         {
             string expectedPeriodName = "Period #1";
             DateTime expectedStart = new DateTime(2024, 01, 01);
-            DateTime expectedEnd = new DateTime(2025, 01, 01);
             int expectedDays = 364;
+            // End date is recalculated from Start + NumberOfDays by auto-recalculation
+            DateTime expectedEnd = expectedStart.AddDays(expectedDays);
 
             _viewModel.OnAddManagementPeriodExecute();
 

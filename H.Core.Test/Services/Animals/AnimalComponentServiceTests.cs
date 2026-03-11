@@ -41,17 +41,19 @@ public class AnimalComponentServiceTests
         _mockTransferService = new Mock<ITransferService<AnimalComponentBase, AnimalComponentDto>>();
         var mockLogger = new Mock<ILogger>();
         var mockContainerProvider = new Mock<IContainerProvider>();
+        var mockManagementPeriodService = new Mock<IManagementPeriodService>();
 
         mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile<AnimalComponentDtoToAnimalComponentMapper>();
+            cfg.AddProfile<AnimalGroupToAnimalGroupDtoMapper>();
         }).CreateMapper());
 
-        // Updated constructor to include the transfer service
         _service = new AnimalComponentService(
             mockLogger.Object,
             _mockAnimalComponentFactory.Object,
-            _mockTransferService.Object
+            _mockTransferService.Object,
+            mockContainerProvider.Object,
+            mockManagementPeriodService.Object
         );
     }
 

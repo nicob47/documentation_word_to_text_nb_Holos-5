@@ -1832,6 +1832,9 @@ Hassan Afzaal</value>
   <data name="Label_Delete" xml:space="preserve">
     <value>Supprimer</value>
   </data>
+  <data name="Label_RemoveSelected" xml:space="preserve">
+    <value>Supprimer la sélection</value>
+  </data>
   <data name="Label_DietFormulator" xml:space="preserve">
     <value>Formulateur de ration</value>
   </data>
@@ -3029,5 +3032,170 @@ Hassan Afzaal</value>
   </data>
   <data name="Label_HeifersEnterHerd" xml:space="preserve">
     <value>Les gÃ©nisses intÃ¨grent le troupeau</value>
+  </data>
+
+  <!-- ═══ Crop Tabs — shared by Rotation Step 4 & Field Step 3 ═══ -->
+
+  <!-- Tab headers -->
+  <data name="Tab_General" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="Tab_Fertilizer" xml:space="preserve">
+    <value>Engrais</value>
+  </data>
+  <data name="Tab_Manure" xml:space="preserve">
+    <value>Fumier</value>
+  </data>
+  <data name="Tab_Grazing" xml:space="preserve">
+    <value>Pâturage</value>
+  </data>
+  <data name="Tab_Soil" xml:space="preserve">
+    <value>Sol</value>
+  </data>
+  <data name="Tab_Residue" xml:space="preserve">
+    <value>Résidus</value>
+  </data>
+  <data name="Tab_Economics" xml:space="preserve">
+    <value>Économie</value>
+  </data>
+
+  <!-- General tab labels -->
+  <data name="Label_DryYield" xml:space="preserve">
+    <value>Rendement sec :</value>
+  </data>
+  <data name="Label_KgDmPerHa" xml:space="preserve">
+    <value>kg MS/ha</value>
+  </data>
+  <data name="Label_MoistureContent" xml:space="preserve">
+    <value>Teneur en humidité de la culture :</value>
+  </data>
+  <data name="Label_TillageType" xml:space="preserve">
+    <value>Type de travail du sol :</value>
+  </data>
+  <data name="Label_HarvestMethod" xml:space="preserve">
+    <value>Méthode de récolte :</value>
+  </data>
+  <data name="Label_NumberOfPesticidePasses" xml:space="preserve">
+    <value>Nombre de passages de pesticides :</value>
+  </data>
+
+  <!-- Fertilizer tab labels -->
+  <data name="Label_NitrogenFertilizerRate" xml:space="preserve">
+    <value>Taux d'engrais azoté :</value>
+  </data>
+  <data name="Label_KgNPerHa" xml:space="preserve">
+    <value>kg N/ha</value>
+  </data>
+  <data name="Label_PhosphorusFertilizerRate" xml:space="preserve">
+    <value>Taux d'engrais phosphoré :</value>
+  </data>
+  <data name="Label_KgPPerHa" xml:space="preserve">
+    <value>kg P/ha</value>
+  </data>
+  <data name="Label_PotassiumFertilizerRate" xml:space="preserve">
+    <value>Taux d'engrais potassique :</value>
+  </data>
+  <data name="Label_KgKPerHa" xml:space="preserve">
+    <value>kg K/ha</value>
+  </data>
+  <data name="Label_SulphurFertilizerRate" xml:space="preserve">
+    <value>Taux d'engrais soufré :</value>
+  </data>
+  <data name="Label_KgSPerHa" xml:space="preserve">
+    <value>kg S/ha</value>
+  </data>
+  <data name="Label_NitrogenFertilizerType" xml:space="preserve">
+    <value>Type d'engrais azoté :</value>
+  </data>
+  <data name="Label_FertilizerBlend" xml:space="preserve">
+    <value>Mélange d'engrais :</value>
+  </data>
+  <data name="Label_SoilReductionFactor" xml:space="preserve">
+    <value>Facteur de réduction du sol :</value>
+  </data>
+  <data name="Label_CustomReductionFactor" xml:space="preserve">
+    <value>Facteur de réduction personnalisé :</value>
+  </data>
+
+  <!-- Manure tab labels -->
+  <data name="Label_ManureApplied" xml:space="preserve">
+    <value>Fumier appliqué :</value>
+  </data>
+  <data name="Label_AmountOfManureApplied" xml:space="preserve">
+    <value>Quantité de fumier appliquée :</value>
+  </data>
+  <data name="Label_ManureLocationSource" xml:space="preserve">
+    <value>Source de localisation du fumier :</value>
+  </data>
+  <data name="Label_ManureAnimalSource" xml:space="preserve">
+    <value>Source animale du fumier :</value>
+  </data>
+  <data name="Label_ManureApplicationType" xml:space="preserve">
+    <value>Type d'application du fumier :</value>
+  </data>
+  <data name="Label_ManureStateType" xml:space="preserve">
+    <value>État du fumier :</value>
+  </data>
+
+  <!-- Grazing tab labels -->
+  <data name="Label_CropIsGrazed" xml:space="preserve">
+    <value>Culture pâturée :</value>
+  </data>
+  <data name="Label_ForageUtilizationRate" xml:space="preserve">
+    <value>Taux d'utilisation du fourrage :</value>
+  </data>
+
+  <!-- Soil tab labels -->
+  <data name="Label_ClimateParameter" xml:space="preserve">
+    <value>Paramètre climatique :</value>
+  </data>
+  <data name="Label_TillageFactor" xml:space="preserve">
+    <value>Facteur de travail du sol :</value>
+  </data>
+  <data name="Label_ManagementFactor" xml:space="preserve">
+    <value>Facteur de gestion :</value>
+  </data>
+
+  <!-- Residue tab labels -->
+  <data name="Label_BiomassCoefficients" xml:space="preserve">
+    <value>Coefficients de biomasse</value>
+  </data>
+  <data name="Label_PercentageReturnedToSoil" xml:space="preserve">
+    <value>Pourcentage retourné au sol</value>
+  </data>
+  <data name="Label_ProductYieldReturned" xml:space="preserve">
+    <value>Rendement du produit retourné :</value>
+  </data>
+  <data name="Label_StrawReturned" xml:space="preserve">
+    <value>Paille retournée :</value>
+  </data>
+  <data name="Label_RootsReturned" xml:space="preserve">
+    <value>Racines retournées :</value>
+  </data>
+  <data name="Label_NitrogenContent" xml:space="preserve">
+    <value>Teneur en azote</value>
+  </data>
+  <data name="Label_NContentInProduct" xml:space="preserve">
+    <value>Teneur en N du produit :</value>
+  </data>
+  <data name="Label_NContentInStraw" xml:space="preserve">
+    <value>Teneur en N de la paille :</value>
+  </data>
+  <data name="Label_NContentInRoots" xml:space="preserve">
+    <value>Teneur en N des racines :</value>
+  </data>
+  <data name="Label_NContentInExtraroot" xml:space="preserve">
+    <value>Teneur en N des extraracines :</value>
+  </data>
+  <data name="Label_CarbonAndLignin" xml:space="preserve">
+    <value>Carbone et lignine</value>
+  </data>
+  <data name="Label_LigninContent" xml:space="preserve">
+    <value>Teneur en lignine :</value>
+  </data>
+
+  <!-- Economics tab labels -->
+  <data name="Label_CropEconomicDataApplied" xml:space="preserve">
+    <value>Données économiques de la culture appliquées :</value>
   </data>
 </root>

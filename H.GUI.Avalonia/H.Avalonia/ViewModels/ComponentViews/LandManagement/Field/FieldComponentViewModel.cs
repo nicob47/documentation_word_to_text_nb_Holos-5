@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using H.Core.Enumerations;
 using H.Avalonia.Views.ComponentViews;
 using H.Avalonia.Views.ComponentViews.LandManagement.Field;
 using H.Core.Factories;
@@ -129,8 +130,8 @@ public class FieldComponentViewModel : ViewModelBase
     public ICropDto? SelectedCropDto
     {
         get => _selectedCropDto;
-        set 
-        { 
+        set
+        {
             if (SetProperty(ref _selectedCropDto, value))
             {
                 // Update selection states for all crops
@@ -138,6 +139,18 @@ public class FieldComponentViewModel : ViewModelBase
             }
         }
     }
+
+    // ── Enum lists for crop tab ComboBoxes ──
+
+    public IReadOnlyList<TillageType> TillageTypes { get; } = Enum.GetValues<TillageType>();
+    public IReadOnlyList<HarvestMethods> HarvestMethodTypes { get; } = Enum.GetValues<HarvestMethods>();
+    public IReadOnlyList<NitrogenFertilizerType> NitrogenFertilizerTypes { get; } = Enum.GetValues<NitrogenFertilizerType>();
+    public IReadOnlyList<FertilizerBlends> FertilizerBlendTypes { get; } = Enum.GetValues<FertilizerBlends>();
+    public IReadOnlyList<SoilReductionFactors> SoilReductionFactorTypes { get; } = Enum.GetValues<SoilReductionFactors>();
+    public IReadOnlyList<ManureLocationSourceType> ManureLocationSourceTypes { get; } = Enum.GetValues<ManureLocationSourceType>();
+    public IReadOnlyList<ManureAnimalSourceTypes> ManureAnimalSourceTypes { get; } = Enum.GetValues<ManureAnimalSourceTypes>();
+    public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
+    public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
 
     #endregion
 

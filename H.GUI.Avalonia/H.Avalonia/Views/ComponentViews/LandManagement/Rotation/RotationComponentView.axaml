@@ -7,6 +7,7 @@ xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagemen
 xmlns:shared="clr-namespace:H.Avalonia.Views.ComponentViews.Shared"
 xmlns:properties="clr-namespace:H.Avalonia.Infrastructure.Properties;assembly=H.Avalonia.Infrastructure"
 xmlns:rotationViews="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.Rotation"
+xmlns:cropTabs="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.CropTabs"
 mc:Ignorable="d"
 x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationComponentView">
 
@@ -124,125 +125,58 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 							</StackPanel>
 						</Border>
 
-						<!-- Crop Details Editing Section -->
+						<!-- Copy to Similar Crops Toggle -->
 						<Border IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
 								Background="{StaticResource GcdsBgLightBrush}"
 								BorderBrush="{StaticResource GcdsBorderLightBrush}"
 								BorderThickness="1"
-								CornerRadius="8"
-								Padding="20">
-							<StackPanel>
-								<!-- Section Header -->
-								<StackPanel Margin="0,0,0,16">
-									<TextBlock Text="{Binding [Label_CropDetails].Value, Source={StaticResource Loc}}"
-											  FontSize="16"
-											  FontWeight="Bold"
-											  Foreground="{StaticResource GcdsTextPrimaryBrush}"
-											  Margin="0,0,0,4"/>
-									<TextBlock Text="{Binding [Label_ConfigureYieldForSelected].Value, Source={StaticResource Loc}}"
-											  FontSize="12"
-											  Foreground="{StaticResource GcdsTextSecondaryBrush}"
-											  FontStyle="Italic"/>
-								</StackPanel>
-
-								<!-- Copy to Similar Crops Toggle -->
-								<Border Background="{StaticResource GcdsBgLightBrush}"
-										BorderBrush="{StaticResource GcdsBorderLightBrush}"
-										BorderThickness="1"
-										CornerRadius="6"
-										Padding="12"
-										Margin="0,0,0,16">
-									<StackPanel Spacing="8">
-										<TextBlock Text="{Binding [Label_CopyToSimilarCrops].Value, Source={StaticResource Loc}}"
-												   FontWeight="SemiBold"
-												   FontSize="13"
-												   Foreground="{StaticResource GcdsTextPrimaryBrush}"
-												   VerticalAlignment="Center"/>
-										<TextBlock Text="{Binding [Label_CopyToSimilarCropsDesc].Value, Source={StaticResource Loc}}"
-												   TextWrapping="Wrap"
-												   FontSize="12"
-												   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-												   Margin="0,0,0,4"/>
-										<ToggleSwitch IsChecked="{Binding SelectedCropDto.CopyToSimilarCrops}"
-													  OnContent="{Binding [Label_CopyEnabled].Value, Source={StaticResource Loc}}"
-													  OffContent="{Binding [Label_CopyDisabled].Value, Source={StaticResource Loc}}"/>
-									</StackPanel>
-								</Border>
-
-								<!-- Crop editing fields -->
-								<ContentControl Content="{Binding SelectedCropDto}">
-									<ContentControl.ContentTemplate>
-										<DataTemplate>
-											<Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition MinWidth="160"/>
-													<ColumnDefinition MinWidth="120"/>
-													<ColumnDefinition MinWidth="120"/>
-												</Grid.ColumnDefinitions>
-												<Grid.RowDefinitions>
-													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
-												</Grid.RowDefinitions>
-
-												<!-- Yield Row -->
-												<Label Grid.Row="0"
-													   Grid.Column="0"
-													   Content="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}"
-													   Classes="input-label" />
-
-												<NumericUpDown Name="YieldNumericUpDown"
-															   Grid.Row="0"
-															   Grid.Column="1"
-															   Minimum="0"
-															   Value="{Binding WetYield}"/>
-
-												<Label Grid.Row="0"
-													   Grid.Column="2"
-													   Content="{Binding [Label_KgPerHa].Value, Source={StaticResource Loc}}"
-													   Classes="unit-label"/>
-
-												<!-- Irrigation Row -->
-												<Label Grid.Row="1"
-													   Grid.Column="0"
-													   Content="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}"
-													   Classes="input-label" />
-
-												<NumericUpDown Name="IrrigationNumericUpDown"
-															   Grid.Row="1"
-															   Grid.Column="1"
-															   Minimum="0"
-															   Value="{Binding AmountOfIrrigation}"/>
-
-												<Label Grid.Row="1"
-													   Grid.Column="2"
-													   Content="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}"
-													   Classes="unit-label"/>
-
-												<!-- Herbicide Row -->
-												<Label Grid.Row="2"
-													   Grid.Column="0"
-													   Content="{Binding [Label_HerbicideUsed].Value, Source={StaticResource Loc}}"
-													   Classes="input-label" />
-
-												<StackPanel Grid.Row="2"
-														   Grid.Column="1"
-														   Grid.ColumnSpan="2"
-														   Orientation="Horizontal"
-														   Spacing="16">
-													<RadioButton Content="{Binding [Label_Yes].Value, Source={StaticResource Loc}}"
-															   GroupName="HerbicideGroup"
-															   IsChecked="{Binding HerbicideUsed}"/>
-													<RadioButton Content="{Binding [Label_No].Value, Source={StaticResource Loc}}"
-															   GroupName="HerbicideGroup"
-															   IsChecked="{Binding !HerbicideUsed}"/>
-												</StackPanel>
-											</Grid>
-										</DataTemplate>
-									</ContentControl.ContentTemplate>
-								</ContentControl>
+								CornerRadius="6"
+								Padding="12"
+								Margin="0,0,0,16">
+							<StackPanel Spacing="8">
+								<TextBlock Text="{Binding [Label_CopyToSimilarCrops].Value, Source={StaticResource Loc}}"
+										   FontWeight="SemiBold"
+										   FontSize="13"
+										   Foreground="{StaticResource GcdsTextPrimaryBrush}"
+										   VerticalAlignment="Center"/>
+								<TextBlock Text="{Binding [Label_CopyToSimilarCropsDesc].Value, Source={StaticResource Loc}}"
+										   TextWrapping="Wrap"
+										   FontSize="12"
+										   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+										   Margin="0,0,0,4"/>
+								<ToggleSwitch IsChecked="{Binding SelectedCropDto.CopyToSimilarCrops}"
+											  OnContent="{Binding [Label_CopyEnabled].Value, Source={StaticResource Loc}}"
+											  OffContent="{Binding [Label_CopyDisabled].Value, Source={StaticResource Loc}}"/>
 							</StackPanel>
 						</Border>
+
+						<!-- Crop Details TabControl -->
+						<TabControl IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
+									DataContext="{Binding SelectedCropDto}"
+									Background="White"
+									MinHeight="450">
+							<TabItem Header="{Binding [Tab_General].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropGeneralTabView/></ScrollViewer>
+							</TabItem>
+							<TabItem Header="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropFertilizerTabView/></ScrollViewer>
+							</TabItem>
+							<TabItem Header="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropManureTabView/></ScrollViewer>
+							</TabItem>
+							<TabItem Header="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropGrazingTabView/></ScrollViewer>
+							</TabItem>
+							<TabItem Header="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropSoilTabView/></ScrollViewer>
+							</TabItem>
+							<TabItem Header="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropResidueTabView/></ScrollViewer>
+							</TabItem>
+							<TabItem Header="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}">
+								<ScrollViewer><cropTabs:CropEconomicsTabView/></ScrollViewer>
+							</TabItem>
+						</TabControl>
 
 						<!-- Empty State Message when no crop is selected -->
 						<Border IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNull}}"
