@@ -44,15 +44,7 @@
                     Padding="16,12" 
                     Margin="10,5,10,5">
                 <StackPanel  Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
-                    <ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedItem}">
-                        <ListBoxItem Content="Farm Profile"/>
-                        <ListBoxItem Content="Annual Production Summary"/>
-                        <ListBoxItem Content="Total GHG Emissions"/>
-                        <ListBoxItem Content="Emissions Breakdown by Category"/>
-                        <ListBoxItem Content="Carbon Sequestration Summary"/>
-                        <ListBoxItem Content="Manure Management Overview"/>
-                        <ListBoxItem Content="Key Findings and Recommendations"/>
-                    </ListBox>
+                    <ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedBasicItem}" ItemsSource="{Binding Path=BasicViewChapters}" TabIndex="0" />
                 </StackPanel>
             </Border>
         </ScrollViewer>
@@ -65,16 +57,7 @@
                     Padding="16,12" 
                     Margin="10,5,10,5">
                 <StackPanel  Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
-                    <ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedItem}">
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleMultiYearCarbonModelling}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleEstimatesOfProduction}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleFeedEstimateReport}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.LabelManureManagement}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleEmissionsPieChart}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleOverallEmissions}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleComponentEmissions}"/>
-                        <ListBoxItem Content="{x:Static properties:Resources.TitleDetailedEmissionsReport}"/>
-                    </ListBox>
+                    <ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedAdvancedItem}" ItemsSource="{Binding Path= AdvancedViewTabs }" TabIndex="0" />
                 </StackPanel>
             </Border>
         </ScrollViewer>
