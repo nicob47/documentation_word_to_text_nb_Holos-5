@@ -1,0 +1,402 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:converters="clr-namespace:H.Avalonia.Converters"
+           mc:Ignorable="d"
+           x:Class="H.Avalonia.Views.ComponentViews.Poultry.PoultryLifecycleVisualizationView">
+
+<UserControl.Resources>
+  <converters:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter"/>
+  <converters:BoolToBorderThicknessConverter x:Key="BoolToBorderThicknessConverter"/>
+</UserControl.Resources>
+
+  <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
+          BorderThickness="2"
+          CornerRadius="8"
+          Background="White"
+          Padding="20"
+          Margin="0,0,0,16">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+      <!-- Title -->
+      <StackPanel Grid.Row="0" Margin="0,0,0,24">
+        <TextBlock Text="{Binding [Label_PoultryProductionChain].Value, Source={StaticResource Loc}}"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding [Label_PoultryProductionChainDesc].Value, Source={StaticResource Loc}}"
+                   FontSize="13"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   HorizontalAlignment="Center"
+                   Margin="0,4,0,0"/>
+      </StackPanel>
+
+      <!-- Main Production Chain Visualization -->
+      <Canvas Grid.Row="1"
+              Width="1100"
+              Height="440"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+
+        <!-- ══════════════════════════════════════════════════════════════ -->
+        <!-- CHICKEN ROW (top) -->
+        <!-- ══════════════════════════════════════════════════════════════ -->
+
+        <!-- Row Label: Chicken (horizontal) -->
+        <Border Canvas.Left="0"
+                Canvas.Top="28"
+                Background="#F3E5F5"
+                CornerRadius="4"
+                Padding="6,3">
+          <TextBlock Text="{Binding [Label_ChickenProduction].Value, Source={StaticResource Loc}}"
+                     FontSize="10"
+                     FontWeight="Bold"
+                     Foreground="#7B1FA2"/>
+        </Border>
+
+        <!-- Stage: Chicken Multiplier Breeder -->
+        <Border Canvas.Left="10"
+                Canvas.Top="55"
+                Width="165"
+                Height="115"
+                Background="#F3E5F5"
+                BorderBrush="{Binding IsBreederSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsBreederSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Breeder_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_MultiplierBreeder].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#7B1FA2"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_BreederSubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Breeder → Hatchery -->
+        <Path Canvas.Left="175"
+              Canvas.Top="110"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 90,0 M 85,-5 L 90,0 L 85,5"/>
+        <TextBlock Canvas.Left="188"
+                   Canvas.Top="90"
+                   Text="{Binding [Label_FertilizedEggs].Value, Source={StaticResource Loc}}"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Stage: Multiplier Hatchery -->
+        <Border Canvas.Left="265"
+                Canvas.Top="55"
+                Width="165"
+                Height="115"
+                Background="{StaticResource GcdsSelectionBgBrush}"
+                BorderBrush="{Binding IsHatcherySelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsHatcherySelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Hatchery_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_MultiplierHatchery].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#1976D2"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_HatcherySubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Hatchery → Pullet Farm -->
+        <Path Canvas.Left="430"
+              Canvas.Top="110"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 90,0 M 85,-5 L 90,0 L 85,5"/>
+        <TextBlock Canvas.Left="443"
+                   Canvas.Top="90"
+                   Text="{Binding [Label_DayOldChicks].Value, Source={StaticResource Loc}}"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Stage: Pullet Farm -->
+        <Border Canvas.Left="520"
+                Canvas.Top="55"
+                Width="165"
+                Height="115"
+                Background="#E8F5E9"
+                BorderBrush="{Binding IsPulletSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsPulletSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Pullet_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_PulletFarm].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#388E3C"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_PulletSubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Pullet Farm → Egg Production (angled up-right) -->
+        <Path Canvas.Left="685"
+              Canvas.Top="80"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 100,-25 M 93,-28 L 100,-25 L 95,-18"/>
+        <TextBlock Canvas.Left="700"
+                   Canvas.Top="42"
+                   Text="{Binding [Label_PointOfLayPullets].Value, Source={StaticResource Loc}}"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Arrow: Pullet Farm → Meat Production (angled down-right) -->
+        <Path Canvas.Left="685"
+              Canvas.Top="135"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 100,60 M 93,58 L 100,60 L 96,52"/>
+
+        <!-- Stage: Chicken Egg Production -->
+        <Border Canvas.Left="785"
+                Canvas.Top="10"
+                Width="170"
+                Height="110"
+                Background="#FFF3E0"
+                BorderBrush="{Binding IsEggSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsEggSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Egg_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_EggProduction].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#F57C00"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_EggSubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Stage: Chicken Meat Production -->
+        <Border Canvas.Left="785"
+                Canvas.Top="130"
+                Width="170"
+                Height="110"
+                Background="#FFEBEE"
+                BorderBrush="{Binding IsChickenMeatSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsChickenMeatSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="ChickenMeat_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_ChickenMeatProduction].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#D32F2F"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_ChickenMeatSubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Feedback loop: Egg Production back to Breeder (dashed arc across top)
+             Arc starts at top-center of Breeder (abs 93,55) and ends at top-center of Egg Production (abs 870,10) -->
+        <Path Canvas.Left="10"
+              Canvas.Top="5"
+              Stroke="#7B1FA2"
+              StrokeThickness="2"
+              StrokeDashArray="4,2"
+              Data="M 83,50 Q 475,-22 860,5"/>
+        <!-- Arrowhead at Breeder end, pointing downward into the box -->
+        <Path Canvas.Left="93"
+              Canvas.Top="55"
+              Stroke="#7B1FA2"
+              StrokeThickness="2"
+              Fill="#7B1FA2"
+              Data="M 0,0 L -5,-12 L 7,-10 Z"/>
+        <Border Canvas.Left="390"
+                Canvas.Top="-2"
+                Background="White"
+                Padding="4,1">
+          <TextBlock Text="{Binding [Label_ReplacementBreedingStock].Value, Source={StaticResource Loc}}"
+                     FontSize="9"
+                     Foreground="#7B1FA2"
+                     FontWeight="Bold"/>
+        </Border>
+
+        <!-- ══════════════════════════════════════════════════════════════ -->
+        <!-- TURKEY ROW (bottom) -->
+        <!-- ══════════════════════════════════════════════════════════════ -->
+
+        <!-- Row Label: Turkey (horizontal) -->
+        <Border Canvas.Left="0"
+                Canvas.Top="280"
+                Background="#E0F2F1"
+                CornerRadius="4"
+                Padding="6,3">
+          <TextBlock Text="{Binding [Label_TurkeyProduction].Value, Source={StaticResource Loc}}"
+                     FontSize="10"
+                     FontWeight="Bold"
+                     Foreground="#00695C"/>
+        </Border>
+
+        <!-- Stage: Turkey Multiplier Breeder -->
+        <Border Canvas.Left="10"
+                Canvas.Top="305"
+                Width="165"
+                Height="115"
+                Background="#E0F2F1"
+                BorderBrush="{Binding IsTurkeyBreederSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsTurkeyBreederSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="TurkeyBreeder_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_TurkeyMultiplierBreeder].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#00695C"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_TurkeyBreederSubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Turkey Breeder → (shared) Hatchery (angled up-right, dashed) -->
+        <Path Canvas.Left="175"
+              Canvas.Top="170"
+              Stroke="#424242"
+              StrokeThickness="2"
+              StrokeDashArray="3,2"
+              Data="M 0,190 L 90,0 M 84,7 L 90,0 L 82,3"/>
+        <TextBlock Canvas.Left="130"
+                   Canvas.Top="290"
+                   Text="{Binding [Label_TurkeyEggs].Value, Source={StaticResource Loc}}"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Arrow: Hatchery → Turkey Meat (L-shaped: down then right) -->
+        <Path Canvas.Left="348"
+              Canvas.Top="170"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,192 L 437,192 M 432,187 L 437,192 L 432,197"/>
+
+        <!-- Stage: Turkey Meat Production -->
+        <Border Canvas.Left="785"
+                Canvas.Top="305"
+                Width="170"
+                Height="115"
+                Background="#FFEBEE"
+                BorderBrush="{Binding IsTurkeyMeatSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsTurkeyMeatSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="TurkeyMeat_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding [Label_TurkeyMeatProduction].Value, Source={StaticResource Loc}}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#D32F2F"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="{Binding [Label_TurkeyMeatSubtitle].Value, Source={StaticResource Loc}}"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+      </Canvas>
+
+      <!-- Stage Information Box -->
+      <Border Grid.Row="2"
+              Background="{StaticResource GcdsBgLightBrush}"
+              BorderBrush="{StaticResource GcdsBorderLightBrush}"
+              BorderThickness="1"
+              CornerRadius="6"
+              Padding="16"
+              Margin="0,16,0,16"
+              IsVisible="{Binding HasSelection}">
+        <StackPanel>
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0"
+                       Text="{Binding SelectedStageTitle}"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+            <Button Grid.Column="1"
+                    Content="X"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="14"
+                    Foreground="#999"
+                    Cursor="Hand"
+                    Click="CloseInfo_Click"
+                    Padding="8,0"/>
+          </Grid>
+          <TextBlock Text="{Binding SelectedStageDescription}"
+                     TextWrapping="Wrap"
+                     FontSize="12"
+                     Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                     LineHeight="18"
+                     Margin="0,8,0,0"/>
+        </StackPanel>
+      </Border>
+
+    </Grid>
+  </Border>
+
+</UserControl>

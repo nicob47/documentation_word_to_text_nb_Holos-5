@@ -433,3 +433,9 @@ H.CLI/sync.ffs_db
 
 # Screenshots captured during development/testing
 /Screenshots/
+
+# Claude Code local files
+.claude/
+
+# Local utility scripts
+/kill-dotnet.ps1
