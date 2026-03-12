@@ -1582,175 +1582,194 @@ select.form-input { cursor: pointer; }
 
     <!-- DAIRY COMPONENT VIEW -->
     <div id="view-dairyComponent" class="view">
-      <div><input type="text" class="view-title-input" id="dairyComponentTitle" value="My Dairy Operation"></div>
+      <div><input type="text" class="view-title-input" id="dairyComponentTitle" value="Dairy cattle"></div>
       <div class="title-underline"></div>
 
-      <!-- Lifecycle Visualization -->
-      <div class="diagram-container">
-        <div class="diagram-title">Dairy Lifecycle</div>
-        <div class="diagram-subtitle">Click on a stage to learn more</div>
-        <svg viewBox="0 0 1000 280" width="100%" style="max-width:1000px; display:block; margin:0 auto;">
-          <!-- Calf -->
-          <rect x="20" y="40" width="180" height="100" rx="12" fill="#E3F2FD" stroke="#64B5F6" stroke-width="2" cursor="pointer" onclick="selectDairyStage('calf')"/>
-          <text x="110" y="78" text-anchor="middle" fill="#1565C0" font-size="14" font-weight="bold">Calf</text>
-          <text x="110" y="98" text-anchor="middle" fill="#595959" font-size="10">Birth to 4 months</text>
-          <text x="110" y="114" text-anchor="middle" fill="#595959" font-size="10">Milk &amp; starter feed</text>
-
-          <!-- Arrow: Calf → Heifer -->
-          <line x1="200" y1="90" x2="260" y2="90" stroke="#424242" stroke-width="2"/>
-          <polygon points="260,90 252,85 252,95" fill="#424242"/>
-          <text x="230" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Weaning</text>
-
-          <!-- Heifer -->
-          <rect x="265" y="40" width="180" height="100" rx="12" fill="#F3E5F5" stroke="#CE93D8" stroke-width="2" cursor="pointer" onclick="selectDairyStage('heifer')"/>
-          <text x="355" y="78" text-anchor="middle" fill="#7B1FA2" font-size="14" font-weight="bold">Heifer</text>
-          <text x="355" y="98" text-anchor="middle" fill="#595959" font-size="10">4 months to first calving</text>
-          <text x="355" y="114" text-anchor="middle" fill="#595959" font-size="10">Growing phase</text>
-
-          <!-- Arrow: Heifer → Lactating -->
-          <line x1="445" y1="90" x2="505" y2="90" stroke="#424242" stroke-width="2"/>
-          <polygon points="505,90 497,85 497,95" fill="#424242"/>
-          <text x="475" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">First Calving</text>
-
-          <!-- Lactating -->
-          <rect x="510" y="40" width="180" height="100" rx="12" fill="#E8F5E9" stroke="#81C784" stroke-width="2" cursor="pointer" onclick="selectDairyStage('lactating')"/>
-          <text x="600" y="78" text-anchor="middle" fill="#2E7D32" font-size="14" font-weight="bold">Lactating Cow</text>
-          <text x="600" y="98" text-anchor="middle" fill="#595959" font-size="10">Milk production</text>
-          <text x="600" y="114" text-anchor="middle" fill="#595959" font-size="10">~305 lactation days</text>
-
-          <!-- Arrow: Lactating → Dry -->
-          <line x1="690" y1="90" x2="750" y2="90" stroke="#424242" stroke-width="2"/>
-          <polygon points="750,90 742,85 742,95" fill="#424242"/>
-          <text x="720" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Drying Off</text>
-
-          <!-- Dry -->
-          <rect x="755" y="40" width="180" height="100" rx="12" fill="#FFF3E0" stroke="#FFB74D" stroke-width="2" cursor="pointer" onclick="selectDairyStage('dry')"/>
-          <text x="845" y="78" text-anchor="middle" fill="#F57C00" font-size="14" font-weight="bold">Dry Cow</text>
-          <text x="845" y="98" text-anchor="middle" fill="#595959" font-size="10">Pre-calving rest</text>
-          <text x="845" y="114" text-anchor="middle" fill="#595959" font-size="10">~60 dry days</text>
-
-          <!-- Feedback arc: Dry → Lactating -->
-          <path d="M 845,140 Q 720,220 600,140" fill="none" stroke="#F57C00" stroke-width="2" stroke-dasharray="4,2"/>
-          <polygon points="600,140 607,148 604,136" fill="#F57C00"/>
-          <text x="722" y="200" text-anchor="middle" fill="#F57C00" font-size="9" font-weight="bold">Calving cycle repeats</text>
-
-          <!-- Replacement arrow from Heifer -->
-          <line x1="355" y1="140" x2="355" y2="230" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="355" y="248" text-anchor="middle" fill="#2E7D32" font-size="9">Replacement heifers enter herd</text>
-
-          <!-- Culling arrow from Lactating -->
-          <line x1="600" y1="140" x2="600" y2="230" stroke="#D32F2F" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="600" y="248" text-anchor="middle" fill="#D32F2F" font-size="9">Culling (based on replacement rate)</text>
-        </svg>
-        <div id="dairyStageInfoPanel" class="info-banner" style="display:none;">
-          <button class="close-btn" onclick="document.getElementById('dairyStageInfoPanel').style.display='none'">✕</button>
-          <h3 id="dairyStageInfoTitle"></h3>
-          <p id="dairyStageInfoDesc"></p>
+      <!-- Advanced Options Toggle -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:var(--bg-light); border:1px solid var(--border-light); border-radius:var(--radius); margin-bottom:16px;">
+        <div>
+          <div style="font-size:var(--font-body); font-weight:500;">Show Advanced Options</div>
+          <div style="font-size:var(--font-small); color:var(--text-secondary);">Display additional configuration options for detailed dairy operation management</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <label style="position:relative; display:inline-block; width:44px; height:24px;">
+            <input type="checkbox" id="dairyAdvancedToggle" style="opacity:0; width:0; height:0;" onchange="document.getElementById('dairyLifecycleDiagram').style.display = this.checked ? 'block' : 'none'">
+            <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; border-radius:12px; transition:.3s;" onclick="this.previousElementSibling.click(); this.style.background = this.previousElementSibling.checked ? 'var(--bg-primary)' : '#ccc';"></span>
+          </label>
+          <span style="font-size:var(--font-small); color:var(--text-secondary);">Basic</span>
         </div>
       </div>
 
-      <!-- Herd Composition (Steps 1 & 2) -->
-      <div class="step-container">
+      <!-- Lifecycle Diagram (hidden by default, shown with Advanced Options) -->
+      <div id="dairyLifecycleDiagram" style="display:none; margin-bottom:16px;">
+        <div class="diagram-container">
+          <div class="diagram-title">Dairy Lifecycle</div>
+          <div class="diagram-subtitle">Click on a stage to learn more</div>
+          <svg viewBox="0 0 1000 280" width="100%" style="max-width:1000px; display:block; margin:0 auto;">
+            <rect x="20" y="40" width="180" height="100" rx="12" fill="#E3F2FD" stroke="#64B5F6" stroke-width="2" cursor="pointer" onclick="selectDairyStage('calf')"/>
+            <text x="110" y="78" text-anchor="middle" fill="#1565C0" font-size="14" font-weight="bold">Calf</text>
+            <text x="110" y="98" text-anchor="middle" fill="#595959" font-size="10">Birth to 4 months</text>
+            <text x="110" y="114" text-anchor="middle" fill="#595959" font-size="10">Milk &amp; starter feed</text>
+            <line x1="200" y1="90" x2="260" y2="90" stroke="#424242" stroke-width="2"/>
+            <polygon points="260,90 252,85 252,95" fill="#424242"/>
+            <text x="230" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Weaning</text>
+            <rect x="265" y="40" width="180" height="100" rx="12" fill="#F3E5F5" stroke="#CE93D8" stroke-width="2" cursor="pointer" onclick="selectDairyStage('heifer')"/>
+            <text x="355" y="78" text-anchor="middle" fill="#7B1FA2" font-size="14" font-weight="bold">Heifer</text>
+            <text x="355" y="98" text-anchor="middle" fill="#595959" font-size="10">4 months to first calving</text>
+            <text x="355" y="114" text-anchor="middle" fill="#595959" font-size="10">Growing phase</text>
+            <line x1="445" y1="90" x2="505" y2="90" stroke="#424242" stroke-width="2"/>
+            <polygon points="505,90 497,85 497,95" fill="#424242"/>
+            <text x="475" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">First Calving</text>
+            <rect x="510" y="40" width="180" height="100" rx="12" fill="#E8F5E9" stroke="#81C784" stroke-width="2" cursor="pointer" onclick="selectDairyStage('lactating')"/>
+            <text x="600" y="78" text-anchor="middle" fill="#2E7D32" font-size="14" font-weight="bold">Lactating Cow</text>
+            <text x="600" y="98" text-anchor="middle" fill="#595959" font-size="10">Milk production</text>
+            <text x="600" y="114" text-anchor="middle" fill="#595959" font-size="10">~305 lactation days</text>
+            <line x1="690" y1="90" x2="750" y2="90" stroke="#424242" stroke-width="2"/>
+            <polygon points="750,90 742,85 742,95" fill="#424242"/>
+            <text x="720" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Drying Off</text>
+            <rect x="755" y="40" width="180" height="100" rx="12" fill="#FFF3E0" stroke="#FFB74D" stroke-width="2" cursor="pointer" onclick="selectDairyStage('dry')"/>
+            <text x="845" y="78" text-anchor="middle" fill="#F57C00" font-size="14" font-weight="bold">Dry Cow</text>
+            <text x="845" y="98" text-anchor="middle" fill="#595959" font-size="10">Pre-calving rest</text>
+            <text x="845" y="114" text-anchor="middle" fill="#595959" font-size="10">~60 dry days</text>
+            <path d="M 845,140 Q 720,220 600,140" fill="none" stroke="#F57C00" stroke-width="2" stroke-dasharray="4,2"/>
+            <polygon points="600,140 607,148 604,136" fill="#F57C00"/>
+            <text x="722" y="200" text-anchor="middle" fill="#F57C00" font-size="9" font-weight="bold">Calving cycle repeats</text>
+          </svg>
+          <div id="dairyStageInfoPanel" class="info-banner" style="display:none;">
+            <button class="close-btn" onclick="document.getElementById('dairyStageInfoPanel').style.display='none'">✕</button>
+            <h3 id="dairyStageInfoTitle"></h3>
+            <p id="dairyStageInfoDesc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 1: Herd Composition — stage cards -->
+      <div class="step-container" style="background:#f0f8f0; border-color:#c8e6c9;">
         <div class="step-header">
-          <span class="step-badge">Step 1 &amp; 2</span>
-          <span class="step-description">Herd composition and stage population</span>
+          <span class="step-badge">Step 1</span>
+          <span class="step-description">Define Steady-State Herd Composition</span>
+        </div>
+        <p style="font-size:var(--font-small); color:var(--text-secondary); margin-bottom:12px;">Click on a stage card below to configure its population, duration, and management practices</p>
+        <div style="display:flex; gap:0; align-items:stretch;">
+          <div class="dairy-stage-card selected" onclick="selectDairyCard(this, 'calf')" style="flex:1; padding:16px; border:2px solid var(--selection-border); background:var(--selection-bg); border-radius:var(--radius-sm) 0 0 var(--radius-sm); text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#1565C0; text-transform:uppercase; letter-spacing:0.5px;">Calf</div>
+            <div style="font-size:24px; font-weight:700; margin:6px 0 2px;">33 <span style="font-size:12px; font-weight:400; color:var(--text-secondary);">animals</span></div>
+            <div style="font-size:12px; color:var(--text-secondary);">120 days</div>
+          </div>
+          <div class="dairy-stage-card" onclick="selectDairyCard(this, 'heifer')" style="flex:1; padding:16px; border:1px solid var(--border-light); background:var(--bg-white); text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#7B1FA2; text-transform:uppercase; letter-spacing:0.5px;">Heifer</div>
+            <div style="font-size:24px; font-weight:700; margin:6px 0 2px;">50 <span style="font-size:12px; font-weight:400; color:var(--text-secondary);">animals</span></div>
+            <div style="font-size:12px; color:var(--text-secondary);">608 days</div>
+          </div>
+          <div class="dairy-stage-card" onclick="selectDairyCard(this, 'lactating')" style="flex:1; padding:16px; border:1px solid var(--border-light); background:var(--bg-white); text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#2E7D32; text-transform:uppercase; letter-spacing:0.5px;">Lactating</div>
+            <div style="font-size:24px; font-weight:700; margin:6px 0 2px;">25 <span style="font-size:12px; font-weight:400; color:var(--text-secondary);">animals</span></div>
+            <div style="font-size:12px; color:var(--text-secondary);">305 days</div>
+          </div>
+          <div class="dairy-stage-card" onclick="selectDairyCard(this, 'dry')" style="flex:1; padding:16px; border:1px solid var(--border-light); background:var(--bg-white); text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#F57C00; text-transform:uppercase; letter-spacing:0.5px;">Dry</div>
+            <div style="font-size:24px; font-weight:700; margin:6px 0 2px;">16 <span style="font-size:12px; font-weight:400; color:var(--text-secondary);">animals</span></div>
+            <div style="font-size:12px; color:var(--text-secondary);">60 days</div>
+          </div>
+          <div style="width:60px; padding:12px 8px; background:#2E7D32; color:#fff; border-radius:0 var(--radius-sm) var(--radius-sm) 0; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">Total</div>
+            <div style="font-size:22px; font-weight:700;">124</div>
+            <div style="font-size:10px;">animals</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Configure Stage Population and Duration -->
+      <div class="step-container" style="background:#fffde7; border-color:#fff9c4;">
+        <div class="step-header">
+          <span class="step-badge">Step 2</span>
+          <span class="step-description">Configure Stage Population and Duration</span>
+        </div>
+        <p style="font-size:var(--font-small); color:var(--text-secondary); margin-bottom:16px;">Enter the steady-state population and duration for the selected stage</p>
+        <div style="margin-bottom:16px;">
+          <div style="font-size:var(--font-small); margin-bottom:8px;">How many animal groups would you like to create?</div>
+          <label style="font-size:var(--font-small); margin-right:16px; cursor:pointer;"><input type="radio" name="dairyGroups" checked style="margin-right:4px;"> A single animal group</label>
+          <label style="font-size:var(--font-small); cursor:pointer;"><input type="radio" name="dairyGroups" style="margin-right:4px;"> Multiple groups</label>
         </div>
         <div class="form-grid">
-          <label class="form-label">Total herd size</label>
+          <label class="form-label" id="dairyDurationLabel">How long do calves remain in this stage?</label>
           <input type="number" class="form-input" value="120" step="1">
-          <span class="form-unit">head</span>
-          <label class="form-label">Lactating cows</label>
-          <input type="number" class="form-input" value="80" step="1">
-          <span class="form-unit">head</span>
-          <label class="form-label">Dry cows</label>
-          <input type="number" class="form-input" value="15" step="1">
-          <span class="form-unit">head</span>
-          <label class="form-label">Heifers</label>
-          <input type="number" class="form-input" value="20" step="1">
-          <span class="form-unit">head</span>
-          <label class="form-label">Calves</label>
-          <input type="number" class="form-input" value="25" step="1">
-          <span class="form-unit">head</span>
-          <label class="form-label">Replacement rate</label>
-          <input type="number" class="form-input" value="25" step="1">
-          <span class="form-unit">%</span>
-          <label class="form-label">Lactation days</label>
-          <input type="number" class="form-input" value="305" step="1">
           <span class="form-unit">days</span>
-          <label class="form-label">Dry period</label>
-          <input type="number" class="form-input" value="60" step="1">
-          <span class="form-unit">days</span>
+          <label class="form-label" id="dairyPopulationLabel">How many calves are in the herd?</label>
+          <input type="number" class="form-input" value="33" step="1">
+          <span class="form-unit">head</span>
         </div>
       </div>
 
-      <!-- Step 3: Stage Configuration -->
-      <div class="step-container">
-        <div class="step-header">
-          <span class="step-badge">Step 3</span>
-          <span class="step-description">Configure selected lifecycle stage</span>
-        </div>
-        <div class="tab-bar">
-          <button class="tab-btn active" onclick="switchTab(this, 'tab-dairy-lactating')">Lactating</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-dry')">Dry</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-heifer')">Heifer</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-calf')">Calf</button>
-        </div>
-        <div id="tab-dairy-lactating" class="tab-content active">
-          <div class="form-grid">
-            <label class="form-label">Milk production</label>
-            <input type="number" class="form-input" value="9800" step="100">
-            <span class="form-unit">kg/year</span>
-            <label class="form-label">Milk fat content</label>
-            <input type="number" class="form-input" value="3.9" step="0.1">
-            <span class="form-unit">%</span>
-            <label class="form-label">Milk protein content</label>
-            <input type="number" class="form-input" value="3.2" step="0.1">
-            <span class="form-unit">%</span>
-            <label class="form-label">Feed intake</label>
-            <input type="number" class="form-input" value="22.5" step="0.1">
-            <span class="form-unit">kg DM/day</span>
-            <label class="form-label">Housing type</label>
-            <select class="form-input"><option>Free-stall barn</option><option>Tie-stall barn</option><option>Bedded pack</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Manure handling</label>
-            <select class="form-input"><option>Liquid (slurry)</option><option>Solid storage</option><option>Daily spread</option></select>
-            <span class="form-unit"></span>
+      <!-- Step 3: Management Practices -->
+      <div style="border-radius:var(--radius); overflow:hidden; border:1px solid #1a3a5c;">
+        <div style="background:#1a3a5c; color:#fff; padding:12px 16px;">
+          <div class="step-header" style="margin:0;">
+            <span class="step-badge" style="background:#fff; color:#1a3a5c;">Step 3</span>
           </div>
+          <div style="font-size:16px; font-weight:600; margin-top:8px;" id="dairyStep3Title">Management Practices - Calf Stage</div>
+          <div style="font-size:var(--font-small); opacity:0.8; margin-top:2px;" id="dairyStep3Subtitle">Configure management practices for calf stage (birth to 4 months)</div>
         </div>
-        <div id="tab-dairy-dry" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Feed intake</label>
-            <input type="number" class="form-input" value="14.0" step="0.1">
-            <span class="form-unit">kg DM/day</span>
-            <label class="form-label">Housing type</label>
-            <select class="form-input"><option>Free-stall barn</option><option>Bedded pack</option><option>Pasture</option></select>
-            <span class="form-unit"></span>
+        <div style="padding:16px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+            <label style="font-size:var(--font-small); font-weight:500;">Practice:</label>
+            <select class="form-input" style="flex:1;"><option>Phase 1: Milk-Fed Period</option><option>Phase 2: Starter Feed Period</option></select>
+            <button class="btn btn-primary" style="font-size:var(--font-small); padding:6px 14px;">+ Add</button>
+            <button class="btn-danger" style="font-size:var(--font-small); padding:6px 10px;">🗑</button>
           </div>
-        </div>
-        <div id="tab-dairy-heifer" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Initial weight</label>
-            <input type="number" class="form-input" value="65">
-            <span class="form-unit">kg</span>
-            <label class="form-label">Final weight</label>
-            <input type="number" class="form-input" value="600">
-            <span class="form-unit">kg</span>
-            <label class="form-label">Average daily gain</label>
-            <input type="number" class="form-input" value="0.85" step="0.01">
-            <span class="form-unit">kg/day</span>
+          <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this, 'tab-dairy-housing')">Housing</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-manure')">Manure Handling</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-diet')">Diet</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-details')">Animal Details</button>
           </div>
-        </div>
-        <div id="tab-dairy-calf" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Birth weight</label>
-            <input type="number" class="form-input" value="40">
-            <span class="form-unit">kg</span>
-            <label class="form-label">Weaning weight</label>
-            <input type="number" class="form-input" value="65">
-            <span class="form-unit">kg</span>
-            <label class="form-label">Milk consumption</label>
-            <input type="number" class="form-input" value="4.5" step="0.1">
-            <span class="form-unit">L/day</span>
+          <div id="tab-dairy-housing" class="tab-content active">
+            <div class="form-grid">
+              <label class="form-label">Housing type</label>
+              <select class="form-input"><option>Housed in barn (solid)</option><option>Housed in barn (slurry)</option><option>Enclosed pasture</option><option>Confined – no barn</option></select>
+              <span class="form-unit"></span>
+            </div>
+            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border-light);">
+              <div style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Advanced</div>
+              <div class="form-grid">
+                <label class="form-label">Bedding material</label>
+                <select class="form-input"><option>None</option><option>Straw</option><option>Wood shavings</option><option>Sawdust</option></select>
+                <span class="form-unit"></span>
+                <label class="form-label">Bedding rate</label>
+                <input type="number" class="form-input" value="0.00" step="0.01">
+                <span class="form-unit">kg/hd/day</span>
+              </div>
+            </div>
+          </div>
+          <div id="tab-dairy-manure" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Manure handling system</label>
+              <select class="form-input"><option>Solid storage</option><option>Liquid (slurry)</option><option>Composting – passive</option><option>Daily spread</option><option>Deep bedding</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+          <div id="tab-dairy-diet" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Diet type</label>
+              <select class="form-input"><option>Milk only</option><option>Milk + starter</option><option>Custom</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Dry matter intake</label>
+              <input type="number" class="form-input" value="2.5" step="0.1">
+              <span class="form-unit">kg DM/day</span>
+            </div>
+          </div>
+          <div id="tab-dairy-details" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Birth weight</label>
+              <input type="number" class="form-input" value="40">
+              <span class="form-unit">kg</span>
+              <label class="form-label">Weaning weight</label>
+              <input type="number" class="form-input" value="65">
+              <span class="form-unit">kg</span>
+              <label class="form-label">Average daily gain</label>
+              <input type="number" class="form-input" value="0.65" step="0.01">
+              <span class="form-unit">kg/day</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2337,6 +2356,33 @@ const dairyStageInfo = {
   lactating: { title: 'Lactating Cow', desc: 'Lactating cows are the primary production stage, producing milk over a lactation period of approximately 305 days. Feed intake is highest during this stage to support milk production, resulting in significant enteric methane and manure emissions. Milk production level, diet composition, and housing system are key emission factors.' },
   dry: { title: 'Dry Cow', desc: 'The dry period is a 45-60 day rest period before calving when cows are not milked. Feed intake is reduced compared to lactation but cows still contribute to enteric and manure emissions. After the dry period, cows return to the lactating stage when they calve again, creating a repeating cycle.' }
 };
+
+const dairyStageLabels = {
+  calf: { name: 'Calf Stage', subtitle: 'Configure management practices for calf stage (birth to 4 months)', durQ: 'How long do calves remain in this stage?', popQ: 'How many calves are in the herd?' },
+  heifer: { name: 'Heifer Stage', subtitle: 'Configure management practices for heifer stage (4 months to first calving)', durQ: 'How long do heifers remain in this stage?', popQ: 'How many heifers are in the herd?' },
+  lactating: { name: 'Lactating Stage', subtitle: 'Configure management practices for lactating cows', durQ: 'How long is the lactation period?', popQ: 'How many lactating cows are in the herd?' },
+  dry: { name: 'Dry Stage', subtitle: 'Configure management practices for dry cows (pre-calving rest)', durQ: 'How long is the dry period?', popQ: 'How many dry cows are in the herd?' }
+};
+
+function selectDairyCard(el, stage) {
+  // Update card selection styling
+  el.parentElement.querySelectorAll('.dairy-stage-card').forEach(c => {
+    c.style.border = '1px solid var(--border-light)';
+    c.style.background = 'var(--bg-white)';
+  });
+  el.style.border = '2px solid var(--selection-border)';
+  el.style.background = 'var(--selection-bg)';
+  // Update Step 2 labels
+  const labels = dairyStageLabels[stage];
+  if (labels) {
+    const durLabel = document.getElementById('dairyDurationLabel');
+    const popLabel = document.getElementById('dairyPopulationLabel');
+    if (durLabel) durLabel.textContent = labels.durQ;
+    if (popLabel) popLabel.textContent = labels.popQ;
+    document.getElementById('dairyStep3Title').textContent = 'Management Practices - ' + labels.name;
+    document.getElementById('dairyStep3Subtitle').textContent = labels.subtitle;
+  }
+}
 
 function selectDairyStage(stage) {
   const info = dairyStageInfo[stage];
