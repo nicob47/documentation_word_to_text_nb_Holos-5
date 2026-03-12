@@ -3842,6 +3842,18 @@ Hassan Afzaal</value>
   <data name="Label_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Label_FarmSettings" xml:space="preserve">
+    <value>Farm Settings</value>
+  </data>
+  <data name="Label_ClimateAndWeather" xml:space="preserve">
+    <value>Climate &amp; Weather</value>
+  </data>
+  <data name="Label_DietAndFeed" xml:space="preserve">
+    <value>Diet &amp; Feed</value>
+  </data>
+  <data name="Label_SoilAndManureDefaults" xml:space="preserve">
+    <value>Soil &amp; Manure Defaults</value>
+  </data>
   <data name="Label_Soil" xml:space="preserve">
     <value>Soil</value>
   </data>
@@ -3931,6 +3943,77 @@ Hassan Afzaal</value>
   </data>
   <data name="Label_HeifersEnterHerd" xml:space="preserve">
     <value>Heifers enter herd</value>
+  </data>
+
+  <!-- ═══ Poultry Production Chain Diagram ═══ -->
+  <data name="Label_PoultryProductionChain" xml:space="preserve">
+    <value>Poultry Production Chain</value>
+  </data>
+  <data name="Label_PoultryProductionChainDesc" xml:space="preserve">
+    <value>How poultry components connect in the breeding-to-production pipeline</value>
+  </data>
+  <data name="Label_ChickenProduction" xml:space="preserve">
+    <value>CHICKEN</value>
+  </data>
+  <data name="Label_TurkeyProduction" xml:space="preserve">
+    <value>TURKEY</value>
+  </data>
+  <data name="Label_MultiplierBreeder" xml:space="preserve">
+    <value>Multiplier Breeder</value>
+  </data>
+  <data name="Label_BreederSubtitle" xml:space="preserve">
+    <value>Parent breeding stock producing fertilized eggs</value>
+  </data>
+  <data name="Label_MultiplierHatchery" xml:space="preserve">
+    <value>Multiplier Hatchery</value>
+  </data>
+  <data name="Label_HatcherySubtitle" xml:space="preserve">
+    <value>Incubation of fertilized eggs into day-old chicks</value>
+  </data>
+  <data name="Label_PulletFarm" xml:space="preserve">
+    <value>Pullet Farm</value>
+  </data>
+  <data name="Label_PulletSubtitle" xml:space="preserve">
+    <value>Rearing chicks to point-of-lay (0-19 weeks)</value>
+  </data>
+  <data name="Label_EggProduction" xml:space="preserve">
+    <value>Egg Production</value>
+  </data>
+  <data name="Label_EggSubtitle" xml:space="preserve">
+    <value>Layer hens producing table eggs (19-72 weeks)</value>
+  </data>
+  <data name="Label_ChickenMeatProduction" xml:space="preserve">
+    <value>Meat Production</value>
+  </data>
+  <data name="Label_ChickenMeatSubtitle" xml:space="preserve">
+    <value>Broilers raised to market weight (5-7 weeks)</value>
+  </data>
+  <data name="Label_TurkeyMultiplierBreeder" xml:space="preserve">
+    <value>Turkey Breeder</value>
+  </data>
+  <data name="Label_TurkeyBreederSubtitle" xml:space="preserve">
+    <value>Parent stock producing fertilized turkey eggs</value>
+  </data>
+  <data name="Label_TurkeyMeatProduction" xml:space="preserve">
+    <value>Turkey Meat</value>
+  </data>
+  <data name="Label_TurkeyMeatSubtitle" xml:space="preserve">
+    <value>Turkeys raised to market weight (10-20 weeks)</value>
+  </data>
+  <data name="Label_FertilizedEggs" xml:space="preserve">
+    <value>Fertilized eggs</value>
+  </data>
+  <data name="Label_DayOldChicks" xml:space="preserve">
+    <value>Day-old chicks</value>
+  </data>
+  <data name="Label_PointOfLayPullets" xml:space="preserve">
+    <value>Point-of-lay</value>
+  </data>
+  <data name="Label_ReplacementBreedingStock" xml:space="preserve">
+    <value>Replacement breeding stock</value>
+  </data>
+  <data name="Label_TurkeyEggs" xml:space="preserve">
+    <value>Turkey eggs</value>
   </data>
 
   <!-- ═══ Crop Tabs — shared by Rotation Step 4 & Field Step 3 ═══ -->

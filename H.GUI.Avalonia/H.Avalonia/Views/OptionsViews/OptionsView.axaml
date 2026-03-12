@@ -47,18 +47,46 @@
 					<ListBoxItem Margin="-5, 0" IsEnabled="False" >
 						<TextBlock Foreground="Black" FontWeight="Bold" Text="{Binding [Label_Settings].Value, Source={StaticResource Loc}}"/>
 					</ListBoxItem>
+
+					<!-- Farm Settings -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_FarmSettings].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
 					<ListBoxItem Content="{Binding [Label_Farm].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_Soil].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_UserSettings].Value, Source={StaticResource Loc}}"/>
+
+					<!-- Climate & Weather -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_ClimateAndWeather].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
 					<ListBoxItem Content="{Binding [Label_Temperature].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_BarnTemperatures].Value, Source={StaticResource Loc}}"/>
-                        <ListBoxItem Content="{Binding [Label_Diets].Value, Source={StaticResource Loc}}"/>
-                        <ListBoxItem Content="{Binding [Label_Ingredients].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_Precipitation].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_Evapotranspiration].Value, Source={StaticResource Loc}}"/>
+
+					<!-- Diet & Feed -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_DietAndFeed].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
+					<ListBoxItem Content="{Binding [Label_Diets].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_Ingredients].Value, Source={StaticResource Loc}}"/>
+
+					<!-- Soil & Manure Defaults -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_SoilAndManureDefaults].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
 					<ListBoxItem Content="{Binding [Label_SoilN2OBreakdown].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_DefaultBeddingComposition].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_DefaultManureComposition].Value, Source={StaticResource Loc}}"/>
-						<ListBoxItem Content="{Binding [Label_UserSettings].Value, Source={StaticResource Loc}}"/>
 					</ListBox>
 				</StackPanel>
 			</Border>

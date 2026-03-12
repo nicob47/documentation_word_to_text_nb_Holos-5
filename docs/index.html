@@ -1970,16 +1970,26 @@ select.form-input { cursor: pointer; }
             <button class="options-item" onclick="showOptionPanel('opt-export-manure')">Export Manure</button>
             <div style="height:1px; background:var(--border-light); margin:8px 0;"></div>
             <div style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; padding:8px 12px 4px; letter-spacing:0.5px;">Settings</div>
+
+            <div style="font-size:12px; font-weight:800; color:var(--bg-primary); background:#f2f2f2; border-top:1px solid #8c8c8c; border-bottom:1px solid #8c8c8c; margin-top:8px; padding:8px 12px 8px 16px;">Farm Settings</div>
             <button class="options-item" onclick="showOptionPanel('opt-farm-settings')">Farm</button>
             <button class="options-item" onclick="showOptionPanel('opt-soil-settings')">Soil</button>
+            <button class="options-item" onclick="showOptionPanel('opt-user-settings')">User Settings</button>
+
+            <div style="font-size:12px; font-weight:800; color:var(--bg-primary); background:#f2f2f2; border-top:1px solid #8c8c8c; border-bottom:1px solid #8c8c8c; margin-top:8px; padding:8px 12px 8px 16px;">Climate &amp; Weather</div>
             <button class="options-item" onclick="showOptionPanel('opt-temp-settings')">Temperature</button>
             <button class="options-item" onclick="showOptionPanel('opt-barn-temp')">Barn Temperatures</button>
             <button class="options-item" onclick="showOptionPanel('opt-precip')">Precipitation</button>
             <button class="options-item" onclick="showOptionPanel('opt-evapotrans')">Evapotranspiration</button>
+
+            <div style="font-size:12px; font-weight:800; color:var(--bg-primary); background:#f2f2f2; border-top:1px solid #8c8c8c; border-bottom:1px solid #8c8c8c; margin-top:8px; padding:8px 12px 8px 16px;">Diet &amp; Feed</div>
+            <button class="options-item" onclick="showOptionPanel('opt-diets')">Diets</button>
+            <button class="options-item" onclick="showOptionPanel('opt-ingredients')">Ingredients</button>
+
+            <div style="font-size:12px; font-weight:800; color:var(--bg-primary); background:#f2f2f2; border-top:1px solid #8c8c8c; border-bottom:1px solid #8c8c8c; margin-top:8px; padding:8px 12px 8px 16px;">Soil &amp; Manure Defaults</div>
             <button class="options-item" onclick="showOptionPanel('opt-n2o')">Soil N₂O Breakdown</button>
-            <button class="options-item" onclick="showOptionPanel('opt-bedding')">Default Bedding</button>
-            <button class="options-item" onclick="showOptionPanel('opt-manure-comp')">Default Manure</button>
-            <button class="options-item" onclick="showOptionPanel('opt-user-settings')">User Settings</button>
+            <button class="options-item" onclick="showOptionPanel('opt-bedding')">Default Bedding Composition</button>
+            <button class="options-item" onclick="showOptionPanel('opt-manure-comp')">Default Manure Composition</button>
           </div>
           <div style="padding:10px; border-top:1px solid var(--border-light);">
             <button class="btn" style="width:100%;" onclick="showView('myComponents'); renderMyComponents();">← Go Back</button>
@@ -2157,6 +2167,7 @@ function showOptionPanel(panelId) {
     'opt-farm-settings': 'Farm Settings', 'opt-soil-settings': 'Soil Settings',
     'opt-temp-settings': 'Temperature Settings', 'opt-barn-temp': 'Barn Temperature Settings',
     'opt-precip': 'Precipitation Settings', 'opt-evapotrans': 'Evapotranspiration Settings',
+    'opt-diets': 'Diets', 'opt-ingredients': 'Ingredients',
     'opt-n2o': 'Soil N₂O Breakdown', 'opt-bedding': 'Default Bedding Composition',
     'opt-manure-comp': 'Default Manure Composition', 'opt-user-settings': 'User Settings'
   };

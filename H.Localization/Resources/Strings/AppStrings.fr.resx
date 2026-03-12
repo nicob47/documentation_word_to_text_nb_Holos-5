@@ -2943,6 +2943,18 @@ Hassan Afzaal</value>
   <data name="Label_Settings" xml:space="preserve">
     <value>ParamÃ¨tres</value>
   </data>
+  <data name="Label_FarmSettings" xml:space="preserve">
+    <value>ParamÃ¨tres de la ferme</value>
+  </data>
+  <data name="Label_ClimateAndWeather" xml:space="preserve">
+    <value>Climat et mÃ©tÃ©o</value>
+  </data>
+  <data name="Label_DietAndFeed" xml:space="preserve">
+    <value>Alimentation</value>
+  </data>
+  <data name="Label_SoilAndManureDefaults" xml:space="preserve">
+    <value>Valeurs par dÃ©faut du sol et du fumier</value>
+  </data>
   <data name="Label_Soil" xml:space="preserve">
     <value>Sol</value>
   </data>
@@ -3032,6 +3044,77 @@ Hassan Afzaal</value>
   </data>
   <data name="Label_HeifersEnterHerd" xml:space="preserve">
     <value>Les gÃ©nisses intÃ¨grent le troupeau</value>
+  </data>
+
+  <!-- ═══ Poultry Production Chain Diagram ═══ -->
+  <data name="Label_PoultryProductionChain" xml:space="preserve">
+    <value>Chaîne de production avicole</value>
+  </data>
+  <data name="Label_PoultryProductionChainDesc" xml:space="preserve">
+    <value>Comment les composantes avicoles se connectent dans le pipeline de reproduction à production</value>
+  </data>
+  <data name="Label_ChickenProduction" xml:space="preserve">
+    <value>POULET</value>
+  </data>
+  <data name="Label_TurkeyProduction" xml:space="preserve">
+    <value>DINDON</value>
+  </data>
+  <data name="Label_MultiplierBreeder" xml:space="preserve">
+    <value>Reproducteur multiplicateur</value>
+  </data>
+  <data name="Label_BreederSubtitle" xml:space="preserve">
+    <value>Cheptel reproducteur produisant des œufs fécondés</value>
+  </data>
+  <data name="Label_MultiplierHatchery" xml:space="preserve">
+    <value>Couvoir multiplicateur</value>
+  </data>
+  <data name="Label_HatcherySubtitle" xml:space="preserve">
+    <value>Incubation des œufs fécondés en poussins d'un jour</value>
+  </data>
+  <data name="Label_PulletFarm" xml:space="preserve">
+    <value>Élevage de poulettes</value>
+  </data>
+  <data name="Label_PulletSubtitle" xml:space="preserve">
+    <value>Élevage des poussins jusqu'au point de ponte (0-19 semaines)</value>
+  </data>
+  <data name="Label_EggProduction" xml:space="preserve">
+    <value>Production d'œufs</value>
+  </data>
+  <data name="Label_EggSubtitle" xml:space="preserve">
+    <value>Poules pondeuses produisant des œufs de table (19-72 semaines)</value>
+  </data>
+  <data name="Label_ChickenMeatProduction" xml:space="preserve">
+    <value>Production de viande</value>
+  </data>
+  <data name="Label_ChickenMeatSubtitle" xml:space="preserve">
+    <value>Poulets de chair élevés au poids du marché (5-7 semaines)</value>
+  </data>
+  <data name="Label_TurkeyMultiplierBreeder" xml:space="preserve">
+    <value>Reproducteur de dindon</value>
+  </data>
+  <data name="Label_TurkeyBreederSubtitle" xml:space="preserve">
+    <value>Cheptel reproducteur produisant des œufs de dindon fécondés</value>
+  </data>
+  <data name="Label_TurkeyMeatProduction" xml:space="preserve">
+    <value>Viande de dindon</value>
+  </data>
+  <data name="Label_TurkeyMeatSubtitle" xml:space="preserve">
+    <value>Dindons élevés au poids du marché (10-20 semaines)</value>
+  </data>
+  <data name="Label_FertilizedEggs" xml:space="preserve">
+    <value>Œufs fécondés</value>
+  </data>
+  <data name="Label_DayOldChicks" xml:space="preserve">
+    <value>Poussins d'un jour</value>
+  </data>
+  <data name="Label_PointOfLayPullets" xml:space="preserve">
+    <value>Point de ponte</value>
+  </data>
+  <data name="Label_ReplacementBreedingStock" xml:space="preserve">
+    <value>Cheptel reproducteur de remplacement</value>
+  </data>
+  <data name="Label_TurkeyEggs" xml:space="preserve">
+    <value>Œufs de dindon</value>
   </data>
 
   <!-- ═══ Crop Tabs — shared by Rotation Step 4 & Field Step 3 ═══ -->
