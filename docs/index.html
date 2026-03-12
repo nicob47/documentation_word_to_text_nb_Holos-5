@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holos 5 — UI Preview</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   GCDS Design System Tokens (from ResourceStyles.axaml)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --gcds-blue-50: #ebf2fa;
+  --gcds-blue-100: #d6e4f5;
+  --gcds-blue-700: #1f497a;
+  --gcds-blue-muted: #26374a;
+  --gcds-focus-blue: #1354ec;
+  --gcds-gray-50: #f2f2f2;
+  --gcds-gray-150: #d9d9d9;
+  --gcds-gray-200: #cccccc;
+  --gcds-gray-450: #8c8c8c;
+  --gcds-gray-650: #595959;
+  --gcds-gray-800: #333333;
+  --gcds-red-600: #b3192e;
+  --gcds-green-700: #1f7a40;
+  --gcds-yellow-50: #fef7e7;
+  --gcds-yellow-500: #f2ad0d;
+  --text-primary: #333333;
+  --text-secondary: #595959;
+  --bg-light: #f2f2f2;
+  --bg-primary: #26374a;
+  --bg-white: #ffffff;
+  --border-light: #d9d9d9;
+  --border-default: #8c8c8c;
+  --border-subtle: #cccccc;
+  --selection-bg: #ebf2fa;
+  --selection-border: #1f497a;
+  --link-default: #1354ec;
+  --danger: #b3192e;
+  --success: #1f7a40;
+  --warning-bg: #fef7e7;
+  --warning: #f2ad0d;
+  --heading-font: 'Segoe UI', 'Lato', sans-serif;
+  --body-font: 'Segoe UI', 'Noto Sans', sans-serif;
+  --font-h1: 36px;
+  --font-h3: 25px;
+  --font-h5: 21px;
+  --font-h6: 19px;
+  --font-body: 14px;
+  --font-small: 13px;
+  --font-caption: 11px;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+  --sidebar-width: 220px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--body-font);
+  font-size: var(--font-body);
+  color: var(--text-primary);
+  background: #e8e8e8;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FULL-SCREEN VIEWS (pre-app flow: disclaimer, loading, farm)
+   ═══════════════════════════════════════════════════════════════ */
+.fullscreen-view {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg-white);
+  z-index: 100;
+  overflow-y: auto;
+}
+.fullscreen-view.active { display: flex; flex-direction: column; }
+
+/* Disclaimer */
+.disclaimer-view {
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.disclaimer-box {
+  max-width: 720px;
+  width: 100%;
+}
+.disclaimer-box .logo-area {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.disclaimer-box .logo-placeholder {
+  width: 100px; height: 100px; margin: 0 auto 12px;
+  background: var(--selection-bg); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px; font-weight: bold; color: var(--selection-border);
+}
+.disclaimer-box h1 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h1);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+.disclaimer-box .version {
+  font-size: var(--font-small);
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.disclaimer-box .lang-row {
+  display: flex; gap: 12px; align-items: center;
+  margin-bottom: 20px;
+}
+.disclaimer-text-box {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: var(--font-small);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  background: var(--bg-light);
+}
+
+/* Loading */
+.loading-view {
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-light);
+}
+.loading-box {
+  text-align: center;
+  max-width: 500px;
+}
+.loading-box h1 {
+  font-family: var(--heading-font);
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 32px;
+}
+.progress-bar-bg {
+  width: 400px;
+  height: 6px;
+  background: var(--border-light);
+  border-radius: 3px;
+  margin: 0 auto 16px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--selection-border);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.5s;
+}
+.loading-msg {
+  font-size: var(--font-body);
+  color: var(--text-secondary);
+}
+
+/* Farm Options */
+.farm-options-view {
+  align-items: center;
+  justify-content: center;
+}
+.farm-options-box {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+.farm-options-box h1 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h3);
+  margin-bottom: 32px;
+}
+.farm-option-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.farm-option-btn {
+  width: 320px;
+  padding: 16px 24px;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius);
+  background: white;
+  cursor: pointer;
+  font-family: var(--body-font);
+  font-size: 16px;
+  text-align: left;
+  transition: all 0.15s;
+}
+.farm-option-btn:hover {
+  border-color: var(--selection-border);
+  background: var(--selection-bg);
+}
+.farm-option-btn .opt-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.farm-option-btn .opt-desc {
+  font-size: var(--font-small);
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.farm-option-sep {
+  width: 320px;
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 8px auto;
+}
+
+/* Farm Creation */
+.farm-creation-view {
+  align-items: center;
+  justify-content: center;
+}
+.farm-form {
+  max-width: 600px;
+  width: 100%;
+}
+.farm-form h1 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h3);
+  margin-bottom: 24px;
+}
+.farm-form .field {
+  margin-bottom: 20px;
+}
+.farm-form .field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.farm-form .field input,
+.farm-form .field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  font-family: var(--body-font);
+  font-size: var(--font-body);
+}
+.farm-form .field textarea { resize: vertical; min-height: 80px; }
+.farm-form .field input:focus,
+.farm-form .field textarea:focus {
+  outline: none;
+  border-color: var(--selection-border);
+  box-shadow: 0 0 0 2px rgba(31, 73, 122, 0.15);
+}
+.farm-form .btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Farm Open Existing */
+.farm-open-view {
+  align-items: center;
+  justify-content: center;
+}
+.farm-open-box {
+  max-width: 700px;
+  width: 100%;
+}
+.farm-open-box h1 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h3);
+  margin-bottom: 16px;
+}
+.farm-list {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: white;
+  margin-bottom: 20px;
+}
+.farm-list-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.farm-list-item:last-child { border-bottom: none; }
+.farm-list-item:hover { background: var(--selection-bg); }
+.farm-list-item.selected {
+  background: var(--selection-bg);
+  border-left: 4px solid var(--selection-border);
+}
+.farm-list-item .farm-name { font-weight: 600; }
+.farm-list-item .farm-date { font-size: var(--font-small); color: var(--text-secondary); }
+
+/* Soil / Map View */
+.soil-setup-view {
+  align-items: center;
+  padding: 40px;
+}
+.soil-setup-box {
+  max-width: 900px;
+  width: 100%;
+}
+.soil-setup-box h1 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h3);
+  margin-bottom: 8px;
+}
+.soil-setup-box .subtitle {
+  font-size: var(--font-body);
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.map-placeholder {
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 30%, #a5d6a7 50%, #81c784 70%, #e8f5e9 100%);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  position: relative;
+}
+.map-placeholder::after {
+  content: '📍 Click to select your farm location';
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: var(--font-body);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP SHELL (main app after setup)
+   ═══════════════════════════════════════════════════════════════ */
+.app-shell {
+  display: none;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  background: var(--bg-white);
+}
+.app-shell.active {
+  display: grid;
+}
+
+/* Sidebar */
+.sidebar {
+  grid-row: 1 / 3;
+  background: var(--bg-light);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.sidebar-header {
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 10px;
+}
+.sidebar-header-bar {
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-header-bar h2 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h6);
+  font-weight: 600;
+  margin: 0;
+}
+.sidebar-header-bar .btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 50%;
+}
+.sidebar-header-bar .btn-icon:hover { background: var(--gcds-gray-150); }
+.sidebar-components {
+  flex: 1;
+  overflow-y: auto;
+  padding: 5px 10px;
+}
+.sidebar-component-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s, background 0.15s;
+}
+.sidebar-component-card:hover { border-color: var(--border-default); }
+.sidebar-component-card.active { border-color: var(--selection-border); background: var(--selection-bg); border-width: 2px; }
+.sidebar-component-card .card-title {
+  font-size: 16px; font-weight: bold; color: var(--text-primary); margin-bottom: 4px;
+}
+.sidebar-component-card .card-type {
+  font-size: 13px; color: var(--text-secondary); font-style: italic; margin-bottom: 4px;
+}
+.sidebar-component-card .card-desc {
+  font-size: 12px; color: var(--text-primary); line-height: 1.4;
+}
+.sidebar-component-card .card-delete {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 11px; padding: 3px 10px;
+  background: transparent; border: 1px solid var(--danger); color: var(--danger);
+  border-radius: 4px; cursor: pointer;
+}
+.sidebar-component-card .card-delete:hover { background: var(--danger); color: #fff; }
+.sidebar-empty {
+  text-align: center; padding: 30px 16px; color: var(--text-secondary);
+}
+.sidebar-empty h3 { font-size: 16px; color: var(--gcds-gray-200); margin-bottom: 8px; }
+.sidebar-empty p { font-size: 13px; }
+.sidebar-footer-bar {
+  background: var(--bg-light);
+  border-top: 1px solid var(--border-light);
+  padding: 10px;
+  text-align: center;
+}
+.sidebar-footer-bar .btn { width: calc(100% - 8px); }
+
+/* Content Region */
+.content-region {
+  overflow-y: auto;
+  background: var(--bg-white);
+}
+
+/* Footer */
+.footer {
+  grid-column: 1 / 3;
+  background: var(--bg-light);
+  border-top: 1px solid var(--border-light);
+  padding: 8px 20px;
+  font-size: var(--font-small);
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Views */
+.view { display: none; padding: 16px; }
+.view.active { display: block; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Common Components
+   ═══════════════════════════════════════════════════════════════ */
+.header-bar {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-bar h1 {
+  font-family: var(--heading-font);
+  font-size: var(--font-h5);
+  font-weight: bold;
+  margin: 0;
+}
+.header-bar .subtitle {
+  font-size: var(--font-small);
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--body-font);
+  font-size: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-primary { background: var(--bg-primary); color: white; }
+.btn-primary:hover { background: var(--link-default); }
+.btn-secondary { background: transparent; color: var(--link-default); border: 1px solid var(--border-light); }
+.btn-secondary:hover { background: var(--selection-bg); }
+.btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); padding: 6px 12px; font-size: var(--font-small); }
+.btn-danger:hover { background: #ffebee; }
+.btn-link { background: transparent; border: none; color: var(--link-default); cursor: pointer; font-size: var(--font-body); padding: 4px; }
+.btn-link:hover { text-decoration: underline; }
+.btn-icon { background: transparent; border: none; padding: 5px; cursor: pointer; border-radius: 50%; }
+.btn-icon:hover { background: var(--bg-light); }
+
+/* Step container */
+.step-container {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.step-badge {
+  background: var(--bg-primary); color: white;
+  border-radius: 4px; padding: 6px 12px;
+  font-size: var(--font-small); font-weight: 600;
+  white-space: nowrap;
+}
+.step-description { font-size: var(--font-body); color: var(--text-secondary); }
+
+/* Timeline */
+.timeline-container {
+  background: white;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+.timeline-header { font-size: var(--font-body); font-weight: 600; margin-bottom: 12px; }
+.timeline-scroll {
+  display: flex; gap: 16px; overflow-x: auto;
+  padding-bottom: 8px; min-height: 150px;
+}
+.timeline-card {
+  min-width: 160px; max-width: 200px;
+  background: white;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  cursor: pointer; flex-shrink: 0;
+}
+.timeline-card.selected {
+  border-color: var(--selection-border);
+  background: var(--selection-bg);
+  border-width: 3px;
+}
+.timeline-card:hover:not(.selected) {
+  border-color: var(--selection-border);
+  background: var(--selection-bg);
+}
+.timeline-hint { font-size: var(--font-caption); color: var(--text-secondary); font-style: italic; margin-top: 8px; }
+
+/* Tabs */
+.tab-bar { display: flex; border-bottom: 2px solid var(--border-light); margin-bottom: 16px; }
+.tab-btn {
+  padding: 10px 20px; border: none; background: transparent;
+  cursor: pointer; font-family: var(--body-font); font-size: var(--font-body);
+  color: var(--text-secondary); border-bottom: 3px solid transparent; margin-bottom: -2px;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--selection-border); border-bottom-color: var(--selection-border); font-weight: 600; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Forms */
+.form-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 12px 16px;
+  align-items: center;
+}
+.form-label { font-size: var(--font-body); color: var(--text-primary); text-align: right; }
+.form-input {
+  padding: 8px 12px; border: 1px solid var(--border-default);
+  border-radius: 4px; font-size: var(--font-body); font-family: var(--body-font);
+  background: white; min-width: 200px;
+}
+.form-input:focus { outline: none; border-color: var(--selection-border); box-shadow: 0 0 0 2px rgba(31,73,122,0.15); }
+.form-unit { font-size: var(--font-small); color: var(--text-secondary); }
+select.form-input { cursor: pointer; }
+
+/* Component cards */
+.component-card {
+  background: white;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  margin-bottom: 16px;
+}
+.component-card:hover { border-color: var(--selection-border); background: var(--selection-bg); }
+.component-card .card-title { font-size: 18px; font-weight: bold; }
+.component-card .card-type { font-size: 14px; color: var(--text-secondary); font-style: italic; margin-top: 4px; }
+.component-card .card-desc { font-size: 12px; margin-top: 6px; }
+.component-card .card-delete { position: absolute; top: 12px; right: 12px; }
+
+/* Category card */
+.category-card {
+  width: 280px; min-height: 100px;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  margin: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.category-card:hover { border-color: var(--selection-border); background: var(--selection-bg); }
+.category-card .cat-name { font-family: var(--heading-font); font-weight: bold; font-size: var(--font-h6); }
+.category-card .cat-count { margin-top: 8px; font-size: var(--font-small); }
+.category-card .cat-count strong { color: var(--link-default); font-weight: 600; }
+.category-card .cat-count span { color: var(--text-secondary); }
+
+/* Choose component card */
+.choose-card {
+  width: 280px; height: 200px;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px; margin: 4px;
+  display: flex; flex-direction: column;
+  transition: all 0.15s;
+}
+.choose-card:hover { border-color: var(--selection-border); background: var(--selection-bg); }
+.choose-card .comp-name { font-family: var(--heading-font); font-weight: bold; font-size: var(--font-body); }
+.choose-card .comp-desc {
+  font-size: var(--font-small); color: var(--text-secondary); margin-top: 8px;
+  flex: 1; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+
+.wrap-panel { display: flex; flex-wrap: wrap; }
+
+/* Title bar */
+.view-title-input {
+  font-family: var(--heading-font); font-size: var(--font-h5);
+  font-weight: bold; border: none; background: transparent;
+  padding: 4px 8px; width: 100%;
+}
+.view-title-input:focus { outline: none; background: var(--selection-bg); border-radius: 4px; }
+.title-underline { height: 3px; background: var(--border-light); margin-bottom: 16px; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 40px; }
+.empty-state h2 { font-size: 24px; font-weight: 600; color: lightgray; margin-bottom: 12px; }
+.empty-state p { font-size: 16px; color: var(--text-secondary); font-style: italic; margin-bottom: 20px; }
+.tip-box {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-light); border-radius: var(--radius); padding: 12px 16px;
+}
+.tip-icon {
+  width: 24px; height: 24px;
+  background: var(--bg-primary); color: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: bold;
+}
+
+.content-panel {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin: 0 0 10px;
+}
+.action-bar {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+}
+
+/* Info banner */
+.info-banner {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 16px; margin-top: 16px;
+}
+.info-banner h3 { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+.info-banner p { font-size: 12px; color: var(--text-secondary); line-height: 18px; }
+.info-banner .close-btn {
+  float: right; background: transparent; border: none;
+  cursor: pointer; color: #999; font-size: 14px; padding: 0 8px;
+}
+
+/* Diagram */
+.diagram-container {
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius); background: white;
+  padding: 20px; margin-bottom: 16px;
+}
+.diagram-title { font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 4px; }
+.diagram-subtitle { font-size: var(--font-small); color: var(--text-secondary); text-align: center; margin-bottom: 24px; }
+
+/* Data grid */
+.data-grid { width: 100%; border-collapse: collapse; font-size: var(--font-small); }
+.data-grid th { background: var(--bg-primary); color: white; padding: 10px 12px; text-align: left; font-weight: 600; }
+.data-grid td { padding: 8px 12px; border-bottom: 1px solid var(--border-light); }
+.data-grid tr:hover td { background: var(--selection-bg); }
+
+/* Mockup badge */
+.mockup-badge {
+  position: fixed; top: 0; right: 0;
+  background: var(--warning); color: var(--text-primary);
+  padding: 4px 16px 4px 20px;
+  font-size: 11px; font-weight: bold;
+  z-index: 1000; border-bottom-left-radius: 8px;
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="mockup-badge">UI MOCKUP — NOT FUNCTIONAL</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 1: DISCLAIMER
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-disclaimer" class="fullscreen-view active disclaimer-view">
+  <div class="disclaimer-box">
+    <div class="logo-area">
+      <div class="logo-placeholder">H</div>
+      <h1>Holos</h1>
+      <div class="version">Version 5.0.0-preview &bull; March 2026</div>
+    </div>
+
+    <div class="lang-row">
+      <label style="font-weight:600;">Language / Langue:</label>
+      <select class="form-input" style="min-width: 160px;">
+        <option>English</option>
+        <option>Français</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <h3 style="margin-bottom: 8px;">About Holos</h3>
+      <p style="font-size: var(--font-small); color: var(--text-secondary); line-height: 1.6;">
+        Holos is a whole-farm model and software tool that estimates greenhouse gas (GHG) emissions
+        based on information entered for individual farms. The model was developed by Agriculture
+        and Agri-Food Canada to explore agricultural management practices that may reduce GHG
+        emissions from Canadian farms.
+      </p>
+    </div>
+
+    <div class="disclaimer-text-box">
+      <p><strong>Disclaimer</strong></p>
+      <p style="margin-top: 8px;">
+        The results produced by Holos are estimates only and are not intended to replace professional
+        judgment. Agriculture and Agri-Food Canada makes no warranties or guarantees, express or implied,
+        regarding the accuracy, completeness, or reliability of any results generated by this software.
+        Users assume all risk associated with the use of this software and its outputs. This software
+        is provided "as is" without warranty of any kind. In no event shall Agriculture and Agri-Food
+        Canada be liable for any damages arising out of the use of this software.
+      </p>
+      <p style="margin-top: 12px;">
+        The emission factors and methodologies used in Holos are based on the Intergovernmental Panel
+        on Climate Change (IPCC) guidelines and Canadian-specific research. These factors are subject
+        to scientific uncertainty and may be updated as new research becomes available.
+      </p>
+    </div>
+
+    <div style="text-align: center;">
+      <button class="btn btn-primary" style="padding: 12px 40px; font-size: 16px;" onclick="goToLoading()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 2: LOADING
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-loading" class="fullscreen-view loading-view">
+  <div class="loading-box">
+    <h1>Holos v5</h1>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+    <div class="loading-msg" id="loadingMsg">Loading, please wait...</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 3: FARM OPTIONS
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-farmOptions" class="fullscreen-view farm-options-view">
+  <div class="farm-options-box">
+    <h1>Would you like to open an existing farm or create a new one?</h1>
+    <div class="farm-option-btns">
+      <button class="farm-option-btn" onclick="goTo('screen-farmCreate')">
+        <div class="opt-title">Create New Farm</div>
+        <div class="opt-desc">Start a new farm from scratch</div>
+      </button>
+      <button class="farm-option-btn" onclick="goTo('screen-farmOpen')">
+        <div class="opt-title">Open Existing Farm</div>
+        <div class="opt-desc">Load a previously saved farm</div>
+      </button>
+      <hr class="farm-option-sep">
+      <button class="farm-option-btn" onclick="goTo('screen-farmCreate')">
+        <div class="opt-title">Import</div>
+        <div class="opt-desc">Import farm data from a file</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 4A: FARM CREATION (New Farm)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-farmCreate" class="fullscreen-view farm-creation-view">
+  <div class="farm-form">
+    <h1>Create New Farm</h1>
+    <div class="field">
+      <label>Farm Name</label>
+      <input type="text" placeholder="Enter a name for your farm" value="My Farm">
+    </div>
+    <div class="field">
+      <label>Comments (optional)</label>
+      <textarea placeholder="Add any notes about this farm..."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goTo('screen-farmOptions')">← Go Back</button>
+      <button class="btn btn-primary" onclick="goTo('screen-soilSetup')">Create Farm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 4B: FARM OPEN EXISTING
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-farmOpen" class="fullscreen-view farm-open-view">
+  <div class="farm-open-box">
+    <h1>Open an Existing Farm</h1>
+    <div style="margin-bottom: 12px;">
+      <input type="text" class="form-input" placeholder="Search farms..." style="width: 100%;">
+    </div>
+    <div class="farm-list">
+      <div class="farm-list-item selected" onclick="selectFarm(this)">
+        <div>
+          <div class="farm-name">East Quarter Section</div>
+          <div style="font-size: var(--font-small); color: var(--text-secondary);">3 components &bull; Last modified: Mar 5, 2026</div>
+        </div>
+        <div class="farm-date">160 acres</div>
+      </div>
+      <div class="farm-list-item" onclick="selectFarm(this)">
+        <div>
+          <div class="farm-name">Smith Ranch</div>
+          <div style="font-size: var(--font-small); color: var(--text-secondary);">5 components &bull; Last modified: Feb 20, 2026</div>
+        </div>
+        <div class="farm-date">640 acres</div>
+      </div>
+      <div class="farm-list-item" onclick="selectFarm(this)">
+        <div>
+          <div class="farm-name">Poultry Demo Farm</div>
+          <div style="font-size: var(--font-small); color: var(--text-secondary);">7 components &bull; Last modified: Jan 15, 2026</div>
+        </div>
+        <div class="farm-date">40 acres</div>
+      </div>
+    </div>
+    <div class="btn-row" style="display:flex; gap:12px;">
+      <button class="btn btn-secondary" onclick="goTo('screen-farmOptions')">← Go Back</button>
+      <button class="btn btn-primary" onclick="enterMainApp()">Open</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 5: SOIL / MAP SETUP
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-soilSetup" class="fullscreen-view soil-setup-view">
+  <div class="soil-setup-box">
+    <h1>Set Up Your Farm Location</h1>
+    <div class="subtitle">Select your province and location to load soil and climate data for your farm.</div>
+
+    <div class="step-container" style="margin-bottom: 20px;">
+      <div class="step-header">
+        <span class="step-badge">Step 1</span>
+        <span class="step-description">Select your province</span>
+      </div>
+      <div class="form-grid" style="max-width: 500px;">
+        <label class="form-label">Province</label>
+        <select class="form-input">
+          <option>Alberta</option><option>British Columbia</option><option>Manitoba</option>
+          <option>Ontario</option><option>Quebec</option><option>Saskatchewan</option>
+        </select>
+        <span class="form-unit"></span>
+      </div>
+    </div>
+
+    <div class="step-container" style="margin-bottom: 20px;">
+      <div class="step-header">
+        <span class="step-badge">Step 2</span>
+        <span class="step-description">Select your location on the map</span>
+      </div>
+      <div class="map-placeholder"></div>
+      <div class="form-grid" style="max-width: 500px;">
+        <label class="form-label">Latitude</label>
+        <input type="number" class="form-input" value="49.6947" step="0.0001">
+        <span class="form-unit">°N</span>
+        <label class="form-label">Longitude</label>
+        <input type="number" class="form-input" value="-112.8186" step="0.0001">
+        <span class="form-unit">°W</span>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 24px;">
+      <button class="btn btn-secondary" onclick="goTo('screen-farmCreate')" style="margin-right: 12px;">← Go Back</button>
+      <button class="btn btn-primary" style="padding: 12px 32px;" onclick="enterMainApp()">Continue to Farm →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN APP SHELL (after setup)
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="app-shell" id="appShell">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-header-bar">
+        <h2>My Components</h2>
+        <button class="btn-icon" title="Settings" onclick="showView('about')">⚙️</button>
+      </div>
+    </div>
+    <div class="sidebar-components" id="sidebarComponentList"></div>
+    <div class="sidebar-footer-bar">
+      <button class="btn btn-primary" onclick="showView('chooseComponents')">Edit Components</button>
+    </div>
+  </aside>
+
+  <main class="content-region">
+
+    <!-- WELCOME / NO COMPONENT SELECTED VIEW -->
+    <div id="view-myComponents" class="view active">
+      <div style="display:flex; align-items:center; justify-content:center; height:100%; text-align:center; color:var(--text-secondary); padding:40px;">
+        <div>
+          <div style="font-size:48px; margin-bottom:16px; opacity:0.3;">📦</div>
+          <h2 style="font-weight:400; margin-bottom:8px; color:var(--gcds-gray-450);">Select a component</h2>
+          <p style="font-size:13px;">Click a component in the sidebar to view and edit its details, or click <strong>Edit Components</strong> to add new ones.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHOOSE COMPONENTS VIEW -->
+    <div id="view-chooseComponents" class="view">
+      <div class="header-bar">
+        <div>
+          <h1>Choose Components</h1>
+          <div class="subtitle">Select a category to browse available components</div>
+        </div>
+        <button class="btn btn-primary" onclick="showView('myComponents')">Finish</button>
+      </div>
+      <div id="categoryPanel">
+        <div class="wrap-panel" id="categoryCards"></div>
+      </div>
+      <div id="componentPanel" style="display:none;">
+        <div style="margin: 4px 0 16px;">
+          <button class="btn-link" onclick="backToCategories()">← Back to Categories</button>
+          <h2 id="categoryTitle" style="font-family: var(--heading-font); font-size: var(--font-h5); margin-top: 8px;"></h2>
+          <hr style="border: none; border-top: 1px solid var(--border-subtle); margin-top: 8px;">
+        </div>
+        <div class="wrap-panel" id="componentCards"></div>
+      </div>
+    </div>
+
+    <!-- COMPONENT EDITING VIEW (generic animal 3-step) -->
+    <div id="view-editComponent" class="view">
+      <div><input type="text" class="view-title-input" id="editComponentTitle" value="My Bison Component"></div>
+      <div class="title-underline"></div>
+
+      <!-- Step 1 -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 1</span>
+          <span class="step-description">Define your animal groups</span>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <button class="btn btn-primary" onclick="addAnimalGroup()" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Group</button>
+        </div>
+        <div class="timeline-container">
+          <div class="timeline-header">Animal Groups</div>
+          <div class="timeline-scroll" id="animalGroupTimeline"></div>
+          <div class="timeline-hint">Tip: Scroll horizontally to see more groups</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 2</span>
+          <span class="step-description">Define management periods for the selected group</span>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <button class="btn btn-primary" onclick="addManagementPeriod()" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Period</button>
+        </div>
+        <div class="timeline-container">
+          <div class="timeline-header">Management Periods</div>
+          <div class="timeline-scroll" id="mgmtPeriodTimeline">
+            <div class="timeline-card selected" style="min-width: 180px;">
+              <div style="font-size: var(--font-small); font-weight: 600;">Period #1</div>
+              <div style="font-size: var(--font-caption); color: var(--text-secondary); margin-top: 4px;">Jan 1 – Dec 31</div>
+              <div style="font-size: var(--font-small); color: var(--text-secondary); margin-top: 8px;">365 days</div>
+              <div style="font-size: 13px; font-weight: 500; margin-top: 4px;">50 animals</div>
+              <button class="btn-danger" style="margin-top: 8px; font-size: 11px; padding: 4px 10px;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 3</span>
+          <span class="step-description">Configure management practices for the selected period</span>
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'tab-housing')">Housing</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-manure')">Manure</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-details')">Animal Details</button>
+        </div>
+        <div id="tab-housing" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Housing type</label>
+            <select class="form-input"><option>Confined – no barn</option><option>Enclosed pasture</option><option>Housing (barn)</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Pasture location</label>
+            <select class="form-input"><option>Not applicable</option><option>On farm field</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-manure" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Manure handling</label>
+            <select class="form-input"><option>Pasture</option><option>Deep bedding</option><option>Solid storage</option><option>Composting – passive</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Methane conversion factor</label>
+            <input type="number" class="form-input" value="0.47" step="0.01">
+            <span class="form-unit">%</span>
+            <label class="form-label">N₂O emission factor</label>
+            <input type="number" class="form-input" value="0.02" step="0.001">
+            <span class="form-unit">kg N₂O-N/kg N</span>
+          </div>
+        </div>
+        <div id="tab-details" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Initial weight</label>
+            <input type="number" class="form-input" value="250">
+            <span class="form-unit">kg</span>
+            <label class="form-label">Final weight</label>
+            <input type="number" class="form-input" value="500">
+            <span class="form-unit">kg</span>
+            <label class="form-label">Average daily gain</label>
+            <input type="number" class="form-input" value="0.95" step="0.01">
+            <span class="form-unit">kg/day</span>
+            <label class="form-label">Feed intake</label>
+            <input type="number" class="form-input" value="8.5" step="0.1">
+            <span class="form-unit">kg DM/day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POULTRY COMPONENT VIEW -->
+    <div id="view-poultryComponent" class="view">
+      <div><input type="text" class="view-title-input" id="poultryTitle" value="My Chicken Egg Production"></div>
+      <div class="title-underline"></div>
+
+      <div class="diagram-container">
+        <div class="diagram-title">Poultry Production Chain</div>
+        <div class="diagram-subtitle">Click on a stage to learn more about each production step</div>
+        <svg viewBox="0 0 1100 440" width="100%" style="max-width: 1100px; display: block; margin: 0 auto;">
+          <!-- Row Labels -->
+          <rect x="0" y="28" width="105" height="24" rx="4" fill="#F3E5F5"/>
+          <text x="52" y="44" text-anchor="middle" fill="#7B1FA2" font-size="10" font-weight="bold">Chicken</text>
+          <rect x="0" y="280" width="105" height="24" rx="4" fill="#E0F2F1"/>
+          <text x="52" y="296" text-anchor="middle" fill="#00695C" font-size="10" font-weight="bold">Turkey</text>
+
+          <!-- Multiplier Breeder -->
+          <rect x="10" y="55" width="165" height="115" rx="12" fill="#F3E5F5" stroke="#CE93D8" stroke-width="2" cursor="pointer" onclick="selectStage('breeder')"/>
+          <text x="92" y="100" text-anchor="middle" fill="#7B1FA2" font-size="13" font-weight="bold">Multiplier</text>
+          <text x="92" y="116" text-anchor="middle" fill="#7B1FA2" font-size="13" font-weight="bold">Breeder</text>
+          <text x="92" y="137" text-anchor="middle" fill="#595959" font-size="10">Parent stock for</text>
+          <text x="92" y="150" text-anchor="middle" fill="#595959" font-size="10">egg &amp; meat lines</text>
+
+          <!-- Arrow: Breeder → Hatchery -->
+          <line x1="175" y1="112" x2="260" y2="112" stroke="#424242" stroke-width="2"/>
+          <polygon points="260,112 252,107 252,117" fill="#424242"/>
+          <text x="218" y="100" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Fertilized eggs</text>
+
+          <!-- Multiplier Hatchery -->
+          <rect x="265" y="55" width="165" height="115" rx="12" fill="#ebf2fa" stroke="#90CAF9" stroke-width="2" cursor="pointer" onclick="selectStage('hatchery')"/>
+          <text x="347" y="100" text-anchor="middle" fill="#1976D2" font-size="13" font-weight="bold">Multiplier</text>
+          <text x="347" y="116" text-anchor="middle" fill="#1976D2" font-size="13" font-weight="bold">Hatchery</text>
+          <text x="347" y="137" text-anchor="middle" fill="#595959" font-size="10">Incubation &amp;</text>
+          <text x="347" y="150" text-anchor="middle" fill="#595959" font-size="10">hatching facility</text>
+
+          <!-- Arrow: Hatchery → Pullet -->
+          <line x1="430" y1="112" x2="515" y2="112" stroke="#424242" stroke-width="2"/>
+          <polygon points="515,112 507,107 507,117" fill="#424242"/>
+          <text x="473" y="100" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Day-old chicks</text>
+
+          <!-- Pullet Farm -->
+          <rect x="520" y="55" width="165" height="115" rx="12" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="2" cursor="pointer" onclick="selectStage('pullet')"/>
+          <text x="602" y="100" text-anchor="middle" fill="#388E3C" font-size="13" font-weight="bold">Pullet Farm</text>
+          <text x="602" y="116" text-anchor="middle" fill="#388E3C" font-size="13" font-weight="bold">(Rearing)</text>
+          <text x="602" y="137" text-anchor="middle" fill="#595959" font-size="10">Growing birds to</text>
+          <text x="602" y="150" text-anchor="middle" fill="#595959" font-size="10">production age</text>
+
+          <!-- Arrow: Pullet → Egg (up) -->
+          <line x1="685" y1="85" x2="780" y2="60" stroke="#424242" stroke-width="2"/>
+          <polygon points="780,60 770,58 773,67" fill="#424242"/>
+          <text x="730" y="55" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Point-of-lay</text>
+
+          <!-- Arrow: Pullet → Meat (down) -->
+          <line x1="685" y1="140" x2="780" y2="190" stroke="#424242" stroke-width="2"/>
+          <polygon points="780,190 771,185 774,194" fill="#424242"/>
+
+          <!-- Chicken Egg Production -->
+          <rect x="785" y="10" width="170" height="110" rx="12" fill="#FFF3E0" stroke="#FFCC80" stroke-width="2" cursor="pointer" onclick="selectStage('egg')"/>
+          <text x="870" y="50" text-anchor="middle" fill="#F57C00" font-size="13" font-weight="bold">Egg</text>
+          <text x="870" y="66" text-anchor="middle" fill="#F57C00" font-size="13" font-weight="bold">Production</text>
+          <text x="870" y="87" text-anchor="middle" fill="#595959" font-size="10">Commercial</text>
+          <text x="870" y="100" text-anchor="middle" fill="#595959" font-size="10">table egg laying</text>
+
+          <!-- Chicken Meat Production -->
+          <rect x="785" y="130" width="170" height="110" rx="12" fill="#FFEBEE" stroke="#EF9A9A" stroke-width="2" cursor="pointer" onclick="selectStage('chickenMeat')"/>
+          <text x="870" y="172" text-anchor="middle" fill="#D32F2F" font-size="13" font-weight="bold">Chicken Meat</text>
+          <text x="870" y="188" text-anchor="middle" fill="#D32F2F" font-size="13" font-weight="bold">Production</text>
+          <text x="870" y="210" text-anchor="middle" fill="#595959" font-size="10">Broiler growing</text>
+          <text x="870" y="223" text-anchor="middle" fill="#595959" font-size="10">&amp; finishing</text>
+
+          <!-- Feedback arc -->
+          <path d="M 93,55 Q 475,-22 870,10" fill="none" stroke="#7B1FA2" stroke-width="2" stroke-dasharray="4,2"/>
+          <polygon points="93,55 88,43 100,45" fill="#7B1FA2"/>
+          <rect x="385" y="-4" width="160" height="16" rx="2" fill="white"/>
+          <text x="465" y="8" text-anchor="middle" fill="#7B1FA2" font-size="9" font-weight="bold">Replacement breeding stock</text>
+
+          <!-- Turkey Breeder -->
+          <rect x="10" y="305" width="165" height="115" rx="12" fill="#E0F2F1" stroke="#80CBC4" stroke-width="2" cursor="pointer" onclick="selectStage('turkeyBreeder')"/>
+          <text x="92" y="350" text-anchor="middle" fill="#00695C" font-size="13" font-weight="bold">Turkey</text>
+          <text x="92" y="366" text-anchor="middle" fill="#00695C" font-size="13" font-weight="bold">Breeder</text>
+          <text x="92" y="387" text-anchor="middle" fill="#595959" font-size="10">Turkey parent</text>
+          <text x="92" y="400" text-anchor="middle" fill="#595959" font-size="10">breeding stock</text>
+
+          <!-- Arrow: Turkey → Hatchery (diagonal dashed) -->
+          <line x1="175" y1="360" x2="265" y2="170" stroke="#424242" stroke-width="2" stroke-dasharray="3,2"/>
+          <polygon points="265,170 258,177 262,173" fill="#424242"/>
+          <text x="178" y="290" fill="#595959" font-size="9" font-style="italic">Turkey eggs</text>
+
+          <!-- Arrow: Hatchery → Turkey Meat (L-shaped) -->
+          <line x1="348" y1="170" x2="348" y2="362" stroke="#424242" stroke-width="2"/>
+          <line x1="348" y1="362" x2="780" y2="362" stroke="#424242" stroke-width="2"/>
+          <polygon points="780,362 772,357 772,367" fill="#424242"/>
+
+          <!-- Turkey Meat -->
+          <rect x="785" y="305" width="170" height="115" rx="12" fill="#FFEBEE" stroke="#EF9A9A" stroke-width="2" cursor="pointer" onclick="selectStage('turkeyMeat')"/>
+          <text x="870" y="350" text-anchor="middle" fill="#D32F2F" font-size="13" font-weight="bold">Turkey Meat</text>
+          <text x="870" y="366" text-anchor="middle" fill="#D32F2F" font-size="13" font-weight="bold">Production</text>
+          <text x="870" y="387" text-anchor="middle" fill="#595959" font-size="10">Turkey growing</text>
+          <text x="870" y="400" text-anchor="middle" fill="#595959" font-size="10">&amp; finishing</text>
+        </svg>
+
+        <div id="stageInfoPanel" class="info-banner" style="display:none;">
+          <button class="close-btn" onclick="document.getElementById('stageInfoPanel').style.display='none'">✕</button>
+          <h3 id="stageInfoTitle"></h3>
+          <p id="stageInfoDesc"></p>
+        </div>
+      </div>
+
+      <!-- Poultry 3-step wizard -->
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 1</span><span class="step-description">Define your animal groups</span></div>
+        <div style="margin-bottom: 12px;"><button class="btn btn-primary" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Group</button></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Animal Groups</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Chicken Hens</option><option>Chicken Cockerels</option><option>Chicken Roosters</option></select>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">Laying Hens</div>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 2</span><span class="step-description">Define management periods</span></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Management Periods</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <div style="font-size: var(--font-small); font-weight: 600;">Period #1</div>
+              <div style="font-size: var(--font-caption); color: var(--text-secondary);">Jan 1 – Dec 31</div>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">200 birds</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 3</span><span class="step-description">Configure management practices</span></div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'ptab-housing')">Housing</button>
+          <button class="tab-btn" onclick="switchTab(this, 'ptab-manure')">Manure</button>
+          <button class="tab-btn" onclick="switchTab(this, 'ptab-details')">Animal Details</button>
+        </div>
+        <div id="ptab-housing" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Housing type</label><select class="form-input"><option>Enclosed pasture</option><option>Confined – no barn</option><option>Housing (barn)</option></select><span class="form-unit"></span>
+            <label class="form-label">Bedding type</label><select class="form-input"><option>Straw</option><option>Wood shavings</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="ptab-manure" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Manure handling</label><select class="form-input"><option>Solid storage</option><option>Composting – passive</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="ptab-details" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Number of birds</label><input type="number" class="form-input" value="200"><span class="form-unit">head</span>
+            <label class="form-label">Egg production</label><input type="number" class="form-input" value="305"><span class="form-unit">eggs/year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIMATE DATA VIEW -->
+    <div id="view-climate" class="view">
+      <div class="header-bar"><div><h1>Climate Data</h1><div class="subtitle">Climate parameters for your farm location</div></div></div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Location</span><span class="step-description">Province and climate region</span></div>
+        <div class="form-grid">
+          <label class="form-label">Province</label>
+          <select class="form-input"><option>Alberta</option><option>British Columbia</option><option>Manitoba</option><option>Ontario</option><option>Quebec</option><option>Saskatchewan</option></select>
+          <span class="form-unit"></span>
+          <label class="form-label">SLC polygon</label>
+          <select class="form-input"><option>793001 – Edmonton area</option><option>793002 – Red Deer area</option></select>
+          <span class="form-unit"></span>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Data</span><span class="step-description">Monthly climate normals</span></div>
+        <div style="overflow-x: auto;">
+          <table class="data-grid">
+            <thead><tr><th>Month</th><th>Mean Temp (°C)</th><th>Precipitation (mm)</th><th>PET (mm)</th><th>Growing Days</th></tr></thead>
+            <tbody>
+              <tr><td>January</td><td>-14.2</td><td>22.1</td><td>0.0</td><td>0</td></tr>
+              <tr><td>February</td><td>-10.8</td><td>16.5</td><td>0.0</td><td>0</td></tr>
+              <tr><td>March</td><td>-5.1</td><td>20.3</td><td>2.1</td><td>3</td></tr>
+              <tr><td>April</td><td>4.2</td><td>28.7</td><td>32.5</td><td>15</td></tr>
+              <tr><td>May</td><td>10.8</td><td>51.2</td><td>75.3</td><td>28</td></tr>
+              <tr><td>June</td><td>14.9</td><td>83.4</td><td>102.1</td><td>30</td></tr>
+              <tr><td>July</td><td>17.1</td><td>68.9</td><td>118.5</td><td>31</td></tr>
+              <tr><td>August</td><td>16.3</td><td>55.2</td><td>98.7</td><td>31</td></tr>
+              <tr><td>September</td><td>10.9</td><td>38.6</td><td>52.3</td><td>22</td></tr>
+              <tr><td>October</td><td>4.8</td><td>21.8</td><td>18.9</td><td>10</td></tr>
+              <tr><td>November</td><td>-5.6</td><td>19.4</td><td>1.2</td><td>0</td></tr>
+              <tr><td>December</td><td>-12.1</td><td>18.9</td><td>0.0</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOIL DATA VIEW -->
+    <div id="view-soil" class="view">
+      <div class="header-bar"><div><h1>Soil Data</h1><div class="subtitle">Soil characteristics for your farm location</div></div></div>
+      <div class="step-container">
+        <div class="form-grid">
+          <label class="form-label">Soil texture</label>
+          <select class="form-input"><option>Medium (loam)</option><option>Fine (clay)</option><option>Coarse (sand)</option><option>Organic</option></select>
+          <span class="form-unit"></span>
+          <label class="form-label">Soil great group</label>
+          <select class="form-input"><option>Black Chernozem</option><option>Dark Brown Chernozem</option><option>Brown Chernozem</option></select>
+          <span class="form-unit"></span>
+          <label class="form-label">Top layer thickness</label>
+          <input type="number" class="form-input" value="25"><span class="form-unit">cm</span>
+          <label class="form-label">Proportion of sand</label>
+          <input type="number" class="form-input" value="35"><span class="form-unit">%</span>
+          <label class="form-label">Proportion of clay</label>
+          <input type="number" class="form-input" value="28"><span class="form-unit">%</span>
+          <label class="form-label">Organic carbon</label>
+          <input type="number" class="form-input" value="3.2"><span class="form-unit">%</span>
+          <label class="form-label">pH (water)</label>
+          <input type="number" class="form-input" value="6.5" step="0.1"><span class="form-unit"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT VIEW -->
+    <div id="view-about" class="view">
+      <div style="max-width: 700px; margin: 40px auto; text-align: center;">
+        <div class="sidebar-logo-placeholder" style="width: 120px; height: 120px; font-size: 48px; margin: 0 auto 24px;">H</div>
+        <h1 style="font-family: var(--heading-font); font-size: var(--font-h1); margin-bottom: 8px;">Holos</h1>
+        <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 24px;">Version 5.0.0-preview</p>
+        <div style="text-align: left; background: var(--bg-light); border-radius: var(--radius); padding: 24px; margin-bottom: 16px;">
+          <h3 style="margin-bottom: 8px;">About Holos</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">
+            Holos is a whole-farm model and software tool that estimates greenhouse gas (GHG) emissions
+            based on information entered for individual farms. The model was developed by Agriculture
+            and Agri-Food Canada.
+          </p>
+        </div>
+        <div style="text-align: left; background: var(--bg-light); border-radius: var(--radius); padding: 24px;">
+          <h3 style="margin-bottom: 8px;">Contact</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">
+            Agriculture and Agri-Food Canada<br>
+            Lethbridge Research and Development Centre<br>
+            5403 1st Avenue South, Lethbridge, AB T1J 4B1
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>Holos v5.0.0-preview — Agriculture and Agri-Food Canada</span>
+    <span>UI Mockup for Review</span>
+  </footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════════════════════════ */
+const categories = [
+  { name: 'Land Management', components: [
+    { type: 'Field', desc: 'Annual and perennial crop production with detailed management' },
+    { type: 'Crop Rotation', desc: 'Multi-year crop rotation planning and carbon modeling' },
+    { type: 'Shelterbelt', desc: 'Tree-based windbreak and carbon sequestration' }
+  ]},
+  { name: 'Beef Production', components: [
+    { type: 'Cow-Calf', desc: 'Cow-calf operation including breeding herd and calves' },
+    { type: 'Backgrounding', desc: 'Growing cattle from weaning to feedlot entry' },
+    { type: 'Finishing', desc: 'Feedlot finishing of cattle for market' }
+  ]},
+  { name: 'Dairy', components: [
+    { type: 'Dairy', desc: 'Full dairy operation with lactating, dry, heifer, and calf stages' }
+  ]},
+  { name: 'Swine', components: [
+    { type: 'Farrow-to-Wean', desc: 'Sow farrow-to-wean operation' },
+    { type: 'Iso-Wean', desc: 'Isolated weaner pig operation' },
+    { type: 'Farrow-to-Finish', desc: 'Combined farrowing and finishing operation' },
+    { type: 'Grower-to-Finish', desc: 'Growing and finishing pigs for market' }
+  ]},
+  { name: 'Poultry', isPoultry: true, components: [
+    { type: 'Chicken Multiplier Breeder', desc: 'Parent stock producing fertilized eggs for hatcheries' },
+    { type: 'Multiplier Hatchery', desc: 'Incubation facility producing day-old chicks' },
+    { type: 'Chicken Pullet Farm', desc: 'Rearing facility growing chicks to production age' },
+    { type: 'Chicken Egg Production', desc: 'Commercial table egg laying operation' },
+    { type: 'Chicken Meat Production', desc: 'Broiler growing and finishing operation' },
+    { type: 'Turkey Multiplier Breeder', desc: 'Turkey parent breeding stock' },
+    { type: 'Turkey Meat Production', desc: 'Turkey growing and finishing operation' }
+  ]},
+  { name: 'Other Livestock', components: [
+    { type: 'Bison', desc: 'Bison ranching operation' },
+    { type: 'Deer', desc: 'Deer farming operation' },
+    { type: 'Goats', desc: 'Goat production (dairy or meat)' },
+    { type: 'Horses', desc: 'Horse keeping and breeding' },
+    { type: 'Llama', desc: 'Llama and alpaca operation' },
+    { type: 'Mules', desc: 'Mule keeping operation' }
+  ]},
+  { name: 'Sheep', components: [
+    { type: 'Lambs & Ewes', desc: 'Ewe flock with lamb production' },
+    { type: 'Rams', desc: 'Ram keeping for breeding' },
+    { type: 'Sheep Feedlot', desc: 'Feedlot finishing of lambs' }
+  ]},
+  { name: 'Infrastructure', components: [
+    { type: 'Anaerobic Digestion', desc: 'Biogas production from manure and organic waste' }
+  ]}
+];
+
+let myComponents = [
+  { name: 'East Pasture', type: 'Field', desc: 'Main grazing field — 160 acres mixed grass', category: 'Land Management' },
+  { name: 'Cow-Calf Herd', type: 'Cow-Calf', desc: '150 head cow-calf operation on native pasture', category: 'Beef Production' },
+  { name: 'Egg Barn', type: 'Chicken Egg Production', desc: '2000 laying hens — free run barn system', category: 'Poultry', isPoultry: true }
+];
+
+let animalGroupCounter = 1;
+let mgmtPeriodCounter = 1;
+
+/* ═══════════════════════════════════════════════════════════════
+   FULLSCREEN FLOW NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+function goTo(screenId) {
+  document.querySelectorAll('.fullscreen-view').forEach(v => v.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+}
+
+function goToLoading() {
+  goTo('screen-loading');
+  // Animate progress bar
+  const bar = document.getElementById('progressBar');
+  const msg = document.getElementById('loadingMsg');
+  let pct = 0;
+  const steps = [
+    { p: 25, t: 'Initializing geographic data...' },
+    { p: 50, t: 'Loading yield tables...' },
+    { p: 75, t: 'Preparing climate data...' },
+    { p: 100, t: 'Ready!' }
+  ];
+  let step = 0;
+  const iv = setInterval(() => {
+    if (step < steps.length) {
+      bar.style.width = steps[step].p + '%';
+      msg.textContent = steps[step].t;
+      step++;
+    } else {
+      clearInterval(iv);
+      setTimeout(() => goTo('screen-farmOptions'), 400);
+    }
+  }, 600);
+}
+
+function enterMainApp() {
+  // Hide all fullscreen views and show main app
+  document.querySelectorAll('.fullscreen-view').forEach(v => v.classList.remove('active'));
+  document.getElementById('appShell').classList.add('active');
+  renderMyComponents();
+  renderCategories();
+  renderAnimalGroups();
+}
+
+function selectFarm(el) {
+  document.querySelectorAll('.farm-list-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP VIEW NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+function showView(viewName) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const view = document.getElementById('view-' + viewName);
+  if (view) view.classList.add('active');
+
+  // Update sidebar component highlighting
+  if (!['editComponent','poultryComponent'].includes(viewName)) {
+    document.querySelectorAll('.sidebar-component-card').forEach(c => c.classList.remove('active'));
+  }
+  if (viewName === 'chooseComponents') {
+    document.getElementById('categoryPanel').style.display = '';
+    document.getElementById('componentPanel').style.display = 'none';
+    renderCategories();
+  }
+  document.querySelector('.content-region').scrollTop = 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MY COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
+function renderMyComponents() {
+  const list = document.getElementById('sidebarComponentList');
+  if (myComponents.length === 0) {
+    list.innerHTML = '<div class="sidebar-empty"><h3>No components added</h3><p>Click "Edit Components" below to add components to your farm.</p></div>';
+    return;
+  }
+  list.innerHTML = myComponents.map((c, i) =>
+    '<div class="sidebar-component-card" onclick="openComponent(' + i + ')" data-idx="' + i + '">' +
+    '<button class="card-delete" onclick="event.stopPropagation(); deleteComponent(' + i + ')">Delete</button>' +
+    '<div class="card-title">' + c.name + '</div>' +
+    '<div class="card-type">' + c.type + '</div>' +
+    '<div class="card-desc">' + c.desc + '</div></div>'
+  ).join('');
+}
+
+function deleteComponent(i) { myComponents.splice(i, 1); renderMyComponents(); showView('myComponents'); }
+
+function openComponent(i) {
+  const comp = myComponents[i];
+  // Highlight sidebar card
+  document.querySelectorAll('.sidebar-component-card').forEach(c => c.classList.remove('active'));
+  const card = document.querySelector('.sidebar-component-card[data-idx="' + i + '"]');
+  if (card) card.classList.add('active');
+
+  if (comp.isPoultry) {
+    document.getElementById('poultryTitle').value = comp.name;
+    showView('poultryComponent');
+  } else {
+    document.getElementById('editComponentTitle').value = comp.name;
+    showView('editComponent');
+    renderAnimalGroups();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CHOOSE COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
+function renderCategories() {
+  const c = document.getElementById('categoryCards');
+  c.innerHTML = categories.map((cat, i) =>
+    '<div class="category-card" onclick="showCategoryComponents(' + i + ')">' +
+    '<div class="cat-name">' + cat.name + '</div>' +
+    '<div class="cat-count"><strong>' + cat.components.length + '</strong> <span>components available</span></div></div>'
+  ).join('');
+}
+
+function showCategoryComponents(ci) {
+  const cat = categories[ci];
+  document.getElementById('categoryPanel').style.display = 'none';
+  document.getElementById('componentPanel').style.display = '';
+  document.getElementById('categoryTitle').textContent = cat.name;
+  document.getElementById('componentCards').innerHTML = cat.components.map(comp =>
+    '<div class="choose-card"><div class="comp-name">' + comp.type + '</div>' +
+    '<div class="comp-desc">' + comp.desc + '</div>' +
+    '<div style="margin-top:auto; padding-top:12px;">' +
+    '<button class="btn btn-primary" style="font-size:var(--font-small); padding:8px 16px;" ' +
+    'onclick="addComponent(\'' + comp.type + '\', \'' + comp.desc.replace(/'/g, "\\'") + '\', \'' + cat.name + '\', ' + (cat.isPoultry||false) + ')">Add to Farm</button></div></div>'
+  ).join('');
+}
+
+function backToCategories() {
+  document.getElementById('categoryPanel').style.display = '';
+  document.getElementById('componentPanel').style.display = 'none';
+}
+
+function addComponent(type, desc, category, isPoultry) {
+  myComponents.push({ name: 'My ' + type, type: type, desc: desc, category: category, isPoultry: isPoultry });
+  renderMyComponents();
+  // Auto-select the newly added component
+  openComponent(myComponents.length - 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENT EDITING
+   ═══════════════════════════════════════════════════════════════ */
+function renderAnimalGroups() {
+  const tl = document.getElementById('animalGroupTimeline');
+  if (tl && tl.children.length === 0) addAnimalGroup();
+}
+
+function addAnimalGroup() {
+  animalGroupCounter++;
+  const tl = document.getElementById('animalGroupTimeline');
+  const card = document.createElement('div');
+  card.className = 'timeline-card';
+  card.innerHTML = '<select class="form-input" style="min-width:120px; font-size:12px;"><option>Not Selected</option><option>Bison</option><option>Goats</option><option>Horses</option><option>Deer</option></select>' +
+    '<div style="font-size:13px; font-weight:500; margin-top:4px;">Group #' + animalGroupCounter + '</div>' +
+    '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove()">Delete</button>';
+  card.onclick = function(e) {
+    if (['BUTTON','SELECT','OPTION'].includes(e.target.tagName)) return;
+    tl.querySelectorAll('.timeline-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  };
+  tl.appendChild(card);
+}
+
+function addManagementPeriod() {
+  mgmtPeriodCounter++;
+  const tl = document.getElementById('mgmtPeriodTimeline');
+  const card = document.createElement('div');
+  card.className = 'timeline-card';
+  card.style.minWidth = '180px';
+  card.innerHTML = '<div style="font-size:var(--font-small); font-weight:600;">Period #' + mgmtPeriodCounter + '</div>' +
+    '<div style="font-size:var(--font-caption); color:var(--text-secondary); margin-top:4px;">Jan 1 – Dec 31</div>' +
+    '<div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:8px;">365 days</div>' +
+    '<div style="font-size:13px; font-weight:500; margin-top:4px;">50 animals</div>' +
+    '<button class="btn-danger" style="margin-top:8px; font-size:11px; padding:4px 10px;" onclick="this.closest(\'.timeline-card\').remove()">Delete</button>';
+  card.onclick = function(e) {
+    if (e.target.tagName === 'BUTTON') return;
+    tl.querySelectorAll('.timeline-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  };
+  tl.appendChild(card);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TABS
+   ═══════════════════════════════════════════════════════════════ */
+function switchTab(btn, tabId) {
+  const bar = btn.parentElement;
+  const container = bar.parentElement;
+  bar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   POULTRY DIAGRAM
+   ═══════════════════════════════════════════════════════════════ */
+const stageInfo = {
+  breeder: { title: 'Chicken Multiplier Breeder', desc: 'The multiplier breeder facility maintains parent stock that produce fertilized eggs. These eggs are sent to the multiplier hatchery. Breeder flocks are typically replaced every 40-60 weeks.' },
+  hatchery: { title: 'Multiplier Hatchery', desc: 'The hatchery receives fertilized eggs and incubates them for 21 days (chickens) or 28 days (turkeys). Day-old chicks are then distributed to pullet farms or meat production facilities.' },
+  pullet: { title: 'Pullet Farm (Rearing)', desc: 'The pullet farm raises chicks from day-old to point-of-lay (approximately 19 weeks). Birds are then transferred to egg or meat production facilities.' },
+  egg: { title: 'Chicken Egg Production', desc: 'Commercial laying hens produce table eggs. A typical production cycle lasts 52-72 weeks. At the end, spent hens may be processed and replacement pullets are brought in.' },
+  chickenMeat: { title: 'Chicken Meat Production', desc: 'Broiler chickens are raised for meat, typically reaching market weight in 35-42 days. Operations manage housing, feeding, and environment for optimal growth.' },
+  turkeyBreeder: { title: 'Turkey Multiplier Breeder', desc: 'Turkey breeder facilities maintain parent stock for turkey meat production. Turkey hens produce fertilized eggs sent to the hatchery.' },
+  turkeyMeat: { title: 'Turkey Meat Production', desc: 'Turkey meat production raises turkeys from poults to market weight. Hens reach market in 12-14 weeks, toms in 16-20 weeks.' }
+};
+
+function selectStage(stage) {
+  const info = stageInfo[stage];
+  if (!info) return;
+  document.getElementById('stageInfoTitle').textContent = info.title;
+  document.getElementById('stageInfoDesc').textContent = info.desc;
+  document.getElementById('stageInfoPanel').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
