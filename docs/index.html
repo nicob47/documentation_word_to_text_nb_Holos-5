@@ -340,10 +340,28 @@ body {
 /* ═══════════════════════════════════════════════════════════════
    APP SHELL (main app after setup)
    ═══════════════════════════════════════════════════════════════ */
+/* Toolbar */
+.toolbar {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-primary); color: #fff; padding: 0 16px; height: 40px;
+  font-size: var(--font-small);
+}
+.toolbar-left { display: flex; align-items: center; gap: 8px; }
+.toolbar-brand { font-weight: 700; font-size: 15px; letter-spacing: 0.5px; }
+.toolbar-sep { opacity: 0.4; }
+.toolbar-farm-name { opacity: 0.85; font-size: 12px; }
+.toolbar-center, .toolbar-right { display: flex; align-items: center; gap: 2px; }
+.toolbar-btn {
+  background: none; border: none; color: #fff; font-size: 12px; padding: 5px 10px;
+  border-radius: 4px; cursor: pointer; opacity: 0.85; white-space: nowrap;
+}
+.toolbar-btn:hover { background: rgba(255,255,255,0.15); opacity: 1; }
+
 .app-shell {
   display: none;
   grid-template-columns: var(--sidebar-width) 1fr;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr auto;
   height: 100vh;
   background: var(--bg-white);
 }
@@ -356,7 +374,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-  grid-row: 1 / 3;
+  grid-row: 2 / 4;
   background: var(--bg-light);
   border-right: 1px solid var(--border-light);
   display: flex;
@@ -722,11 +740,11 @@ select.form-input { cursor: pointer; }
 
 /* Mockup badge */
 .mockup-badge {
-  position: fixed; top: 0; right: 0;
+  position: fixed; top: 42px; right: 0;
   background: var(--warning); color: var(--text-primary);
-  padding: 4px 16px 4px 20px;
-  font-size: 11px; font-weight: bold;
-  z-index: 1000; border-bottom-left-radius: 8px;
+  padding: 3px 12px 3px 16px;
+  font-size: 10px; font-weight: bold;
+  z-index: 1000; border-bottom-left-radius: 6px;
   letter-spacing: 0.5px;
 }
 </style>
@@ -832,7 +850,7 @@ select.form-input { cursor: pointer; }
     <h1>Create New Farm</h1>
     <div class="field">
       <label>Farm Name</label>
-      <input type="text" placeholder="Enter a name for your farm" value="My Farm">
+      <input type="text" id="farmNameInput" placeholder="Enter a name for your farm" value="My Farm">
     </div>
     <div class="field">
       <label>Comments (optional)</label>
@@ -934,6 +952,25 @@ select.form-input { cursor: pointer; }
      MAIN APP SHELL (after setup)
      ═══════════════════════════════════════════════════════════════ -->
 <div class="app-shell" id="appShell">
+  <!-- TOOLBAR -->
+  <div class="toolbar" id="appToolbar">
+    <div class="toolbar-left">
+      <span class="toolbar-brand">Holos</span>
+      <span class="toolbar-sep">|</span>
+      <span class="toolbar-farm-name" id="toolbarFarmName">My Farm</span>
+    </div>
+    <div class="toolbar-center">
+      <button class="toolbar-btn" onclick="showView('myComponents'); renderMyComponents();" title="Components">📦 Components</button>
+      <button class="toolbar-btn" onclick="showView('results')" title="Results">📊 Results</button>
+      <button class="toolbar-btn" onclick="showView('climate')" title="Climate Data">🌡️ Climate</button>
+      <button class="toolbar-btn" onclick="showView('soil')" title="Soil Data">🌱 Soil</button>
+    </div>
+    <div class="toolbar-right">
+      <button class="toolbar-btn" onclick="showView('options')" title="Settings">⚙️ Settings</button>
+      <button class="toolbar-btn" onclick="showView('about')" title="About">ℹ️ About</button>
+    </div>
+  </div>
+
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-header-bar">
@@ -1368,6 +1405,453 @@ select.form-input { cursor: pointer; }
       </div>
     </div>
 
+    <!-- ROTATION COMPONENT VIEW -->
+    <div id="view-rotationComponent" class="view">
+      <div><input type="text" class="view-title-input" id="rotationComponentTitle" value="My Crop Rotation"></div>
+      <div class="title-underline"></div>
+
+      <!-- Step 1: Rotation Parameters -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 1</span>
+          <span class="step-description">Define rotation parameters</span>
+        </div>
+        <div style="display:flex; gap:32px; flex-wrap:wrap;">
+          <div>
+            <h4 style="margin-bottom:12px; font-size:var(--font-small); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Time Period</h4>
+            <div class="form-grid">
+              <label class="form-label">Start year</label>
+              <input type="number" class="form-input" value="2020" step="1">
+              <span class="form-unit">year</span>
+              <label class="form-label">End year</label>
+              <input type="number" class="form-input" value="2025" step="1">
+              <span class="form-unit">year</span>
+            </div>
+          </div>
+          <div style="width:1px; background:var(--border-light);"></div>
+          <div>
+            <h4 style="margin-bottom:12px; font-size:var(--font-small); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Field Configuration</h4>
+            <div class="form-grid">
+              <label class="form-label">Number of fields</label>
+              <input type="number" class="form-input" value="3" min="1" max="20" step="1">
+              <span class="form-unit"></span>
+              <label class="form-label">Field size</label>
+              <input type="number" class="form-input" value="65" step="0.1">
+              <span class="form-unit">ha</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px; padding:12px 16px; background:var(--bg-light); border-radius:var(--radius-sm); font-size:var(--font-small); color:var(--text-secondary);">
+          <strong>Summary:</strong> Total area: <strong>195 ha</strong> · Fields: <strong>3</strong> · Years per field: <strong>6</strong> · Total crop-years: <strong>18</strong>
+        </div>
+      </div>
+
+      <!-- Step 2: Build Rotation Sequence -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 2</span>
+          <span class="step-description">Build your rotation sequence</span>
+        </div>
+        <div style="margin-bottom: 12px; display:flex; align-items:center; gap:16px;">
+          <button class="btn btn-primary" onclick="addRotationCrop()" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Crop</button>
+          <span style="font-size:var(--font-small); color:var(--text-secondary);">Crops in sequence: <strong id="rotationCropCount">3</strong></span>
+        </div>
+        <div class="timeline-container">
+          <div class="timeline-header">Rotation Sequence</div>
+          <div class="timeline-scroll" id="rotationTimeline">
+            <div class="timeline-card selected" style="min-width: 150px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 1</div>
+              <select class="form-input" style="min-width:110px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option></select>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+            <div class="timeline-card" style="min-width: 150px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 2</div>
+              <select class="form-input" style="min-width:110px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option></select>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+            <div class="timeline-card" style="min-width: 150px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 3</div>
+              <select class="form-input" style="min-width:110px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option></select>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+          </div>
+          <div class="timeline-hint">Tip: Define one cycle — it repeats across all fields</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Rotation Preview (field × year grid) -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 3</span>
+          <span class="step-description">Rotation preview — field assignments by year</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-grid">
+            <thead>
+              <tr><th></th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="font-weight:600;">Field 1</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td></tr>
+              <tr><td style="font-weight:600;">Field 2</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td></tr>
+              <tr><td style="font-weight:600;">Field 3</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Step 4: Crop detail editing -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 4</span>
+          <span class="step-description">Configure details for selected crop</span>
+        </div>
+        <div style="margin-bottom:12px; padding:10px 14px; background:var(--selection-bg); border:1px solid var(--selection-border); border-radius:var(--radius-sm); font-size:var(--font-small);">
+          Currently editing: <strong>Wheat</strong> · Year 1 · Field 1
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'tab-rot-general')">General</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-fertilizer')">Fertilizer</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-manure')">Manure</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-grazing')">Grazing</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-soil')">Soil</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-residue')">Residue</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-economics')">Economics</button>
+        </div>
+        <div id="tab-rot-general" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Crop type</label>
+            <select class="form-input"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Yield</label>
+            <input type="number" class="form-input" value="3200" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+            <label class="form-label">Tillage type</label>
+            <select class="form-input"><option>Reduced tillage</option><option>No-till</option><option>Intensive tillage</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Irrigation</label>
+            <select class="form-input"><option>Rainfed</option><option>Irrigated</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-rot-fertilizer" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Nitrogen rate</label>
+            <input type="number" class="form-input" value="75" step="1">
+            <span class="form-unit">kg N ha⁻¹</span>
+            <label class="form-label">Phosphorus rate</label>
+            <input type="number" class="form-input" value="20" step="1">
+            <span class="form-unit">kg P₂O₅ ha⁻¹</span>
+          </div>
+        </div>
+        <div id="tab-rot-manure" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Manure applied</label>
+            <select class="form-input"><option>No</option><option>Yes</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Amount applied</label>
+            <input type="number" class="form-input" value="0" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+          </div>
+        </div>
+        <div id="tab-rot-grazing" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Grazed</label>
+            <select class="form-input"><option>No</option><option>Yes</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-rot-soil" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Soil texture override</label>
+            <select class="form-input"><option>Use farm default</option><option>Fine (clay)</option><option>Medium (loam)</option><option>Coarse (sand)</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-rot-residue" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Above-ground residue</label>
+            <input type="number" class="form-input" value="2800" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+            <label class="form-label">Below-ground residue</label>
+            <input type="number" class="form-input" value="1200" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+          </div>
+        </div>
+        <div id="tab-rot-economics" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Crop price</label>
+            <input type="number" class="form-input" value="310" step="1">
+            <span class="form-unit">$ t⁻¹</span>
+            <label class="form-label">Cost of production</label>
+            <input type="number" class="form-input" value="450" step="1">
+            <span class="form-unit">$ ha⁻¹</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAIRY COMPONENT VIEW -->
+    <div id="view-dairyComponent" class="view">
+      <div><input type="text" class="view-title-input" id="dairyComponentTitle" value="My Dairy Operation"></div>
+      <div class="title-underline"></div>
+
+      <!-- Lifecycle Visualization -->
+      <div class="diagram-container">
+        <div class="diagram-title">Dairy Lifecycle</div>
+        <div class="diagram-subtitle">Click on a stage to learn more</div>
+        <svg viewBox="0 0 1000 280" width="100%" style="max-width:1000px; display:block; margin:0 auto;">
+          <!-- Calf -->
+          <rect x="20" y="40" width="180" height="100" rx="12" fill="#E3F2FD" stroke="#64B5F6" stroke-width="2" cursor="pointer" onclick="selectDairyStage('calf')"/>
+          <text x="110" y="78" text-anchor="middle" fill="#1565C0" font-size="14" font-weight="bold">Calf</text>
+          <text x="110" y="98" text-anchor="middle" fill="#595959" font-size="10">Birth to 4 months</text>
+          <text x="110" y="114" text-anchor="middle" fill="#595959" font-size="10">Milk &amp; starter feed</text>
+
+          <!-- Arrow: Calf → Heifer -->
+          <line x1="200" y1="90" x2="260" y2="90" stroke="#424242" stroke-width="2"/>
+          <polygon points="260,90 252,85 252,95" fill="#424242"/>
+          <text x="230" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Weaning</text>
+
+          <!-- Heifer -->
+          <rect x="265" y="40" width="180" height="100" rx="12" fill="#F3E5F5" stroke="#CE93D8" stroke-width="2" cursor="pointer" onclick="selectDairyStage('heifer')"/>
+          <text x="355" y="78" text-anchor="middle" fill="#7B1FA2" font-size="14" font-weight="bold">Heifer</text>
+          <text x="355" y="98" text-anchor="middle" fill="#595959" font-size="10">4 months to first calving</text>
+          <text x="355" y="114" text-anchor="middle" fill="#595959" font-size="10">Growing phase</text>
+
+          <!-- Arrow: Heifer → Lactating -->
+          <line x1="445" y1="90" x2="505" y2="90" stroke="#424242" stroke-width="2"/>
+          <polygon points="505,90 497,85 497,95" fill="#424242"/>
+          <text x="475" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">First Calving</text>
+
+          <!-- Lactating -->
+          <rect x="510" y="40" width="180" height="100" rx="12" fill="#E8F5E9" stroke="#81C784" stroke-width="2" cursor="pointer" onclick="selectDairyStage('lactating')"/>
+          <text x="600" y="78" text-anchor="middle" fill="#2E7D32" font-size="14" font-weight="bold">Lactating Cow</text>
+          <text x="600" y="98" text-anchor="middle" fill="#595959" font-size="10">Milk production</text>
+          <text x="600" y="114" text-anchor="middle" fill="#595959" font-size="10">~305 lactation days</text>
+
+          <!-- Arrow: Lactating → Dry -->
+          <line x1="690" y1="90" x2="750" y2="90" stroke="#424242" stroke-width="2"/>
+          <polygon points="750,90 742,85 742,95" fill="#424242"/>
+          <text x="720" y="80" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Drying Off</text>
+
+          <!-- Dry -->
+          <rect x="755" y="40" width="180" height="100" rx="12" fill="#FFF3E0" stroke="#FFB74D" stroke-width="2" cursor="pointer" onclick="selectDairyStage('dry')"/>
+          <text x="845" y="78" text-anchor="middle" fill="#F57C00" font-size="14" font-weight="bold">Dry Cow</text>
+          <text x="845" y="98" text-anchor="middle" fill="#595959" font-size="10">Pre-calving rest</text>
+          <text x="845" y="114" text-anchor="middle" fill="#595959" font-size="10">~60 dry days</text>
+
+          <!-- Feedback arc: Dry → Lactating -->
+          <path d="M 845,140 Q 720,220 600,140" fill="none" stroke="#F57C00" stroke-width="2" stroke-dasharray="4,2"/>
+          <polygon points="600,140 607,148 604,136" fill="#F57C00"/>
+          <text x="722" y="200" text-anchor="middle" fill="#F57C00" font-size="9" font-weight="bold">Calving cycle repeats</text>
+
+          <!-- Replacement arrow from Heifer -->
+          <line x1="355" y1="140" x2="355" y2="230" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="355" y="248" text-anchor="middle" fill="#2E7D32" font-size="9">Replacement heifers enter herd</text>
+
+          <!-- Culling arrow from Lactating -->
+          <line x1="600" y1="140" x2="600" y2="230" stroke="#D32F2F" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="600" y="248" text-anchor="middle" fill="#D32F2F" font-size="9">Culling (based on replacement rate)</text>
+        </svg>
+        <div id="dairyStageInfoPanel" class="info-banner" style="display:none;">
+          <button class="close-btn" onclick="document.getElementById('dairyStageInfoPanel').style.display='none'">✕</button>
+          <h3 id="dairyStageInfoTitle"></h3>
+          <p id="dairyStageInfoDesc"></p>
+        </div>
+      </div>
+
+      <!-- Herd Composition (Steps 1 & 2) -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 1 &amp; 2</span>
+          <span class="step-description">Herd composition and stage population</span>
+        </div>
+        <div class="form-grid">
+          <label class="form-label">Total herd size</label>
+          <input type="number" class="form-input" value="120" step="1">
+          <span class="form-unit">head</span>
+          <label class="form-label">Lactating cows</label>
+          <input type="number" class="form-input" value="80" step="1">
+          <span class="form-unit">head</span>
+          <label class="form-label">Dry cows</label>
+          <input type="number" class="form-input" value="15" step="1">
+          <span class="form-unit">head</span>
+          <label class="form-label">Heifers</label>
+          <input type="number" class="form-input" value="20" step="1">
+          <span class="form-unit">head</span>
+          <label class="form-label">Calves</label>
+          <input type="number" class="form-input" value="25" step="1">
+          <span class="form-unit">head</span>
+          <label class="form-label">Replacement rate</label>
+          <input type="number" class="form-input" value="25" step="1">
+          <span class="form-unit">%</span>
+          <label class="form-label">Lactation days</label>
+          <input type="number" class="form-input" value="305" step="1">
+          <span class="form-unit">days</span>
+          <label class="form-label">Dry period</label>
+          <input type="number" class="form-input" value="60" step="1">
+          <span class="form-unit">days</span>
+        </div>
+      </div>
+
+      <!-- Step 3: Stage Configuration -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 3</span>
+          <span class="step-description">Configure selected lifecycle stage</span>
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'tab-dairy-lactating')">Lactating</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-dry')">Dry</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-heifer')">Heifer</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-dairy-calf')">Calf</button>
+        </div>
+        <div id="tab-dairy-lactating" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Milk production</label>
+            <input type="number" class="form-input" value="9800" step="100">
+            <span class="form-unit">kg/year</span>
+            <label class="form-label">Milk fat content</label>
+            <input type="number" class="form-input" value="3.9" step="0.1">
+            <span class="form-unit">%</span>
+            <label class="form-label">Milk protein content</label>
+            <input type="number" class="form-input" value="3.2" step="0.1">
+            <span class="form-unit">%</span>
+            <label class="form-label">Feed intake</label>
+            <input type="number" class="form-input" value="22.5" step="0.1">
+            <span class="form-unit">kg DM/day</span>
+            <label class="form-label">Housing type</label>
+            <select class="form-input"><option>Free-stall barn</option><option>Tie-stall barn</option><option>Bedded pack</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Manure handling</label>
+            <select class="form-input"><option>Liquid (slurry)</option><option>Solid storage</option><option>Daily spread</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-dairy-dry" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Feed intake</label>
+            <input type="number" class="form-input" value="14.0" step="0.1">
+            <span class="form-unit">kg DM/day</span>
+            <label class="form-label">Housing type</label>
+            <select class="form-input"><option>Free-stall barn</option><option>Bedded pack</option><option>Pasture</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-dairy-heifer" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Initial weight</label>
+            <input type="number" class="form-input" value="65">
+            <span class="form-unit">kg</span>
+            <label class="form-label">Final weight</label>
+            <input type="number" class="form-input" value="600">
+            <span class="form-unit">kg</span>
+            <label class="form-label">Average daily gain</label>
+            <input type="number" class="form-input" value="0.85" step="0.01">
+            <span class="form-unit">kg/day</span>
+          </div>
+        </div>
+        <div id="tab-dairy-calf" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Birth weight</label>
+            <input type="number" class="form-input" value="40">
+            <span class="form-unit">kg</span>
+            <label class="form-label">Weaning weight</label>
+            <input type="number" class="form-input" value="65">
+            <span class="form-unit">kg</span>
+            <label class="form-label">Milk consumption</label>
+            <input type="number" class="form-input" value="4.5" step="0.1">
+            <span class="form-unit">L/day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS VIEW -->
+    <div id="view-results" class="view">
+      <div class="header-bar">
+        <div><h1>Results</h1><div class="subtitle">Greenhouse gas emissions and environmental indicators</div></div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-secondary" style="font-size:var(--font-small);">Export to CSV</button>
+        </div>
+      </div>
+
+      <!-- Results tab navigation -->
+      <div class="tab-bar" style="margin-bottom:0;">
+        <button class="tab-btn active" onclick="switchTab(this, 'tab-results-ghg')">GHG Emissions</button>
+        <button class="tab-btn" onclick="switchTab(this, 'tab-results-climate')">Climate Data</button>
+        <button class="tab-btn" onclick="switchTab(this, 'tab-results-soil')">Soil Carbon</button>
+      </div>
+
+      <!-- GHG Results -->
+      <div id="tab-results-ghg" class="tab-content active" style="display:block;">
+        <div class="step-container">
+          <h3 style="margin-bottom:16px;">Emissions Summary by Component</h3>
+          <div style="overflow-x:auto;">
+            <table class="data-grid">
+              <thead>
+                <tr><th>Component</th><th>Enteric CH₄<br><small>kg CO₂e</small></th><th>Manure CH₄<br><small>kg CO₂e</small></th><th>Manure N₂O<br><small>kg CO₂e</small></th><th>Soil N₂O<br><small>kg CO₂e</small></th><th>Energy CO₂<br><small>kg CO₂e</small></th><th>Total<br><small>kg CO₂e</small></th></tr>
+              </thead>
+              <tbody>
+                <tr><td>East Pasture</td><td>—</td><td>—</td><td>—</td><td>12,450</td><td>3,200</td><td style="font-weight:600;">15,650</td></tr>
+                <tr><td>Cow-Calf Herd</td><td>245,800</td><td>18,400</td><td>8,920</td><td>15,200</td><td>1,850</td><td style="font-weight:600;">290,170</td></tr>
+                <tr><td>Egg Barn</td><td>—</td><td>3,200</td><td>1,450</td><td>—</td><td>4,600</td><td style="font-weight:600;">9,250</td></tr>
+                <tr style="font-weight:700; background:var(--bg-light);"><td>FARM TOTAL</td><td>245,800</td><td>21,600</td><td>10,370</td><td>27,650</td><td>9,650</td><td style="color:var(--danger);">315,070</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:24px; padding:20px; background:var(--bg-light); border-radius:var(--radius); text-align:center;">
+            <div style="font-size:var(--font-caption); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Total Farm Emissions</div>
+            <div style="font-size:36px; font-weight:700; color:var(--danger); margin:8px 0;">315.1 t CO₂e</div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary);">Emissions intensity: <strong>2.03 t CO₂e ha⁻¹</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Climate Results -->
+      <div id="tab-results-climate" class="tab-content">
+        <div class="step-container">
+          <h3 style="margin-bottom:16px;">Climate Data Results</h3>
+          <div style="overflow-x:auto;">
+            <table class="data-grid">
+              <thead>
+                <tr><th>Latitude</th><th>Longitude</th><th>Year</th><th>Total PPT (mm)</th><th>Total PET (mm)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>49.695</td><td>-112.819</td><td>2020</td><td>425.1</td><td>501.6</td></tr>
+                <tr><td>49.695</td><td>-112.819</td><td>2021</td><td>398.7</td><td>512.3</td></tr>
+                <tr><td>49.695</td><td>-112.819</td><td>2022</td><td>441.3</td><td>498.1</td></tr>
+                <tr><td>49.695</td><td>-112.819</td><td>2023</td><td>387.9</td><td>524.5</td></tr>
+                <tr><td>49.695</td><td>-112.819</td><td>2024</td><td>412.6</td><td>507.8</td></tr>
+                <tr><td>49.695</td><td>-112.819</td><td>2025</td><td>435.2</td><td>495.3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soil Results -->
+      <div id="tab-results-soil" class="tab-content">
+        <div class="step-container">
+          <h3 style="margin-bottom:16px;">Soil Carbon Change</h3>
+          <div style="overflow-x:auto;">
+            <table class="data-grid">
+              <thead>
+                <tr><th>Field</th><th>Province</th><th>Soil Great Group</th><th>Soil Texture</th><th>Clay %</th><th>pH</th><th>SOC (Mg C ha⁻¹)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>East Pasture</td><td>Alberta</td><td>Black Chernozem</td><td>Medium (loam)</td><td>28</td><td>6.5</td><td>82.4</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:24px; padding:20px; background:var(--bg-light); border-radius:var(--radius); text-align:center;">
+            <div style="font-size:var(--font-caption); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Net Soil Carbon Change</div>
+            <div style="font-size:36px; font-weight:700; color:var(--success); margin:8px 0;">+1.2 t C ha⁻¹</div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary);">Soil is sequestering carbon under current management</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CLIMATE DATA VIEW -->
     <div id="view-climate" class="view">
       <div class="header-bar"><div><h1>Climate Data</h1><div class="subtitle">Climate parameters for your farm location</div></div></div>
@@ -1607,6 +2091,9 @@ function enterMainApp() {
   // Hide all fullscreen views and show main app
   document.querySelectorAll('.fullscreen-view').forEach(v => v.classList.remove('active'));
   document.getElementById('appShell').classList.add('active');
+  // Set toolbar farm name from creation form or selected farm
+  const farmNameInput = document.getElementById('farmNameInput');
+  if (farmNameInput && farmNameInput.value) setToolbarFarmName(farmNameInput.value);
   renderMyComponents();
   renderCategories();
   renderAnimalGroups();
@@ -1703,9 +2190,15 @@ function openComponent(i) {
   if (comp.isPoultry) {
     document.getElementById('poultryTitle').value = comp.name;
     showView('poultryComponent');
+  } else if (comp.type === 'Crop Rotation') {
+    document.getElementById('rotationComponentTitle').value = comp.name;
+    showView('rotationComponent');
   } else if (comp.category === 'Land Management') {
     document.getElementById('fieldComponentTitle').value = comp.name;
     showView('fieldComponent');
+  } else if (comp.type === 'Dairy') {
+    document.getElementById('dairyComponentTitle').value = comp.name;
+    showView('dairyComponent');
   } else {
     document.getElementById('editComponentTitle').value = comp.name;
     showView('editComponent');
@@ -1843,6 +2336,53 @@ function selectStage(stage) {
   document.getElementById('stageInfoTitle').textContent = info.title;
   document.getElementById('stageInfoDesc').textContent = info.desc;
   document.getElementById('stageInfoPanel').style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DAIRY STAGE INFO
+   ═══════════════════════════════════════════════════════════════ */
+const dairyStageInfo = {
+  calf: { title: 'Calf Stage', desc: 'The calf stage covers birth through weaning at approximately 4 months of age. Calves are fed milk or milk replacer and gradually introduced to starter feed. This stage is important for establishing growth trajectories and early emissions from enteric fermentation are minimal.' },
+  heifer: { title: 'Heifer Stage', desc: 'Heifers are young female cattle from weaning until first calving (typically 22-26 months). During this growing phase, heifers transition to forage-based diets. Some heifers are retained as replacement animals while others may be sold. Enteric methane emissions increase as rumen function develops.' },
+  lactating: { title: 'Lactating Cow', desc: 'Lactating cows are the primary production stage, producing milk over a lactation period of approximately 305 days. Feed intake is highest during this stage to support milk production, resulting in significant enteric methane and manure emissions. Milk production level, diet composition, and housing system are key emission factors.' },
+  dry: { title: 'Dry Cow', desc: 'The dry period is a 45-60 day rest period before calving when cows are not milked. Feed intake is reduced compared to lactation but cows still contribute to enteric and manure emissions. After the dry period, cows return to the lactating stage when they calve again, creating a repeating cycle.' }
+};
+
+function selectDairyStage(stage) {
+  const info = dairyStageInfo[stage];
+  if (!info) return;
+  document.getElementById('dairyStageInfoTitle').textContent = info.title;
+  document.getElementById('dairyStageInfoDesc').textContent = info.desc;
+  document.getElementById('dairyStageInfoPanel').style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROTATION HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+let rotationYearCounter = 3;
+function addRotationCrop() {
+  rotationYearCounter++;
+  const tl = document.getElementById('rotationTimeline');
+  const card = document.createElement('div');
+  card.className = 'timeline-card';
+  card.style.minWidth = '150px';
+  card.innerHTML = '<div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:6px;">Year ' + rotationYearCounter + '</div>' +
+    '<select class="form-input" style="min-width:110px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>' +
+    '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove(); updateRotationCount();">Delete</button>';
+  tl.appendChild(card);
+  updateRotationCount();
+}
+function updateRotationCount() {
+  const count = document.getElementById('rotationTimeline').children.length;
+  document.getElementById('rotationCropCount').textContent = count;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOOLBAR FARM NAME
+   ═══════════════════════════════════════════════════════════════ */
+function setToolbarFarmName(name) {
+  const el = document.getElementById('toolbarFarmName');
+  if (el) el.textContent = name || 'My Farm';
 }
 </script>
 
