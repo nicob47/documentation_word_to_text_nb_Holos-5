@@ -386,10 +386,10 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews
             var dto = new ManagementPeriodDto();
             dto.Name = "Test";
             dto.Start = new DateTime(2026, 1, 1);
-            dto.End = new DateTime(2026, 7, 1); // 181 days from Jan 1
+            dto.End = new DateTime(2026, 7, 1); // Jan 1 to Jul 1 inclusive = 182 days
 
-            // Assert
-            Assert.AreEqual((new DateTime(2026, 7, 1) - new DateTime(2026, 1, 1)).Days, dto.NumberOfDays);
+            // Assert — inclusive day count: (End - Start).Days + 1
+            Assert.AreEqual((new DateTime(2026, 7, 1) - new DateTime(2026, 1, 1)).Days + 1, dto.NumberOfDays);
         }
 
         [TestMethod]
@@ -405,8 +405,8 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews
             // Act — move start date forward
             dto.Start = new DateTime(2026, 6, 1);
 
-            // Assert — days should be less
-            var expectedDays = (new DateTime(2026, 12, 31) - new DateTime(2026, 6, 1)).Days;
+            // Assert — days should be less (inclusive count)
+            var expectedDays = (new DateTime(2026, 12, 31) - new DateTime(2026, 6, 1)).Days + 1;
             Assert.AreEqual(expectedDays, dto.NumberOfDays);
             Assert.IsTrue(dto.NumberOfDays < initialDays);
         }
@@ -423,8 +423,8 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews
             // Act — change number of days
             dto.NumberOfDays = 30;
 
-            // Assert — End date should have moved
-            Assert.AreEqual(new DateTime(2026, 1, 1).AddDays(30), dto.End);
+            // Assert — End date should have moved (inclusive: Start + N-1)
+            Assert.AreEqual(new DateTime(2026, 1, 1).AddDays(30 - 1), dto.End);
         }
 
         [TestMethod]
@@ -442,8 +442,8 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews
             dto.End = new DateTime(2026, 6, 1);
             dto.NumberOfDays = 60;
 
-            // Assert — just verifying no StackOverflow and final state is consistent
-            Assert.AreEqual(new DateTime(2026, 3, 1).AddDays(60), dto.End);
+            // Assert — just verifying no StackOverflow and final state is consistent (inclusive end)
+            Assert.AreEqual(new DateTime(2026, 3, 1).AddDays(60 - 1), dto.End);
             Assert.AreEqual(60, dto.NumberOfDays);
         }
 

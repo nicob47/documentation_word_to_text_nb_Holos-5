@@ -324,14 +324,14 @@ namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
             if (lastPeriod != null && lastPeriod.End != default)
             {
                 startDate = lastPeriod.End;
-                endDate = startDate.AddDays(365);
+                endDate = startDate.AddDays(365 - 1);
                 numberOfDays = 365;
             }
             else
             {
                 startDate = new DateTime(DateTime.Now.Year, 1, 1);
                 endDate = new DateTime(DateTime.Now.Year, 12, 31);
-                numberOfDays = (endDate - startDate).Days;
+                numberOfDays = (endDate - startDate).Days + 1;
             }
 
             var newPractice = new ManagementPeriodDto

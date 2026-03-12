@@ -571,9 +571,9 @@ namespace H.Core.Factories.Animals
             try
             {
                 _isRecalculating = true;
-                if (Start != default && End != default && End > Start)
+                if (Start != default && End != default && End >= Start)
                 {
-                    NumberOfDays = (End - Start).Days;
+                    NumberOfDays = (End - Start).Days + 1;
                 }
             }
             finally
@@ -591,7 +591,7 @@ namespace H.Core.Factories.Animals
                 _isRecalculating = true;
                 if (Start != default && NumberOfDays > 0)
                 {
-                    End = Start.AddDays(NumberOfDays);
+                    End = Start.AddDays(NumberOfDays - 1);
                 }
             }
             finally

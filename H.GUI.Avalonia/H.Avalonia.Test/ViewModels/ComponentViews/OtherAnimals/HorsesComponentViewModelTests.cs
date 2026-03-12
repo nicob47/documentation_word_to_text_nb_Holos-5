@@ -98,8 +98,8 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
             string expectedPeriodName = "Period #1";
             DateTime expectedStart = new DateTime(2024, 01, 01);
             int expectedDays = 364;
-            // End date is recalculated from Start + NumberOfDays by auto-recalculation
-            DateTime expectedEnd = expectedStart.AddDays(expectedDays);
+            // End date is recalculated from Start + (NumberOfDays - 1) by inclusive auto-recalculation
+            DateTime expectedEnd = expectedStart.AddDays(expectedDays - 1);
 
             _viewModel.OnAddManagementPeriodExecute();
 
@@ -116,7 +116,7 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
             var testFarm = new Farm();
             var testHorsesComponent = new HorsesComponent();
             var testGroup = new AnimalGroup();
-            var testManagementPeriod = new ManagementPeriod() { GroupName = "Period #0", Start = new DateTime(2020, 01, 01), End = new DateTime(2020, 03, 13), NumberOfDays = 72 };
+            var testManagementPeriod = new ManagementPeriod() { GroupName = "Period #0", Start = new DateTime(2020, 01, 01), End = new DateTime(2020, 03, 12), NumberOfDays = 72 };
             testGroup.ManagementPeriods.Add(testManagementPeriod);
             testHorsesComponent.Groups.Add(testGroup);
             testFarm.Components.Add(testHorsesComponent);

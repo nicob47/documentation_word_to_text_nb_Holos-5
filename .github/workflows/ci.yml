@@ -83,35 +83,19 @@ jobs:
         run: >
           dotnet test H.CLI.Test/H.CLI.Test.csproj
           --no-build --configuration Release
-          --logger "trx;LogFileName=H.CLI.Test.trx"
-          --results-directory TestResults
 
       - name: Test — H.Core.Test
         run: >
           dotnet test H.Core.Test/H.Core.Test.csproj
           --no-build --configuration Release
-          --logger "trx;LogFileName=H.Core.Test.trx"
-          --results-directory TestResults
 
       - name: Test — H.Infrastructure.Test
         run: >
           dotnet test H.Infrastructure.Test/H.Infrastructure.Test.csproj
           --no-build --configuration Release
-          --logger "trx;LogFileName=H.Infrastructure.Test.trx"
-          --results-directory TestResults
 
       - name: Test — H.Avalonia.Test (headless)
         run: >
           dotnet test H.GUI.Avalonia/H.Avalonia.Test/H.Avalonia.Test.csproj
           --no-build --configuration Release
-          --logger "trx;LogFileName=H.Avalonia.Test.trx"
-          --results-directory TestResults
           --filter "Category!=Integration"
-
-      - name: Publish test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: TestResults/*.trx
-          retention-days: 30

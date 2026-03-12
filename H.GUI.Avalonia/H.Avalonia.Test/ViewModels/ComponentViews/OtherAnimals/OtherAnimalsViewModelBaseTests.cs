@@ -338,7 +338,7 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
 
             // Assert — second practice has 365-day duration
             var secondPractice = _viewModel.SelectedGroupManagementPeriods[1];
-            Assert.AreEqual(firstEnd.AddDays(365), secondPractice.End);
+            Assert.AreEqual(firstEnd.AddDays(365 - 1), secondPractice.End);
         }
 
         [TestMethod]
