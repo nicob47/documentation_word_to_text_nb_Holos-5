@@ -952,22 +952,12 @@ select.form-input { cursor: pointer; }
      MAIN APP SHELL (after setup)
      ═══════════════════════════════════════════════════════════════ -->
 <div class="app-shell" id="appShell">
-  <!-- TOOLBAR -->
+  <!-- TOOLBAR (currently a stub in Avalonia app — minimal brand bar) -->
   <div class="toolbar" id="appToolbar">
     <div class="toolbar-left">
       <span class="toolbar-brand">Holos</span>
       <span class="toolbar-sep">|</span>
       <span class="toolbar-farm-name" id="toolbarFarmName">My Farm</span>
-    </div>
-    <div class="toolbar-center">
-      <button class="toolbar-btn" onclick="showView('myComponents'); renderMyComponents();" title="Components">📦 Components</button>
-      <button class="toolbar-btn" onclick="showView('results')" title="Results">📊 Results</button>
-      <button class="toolbar-btn" onclick="showView('climate')" title="Climate Data">🌡️ Climate</button>
-      <button class="toolbar-btn" onclick="showView('soil')" title="Soil Data">🌱 Soil</button>
-    </div>
-    <div class="toolbar-right">
-      <button class="toolbar-btn" onclick="showView('options')" title="Settings">⚙️ Settings</button>
-      <button class="toolbar-btn" onclick="showView('about')" title="About">ℹ️ About</button>
     </div>
   </div>
 
