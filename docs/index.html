@@ -350,6 +350,9 @@ body {
 .app-shell.active {
   display: grid;
 }
+.app-shell.no-sidebar {
+  grid-template-columns: 1fr;
+}
 
 /* Sidebar */
 .sidebar {
@@ -434,6 +437,17 @@ body {
   text-align: center;
 }
 .sidebar-footer-bar .btn { width: calc(100% - 8px); }
+
+/* Options menu items */
+.options-item {
+  display: block; width: 100%; text-align: left;
+  padding: 8px 12px; margin: 1px 0;
+  background: transparent; border: none; border-radius: 4px;
+  cursor: pointer; font-family: var(--body-font); font-size: var(--font-body);
+  color: var(--text-primary);
+}
+.options-item:hover { background: var(--gcds-blue-50); }
+.options-item.active { background: var(--selection-bg); color: var(--selection-border); font-weight: 600; }
 
 /* Content Region */
 .content-region {
@@ -924,7 +938,7 @@ select.form-input { cursor: pointer; }
     <div class="sidebar-header">
       <div class="sidebar-header-bar">
         <h2>My Components</h2>
-        <button class="btn-icon" title="Settings" onclick="showView('about')">⚙️</button>
+        <button class="btn-icon" title="Settings" onclick="showView('options')">⚙️</button>
       </div>
     </div>
     <div class="sidebar-components" id="sidebarComponentList"></div>
@@ -1314,6 +1328,53 @@ select.form-input { cursor: pointer; }
         </div>
       </div>
     </div>
+
+    <!-- OPTIONS VIEW -->
+    <div id="view-options" class="view">
+      <div style="display:flex; height:100%;">
+        <!-- Options Sidebar Menu -->
+        <div style="width:240px; border-right:1px solid var(--border-light); background:var(--bg-light); display:flex; flex-direction:column; overflow-y:auto;">
+          <div style="padding:16px; border-bottom:1px solid var(--border-light);">
+            <h2 style="font-size:var(--font-h5); margin:0;">Options</h2>
+          </div>
+          <div style="flex:1; padding:8px;">
+            <div style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; padding:8px 12px 4px; letter-spacing:0.5px;">File</div>
+            <button class="options-item" onclick="showOptionPanel('opt-new-farm')">New Farm</button>
+            <button class="options-item" onclick="showOptionPanel('opt-open-farm')">Open Farm</button>
+            <button class="options-item" onclick="showOptionPanel('opt-close-farm')">Close Farm</button>
+            <button class="options-item" onclick="showOptionPanel('opt-farms')">Farms</button>
+            <button class="options-item" onclick="showOptionPanel('opt-save')">Save Options</button>
+            <button class="options-item" onclick="showOptionPanel('opt-export-farm')">Export Farm(s)</button>
+            <button class="options-item" onclick="showOptionPanel('opt-import')">Import Farm</button>
+            <button class="options-item" onclick="showOptionPanel('opt-export-climate')">Export Climate</button>
+            <button class="options-item" onclick="showOptionPanel('opt-export-manure')">Export Manure</button>
+            <div style="height:1px; background:var(--border-light); margin:8px 0;"></div>
+            <div style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; padding:8px 12px 4px; letter-spacing:0.5px;">Settings</div>
+            <button class="options-item" onclick="showOptionPanel('opt-farm-settings')">Farm</button>
+            <button class="options-item" onclick="showOptionPanel('opt-soil-settings')">Soil</button>
+            <button class="options-item" onclick="showOptionPanel('opt-temp-settings')">Temperature</button>
+            <button class="options-item" onclick="showOptionPanel('opt-barn-temp')">Barn Temperatures</button>
+            <button class="options-item" onclick="showOptionPanel('opt-precip')">Precipitation</button>
+            <button class="options-item" onclick="showOptionPanel('opt-evapotrans')">Evapotranspiration</button>
+            <button class="options-item" onclick="showOptionPanel('opt-n2o')">Soil N₂O Breakdown</button>
+            <button class="options-item" onclick="showOptionPanel('opt-bedding')">Default Bedding</button>
+            <button class="options-item" onclick="showOptionPanel('opt-manure-comp')">Default Manure</button>
+            <button class="options-item" onclick="showOptionPanel('opt-user-settings')">User Settings</button>
+          </div>
+          <div style="padding:10px; border-top:1px solid var(--border-light);">
+            <button class="btn" style="width:100%;" onclick="showView('myComponents'); renderMyComponents();">← Go Back</button>
+          </div>
+        </div>
+        <!-- Options Content Panel -->
+        <div style="flex:1; display:flex; align-items:center; justify-content:center; color:var(--text-secondary);" id="optionsContent">
+          <div style="text-align:center;">
+            <div style="font-size:40px; opacity:0.3; margin-bottom:12px;">⚙️</div>
+            <h2 style="font-weight:400; color:var(--gcds-gray-450);">Select an Option</h2>
+            <p style="font-size:13px;">Choose a file operation or settings category from the menu.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer class="footer">
@@ -1437,6 +1498,17 @@ function showView(viewName) {
   const view = document.getElementById('view-' + viewName);
   if (view) view.classList.add('active');
 
+  // Toggle sidebar visibility: hide when in options (options has its own sidebar menu)
+  const sidebar = document.querySelector('.sidebar');
+  const shell = document.getElementById('appShell');
+  if (viewName === 'options') {
+    sidebar.style.display = 'none';
+    shell.classList.add('no-sidebar');
+  } else {
+    sidebar.style.display = '';
+    shell.classList.remove('no-sidebar');
+  }
+
   // Update sidebar component highlighting
   if (!['editComponent','poultryComponent'].includes(viewName)) {
     document.querySelectorAll('.sidebar-component-card').forEach(c => c.classList.remove('active'));
@@ -1447,6 +1519,31 @@ function showView(viewName) {
     renderCategories();
   }
   document.querySelector('.content-region').scrollTop = 0;
+}
+
+function showOptionPanel(panelId) {
+  // Highlight selected menu item
+  document.querySelectorAll('.options-item').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  // Show placeholder content for the selected option
+  const labels = {
+    'opt-new-farm': 'New Farm', 'opt-open-farm': 'Open Farm', 'opt-close-farm': 'Close Farm',
+    'opt-farms': 'Farm Management', 'opt-save': 'Save Options',
+    'opt-export-farm': 'Export Farm(s)', 'opt-import': 'Import Farm',
+    'opt-export-climate': 'Export Climate', 'opt-export-manure': 'Export Manure',
+    'opt-farm-settings': 'Farm Settings', 'opt-soil-settings': 'Soil Settings',
+    'opt-temp-settings': 'Temperature Settings', 'opt-barn-temp': 'Barn Temperature Settings',
+    'opt-precip': 'Precipitation Settings', 'opt-evapotrans': 'Evapotranspiration Settings',
+    'opt-n2o': 'Soil N₂O Breakdown', 'opt-bedding': 'Default Bedding Composition',
+    'opt-manure-comp': 'Default Manure Composition', 'opt-user-settings': 'User Settings'
+  };
+  const title = labels[panelId] || panelId;
+  document.getElementById('optionsContent').innerHTML =
+    '<div style="width:100%; padding:24px;">' +
+    '<h2 style="margin-bottom:16px;">' + title + '</h2>' +
+    '<div style="background:var(--bg-light); border:1px solid var(--border-light); border-radius:var(--radius); padding:24px; color:var(--text-secondary);">' +
+    '<p style="font-size:13px;">This settings panel is a placeholder in the UI mockup. In the full application, this view contains editable fields for <strong>' + title.toLowerCase() + '</strong>.</p>' +
+    '</div></div>';
 }
 
 /* ═══════════════════════════════════════════════════════════════
