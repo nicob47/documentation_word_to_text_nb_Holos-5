@@ -1079,6 +1079,133 @@ select.form-input { cursor: pointer; }
       </div>
     </div>
 
+    <!-- FIELD / LAND MANAGEMENT COMPONENT VIEW -->
+    <div id="view-fieldComponent" class="view">
+      <div><input type="text" class="view-title-input" id="fieldComponentTitle" value="My Field Component"></div>
+      <div class="title-underline"></div>
+
+      <!-- Step 1: Basic field info -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 1</span>
+          <span class="step-description">Enter basic information for field</span>
+        </div>
+        <div class="form-grid">
+          <label class="form-label">Field area</label>
+          <input type="number" class="form-input" value="160" step="1">
+          <span class="form-unit">ha</span>
+          <label class="form-label">Start year</label>
+          <input type="number" class="form-input" value="1985" step="1">
+          <span class="form-unit">year</span>
+          <label class="form-label">End year</label>
+          <input type="number" class="form-input" value="2025" step="1">
+          <span class="form-unit">year</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Field history (crop timeline) -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 2</span>
+          <span class="step-description">Enter field history</span>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <button class="btn btn-primary" onclick="addCropToField()" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Crop to Field</button>
+        </div>
+        <div class="timeline-container">
+          <div class="timeline-header">Crop History</div>
+          <div class="timeline-scroll" id="cropTimeline">
+            <div class="timeline-card selected" style="min-width: 160px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2025</div>
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option><option>Native grass</option></select>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+            <div class="timeline-card" style="min-width: 160px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2024</div>
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+            <div class="timeline-card" style="min-width: 160px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2023</div>
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+          </div>
+          <div class="timeline-hint">Tip: Scroll horizontally to see more crop years</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Crop detail editing (tabbed) -->
+      <div class="step-container">
+        <div class="step-header">
+          <span class="step-badge">Step 3</span>
+          <span class="step-description">Configure details for the selected crop year</span>
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'tab-field-general')">General</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-field-residues')">Residues</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-field-economics')">Economics</button>
+        </div>
+        <div id="tab-field-general" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Crop type</label>
+            <select class="form-input"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Yield</label>
+            <input type="number" class="form-input" value="3200" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+            <label class="form-label">Tillage type</label>
+            <select class="form-input"><option>Reduced tillage</option><option>Intensive tillage</option><option>No-till</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Nitrogen fertilizer rate</label>
+            <input type="number" class="form-input" value="75" step="1">
+            <span class="form-unit">kg N ha⁻¹</span>
+            <label class="form-label">Phosphorus fertilizer rate</label>
+            <input type="number" class="form-input" value="20" step="1">
+            <span class="form-unit">kg P₂O₅ ha⁻¹</span>
+            <label class="form-label">Pesticide passes</label>
+            <input type="number" class="form-input" value="2" step="1">
+            <span class="form-unit">passes</span>
+            <label class="form-label">Irrigation</label>
+            <select class="form-input"><option>Irrigated</option><option>Rainfed</option></select>
+            <span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="tab-field-residues" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Carbon concentration</label>
+            <input type="number" class="form-input" value="0.45" step="0.01">
+            <span class="form-unit">kg C kg⁻¹</span>
+            <label class="form-label">Moisture content of crop</label>
+            <input type="number" class="form-input" value="12.0" step="0.1">
+            <span class="form-unit">%</span>
+            <label class="form-label">Above-ground residue</label>
+            <input type="number" class="form-input" value="2800" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+            <label class="form-label">Below-ground residue</label>
+            <input type="number" class="form-input" value="1200" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+            <label class="form-label">Residue returned to soil</label>
+            <input type="number" class="form-input" value="100" step="1">
+            <span class="form-unit">%</span>
+          </div>
+        </div>
+        <div id="tab-field-economics" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Crop price</label>
+            <input type="number" class="form-input" value="265.00" step="1">
+            <span class="form-unit">$ t⁻¹</span>
+            <label class="form-label">Cost of production</label>
+            <input type="number" class="form-input" value="425.00" step="1">
+            <span class="form-unit">$ ha⁻¹</span>
+            <label class="form-label">Revenue from sale</label>
+            <input type="number" class="form-input" value="848.00" step="1" disabled>
+            <span class="form-unit">$ ha⁻¹</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- POULTRY COMPONENT VIEW -->
     <div id="view-poultryComponent" class="view">
       <div><input type="text" class="view-title-input" id="poultryTitle" value="My Chicken Egg Production"></div>
@@ -1576,6 +1703,9 @@ function openComponent(i) {
   if (comp.isPoultry) {
     document.getElementById('poultryTitle').value = comp.name;
     showView('poultryComponent');
+  } else if (comp.category === 'Land Management') {
+    document.getElementById('fieldComponentTitle').value = comp.name;
+    showView('fieldComponent');
   } else {
     document.getElementById('editComponentTitle').value = comp.name;
     showView('editComponent');
@@ -1636,6 +1766,24 @@ function addAnimalGroup() {
   card.className = 'timeline-card';
   card.innerHTML = '<select class="form-input" style="min-width:120px; font-size:12px;"><option>Not Selected</option><option>Bison</option><option>Goats</option><option>Horses</option><option>Deer</option></select>' +
     '<div style="font-size:13px; font-weight:500; margin-top:4px;">Group #' + animalGroupCounter + '</div>' +
+    '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove()">Delete</button>';
+  card.onclick = function(e) {
+    if (['BUTTON','SELECT','OPTION'].includes(e.target.tagName)) return;
+    tl.querySelectorAll('.timeline-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  };
+  tl.appendChild(card);
+}
+
+let cropYearCounter = 2022;
+function addCropToField() {
+  cropYearCounter--;
+  const tl = document.getElementById('cropTimeline');
+  const card = document.createElement('div');
+  card.className = 'timeline-card';
+  card.style.minWidth = '160px';
+  card.innerHTML = '<div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">' + cropYearCounter + '</div>' +
+    '<select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>' +
     '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove()">Delete</button>';
   card.onclick = function(e) {
     if (['BUTTON','SELECT','OPTION'].includes(e.target.tagName)) return;
