@@ -98,4 +98,4 @@ jobs:
         run: >
           dotnet test H.GUI.Avalonia/H.Avalonia.Test/H.Avalonia.Test.csproj
           --no-build --configuration Release
-          --filter "Category!=Integration"
+          --filter "TestCategory!=Integration"
