@@ -18,11 +18,11 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
 
         private Languages _selectedLanguage;
 
-        private string _aboutHolosString;
-        private string _toBeKeptInformedString;
-        private string _disclaimerTitle;
-        private string _disclaimerText;
-        private string _versionString;
+        private string _aboutHolosString = string.Empty;
+        private string _toBeKeptInformedString = string.Empty;
+        private string _disclaimerTitle = string.Empty;
+        private string _disclaimerText = string.Empty;
+        private string _versionString = string.Empty;
 
         private DelegateCommand<object> _okCommand = null!;
 
