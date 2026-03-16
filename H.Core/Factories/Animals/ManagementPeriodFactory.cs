@@ -1,4 +1,3 @@
-using AutoMapper;
 using H.Core.Mappers;
 using H.Core.Models.Animals;
 using Prism.Ioc;
@@ -9,9 +8,9 @@ public class ManagementPeriodFactory : IManagementPeriodFactory
 {
     #region Fields
 
-    private readonly IMapper _managementPeriodDtoToManagementPeriodDtoMapper;
-    private readonly IMapper _managementPeriodToManagementPeriodDtoMapper;
-    private readonly IMapper _managementPeriodDtoToManagementPeriodMapper;
+    private readonly IModelMapper<ManagementPeriodDto, ManagementPeriodDto> _managementPeriodDtoToManagementPeriodDtoMapper;
+    private readonly IModelMapper<ManagementPeriod, ManagementPeriodDto> _managementPeriodToManagementPeriodDtoMapper;
+    private readonly IModelMapper<ManagementPeriodDto, ManagementPeriod> _managementPeriodDtoToManagementPeriodMapper;
 
     #endregion
 
@@ -25,9 +24,9 @@ public class ManagementPeriodFactory : IManagementPeriodFactory
         }
         else
         {
-            _managementPeriodDtoToManagementPeriodDtoMapper = containerProvider.Resolve<IMapper>(nameof(ManagementPeriodDtoToManagementPeriodDtoMapper));
-            _managementPeriodToManagementPeriodDtoMapper = containerProvider.Resolve<IMapper>(nameof(ManagementPeriodToManagementPeriodDtoMapper));
-            _managementPeriodDtoToManagementPeriodMapper = containerProvider.Resolve<IMapper>(nameof(ManagementPeriodDtoToManagementPeriodMapper));
+            _managementPeriodDtoToManagementPeriodDtoMapper = containerProvider.Resolve<IModelMapper<ManagementPeriodDto, ManagementPeriodDto>>(nameof(ManagementPeriodDtoToManagementPeriodDtoMapper));
+            _managementPeriodToManagementPeriodDtoMapper = containerProvider.Resolve<IModelMapper<ManagementPeriod, ManagementPeriodDto>>(nameof(ManagementPeriodToManagementPeriodDtoMapper));
+            _managementPeriodDtoToManagementPeriodMapper = containerProvider.Resolve<IModelMapper<ManagementPeriodDto, ManagementPeriod>>(nameof(ManagementPeriodDtoToManagementPeriodMapper));
         }
     }
 
@@ -42,7 +41,7 @@ public class ManagementPeriodFactory : IManagementPeriodFactory
         dto.Start = new DateTime(DateTime.Now.Year, 1, 1);
         dto.End = new DateTime(DateTime.Now.Year, 12, 31);
         dto.NumberOfDays = (dto.End - dto.Start).Days + 1;
-        
+
         return dto;
     }
 
@@ -50,27 +49,27 @@ public class ManagementPeriodFactory : IManagementPeriodFactory
     {
         var dto = new ManagementPeriodDto();
 
-        _managementPeriodDtoToManagementPeriodDtoMapper.Map(template, dto);
+        if (template is ManagementPeriodDto dtoTemplate)
+        {
+            PropertyMapper.CopyTo(dtoTemplate, dto);
+        }
 
         return dto;
     }
 
     public IManagementPeriodDto CreateManagementPeriodDto(ManagementPeriod managementPeriod)
     {
-        var dto = new ManagementPeriodDto();
-
-        _managementPeriodToManagementPeriodDtoMapper.Map(managementPeriod, dto);
-
-        return dto;
+        return _managementPeriodToManagementPeriodDtoMapper.Map(managementPeriod);
     }
 
     public ManagementPeriod CreateManagementPeriod(IManagementPeriodDto dto)
     {
-        var managementPeriod = new ManagementPeriod();
+        if (dto is ManagementPeriodDto managementPeriodDto)
+        {
+            return _managementPeriodDtoToManagementPeriodMapper.Map(managementPeriodDto);
+        }
 
-        _managementPeriodDtoToManagementPeriodMapper.Map(dto, managementPeriod);
-
-        return managementPeriod;
+        return new ManagementPeriod();
     }
 
     #endregion

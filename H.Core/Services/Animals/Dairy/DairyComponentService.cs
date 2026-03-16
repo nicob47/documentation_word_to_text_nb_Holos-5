@@ -1,4 +1,3 @@
-using AutoMapper;
 using H.Core.Factories.Animals.Dairy;
 using H.Core.Models;
 using H.Core.Models.Animals.Dairy;
@@ -24,8 +23,8 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
 {
     #region Fields
 
-    private readonly IMapper _mapper;
-    private readonly IMapper _animalGroupMapper;
+    private readonly IModelMapper<DairyComponent, DairyComponentDto> _mapper;
+    private readonly IModelMapper<AnimalGroup, AnimalGroupDto> _animalGroupMapper;
 
     #endregion
 
@@ -45,10 +44,10 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
         }
 
         // Resolve the dairy-specific mapper by name
-        _mapper = containerProvider.Resolve<IMapper>(nameof(DairyComponentToDtoMapper));
-        
+        _mapper = containerProvider.Resolve<IModelMapper<DairyComponent, DairyComponentDto>>(nameof(DairyComponentToDtoMapper));
+
         // Resolve the animal group mapper for converting between AnimalGroup and AnimalGroupDto
-        _animalGroupMapper = containerProvider.Resolve<IMapper>(nameof(AnimalGroupToAnimalGroupDtoMapper));
+        _animalGroupMapper = containerProvider.Resolve<IModelMapper<AnimalGroup, AnimalGroupDto>>(nameof(AnimalGroupToAnimalGroupDtoMapper));
     }
 
     #endregion
@@ -71,7 +70,7 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
 
     /// <summary>
     /// Creates a dairy component DTO from a domain model for UI binding.
-    /// Uses AutoMapper to transfer properties from the domain model to the DTO.
+    /// Transfers properties from the domain model to the DTO.
     /// 
     /// ARCHITECTURE NOTE:
     /// This method also converts AnimalGroup domain objects to AnimalGroupDto objects.
@@ -81,13 +80,13 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
     /// <returns>A DTO suitable for binding in the view</returns>
     public IDairyComponentDto TransferToDairyComponentDto(DairyComponent dairyComponent)
     {
-        var dairyComponentDto = _mapper.Map<DairyComponentDto>(dairyComponent);
+        var dairyComponentDto = _mapper.Map(dairyComponent);
         
         // Convert AnimalGroup domain objects to AnimalGroupDto objects
         dairyComponentDto.AnimalGroupDtos = new ObservableCollection<AnimalGroupDto>();
         foreach (var animalGroup in dairyComponent.Groups)
         {
-            var animalGroupDto = _animalGroupMapper.Map<AnimalGroupDto>(animalGroup);
+            var animalGroupDto = _animalGroupMapper.Map(animalGroup);
             dairyComponentDto.AnimalGroupDtos.Add(animalGroupDto);
         }
         
@@ -100,7 +99,7 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
 
     /// <summary>
     /// Transfers data from DTO back to the domain model after validation.
-    /// Uses AutoMapper to apply changes from the DTO to the existing domain model.
+    /// Applies changes from the DTO to the existing domain model.
     /// 
     /// ARCHITECTURE NOTE:
     /// This method also converts AnimalGroupDto objects back to AnimalGroup domain objects.
@@ -111,15 +110,15 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
     /// <returns>The updated dairy component</returns>
     public DairyComponent TransferDairyDtoToSystem(DairyComponentDto dairyDto, DairyComponent dairyComponent)
     {
-        // Transfer basic properties
-        _mapper.Map(dairyDto, dairyComponent);
-        
+        // Transfer basic properties (reverse direction: DTO -> domain model)
+        PropertyMapper.CopyTo(dairyDto, dairyComponent);
+
         // Convert AnimalGroupDto objects back to AnimalGroup domain objects
         // Clear existing groups and rebuild from DTOs
         dairyComponent.Groups.Clear();
         foreach (var animalGroupDto in dairyDto.AnimalGroupDtos)
         {
-            var animalGroup = _animalGroupMapper.Map<AnimalGroup>(animalGroupDto);
+            var animalGroup = PropertyMapper.Map<AnimalGroupDto, AnimalGroup>(animalGroupDto);
             dairyComponent.Groups.Add(animalGroup);
         }
         
@@ -196,10 +195,10 @@ public class DairyComponentService : ComponentServiceBase, IDairyComponentServic
         dairyComponent.Groups.Add(dryGroup);
         
         // Also add as DTOs for UI binding
-        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map<AnimalGroupDto>(calfGroup));
-        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map<AnimalGroupDto>(heiferGroup));
-        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map<AnimalGroupDto>(lactatingGroup));
-        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map<AnimalGroupDto>(dryGroup));
+        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map(calfGroup));
+        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map(heiferGroup));
+        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map(lactatingGroup));
+        dairyDto.AnimalGroupDtos.Add(_animalGroupMapper.Map(dryGroup));
 
         Logger?.LogInformation(
             $"Auto-generated 4 animal groups for dairy component '{dairyComponent.Name}': " +

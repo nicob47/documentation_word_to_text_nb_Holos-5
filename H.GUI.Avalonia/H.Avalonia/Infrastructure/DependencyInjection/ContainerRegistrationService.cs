@@ -1,4 +1,3 @@
-using AutoMapper;
 using H.Avalonia.Infrastructure.Dialogs;
 using H.Avalonia.Infrastructure.MapperServices;
 using H.Avalonia.Services;
@@ -430,16 +429,16 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
         #region Mappers Registration
 
         /// <summary>
-        /// Register AutoMapper configurations
+        /// Register mapper implementations
         /// </summary>
         private void RegisterMappers(IContainerRegistry containerRegistry)
         {
-            _logger.LogDebug("Registering AutoMapper configurations");
-            
+            _logger.LogDebug("Registering mapper implementations");
+
             var mapperRegistrationService = new MapperRegistrationService();
             mapperRegistrationService.RegisterMappers(containerRegistry);
-            
-            _logger.LogInformation("Successfully registered AutoMapper configurations");
+
+            _logger.LogInformation("Successfully registered mapper implementations");
         }
 
         #endregion
@@ -497,8 +496,8 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             {
                 var unitsCalculator = _containerProvider.Resolve<IUnitsOfMeasurementCalculator>();
                 var dailyClimateDataFactory = _containerProvider.Resolve<IFactory<DailyClimateDto>>();
-                var dtoToModelMapper = _containerProvider.Resolve<IMapper>(nameof(DailyClimateDtoToDailyClimateDataMapper));
-                var modelToDtoMapper = _containerProvider.Resolve<IMapper>(nameof(DailyClimateDataToDailyClimateDtoMapper));
+                var dtoToModelMapper = _containerProvider.Resolve<IModelMapper<DailyClimateDto, DailyClimateData>>(nameof(DailyClimateDtoToDailyClimateDataMapper));
+                var modelToDtoMapper = _containerProvider.Resolve<IModelMapper<DailyClimateData, DailyClimateDto>>(nameof(DailyClimateDataToDailyClimateDtoMapper));
 
                 return new TransferService<DailyClimateData, DailyClimateDto>(
                     unitsOfMeasurementCalculator: unitsCalculator,
@@ -520,8 +519,8 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             {
                 var unitsCalculator = _containerProvider.Resolve<IUnitsOfMeasurementCalculator>();
                 var cropDtoFactory = _containerProvider.Resolve<IFactory<CropDto>>();
-                var dtoToModelMapper = _containerProvider.Resolve<IMapper>(nameof(CropDtoToCropViewItemMapper));
-                var modelToDtoMapper = _containerProvider.Resolve<IMapper>(nameof(CropViewItemToCropDtoMapper));
+                var dtoToModelMapper = _containerProvider.Resolve<IModelMapper<ICropDto, CropViewItem>>(nameof(CropDtoToCropViewItemMapper));
+                var modelToDtoMapper = _containerProvider.Resolve<IModelMapper<CropViewItem, CropDto>>(nameof(CropViewItemToCropDtoMapper));
 
                 return new TransferService<CropViewItem, CropDto>(
                     unitsOfMeasurementCalculator: unitsCalculator,
@@ -543,8 +542,8 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             {
                 var unitsCalculator = _containerProvider.Resolve<IUnitsOfMeasurementCalculator>();
                 var fieldDtoFactory = _containerProvider.Resolve<IFactory<FieldSystemComponentDto>>();
-                var dtoToModelMapper = _containerProvider.Resolve<IMapper>(nameof(FieldDtoToFieldComponentMapper));
-                var modelToDtoMapper = _containerProvider.Resolve<IMapper>(nameof(FieldComponentToDtoMapper));
+                var dtoToModelMapper = _containerProvider.Resolve<IModelMapper<FieldSystemComponentDto, FieldSystemComponent>>(nameof(FieldDtoToFieldComponentMapper));
+                var modelToDtoMapper = _containerProvider.Resolve<IModelMapper<FieldSystemComponent, FieldSystemComponentDto>>(nameof(FieldComponentToDtoMapper));
 
                 return new TransferService<FieldSystemComponent, FieldSystemComponentDto>(
                     unitsOfMeasurementCalculator: unitsCalculator,
@@ -566,8 +565,8 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             {
                 var unitsCalculator = _containerProvider.Resolve<IUnitsOfMeasurementCalculator>();
                 var rotationDtoFactory = _containerProvider.Resolve<IFactory<RotationComponentDto>>();
-                var dtoToModelMapper = _containerProvider.Resolve<IMapper>(nameof(RotationComponentDtoToRotationComponentMapper));
-                var modelToDtoMapper = _containerProvider.Resolve<IMapper>(nameof(RotationComponentToRotationComponentDtoMapper));
+                var dtoToModelMapper = _containerProvider.Resolve<IModelMapper<RotationComponentDto, RotationComponent>>(nameof(RotationComponentDtoToRotationComponentMapper));
+                var modelToDtoMapper = _containerProvider.Resolve<IModelMapper<RotationComponent, RotationComponentDto>>(nameof(RotationComponentToRotationComponentDtoMapper));
 
                 return new TransferService<RotationComponent, RotationComponentDto>(
                     unitsOfMeasurementCalculator: unitsCalculator,
@@ -589,8 +588,8 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             {
                 var unitsCalculator = _containerProvider.Resolve<IUnitsOfMeasurementCalculator>();
                 var animalDtoFactory = _containerProvider.Resolve<IFactory<AnimalComponentDto>>();
-                var dtoToModelMapper = _containerProvider.Resolve<IMapper>(nameof(AnimalComponentDtoToAnimalComponentMapper));
-                var modelToDtoMapper = _containerProvider.Resolve<IMapper>(nameof(AnimalComponentBaseToAnimalComponentDtoMapper));
+                var dtoToModelMapper = _containerProvider.Resolve<IModelMapper<AnimalComponentDto, AnimalComponentBase>>(nameof(AnimalComponentDtoToAnimalComponentMapper));
+                var modelToDtoMapper = _containerProvider.Resolve<IModelMapper<AnimalComponentBase, AnimalComponentDto>>(nameof(AnimalComponentBaseToAnimalComponentDtoMapper));
 
                 return new TransferService<AnimalComponentBase, AnimalComponentDto>(
                     unitsOfMeasurementCalculator: unitsCalculator,

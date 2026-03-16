@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Factories;
+﻿using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
 using H.Core.Models.Animals;
@@ -34,21 +33,14 @@ public class ManagementPeriodFactoryTests
     {
         _mockContainerProvider = new Mock<IContainerProvider>();
 
-        // Setup mappers to return a working IMapper for each required profile
-        _mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(ManagementPeriodDtoToManagementPeriodDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<ManagementPeriodDtoToManagementPeriodDtoMapper>();
-        }).CreateMapper());
+        _mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<ManagementPeriodDto, ManagementPeriodDto>), nameof(ManagementPeriodDtoToManagementPeriodDtoMapper)))
+            .Returns(new ManagementPeriodDtoToManagementPeriodDtoMapper());
 
-        _mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(ManagementPeriodToManagementPeriodDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<ManagementPeriodToManagementPeriodDtoMapper>();
-        }).CreateMapper());
+        _mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<ManagementPeriod, ManagementPeriodDto>), nameof(ManagementPeriodToManagementPeriodDtoMapper)))
+            .Returns(new ManagementPeriodToManagementPeriodDtoMapper());
 
-        _mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(ManagementPeriodDtoToManagementPeriodMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<ManagementPeriodDtoToManagementPeriodMapper>();
-        }).CreateMapper());
+        _mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<ManagementPeriodDto, ManagementPeriod>), nameof(ManagementPeriodDtoToManagementPeriodMapper)))
+            .Returns(new ManagementPeriodDtoToManagementPeriodMapper());
 
         _factory = new ManagementPeriodFactory(_mockContainerProvider.Object);
     }

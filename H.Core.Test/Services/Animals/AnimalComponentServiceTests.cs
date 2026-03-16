@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Factories;
+﻿using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
 using H.Core.Models;
@@ -43,10 +42,8 @@ public class AnimalComponentServiceTests
         var mockContainerProvider = new Mock<IContainerProvider>();
         var mockManagementPeriodService = new Mock<IManagementPeriodService>();
 
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalGroupToAnimalGroupDtoMapper>();
-        }).CreateMapper());
+        mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<AnimalGroup, AnimalGroupDto>), It.IsAny<string>()))
+            .Returns(new AnimalGroupToAnimalGroupDtoMapper());
 
         _service = new AnimalComponentService(
             mockLogger.Object,

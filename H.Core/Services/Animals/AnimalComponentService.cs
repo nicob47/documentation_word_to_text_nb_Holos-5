@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
@@ -16,7 +15,7 @@ public class AnimalComponentService : ComponentServiceBase, IAnimalComponentServ
 
     private readonly IAnimalComponentFactory _animalComponentFactory;
     private readonly ITransferService<AnimalComponentBase, AnimalComponentDto> _animalComponentTransferService;
-    private readonly IMapper _animalGroupMapper;
+    private readonly IModelMapper<AnimalGroup, AnimalGroupDto> _animalGroupMapper;
     private readonly IManagementPeriodService _managementPeriodService;
 
     /// <summary>
@@ -53,7 +52,7 @@ public class AnimalComponentService : ComponentServiceBase, IAnimalComponentServ
 
         if (containerProvider == null) throw new ArgumentNullException(nameof(containerProvider));
 
-        _animalGroupMapper = containerProvider.Resolve<IMapper>(nameof(AnimalGroupToAnimalGroupDtoMapper));
+        _animalGroupMapper = containerProvider.Resolve<IModelMapper<AnimalGroup, AnimalGroupDto>>(nameof(AnimalGroupToAnimalGroupDtoMapper));
     }
 
     #endregion
@@ -77,7 +76,7 @@ public class AnimalComponentService : ComponentServiceBase, IAnimalComponentServ
 
         foreach (var animalGroup in animalComponent.Groups)
         {
-            var animalGroupDto = _animalGroupMapper.Map<AnimalGroupDto>(animalGroup);
+            var animalGroupDto = _animalGroupMapper.Map(animalGroup);
 
             // Populate the valid animal types for the group's ComboBox
             animalGroupDto.ValidAnimalTypes = new ObservableCollection<AnimalType>(OtherAnimalTypes);
@@ -118,7 +117,7 @@ public class AnimalComponentService : ComponentServiceBase, IAnimalComponentServ
 
         foreach (var animalGroupDto in animalComponentDto.AnimalGroupDtos)
         {
-            var animalGroup = _animalGroupMapper.Map<AnimalGroup>(animalGroupDto);
+            var animalGroup = PropertyMapper.Map<AnimalGroupDto, AnimalGroup>(animalGroupDto);
 
             // Convert each ManagementPeriodDto back to a ManagementPeriod domain object
             foreach (var managementPeriodDto in animalGroupDto.ManagementPeriodDtos)

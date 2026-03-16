@@ -3,18 +3,16 @@ using H.Core.Enumerations;
 using H.Core.Models;
 using H.Core.Models.Infrastructure;
 using H.Core.Providers.AnaerobicDigestion;
-using AutoMapper;
 using H.Core.Services.Animals;
 using SubstrateFlowInformation = H.Core.Models.Infrastructure.SubstrateFlowInformation;
 
 namespace H.Core.Calculators.Infrastructure
 {
-    public partial class ADCalculator : IADCalculator  
+    public partial class ADCalculator : IADCalculator
     {
         #region Fields
 
         private AnimalResultsService _animalResultsService = new AnimalResultsService();
-        private readonly IMapper _substrateMapper;
 
         private readonly Table_46_Biogas_Methane_Production_Parameters_Provider
             _biogasMethaneProductionParametersProvider = new Table_46_Biogas_Methane_Production_Parameters_Provider();
@@ -31,14 +29,6 @@ namespace H.Core.Calculators.Infrastructure
 
         public ADCalculator()
         {
-            var substrateFlowMapperConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<SubstrateFlowInformation, SubstrateFlowInformation>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            _substrateMapper = substrateFlowMapperConfiguration.CreateMapper();
         }
 
         #endregion

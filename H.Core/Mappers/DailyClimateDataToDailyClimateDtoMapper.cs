@@ -1,19 +1,14 @@
-using AutoMapper;
 using H.Core.Models.Climate;
 using H.Core.Providers.Climate;
 
 namespace H.Core.Mappers;
 
-public class DailyClimateDataToDailyClimateDtoMapper : Profile
+public class DailyClimateDataToDailyClimateDtoMapper : IModelMapper<DailyClimateData, DailyClimateDto>
 {
-    public DailyClimateDataToDailyClimateDtoMapper()
+    public DailyClimateDto Map(DailyClimateData source)
     {
-        CreateMap<DailyClimateData, DailyClimateDto>()
-            .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.Year))
-            .ForMember(dest => dest.MeanDailyEvapotranspiration, opt => opt.MapFrom(src => src.MeanDailyPET))
-            .ForMember(dest => dest.MeanDailyPrecipitation, opt => opt.MapFrom(src => src.MeanDailyPrecipitation))
-            .ForMember(dest => dest.Latitude, opt => opt.Ignore())
-            .ForMember(dest => dest.Longitude, opt => opt.Ignore())
-            .ForMember(dest => dest.MonthlyPPT, opt => opt.Ignore());
+        var dest = PropertyMapper.Map<DailyClimateData, DailyClimateDto>(source);
+        dest.MeanDailyEvapotranspiration = source.MeanDailyPET;
+        return dest;
     }
 }

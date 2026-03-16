@@ -1,14 +1,14 @@
-using AutoMapper;
 using H.Core.Factories.Rotations;
 using H.Core.Models.LandManagement.Rotation;
 
 namespace H.Core.Mappers;
 
-public class RotationComponentToRotationComponentDtoMapper : Profile
+public class RotationComponentToRotationComponentDtoMapper : IModelMapper<RotationComponent, RotationComponentDto>
 {
-    public RotationComponentToRotationComponentDtoMapper()
+    public RotationComponentDto Map(RotationComponent source)
     {
-        CreateMap<RotationComponent, RotationComponentDto>()
-            .ForMember(dest => dest.FieldArea, opt => opt.MapFrom(src => src.FieldSystemComponent.FieldArea));
+        var dest = PropertyMapper.Map<RotationComponent, RotationComponentDto>(source);
+        dest.FieldArea = source.FieldSystemComponent.FieldArea;
+        return dest;
     }
 }

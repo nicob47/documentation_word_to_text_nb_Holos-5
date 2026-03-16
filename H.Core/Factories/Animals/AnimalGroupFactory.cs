@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using H.Core.Mappers;
+﻿using H.Core.Mappers;
 using H.Core.Models;
 using Prism.Ioc;
 
 namespace H.Core.Factories.Animals;
 
 /// <summary>
-/// Factory for creating <see cref="AnimalGroupDto"/> instances with optional AutoMapper support.
+/// Factory for creating <see cref="AnimalGroupDto"/> instances with optional mapper support.
 /// </summary>
 public class AnimalGroupFactory : IAnimalGroupFactory
 {
@@ -16,7 +15,7 @@ public class AnimalGroupFactory : IAnimalGroupFactory
     /// Optional mapper for copying data between <see cref="AnimalGroupDto"/> instances.
     /// Will be null if the factory is created without dependency injection.
     /// </summary>
-    private readonly IMapper? _animalGroupDtoToAnimalGroupDtoMapper;
+    private readonly IModelMapper<AnimalGroupDto, AnimalGroupDto>? _animalGroupDtoToAnimalGroupDtoMapper;
 
     #endregion
 
@@ -33,10 +32,10 @@ public class AnimalGroupFactory : IAnimalGroupFactory
     /// <summary>
     /// Initializes a new instance of the <see cref="AnimalGroupFactory"/> class with dependency injection.
     /// </summary>
-    /// <param name="containerProvider">The container provider used to resolve the AutoMapper instance.</param>
+    /// <param name="containerProvider">The container provider used to resolve the mapper instance.</param>
     public AnimalGroupFactory(IContainerProvider containerProvider)
     {
-        _animalGroupDtoToAnimalGroupDtoMapper = containerProvider.Resolve<IMapper>(nameof(AnimalGroupDtoToAnimalGroupDtoMapper));
+        _animalGroupDtoToAnimalGroupDtoMapper = containerProvider.Resolve<IModelMapper<AnimalGroupDto, AnimalGroupDto>>(nameof(AnimalGroupDtoToAnimalGroupDtoMapper));
     }
 
     #endregion
@@ -64,7 +63,7 @@ public class AnimalGroupFactory : IAnimalGroupFactory
 
     /// <summary>
     /// Creates a new <see cref="AnimalGroupDto"/> instance by copying data from a template.
-    /// If AutoMapper is available, properties will be copied from the template; otherwise, default values are used.
+    /// If a mapper is available, properties will be copied from the template; otherwise, default values are used.
     /// </summary>
     /// <param name="template">The template DTO to copy data from.</param>
     /// <returns>A new <see cref="AnimalGroupDto"/> instance with data copied from the template if mapping is available.</returns>
@@ -72,8 +71,10 @@ public class AnimalGroupFactory : IAnimalGroupFactory
     {
         var result = new AnimalGroupDto();
 
-        // Use null-conditional operator to safely invoke mapping only if mapper is available
-        _animalGroupDtoToAnimalGroupDtoMapper?.Map(template, result);
+        if (_animalGroupDtoToAnimalGroupDtoMapper != null && template is AnimalGroupDto dtoTemplate)
+        {
+            PropertyMapper.CopyTo(dtoTemplate, result);
+        }
 
         return result;
     }

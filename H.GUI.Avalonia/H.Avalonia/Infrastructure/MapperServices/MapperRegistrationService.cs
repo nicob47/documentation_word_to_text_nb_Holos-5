@@ -1,16 +1,27 @@
-using AutoMapper;
+using H.Core.Factories.Animals;
+using H.Core.Factories.Animals.Dairy;
+using H.Core.Factories.Crops;
+using H.Core.Factories.Fields;
+using H.Core.Factories.Rotations;
 using H.Core.Mappers;
+using H.Core.Models.Animals;
+using H.Core.Models.Animals.Dairy;
+using H.Core.Models.Climate;
+using H.Core.Models.LandManagement.Fields;
+using H.Core.Models.LandManagement.Rotation;
+using H.Core.Providers.Climate;
+using H.Core.Providers.Feed;
 using Prism.Ioc;
 
 namespace H.Avalonia.Infrastructure.MapperServices;
 
 /// <summary>
-/// Service responsible for configuring and registering AutoMapper mappers with the dependency injection container.
+/// Service responsible for configuring and registering IModelMapper implementations with the dependency injection container.
 /// </summary>
 public class MapperRegistrationService
 {
     /// <summary>
-    /// Configures and registers all AutoMapper mappers with the container.
+    /// Configures and registers all IModelMapper implementations with the container.
     /// </summary>
     /// <param name="containerRegistry">The Prism container registry for dependency injection.</param>
     public void RegisterMappers(IContainerRegistry containerRegistry)
@@ -20,7 +31,7 @@ public class MapperRegistrationService
 
         // Field mappers
         RegisterFieldMappers(containerRegistry);
-        
+
         // Rotation mappers
         RegisterRotationMappers(containerRegistry);
 
@@ -29,7 +40,7 @@ public class MapperRegistrationService
 
         // Animal component mappers
         RegisterAnimalComponentMappers(containerRegistry);
-        
+
         // Dairy component mappers
         RegisterDairyComponentMappers(containerRegistry);
 
@@ -42,167 +53,94 @@ public class MapperRegistrationService
 
     private void RegisterCropMappers(IContainerRegistry containerRegistry)
     {
-        var cropDtoToCropDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<CropDtoToCropDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<CropDto, CropDto>>(
+            new CropDtoToCropDtoMapper(), nameof(CropDtoToCropDtoMapper));
 
-        var cropDtoToCropViewItemConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<CropDtoToCropViewItemMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<ICropDto, CropViewItem>>(
+            new CropDtoToCropViewItemMapper(), nameof(CropDtoToCropViewItemMapper));
 
-        var cropViewItemToCropDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<CropViewItemToCropDtoMapper>();
-        });
-
-        containerRegistry.RegisterInstance(cropDtoToCropDtoConfiguration.CreateMapper(), nameof(CropDtoToCropDtoMapper));
-        containerRegistry.RegisterInstance(cropDtoToCropViewItemConfiguration.CreateMapper(), nameof(CropDtoToCropViewItemMapper));
-        containerRegistry.RegisterInstance(cropViewItemToCropDtoConfiguration.CreateMapper(), nameof(CropViewItemToCropDtoMapper));
+        containerRegistry.RegisterInstance<IModelMapper<CropViewItem, CropDto>>(
+            new CropViewItemToCropDtoMapper(), nameof(CropViewItemToCropDtoMapper));
     }
 
     private void RegisterFieldMappers(IContainerRegistry containerRegistry)
     {
-        var fieldComponentToFieldDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<FieldComponentToDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<FieldSystemComponent, FieldSystemComponentDto>>(
+            new FieldComponentToDtoMapper(), nameof(FieldComponentToDtoMapper));
 
-        var fieldDtoToFieldComponentConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<FieldDtoToFieldComponentMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<FieldSystemComponentDto, FieldSystemComponent>>(
+            new FieldDtoToFieldComponentMapper(), nameof(FieldDtoToFieldComponentMapper));
 
-        var fieldDtoToFieldDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<FieldDtoToFieldDtoMapper>();
-        });
-
-        containerRegistry.RegisterInstance(fieldComponentToFieldDtoConfiguration.CreateMapper(), nameof(FieldComponentToDtoMapper));
-        containerRegistry.RegisterInstance(fieldDtoToFieldComponentConfiguration.CreateMapper(), nameof(FieldDtoToFieldComponentMapper));
-        containerRegistry.RegisterInstance(fieldDtoToFieldDtoConfiguration.CreateMapper(), nameof(FieldDtoToFieldDtoMapper));
+        containerRegistry.RegisterInstance<IModelMapper<FieldSystemComponentDto, FieldSystemComponentDto>>(
+            new FieldDtoToFieldDtoMapper(), nameof(FieldDtoToFieldDtoMapper));
     }
 
     private void RegisterRotationMappers(IContainerRegistry containerRegistry)
     {
-        var rotationComponentToRotationComponentDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<RotationComponentToRotationComponentDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<RotationComponent, RotationComponentDto>>(
+            new RotationComponentToRotationComponentDtoMapper(), nameof(RotationComponentToRotationComponentDtoMapper));
 
-        var rotationComponentDtoToRotationComponentConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<RotationComponentDtoToRotationComponentMapper>();
-        });
-
-        containerRegistry.RegisterInstance(rotationComponentToRotationComponentDtoConfiguration.CreateMapper(), nameof(RotationComponentToRotationComponentDtoMapper));
-        containerRegistry.RegisterInstance(rotationComponentDtoToRotationComponentConfiguration.CreateMapper(), nameof(RotationComponentDtoToRotationComponentMapper));
+        containerRegistry.RegisterInstance<IModelMapper<RotationComponentDto, RotationComponent>>(
+            new RotationComponentDtoToRotationComponentMapper(), nameof(RotationComponentDtoToRotationComponentMapper));
     }
 
     private void RegisterFeedIngredientMappers(IContainerRegistry containerRegistry)
     {
-        var feedIngredientToFeedIngredientConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<FeedIngredientToFeedIngredientMapper>();
-        });
-
-        containerRegistry.RegisterInstance(feedIngredientToFeedIngredientConfiguration.CreateMapper(), nameof(FeedIngredientToFeedIngredientMapper));
+        containerRegistry.RegisterInstance<IModelMapper<FeedIngredient, FeedIngredient>>(
+            new FeedIngredientToFeedIngredientMapper(), nameof(FeedIngredientToFeedIngredientMapper));
     }
 
     private void RegisterAnimalComponentMappers(IContainerRegistry containerRegistry)
     {
-        var animalComponentDtoToAnimalComponentConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalComponentDtoToAnimalComponentMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<AnimalComponentDto, AnimalComponentBase>>(
+            new AnimalComponentDtoToAnimalComponentMapper(), nameof(AnimalComponentDtoToAnimalComponentMapper));
 
-        var animalComponentDtoToAnimalComponentDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalComponentDtoToAnimalComponentDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<AnimalComponentDto, AnimalComponentDto>>(
+            new AnimalComponentDtoToAnimalComponentDtoMapper(), nameof(AnimalComponentDtoToAnimalComponentDtoMapper));
 
-        var animalComponentToAnimalComponentDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalComponentBaseToAnimalComponentDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<AnimalComponentBase, AnimalComponentDto>>(
+            new AnimalComponentBaseToAnimalComponentDtoMapper(), nameof(AnimalComponentBaseToAnimalComponentDtoMapper));
 
-        var animalGroupDtoToAnimalGroupConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalGroupDtoToAnimalGroupMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<AnimalGroupDto, AnimalGroup>>(
+            new AnimalGroupDtoToAnimalGroupMapper(), nameof(AnimalGroupDtoToAnimalGroupMapper));
 
-        var animalGroupDtoToAnimalGroupDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalGroupDtoToAnimalGroupDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<AnimalGroupDto, AnimalGroupDto>>(
+            new AnimalGroupDtoToAnimalGroupDtoMapper(), nameof(AnimalGroupDtoToAnimalGroupDtoMapper));
 
-        var animalGroupToAnimalGroupDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalGroupToAnimalGroupDtoMapper>();
-        });
-
-        containerRegistry.RegisterInstance(animalComponentDtoToAnimalComponentConfiguration.CreateMapper(), nameof(AnimalComponentDtoToAnimalComponentMapper));
-        containerRegistry.RegisterInstance(animalComponentDtoToAnimalComponentDtoConfiguration.CreateMapper(), nameof(AnimalComponentDtoToAnimalComponentDtoMapper));
-        containerRegistry.RegisterInstance(animalComponentToAnimalComponentDtoConfiguration.CreateMapper(), nameof(AnimalComponentBaseToAnimalComponentDtoMapper));
-        containerRegistry.RegisterInstance(animalGroupDtoToAnimalGroupConfiguration.CreateMapper(), nameof(AnimalGroupDtoToAnimalGroupMapper));
-        containerRegistry.RegisterInstance(animalGroupDtoToAnimalGroupDtoConfiguration.CreateMapper(), nameof(AnimalGroupDtoToAnimalGroupDtoMapper));
-        containerRegistry.RegisterInstance(animalGroupToAnimalGroupDtoConfiguration.CreateMapper(), nameof(AnimalGroupToAnimalGroupDtoMapper));
+        containerRegistry.RegisterInstance<IModelMapper<AnimalGroup, AnimalGroupDto>>(
+            new AnimalGroupToAnimalGroupDtoMapper(), nameof(AnimalGroupToAnimalGroupDtoMapper));
     }
 
     private void RegisterDairyComponentMappers(IContainerRegistry containerRegistry)
     {
-        var dairyComponentToDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<AnimalComponentBaseToAnimalComponentDtoMapper>();
-            expression.AddProfile<AnimalComponentDtoToAnimalComponentMapper>();
-            expression.AddProfile<DairyComponentToDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<DairyComponent, DairyComponentDto>>(
+            new DairyComponentToDtoMapper(), nameof(DairyComponentToDtoMapper));
 
-        containerRegistry.RegisterInstance(dairyComponentToDtoConfiguration.CreateMapper(), nameof(DairyComponentToDtoMapper));
+        containerRegistry.RegisterInstance<IModelMapper<DairyComponentDto, DairyComponent>>(
+            new DairyComponentDtoToComponentMapper(), nameof(DairyComponentDtoToComponentMapper));
     }
 
     private void RegisterManagementPeriodMappers(IContainerRegistry containerRegistry)
     {
-        var managementPeriodDtoToManagementPeriodDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<ManagementPeriodDtoToManagementPeriodDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<ManagementPeriodDto, ManagementPeriodDto>>(
+            new ManagementPeriodDtoToManagementPeriodDtoMapper(), nameof(ManagementPeriodDtoToManagementPeriodDtoMapper));
 
-        var managementPeriodToManagementPeriodDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<ManagementPeriodToManagementPeriodDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<ManagementPeriod, ManagementPeriodDto>>(
+            new ManagementPeriodToManagementPeriodDtoMapper(), nameof(ManagementPeriodToManagementPeriodDtoMapper));
 
-        var managementPeriodDtoToManagementPeriodConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<ManagementPeriodDtoToManagementPeriodMapper>();
-        });
-
-        containerRegistry.RegisterInstance(managementPeriodDtoToManagementPeriodDtoConfiguration.CreateMapper(), nameof(ManagementPeriodDtoToManagementPeriodDtoMapper));
-        containerRegistry.RegisterInstance(managementPeriodToManagementPeriodDtoConfiguration.CreateMapper(), nameof(ManagementPeriodToManagementPeriodDtoMapper));
-        containerRegistry.RegisterInstance(managementPeriodDtoToManagementPeriodConfiguration.CreateMapper(), nameof(ManagementPeriodDtoToManagementPeriodMapper));
+        containerRegistry.RegisterInstance<IModelMapper<ManagementPeriodDto, ManagementPeriod>>(
+            new ManagementPeriodDtoToManagementPeriodMapper(), nameof(ManagementPeriodDtoToManagementPeriodMapper));
     }
 
     private void RegisterClimateMappers(IContainerRegistry containerRegistry)
     {
-        var dailyClimateDataToDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<DailyClimateDataToDailyClimateDtoMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<DailyClimateData, DailyClimateDto>>(
+            new DailyClimateDataToDailyClimateDtoMapper(), nameof(DailyClimateDataToDailyClimateDtoMapper));
 
-        var dailyClimateDtoToDataConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<DailyClimateDtoToDailyClimateDataMapper>();
-        });
+        containerRegistry.RegisterInstance<IModelMapper<DailyClimateDto, DailyClimateData>>(
+            new DailyClimateDtoToDailyClimateDataMapper(), nameof(DailyClimateDtoToDailyClimateDataMapper));
 
-        var dailyClimateDtoToDtoConfiguration = new MapperConfiguration(expression =>
-        {
-            expression.AddProfile<DailyClimateDtoToDailyClimateDtoMapper>();
-        });
-
-        containerRegistry.RegisterInstance(dailyClimateDataToDtoConfiguration.CreateMapper(), nameof(DailyClimateDataToDailyClimateDtoMapper));
-        containerRegistry.RegisterInstance(dailyClimateDtoToDataConfiguration.CreateMapper(), nameof(DailyClimateDtoToDailyClimateDataMapper));
-        containerRegistry.RegisterInstance(dailyClimateDtoToDtoConfiguration.CreateMapper(), nameof(DailyClimateDtoToDailyClimateDtoMapper));
+        containerRegistry.RegisterInstance<IModelMapper<DailyClimateDto, DailyClimateDto>>(
+            new DailyClimateDtoToDailyClimateDtoMapper(), nameof(DailyClimateDtoToDailyClimateDtoMapper));
     }
 }

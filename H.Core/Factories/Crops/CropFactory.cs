@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Mappers;
 using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
@@ -15,9 +14,9 @@ public class CropFactory : ICropFactory
 {
     #region Fields
 
-    private readonly IMapper _cropViewItemToDtoMapper;
-    private readonly IMapper _cropDtoToDtoMapper;
-    private readonly IMapper _cropDtoToViewItemMapper;
+    private readonly IModelMapper<CropViewItem, CropDto> _cropViewItemToDtoMapper;
+    private readonly IModelMapper<CropDto, CropDto> _cropDtoToDtoMapper;
+    private readonly IModelMapper<ICropDto, CropViewItem> _cropDtoToViewItemMapper;
 
     private readonly ICropInitializationService _cropInitializationService;
 
@@ -42,9 +41,9 @@ public class CropFactory : ICropFactory
         }
         else
         {
-            _cropViewItemToDtoMapper = containerProvider.Resolve<IMapper>(nameof(CropViewItemToCropDtoMapper));
-            _cropDtoToDtoMapper = containerProvider.Resolve<IMapper>(nameof(CropDtoToCropDtoMapper));
-            _cropDtoToViewItemMapper = containerProvider.Resolve<IMapper>(nameof(CropDtoToCropViewItemMapper));
+            _cropViewItemToDtoMapper = containerProvider.Resolve<IModelMapper<CropViewItem, CropDto>>(nameof(CropViewItemToCropDtoMapper));
+            _cropDtoToDtoMapper = containerProvider.Resolve<IModelMapper<CropDto, CropDto>>(nameof(CropDtoToCropDtoMapper));
+            _cropDtoToViewItemMapper = containerProvider.Resolve<IModelMapper<ICropDto, CropViewItem>>(nameof(CropDtoToCropViewItemMapper));
         }
     }
 
@@ -74,29 +73,22 @@ public class CropFactory : ICropFactory
 
     public IDto CreateDtoFromDtoTemplate(IDto template)
     {
-        var cropDto = new CropDto();
+        if (template is CropDto dtoTemplate)
+        {
+            return _cropDtoToDtoMapper.Map(dtoTemplate);
+        }
 
-        _cropDtoToDtoMapper.Map(template, cropDto);
-
-        return cropDto;
+        return new CropDto();
     }
 
     public CropDto CreateCropDto(CropViewItem template)
     {
-        var cropDto = new CropDto();
-
-        _cropViewItemToDtoMapper.Map(template, cropDto);
-
-        return cropDto;
+        return _cropViewItemToDtoMapper.Map(template);
     }
 
-    public CropViewItem CreateCropViewItem(ICropDto  cropDto)
+    public CropViewItem CreateCropViewItem(ICropDto cropDto)
     {
-        var viewItem = new CropViewItem();
-
-        _cropDtoToViewItemMapper.Map(cropDto, viewItem);
-
-        return viewItem;
+        return _cropDtoToViewItemMapper.Map(cropDto);
     }
 
     #endregion

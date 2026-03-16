@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using AutoMapper;
 using H.Core.Converters;
 using H.Core.CustomAttributes;
 using H.Core.Enumerations;
+using H.Core.Mappers;
 using H.Core.Properties;
 using H.Infrastructure;
 
@@ -49,32 +49,10 @@ namespace H.Core.Providers.Feed
         private EntericMethanEmissionMethodologies _selectedMethaneEmissionMethodology;
 
         private ObservableCollection<FeedIngredient> _ingredients = null!;
-        private static MapperConfiguration _dietMapperConfiguration;
-        private static MapperConfiguration _ingredientMapperConfiguration;
-        private static IMapper _dietMapper;
-        private static IMapper _ingredientMapper;
 
         #endregion
 
         #region Constructors
-
-        static Diet()
-        {
-            _dietMapperConfiguration = new MapperConfiguration(x =>
-            {
-                x.CreateMap<Diet, Diet>().ForMember(property => property.Ingredients, options => options.Ignore());
-            });
-
-            _ingredientMapperConfiguration = new MapperConfiguration(x =>
-            {
-                x.CreateMap<FeedIngredient, FeedIngredient>()
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            _dietMapper = _dietMapperConfiguration.CreateMapper();
-
-            _ingredientMapper = _ingredientMapperConfiguration.CreateMapper();
-        }
 
         public Diet()
         {
@@ -490,14 +468,14 @@ namespace H.Core.Providers.Feed
             // what is wanted as we just want to copy ingredients to the copiedDiet property.
             copiedDiet.Ingredients = new ObservableCollection<FeedIngredient>();
 
-            _dietMapper.Map(dietToCopy, copiedDiet);            
+            PropertyMapper.CopyTo(dietToCopy, copiedDiet);
 
             // Copy ingredients
             var ingredientsToBeCopied = dietToCopy.Ingredients.ToList();
 
             foreach (var feedIngredient in ingredientsToBeCopied)
             {
-                var copiedIngredient = _ingredientMapper.Map<FeedIngredient>(feedIngredient);
+                var copiedIngredient = PropertyMapper.Map<FeedIngredient, FeedIngredient>(feedIngredient);
 
                 copiedDiet.Ingredients.Add(copiedIngredient);
             }

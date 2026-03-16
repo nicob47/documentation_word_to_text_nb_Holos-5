@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Factories.Animals;
 using H.Core.Factories.Animals.Dairy;
 using H.Core.Mappers;
@@ -27,8 +26,6 @@ public class DairyComponentServiceTests
     private DairyComponentService _sut = null!;
     private Mock<ILogger> _mockLogger = null!;
     private Mock<IContainerProvider> _mockContainerProvider = null!;
-    private IMapper _dairyMapper = null!;
-    private IMapper _animalGroupMapper = null!;
     private Farm _testFarm = null!;
     private DairyComponent _testDairyComponent = null!;
     private DairyComponentDto _testDairyComponentDto = null!;
@@ -50,33 +47,18 @@ public class DairyComponentServiceTests
     [TestInitialize]
     public void TestInitialize()
     {
-        // Setup AutoMapper configurations with all required profiles
-        var dairyMapperConfig = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalComponentBaseToAnimalComponentDtoMapper>();
-            cfg.AddProfile<AnimalComponentDtoToAnimalComponentMapper>();
-            cfg.AddProfile<DairyComponentToDtoMapper>();
-        });
-        _dairyMapper = dairyMapperConfig.CreateMapper();
-
-        var animalGroupMapperConfig = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalGroupToAnimalGroupDtoMapper>();
-        });
-        _animalGroupMapper = animalGroupMapperConfig.CreateMapper();
-
         // Setup mocks
         _mockLogger = new Mock<ILogger>();
         _mockContainerProvider = new Mock<IContainerProvider>();
 
-        // Configure container provider to return mappers
+        // Configure container provider to return IModelMapper instances
         _mockContainerProvider
-            .Setup(x => x.Resolve(typeof(IMapper), nameof(DairyComponentToDtoMapper)))
-            .Returns(_dairyMapper);
+            .Setup(x => x.Resolve(typeof(IModelMapper<DairyComponent, DairyComponentDto>), nameof(DairyComponentToDtoMapper)))
+            .Returns(new DairyComponentToDtoMapper());
 
         _mockContainerProvider
-            .Setup(x => x.Resolve(typeof(IMapper), nameof(AnimalGroupToAnimalGroupDtoMapper)))
-            .Returns(_animalGroupMapper);
+            .Setup(x => x.Resolve(typeof(IModelMapper<AnimalGroup, AnimalGroupDto>), nameof(AnimalGroupToAnimalGroupDtoMapper)))
+            .Returns(new AnimalGroupToAnimalGroupDtoMapper());
 
         // Create test data
         _testFarm = new Farm { Name = "Test Dairy Farm" };

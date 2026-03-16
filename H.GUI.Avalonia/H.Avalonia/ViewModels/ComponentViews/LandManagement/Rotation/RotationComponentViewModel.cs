@@ -506,7 +506,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         ///   <item>For each field, compute a shift offset driven by <see cref="ShiftDirection"/>.</item>
         ///   <item>For each year in [StartYear, EndYear], use modulo arithmetic to pick the correct
         ///         crop and create a <see cref="YearCropAssignment"/> cell with its own cloned
-        ///         <see cref="ICropDto"/> (via AutoMapper) so per-cell edits remain independent.</item>
+        ///         <see cref="ICropDto"/> (via PropertyMapper) so per-cell edits remain independent.</item>
         ///   <item>All rows are accumulated in a local list, then wrapped in a new
         ///         <see cref="ObservableCollection{T}"/> and assigned via the property setter —
         ///         exactly one <c>PropertyChanged</c> notification, old data → new data in one frame.</item>
@@ -595,7 +595,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     if (_cropFactory is not null)
                     {
                         // Use the factory's CreateDtoFromDtoTemplate method to copy properties
-                        // This leverages AutoMapper for proper property copying
+                        // This leverages PropertyMapper for proper property copying
                         cellCropDto = (ICropDto)_cropFactory.CreateDtoFromDtoTemplate(sourceCrop);
 
                         // Override the year to match this specific cell's year

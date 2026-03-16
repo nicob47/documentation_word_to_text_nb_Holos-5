@@ -4,7 +4,6 @@ using System.Globalization;
 using H.Content;
 using H.Core.Converters;
 using H.Infrastructure;
-using AutoMapper;
 using H.Core.Enumerations;
 using H.Core.Mappers;
 using H.Core.Models;
@@ -52,7 +51,7 @@ namespace H.Core.Providers.Feed
 
         #region Fields
 
-        private readonly IMapper _feedIngredientMapper;
+        private readonly IModelMapper<FeedIngredient, FeedIngredient> _feedIngredientMapper;
         private readonly ILogger _logger = null!;
         private readonly ICacheService _cacheService = null!;
 
@@ -73,10 +72,7 @@ namespace H.Core.Providers.Feed
             this.BuildDictionary();
             this.CreateIngredientLists();
 
-            _feedIngredientMapper = new Mapper(new MapperConfiguration(expression =>
-            {
-                expression.CreateMap<FeedIngredient, FeedIngredient>();
-            }));
+            _feedIngredientMapper = new FeedIngredientToFeedIngredientMapper();
         }
 
         public FeedIngredientProvider(ILogger logger, IContainerProvider containerProvider, ICacheService cacheService) : this()
@@ -99,7 +95,7 @@ namespace H.Core.Providers.Feed
                 throw new ArgumentNullException(nameof(logger));
             }
 
-            _feedIngredientMapper = containerProvider.Resolve<IMapper>(nameof(FeedIngredientToFeedIngredientMapper));
+            _feedIngredientMapper = containerProvider.Resolve<IModelMapper<FeedIngredient, FeedIngredient>>(nameof(FeedIngredientToFeedIngredientMapper));
         }
 
         #endregion
@@ -162,7 +158,7 @@ namespace H.Core.Providers.Feed
             {
                 var copiedIngredient = new FeedIngredient();
 
-                _feedIngredientMapper.Map(ingredient, copiedIngredient);
+                PropertyMapper.CopyTo(ingredient, copiedIngredient);
 
                 copiedIngredient.PercentageInDiet = defaultPercentageInDiet;
 

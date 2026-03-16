@@ -1,4 +1,3 @@
-﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
@@ -17,7 +16,6 @@ public class AnimalGroupFactoryTests
 
     private AnimalGroupFactory _sut = null!;
     private Mock<IContainerProvider> _mockContainerProvider = null!;
-    private IMapper _mockMapper = null!;
 
     #endregion
 
@@ -38,13 +36,10 @@ public class AnimalGroupFactoryTests
     {
         _mockContainerProvider = new Mock<IContainerProvider>();
 
-        _mockMapper = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalGroupDtoToAnimalGroupDtoMapper>();
-        }).CreateMapper();
+        var mapper = new AnimalGroupDtoToAnimalGroupDtoMapper();
 
-        _mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(AnimalGroupDtoToAnimalGroupDtoMapper)))
-            .Returns(_mockMapper);
+        _mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<AnimalGroupDto, AnimalGroupDto>), nameof(AnimalGroupDtoToAnimalGroupDtoMapper)))
+            .Returns(mapper);
 
         _sut = new AnimalGroupFactory(_mockContainerProvider.Object);
     }

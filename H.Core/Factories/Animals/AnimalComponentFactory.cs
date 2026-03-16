@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Mappers;
+﻿using H.Core.Mappers;
 using H.Core.Models;
 using Prism.Ioc;
 
@@ -9,7 +8,7 @@ public class AnimalComponentFactory : IAnimalComponentFactory
 {
     #region Fields
 
-    private readonly IMapper _animalComponentDtoToAnimalComponentDtoMapper;
+    private readonly IModelMapper<AnimalComponentDto, AnimalComponentDto> _animalComponentDtoToAnimalComponentDtoMapper;
 
     #endregion
 
@@ -19,13 +18,13 @@ public class AnimalComponentFactory : IAnimalComponentFactory
     {
         if (containerProvider != null)
         {
-            _animalComponentDtoToAnimalComponentDtoMapper = containerProvider.Resolve<IMapper>(nameof(AnimalComponentDtoToAnimalComponentDtoMapper));
+            _animalComponentDtoToAnimalComponentDtoMapper = containerProvider.Resolve<IModelMapper<AnimalComponentDto, AnimalComponentDto>>(nameof(AnimalComponentDtoToAnimalComponentDtoMapper));
         }
         else
         {
             throw new ArgumentNullException(nameof(containerProvider));
         }
-    } 
+    }
 
     #endregion
 
@@ -45,7 +44,10 @@ public class AnimalComponentFactory : IAnimalComponentFactory
     {
         var result = new AnimalComponentDto();
 
-        _animalComponentDtoToAnimalComponentDtoMapper.Map(template, result);
+        if (template is AnimalComponentDto dtoTemplate)
+        {
+            PropertyMapper.CopyTo(dtoTemplate, result);
+        }
 
         return result;
     }
