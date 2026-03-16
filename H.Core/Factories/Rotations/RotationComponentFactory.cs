@@ -1,3 +1,4 @@
+using H.Core.Mappers;
 using H.Core.Models;
 
 namespace H.Core.Factories.Rotations;
@@ -21,12 +22,8 @@ public class RotationComponentFactory : IFactory<RotationComponentDto>
             throw new ArgumentException($"Template must be of type {nameof(RotationComponentDto)}", nameof(template));
         }
 
-        var dto = new RotationComponentDto
-        {
-            Guid = rotationTemplate.Guid,
-            Name = rotationTemplate.Name,
-            FieldArea = rotationTemplate.FieldArea
-        };
+        var dto = new RotationComponentDto();
+        PropertyMapper.CopyTo(rotationTemplate, dto);
 
         return dto;
     }

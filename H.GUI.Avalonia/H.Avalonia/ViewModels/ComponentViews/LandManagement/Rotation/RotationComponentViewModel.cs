@@ -1391,5 +1391,38 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         }
 
         #endregion
+
+        #region Overrides
+
+        public override void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            base.OnNavigatedFrom(navigationContext);
+
+            if (_selectedRotationComponent is not null &&
+                _selectedRotationComponentDto is RotationComponentDto rotationComponentDto)
+            {
+                if (!rotationComponentDto.HasErrors)
+                {
+                    try
+                    {
+                        _rotationComponentService?.TransferRotationDtoToSystem(
+                            rotationComponentDto,
+                            _selectedRotationComponent);
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger?.LogError(exception, "Error saving rotation component changes during navigation");
+                    }
+                }
+            }
+
+            // Clean up event handlers
+            if (_selectedRotationComponentDto is RotationComponentDto dto)
+            {
+                dto.PropertyChanged -= RotationComponentDtoOnPropertyChanged;
+            }
+        }
+
+        #endregion
     }
 }
