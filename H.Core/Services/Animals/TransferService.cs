@@ -148,8 +148,9 @@ namespace H.Core.Services.Animals
                 property.SetValue(copy, bindingValue);
             }
 
-            // Map values from the copy of the DTO to the internal system object
-            PropertyMapper.CopyTo(copy, model);
+            // Map values from the copy of the DTO to the internal system object.
+            // Cast to TDto so PropertyMapper sees the concrete type's properties, not just IDto's.
+            PropertyMapper.CopyTo((TDto)copy, model);
 
             return model;
         }
