@@ -105,6 +105,9 @@ namespace H.Core.Services.Animals
             // Use the internal mapper
             PropertyMapper.CopyTo(model, dto);
 
+            // Track which domain object this DTO was created from
+            dto.DomainObjectGuid = model.Guid;
+
             // All numerical values are stored internally as metric values
             var propertyConverter = new PropertyConverter<IDto>(dto);
 

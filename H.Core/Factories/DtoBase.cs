@@ -12,6 +12,7 @@ public abstract class DtoBase : ErrorValidationBase, IDto
 
     private string? _name;
     private Guid _guid = Guid.NewGuid();
+    private Guid _domainObjectGuid;
 
     #endregion
 
@@ -27,6 +28,16 @@ public abstract class DtoBase : ErrorValidationBase, IDto
     {
         get => _guid;
         set => SetProperty(ref _guid, value);
+    }
+
+    /// <summary>
+    /// Tracks which domain object this DTO was created from.
+    /// Set by TransferService when transferring a domain object to a DTO.
+    /// </summary>
+    public Guid DomainObjectGuid
+    {
+        get => _domainObjectGuid;
+        set => SetProperty(ref _domainObjectGuid, value);
     }
 
     #endregion

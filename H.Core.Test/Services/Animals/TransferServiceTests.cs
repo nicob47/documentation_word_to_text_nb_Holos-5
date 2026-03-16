@@ -22,7 +22,8 @@ namespace H.Core.Test.Services.Animals
     public class TestDto : IDto
     {
         public string Name { get; set; } = string.Empty;
-        public Guid Guid { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
+        public Guid DomainObjectGuid { get; set; }
         public double Weight { get; set; }
 #pragma warning disable CS0067
         public event PropertyChangedEventHandler PropertyChanged;
@@ -194,6 +195,107 @@ namespace H.Core.Test.Services.Animals
             // Assert
             Assert.AreEqual("Corn", dto.Name);
             Assert.AreEqual(1999, dto.Year);
+        }
+
+        [TestMethod]
+        public void TransferDomainObjectToDto_SetsDomainObjectGuid()
+        {
+            // Arrange
+            ITransferService<TestModel, TestDto> service = new TransferService<TestModel, TestDto>(
+                _mockUnitsCalculator.Object,
+                _mockTestDtoFactory.Object,
+                _testDtoToTestModelMapper,
+                _testModelToTestDtoMapper
+            );
+            var model = new TestModel { Name = "Test", Weight = 100.0 };
+            var modelGuid = model.Guid;
+
+            // Act
+            var dto = service.TransferDomainObjectToDto(model);
+
+            // Assert
+            Assert.AreEqual(modelGuid, dto.DomainObjectGuid, "DomainObjectGuid should be set to the domain model's Guid");
+            Assert.AreNotEqual(modelGuid, dto.Guid, "DTO identity Guid should remain its own value");
+        }
+
+        [TestMethod]
+        public void TransferDomainObjectToDto_DtoGuidIsNotDomainGuid()
+        {
+            // Arrange
+            ITransferService<TestModel, TestDto> service = new TransferService<TestModel, TestDto>(
+                _mockUnitsCalculator.Object,
+                _mockTestDtoFactory.Object,
+                _testDtoToTestModelMapper,
+                _testModelToTestDtoMapper
+            );
+            var model = new TestModel { Name = "Test" };
+
+            // Act
+            var dto = service.TransferDomainObjectToDto(model);
+
+            // Assert — DTO gets its own identity, domain correlation is via DomainObjectGuid
+            Assert.AreNotEqual(model.Guid, dto.Guid, "DTO should have its own identity Guid, not the domain model's");
+            Assert.AreEqual(model.Guid, dto.DomainObjectGuid, "DomainObjectGuid should track the source domain object");
+        }
+
+        [TestMethod]
+        public void TransferDomainObjectToDto_MultipleDtosFromSameModel_ShareDomainObjectGuid()
+        {
+            // Arrange
+            ITransferService<TestModel, TestDto> service = new TransferService<TestModel, TestDto>(
+                _mockUnitsCalculator.Object,
+                _mockTestDtoFactory.Object,
+                _testDtoToTestModelMapper,
+                _testModelToTestDtoMapper
+            );
+            var model = new TestModel { Name = "Shared" };
+
+            // Act
+            _mockTestDtoFactory.Setup(f => f.CreateDto(It.IsAny<Farm>())).Returns(new TestDto());
+            var dto1 = service.TransferDomainObjectToDto(model);
+            _mockTestDtoFactory.Setup(f => f.CreateDto(It.IsAny<Farm>())).Returns(new TestDto());
+            var dto2 = service.TransferDomainObjectToDto(model);
+
+            // Assert — both DTOs point back to the same domain object but have different identity Guids
+            Assert.AreEqual(dto1.DomainObjectGuid, dto2.DomainObjectGuid, "Both DTOs should reference the same domain object");
+            Assert.AreNotEqual(dto1.Guid, dto2.Guid, "Each DTO should have its own unique identity Guid");
+        }
+
+        [TestMethod]
+        public void TransferDtoToDomainObject_DoesNotOverwriteModelGuid()
+        {
+            // Arrange
+            _mockTestDtoFactory.Setup(f => f.CreateDtoFromDtoTemplate(It.IsAny<IDto>()))
+                .Returns<IDto>(template =>
+                {
+                    var testTemplate = (TestDto)template;
+                    var copy = new TestDto
+                    {
+                        Name = testTemplate.Name,
+                        Weight = testTemplate.Weight,
+                        DomainObjectGuid = testTemplate.DomainObjectGuid
+                    };
+                    return copy;
+                });
+
+            ITransferService<TestModel, TestDto> service = new TransferService<TestModel, TestDto>(
+                _mockUnitsCalculator.Object,
+                _mockTestDtoFactory.Object,
+                _testDtoToTestModelMapper,
+                _testModelToTestDtoMapper
+            );
+
+            var model = new TestModel { Name = "Original", Weight = 50.0 };
+            var originalModelGuid = model.Guid;
+
+            var dto = new TestDto { Name = "Updated", Weight = 75.0, DomainObjectGuid = originalModelGuid };
+
+            // Act
+            service.TransferDtoToDomainObject(dto, model);
+
+            // Assert — model keeps its own Guid, name is updated via PropertyMapper
+            Assert.AreEqual(originalModelGuid, model.Guid, "Domain model Guid should not be overwritten by transfer");
+            Assert.AreEqual("Updated", model.Name);
         }
 
         #endregion

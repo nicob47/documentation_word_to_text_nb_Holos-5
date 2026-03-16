@@ -24,7 +24,9 @@ public static class PropertyMapper
     /// Properties match by name, and the source property type must be assignable to the dest property type.
     /// Collection properties (IEnumerable, but not string) are skipped to avoid sharing references;
     /// callers are expected to copy collection items manually.
-    /// Nullable&lt;T&gt; source properties are unwrapped to match non-nullable T destination properties.
+    /// Guid properties are skipped by default to preserve object identity; each object should keep
+    /// its own unique Guid. Nullable&lt;T&gt; source properties are unwrapped to match non-nullable T
+    /// destination properties.
     /// </summary>
     public static void CopyTo<TSource, TDest>(TSource source, TDest dest)
     {
@@ -40,6 +42,11 @@ public static class PropertyMapper
 
             var srcType = srcProp.PropertyType;
             var destType = destProp.PropertyType;
+
+            // Skip the identity Guid property to preserve object identity.
+            // Other Guid-typed properties (e.g. FieldSystemComponentGuid, DomainObjectGuid) are copied normally.
+            if (srcProp.Name == "Guid")
+                continue;
 
             // Skip collection properties to avoid sharing mutable collection references.
             // String implements IEnumerable but should be copied normally.
