@@ -50,18 +50,26 @@ namespace H.Avalonia.ViewModels.Results
             new ComboBoxItem { Content = "Mg GHGs" }
         };
 
+        /// <summary>
+        /// Gets or sets the currently selected emission type in the user interface.
+        /// </summary>
         public ComboBoxItem SelectedEmissionType
         {
             get => _selectedEmissionType;
             set => SetProperty(ref _selectedEmissionType, value);
         }
 
+        /// <summary>
+        /// Gets or sets the collection of years available for selection.
+        /// </summary>
         public ObservableCollection<int> AvailableYears { get; set; } = new ObservableCollection<int>()
         {
             2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018,
         };
 
-
+        /// <summary>
+        /// Gets or sets the year currently selected by the user.
+        /// </summary>
         public int SelectedYear { set; get; }
 
         /// <summary>
