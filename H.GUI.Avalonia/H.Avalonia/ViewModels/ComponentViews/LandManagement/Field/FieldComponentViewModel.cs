@@ -471,6 +471,12 @@ public class FieldComponentViewModel : ViewModelBase
                 // Subscribe to cover crop property changes
                 coverDto.PropertyChanged += CoverCropDtoOnPropertyChanged;
             }
+
+            // Force UI to re-evaluate all SelectedCropDto.* bindings (e.g. HasCoverCrop)
+            if (ReferenceEquals(cropDto, SelectedCropDto))
+            {
+                RaisePropertyChanged(nameof(SelectedCropDto));
+            }
         }
         catch (Exception ex)
         {

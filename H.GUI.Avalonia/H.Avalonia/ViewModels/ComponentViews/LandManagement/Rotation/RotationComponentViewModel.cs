@@ -631,7 +631,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                             : Brush.Parse("#F5F5F5"),
                         IsSelected = false, // Initialize to not selected (updated when user clicks timeline card)
                         CoverCropDisplay = sourceCrop.HasCoverCrop && sourceCrop.CoverCropDto != null
-                            ? sourceCrop.CoverCropDto.CropType.ToString()
+                            ? (_cropColorService?.GetCropDisplayName(sourceCrop.CoverCropDto.CropType) ?? sourceCrop.CoverCropDto.CropType.ToString())
                             : null,
                     };
 
@@ -856,6 +856,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                 if (SelectedCropDto != null)
                 {
                     SelectedCropDto.CoverCropDto = cropDto.HasCoverCrop ? cropDto.CoverCropDto : null;
+                    // Force UI to re-evaluate all SelectedCropDto.* bindings (e.g. HasCoverCrop)
+                    RaisePropertyChanged(nameof(SelectedCropDto));
                 }
             }
             catch (Exception ex)
@@ -870,7 +872,11 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         private void OnCoverCropDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(ICropDto.CropType) || sender is not ICropDto coverCropDto)
+            if (sender is not ICropDto coverCropDto)
+                return;
+
+            // React to CropType or SelectedCropTypeItem changes (both indicate the cover crop type changed)
+            if (e.PropertyName != nameof(ICropDto.CropType) && e.PropertyName != nameof(ICropDto.SelectedCropTypeItem))
                 return;
 
             // Find the parent crop that owns this cover crop DTO
@@ -890,7 +896,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             if (sourceCropIndex < 0) return;
 
             var rotationLength = crops.Count;
-            var newCoverDisplay = coverCropDto.CropType.ToString();
+            var newCoverDisplay = _cropColorService?.GetCropDisplayName(coverCropDto.CropType) ?? coverCropDto.CropType.ToString();
 
             // Update CoverCropDisplay on all preview cells derived from the parent crop
             for (int fieldIndex = 0; fieldIndex < FieldAssignmentRows.Count; fieldIndex++)

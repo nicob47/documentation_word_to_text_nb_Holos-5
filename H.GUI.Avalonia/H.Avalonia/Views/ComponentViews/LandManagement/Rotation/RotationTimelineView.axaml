@@ -174,14 +174,16 @@
                                                 <StackPanel Spacing="4"
                                                             IsVisible="{Binding HasCoverCrop}">
                                                     <TextBlock Text="Cover Crop Type"
-                                                               FontSize="11"
+                                                               FontSize="12"
                                                                Foreground="#2E7D32"
                                                                FontWeight="SemiBold"
                                                                HorizontalAlignment="Left" />
-                                                    <ComboBox ItemsSource="{Binding CoverCropDto.ValidCropTypes}"
-                                                              SelectedItem="{Binding CoverCropDto.CropType}"
+                                                    <ComboBox Classes="crop-selector"
+                                                              ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
+                                                              SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
+                                                              ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
                                                               Width="240"
-                                                              HorizontalAlignment="Left" />
+                                                              MaxDropDownHeight="320"/>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>

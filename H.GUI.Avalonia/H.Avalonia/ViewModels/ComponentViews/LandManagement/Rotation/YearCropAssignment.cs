@@ -126,7 +126,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         public string? CoverCropDisplay
         {
             get => _coverCropDisplay;
-            set => SetProperty(ref _coverCropDisplay, value);
+            set
+            {
+                if (SetProperty(ref _coverCropDisplay, value))
+                {
+                    RaisePropertyChanged(nameof(HasCoverCrop));
+                }
+            }
         }
 
         /// <summary>
