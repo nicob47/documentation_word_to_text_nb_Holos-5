@@ -7,9 +7,12 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using H.Core.Services;
+using Microsoft.Extensions.Logging;
 
 namespace H.Avalonia.ViewModels.Results
 {
@@ -17,22 +20,26 @@ namespace H.Avalonia.ViewModels.Results
     {
         #region Fields
 
+        private ILogger _logger;
+
         private bool _isAdvancedMode = false;
 
         private ListBoxItem _selectedBasicItem;
         private ListBoxItem _selectedAdvancedItem;
-        private ListBoxItem _lastSelectedBasicItem;
-        private ListBoxItem _lastSelectedAdvancedItem;
 
         private ObservableCollection<ListBoxItem> _basicViewChapters = new();
         private ObservableCollection<ListBoxItem> _advancedViewTabs = new();
+
+        private ResultsSidebarUIState _basicUIState = new();
+        private ResultsSidebarUIState _advancedUIState = new();
 
         #endregion
 
         #region Constructors
 
-        public ResultsSidebarViewModel(IRegionManager regionManager) : base(regionManager)
+        public ResultsSidebarViewModel(IRegionManager regionManager, ILogger logger) : base(regionManager)
         {
+            _logger = logger;
             PopulateBasicChaptersTitles();
             PopulateAdvancedTabs();
             this.PropertyChanged += OnSelectedOptionChanged;
@@ -51,6 +58,8 @@ namespace H.Avalonia.ViewModels.Results
             set
             {
                 SetProperty(ref _selectedBasicItem, value);
+                _basicUIState.SelectedItem = _selectedBasicItem;
+                _basicUIState.LastAccessed = DateTime.Now;
             }
         }
 
@@ -63,6 +72,8 @@ namespace H.Avalonia.ViewModels.Results
             set
             {
                 SetProperty(ref _selectedAdvancedItem, value);
+                _advancedUIState.SelectedItem = _selectedAdvancedItem;
+                _advancedUIState.LastAccessed = DateTime.Now;
             }
 
         }
@@ -130,20 +141,10 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Private Methods
 
-        private void OnSelectedOptionChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (SelectedAdvancedItem is ListBoxItem item && item.Content != null)
-            {
-                string? selectedOption = item.Content.ToString();
-                if (!IsAdvancedMode)
-                {
-                    NavigateToBasicChapter(selectedOption);
-                }
-                else
-                    NavigateToAdvancedTab(selectedOption);
-            }
-        }
 
+        /// <summary>
+        /// Populate chapter titles for the basic results view, these should correspond to the sections in the ResultsSummaryView.axaml
+        /// </summary>
         private void PopulateBasicChaptersTitles()
         {
             _basicViewChapters.Add(new ListBoxItem() { Content = "Farm Profile" });
@@ -155,6 +156,9 @@ namespace H.Avalonia.ViewModels.Results
             _basicViewChapters.Add(new ListBoxItem() { Content = "Key Findings and Recommendations" });
         }
 
+        /// <summary>
+        /// Populate tab titles for the advanced results view, these should correspond to the different views available for navigation in the advanced results section.
+        /// </summary>
         private void PopulateAdvancedTabs()
         {
             _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleMultiYearCarbonModelling });
@@ -167,11 +171,20 @@ namespace H.Avalonia.ViewModels.Results
             _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleDetailedEmissionsReport });
         }
 
+        /// <summary>
+        /// This will load the requested chapter in the basic results view in to the content region.
+        /// </summary>
+        /// <param name="selectedOption">The requested chapter to be loaded in the content region.</param>
         private void NavigateToBasicChapter(string selectedOption)
         {
             selectedOption = "ResultsSummaryView";
-            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
+            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, selectedOption);
         }
+
+        /// <summary>
+        /// Navigates to the corresponding tab in the advanced results view based on the selected option in the sidebar. The mapping between sidebar options and views is determined by the content of the ListBoxItem and can be adjusted as needed. If no matching option is found, no navigation will occur.
+        /// </summary>
+        /// <param name="selectedOption">The requested tab to be loaded in the content region.</param>
         private void NavigateToAdvancedTab(string selectedOption)
         {
             switch (selectedOption)
@@ -200,6 +213,24 @@ namespace H.Avalonia.ViewModels.Results
                 case var _ when selectedOption == H.Core.Properties.Resources.TitleDetailedEmissionsReport:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(DetailedEmissionsReportResultsView));
                     break;
+                default:
+                    _logger.LogError($"Attempted to navigate to advanced tab {selectedOption} that does not exist in {nameof(ResultsSidebarView)}.");
+                    return;
+            }
+        }
+
+        /// <summary>
+        /// When the results mode is toggled to basic or advanced, this method will navigate to the last accessed chapter or tab in the corresponding view. If no chapter or tab has been accessed yet, it will navigate to the first item in the list by default.
+        /// </summary>
+        private void OnResultModeChanged()
+        {
+            if (!IsAdvancedMode)
+            {
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(_basicUIState.SelectedItem));
+            }
+            else
+            {
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(_advancedUIState.SelectedItem));
             }
         }
 
@@ -207,29 +238,22 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Event Handlers
 
-        private void OnResultModeChanged()
+        /// <summary>
+        /// Requests navigation to the appropriate chapter or tab in the content region based off of the basic/advanced results state.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSelectedOptionChanged(object sender, PropertyChangedEventArgs e)
         {
-            _lastSelectedBasicItem = _selectedBasicItem;
-            _lastSelectedAdvancedItem = _selectedAdvancedItem;
-            // Store current advanced tab, navigate to summary when switching to basic
-            if (!IsAdvancedMode)
+            if (SelectedAdvancedItem is ListBoxItem item && item.Content != null)
             {
-                if (_lastSelectedBasicItem == null)
+                string? selectedOption = item.Content.ToString();
+                if (!IsAdvancedMode)
                 {
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
-                    return;
+                    NavigateToBasicChapter(selectedOption);
                 }
-                SelectedBasicItem = _lastSelectedBasicItem;
-            }
-            else
-            {
-                if (_lastSelectedAdvancedItem == null)
-                {
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(MultiYearCarbonModellingView));
-                    return;
-                }
-
-                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(_lastSelectedAdvancedItem));
+                else
+                    NavigateToAdvancedTab(selectedOption);
             }
         }
 
