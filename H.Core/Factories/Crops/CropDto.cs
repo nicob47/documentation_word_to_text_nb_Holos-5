@@ -143,8 +143,10 @@ public partial class CropDto : DtoBase, ICropDto
             {
                 if (IsSecondaryCrop)
                 {
-                    // For cover crops, use the dedicated cover crop type list
-                    ValidCropTypes = new ObservableCollection<CropType>(CropTypeExtensions.GetValidCoverCropTypes());
+                    // For cover crops, use the dedicated cover crop type list.
+                    // Set the backing field directly to avoid the ValidCropTypes setter
+                    // which would null-out _groupedCropItems and cause infinite recursion.
+                    _cropTypes = new ObservableCollection<CropType>(CropTypeExtensions.GetValidCoverCropTypes());
                 }
                 _groupedCropItems = BuildGroupedCropItems();
             }
