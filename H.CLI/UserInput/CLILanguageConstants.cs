@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.UserInput
 {
@@ -60,8 +61,8 @@ namespace H.CLI.UserInput
                 default:
                     Console.ResetColor();
                     Console.BackgroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(String.Format(Properties.Resources.LanguageNotSupported, culture.DisplayName));
-                    throw new NotSupportedException(String.Format(Properties.Resources.LanguageNotSupported, culture.DisplayName)); 
+                    Console.WriteLine(String.Format(AppStrings.Error_LanguageNotSupported, culture.DisplayName));
+                    throw new NotSupportedException(String.Format(AppStrings.Error_LanguageNotSupported, culture.DisplayName)); 
 
             }
             Console.ResetColor();

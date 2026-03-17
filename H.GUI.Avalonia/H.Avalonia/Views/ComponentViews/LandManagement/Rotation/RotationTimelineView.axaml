@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"
              xmlns:converters="clr-namespace:H.Avalonia.Converters"
+             xmlns:dataTemplates="clr-namespace:H.Avalonia.DataTemplates"
              mc:Ignorable="d"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationTimelineView">
 
@@ -19,7 +21,25 @@
         <converters:BoolToBorderThicknessConverter x:Key="BoolToBorderThicknessConverter"/>
         <converters:BoolToScaleTransformConverter x:Key="BoolToScaleTransformConverter"/>
         <converters:CropTypeToColorConverter x:Key="CropTypeToColorConverter"/>
+        <!-- Data template selector: renders category headers vs. crop items differently -->
+        <dataTemplates:CropGroupedItemDataTemplate x:Key="CropGroupedItemDataTemplate"/>
     </UserControl.Resources>
+
+    <UserControl.Styles>
+        <!-- White popup background for the crop ComboBox so category colours read clearly -->
+        <Style Selector="ComboBox.crop-selector /template/ Border#Background">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <!-- Override ComboBoxItem: white background, stretch content to full width -->
+        <Style Selector="ComboBox.crop-selector ComboBoxItem">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="ComboBox.crop-selector ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#EBF2FA"/>
+        </Style>
+    </UserControl.Styles>
 
     <!-- Step 2: Build Rotation Timeline -->
     <Border x:Name="StepContainerBorder" Classes="step-container">
@@ -27,14 +47,14 @@
             <!-- Step Header -->
             <StackPanel x:Name="StepHeaderPanel" Margin="0,0,0,20">
                 <Border x:Name="StepBadgeBorder" Classes="step-badge" HorizontalAlignment="Left">
-                    <TextBlock x:Name="StepNumberTextBlock" Text="Step 2" Classes="step-badge-text"/>
+                    <TextBlock x:Name="StepNumberTextBlock" Text="{Binding [Label_StepTwo].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
                 </Border>
                 <TextBlock x:Name="StepTitleTextBlock"
-                           Text="Build Your Rotation Sequence"
+                           Text="{Binding [Label_BuildYourRotationSequence].Value, Source={StaticResource Loc}}"
                            Classes="step-number-description"
                            Margin="0,8,0,0"/>
                 <TextBlock x:Name="StepDescriptionTextBlock"
-                           Text="Add crops to create your rotation timeline. Each crop represents one year in the sequence."
+                           Text="{Binding [Label_AddCropsToRotationDesc].Value, Source={StaticResource Loc}}"
                            Foreground="{StaticResource GcdsTextSecondaryBrush}"
                            FontSize="12"
                            Margin="0,4,0,0"/>
@@ -43,11 +63,11 @@
             <!-- Timeline Controls -->
             <StackPanel x:Name="TimelineControlsPanel" Orientation="Horizontal" Margin="0,0,0,12">
                 <Button x:Name="AddCropButton"
-                        Content="+ Add Crop" 
+                        Content="{Binding [Button_AddCrop].Value, Source={StaticResource Loc}}"
                         Command="{Binding AddCropToRotationCommand}"
                         Margin="0,0,8,0"/>
                 <TextBlock x:Name="CropsInSequenceLabelTextBlock"
-                           Text="Crops in sequence:" 
+                           Text="{Binding [Label_CropsInSequence].Value, Source={StaticResource Loc}}"
                            VerticalAlignment="Center"
                            Margin="8,0,8,0"
                            IsVisible="{Binding CropDtos.Count}"/>
@@ -63,7 +83,7 @@
                     IsVisible="{Binding CropDtos.Count}">
                 <StackPanel>
                     <!-- Timeline Header -->
-                    <TextBlock Text="Rotation Timeline" Classes="timeline-header" />
+                    <TextBlock Text="{Binding [Label_RotationTimeline].Value, Source={StaticResource Loc}}" Classes="timeline-header" />
 
                     <!-- Timeline Scrollable Area -->
                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
@@ -95,39 +115,75 @@
                                                 <!-- Top row with Year Badge and Delete Button in same DockPanel for perfect alignment -->
                                                 <DockPanel LastChildFill="False">
                                                     <!-- Year Badge -->
-                                                    <Border Classes="year-badge" 
+                                                    <Border Classes="year-badge"
                                                             DockPanel.Dock="Left"
                                                             VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding Year}" 
+                                                        <TextBlock Text="{Binding Year}"
                                                                    Classes="year-badge-text"
                                                                    VerticalAlignment="Center"
                                                                    HorizontalAlignment="Center" />
                                                     </Border>
-                                                    
+
                                                     <!-- Delete Button -->
                                                     <Button Classes="delete-button"
                                                             DockPanel.Dock="Right"
                                                             VerticalAlignment="Center"
                                                             Command="{Binding $parent[UserControl].((rotation:RotationComponentViewModel)DataContext).RemoveSpecificCropCommand}"
                                                             CommandParameter="{Binding}">
-                                                        <TextBlock Name="DeleteTextBlock" 
+                                                        <TextBlock Name="DeleteTextBlock"
                                                                    Classes="delete-text"
-                                                                   Text="Delete"/>
+                                                                   Text="{Binding [Label_Delete].Value, Source={StaticResource Loc}}"/>
                                                     </Button>
                                                 </DockPanel>
-                                                
+
                                                 <!-- Crop Type Section -->
                                                 <StackPanel Spacing="4">
-                                                    <TextBlock Text="Select crop"
+                                                    <TextBlock Text="{Binding [Label_SelectCrop].Value, Source={StaticResource Loc}}"
                                                                FontSize="12"
                                                                Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                                                FontWeight="SemiBold"
                                                                HorizontalAlignment="Left" />
 
-                                                    <ComboBox ItemsSource="{Binding ValidCropTypes}"
-                                                              SelectedItem="{Binding CropType}"
-                                                              MinWidth="140"
-                                                              HorizontalAlignment="Stretch" />
+                                                    <!-- Grouped ComboBox -->
+                                                    <ComboBox Classes="crop-selector"
+                                                              ItemsSource="{Binding GroupedCropItems}"
+                                                              SelectedItem="{Binding SelectedCropTypeItem}"
+                                                              ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                              Width="240"
+                                                              MaxDropDownHeight="320"/>
+                                                </StackPanel>
+
+                                                <!-- Cover Crop Toggle -->
+                                                <Button Background="Transparent"
+                                                        BorderThickness="0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Left"
+                                                        Command="{Binding $parent[UserControl].((rotation:RotationComponentViewModel)DataContext).ToggleCoverCropCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                        <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
+                                                                  IsHitTestVisible="False"/>
+                                                        <TextBlock Text="Cover Crop"
+                                                                   FontSize="11"
+                                                                   Foreground="#2E7D32"
+                                                                   VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <!-- Cover Crop Type Selector (visible when cover crop enabled) -->
+                                                <StackPanel Spacing="4"
+                                                            IsVisible="{Binding HasCoverCrop}">
+                                                    <TextBlock Text="Cover Crop Type"
+                                                               FontSize="12"
+                                                               Foreground="#2E7D32"
+                                                               FontWeight="SemiBold"
+                                                               HorizontalAlignment="Left" />
+                                                    <ComboBox Classes="crop-selector"
+                                                              ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
+                                                              SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
+                                                              ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                              Width="240"
+                                                              MaxDropDownHeight="320"/>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>
@@ -138,7 +194,7 @@
                     </ScrollViewer>
 
                     <!-- Timeline Navigation Hint -->
-                    <TextBlock Text="Tip: Scroll horizontally to view all crops, selected crop will be highlighted"
+                    <TextBlock Text="{Binding [Label_TimelineScrollHint].Value, Source={StaticResource Loc}}"
                                Classes="timeline-hint" />
                 </StackPanel>
             </Border>
@@ -153,7 +209,7 @@
                     Padding="16"
                     Margin="0,12,0,0">
                 <TextBlock x:Name="EmptyStateMessageTextBlock"
-                           Text="Add at least one crop to create your rotation"
+                           Text="{Binding [Label_AddAtLeastOneCrop].Value, Source={StaticResource Loc}}"
                            Foreground="{StaticResource GcdsTextSecondaryBrush}"
                            VerticalAlignment="Center"/>
             </Border>

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
-using AutoMapper;
 using H.Core.Converters;
 using H.Core.CustomAttributes;
 using H.Core.Enumerations;
+using H.Core.Mappers;
 using H.Core.Models.LandManagement.Fields;
 using H.Infrastructure;
 
@@ -33,25 +33,12 @@ namespace H.Core.Models.Animals
         private double _indoorHousingTemperature;
 
 
-        private static readonly IMapper _housingDetailsMapper;
-
         private bool _useCustomIndoorHousingTemperature;
 
         #endregion
 
         #region Constructors
 
-        static HousingDetails()
-        {
-            var housingDetailsConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<HousingDetails, HousingDetails>()
-                    .ForMember(housingDetails => housingDetails.Guid, opt => opt.Ignore())
-                    .ForMember(housingDetails => housingDetails.Name, opt => opt.Ignore());
-            });
-
-            _housingDetailsMapper = housingDetailsConfiguration.CreateMapper();
-        }
         public HousingDetails()
         {
             this.GrazingSystemType = null; // No grazing by default
@@ -240,7 +227,7 @@ namespace H.Core.Models.Animals
 
         public static HousingDetails CopyHousingDetails(HousingDetails sourceHousingDetails)
         {
-            var copyHousingDetails = _housingDetailsMapper.Map<HousingDetails>(sourceHousingDetails);
+            var copyHousingDetails = PropertyMapper.Map<HousingDetails, HousingDetails>(sourceHousingDetails);
 
             return copyHousingDetails;
         }

@@ -1,6 +1,7 @@
 ﻿using H.CLI.Converters;
 using H.CLI.Interfaces;
 using System;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Factories
 {
@@ -14,42 +15,42 @@ namespace H.CLI.Factories
         /// </summary>
         public IConverter GetComponentConverter(string component)
         {
-            if (component.ToUpper() == Properties.Resources.DefaultShelterbeltInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultShelterbeltInput.ToUpper())
             {
                 return new ShelterbeltConverter();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultFieldsInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultFieldsInput.ToUpper())
             {
                 return new FieldSystemInputConverter();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultSwineInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultSwineInput.ToUpper())
             {
                 return new SwineConverter();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultDairyInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultDairyInput.ToUpper())
             {
                 return new DairyConverter();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultSheepInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultSheepInput.ToUpper())
             {
                 return new SheepConverter();
             }
 
 
-            if (component.ToUpper() == Properties.Resources.DefaultBeefInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultBeefInput.ToUpper())
             {
                 return new BeefConverter();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultPoultryInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultPoultryInput.ToUpper())
             {
                 return new PoultryConverter();
             }
-            if (component.ToUpper() == Properties.Resources.DefaultOtherLivestockInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultOtherLivestockInput.ToUpper())
             {
                 return new OtherLiveStockConverter();
             }

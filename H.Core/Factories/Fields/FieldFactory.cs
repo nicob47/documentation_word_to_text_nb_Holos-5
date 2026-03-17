@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using H.Core.Mappers;
+﻿using H.Core.Mappers;
 using H.Core.Models;
+using H.Core.Models.LandManagement.Fields;
 using Prism.Ioc;
 
 namespace H.Core.Factories.Fields;
@@ -12,8 +12,8 @@ public class FieldFactory : IFieldFactory
 {
     #region Fields
 
-    private readonly IMapper _fieldComponentToDtoMapper;
-    private readonly IMapper _fieldDtoToDtoMapper;
+    private readonly IModelMapper<FieldSystemComponent, FieldSystemComponentDto> _fieldComponentToDtoMapper;
+    private readonly IModelMapper<FieldSystemComponentDto, FieldSystemComponentDto> _fieldDtoToDtoMapper;
 
     #endregion
 
@@ -26,8 +26,8 @@ public class FieldFactory : IFieldFactory
             throw new ArgumentNullException(nameof(containerProvider));
         }
 
-        _fieldComponentToDtoMapper = containerProvider.Resolve<IMapper>(nameof(FieldComponentToDtoMapper));
-        _fieldDtoToDtoMapper = containerProvider.Resolve<IMapper>(nameof(FieldDtoToFieldDtoMapper));
+        _fieldComponentToDtoMapper = containerProvider.Resolve<IModelMapper<FieldSystemComponent, FieldSystemComponentDto>>(nameof(FieldComponentToDtoMapper));
+        _fieldDtoToDtoMapper = containerProvider.Resolve<IModelMapper<FieldSystemComponentDto, FieldSystemComponentDto>>(nameof(FieldDtoToFieldDtoMapper));
     }
 
     #endregion
@@ -36,11 +36,12 @@ public class FieldFactory : IFieldFactory
 
     public IDto CreateDtoFromDtoTemplate(IDto template)
     {
-        var fieldComponentDto = new FieldSystemComponentDto();
+        if (template is FieldSystemComponentDto dtoTemplate)
+        {
+            return _fieldDtoToDtoMapper.Map(dtoTemplate);
+        }
 
-        _fieldDtoToDtoMapper.Map(template, fieldComponentDto);
-
-        return fieldComponentDto;
+        return new FieldSystemComponentDto();
     }
 
     /// <summary>
@@ -65,7 +66,7 @@ public class FieldFactory : IFieldFactory
     {
         var fieldComponentDto = new FieldSystemComponentDto();
 
-        _fieldDtoToDtoMapper.Map(template, fieldComponentDto);
+        PropertyMapper.CopyTo(template, fieldComponentDto);
 
         return fieldComponentDto;
     }

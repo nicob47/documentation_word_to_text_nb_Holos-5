@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using H.Core.Calculators.UnitsOfMeasurement;
+﻿using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Converters;
 using H.Core.Factories;
+using H.Core.Mappers;
 using H.Core.Models;
 using H.Infrastructure;
 
@@ -21,8 +21,8 @@ namespace H.Core.Services.Animals
 
         private readonly IUnitsOfMeasurementCalculator _unitsOfMeasurementCalculator;
         private readonly IFactory<TDto> _dtoFactory;
-        private readonly IMapper _dtoToModelMapper;
-        private readonly IMapper _modelToDtoMapper;
+        private readonly IModelMapper<TDto, TModelBase> _dtoToModelMapper;
+        private readonly IModelMapper<TModelBase, TDto> _modelToDtoMapper;
 
         #endregion
 
@@ -40,17 +40,17 @@ namespace H.Core.Services.Animals
         /// Factory used to create new DTO instances and DTO copies (for safe mapping without mutating bound instances).
         /// </param>
         /// <param name="dtoToModelMapper">
-        /// AutoMapper instance that maps from TDto to TModelBase (DTO → Domain).
+        /// Mapper that maps from TDto to TModelBase (DTO → Domain).
         /// Must be configured for the type pair (TDto, TModelBase).
         /// Used in <see cref="TransferDtoToDomainObject(TDto, TModelBase)"/>.
         /// </param>
         /// <param name="modelToDtoMapper">
-        /// AutoMapper instance that maps from TModelBase to TDto (Domain → DTO).
+        /// Mapper that maps from TModelBase to TDto (Domain → DTO).
         /// Must be configured for the type pair (TModelBase, TDto).
         /// Used in <see cref="TransferDomainObjectToDto(TModelBase)"/>.
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown if required dependencies are null.</exception>
-        public TransferService(IUnitsOfMeasurementCalculator unitsOfMeasurementCalculator, IFactory<TDto> dtoFactory, IMapper dtoToModelMapper, IMapper modelToDtoMapper)
+        public TransferService(IUnitsOfMeasurementCalculator unitsOfMeasurementCalculator, IFactory<TDto> dtoFactory, IModelMapper<TDto, TModelBase> dtoToModelMapper, IModelMapper<TModelBase, TDto> modelToDtoMapper)
         {
             if (dtoFactory != null)
             {
@@ -103,7 +103,10 @@ namespace H.Core.Services.Animals
             var dto = _dtoFactory.CreateDto(new Farm());
 
             // Use the internal mapper
-            _modelToDtoMapper.Map(model, dto);
+            PropertyMapper.CopyTo(model, dto);
+
+            // Track which domain object this DTO was created from
+            dto.DomainObjectGuid = model.Guid;
 
             // All numerical values are stored internally as metric values
             var propertyConverter = new PropertyConverter<IDto>(dto);
@@ -145,8 +148,9 @@ namespace H.Core.Services.Animals
                 property.SetValue(copy, bindingValue);
             }
 
-            // Map values from the copy of the DTO to the internal system object
-            _dtoToModelMapper.Map(copy, model);
+            // Map values from the copy of the DTO to the internal system object.
+            // Cast to TDto so PropertyMapper sees the concrete type's properties, not just IDto's.
+            PropertyMapper.CopyTo((TDto)copy, model);
 
             return model;
         }

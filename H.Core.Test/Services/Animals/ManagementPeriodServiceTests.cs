@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Calculators.UnitsOfMeasurement;
+﻿using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Enumerations;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
@@ -32,13 +31,13 @@ namespace H.Core.Test.Services.Animals
             var mockContainerProvider = new Mock<IContainerProvider>();
             var mockUnitsOfMeasurementCalculator = new Mock<IUnitsOfMeasurementCalculator>();
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(ManagementPeriodDtoToManagementPeriodMapper)))
-                .Returns(new MapperConfiguration(cfg => cfg.AddProfile<ManagementPeriodDtoToManagementPeriodMapper>()).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<ManagementPeriodDto, ManagementPeriod>), nameof(ManagementPeriodDtoToManagementPeriodMapper)))
+                .Returns(new ManagementPeriodDtoToManagementPeriodMapper());
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(ManagementPeriodToManagementPeriodDtoMapper)))
-                .Returns(new MapperConfiguration(cfg => cfg.AddProfile<ManagementPeriodToManagementPeriodDtoMapper>()).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<ManagementPeriod, ManagementPeriodDto>), nameof(ManagementPeriodToManagementPeriodDtoMapper)))
+                .Returns(new ManagementPeriodToManagementPeriodDtoMapper());
 
-            _service = new ManagementPeriodService(mockLogger.Object, mockContainerProvider.Object, 
+            _service = new ManagementPeriodService(mockLogger.Object, mockContainerProvider.Object,
                 _mockManagementPeriodFactory.Object, mockUnitsOfMeasurementCalculator.Object);
         }
 

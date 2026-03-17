@@ -1,4 +1,4 @@
-﻿using H.Core.CustomAttributes;
+using H.Core.CustomAttributes;
 using H.Core.Enumerations;
 
 namespace H.Core.Factories.Crops;
@@ -11,19 +11,22 @@ public partial class CropDto
     private double _biomassCoefficientStraw;
     private double _biomassCoefficientRoots;
     private double _biomassCoefficientExtraroot;
+    private double _percentageOfProductYieldReturnedToSoil;
+    private double _percentageOfStrawReturnedToSoil;
+    private double _percentageOfRootsReturnedToSoil;
+    private double _nitrogenContentInProduct;
+    private double _nitrogenContentInStraw;
+    private double _nitrogenContentInRoots;
+    private double _nitrogenContentInExtraroot;
+    private double _carbonConcentration;
+    private double _ligninContent;
 
     #endregion
 
-    #region Properties
-
-    #endregion
-
-    #region Properties
+    #region Residue Properties
 
     /// <summary>
-    /// R_p
-    ///
-    /// (unitless)
+    /// R_p (unitless)
     /// </summary>
     [Units(MetricUnitsOfMeasurement.None)]
     public double BiomassCoefficientProduct
@@ -33,9 +36,7 @@ public partial class CropDto
     }
 
     /// <summary>
-    /// R_s
-    ///
-    /// (unitless)
+    /// R_s (unitless)
     /// </summary>
     [Units(MetricUnitsOfMeasurement.None)]
     public double BiomassCoefficientStraw
@@ -45,9 +46,7 @@ public partial class CropDto
     }
 
     /// <summary>
-    /// R_r
-    ///
-    /// (unitless)
+    /// R_r (unitless)
     /// </summary>
     [Units(MetricUnitsOfMeasurement.None)]
     public double BiomassCoefficientRoots
@@ -57,16 +56,71 @@ public partial class CropDto
     }
 
     /// <summary>
-    /// R_e
-    ///
-    /// (unitless)
+    /// R_e (unitless)
     /// </summary>
     [Units(MetricUnitsOfMeasurement.None)]
     public double BiomassCoefficientExtraroot
     {
         get => _biomassCoefficientExtraroot;
         set => SetProperty(ref _biomassCoefficientExtraroot, value);
-    } 
+    }
+
+    [Units(MetricUnitsOfMeasurement.Percentage)]
+    public double PercentageOfProductYieldReturnedToSoil
+    {
+        get => _percentageOfProductYieldReturnedToSoil;
+        set => SetProperty(ref _percentageOfProductYieldReturnedToSoil, value);
+    }
+
+    [Units(MetricUnitsOfMeasurement.Percentage)]
+    public double PercentageOfStrawReturnedToSoil
+    {
+        get => _percentageOfStrawReturnedToSoil;
+        set => SetProperty(ref _percentageOfStrawReturnedToSoil, value);
+    }
+
+    [Units(MetricUnitsOfMeasurement.Percentage)]
+    public double PercentageOfRootsReturnedToSoil
+    {
+        get => _percentageOfRootsReturnedToSoil;
+        set => SetProperty(ref _percentageOfRootsReturnedToSoil, value);
+    }
+
+    public double NitrogenContentInProduct
+    {
+        get => _nitrogenContentInProduct;
+        set => SetProperty(ref _nitrogenContentInProduct, value);
+    }
+
+    public double NitrogenContentInStraw
+    {
+        get => _nitrogenContentInStraw;
+        set => SetProperty(ref _nitrogenContentInStraw, value);
+    }
+
+    public double NitrogenContentInRoots
+    {
+        get => _nitrogenContentInRoots;
+        set => SetProperty(ref _nitrogenContentInRoots, value);
+    }
+
+    public double NitrogenContentInExtraroot
+    {
+        get => _nitrogenContentInExtraroot;
+        set => SetProperty(ref _nitrogenContentInExtraroot, value);
+    }
+
+    public double CarbonConcentration
+    {
+        get => _carbonConcentration;
+        set => SetProperty(ref _carbonConcentration, value);
+    }
+
+    public double LigninContent
+    {
+        get => _ligninContent;
+        set => SetProperty(ref _ligninContent, value);
+    }
 
     #endregion
 }

@@ -19,6 +19,7 @@ using H.Core;
 using H.Core.Calculators.Infrastructure;
 using H.Core.Converters;
 using H.Core.Services.Animals;
+using H.Localization.Resources.Strings;
 
 
 namespace H.CLI.Results
@@ -120,7 +121,7 @@ namespace H.CLI.Results
 
         private void WriteFieldCarbonResultsToFile()
         {
-            var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + Properties.Resources.TotalResultsForAllFarms + @"\" + Properties.Resources.TotalResultsAllFields + CLILanguageConstants.OutputLanguageAddOn;
+            var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + AppStrings.Result_TotalForAllFarms + @"\" + AppStrings.Result_TotalAllFields + CLILanguageConstants.OutputLanguageAddOn;
 
             //_fieldResultsService.ExportAllResultsToFile(path: path,
             //    measurementSystemType: CLIUnitsOfMeasurementConstants.measurementSystem,
@@ -142,8 +143,8 @@ namespace H.CLI.Results
 
                 // Build the path depending on which output file we are building
                 var path = outputType == EmissionDisplayUnits.KilogramsGhgs ? 
-                    InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + Properties.Resources.TotalResultsForAllFarms + @"\" + Properties.Resources.TotalResultsGHG + CLILanguageConstants.OutputLanguageAddOn : 
-                    InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + Properties.Resources.TotalResultsForAllFarms + @"\" + Properties.Resources.TotalResultsCO2E + CLILanguageConstants.OutputLanguageAddOn;
+                    InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + AppStrings.Result_TotalForAllFarms + @"\" + AppStrings.Result_TotalGHG + CLILanguageConstants.OutputLanguageAddOn : 
+                    InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + AppStrings.Result_TotalForAllFarms + @"\" + AppStrings.Result_TotalCO2E + CLILanguageConstants.OutputLanguageAddOn;
 
                 // Build the headers
                 stringBuilder.AppendLine(this.GetHeadersAllFarms(applicationData, outputType));
@@ -226,7 +227,7 @@ namespace H.CLI.Results
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
 
                             // Subtotal
-                            stringBuilder.Append(animalComponentEmissionsResults.Component.Name + " " + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                            stringBuilder.Append(animalComponentEmissionsResults.Component.Name + " " + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
 
                             stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, animalComponentEmissionsResults.TotalEntericMethaneEmission), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                             stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, animalComponentEmissionsResults.TotalManureMethaneEmission), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -263,7 +264,7 @@ namespace H.CLI.Results
                     // Component name
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
 
-                    stringBuilder.Append(Properties.Resources.FarmTotal + CLILanguageConstants.Delimiter);
+                    stringBuilder.Append(AppStrings.Column_FarmTotal + CLILanguageConstants.Delimiter);
                     stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, farmEmissionResult.TotalEntericMethaneFromFarm), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                     stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, farmEmissionResult.TotalManureMethaneFromFarm), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                     stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsN2O, outputType, farmEmissionResult.TotalDirectNitrousOxideFromFarm), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -285,7 +286,7 @@ namespace H.CLI.Results
                 }
 
                 // Output results for all farms
-                stringBuilder.Append(Properties.Resources.AllFarms + CLILanguageConstants.Delimiter);
+                stringBuilder.Append(AppStrings.Column_AllFarms + CLILanguageConstants.Delimiter);
 
                 // Component category
                 stringBuilder.Append(CLILanguageConstants.Delimiter);
@@ -339,8 +340,8 @@ namespace H.CLI.Results
                 {
                     // Build the path depending on which output file we are building
                     var path = outputType == EmissionDisplayUnits.KilogramsGhgs ?
-                        InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + farmEmissionResult.Farm.Name + Properties.Resources.Results + @"\" + farmEmissionResult.Farm.Name + Properties.Resources.FarmResultsGHG + farmEmissionResult.Farm.SettingsFileName + CLILanguageConstants.OutputLanguageAddOn :
-                        InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + farmEmissionResult.Farm.Name + Properties.Resources.Results + @"\" + farmEmissionResult.Farm.Name + Properties.Resources.FarmResultsCO2E + farmEmissionResult.Farm.SettingsFileName + CLILanguageConstants.OutputLanguageAddOn;
+                        InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + farmEmissionResult.Farm.Name + AppStrings.Column_Results + @"\" + farmEmissionResult.Farm.Name + AppStrings.Result_FarmGHG + farmEmissionResult.Farm.SettingsFileName + CLILanguageConstants.OutputLanguageAddOn :
+                        InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + farmEmissionResult.Farm.Name + AppStrings.Column_Results + @"\" + farmEmissionResult.Farm.Name + AppStrings.Result_FarmCO2E + farmEmissionResult.Farm.SettingsFileName + CLILanguageConstants.OutputLanguageAddOn;
 
                     var stringBuilder = new StringBuilder();
 
@@ -451,7 +452,7 @@ namespace H.CLI.Results
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
 
                             // Subtotal
-                            stringBuilder.Append(animalComponentEmissionsResults.Component.Name + " " + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                            stringBuilder.Append(animalComponentEmissionsResults.Component.Name + " " + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
 
                             stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, animalComponentEmissionsResults.TotalEntericMethaneEmission), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                             stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, animalComponentEmissionsResults.TotalManureMethaneEmission), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -496,7 +497,7 @@ namespace H.CLI.Results
                     // Month name
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
 
-                    stringBuilder.Append(Properties.Resources.FarmTotal + CLILanguageConstants.Delimiter);
+                    stringBuilder.Append(AppStrings.Column_FarmTotal + CLILanguageConstants.Delimiter);
 
                     stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, farmEmissionResult.TotalEntericMethaneFromFarm), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                     stringBuilder.Append(Math.Round(_emissionTypeConverter.Convert(EmissionDisplayUnits.KilogramsCH4, outputType, farmEmissionResult.TotalManureMethaneFromFarm), roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -536,23 +537,23 @@ namespace H.CLI.Results
         public void WriteEstimatesOfProductionToFile()
         {
             #region Setting Up Path For Total Results For All Farms
-            var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + Properties.Resources.TotalResultsForAllFarms + @"\" + Properties.Resources.TotalResultsEP + CLILanguageConstants.OutputLanguageAddOn;
+            var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + AppStrings.Result_TotalForAllFarms + @"\" + AppStrings.Result_TotalEP + CLILanguageConstants.OutputLanguageAddOn;
             var stringBuilder = new StringBuilder();
             var results = new EstimatesOfProductionResults();
             #endregion
 
             #region Headers
-            stringBuilder.AppendLine(String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Harvest + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Key_Area + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.LandAppliedManure + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramsNitrogen) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.DefaultBeefInputFolder + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Lamb + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Milk + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.FPCM + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter));
+            stringBuilder.AppendLine(String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Harvest + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Area + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_LandAppliedManure + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramsNitrogen) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Filename_DefaultBeefInput + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Lamb + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Milk + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_FPCM + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter));
 
             #endregion
 
@@ -777,7 +778,7 @@ namespace H.CLI.Results
                             //Component Name
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
                             //Component Group Name
-                            stringBuilder.Append(animalGroup.Key + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                            stringBuilder.Append(animalGroup.Key + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                             //Harvest
                             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                             //Area
@@ -864,7 +865,7 @@ namespace H.CLI.Results
                     //Component Category
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
                     //Component Name
-                    stringBuilder.Append(componentGroup.Key.ToString() + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                    stringBuilder.Append(componentGroup.Key.ToString() + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                     //Component Group Name
                     stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                     //Harvest
@@ -927,7 +928,7 @@ namespace H.CLI.Results
                 //Component Category
                 stringBuilder.Append(CLILanguageConstants.Delimiter);
                 //Component Name
-                stringBuilder.Append(Properties.Resources.FarmTotal + CLILanguageConstants.Delimiter);
+                stringBuilder.Append(AppStrings.Column_FarmTotal + CLILanguageConstants.Delimiter);
                 //Component Group Name
                 stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                 //Harvest
@@ -947,13 +948,13 @@ namespace H.CLI.Results
 
             #region Outputs For All Farms
             //Farm Name
-            stringBuilder.Append(Properties.Resources.AllFarms + CLILanguageConstants.Delimiter);
+            stringBuilder.Append(AppStrings.Column_AllFarms + CLILanguageConstants.Delimiter);
             //Component Category
             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
             //Component Name
             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
             //Component Group Name
-            stringBuilder.Append(Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+            stringBuilder.Append(AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
             //Harvest
             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
             //Area
@@ -992,18 +993,18 @@ namespace H.CLI.Results
             #endregion
 
             #region Headers
-            stringBuilder.AppendLine(String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Harvest + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Key_Area + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.LandAppliedManure + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramsNitrogen) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.DefaultBeefInputFolder + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Lamb + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Milk + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.FPCM + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter));
+            stringBuilder.AppendLine(String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Harvest + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Area + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_LandAppliedManure + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramsNitrogen) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Filename_DefaultBeefInput + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Lamb + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Milk + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_FPCM + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.Kilograms) + CLILanguageConstants.Delimiter));
 
             #endregion
 
@@ -1015,7 +1016,7 @@ namespace H.CLI.Results
                 var farmName = splitFarmNameToSettingsFileToOutputPath[0];
                 var farmSettingsFile = splitFarmNameToSettingsFileToOutputPath[1];
 
-                path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + farmName + Properties.Resources.Results + @"\" + farmName + Properties.Resources.FarmResultsEP + farmSettingsFile + CLILanguageConstants.OutputLanguageAddOn;
+                path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + farmName + AppStrings.Column_Results + @"\" + farmName + AppStrings.Result_FarmEP + farmSettingsFile + CLILanguageConstants.OutputLanguageAddOn;
                 #endregion
 
                 var filteredFarmComponents = groupedComponentsForAFarm.SelectMany(x => x.Value.Where(y => y.Component.ComponentType != ComponentType.Rams &&
@@ -1255,7 +1256,7 @@ namespace H.CLI.Results
                                 //Component Group Name
                                 stringBuilder.Append(CLILanguageConstants.Delimiter);
                                 //Month Name
-                                stringBuilder.Append(Properties.Resources.AllMonths + CLILanguageConstants.Delimiter);
+                                stringBuilder.Append(AppStrings.Column_AllMonths + CLILanguageConstants.Delimiter);
                                 //Harvest
                                 stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                                 //Area
@@ -1332,7 +1333,7 @@ namespace H.CLI.Results
                             //Component Name
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
                             //Component Group Name
-                            stringBuilder.Append(animalGroup.Key + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                            stringBuilder.Append(animalGroup.Key + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                             //Month
                             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                             //Harvest
@@ -1434,7 +1435,7 @@ namespace H.CLI.Results
                     //Component Category
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
                     //Component Name
-                    stringBuilder.Append(componentGroup.Key.ToString() + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                    stringBuilder.Append(componentGroup.Key.ToString() + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                     //Component Group Name
                     stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                     //Month
@@ -1502,7 +1503,7 @@ namespace H.CLI.Results
                 //Component Category
                 stringBuilder.Append(CLILanguageConstants.Delimiter);
                 //Component Name
-                stringBuilder.Append(Properties.Resources.FarmTotal + CLILanguageConstants.Delimiter);
+                stringBuilder.Append(AppStrings.Column_FarmTotal + CLILanguageConstants.Delimiter);
                 //Component Group Name
                 stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                 //Month
@@ -1538,17 +1539,17 @@ namespace H.CLI.Results
         public void WriteFeedEstimatesToFile()
         {
             #region Setting Up Path For Total Results For All Farms
-            var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + Properties.Resources.TotalResultsForAllFarms + @"\" + Properties.Resources.TotalResultsFE + CLILanguageConstants.OutputLanguageAddOn;
+            var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + AppStrings.Result_TotalForAllFarms + @"\" + AppStrings.Result_TotalFE + CLILanguageConstants.OutputLanguageAddOn;
             var stringBuilder = new StringBuilder();
             var results = new FeedEstimateResults();
             #endregion
 
             #region Headers
-            stringBuilder.AppendLine(String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.DryMatterIntake + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramPerHeadPerDay)));
+            stringBuilder.AppendLine(String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_DryMatterIntake + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramPerHeadPerDay)));
 
 
             #endregion
@@ -1630,7 +1631,7 @@ namespace H.CLI.Results
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
                             //Component Name
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
-                            stringBuilder.Append(animalGroup.Key + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                            stringBuilder.Append(animalGroup.Key + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                             stringBuilder.Append(Math.Round(results.AnimalGroupDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                             stringBuilder.AppendLine();
                             stringBuilder.AppendLine();
@@ -1665,7 +1666,7 @@ namespace H.CLI.Results
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
                     //Component Name
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
-                    stringBuilder.Append(componentCategoryGroup.Key.ToString() + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                    stringBuilder.Append(componentCategoryGroup.Key.ToString() + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                     stringBuilder.Append(Math.Round(results.ComponentDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                     stringBuilder.AppendLine();
                     stringBuilder.AppendLine();
@@ -1681,7 +1682,7 @@ namespace H.CLI.Results
                 //Component Name
                 stringBuilder.Append(CLILanguageConstants.Delimiter);
                 //Component Group Name
-                stringBuilder.Append(Properties.Resources.FarmTotal + CLILanguageConstants.Delimiter);
+                stringBuilder.Append(AppStrings.Column_FarmTotal + CLILanguageConstants.Delimiter);
                 stringBuilder.Append(Math.Round(results.FarmDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                 stringBuilder.AppendLine();
                 stringBuilder.AppendLine();
@@ -1690,10 +1691,10 @@ namespace H.CLI.Results
             #endregion
 
             #region Outputs For All Farms
-            stringBuilder.Append(Properties.Resources.AllFarms + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+            stringBuilder.Append(AppStrings.Column_AllFarms + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
-            stringBuilder.Append(Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+            stringBuilder.Append(AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
             stringBuilder.Append(Math.Round(results.AllFarmsDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
             stringBuilder.AppendLine();
             stringBuilder.AppendLine();
@@ -1721,12 +1722,12 @@ namespace H.CLI.Results
             #endregion
 
             #region Headers
-            stringBuilder.AppendLine(String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.DryMatterIntake + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramPerHeadPerDay)));
+            stringBuilder.AppendLine(String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_DryMatterIntake + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramPerHeadPerDay)));
 
 
             #endregion
@@ -1740,7 +1741,7 @@ namespace H.CLI.Results
                 var farmName = splitFarmNameToSettingsFileToOutputPath[0];
                 var farmSettingsFile = splitFarmNameToSettingsFileToOutputPath[1];
 
-                var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + farmName + Properties.Resources.Results + @"\" + farmName + Properties.Resources.FarmResultsFE + farmSettingsFile + CLILanguageConstants.OutputLanguageAddOn;
+                var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + farmName + AppStrings.Column_Results + @"\" + farmName + AppStrings.Result_FarmFE + farmSettingsFile + CLILanguageConstants.OutputLanguageAddOn;
 
                 var filteredFarmComponents = groupedComponentsForAFarm.SelectMany(x => x.Value.Where(y => y.Component.ComponentCategory == ComponentCategory.Sheep ||
                                                                                                       y.Component.ComponentCategory == ComponentCategory.BeefProduction ||
@@ -1834,7 +1835,7 @@ namespace H.CLI.Results
                                 //Component Group Name
                                 stringBuilder.Append(CLILanguageConstants.Delimiter);
                                 //Month Name
-                                stringBuilder.Append(Properties.Resources.AllMonths + CLILanguageConstants.Delimiter);
+                                stringBuilder.Append(AppStrings.Column_AllMonths + CLILanguageConstants.Delimiter);
                                 stringBuilder.Append(Math.Round(results.AnimalSubGroupDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
                                 stringBuilder.AppendLine();
                                 stringBuilder.AppendLine();
@@ -1847,7 +1848,7 @@ namespace H.CLI.Results
                             //Component Name
                             stringBuilder.Append(CLILanguageConstants.Delimiter);
                             //Component Group Name
-                            stringBuilder.Append(animalGroup.Key + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                            stringBuilder.Append(animalGroup.Key + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                             //Month Name
                             stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                             stringBuilder.Append(Math.Round(results.AnimalGroupDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -1884,7 +1885,7 @@ namespace H.CLI.Results
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
                     //Component Name
                     stringBuilder.Append(CLILanguageConstants.Delimiter);
-                    stringBuilder.Append(componentGroup.Key.ToString() + Properties.Resources.Totals + CLILanguageConstants.Delimiter);
+                    stringBuilder.Append(componentGroup.Key.ToString() + AppStrings.Column_Totals + CLILanguageConstants.Delimiter);
                     //Month
                     stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                     stringBuilder.Append(Math.Round(results.ComponentDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -1902,7 +1903,7 @@ namespace H.CLI.Results
                 stringBuilder.Append(CLILanguageConstants.Delimiter);
                 //Component Name
                 stringBuilder.Append(CLILanguageConstants.Delimiter);
-                stringBuilder.Append(Properties.Resources.FarmTotal + CLILanguageConstants.Delimiter);
+                stringBuilder.Append(AppStrings.Column_FarmTotal + CLILanguageConstants.Delimiter);
                 //Month
                 stringBuilder.Append("N/A" + CLILanguageConstants.Delimiter);
                 stringBuilder.Append(Math.Round(results.FarmDryMatterIntake, roundingDigits).ToString(CLILanguageConstants.culture) + CLILanguageConstants.Delimiter);
@@ -1927,20 +1928,20 @@ namespace H.CLI.Results
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine(String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.Year + CLILanguageConstants.Delimiter +
-                                                   Properties.Resources.DryMatterIntake + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramPerHeadPerDay)));
+            stringBuilder.AppendLine(String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_Year + CLILanguageConstants.Delimiter +
+                                                   AppStrings.Column_DryMatterIntake + _uCalc.GetUnitsOfMeasurementString(CLIUnitsOfMeasurementConstants.measurementSystem, MetricUnitsOfMeasurement.KilogramPerHeadPerDay)));
 
             foreach (var farmEmissionResult in _farmEmissionResults)
             {
                 
                 var farmName = farmEmissionResult.Farm.Name;
                 var settingsFileName = farmEmissionResult.Farm.SettingsFileName;
-                var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + farmName + Properties.Resources.Results + @"\" + farmName + Properties.Resources.FarmResultsFE + settingsFileName + CLILanguageConstants.OutputLanguageAddOn;
+                var path = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + farmName + AppStrings.Column_Results + @"\" + farmName + AppStrings.Result_FarmFE + settingsFileName + CLILanguageConstants.OutputLanguageAddOn;
 
                 // Farm name
                 stringBuilder.AppendLine(farmName + "_" + settingsFileName);
@@ -2055,33 +2056,33 @@ namespace H.CLI.Results
             switch (type)
             {
                 case EmissionDisplayUnits.MegagramsCO2e:
-                    return String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.GroupName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.Year + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.CO2 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
+                    return String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_GroupName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_Year + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_CO2 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
                 case EmissionDisplayUnits.KilogramsGhgs:
-                    return String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.GroupName + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.Month + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.Year + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                           Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
+                    return String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_GroupName + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_Month + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_Year + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                           AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
                                                            // Note that there is no subtotal column in the GHG report (only the CO2e report)
-                                                           Properties.Resources.CO2 + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
+                                                           AppStrings.Column_CO2 + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
                 default:
                     throw new NotImplementedException();
             }
@@ -2097,30 +2098,30 @@ namespace H.CLI.Results
             {
                 case EmissionDisplayUnits.MegagramsCO2e:
                     return
-                    String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.CO2 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
+                    String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_CO2 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_SubTotal + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.MegagramsCO2e);
                 case EmissionDisplayUnits.KilogramsGhgs:
                     return
-                       String.Format(Properties.Resources.FarmName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentCategory + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ComponentGroupName + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EntericCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.ManureCH4 + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.DirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.IndirectN2O + CLILanguageConstants.Delimiter +
-                                                       Properties.Resources.EnergyCO2 + CLILanguageConstants.Delimiter +
+                       String.Format(AppStrings.Column_FarmName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentCategory + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ComponentGroupName + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EntericCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_ManureCH4 + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_DirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_IndirectN2O + CLILanguageConstants.Delimiter +
+                                                       AppStrings.Column_EnergyCO2 + CLILanguageConstants.Delimiter +
                                                        // Note that there is no subtotal column in the GHG report (only the CO2e report)
-                                                       Properties.Resources.CO2 + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
+                                                       AppStrings.Column_CO2 + CLILanguageConstants.Delimiter, applicationData.DisplayUnitStrings.KilogramsGhgs);
 
                 default:
                     throw new NotImplementedException();

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using AutoMapper;
 using H.Core.Calculators.Carbon;
+using H.Core.Mappers;
 using H.Core.Calculators.Climate;
 using H.Core.Calculators.Economics;
 using H.Core.Calculators.Nitrogen;
@@ -43,12 +43,6 @@ namespace H.Core.Services.LandManagement
         private readonly EconomicsHelper _economicsHelper = new EconomicsHelper();
         private readonly FieldComponentHelper _fieldComponentHelper = new FieldComponentHelper();
 
-        private readonly IMapper _detailViewItemMapper;
-        private readonly IMapper _manureApplicationViewItemMapper;
-        private readonly IMapper _harvestViewItemMapper;
-        private readonly IMapper _hayImportViewItemMapper;
-        private readonly IMapper _fertilizerViewItemMapper;
-        private readonly IMapper _digestateViewItemMapper;
 
 
         private readonly Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider _carbonFootprintForFertilizerBlendsProvider = new Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider();
@@ -102,75 +96,6 @@ namespace H.Core.Services.LandManagement
             }
 
             HTraceListener.AddTraceListener();
-
-            /*
-             * Create a mapper that will map component selection view items to detail view items
-             */
-
-            var componentSelectionViewItemToDetailViewItemMapperConfiguration = new MapperConfiguration(configuration =>
-            {
-                configuration.CreateMap<CropViewItem, CropViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore())
-                    .ForMember(property => property.HarvestViewItems, options => options.Ignore())
-                    .ForMember(property => property.GrazingViewItems, options => options.Ignore())
-                    .ForMember(property => property.FertilizerApplicationViewItems, options => options.Ignore())
-                    .ForMember(property => property.HayImportViewItems, options => options.Ignore())
-                    .ForMember(property => property.DigestateApplicationViewItems, options => options.Ignore())
-                    .ForMember(property => property.ManureApplicationViewItems, options => options.Ignore())
-                    .ForMember(property => property.MonthlyIpccTier2TemperatureFactors, options => options.Ignore())
-                    .ForMember(property => property.MonthlyIpccTier2WaterFactors, options => options.Ignore());
-            });
-
-            _detailViewItemMapper = componentSelectionViewItemToDetailViewItemMapperConfiguration.CreateMapper();
-
-            var manureApplicationViewItemConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<ManureApplicationViewItem, ManureApplicationViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            var hayImportViewItemMapperConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<HayImportViewItem, HayImportViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            var grazingViewItemMapperConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<GrazingViewItem, GrazingViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            var harvestViewItemMapperConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<HarvestViewItem, HarvestViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            var fertilizerViewItemMapperConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<FertilizerApplicationViewItem, FertilizerApplicationViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            var digestateViewItemMapperConfiguration = new MapperConfiguration(configure: configuration =>
-            {
-                configuration.CreateMap<DigestateApplicationViewItem, DigestateApplicationViewItem>()
-                    .ForMember(property => property.Name, options => options.Ignore())
-                    .ForMember(property => property.Guid, options => options.Ignore());
-            });
-
-            _manureApplicationViewItemMapper = manureApplicationViewItemConfiguration.CreateMapper();
-            _hayImportViewItemMapper = hayImportViewItemMapperConfiguration.CreateMapper();
-            _harvestViewItemMapper = harvestViewItemMapperConfiguration.CreateMapper();
-            _fertilizerViewItemMapper = fertilizerViewItemMapperConfiguration.CreateMapper();
-            _digestateViewItemMapper = digestateViewItemMapperConfiguration.CreateMapper();
 
             _smallAreaYieldProvider.Initialize();
 

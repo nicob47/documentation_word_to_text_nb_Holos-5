@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropGeneralTabView">
+
+    <UserControl.Resources>
+        <infrastructure:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+
+    <Border Classes="step-card" Margin="16">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+
+            <!-- Yield (wet weight) -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                               Value="{Binding WetYield}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_KgPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Yield (dry weight) -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_DryYield].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.00" Increment="1"
+                               Value="{Binding DryYield}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_KgDmPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Moisture content -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_MoistureContent].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
+                               Value="{Binding MoistureContentOfCropPercentage}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Tillage -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_TillageType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.TillageTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                          SelectedItem="{Binding TillageType}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <!-- Harvest method -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_HarvestMethod].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.HarvestMethodTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                          SelectedItem="{Binding HarvestMethod}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <!-- Amount of irrigation -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                               Value="{Binding AmountOfIrrigation}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Number of pesticide passes -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_NumberOfPesticidePasses].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="{}{0:0}" Increment="1"
+                               Value="{Binding NumberOfPesticidePasses}" HorizontalAlignment="Stretch"/>
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</UserControl>

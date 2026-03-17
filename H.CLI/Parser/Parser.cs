@@ -7,6 +7,7 @@ using H.CLI.FileAndDirectoryAccessors;
 using H.CLI.Handlers;
 using H.CLI.Interfaces;
 using H.CLI.UserInput;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Parser
 {
@@ -63,7 +64,7 @@ namespace H.CLI.Parser
 
                     if (filelines.Count() < 2)
                     {
-                        Console.WriteLine(String.Format(H.CLI.Properties.Resources.NoFileData, file));
+                        Console.WriteLine(String.Format(AppStrings.Error_NoFileData, file));
                         continue;
                     }
 
@@ -81,7 +82,7 @@ namespace H.CLI.Parser
                                 {
                                     //Used to get English Headers from French Headers
                                     //This has a work around to get the english key probably should be better than the work around.
-                                    var convertedToEnglishKey = Properties.Resources.ResourceManager.GetResourceName(keyValuePair.Key, CultureInfo.GetCultureInfo("fr-CA"));
+                                    var convertedToEnglishKey = AppStrings.ResourceManager.GetResourceName(keyValuePair.Key, CultureInfo.GetCultureInfo("fr-CA"));
                                     tempObject.ConvertToComponentProperties(convertedToEnglishKey.Replace(" ", ""), keyValuePair.Value, filelines[row][columnIndex].Replace(" ", "").Trim(), row, columnIndex, file);
                                 }
                                 else
@@ -98,14 +99,14 @@ namespace H.CLI.Parser
                                 //if the header isn't optional then throw
                                 if (!optional)
                                 {
-                                    Console.WriteLine(String.Format(H.CLI.Properties.Resources.DataInputMistakeHeader, row, file, keyValuePair.Key));
-                                    throw new IndexOutOfRangeException(String.Format(H.CLI.Properties.Resources.DataInputMistakeHeader, row, file, keyValuePair.Key));
+                                    Console.WriteLine(String.Format(AppStrings.Message_DataInputMistakeHeader, row, file, keyValuePair.Key));
+                                    throw new IndexOutOfRangeException(String.Format(AppStrings.Message_DataInputMistakeHeader, row, file, keyValuePair.Key));
                                 }
 
                                 //let the user know ONCE per missing header that he/she is missing an optional header and HOLOS is using a default value instead.
                                 if (row == 1)
                                 {
-                                    Console.WriteLine(String.Format(H.CLI.Properties.Resources.DataMissingOptionalHeader, keyValuePair.Key, file));
+                                    Console.WriteLine(String.Format(AppStrings.Message_DataMissingOptionalHeader, keyValuePair.Key, file));
                                 }
                             }
                         }
@@ -120,7 +121,7 @@ namespace H.CLI.Parser
                     _errorHandler.CheckIfEachGroupRefersToOneAnimalGroupType(fileToComponentPair);
 
                     Console.ResetColor();
-                    Console.WriteLine(String.Format(H.CLI.Properties.Resources.FollowingFileHasBeenParsed, file));
+                    Console.WriteLine(String.Format(AppStrings.Status_FileHasBeenParsed, file));
                 }
 
                 else

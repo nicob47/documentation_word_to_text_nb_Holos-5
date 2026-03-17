@@ -1,12 +1,13 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:dairy="clr-namespace:H.Avalonia.Views.ComponentViews.Dairy"
 xmlns:dairy1="clr-namespace:H.Avalonia.ViewModels.ComponentViews.Dairy"
 mc:Ignorable="d" d:DesignWidth="1400"
 x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
-  
+
     <Design.DataContext>
         <dairy1:DairyComponentViewModelDesign/>
     </Design.DataContext>
@@ -22,11 +23,11 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
               <StackPanel>
                 <!-- Step Badge -->
                 <Border Classes="step-badge" HorizontalAlignment="Left" Background="White" Margin="0,0,0,8">
-                  <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#2196F3"/>
+                  <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text" Foreground="#2196F3"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Calf Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="Configure management practices for calf stage (birth to 4 months)"
+                <TextBlock Text="{Binding [Label_ManagementPracticesCalfStage].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding [Label_ManagementPracticesCalfStageDesc].Value, Source={StaticResource Loc}}"
                           FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
@@ -39,19 +40,19 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <StackPanel>
                     <!-- Show ComboBox only when groups exist -->
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.CalfPopulationGroups.Count}">
-                      <TextBlock Text="Select Group to Configure:"
+                      <TextBlock Text="{Binding [Label_SelectGroupToConfigure].Value, Source={StaticResource Loc}}"
                                  FontWeight="SemiBold"
                                  FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#2196F3"
                                  Margin="0,0,0,8"/>
-                      <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
+                      <TextBlock Text="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.CalfPopulationGroups}"
                                 SelectedItem="{Binding SelectedCalfGroup}"
-                                PlaceholderText="Choose a group..."
+                                PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
                                 MinWidth="300">
                         <ComboBox.ItemTemplate>
@@ -61,14 +62,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
                         </ComboBox.ItemTemplate>
                       </ComboBox>
                     </StackPanel>
-                    
+
                     <!-- No Groups Available Message -->
                     <StackPanel HorizontalAlignment="Center">
                       <StackPanel.IsVisible>
@@ -77,34 +78,29 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.CalfPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="No Groups Defined"
+                      <TextBlock Text="{Binding [Label_NoGroupsDefined].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
-                      <TextBlock TextWrapping="Wrap"
+                      <TextBlock Text="{Binding [Label_NoGroupsGoToStep2].Value, Source={StaticResource Loc}}"
+                                 TextWrapping="Wrap"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
-                                 MaxWidth="400">
-                        <Run Text="You haven't added any groups yet. Go back to "/>
-                        <Run Text="Step 2" FontWeight="Bold"/>
-                        <Run Text=" above and click '"/>
-                        <Run Text="Add New Group" FontWeight="SemiBold"/>
-                        <Run Text="' to create groups before configuring management practices."/>
-                      </TextBlock>
+                                 MaxWidth="400"/>
                     </StackPanel>
                   </StackPanel>
                 </Border>
-                
+
                 <!-- Management Practices Content -->
                 <!-- Show in Simple mode (UseAdvancedPopulationMode=false) OR when a group is selected in Advanced mode -->
                 <Panel>
                   <dairy:CalfStageView IsVisible="{Binding !SelectedDairyComponentDto.UseAdvancedPopulationMode}"/>
                   <dairy:CalfStageView IsVisible="{Binding SelectedCalfGroup, Converter={x:Static ObjectConverters.IsNotNull}}"/>
                 </Panel>
-                
+
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
                 <Border Background="{StaticResource GcdsWarningBgBrush}" BorderBrush="{StaticResource GcdsWarningBrush}" BorderThickness="1"
@@ -116,13 +112,13 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="No Group Selected"
+                    <TextBlock Text="{Binding [Label_NoGroupSelected].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
-                    <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
+                    <TextBlock Text="{Binding [Label_PleaseSelectGroupFromDropdown].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeSmall}"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
@@ -133,7 +129,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
             </Border>
           </StackPanel>
         </Border>
-        
+
         <!-- Heifer: Purple -->
         <Border BorderBrush="#7B1FA2" BorderThickness="2" CornerRadius="8"
                 IsVisible="{Binding IsHeiferSelected}">
@@ -142,11 +138,11 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
               <StackPanel>
                 <!-- Step Badge -->
                 <Border Classes="step-badge" HorizontalAlignment="Left" Background="White" Margin="0,0,0,8">
-                  <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#7B1FA2"/>
+                  <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text" Foreground="#7B1FA2"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Heifer Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="Configure management practices for heifer stage (4 months to first calving)"
+                <TextBlock Text="{Binding [Label_ManagementPracticesHeiferStage].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding [Label_ManagementPracticesHeiferStageDesc].Value, Source={StaticResource Loc}}"
                           FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
@@ -159,19 +155,19 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <StackPanel>
                     <!-- Show ComboBox only when groups exist -->
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.HeiferPopulationGroups.Count}">
-                      <TextBlock Text="Select Group to Configure:"
+                      <TextBlock Text="{Binding [Label_SelectGroupToConfigure].Value, Source={StaticResource Loc}}"
                                  FontWeight="SemiBold"
                                  FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#7B1FA2"
                                  Margin="0,0,0,8"/>
-                      <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
+                      <TextBlock Text="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.HeiferPopulationGroups}"
                                 SelectedItem="{Binding SelectedHeiferGroup}"
-                                PlaceholderText="Choose a group..."
+                                PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
                                 MinWidth="300">
                         <ComboBox.ItemTemplate>
@@ -181,14 +177,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
                         </ComboBox.ItemTemplate>
                       </ComboBox>
                     </StackPanel>
-                    
+
                     <!-- No Groups Available Message -->
                     <StackPanel HorizontalAlignment="Center">
                       <StackPanel.IsVisible>
@@ -197,40 +193,35 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.HeiferPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="No Groups Defined"
+                      <TextBlock Text="{Binding [Label_NoGroupsDefined].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
-                      <TextBlock TextWrapping="Wrap"
+                      <TextBlock Text="{Binding [Label_NoGroupsGoToStep2].Value, Source={StaticResource Loc}}"
+                                 TextWrapping="Wrap"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
-                                 MaxWidth="400">
-                        <Run Text="You haven't added any groups yet. Go back to "/>
-                        <Run Text="Step 2" FontWeight="Bold"/>
-                        <Run Text=" above and click '"/>
-                        <Run Text="Add New Group" FontWeight="SemiBold"/>
-                        <Run Text="' to create groups before configuring management practices."/>
-                      </TextBlock>
+                                 MaxWidth="400"/>
                     </StackPanel>
                   </StackPanel>
                 </Border>
-                
+
                 <!-- Management Practices Content -->
                 <!-- Show in Simple mode (UseAdvancedPopulationMode=false) OR when a group is selected in Advanced mode -->
                 <Panel>
                   <dairy:HeiferStageView IsVisible="{Binding !SelectedDairyComponentDto.UseAdvancedPopulationMode}"/>
                   <dairy:HeiferStageView IsVisible="{Binding SelectedHeiferGroup, Converter={x:Static ObjectConverters.IsNotNull}}"/>
                 </Panel>
-                
+
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
-                <Border Background="{StaticResource GcdsWarningBgBrush}" 
-                        BorderBrush="{StaticResource GcdsWarningBrush}" 
+                <Border Background="{StaticResource GcdsWarningBgBrush}"
+                        BorderBrush="{StaticResource GcdsWarningBrush}"
                         BorderThickness="1"
-                        CornerRadius="6" 
+                        CornerRadius="6"
                         Padding="20">
                   <Border.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -239,13 +230,13 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="No Group Selected"
+                    <TextBlock Text="{Binding [Label_NoGroupSelected].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
-                    <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
+                    <TextBlock Text="{Binding [Label_PleaseSelectGroupFromDropdown].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeSmall}"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
@@ -256,7 +247,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
             </Border>
           </StackPanel>
         </Border>
-        
+
         <!-- Lactating: Green -->
         <Border BorderBrush="#388E3C" BorderThickness="2" CornerRadius="8"
                 IsVisible="{Binding IsLactatingSelected}">
@@ -265,11 +256,11 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
               <StackPanel>
                 <!-- Step Badge -->
                 <Border Classes="step-badge" HorizontalAlignment="Left" Background="White" Margin="0,0,0,8">
-                  <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#388E3C"/>
+                  <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text" Foreground="#388E3C"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Lactating Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="Configure management practices for lactating cow stage (active milk production)"
+                <TextBlock Text="{Binding [Label_ManagementPracticesLactatingStage].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding [Label_ManagementPracticesLactatingStageDesc].Value, Source={StaticResource Loc}}"
                           FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
@@ -282,19 +273,19 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <StackPanel>
                     <!-- Show ComboBox only when groups exist -->
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.LactatingPopulationGroups.Count}">
-                      <TextBlock Text="Select Group to Configure:"
+                      <TextBlock Text="{Binding [Label_SelectGroupToConfigure].Value, Source={StaticResource Loc}}"
                                  FontWeight="SemiBold"
                                  FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#388E3C"
                                  Margin="0,0,0,8"/>
-                      <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
+                      <TextBlock Text="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.LactatingPopulationGroups}"
                                 SelectedItem="{Binding SelectedLactatingGroup}"
-                                PlaceholderText="Choose a group..."
+                                PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
                                 MinWidth="300">
                         <ComboBox.ItemTemplate>
@@ -304,14 +295,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
                         </ComboBox.ItemTemplate>
                       </ComboBox>
                     </StackPanel>
-                    
+
                     <!-- No Groups Available Message -->
                     <StackPanel HorizontalAlignment="Center">
                       <StackPanel.IsVisible>
@@ -320,34 +311,29 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.LactatingPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="No Groups Defined"
+                      <TextBlock Text="{Binding [Label_NoGroupsDefined].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
-                      <TextBlock TextWrapping="Wrap"
+                      <TextBlock Text="{Binding [Label_NoGroupsGoToStep2].Value, Source={StaticResource Loc}}"
+                                 TextWrapping="Wrap"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
-                                 MaxWidth="400">
-                        <Run Text="You haven't added any groups yet. Go back to "/>
-                        <Run Text="Step 2" FontWeight="Bold"/>
-                        <Run Text=" above and click '"/>
-                        <Run Text="Add New Group" FontWeight="SemiBold"/>
-                        <Run Text="' to create groups before configuring management practices."/>
-                      </TextBlock>
+                                 MaxWidth="400"/>
                     </StackPanel>
                   </StackPanel>
                 </Border>
-                
+
                 <!-- Management Practices Content -->
                 <!-- Show in Simple mode (UseAdvancedPopulationMode=false) OR when a group is selected in Advanced mode -->
                 <Panel>
                   <dairy:LactatingStageView IsVisible="{Binding !SelectedDairyComponentDto.UseAdvancedPopulationMode}"/>
                   <dairy:LactatingStageView IsVisible="{Binding SelectedLactatingGroup, Converter={x:Static ObjectConverters.IsNotNull}}"/>
                 </Panel>
-                
+
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
                 <Border Background="{StaticResource GcdsWarningBgBrush}" BorderBrush="{StaticResource GcdsWarningBrush}" BorderThickness="1"
@@ -359,13 +345,13 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="No Group Selected"
+                    <TextBlock Text="{Binding [Label_NoGroupSelected].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
-                    <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
+                    <TextBlock Text="{Binding [Label_PleaseSelectGroupFromDropdown].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeSmall}"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
@@ -376,7 +362,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
             </Border>
           </StackPanel>
         </Border>
-        
+
         <!-- Dry: Orange -->
         <Border BorderBrush="#F57C00" BorderThickness="2" CornerRadius="8"
                 IsVisible="{Binding IsDrySelected}">
@@ -385,11 +371,11 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
               <StackPanel>
                 <!-- Step Badge -->
                 <Border Classes="step-badge" HorizontalAlignment="Left" Background="White" Margin="0,0,0,8">
-                  <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#F57C00"/>
+                  <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text" Foreground="#F57C00"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices - Dry Stage" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="Configure management practices for dry cow stage (pre-calving period)"
+                <TextBlock Text="{Binding [Label_ManagementPracticesDryStage].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding [Label_ManagementPracticesDryStageDesc].Value, Source={StaticResource Loc}}"
                           FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0"/>
               </StackPanel>
             </Border>
@@ -402,19 +388,19 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                   <StackPanel>
                     <!-- Show ComboBox only when groups exist -->
                     <StackPanel IsVisible="{Binding SelectedDairyComponentDto.DryPopulationGroups.Count}">
-                      <TextBlock Text="Select Group to Configure:"
+                      <TextBlock Text="{Binding [Label_SelectGroupToConfigure].Value, Source={StaticResource Loc}}"
                                  FontWeight="SemiBold"
                                  FontSize="{StaticResource GcdsFontSizeBody}"
                                  Foreground="#F57C00"
                                  Margin="0,0,0,8"/>
-                      <TextBlock Text="You have multiple groups. Select which group's management practices you want to configure:"
+                      <TextBlock Text="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
                       <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.DryPopulationGroups}"
                                 SelectedItem="{Binding SelectedDryGroup}"
-                                PlaceholderText="Choose a group..."
+                                PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
                                 MinWidth="300">
                         <ComboBox.ItemTemplate>
@@ -424,14 +410,14 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                               <TextBlock Text="-" Foreground="#999" Margin="0,0,8,0"/>
                               <TextBlock>
                                 <Run Text="{Binding NumberOfAnimals}"/>
-                                <Run Text=" animals" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                <Run Text="{Binding [Label_AnimalsUnit].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                               </TextBlock>
                             </StackPanel>
                           </DataTemplate>
                         </ComboBox.ItemTemplate>
                       </ComboBox>
                     </StackPanel>
-                    
+
                     <!-- No Groups Available Message -->
                     <StackPanel HorizontalAlignment="Center">
                       <StackPanel.IsVisible>
@@ -440,34 +426,29 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                           <Binding Path="!SelectedDairyComponentDto.DryPopulationGroups.Count"/>
                         </MultiBinding>
                       </StackPanel.IsVisible>
-                      <TextBlock Text="No Groups Defined"
+                      <TextBlock Text="{Binding [Label_NoGroupsDefined].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeH6}"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  HorizontalAlignment="Center"
                                  Margin="0,0,0,8"/>
-                      <TextBlock TextWrapping="Wrap"
+                      <TextBlock Text="{Binding [Label_NoGroupsGoToStep2].Value, Source={StaticResource Loc}}"
+                                 TextWrapping="Wrap"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                  TextAlignment="Center"
-                                 MaxWidth="400">
-                        <Run Text="You haven't added any groups yet. Go back to "/>
-                        <Run Text="Step 2" FontWeight="Bold"/>
-                        <Run Text=" above and click '"/>
-                        <Run Text="Add New Group" FontWeight="SemiBold"/>
-                        <Run Text="' to create groups before configuring management practices."/>
-                      </TextBlock>
+                                 MaxWidth="400"/>
                     </StackPanel>
                   </StackPanel>
                 </Border>
-                
+
                 <!-- Management Practices Content -->
                 <!-- Show in Simple mode (UseAdvancedPopulationMode=false) OR when a group is selected in Advanced mode -->
                 <Panel>
                   <dairy:DryStageView IsVisible="{Binding !SelectedDairyComponentDto.UseAdvancedPopulationMode}"/>
                   <dairy:DryStageView IsVisible="{Binding SelectedDryGroup, Converter={x:Static ObjectConverters.IsNotNull}}"/>
                 </Panel>
-                
+
                 <!-- No Group Selected Message (Advanced Mode Only) -->
                 <!-- Only show when in Advanced mode, groups exist, but none is selected -->
                 <Border Background="{StaticResource GcdsWarningBgBrush}" BorderBrush="{StaticResource GcdsWarningBrush}" BorderThickness="1"
@@ -479,13 +460,13 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                     </MultiBinding>
                   </Border.IsVisible>
                   <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="No Group Selected"
+                    <TextBlock Text="{Binding [Label_NoGroupSelected].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeH6}"
                                FontWeight="Bold"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,8"/>
-                    <TextBlock Text="Please select a group from the dropdown above to configure its management practices."
+                    <TextBlock Text="{Binding [Label_PleaseSelectGroupFromDropdown].Value, Source={StaticResource Loc}}"
                                FontSize="{StaticResource GcdsFontSizeSmall}"
                                Foreground="{StaticResource GcdsTextPrimaryBrush}"
                                TextAlignment="Center"
@@ -496,7 +477,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
             </Border>
           </StackPanel>
         </Border>
-        
+
         <!-- Default: No stage selected -->
         <Border BorderBrush="#1976D2" BorderThickness="2" CornerRadius="8">
           <Border.IsVisible>
@@ -512,23 +493,23 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
               <StackPanel>
                 <!-- Step Badge -->
                 <Border Classes="step-badge" HorizontalAlignment="Left" Background="White" Margin="0,0,0,8">
-                  <TextBlock Text="Step 3" Classes="step-badge-text" Foreground="#1976D2"/>
+                  <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text" Foreground="#1976D2"/>
                 </Border>
                 <!-- Title and Description -->
-                <TextBlock Text="Management Practices Configuration" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="Click a stage card above to configure management practices" 
+                <TextBlock Text="{Binding [Label_ManagementPracticesConfiguration].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding [Label_ClickStageCardAboveDesc].Value, Source={StaticResource Loc}}"
                           FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="White" Opacity="0.95" Margin="0,4,0,0" FontWeight="SemiBold"/>
               </StackPanel>
             </Border>
             <Border Background="White" Padding="20">
               <Border Background="{StaticResource GcdsSelectionBgBrush}" BorderBrush="#1976D2" BorderThickness="1" CornerRadius="6" Padding="20">
                 <StackPanel HorizontalAlignment="Center">
-                  <TextBlock Text="Select a Stage to Begin" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold" 
+                  <TextBlock Text="{Binding [Label_SelectAStageToBegin].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH6}" FontWeight="Bold"
                             Foreground="#1976D2" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                  <TextBlock Text="Click on one of the stage cards above (Calf, Heifer, Lactating, or Dry)" 
+                  <TextBlock Text="{Binding [Label_ClickOnStageCardDesc1].Value, Source={StaticResource Loc}}"
                             FontSize="{StaticResource GcdsFontSizeBody}" Foreground="{StaticResource GcdsTextSecondaryBrush}" HorizontalAlignment="Center" TextWrapping="Wrap"
                             TextAlignment="Center" MaxWidth="500" Margin="0,0,0,8"/>
-                  <TextBlock Text="to configure its specific management practices and production parameters." 
+                  <TextBlock Text="{Binding [Label_ClickOnStageCardDesc2].Value, Source={StaticResource Loc}}"
                             FontSize="{StaticResource GcdsFontSizeBody}" Foreground="{StaticResource GcdsTextSecondaryBrush}" HorizontalAlignment="Center" TextWrapping="Wrap"
                             TextAlignment="Center" MaxWidth="500"/>
                 </StackPanel>

@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_actions", "_actions", "{77
 		.github\workflows\_dotnet-publish-template.yml = .github\workflows\_dotnet-publish-template.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H.Localization", "H.Localization\H.Localization.csproj", "{93894FBC-D442-4594-89B1-2964B4C3EAE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{53A9A756-5E6A-43D9-A056-D0FD56DAE226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A9A756-5E6A-43D9-A056-D0FD56DAE226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53A9A756-5E6A-43D9-A056-D0FD56DAE226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93894FBC-D442-4594-89B1-2964B4C3EAE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93894FBC-D442-4594-89B1-2964B4C3EAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93894FBC-D442-4594-89B1-2964B4C3EAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93894FBC-D442-4594-89B1-2964B4C3EAE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

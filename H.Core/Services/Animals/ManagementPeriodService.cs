@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Calculators.UnitsOfMeasurement;
+﻿using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Core.Factories;
@@ -21,8 +20,8 @@ public class ManagementPeriodService : IManagementPeriodService
     private readonly IManagementPeriodFactory _managementPeriodFactory;
     private readonly IUnitsOfMeasurementCalculator _unitsOfMeasurementCalculator;
 
-    private readonly IMapper _managementPeriodDtoToManagementPeriodMapper;
-    private readonly IMapper _managementPeriodToManagementPeriodDtoMapper;
+    private readonly IModelMapper<ManagementPeriodDto, ManagementPeriod> _managementPeriodDtoToManagementPeriodMapper;
+    private readonly IModelMapper<ManagementPeriod, ManagementPeriodDto> _managementPeriodToManagementPeriodDtoMapper;
 
     #endregion
 
@@ -66,8 +65,8 @@ public class ManagementPeriodService : IManagementPeriodService
             throw new ArgumentNullException(nameof(unitsOfMeasurementCalculator));
         }
 
-        _managementPeriodDtoToManagementPeriodMapper = _containerProvider.Resolve<IMapper>(nameof(ManagementPeriodDtoToManagementPeriodMapper));
-        _managementPeriodToManagementPeriodDtoMapper = _containerProvider.Resolve<IMapper>(nameof(ManagementPeriodToManagementPeriodDtoMapper));
+        _managementPeriodDtoToManagementPeriodMapper = _containerProvider.Resolve<IModelMapper<ManagementPeriodDto, ManagementPeriod>>(nameof(ManagementPeriodDtoToManagementPeriodMapper));
+        _managementPeriodToManagementPeriodDtoMapper = _containerProvider.Resolve<IModelMapper<ManagementPeriod, ManagementPeriodDto>>(nameof(ManagementPeriodToManagementPeriodDtoMapper));
     }
 
     #endregion
@@ -76,10 +75,7 @@ public class ManagementPeriodService : IManagementPeriodService
 
     public IManagementPeriodDto TransferToManagementPeriodDto(ManagementPeriod managementPeriod)
     {
-        var managementPeriodDto = new ManagementPeriodDto();
-
-        // Create a copy of the component by copying all properties into the DTO
-        _managementPeriodToManagementPeriodDtoMapper.Map(managementPeriod, managementPeriodDto);
+        var managementPeriodDto = _managementPeriodToManagementPeriodDtoMapper.Map(managementPeriod);
 
         // All numerical values are stored internally as metric values
         var propertyConverter = new PropertyConverter<IManagementPeriodDto>(managementPeriodDto);
@@ -121,7 +117,10 @@ public class ManagementPeriodService : IManagementPeriodService
         }
 
         // Map values from the copy of the DTO to the internal system object
-        _managementPeriodDtoToManagementPeriodMapper.Map(copy, managementPeriod);
+        if (copy is ManagementPeriodDto managementPeriodDtoCopy)
+        {
+            PropertyMapper.CopyTo(managementPeriodDtoCopy, managementPeriod);
+        }
 
         return copy;
     }

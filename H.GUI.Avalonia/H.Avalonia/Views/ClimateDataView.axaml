@@ -1,10 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="clr-namespace:H.Avalonia.ViewModels"
              xmlns:views="clr-namespace:H.Avalonia.Views"
-             xmlns:properties="clr-namespace:H.Avalonia.Core.Properties;assembly=H.Avalonia.Core"
              mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ClimateDataView">
 
@@ -30,12 +30,12 @@
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
             <Button Name="SelectAllRowsButton"
-                    Content="{x:Static properties:Resources.LabelSelectAllRows}"
+                    Content="{Binding [Label_SelectAllRows].Value, Source={StaticResource Loc}}"
                     Command="{Binding ToggleSelectAllRowsCommand}"
                     HorizontalAlignment="Left"
                     Margin="20, 10, 10, 10"/>
             <Button Name="ImportDataButton"
-                    Content="{x:Static properties:Resources.LabelImportFromCSV}"
+                    Content="{Binding [Label_ImportFromCSV].Value, Source={StaticResource Loc}}"
                     Click="ImportDataButton_OnClick"
                     HorizontalAlignment="Left"
                     Margin="10, 10"/>
@@ -69,7 +69,7 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelLatitude}"
+            <DataGridTemplateColumn Header="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"
                                     Width="13*"
                                     HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -80,7 +80,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelLongitude}"
+                <DataGridTemplateColumn Header="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"
                                         Width="13*"
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -91,7 +91,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelStartYear}"
+                <DataGridTemplateColumn Header="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
                                         Width="14*"
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -102,7 +102,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelEndYear}"
+                <DataGridTemplateColumn Header="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
                                         Width="14*"
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -113,7 +113,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelCalculateMonthlyPPT}"
+                <DataGridTemplateColumn Header="{Binding [Label_CalculateMonthlyPPT].Value, Source={StaticResource Loc}}"
                                         Width="14*"
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -124,7 +124,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelJulianStartDay}"
+                <DataGridTemplateColumn Header="{Binding [Label_JulianStartDay].Value, Source={StaticResource Loc}}"
                                         Width="14*"
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -136,7 +136,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static properties:Resources.LabelJulianEndDay}"
+                <DataGridTemplateColumn Header="{Binding [Label_JulianEndDay].Value, Source={StaticResource Loc}}"
                                         Width="14*"
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -169,11 +169,11 @@
         </DataGrid>
         <Button Classes="add-row-datagrid-button"
                 Grid.Row="3"
-                Content="{x:Static properties:Resources.LabelAddRow}"
+                Content="{Binding [Label_AddRow].Value, Source={StaticResource Loc}}"
                 Command="{Binding AddRowCommand}"/>
         <Button  Classes="calculate-results-button" 
                  Grid.Row="4"
-                 Content="{x:Static properties:Resources.LabelGetClimateData}"
+                 Content="{Binding [Label_GetClimateData].Value, Source={StaticResource Loc}}"
                  Command="{Binding OnGetClimateDataCommand}"/>
     </Grid>
 </UserControl>

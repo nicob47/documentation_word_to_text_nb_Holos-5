@@ -2,31 +2,124 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
-			 xmlns:componentViews="clr-namespace:H.Avalonia.ViewModels.ComponentViews"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:componentViews="clr-namespace:H.Avalonia.ViewModels.ComponentViews"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.OtherAnimals.OtherAnimalsStep2View">
 
     <Design.DataContext>
         <componentViews:AnimalComponentViewModelDesign/>
     </Design.DataContext>
 
-	<StackPanel>
-			<TextBlock FontSize="16" Margin="10,20,0,0" Foreground="{StaticResource GcdsTextSecondaryBrush}">
-				<Run Text="{x:Static properties:Resources.LabelStep2}" FontWeight="Bold"/>
-				<Run Text="{x:Static properties:Resources.LabelStep2Text}"/>
-			</TextBlock>
+    <Border Classes="step-container" Margin="0,0,0,16" IsVisible="{Binding IsGroupSelected}">
+        <StackPanel>
 
-			<Button Command="{Binding OnAddManagementPeriodExecute}" Classes="add-management-period" Content="{x:Static properties:Resources.ButtonAddManagementPeriod}"></Button> 
-			<StackPanel>
-				<DataGrid ItemsSource="{Binding Path=ManagementPeriodDtos}" AutoGenerateColumns="False" Margin="10,20,0,0" HorizontalAlignment="Left" BorderThickness="1" GridLinesVisibility="All" Height="100">
-					<DataGrid.Columns>
-						<DataGridTextColumn Width="Auto" Header="{x:Static properties:Resources.LabelManagementPeriodName}" Binding="{Binding Path=Name}"/>
-						<DataGridTextColumn Width="Auto" Header="{x:Static properties:Resources.LabelStartDate}" Binding="{Binding Path=Start}"/>
-						<DataGridTextColumn Width="Auto" Header="{x:Static properties:Resources.LabelEndDate}" Binding="{Binding Path=End}"/>
-						<DataGridTextColumn Width="Auto" Header="{x:Static properties:Resources.LabelNumberOfDays}" Binding="{Binding Path=NumberOfDays}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</StackPanel>
-		</StackPanel>
+            <StackPanel Classes="step-header">
+                <!-- Step Badge -->
+                <Border Classes="step-badge">
+                    <TextBlock Text="{Binding [Label_Step2].Value, Source={StaticResource Loc}}" Classes="step-badge-text" />
+                </Border>
+
+                <!-- Step Description -->
+                <TextBlock Text="{Binding [Label_Step2Text].Value, Source={StaticResource Loc}}"
+                           Classes="step-number-description"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10" Spacing="8">
+                <Button Command="{Binding AddManagementPracticeCommand}" Classes="add-management-period"
+                        Content="{Binding [Button_AddManagementPeriod].Value, Source={StaticResource Loc}}" />
+                <Button Command="{Binding RemoveManagementPracticeCommand}"
+                        CommandParameter="{Binding SelectedManagementPractice}"
+                        IsVisible="{Binding HasManagementPeriods}"
+                        VerticalAlignment="Bottom"
+                        Classes="delete-button">
+                    <TextBlock Classes="delete-text"
+                               Text="{Binding [Label_RemoveSelected].Value, Source={StaticResource Loc}}" />
+                </Button>
+            </StackPanel>
+
+            <DataGrid ItemsSource="{Binding SelectedGroupManagementPeriods}"
+                      SelectedItem="{Binding SelectedManagementPractice}"
+                      AutoGenerateColumns="False"
+                      IsVisible="{Binding HasManagementPeriods}"
+                      Margin="10,10,10,0"
+                      HorizontalAlignment="Stretch"
+                      BorderThickness="1"
+                      GridLinesVisibility="All"
+                      MinHeight="120"
+                      MaxHeight="350"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="{Binding [Label_ManagementPeriodName].Value, Source={StaticResource Loc}}" Binding="{Binding Path=Name}"/>
+                    <DataGridTemplateColumn Width="Auto" Header="{Binding [Label_StartDate].Value, Source={StaticResource Loc}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CalendarDatePicker SelectedDate="{Binding Start}"
+                                                    Watermark="yyyy-MM-dd"
+                                                    SelectedDateFormat="Custom"
+                                                    CustomDateFormatString="yyyy-MM-dd"
+                                                    MinWidth="140"
+                                                    HorizontalAlignment="Stretch" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto" Header="{Binding [Label_EndDate].Value, Source={StaticResource Loc}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CalendarDatePicker SelectedDate="{Binding End}"
+                                                    Watermark="yyyy-MM-dd"
+                                                    SelectedDateFormat="Custom"
+                                                    CustomDateFormatString="yyyy-MM-dd"
+                                                    MinWidth="140"
+                                                    HorizontalAlignment="Stretch" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto" Header="{Binding [Label_NumberOfDays].Value, Source={StaticResource Loc}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <NumericUpDown Value="{Binding NumberOfDays}"
+                                               Minimum="1"
+                                               Increment="1"
+                                               FormatString="{}{0:0}"
+                                               ShowButtonSpinner="True"
+                                               AllowSpin="True"
+                                               MinWidth="140"
+                                               HorizontalAlignment="Stretch" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="Auto" Header="{Binding [Label_NumberOfAnimals].Value, Source={StaticResource Loc}}" Binding="{Binding Path=NumberOfAnimals}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Period count indicator — helps the user know total periods when grid is scrollable -->
+            <TextBlock IsVisible="{Binding HasManagementPeriods}"
+                       Text="{Binding SelectedGroupManagementPeriods.Count, StringFormat='{}{0} management period(s) defined'}"
+                       FontSize="12"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       Margin="12,4,10,0"
+                       HorizontalAlignment="Left" />
+
+            <!-- Validation Error Summary -->
+            <Border IsVisible="{Binding SelectedManagementPractice.HasErrors, FallbackValue=False}"
+                    BorderBrush="{StaticResource GcdsDangerBrush}"
+                    BorderThickness="1"
+                    Background="#FFF5F5"
+                    Padding="10"
+                    Margin="10,4,10,0"
+                    CornerRadius="4">
+                <StackPanel Spacing="2">
+                    <TextBlock Text="{Binding SelectedManagementPractice.Name, StringFormat='{}{0}:'}"
+                               Foreground="{StaticResource GcdsDangerBrush}"
+                               FontSize="13"
+                               FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding SelectedManagementPractice.ValidationSummary}"
+                               Foreground="{StaticResource GcdsDangerBrush}"
+                               FontSize="13"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Border>
 </UserControl>

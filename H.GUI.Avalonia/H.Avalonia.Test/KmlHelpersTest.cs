@@ -6,6 +6,7 @@ using SharpKml.Base;
 namespace H.Avalonia.Test
 {
     [TestClass]
+    [TestCategory("Integration")]
     public class KmlHelpersTest
     {
         private static GeographicDataProvider _geographicDataProvider = null!;
@@ -46,6 +47,7 @@ namespace H.Avalonia.Test
 
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGetPolygonFromCoordinateAlberta()
         {
             var coordinate = CoordinateList[0];
@@ -62,6 +64,7 @@ namespace H.Avalonia.Test
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGetPolygonFromCoordinateBC()
         {
             var coordinate = CoordinateList[1];
@@ -79,6 +82,7 @@ namespace H.Avalonia.Test
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGetPolygonFromCoordinateInvalid()
         {
             var coordinate = CoordinateList[2];

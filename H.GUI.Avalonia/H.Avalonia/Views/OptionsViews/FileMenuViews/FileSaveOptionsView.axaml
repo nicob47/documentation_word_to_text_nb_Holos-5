@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              x:Class="H.Avalonia.Views.OptionsViews.FileMenuViews.FileSaveOptionsView">
 
 	<Grid VerticalAlignment="Center" MaxWidth="450">
@@ -13,22 +13,22 @@
 		</Grid.RowDefinitions>
 		
 		<StackPanel Grid.Row="0" HorizontalAlignment="Center">
-			<TextBlock Text="{x:Static properties:Resources.TitleSaveHolos}" Margin="0,0,0,10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="#696969"/>
-			<TextBlock Text="{x:Static properties:Resources.DescriptionSaveHolos}" FontStyle="Italic" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Margin="50,0,50,10" FontSize="14" Foreground="#696969"/>
-			<Button Command="{Binding Path=SaveCommand}" HorizontalAlignment="Center" Margin="0,10,0,20" Content="{x:Static properties:Resources.LabelSave}"></Button>
+			<TextBlock Text="{Binding [Title_SaveHolos].Value, Source={StaticResource Loc}}" Margin="0,0,0,10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="#696969"/>
+			<TextBlock Text="{Binding [Text_SaveHolos].Value, Source={StaticResource Loc}}" FontStyle="Italic" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Margin="50,0,50,10" FontSize="14" Foreground="#696969"/>
+			<Button Command="{Binding Path=SaveCommand}" HorizontalAlignment="Center" Margin="0,10,0,20" Content="{Binding [Label_Save].Value, Source={StaticResource Loc}}"></Button>
 			<Border BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="0,0,0,2" Margin="0,15,0,15" Width="450" />
 		</StackPanel>
 		
 		<StackPanel Grid.Row="1" HorizontalAlignment="Center">
-			<TextBlock Text="{x:Static properties:Resources.TitleSaveAs}" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,20,0,10" FontWeight="Bold" FontSize="24" Foreground="#696969"/>
-			<TextBlock Text="{x:Static properties:Resources.DescriptionSaveAs}" FontStyle="Italic" FontWeight="SemiBold" TextWrapping="Wrap" TextAlignment="Center" Margin="50,0,50,10" FontSize="14" Foreground="#696969"/>
+			<TextBlock Text="{Binding [Title_SaveAs].Value, Source={StaticResource Loc}}" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,20,0,10" FontWeight="Bold" FontSize="24" Foreground="#696969"/>
+			<TextBlock Text="{Binding [Text_SaveAs].Value, Source={StaticResource Loc}}" FontStyle="Italic" FontWeight="SemiBold" TextWrapping="Wrap" TextAlignment="Center" Margin="50,0,50,10" FontSize="14" Foreground="#696969"/>
 			<Grid Margin="25 10 25 25" MaxWidth="400">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/> 
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<TextBox Grid.Column="0" Text="{Binding Path=NewFarmName}" Margin="0 0 5 0" Watermark="{x:Static properties:Resources.WatermarkNewFarmName}" VerticalContentAlignment="Center" Foreground="#696969" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
-				<Button Grid.Column="1" Command="{Binding Path=SaveAsCommand}" Margin="5 0 0 0" HorizontalAlignment="Center" Content="{x:Static properties:Resources.LabelSave}"></Button>
+				<TextBox Grid.Column="0" Text="{Binding Path=NewFarmName}" Margin="0 0 5 0" Watermark="{Binding [Label_WatermarkNewFarmName].Value, Source={StaticResource Loc}}" VerticalContentAlignment="Center" Foreground="#696969" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
+				<Button Grid.Column="1" Command="{Binding Path=SaveAsCommand}" Margin="5 0 0 0" HorizontalAlignment="Center" Content="{Binding [Label_Save].Value, Source={StaticResource Loc}}"></Button>
 			</Grid>
 		</StackPanel>
 	</Grid>

@@ -1,5 +1,6 @@
 ﻿using H.Core.Enumerations;
 using H.CLI.Interfaces;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.ComponentKeys
 {
@@ -9,30 +10,30 @@ namespace H.CLI.ComponentKeys
 
         public OtherLivestockKeys() : base()
         {
-            base.Keys.Add(Properties.Resources.Key_Name, null);
+            base.Keys.Add(AppStrings.Column_Name, null);
             base.Keys.Add(H.Core.Properties.Resources.ComponentType, null);
-            base.Keys.Add(Properties.Resources.GroupName, null);
-            base.Keys.Add(Properties.Resources.GroupType, null);
+            base.Keys.Add(AppStrings.Column_GroupName, null);
+            base.Keys.Add(AppStrings.Column_GroupType, null);
 
-            base.Keys.Add(Properties.Resources.ManagementPeriodName, null);
-            base.Keys.Add(Properties.Resources.ManagementPeriodStartDate, null);
-            base.Keys.Add(Properties.Resources.ManagementPeriodDays, null);
-            base.Keys.Add(Properties.Resources.NumberOfAnimals, null);
-            base.Keys.Add(Properties.Resources.ProductionStage, null);
+            base.Keys.Add(AppStrings.Column_ManagementPeriodName, null);
+            base.Keys.Add(AppStrings.Column_ManagementPeriodStartDate, null);
+            base.Keys.Add(AppStrings.Column_ManagementPeriodDays, null);
+            base.Keys.Add(AppStrings.Column_NumberOfAnimals, null);
+            base.Keys.Add(AppStrings.Column_ProductionStage, null);
 
-            base.Keys.Add(Properties.Resources.YearlyManureMethaneRate, ImperialUnitsOfMeasurement.PoundPerHeadPerYear);
-            base.Keys.Add(Properties.Resources.YearlyNitrogenExcretionRate, ImperialUnitsOfMeasurement.PoundPerHeadPerYear);
-            base.Keys.Add(Properties.Resources.YearlyEntericMethaneRate, ImperialUnitsOfMeasurement.PoundPerHeadPerYear);
-            base.Keys.Add(Properties.Resources.N2ODirectEmissionFactor, ImperialUnitsOfMeasurement.PoundsN2ONPerPoundN);
-            base.Keys.Add(Properties.Resources.VolatilizationFraction, null);
+            base.Keys.Add(AppStrings.Column_YearlyManureMethaneRate, ImperialUnitsOfMeasurement.PoundPerHeadPerYear);
+            base.Keys.Add(AppStrings.Column_YearlyNitrogenExcretionRate, ImperialUnitsOfMeasurement.PoundPerHeadPerYear);
+            base.Keys.Add(AppStrings.Column_YearlyEntericMethaneRate, ImperialUnitsOfMeasurement.PoundPerHeadPerYear);
+            base.Keys.Add(AppStrings.Column_N2ODirectEmissionFactor, ImperialUnitsOfMeasurement.PoundsN2ONPerPoundN);
+            base.Keys.Add(AppStrings.Column_VolatilizationFraction, null);
 
-            base.Keys.Add(Properties.Resources.DailyManureMethaneEmissionRate, null);
-            base.Keys.Add(Properties.Resources.MethaneProducingCapacityOfManure, null);
-            base.Keys.Add(Properties.Resources.MethaneConversionFactorOfManure, null);
-            base.Keys.Add(Properties.Resources.VolatileSolids, null);
-            base.Keys.Add(Properties.Resources.EmissionFactorVolatilization, null);
-            base.Keys.Add(Properties.Resources.EmissionFactorLeaching, null);
-            base.Keys.Add(Properties.Resources.FractionLeaching, null);
+            base.Keys.Add(AppStrings.Column_DailyManureMethaneEmissionRate, null);
+            base.Keys.Add(AppStrings.Column_MethaneProducingCapacityOfManure, null);
+            base.Keys.Add(AppStrings.Column_MethaneConversionFactorOfManure, null);
+            base.Keys.Add(AppStrings.Column_VolatileSolids, null);
+            base.Keys.Add(AppStrings.Column_EmissionFactorVolatilization, null);
+            base.Keys.Add(AppStrings.Column_EmissionFactorLeaching, null);
+            base.Keys.Add(AppStrings.Column_FractionLeaching, null);
         }
 
         #endregion

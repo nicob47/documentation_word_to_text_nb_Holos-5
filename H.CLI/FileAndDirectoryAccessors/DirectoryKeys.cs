@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.FileAndDirectoryAccessors
 {
@@ -13,14 +14,14 @@ namespace H.CLI.FileAndDirectoryAccessors
         /// </summary>
         public Dictionary<string, int> directoryWeights { get; set; } = new Dictionary<string, int>
         {
-            {Properties.Resources.DefaultShelterbeltInputFolder, 2 },
-            {Properties.Resources.DefaultFieldsInputFolder, 2 },
-            {Properties.Resources.DefaultBeefInputFolder, 1 },
-            {Properties.Resources.DefaultSheepInputFolder, 1 },
-            {Properties.Resources.DefaultDairyInputFolder, 1 },
-            {Properties.Resources.DefaultPoultryInputFolder, 1 },
-            {Properties.Resources.DefaultSwineInputFolder, 1 },
-            {Properties.Resources.DefaultOtherLivestockInputFolder, 1 }
+            {AppStrings.Filename_DefaultShelterbeltInput, 2 },
+            {AppStrings.Filename_DefaultFieldsInput, 2 },
+            {AppStrings.Filename_DefaultBeefInput, 1 },
+            {AppStrings.Filename_DefaultSheepInput, 1 },
+            {AppStrings.Filename_DefaultDairyInput, 1 },
+            {AppStrings.Filename_DefaultPoultryInput, 1 },
+            {AppStrings.Filename_DefaultSwineInput, 1 },
+            {AppStrings.Filename_DefaultOtherLivestockInput, 1 }
         };   
         #endregion
     }

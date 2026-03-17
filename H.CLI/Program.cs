@@ -16,6 +16,7 @@ using H.Core.Calculators.Carbon;
 using H.Core.Calculators.Nitrogen;
 using H.Core.Providers.Climate;
 using H.Core.Services.LandManagement;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI
 {
@@ -95,7 +96,7 @@ namespace H.CLI
                         globalSettingsHandler.GetUserSettingsMenuChoice(farmDirectoryPath, geographicDataProvider);
   
                         // This will be the default name for the farm settings file. The user can change the name of the settings file in the Farm folder if they want to.
-                        var defaultFarmSettingsFilePath = farmDirectoryPath + @"\" + Properties.Resources.NameOfSettingsFile + ".settings";
+                        var defaultFarmSettingsFilePath = farmDirectoryPath + @"\" + AppStrings.Column_NameOfSettingsFile + ".settings";
 
                         // We add it to our list of settings files so we can continue processing with the new settings file
                         settingsFilePathsInFarmDirectory.Add(defaultFarmSettingsFilePath);
@@ -114,7 +115,7 @@ namespace H.CLI
                             var farmSettingsFileName = Path.GetFileNameWithoutExtension(settingsFilePath);
                             var reader = new ReadSettingsFile();
                             var dataInputHandler = new DataInputHandler();
-                            Console.WriteLine(String.Format(Environment.NewLine + Properties.Resources.StartingConversion, Path.GetFileName(farmDirectoryPath)));
+                            Console.WriteLine(String.Format(Environment.NewLine + AppStrings.Status_StartingConversion, Path.GetFileName(farmDirectoryPath)));
 
                             // Parse And Convert Raw Input Files Into Components and add them to a Farm
                             var farm = dataInputHandler.ProcessDataInputFiles(farmDirectoryPath);
@@ -128,7 +129,7 @@ namespace H.CLI
 
                             // Read Global Settings (ONLY SET ONCE) and other settings (Temperature, Precipitation, Evapotranspiration, Soil) which are specific
                             // for each Farm and therefore, are set for each farm
-                            Console.WriteLine(Properties.Resources.ReadingSettingsFile);
+                            Console.WriteLine(AppStrings.Status_ReadingSettingsFile);
                             reader.ReadGlobalSettings(settingsFilePath);
                             globalSettingsHandler.ApplySettingsFromUserFile(ref applicationData, ref farm, reader.GlobalSettingsDictionary);
   
@@ -143,14 +144,14 @@ namespace H.CLI
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine(Properties.Resources.FarmDoesNotContainAnyData, farm.Name + "_" + farm.SettingsFileName);
+                                Console.WriteLine(AppStrings.Error_FarmDoesNotContainAnyData, farm.Name + "_" + farm.SettingsFileName);
                                 System.Threading.Thread.Sleep(2000);
                             }
 
                         }
                         else
                         {
-                            throw new Exception(Properties.Resources.InvalidSettingsFilePath);
+                            throw new Exception(AppStrings.Error_InvalidSettingsFilePath);
                         }
                     }
                 }
@@ -160,7 +161,7 @@ namespace H.CLI
                     storage.ApplicationData = applicationData;
                     // Start Processing Farms
                     Console.WriteLine();
-                    Console.WriteLine(Properties.Resources.StartingProcessing);
+                    Console.WriteLine(AppStrings.Status_StartingProcessing);
 
                     var climateProvider = new ClimateProvider(new SlcClimateDataProvider());
                     var n2oEmissionFactorCalculator = new N2OEmissionFactorCalculator(climateProvider);
@@ -172,7 +173,7 @@ namespace H.CLI
                     var componentResults = new ComponentResultsProcessor(storage, new TimePeriodHelper(), fieldResultsService);
 
                     // Get base directory of user entered path to create Total Results For All Farms folder
-                    Directory.CreateDirectory(InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + Properties.Resources.TotalResultsForAllFarms);
+                    Directory.CreateDirectory(InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + AppStrings.Result_TotalForAllFarms);
 
                     // Output Individual Results For Each Farm's Land Management Components (list of components is filtered inside method)
                     // Slowest section because we initialize view models for every component
@@ -185,7 +186,7 @@ namespace H.CLI
                     componentResults.WriteEmissionsToFiles(applicationData);
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(Properties.Resources.LabelProcessingComplete);
+                    Console.WriteLine(AppStrings.Status_ProcessingComplete);
                     Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.White;
                     Environment.Exit(1);
@@ -193,7 +194,7 @@ namespace H.CLI
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(Properties.Resources.NoFarmsToProcess);
+                    Console.WriteLine(AppStrings.Error_NoFarmsToProcess);
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.ReadLine();
                     Environment.Exit(1);
@@ -207,7 +208,7 @@ namespace H.CLI
 
                 templateFarmHandler.CreateTemplateFarmIfNotExists(farmsFolderPath, geographicDataProvider);
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(String.Format(Properties.Resources.InitialMessageAfterInstallation, farmsFolderPath));
+                Console.WriteLine(String.Format(AppStrings.Message_InitialAfterInstallation, farmsFolderPath));
                 _ = Console.ReadKey();
                 Environment.Exit(1);
             }

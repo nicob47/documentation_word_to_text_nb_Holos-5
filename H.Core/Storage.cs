@@ -1,9 +1,11 @@
 ﻿using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
+using H.Core.Migrations;
 using H.Core.Models;
 using H.Infrastructure;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
 
 namespace H.Core
@@ -237,12 +239,18 @@ namespace H.Core
             {
                 using (JsonReader reader = new JsonTextReader(r))
                 {
+                    // Parse to JObject first so the migration pipeline can patch the JSON before deserialization
+                    var root = JObject.Load(reader);
+
+                    // Run version-based migrations (v4 → v5, etc.)
+                    JsonMigrationPipeline.MigrateApplicationData(root);
+
                     JsonSerializer serializer = new JsonSerializer();
 
                     // Serializer and deserializer must both have this set to Auto
                     serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                    return serializer.Deserialize<ApplicationData>(reader)!;
+                    return root.ToObject<ApplicationData>(serializer)!;
                 }
             }
         }
@@ -478,7 +486,7 @@ namespace H.Core
                         // Serializer and deserializer must both have this set to Auto
                         serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                       return serializer.Deserialize<List<Farm>>(reader) ?? Enumerable.Empty<Farm>();
+                        return DeserializeFarmsWithMigration(reader, serializer);
                     }
                 }
             }
@@ -513,7 +521,7 @@ namespace H.Core
                             // Serializer and deserializer must both have this set to Auto
                             serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                            return (IEnumerable<Farm>)(serializer.Deserialize<List<Farm>>(reader) ?? new List<Farm>());
+                            return DeserializeFarmsWithMigration(reader, serializer);
                         }
                     }
                 });
@@ -527,6 +535,34 @@ namespace H.Core
                 }
                 return Enumerable.Empty<Farm>();
             }
+        }
+
+        /// <summary>
+        /// Parses farm export JSON, runs the migration pipeline, and deserializes.
+        /// Handles both the v4 bare array format and a potential future envelope format.
+        /// </summary>
+        private static IEnumerable<Farm> DeserializeFarmsWithMigration(JsonReader reader, JsonSerializer serializer)
+        {
+            var token = JToken.Load(reader);
+
+            if (token is JArray farmArray)
+            {
+                // v4 format: bare List<Farm>
+                JsonMigrationPipeline.MigrateFarmExport(farmArray);
+                return farmArray.ToObject<List<Farm>>(serializer) ?? Enumerable.Empty<Farm>();
+            }
+
+            if (token is JObject envelope)
+            {
+                // Future envelope format with Version field
+                JsonMigrationPipeline.MigrateApplicationData(envelope);
+                if (envelope["Farms"] is JArray farms)
+                {
+                    return farms.ToObject<List<Farm>>(serializer) ?? Enumerable.Empty<Farm>();
+                }
+            }
+
+            return Enumerable.Empty<Farm>();
         }
 
         /// <summary>

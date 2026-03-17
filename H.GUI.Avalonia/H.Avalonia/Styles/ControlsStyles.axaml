@@ -235,6 +235,15 @@
 		</Setter>
 	</Style>
 
+	<!-- Suppress inline error text inside DataGrid cells (errors shown in summary panel below grid) -->
+	<Style Selector="DataGrid DataValidationErrors">
+		<Setter Property="ErrorTemplate">
+			<DataTemplate>
+				<Panel/>
+			</DataTemplate>
+		</Setter>
+	</Style>
+
 	<!-- Label Styles -->
 	<!-- Style for labels that appear before input boxes -->
 	<Style Selector="Label.input-label">
@@ -314,8 +323,7 @@
 		<Setter Property="BorderThickness" Value="{Binding IsSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"/>
 		<Setter Property="RenderTransform" Value="{Binding IsSelected, Converter={StaticResource BoolToScaleTransformConverter}}"/>
 		<Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}"/>
-		<Setter Property="MinWidth" Value="180"/>
-		<Setter Property="MaxWidth" Value="200"/>
+		<Setter Property="Width" Value="280"/>
 		<Setter Property="Padding" Value="{StaticResource CardPadding}"/>
 	</Style>
 
@@ -429,7 +437,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{StaticResource DeleteButtonBrush}"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Padding" Value="0"/> <!-- Override base/default button padding show text will be visible -->
+        <Setter Property="Padding" Value="10,4"/>
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="Foreground" Value="{StaticResource DeleteButtonBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -567,5 +575,19 @@
 	</Style>
 	<Style Selector="NumericUpDown:pointerover /template/ TextBox">
 		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
+	</Style>
+
+	<!-- ── Calendar / CalendarDatePicker Overrides ────────────────────── -->
+	<!-- The global Button style sets Background to dark navy and Foreground
+	     to White, which makes the Calendar header unreadable. These overrides
+	     restore the Fluent-Light defaults for buttons inside the calendar popup. -->
+	<Style Selector="CalendarItem Button">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="{StaticResource GcdsTextPrimaryBrush}"/>
+		<Setter Property="FontWeight" Value="Normal"/>
+		<Setter Property="Padding" Value="4,2"/>
+	</Style>
+	<Style Selector="CalendarItem Button:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource GcdsBgLightBrush}"/>
 	</Style>
 </Styles>

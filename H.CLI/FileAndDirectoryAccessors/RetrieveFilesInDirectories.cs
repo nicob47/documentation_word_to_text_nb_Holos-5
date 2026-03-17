@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.FileAndDirectoryAccessors
 {
@@ -18,7 +19,7 @@ namespace H.CLI.FileAndDirectoryAccessors
             }
             catch (DirectoryNotFoundException ex)
             {
-                Console.WriteLine(String.Format(H.CLI.Properties.Resources.DirectoryNotFound, ex.Message));
+                Console.WriteLine(String.Format(AppStrings.Error_DirectoryNotFound, ex.Message));
                 throw new DirectoryNotFoundException();
             }
 

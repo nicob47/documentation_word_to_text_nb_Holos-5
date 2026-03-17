@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using AutoMapper;
 using H.Core.Enumerations;
+using H.Core.Mappers;
 using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
 using H.Core.Models.LandManagement.Rotation;
@@ -11,28 +11,16 @@ namespace H.Core.Services
     public class RotationComponentHelper
     {
         #region Fields
-        
-        private readonly IMapper _cropViewItemMapper;
+
         private readonly FieldComponentHelper _fieldComponentHelper;
 
         #endregion
 
         #region Constructors
-        
+
         public RotationComponentHelper()
         {
-
-
             _fieldComponentHelper = new FieldComponentHelper();
-
-            var cropViewItemMappingConfiguration = new MapperConfiguration(configuration =>
-            {
-                configuration.CreateMap<CropViewItem, CropViewItem>()
-                    .ForMember(x => x.IsInitialized, options => options.Ignore())
-                    .ForMember(x => x.Guid, options => options.Ignore());
-            });
-
-            _cropViewItemMapper = cropViewItemMappingConfiguration.CreateMapper();
         }
 
         #endregion
@@ -232,7 +220,7 @@ namespace H.Core.Services
                 foreach (var shiftedViewItem in shift)
                 {
                     var viewItem = new CropViewItem();
-                    _cropViewItemMapper.Map(shiftedViewItem, viewItem);
+                    PropertyMapper.CopyTo(shiftedViewItem, viewItem);
                     result.Add(viewItem);
                 }
 

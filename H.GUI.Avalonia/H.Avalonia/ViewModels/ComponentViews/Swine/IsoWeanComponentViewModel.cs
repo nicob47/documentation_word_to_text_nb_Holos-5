@@ -1,7 +1,26 @@
-﻿namespace H.Avalonia.ViewModels.ComponentViews.Swine
-{
-    public class IsoWeanComponentViewModel : ViewModelBase
-    {
+using System.Collections.ObjectModel;
+using H.Core.Enumerations;
+using H.Core.Services.Animals;
+using H.Core.Services.StorageService;
+using H.Avalonia.ViewModels.ComponentViews.OtherAnimals;
+using Microsoft.Extensions.Logging;
 
+namespace H.Avalonia.ViewModels.ComponentViews.Swine;
+
+public class IsoWeanComponentViewModel : OtherAnimalsViewModelBase
+{
+    public IsoWeanComponentViewModel(ILogger logger, IAnimalComponentService componentService,
+        IStorageService storageService, IManagementPeriodService managementPeriodService)
+        : base(logger, componentService, storageService, managementPeriodService)
+    {
+        ViewName = "IsoWeanComponentView";
+        AnimalType = AnimalType.SwineStarter;
+        ValidAnimalTypes = new ObservableCollection<AnimalType>(new[]
+        {
+            AnimalType.NotSelected,
+            AnimalType.SwineStarter,
+        });
     }
+
+    public IsoWeanComponentViewModel() { }
 }

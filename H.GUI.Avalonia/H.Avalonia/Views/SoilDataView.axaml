@@ -1,10 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:H.Avalonia.ViewModels"
-             xmlns:properties="clr-namespace:H.Avalonia.Core.Properties;assembly=H.Avalonia.Core"
-			 xmlns:propertiesCore="clr-namespace:H.Core.Properties;assembly=H.Core"
              xmlns:mapsui="clr-namespace:Mapsui.UI.Avalonia;assembly=Mapsui.UI.Avalonia"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:infrastructure1="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
@@ -37,7 +36,7 @@
 	</UserControl.Resources>
 	<TabControl>
 		<!-- Single coordinate tab -->
-		<TabItem Name="SingleCoordinateTab" Header="{x:Static properties:Resources.LabelSingleCoordinate}" IsSelected="True" IsVisible="False">
+		<TabItem Name="SingleCoordinateTab" Header="{Binding [Label_SingleCoordinate].Value, Source={StaticResource Loc}}" IsSelected="True" IsVisible="False">
 			<Grid>
 				<StackPanel HorizontalAlignment="Center"
                             VerticalAlignment="Center">
@@ -46,7 +45,7 @@
                                                        IsActive="{Binding IsDataProcessing}"
                                                        Foreground="Green"
                                                        Margin="0,-10,0,20"/>
-					<TextBlock Text="Loading Data"
+					<TextBlock Text="{Binding [Label_LoadingData].Value, Source={StaticResource Loc}}"
                                IsVisible="{Binding IsDataProcessing}"/>
 				</StackPanel>
 
@@ -59,11 +58,11 @@
                                     Margin="20,0,20,0">
 						    <!-- Step 1: Select Province -->
                             <Grid ColumnDefinitions="Auto, Auto ,Auto" Margin="0,30,0,0">
-                                <TextBlock Grid.Column="0" Text="{x:Static propertiesCore:Resources.StepOneText}" Classes="step-title-textblock"/>
+                                <TextBlock Grid.Column="0" Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-title-textblock"/>
                                 <TextBlock Grid.Column="1" Text="." Classes="step-title-textblock"/>
-                                <TextBlock Grid.Column="2" Text="{x:Static propertiesCore:Resources.SelectProvince}" Classes="step-title-textblock" Margin="5,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="{Binding [Label_SelectProvince].Value, Source={StaticResource Loc}}" Classes="step-title-textblock" Margin="5,0,0,0"/>
                             </Grid>
-						    <TextBlock Text="{x:Static propertiesCore:Resources.SoilDataViewStepOneDesc}"
+						    <TextBlock Text="{Binding [Text_SoilDataViewStepOneDesc].Value, Source={StaticResource Loc}}"
                                        TextWrapping="Wrap"
                                        Margin="0,5,0,10"
                                        FontSize="14"/>
@@ -77,23 +76,23 @@
 						    </ComboBox>
 						    <!-- Step 2: Enter Location -->
 						    <Grid ColumnDefinitions="Auto, Auto, Auto" Margin="0,15,0,0">
-							    <TextBlock Grid.Column="0" Text="{x:Static propertiesCore:Resources.StepTwoText}" Classes="step-title-textblock"/>
+							    <TextBlock Grid.Column="0" Text="{Binding [Label_StepTwo].Value, Source={StaticResource Loc}}" Classes="step-title-textblock"/>
 							    <TextBlock Grid.Column="1" Text="." Classes="step-title-textblock"/>
-							    <TextBlock Grid.Column="2" Text="{x:Static propertiesCore:Resources.SoilDataViewStepTwo}" Classes="step-title-textblock" Margin="5,0,0, 0"/>
+							    <TextBlock Grid.Column="2" Text="{Binding [Label_SoilDataViewStepTwo].Value, Source={StaticResource Loc}}" Classes="step-title-textblock" Margin="5,0,0, 0"/>
 						    </Grid>
-                            <TextBlock Text="{x:Static propertiesCore:Resources.SoilDataViewStepTwoDesc}" 
+                            <TextBlock Text="{Binding [Text_SoilDataViewStepTwoDesc].Value, Source={StaticResource Loc}}" 
                                        TextWrapping="Wrap"
                                        Margin="0,5,0,10"
                                        FontSize="14"/>
 
-                            <RadioButton GroupName="StepTwoChoice" Content="{x:Static propertiesCore:Resources.SoilDataViewStepTwoRightClickOnMap}" IsChecked="{Binding StepTwoRightClickMapSelected}"/>
-                            <RadioButton GroupName="StepTwoChoice" Content="{x:Static propertiesCore:Resources.SoilDataViewStepTwoLatitudeAndLongitude}" IsChecked="{Binding StepTwoLongLatSelected}"/>
-                            <RadioButton GroupName="StepTwoChoice" Content="{x:Static propertiesCore:Resources.SoilDataViewStepTwoRoadSearch}" IsChecked="{Binding StepTwoAddressSearchSelected}"/>
+                            <RadioButton GroupName="StepTwoChoice" Content="{Binding [Label_SoilDataViewStepTwoRightClickOnMap].Value, Source={StaticResource Loc}}" IsChecked="{Binding StepTwoRightClickMapSelected}"/>
+                            <RadioButton GroupName="StepTwoChoice" Content="{Binding [Label_SoilDataViewStepTwoLatLong].Value, Source={StaticResource Loc}}" IsChecked="{Binding StepTwoLongLatSelected}"/>
+                            <RadioButton GroupName="StepTwoChoice" Content="{Binding [Label_SoilDataViewStepTwoRoadSearch].Value, Source={StaticResource Loc}}" IsChecked="{Binding StepTwoAddressSearchSelected}"/>
 
                                 <!-- Coordinate Input Fields -->
 							    <Grid Grid.RowDefinitions="Auto, Auto, Auto" Grid.ColumnDefinitions="Auto,Auto,Auto" IsVisible="{Binding StepTwoLongLatSelected}">
 
-                                    <Label Content="{x:Static properties:Resources.LabelLatitude}"
+                                    <Label Content="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"
                                            Margin="0, 5, 21, 0"
                                            FontWeight="Bold"
                                            Grid.Row="0"
@@ -105,7 +104,7 @@
                                                    Grid.Column="1"/>
 
 
-                                    <Label Content="{x:Static properties:Resources.LabelLongitude}"
+                                    <Label Content="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"
                                            Margin="0, 12, 10, 0"
                                            FontWeight="Bold"
                                            Grid.Row="1"
@@ -119,7 +118,7 @@
 
                                     <Button Classes="generic-button"
                                             Margin="0, 5, 0, 0"
-                                            Content="{x:Static properties:Resources.LabelFindCoordinate}"
+                                            Content="{Binding [Label_FindCoordinate].Value, Source={StaticResource Loc}}"
                                             Command="{Binding GetAddressFromCoordinateCommand}"
                                             Grid.Row="2"
                                             Grid.Column="0"
@@ -131,41 +130,41 @@
                                     <!-- Rural Address Toggle (Hidden for now just to focus prompting on road search as full address search yields inconsistent results) -->
 						            <StackPanel Orientation="Horizontal" Margin="0,0,0,10" IsVisible="False">
 							            <ToggleButton IsChecked="{Binding IsComplexRuralAddressMode, Mode=TwoWay}" Margin="0,0,10,0"/>
-							            <TextBlock Text="{x:Static propertiesCore:Resources.SoilDataViewUrbanAddressFormatToggle}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+							            <TextBlock Text="{Binding [Label_SoilDataViewUrbanAddressFormatToggle].Value, Source={StaticResource Loc}}" VerticalAlignment="Center" FontWeight="SemiBold"/>
 						            </StackPanel>
-                                <TextBlock Text="{x:Static propertiesCore:Resources.SoilDataViewAddressSearchDisclaimer}" TextWrapping="Wrap" Classes="disclaimer"/>
+                                <TextBlock Text="{Binding [Text_SoilDataViewAddressSearchDisclaimer].Value, Source={StaticResource Loc}}" TextWrapping="Wrap" Classes="disclaimer"/>
 						        <!-- Standard Address Fields -->
 						        <Grid Margin="0,5,0,5" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" IsVisible="{Binding !IsComplexRuralAddressMode}">
 							        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewRoadName}"
+									         Watermark="{Binding [Label_SoilDataViewRoadName].Value, Source={StaticResource Loc}}"
 									         Text="{Binding StreetAddress, Mode=TwoWay}" />
 							        <TextBox Grid.Row="1" Grid.Column="0"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewMunicipality}"
+									         Watermark="{Binding [Label_SoilDataViewMunicipality].Value, Source={StaticResource Loc}}"
 									         Text="{Binding Municipality, Mode=TwoWay}" Margin="0,5,5,0"/>
 							        <TextBox Grid.Row="1" Grid.Column="1"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewPostalCode}"
+									         Watermark="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}"
 									         Text="{Binding PostalCode, Mode=TwoWay}" Margin="5,5,0,0"/>
 						        </Grid>
 
 						        <!-- Rural Address Fields (Currently hidden to user as address mode toggle above is invisible to the user)-->
 						        <Grid Margin="0,0,0,5" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*" IsVisible="{Binding IsComplexRuralAddressMode}">
 							        <TextBox Grid.Row="0" Grid.Column="0"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewCivicNumber}"
+									         Watermark="{Binding [Label_SoilDataViewCivicNumber].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralCivicNumbering, Mode=TwoWay}" Margin="0,0,5,0"/>
 							        <TextBox Grid.Row="0" Grid.Column="1"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewRoadName}"
+									         Watermark="{Binding [Label_SoilDataViewRoadName].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralRoadName, Mode=TwoWay}" Margin="5,0,0,0"/>
 							        <TextBox Grid.Row="1" Grid.Column="0"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewCounty}"
+									         Watermark="{Binding [Label_SoilDataViewCounty].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralCounty, Mode=TwoWay}" Margin="0,5,5,0"/>
 							        <TextBox Grid.Row="1" Grid.Column="1"
-									         Watermark="{x:Static propertiesCore:Resources.SoilDataViewMunicipality}"
+									         Watermark="{Binding [Label_SoilDataViewMunicipality].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralMunicipality, Mode=TwoWay}" Margin="5,5,0,0"/>
-							        <TextBox Grid.Row="2" Grid.Column="0" Watermark="{x:Static propertiesCore:Resources.SoilDataViewPostalCode}" Text="{Binding RuralPostalCode, Mode=TwoWay}" Margin="0,5,5,0"/>
+							        <TextBox Grid.Row="2" Grid.Column="0" Watermark="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}" Text="{Binding RuralPostalCode, Mode=TwoWay}" Margin="0,5,5,0"/>
 
 						        </Grid>
 						        <Button Classes="generic-button"
-								        Content="{x:Static propertiesCore:Resources.LabelGetCoordinates}"
+								        Content="{Binding [Label_GetCoordinates].Value, Source={StaticResource Loc}}"
 								        Margin="0, 5, 0, 0"
 								        Command="{Binding GetCoordinatesFromAddressCommand}"
 								        IsEnabled="{Binding IsAddressSearchEnabled}"/>
@@ -174,18 +173,18 @@
 
 						    <!-- Step 3: Get Soil Data -->
                             <Grid ColumnDefinitions="Auto, Auto ,Auto" Margin="0,15,0,0">
-                                <TextBlock Grid.Column="0" Text="{x:Static propertiesCore:Resources.StepThreeText}" Classes="step-title-textblock"/>
+                                <TextBlock Grid.Column="0" Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-title-textblock"/>
                                 <TextBlock Grid.Column="1" Text="." Classes="step-title-textblock"/>
-                                <TextBlock Grid.Column="2" Text="{x:Static propertiesCore:Resources.SoilDataViewStepThree}" Classes="step-title-textblock" Margin="5,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="{Binding [Label_SoilDataViewStepThree].Value, Source={StaticResource Loc}}" Classes="step-title-textblock" Margin="5,0,0,0"/>
                             </Grid>
-                            <TextBlock Text="{x:Static propertiesCore:Resources.SoilDataViewStepThreeDesc}"
+                            <TextBlock Text="{Binding [Text_SoilDataViewStepThreeDesc].Value, Source={StaticResource Loc}}"
                                        TextWrapping="Wrap"
                                        Margin="0,5,0,10"
                                        FontSize="14"/>
 
 						    <Button Classes="generic-button"
                                     Margin="0, 5, 0, 0"
-                                    Content="{x:Static properties:Resources.LabelGetSoilData}"
+                                    Content="{Binding [Label_GetSoilData].Value, Source={StaticResource Loc}}"
                                     Command="{Binding SwitchToResultsViewFromSingleCoordinateCommand}"/>
 					    </StackPanel>
                     </ScrollViewer>
@@ -201,18 +200,18 @@
 		<!-- End of single coordinate tab -->
 		<!-- Multiple coordinates tab -->
 		<TabItem Name="MultiCoordinateTab"
-                 Header="{x:Static properties:Resources.LabelMultipleCoordinates}"
+                 Header="{Binding [Label_MultipleCoordinates].Value, Source={StaticResource Loc}}"
                  IsVisible="False">
 			<Grid RowDefinitions="Auto, Auto, *, Auto, Auto">
 				<StackPanel Grid.Row="0"
                             Orientation="Horizontal">
 					<Button Name="SelectAllRowsButton"
-                            Content="{x:Static properties:Resources.LabelSelectAllRows}"
+                            Content="{Binding [Label_SelectAllRows].Value, Source={StaticResource Loc}}"
                             Command="{Binding ToggleSelectAllRowsCommand}"
                             HorizontalAlignment="Left"
                             Margin="20, 10, 10, 10"/>
 					<Button Name="ImportDataButton"
-                            Content="{x:Static properties:Resources.LabelImportFromCSV}"
+                            Content="{Binding [Label_ImportFromCSV].Value, Source={StaticResource Loc}}"
                             Click="ImportDataButton_OnClick"
                             HorizontalAlignment="Left"
                             Margin="10, 10"/>
@@ -246,7 +245,7 @@
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
-						<DataGridTemplateColumn Header="{x:Static properties:Resources.LabelLatitude}"
+						<DataGridTemplateColumn Header="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"
 												Width="13*"
 												HeaderTemplate="{StaticResource HeaderTemplate}">
 							<DataGridTemplateColumn.CellTemplate>
@@ -257,7 +256,7 @@
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
-						<DataGridTemplateColumn Header="{x:Static properties:Resources.LabelLongitude}"
+						<DataGridTemplateColumn Header="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"
                                                 Width="13*"
                                                 HeaderTemplate="{StaticResource HeaderTemplate}">
 							<DataGridTemplateColumn.CellTemplate>
@@ -289,11 +288,11 @@
 				</DataGrid>
 				<Button Classes="add-row-datagrid-button"
                         Grid.Row="3"
-                        Content="{x:Static properties:Resources.LabelAddRow}"
+                        Content="{Binding [Label_AddRow].Value, Source={StaticResource Loc}}"
                         Command="{Binding AddRowCommand}"/>
 				<Button  Classes="calculate-results-button"
                          Grid.Row="4"
-                         Content="{x:Static properties:Resources.LabelGetSoilData}"
+                         Content="{Binding [Label_GetSoilData].Value, Source={StaticResource Loc}}"
                          Command="{Binding SwitchToResultsViewFromMultiCoordinateCommand}"/>
 			</Grid>
 		</TabItem>

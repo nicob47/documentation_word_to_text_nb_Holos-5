@@ -43,6 +43,12 @@ namespace H.Core.Models
             set { this.SetProperty(ref _farms, value); }
         }
 
+        /// <summary>
+        /// The schema version of the serialized data. Used by the migration pipeline to detect
+        /// and upgrade older file formats. Null or missing in v4 files; defaults to current version for new data.
+        /// </summary>
+        public string Version { get; set; } = "5.0";
+
         public DisplayUnitStrings DisplayUnitStrings
         {
             get { return _displayDisplayUnitStrings; }

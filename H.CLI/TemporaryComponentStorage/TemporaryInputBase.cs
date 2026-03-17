@@ -4,6 +4,7 @@ using System;
 using System.Reflection;
 using H.CLI.Interfaces;
 using H.Core.Models.Animals.Beef;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.TemporaryComponentStorage
 {
@@ -32,7 +33,7 @@ namespace H.CLI.TemporaryComponentStorage
             if (propertyInfo == null)
             {
                 throw new InvalidPropertyNameException(String.Format
-                (Properties.Resources.InvalidPropertyName,
+                (AppStrings.Error_InvalidPropertyName,
                     row + 1, col + 1, filePath));
             }
 
@@ -67,7 +68,7 @@ namespace H.CLI.TemporaryComponentStorage
 
             catch
             {
-                throw new FormatException(String.Format(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath));
+                throw new FormatException(String.Format(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath));
             }
         }
 

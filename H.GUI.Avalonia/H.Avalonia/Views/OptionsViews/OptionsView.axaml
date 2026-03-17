@@ -21,7 +21,7 @@
 		<Grid Row="0">
 			<Border Classes="component-border">
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-					<TextBlock Text="Options" Classes="title-textblock"/>
+					<TextBlock Text="{Binding [Label_Options].Value, Source={StaticResource Loc}}" Classes="title-textblock"/>
 				</StackPanel>
 			</Border>
 		</Grid>
@@ -33,32 +33,60 @@
 					<ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedItem}" IsEnabled="{Binding AllowNavigation}">
 
 						<ListBoxItem Margin="-5, 0" IsEnabled="False" >
-							<TextBlock Foreground="Black" FontWeight="Bold" Text="File"/>
+							<TextBlock Foreground="Black" FontWeight="Bold" Text="{Binding [Label_File].Value, Source={StaticResource Loc}}"/>
 						</ListBoxItem>
-						<ListBoxItem Content="New Farm"/>
-						<ListBoxItem Content="Open Farm"/>
-						<ListBoxItem Content="Close Farm"/>
-						<ListBoxItem Content="Farms"/>
-						<ListBoxItem Content="Save Options"/>
-						<ListBoxItem Content="Export Farm(s)"/>
-						<ListBoxItem Content="Import Farm"/>
-						<ListBoxItem Content="Export Climate"/>
-						<ListBoxItem Content="Export Manure"/>
+						<ListBoxItem Content="{Binding [Label_NewFarm].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_OpenFarm].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_CloseFarm].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_Farms].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_SaveOptions].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_ExportFarms].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_ImportFarm].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_ExportClimate].Value, Source={StaticResource Loc}}"/>
+						<ListBoxItem Content="{Binding [Label_ExportManure].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Margin="-5, 0" IsEnabled="False" >
-						<TextBlock Foreground="Black" FontWeight="Bold" Text="Settings"/>
+						<TextBlock Foreground="Black" FontWeight="Bold" Text="{Binding [Label_Settings].Value, Source={StaticResource Loc}}"/>
 					</ListBoxItem>
-					<ListBoxItem Content="Farm"/>
-					<ListBoxItem Content="Soil"/>
-					<ListBoxItem Content="Temperature"/>
-					<ListBoxItem Content="Barn Temperatures"/>
-                        <ListBoxItem Content="Diets"/>
-                        <ListBoxItem Content="Ingredients"/>
-					<ListBoxItem Content="Precipitation"/>
-					<ListBoxItem Content="Evapotranspiration"/>
-					<ListBoxItem Content="Soil N2O Breakdown"/>
-					<ListBoxItem Content="Default Bedding Composition"/>
-					<ListBoxItem Content="Default Manure Composition"/>
-						<ListBoxItem Content="User Settings"/>
+
+					<!-- Farm Settings -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_FarmSettings].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
+					<ListBoxItem Content="{Binding [Label_Farm].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_Soil].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_UserSettings].Value, Source={StaticResource Loc}}"/>
+
+					<!-- Climate & Weather -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_ClimateAndWeather].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
+					<ListBoxItem Content="{Binding [Label_Temperature].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_BarnTemperatures].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_Precipitation].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_Evapotranspiration].Value, Source={StaticResource Loc}}"/>
+
+					<!-- Diet & Feed -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_DietAndFeed].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
+					<ListBoxItem Content="{Binding [Label_Diets].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_Ingredients].Value, Source={StaticResource Loc}}"/>
+
+					<!-- Soil & Manure Defaults -->
+					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >
+						<Border Background="{StaticResource GcdsBgLightBrush}" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="0,1,0,1" Padding="10,8,0,8" Margin="-5,0,-5,0">
+							<TextBlock Foreground="{StaticResource GcdsBgPrimaryBrush}" FontWeight="ExtraBold" FontSize="14" Text="{Binding [Label_SoilAndManureDefaults].Value, Source={StaticResource Loc}}"/>
+						</Border>
+					</ListBoxItem>
+					<ListBoxItem Content="{Binding [Label_SoilN2OBreakdown].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_DefaultBeddingComposition].Value, Source={StaticResource Loc}}"/>
+					<ListBoxItem Content="{Binding [Label_DefaultManureComposition].Value, Source={StaticResource Loc}}"/>
 					</ListBox>
 				</StackPanel>
 			</Border>
@@ -69,7 +97,7 @@
                 Height="100">
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Margin="20,0">
-				<Button Content="Go Back" Classes="back-button" Command="{Binding OnCancelExecute}" IsEnabled="{Binding AllowNavigation}"  HorizontalAlignment="Center" Margin="10" />
+				<Button Content="{Binding [Button_GoBack].Value, Source={StaticResource Loc}}" Classes="back-button" Command="{Binding OnCancelExecute}" IsEnabled="{Binding AllowNavigation}"  HorizontalAlignment="Center" Margin="10" />
 			</StackPanel>
 		</Border>
 	</Grid>

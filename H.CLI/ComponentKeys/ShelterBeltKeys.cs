@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using H.CLI.Interfaces;
 using H.Core.Enumerations;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.ComponentKeys
 {
@@ -23,20 +24,20 @@ namespace H.CLI.ComponentKeys
 
         public Dictionary<string, ImperialUnitsOfMeasurement?> Keys { get; set; } = new Dictionary<string, ImperialUnitsOfMeasurement?>
         {
-            {Properties.Resources.HardinessZone, null},
-            {Properties.Resources.EcodistrictId, null },
-            {Properties.Resources.YearOfObservation, null},
-            {Properties.Resources.Key_Name, null},
-            {Properties.Resources.RowName, null},
-            {Properties.Resources.RowId, null},
-            {Properties.Resources.RowLength, ImperialUnitsOfMeasurement.Yards},
-            {Properties.Resources.PlantYear, null },
-            {Properties.Resources.CutYear, null },
-            {Properties.Resources.Species, null },
-            {Properties.Resources.PlantedTreeCount, null },
-            {Properties.Resources.LiveTreeCount, null },
-            {Properties.Resources.PlantedTreeSpacing, ImperialUnitsOfMeasurement.Yards },
-            {Properties.Resources.AverageCircumference, ImperialUnitsOfMeasurement.InchesToCm },
+            {AppStrings.Column_HardinessZone, null},
+            {AppStrings.Column_EcodistrictId, null },
+            {AppStrings.Column_YearOfObservation, null},
+            {AppStrings.Column_Name, null},
+            {AppStrings.Column_RowName, null},
+            {AppStrings.Column_RowId, null},
+            {AppStrings.Column_RowLength, ImperialUnitsOfMeasurement.Yards},
+            {AppStrings.Column_PlantYear, null },
+            {AppStrings.Column_CutYear, null },
+            {AppStrings.Column_Species, null },
+            {AppStrings.Column_PlantedTreeCount, null },
+            {AppStrings.Column_LiveTreeCount, null },
+            {AppStrings.Column_PlantedTreeSpacing, ImperialUnitsOfMeasurement.Yards },
+            {AppStrings.Column_AverageCircumference, ImperialUnitsOfMeasurement.InchesToCm },
         };
 
         public bool IsHeaderOptional(string s)

@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Security: scans the dependency diff on PRs for known CVEs ────────────
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: always
+
+  # ── Security: scans all packages (direct + transitive) for CVEs ──────────
+  vulnerability-scan:
+    name: Vulnerability Scan
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore Holos.sln
+
+      - name: Scan for vulnerable packages
+        run: dotnet list Holos.sln package --vulnerable --include-transitive
+
+  # ── Build and test ────────────────────────────────────────────────────────
+  build-and-test:
+    name: Build & Test (.NET 9 / Windows)
+    runs-on: windows-latest
+    needs: vulnerability-scan
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore
+        run: dotnet restore Holos.sln
+
+      - name: Build
+        run: dotnet build Holos.sln --no-restore --configuration Release
+
+      - name: Test — H.CLI.Test
+        run: >
+          dotnet test H.CLI.Test/H.CLI.Test.csproj
+          --no-build --configuration Release
+
+      - name: Test — H.Core.Test
+        run: >
+          dotnet test H.Core.Test/H.Core.Test.csproj
+          --no-build --configuration Release
+
+      - name: Test — H.Infrastructure.Test
+        run: >
+          dotnet test H.Infrastructure.Test/H.Infrastructure.Test.csproj
+          --no-build --configuration Release
+
+      - name: Test — H.Avalonia.Test (headless)
+        run: >
+          dotnet test H.GUI.Avalonia/H.Avalonia.Test/H.Avalonia.Test.csproj
+          --no-build --configuration Release
+          --filter "TestCategory!=Integration"

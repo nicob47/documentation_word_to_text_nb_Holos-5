@@ -1,22 +1,20 @@
-using AutoMapper;
 using H.Core.Factories.Animals.Dairy;
 using H.Core.Models.Animals.Dairy;
 
 namespace H.Core.Mappers;
 
 /// <summary>
-/// AutoMapper profile for mapping between DairyComponent domain model and DairyComponentDto
+/// Maps between DairyComponent domain model and DairyComponentDto.
+/// PropertyMapper handles base class properties (from AnimalComponentBase/AnimalComponentDto) automatically.
 /// </summary>
-public class DairyComponentToDtoMapper : Profile
+public class DairyComponentToDtoMapper : IModelMapper<DairyComponent, DairyComponentDto>
 {
-    public DairyComponentToDtoMapper()
-    {
-        // Map from DairyComponent to DairyComponentDto
-        CreateMap<DairyComponent, DairyComponentDto>()
-            .IncludeBase<H.Core.Models.Animals.AnimalComponentBase, H.Core.Factories.Animals.AnimalComponentDto>();
-        
-        // Map from DairyComponentDto to DairyComponent
-        CreateMap<DairyComponentDto, DairyComponent>()
-            .IncludeBase<H.Core.Factories.Animals.AnimalComponentDto, H.Core.Models.Animals.AnimalComponentBase>();
-    }
+    public DairyComponentDto Map(DairyComponent source)
+        => PropertyMapper.Map<DairyComponent, DairyComponentDto>(source);
+}
+
+public class DairyComponentDtoToComponentMapper : IModelMapper<DairyComponentDto, DairyComponent>
+{
+    public DairyComponent Map(DairyComponentDto source)
+        => PropertyMapper.Map<DairyComponentDto, DairyComponent>(source);
 }

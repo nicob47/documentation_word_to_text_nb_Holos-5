@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using H.CLI.Interfaces;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI
 {
@@ -20,7 +21,7 @@ namespace H.CLI
             {
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(Properties.Resources.CannotWriteToNetworkDrive);
+                Console.WriteLine(AppStrings.Error_CannotWriteToNetworkDrive);
                 Console.ForegroundColor = ConsoleColor.White;
                 BaseOutputDirectoryPath = farmsFoldersPath;
                 return false;

@@ -1,6 +1,5 @@
 ﻿#region Imports
 
-using AutoMapper;
 using H.Core.Enumerations;
 using H.Core.Mappers;
 using H.Core.Models;
@@ -43,10 +42,8 @@ namespace H.Core.Test.Providers.Feed {
             var mockContainerProvider = new Mock<IContainerProvider>();
             var mockCacheService = new Mock<ICacheService>();
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<FeedIngredientToFeedIngredientMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<FeedIngredient, FeedIngredient>), It.IsAny<string>()))
+                .Returns(new FeedIngredientToFeedIngredientMapper());
 
             _sut = new FeedIngredientProvider(mockLogger.Object, mockContainerProvider.Object, mockCacheService.Object);
         }
@@ -279,10 +276,8 @@ namespace H.Core.Test.Providers.Feed {
             var mockContainerProvider = new Mock<IContainerProvider>();
             var mockCacheService = new Mock<ICacheService>();
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<FeedIngredientToFeedIngredientMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<FeedIngredient, FeedIngredient>), It.IsAny<string>()))
+                .Returns(new FeedIngredientToFeedIngredientMapper());
 
             var provider = new FeedIngredientProvider(mockLogger.Object, mockContainerProvider.Object, mockCacheService.Object);
 
@@ -539,10 +534,8 @@ namespace H.Core.Test.Providers.Feed {
             var expected = new List<IFeedIngredient> { new FeedIngredient { IngredientType = IngredientType.BarleyGrain, PercentageInDiet = 100 } };
             var cacheKey = "FeedIngredientProvider_GetIngredientsForDiet_BeefCow_LowEnergyAndProtein";
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<FeedIngredientToFeedIngredientMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<FeedIngredient, FeedIngredient>), It.IsAny<string>()))
+                .Returns(new FeedIngredientToFeedIngredientMapper());
 
             mockCacheService.Setup(x => x.Get<IReadOnlyCollection<IFeedIngredient>>(cacheKey)).Returns(expected);
 
@@ -566,10 +559,8 @@ namespace H.Core.Test.Providers.Feed {
             var mockCacheService = new Mock<ICacheService>();
             var cacheKey = "FeedIngredientProvider_GetIngredientsForDiet_BeefCow_LowEnergyAndProtein";
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<FeedIngredientToFeedIngredientMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<FeedIngredient, FeedIngredient>), It.IsAny<string>()))
+                .Returns(new FeedIngredientToFeedIngredientMapper());
 
             mockCacheService.Setup(x => x.Get<IReadOnlyCollection<IFeedIngredient>>(cacheKey)).Returns((IReadOnlyCollection<IFeedIngredient>)null);
 

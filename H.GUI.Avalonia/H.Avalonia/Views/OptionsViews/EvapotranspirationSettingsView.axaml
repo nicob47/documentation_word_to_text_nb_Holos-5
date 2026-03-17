@@ -1,10 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:OptionsViews="clr-namespace:H.Avalonia.ViewModels.OptionsViews"
 			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.OptionsViews.OptionEvapotranspirationView">
 
@@ -13,68 +13,68 @@
 	</Design.DataContext>
 	
 	<Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto,*">
-		<TextBlock Padding="40, 15" Grid.Row="0" Grid.ColumnSpan="2" Background="#3C4DBB" Foreground="WhiteSmoke" Text="The monthly precipitation averages for the farm." />
+		<TextBlock Padding="40, 15" Grid.Row="0" Grid.ColumnSpan="2" Background="#3C4DBB" Foreground="WhiteSmoke" Text="{Binding [Label_MonthlyPrecipitationAveragesDesc].Value, Source={StaticResource Loc}}" />
 		<ScrollViewer Grid.Row="1" Grid.Column="0">
 			<StackPanel Spacing="5" Width="180" Margin="15">
-				<TextBlock Text="{x:Static properties:Resources.January}"/>
+				<TextBlock Text="{Binding [Label_January].Value, Source={StaticResource Loc}}"/>
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown Grid.Column="0" FormatString="{}{0:0.00}" Value="{Binding Data.January, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.February}"  />
+				<TextBlock Text="{Binding [Label_February].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.February, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.March}"  />
+				<TextBlock Text="{Binding [Label_March].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.March, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.April}"  />
+				<TextBlock Text="{Binding [Label_April].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.April, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.May}"  />
+				<TextBlock Text="{Binding [Label_May].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.May, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.June}"  />
+				<TextBlock Text="{Binding [Label_June].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.June, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.July}"  />
+				<TextBlock Text="{Binding [Label_July].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.July, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.August}"  />
+				<TextBlock Text="{Binding [Label_August].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.August, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.September}"  />
+				<TextBlock Text="{Binding [Label_September].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.September, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.October}"  />
+				<TextBlock Text="{Binding [Label_October].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.October, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.November}"  />
+				<TextBlock Text="{Binding [Label_November].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.November, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
-				<TextBlock Text="{x:Static properties:Resources.December}"  />
+				<TextBlock Text="{Binding [Label_December].Value, Source={StaticResource Loc}}"  />
 				<Grid ColumnDefinitions="*, Auto">
 					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.December, Mode=TwoWay}" />
-					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{x:Static properties:Resources.Millimeters}" />
+					<TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" />
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>

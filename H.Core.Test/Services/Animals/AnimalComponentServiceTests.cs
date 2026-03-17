@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Factories;
+﻿using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
 using H.Core.Models;
@@ -41,17 +40,17 @@ public class AnimalComponentServiceTests
         _mockTransferService = new Mock<ITransferService<AnimalComponentBase, AnimalComponentDto>>();
         var mockLogger = new Mock<ILogger>();
         var mockContainerProvider = new Mock<IContainerProvider>();
+        var mockManagementPeriodService = new Mock<IManagementPeriodService>();
 
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalComponentDtoToAnimalComponentMapper>();
-        }).CreateMapper());
+        mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<AnimalGroup, AnimalGroupDto>), It.IsAny<string>()))
+            .Returns(new AnimalGroupToAnimalGroupDtoMapper());
 
-        // Updated constructor to include the transfer service
         _service = new AnimalComponentService(
             mockLogger.Object,
             _mockAnimalComponentFactory.Object,
-            _mockTransferService.Object
+            _mockTransferService.Object,
+            mockContainerProvider.Object,
+            mockManagementPeriodService.Object
         );
     }
 

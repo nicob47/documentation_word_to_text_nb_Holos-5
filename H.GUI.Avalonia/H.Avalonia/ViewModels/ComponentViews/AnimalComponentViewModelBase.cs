@@ -379,17 +379,7 @@ public abstract class AnimalComponentViewModelBase : ViewModelBase
             Logger?.LogDebug("Current group DTO count: {CurrentCount}", currentGroupDtoCount);
             
             var newGroup = new AnimalGroupDto() {};
-            newGroup.ValidAnimalTypes = new ObservableCollection<AnimalType>([
-                AnimalType.NotSelected,
-                AnimalType.Bison,
-                AnimalType.Goats,
-                AnimalType.Alpacas,
-                AnimalType.Deer,
-                AnimalType.Elk,
-                AnimalType.Llamas,
-                AnimalType.Horses,
-                AnimalType.Mules
-            ]);
+            newGroup.ValidAnimalTypes = new ObservableCollection<AnimalType>(this.ValidAnimalTypes);
             newGroup.GroupType = this.ValidAnimalTypes[0];
             AnimalGroupDtos?.Add(newGroup);
             

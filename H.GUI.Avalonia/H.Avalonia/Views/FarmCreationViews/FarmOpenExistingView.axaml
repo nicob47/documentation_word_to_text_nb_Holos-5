@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
 			 xmlns:FarmCreationViews="clr-namespace:H.Avalonia.ViewModels"
 			 xmlns:viewSections="clr-namespace:H.Avalonia"
 			 xmlns:farmCreationViews="clr-namespace:H.Avalonia.ViewModels.FarmCreationViews"
@@ -15,15 +15,15 @@
 	</Design.DataContext>
 
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<TextBlock Text="{x:Static properties:Resources.LabelOpenAnExistingFarm}"
+		<TextBlock Text="{Binding [Label_OpenAnExistingFarm].Value, Source={StaticResource Loc}}"
                    HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969" />
 
 		<farmCreationViews1:FarmDataGridSharedView/>
 		
 		
-			<Button Content="{x:Static properties:Resources.ButtonOpen}" HorizontalContentAlignment="Center" Width="155" HorizontalAlignment="Center" Command="{Binding NavigateToNextPage}" Margin="0 20" />
+			<Button Content="{Binding [Button_Open].Value, Source={StaticResource Loc}}" HorizontalContentAlignment="Center" Width="155" HorizontalAlignment="Center" Command="{Binding NavigateToNextPage}" Margin="0 20" />
 			<!--<Border BorderBrush="{StaticResource GcdsBorderLightBrush}" Width="455" BorderThickness="0,0,0,1" Margin="0,20" />-->
-			<Button Classes="back-button" Content="{x:Static properties:Resources.ButtonGoBack}"  HorizontalAlignment="Center" Command="{Binding NavigateToPreviousPage}"/>
+			<Button Classes="back-button" Content="{Binding [Button_GoBack].Value, Source={StaticResource Loc}}"  HorizontalAlignment="Center" Command="{Binding NavigateToPreviousPage}"/>
 	</StackPanel>
 
 </UserControl>

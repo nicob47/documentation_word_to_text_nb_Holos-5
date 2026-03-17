@@ -296,6 +296,17 @@ public class FieldComponentService : ComponentServiceBase, IFieldComponentServic
                 // Use the factory to create a new DTO based on the view item template
                 var dto = _cropFactory.CreateCropDto(template: cropViewItem);
 
+                // Check if there is a matching cover crop for this year
+                var coverCropViewItem = fieldSystemComponent.CoverCrops
+                    .FirstOrDefault(cc => cc.Year == cropViewItem.Year);
+
+                if (coverCropViewItem is not null)
+                {
+                    var coverDto = _cropFactory.CreateCropDto(template: coverCropViewItem);
+                    coverDto.IsSecondaryCrop = true;
+                    dto.CoverCropDto = coverDto;
+                }
+
                 // Add the newly created DTO to the field component DTO's crop collection
                 fieldComponentDto.CropDtos?.Add(dto);
             }
@@ -320,6 +331,18 @@ public class FieldComponentService : ComponentServiceBase, IFieldComponentServic
                     if (viewItem is not null)
                     {
                         this.TransferCropDtoToSystem(cropDto, viewItem);
+                    }
+
+                    // Transfer cover crop DTO back to domain
+                    if (cropDto.HasCoverCrop && cropDto.CoverCropDto is not null)
+                    {
+                        var coverViewItem = fieldSystemComponent.CoverCrops
+                            .SingleOrDefault(cc => cc.Guid.Equals(cropDto.CoverCropDto.Guid));
+
+                        if (coverViewItem is not null)
+                        {
+                            this.TransferCropDtoToSystem(cropDto.CoverCropDto, coverViewItem);
+                        }
                     }
                 }
             }
@@ -371,6 +394,28 @@ public class FieldComponentService : ComponentServiceBase, IFieldComponentServic
     public CropViewItem? GetCropViewItemFromDto(ICropDto cropDto, FieldSystemComponent fieldSystemComponent)
     {
         return fieldSystemComponent.CropViewItems.SingleOrDefault(x => x.Guid.Equals(cropDto.Guid));
+    }
+
+    public void AddCoverCropToSystem(FieldSystemComponent fieldSystemComponent, ICropDto coverCropDto)
+    {
+        if (fieldSystemComponent is not null && coverCropDto is not null)
+        {
+            var cropViewItem = _cropFactory.CreateCropViewItem(coverCropDto);
+            cropViewItem.IsSecondaryCrop = true;
+            fieldSystemComponent.CoverCrops.Add(cropViewItem);
+        }
+    }
+
+    public void RemoveCoverCropFromSystem(FieldSystemComponent fieldSystemComponent, ICropDto coverCropDto)
+    {
+        if (fieldSystemComponent is not null && coverCropDto is not null)
+        {
+            var item = fieldSystemComponent.CoverCrops.SingleOrDefault(x => x.Guid.Equals(coverCropDto.Guid));
+            if (item is not null)
+            {
+                fieldSystemComponent.CoverCrops.Remove(item);
+            }
+        }
     }
 
     #endregion

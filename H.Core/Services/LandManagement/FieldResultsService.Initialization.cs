@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using AutoMapper;
 using H.Core.Enumerations;
+using H.Core.Mappers;
 using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
 using H.Core.Providers.Soil;
@@ -138,19 +138,7 @@ namespace H.Core.Services.LandManagement
                 return;
             }
 
-            var customCropDefaultsMapperConfiguration = new MapperConfiguration(configuration =>
-            {
-                // Don't copy the GUID, and do not overwrite the year, name, or area, on the crop
-                configuration.CreateMap<CropViewItem, CropViewItem>()
-                    .ForMember(x => x.Guid, options => options.Ignore())
-                    .ForMember(x => x.Year, options => options.Ignore())
-                    .ForMember(x => x.Name, options => options.Ignore())
-                    .ForMember(x => x.Area, options => options.Ignore());
-            });
-
-            var mapper = customCropDefaultsMapperConfiguration.CreateMapper();
-
-            mapper.Map(cropDefaults, viewItem);
+            PropertyMapper.CopyTo(cropDefaults, viewItem);
         }
 
         public void AssignDefaultEnergyRequirements(CropViewItem viewItem, Farm farm)

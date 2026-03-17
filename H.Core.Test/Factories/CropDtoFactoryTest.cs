@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using H.Core.Factories.Crops;
+﻿using H.Core.Factories.Crops;
 using H.Core.Mappers;
 using H.Core.Models;
+using H.Core.Models.LandManagement.Fields;
 using H.Core.Services.Initialization;
 using Moq;
 using Prism.Ioc;
@@ -35,21 +35,14 @@ public class CropDtoFactoryTest
         var mockContainerProvider = new Mock<IContainerProvider>();
         var mockCropInitializationService = new Mock<ICropInitializationService>();
 
-        // Setup mappers to return a working IMapper for each required profile
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(CropViewItemToCropDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CropViewItemToCropDtoMapper>();
-        }).CreateMapper());
+        mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<CropViewItem, CropDto>), nameof(CropViewItemToCropDtoMapper)))
+            .Returns(new CropViewItemToCropDtoMapper());
 
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(CropDtoToCropDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CropDtoToCropDtoMapper>();
-        }).CreateMapper());
+        mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<CropDto, CropDto>), nameof(CropDtoToCropDtoMapper)))
+            .Returns(new CropDtoToCropDtoMapper());
 
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(CropDtoToCropViewItemMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CropDtoToCropViewItemMapper>();
-        }).CreateMapper());
+        mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<ICropDto, CropViewItem>), nameof(CropDtoToCropViewItemMapper)))
+            .Returns(new CropDtoToCropViewItemMapper());
 
         _factory = new CropFactory(mockCropInitializationService.Object, mockContainerProvider.Object);
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using H.CLI.Interfaces;
 using H.CLI.TemporaryComponentStorage;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Factories
 {
@@ -14,42 +15,42 @@ namespace H.CLI.Factories
         public IComponentTemporaryInput CreateComponentTemporaryInputs(string component)
         {
             
-            if (component.ToUpper() == Properties.Resources.DefaultShelterbeltInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultShelterbeltInput.ToUpper())
             {
                 return new ShelterBeltTemporaryInput();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultFieldsInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultFieldsInput.ToUpper())
             {
                 return new FieldTemporaryInput();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultSwineInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultSwineInput.ToUpper())
             {
                 return new SwineTemporaryInput();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultDairyInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultDairyInput.ToUpper())
             {
                 return new DairyTemporaryInput();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultSheepInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultSheepInput.ToUpper())
             {
                 return new SheepTemporaryInput();
             }
 
 
-            if (component.ToUpper() == Properties.Resources.DefaultBeefInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultBeefInput.ToUpper())
             {
                 return new BeefCattleTemporaryInput();
             }
 
-            if (component.ToUpper() == Properties.Resources.DefaultPoultryInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultPoultryInput.ToUpper())
             {
                 return new PoultryTemporaryInput();
             }
-            if (component.ToUpper() == Properties.Resources.DefaultOtherLivestockInputFolder.ToUpper())
+            if (component.ToUpper() == AppStrings.Filename_DefaultOtherLivestockInput.ToUpper())
             {
                 return new OtherLiveStockTemporaryInput();
             }

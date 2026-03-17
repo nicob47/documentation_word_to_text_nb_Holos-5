@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
-using AutoMapper;
 using H.Core.Converters;
 using H.Core.CustomAttributes;
 using H.Core.Enumerations;
+using H.Core.Mappers;
 using H.Infrastructure;
 
 namespace H.Core.Models.Animals
@@ -41,21 +41,9 @@ namespace H.Core.Models.Animals
         private bool _useCustomVolatilizationFraction;
         private bool _useCustomMethaneConversionFactor;
 
-        private static IMapper _manureDetailsMapper;
         #endregion
 
         #region Constructors
-
-        static ManureDetails()
-        {
-            var manureDetailsMapperConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<ManureDetails, ManureDetails>()
-                    .ForMember(manureDetails => manureDetails.Guid, opt => opt.Ignore())
-                    .ForMember(manureDetails => manureDetails.Name, opt => opt.Ignore());
-            });
-            _manureDetailsMapper = manureDetailsMapperConfiguration.CreateMapper();
-        }
 
         public ManureDetails()
         {
@@ -359,7 +347,7 @@ namespace H.Core.Models.Animals
 
         public static ManureDetails CopyManureDetails(ManureDetails manureDetailsToCopy)
         {
-            return _manureDetailsMapper.Map<ManureDetails>(manureDetailsToCopy);
+            return PropertyMapper.Map<ManureDetails, ManureDetails>(manureDetailsToCopy);
         }
 
         /// <summary>

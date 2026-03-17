@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Events;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -317,6 +318,24 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         public ICommand RemoveSpecificCropCommand { get; private set; } = null!;
 
+        /// <summary>
+        /// Command to toggle cover crop on/off for a given crop DTO
+        /// </summary>
+        public ICommand ToggleCoverCropCommand { get; private set; } = null!;
+
+        // ── Enum lists for crop tab ComboBoxes ──
+
+        public IReadOnlyList<TillageType> TillageTypes { get; } = Enum.GetValues<TillageType>();
+        public IReadOnlyList<HarvestMethods> HarvestMethodTypes { get; } = Enum.GetValues<HarvestMethods>();
+        public IReadOnlyList<NitrogenFertilizerType> NitrogenFertilizerTypes { get; } = Enum.GetValues<NitrogenFertilizerType>();
+        public IReadOnlyList<FertilizerBlends> FertilizerBlendTypes { get; } = Enum.GetValues<FertilizerBlends>();
+        public IReadOnlyList<SoilReductionFactors> SoilReductionFactorTypes { get; } = Enum.GetValues<SoilReductionFactors>();
+        public IReadOnlyList<ManureLocationSourceType> ManureLocationSourceTypes { get; } = Enum.GetValues<ManureLocationSourceType>();
+        public IReadOnlyList<ManureAnimalSourceTypes> ManureAnimalSourceTypes { get; } = Enum.GetValues<ManureAnimalSourceTypes>();
+        public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
+        public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
+        public IReadOnlyList<CoverCropTerminationType> CoverCropTerminationTypes { get; } = Enum.GetValues<CoverCropTerminationType>();
+
         #endregion
 
         #region Public Methods
@@ -338,6 +357,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             }
         }
 
+        /// <inheritdoc/>
         public override void InitializeViewModel(ComponentBase component)
         {
             if (component is not RotationComponent rotationComponent)
@@ -350,12 +370,85 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             this.InitializeRotationComponent(rotationComponent);
         }
 
+        /// <summary>
+        /// Resets all transient ViewModel state and then initializes it for the supplied
+        /// <paramref name="rotationComponent"/>.
+        ///
+        /// <para>
+        /// <strong>Why a reset is necessary:</strong> <see cref="CropDtos"/> is pure UI state
+        /// that lives only in this ViewModel — it is never serialized to nor loaded from the
+        /// domain model. Without the reset, crops added while working on one rotation would
+        /// persist in the collection when the user navigates to a different (or newly created)
+        /// rotation component, making the new component appear pre-populated.
+        /// </para>
+        ///
+        /// Reset steps (performed before touching the incoming component):
+        /// <list type="number">
+        ///   <item>Unsubscribe <see cref="OnCropDtoPropertyChanged"/> from every existing crop DTO
+        ///         to prevent stale event handler references.</item>
+        ///   <item>Clear <see cref="CropDtos"/> and <see cref="FieldComponentDtos"/>.</item>
+        ///   <item>Reset <see cref="FieldAssignmentRows"/> to an empty collection (clears Step 3 grid).</item>
+        ///   <item>Clear <see cref="SelectedCropDto"/> and <see cref="SelectedFieldName"/>.</item>
+        ///   <item>Reset <see cref="ShiftDirection"/> to <see cref="RotationShiftDirection.RightShift"/>.</item>
+        ///   <item>Fire <c>RaisePropertyChanged</c> for all affected computed properties so the UI
+        ///         reflects the clean state immediately.</item>
+        /// </list>
+        ///
+        /// After the reset, a fresh <see cref="IRotationComponentDto"/> is built from the incoming
+        /// <paramref name="rotationComponent"/> via <see cref="IRotationComponentService.TransferToRotationComponentDto"/>
+        /// and assigned to <see cref="SelectedRotationComponentDto"/>.
+        /// </summary>
+        /// <param name="rotationComponent">The rotation component to initialize for, or <c>null</c> to no-op.</param>
         public void InitializeRotationComponent(RotationComponent? rotationComponent)
         {
             if (rotationComponent is null)
             {
                 return;
             }
+
+            // -----------------------------------------------------------------------
+            // Reset all transient ViewModel state so that switching to a new (or freshly
+            // created) rotation component always starts with a clean slate.
+            //
+            // CropDtos is pure UI state — it lives only in this ViewModel and is never
+            // serialized or loaded back from the domain model. Without this reset, crops
+            // added to a previous rotation remain visible when the user navigates to a
+            // different rotation or creates a brand-new one.
+            // -----------------------------------------------------------------------
+
+            // Unsubscribe property-changed listeners from every existing crop DTO
+            // before clearing the collection, so we don't hold stale event references.
+            if (CropDtos != null)
+            {
+                foreach (var crop in CropDtos)
+                {
+                    if (crop is INotifyPropertyChanged npc)
+                    {
+                        npc.PropertyChanged -= OnCropDtoPropertyChanged;
+                    }
+                }
+
+                CropDtos.Clear();
+            }
+
+            // Clear the parallel field-component DTO collection as well.
+            FieldComponentDtos?.Clear();
+
+            // Clear the preview grid and reset selection state.
+            FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>();
+            SelectedCropDto = null;
+            SelectedFieldName = null;
+
+            // Reset shift direction to the default so each rotation starts consistently.
+            _shiftDirection = RotationShiftDirection.RightShift;
+            RaisePropertyChanged(nameof(ShiftDirection));
+            RaisePropertyChanged(nameof(IsShiftEnabled));
+            RaisePropertyChanged(nameof(HasNoCrops));
+            RaisePropertyChanged(nameof(ShouldShowPreview));
+
+            // -----------------------------------------------------------------------
+            // Now initialize for the incoming rotation component.
+            // -----------------------------------------------------------------------
 
             // Hold a reference to the selected field system object
             _selectedRotationComponent = rotationComponent;
@@ -401,42 +494,45 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             
             // Initialize command for removing a crop from the rotation
             this.RemoveSpecificCropCommand = new DelegateCommand<object>(OnRemoveSpecificCropExecute);
+
+            // Initialize command for toggling cover crop on/off
+            this.ToggleCoverCropCommand = new DelegateCommand<object>(OnToggleCoverCropExecute);
         }
 
         /// <summary>
-        /// Generates the field assignment rows for the preview grid (Step 3) based on current rotation parameters.
-        /// 
-        /// This method performs the core rotation calculation logic:
-        /// 1. Takes the crop sequence defined in Step 2 (CropDtos collection)
-        /// 2. Applies rotation parameters (start year, end year, number of fields, field area)
-        /// 3. Creates a grid showing which crop grows in which field in which year
-        /// 4. Optionally applies rotation shifting across fields
-        /// 
+        /// Builds <see cref="FieldAssignmentRows"/> from scratch and assigns it in one atomic operation
+        /// so the UI never sees an empty intermediate state (which would cause a visible flash).
+        ///
+        /// Called on initial load and whenever structural parameters change: number of fields,
+        /// start/end year, shift direction, or adding/removing a crop from the timeline.
+        /// When only a crop <em>type</em> changes on an existing card, use
+        /// <see cref="UpdatePreviewCellsForCropChange"/> instead — it updates cells in-place
+        /// with no container teardown and therefore no flash.
+        ///
         /// Algorithm:
-        /// - For each field, iterate through all years in the rotation period
-        /// - For each year, calculate which crop from the sequence should be grown
-        /// - If shift is enabled: each field starts at a different point in the sequence (field offset)
-        /// - Uses modulo arithmetic to wrap around when reaching the end of the crop sequence
-        /// 
-        /// Example with 3 crops [Wheat, Barley, Oats] and 2 fields:
-        /// - Field 1: Wheat(2020), Barley(2021), Oats(2022), Wheat(2023)...
-        /// - Field 2 (shifted): Barley(2020), Oats(2021), Wheat(2022), Barley(2023)...
+        /// <list type="number">
+        ///   <item>Snapshot <see cref="CropDtos"/> into a local list (the ordered rotation sequence).</item>
+        ///   <item>For each field, compute a shift offset driven by <see cref="ShiftDirection"/>.</item>
+        ///   <item>For each year in [StartYear, EndYear], use modulo arithmetic to pick the correct
+        ///         crop and create a <see cref="YearCropAssignment"/> cell with its own cloned
+        ///         <see cref="ICropDto"/> (via PropertyMapper) so per-cell edits remain independent.</item>
+        ///   <item>All rows are accumulated in a local list, then wrapped in a new
+        ///         <see cref="ObservableCollection{T}"/> and assigned via the property setter —
+        ///         exactly one <c>PropertyChanged</c> notification, old data → new data in one frame.</item>
+        /// </list>
+        ///
+        /// Example — 3 crops [Wheat, Barley, Oats], 2 fields, RightShift:
+        /// <code>
+        /// Field 1: Wheat(2020)  Barley(2021)  Oats(2022)   Wheat(2023)
+        /// Field 2: Barley(2020) Oats(2021)    Wheat(2022)  Barley(2023)
+        /// </code>
         /// </summary>
         protected virtual void GenerateFieldAssignmentRows()
         {
-            // Initialize or clear the field assignment rows collection
-            if (FieldAssignmentRows == null)
-            {
-                FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>();
-            }
-            else
-            {
-                FieldAssignmentRows.Clear();
-            }
-
             // Early exit if required data is missing
             if (CropDtos == null || !CropDtos.Any() || SelectedRotationComponentDto == null)
             {
+                FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>();
                 RaisePropertyChanged(nameof(HasNoCrops));
                 return;
             }
@@ -454,11 +550,17 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             // Validate year range
             if (startYear <= 0 || endYear <= 0 || endYear <= startYear)
             {
+                FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>();
                 RaisePropertyChanged(nameof(HasNoCrops));
                 return;
             }
 
             var totalYears = endYear - startYear + 1;
+
+            // Build all rows into a local list first, then assign in one step.
+            // This avoids the UI seeing an empty collection (which causes a flash/flicker)
+            // when the old rows are cleared before new rows are added.
+            var newRows = new List<FieldAssignmentRow>(numberOfFields);
 
             // Generate a row for each field
             for (int fieldIndex = 0; fieldIndex < numberOfFields; fieldIndex++)
@@ -498,16 +600,16 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     // Create a unique crop DTO instance for this specific cell
                     // This ensures each cell has its own independent data that can be edited separately
                     ICropDto? cellCropDto = null;
-                    
+
                     if (_cropFactory is not null)
                     {
                         // Use the factory's CreateDtoFromDtoTemplate method to copy properties
-                        // This leverages AutoMapper for proper property copying
+                        // This leverages PropertyMapper for proper property copying
                         cellCropDto = (ICropDto)_cropFactory.CreateDtoFromDtoTemplate(sourceCrop);
-                        
+
                         // Override the year to match this specific cell's year
                         cellCropDto.Year = year;
-                        
+
                         // Always initialize CopyToSimilarCrops to false for new cells
                         cellCropDto.CopyToSimilarCrops = false;
                     }
@@ -527,14 +629,22 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         CropBackground = _cropColorService is not null
                             ? Brush.Parse(_cropColorService.GetCropColorHex(sourceCrop.CropType))
                             : Brush.Parse("#F5F5F5"),
-                        IsSelected = false // Initialize to not selected (updated when user clicks timeline card)
+                        IsSelected = false, // Initialize to not selected (updated when user clicks timeline card)
+                        CoverCropDisplay = sourceCrop.HasCoverCrop && sourceCrop.CoverCropDto != null
+                            ? (_cropColorService?.GetCropDisplayName(sourceCrop.CoverCropDto.CropType) ?? sourceCrop.CoverCropDto.CropType.ToString())
+                            : null,
                     };
 
                     row.YearAssignments.Add(assignment);
                 }
 
-                FieldAssignmentRows.Add(row);
+                newRows.Add(row);
             }
+
+            // Assign the fully-built collection in a single operation.
+            // The property setter fires PropertyChanged, so the UI rebinds once
+            // (from old data → new data) instead of seeing an empty intermediate state.
+            FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>(newRows);
 
             // Notify UI that the HasNoCrops property may have changed
             RaisePropertyChanged(nameof(HasNoCrops));
@@ -709,12 +819,118 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             }
         }
 
+        private void OnToggleCoverCropExecute(object obj)
+        {
+            if (IsDisposed || obj is not ICropDto cropDto || _cropFactory is null) return;
+
+            try
+            {
+                if (cropDto.HasCoverCrop)
+                {
+                    // Unsubscribe from cover crop DTO property changes
+                    if (cropDto.CoverCropDto is INotifyPropertyChanged oldCoverDto)
+                    {
+                        oldCoverDto.PropertyChanged -= OnCoverCropDtoPropertyChanged;
+                    }
+
+                    cropDto.CoverCropDto = null;
+                }
+                else
+                {
+                    var coverDto = _cropFactory.CreateCoverCropDto(cropDto.Year);
+                    cropDto.CoverCropDto = coverDto;
+
+                    // Subscribe to cover crop DTO property changes so preview updates
+                    if (coverDto is INotifyPropertyChanged newCoverDto)
+                    {
+                        newCoverDto.PropertyChanged += OnCoverCropDtoPropertyChanged;
+                    }
+                }
+
+                // Regenerate preview to show cover crop indicators
+                GenerateFieldAssignmentRows();
+
+                // The selected cell DTO (Step 4) is a clone of the timeline crop,
+                // so it still has the old cover crop state. Sync it so the Step 4
+                // cover crop editor hides/shows correctly.
+                if (SelectedCropDto != null)
+                {
+                    SelectedCropDto.CoverCropDto = cropDto.HasCoverCrop ? cropDto.CoverCropDto : null;
+                    // Force UI to re-evaluate all SelectedCropDto.* bindings (e.g. HasCoverCrop)
+                    RaisePropertyChanged(nameof(SelectedCropDto));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, "Failed to toggle cover crop on rotation");
+            }
+        }
+
+        /// <summary>
+        /// Handles property changes on a cover crop DTO (child of a timeline crop).
+        /// When the cover crop type changes, updates preview cells in-place.
+        /// </summary>
+        private void OnCoverCropDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is not ICropDto coverCropDto)
+                return;
+
+            // React to CropType or SelectedCropTypeItem changes (both indicate the cover crop type changed)
+            if (e.PropertyName != nameof(ICropDto.CropType) && e.PropertyName != nameof(ICropDto.SelectedCropTypeItem))
+                return;
+
+            // Find the parent crop that owns this cover crop DTO
+            if (CropDtos == null || FieldAssignmentRows == null) return;
+
+            var crops = CropDtos.ToList();
+            int sourceCropIndex = -1;
+            for (int i = 0; i < crops.Count; i++)
+            {
+                if (ReferenceEquals(crops[i].CoverCropDto, coverCropDto))
+                {
+                    sourceCropIndex = i;
+                    break;
+                }
+            }
+
+            if (sourceCropIndex < 0) return;
+
+            var rotationLength = crops.Count;
+            var newCoverDisplay = _cropColorService?.GetCropDisplayName(coverCropDto.CropType) ?? coverCropDto.CropType.ToString();
+
+            // Update CoverCropDisplay on all preview cells derived from the parent crop
+            for (int fieldIndex = 0; fieldIndex < FieldAssignmentRows.Count; fieldIndex++)
+            {
+                var row = FieldAssignmentRows[fieldIndex];
+                if (row.YearAssignments == null) continue;
+
+                int shiftOffset = ShiftDirection switch
+                {
+                    RotationShiftDirection.RightShift => fieldIndex,
+                    RotationShiftDirection.LeftShift => -fieldIndex,
+                    RotationShiftDirection.None => 0,
+                    _ => 0
+                };
+
+                for (int yearIndex = 0; yearIndex < row.YearAssignments.Count; yearIndex++)
+                {
+                    int rawIndex = (yearIndex + shiftOffset) % rotationLength;
+                    int cropIndex = (rawIndex + rotationLength) % rotationLength;
+
+                    if (cropIndex == sourceCropIndex)
+                    {
+                        row.YearAssignments[yearIndex].CoverCropDisplay = newCoverDisplay;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Updates the IsSelected property on all crop DTOs in the timeline (Step 2).
-        /// 
+        ///
         /// This creates a "radio button" effect where only one crop can be selected at a time.
         /// The selected crop card will show visual selection styling (highlighted border, scale effect).
-        /// 
+        ///
         /// This method is called when:
         /// - User clicks a crop card in the timeline
         /// - A crop is deleted and we need to select a different one
@@ -855,7 +1071,19 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         #region Event Handlers
 
         /// <summary>
-        /// Handles changes to the CropDtos collection (add/remove)
+        /// Handles additions and removals from the <see cref="CropDtos"/> collection.
+        ///
+        /// Responsibilities:
+        /// <list type="bullet">
+        ///   <item>Subscribe to <see cref="OnCropDtoPropertyChanged"/> for each newly added crop DTO
+        ///         so individual property changes (e.g. CropType, WetYield) are observed.</item>
+        ///   <item>Unsubscribe from removed crop DTOs to prevent stale event references.</item>
+        ///   <item>Trigger a full <see cref="GenerateFieldAssignmentRows"/> rebuild because adding or
+        ///         removing a crop changes the rotation length — a structural change that cannot be
+        ///         handled by the lighter in-place <see cref="UpdatePreviewCellsForCropChange"/>.</item>
+        ///   <item>Notify the UI that <see cref="HasNoCrops"/> and <see cref="ShouldShowPreview"/>
+        ///         may have changed so visibility/placeholder states update correctly.</item>
+        /// </list>
         /// </summary>
         private void OnCropDtosCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
@@ -867,6 +1095,12 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     if (item is INotifyPropertyChanged notifyPropertyChanged)
                     {
                         notifyPropertyChanged.PropertyChanged += OnCropDtoPropertyChanged;
+                    }
+
+                    // Also subscribe to cover crop DTO if one already exists (e.g. loaded from saved farm)
+                    if (item is ICropDto cropDto && cropDto.CoverCropDto is INotifyPropertyChanged coverNotify)
+                    {
+                        coverNotify.PropertyChanged += OnCoverCropDtoPropertyChanged;
                     }
                 }
             }
@@ -880,6 +1114,12 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     {
                         notifyPropertyChanged.PropertyChanged -= OnCropDtoPropertyChanged;
                     }
+
+                    // Also unsubscribe from cover crop DTO
+                    if (item is ICropDto cropDto && cropDto.CoverCropDto is INotifyPropertyChanged coverNotify)
+                    {
+                        coverNotify.PropertyChanged -= OnCoverCropDtoPropertyChanged;
+                    }
                 }
             }
 
@@ -892,20 +1132,149 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         }
 
     /// <summary>
-    /// Handles property changes on individual crop DTOs
+    /// Handles property changes on individual crop DTOs that belong to the Step 2 timeline.
+    ///
+    /// This handler is registered/unregistered by <see cref="OnCropDtosCollectionChanged"/>
+    /// and is distinct from <see cref="OnSelectedCropDtoPropertyChanged"/>, which tracks the
+    /// crop currently being edited in Step 4.
+    ///
+    /// Behaviour by changed property:
+    /// <list type="bullet">
+    ///   <item>
+    ///     <term><see cref="ICropDto.CropType"/></term>
+    ///     <description>
+    ///       Calls <see cref="UpdatePreviewCellsForCropChange"/> to patch the affected cells
+    ///       in the Step 3 preview grid in-place. A full <see cref="GenerateFieldAssignmentRows"/>
+    ///       rebuild is intentionally avoided here because Avalonia tears down every item
+    ///       container during a collection swap, producing a visible empty frame (flash).
+    ///     </description>
+    ///   </item>
+    ///   <item>
+    ///     <term>Any property</term>
+    ///     <description>
+    ///       Passes the change to <see cref="CopyValuesToSimilarCrops"/> which propagates
+    ///       copyable values (WetYield, AmountOfIrrigation, HerbicideUsed) to other crops
+    ///       of the same type in the same field row when the "Copy to Similar Crops" toggle
+    ///       is enabled.
+    ///     </description>
+    ///   </item>
+    /// </list>
     /// </summary>
     private void OnCropDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        // Regenerate field assignments when CropType changes
-        if (e.PropertyName == nameof(ICropDto.CropType))
+        // When CropType changes on a timeline crop, update the preview cells in-place
+        // instead of rebuilding the entire grid. Rebuilding causes a visible flash because
+        // Avalonia tears down all item containers before creating new ones, leaving an
+        // empty frame visible to the user.
+        if (e.PropertyName == nameof(ICropDto.CropType) && sender is ICropDto changedCrop)
         {
-            GenerateFieldAssignmentRows();
+            UpdatePreviewCellsForCropChange(changedCrop);
         }
 
         // Handle copying values to similar crops
         if (sender is ICropDto cropDto && e.PropertyName != null)
         {
             CopyValuesToSimilarCrops(cropDto, e.PropertyName);
+        }
+    }
+
+    /// <summary>
+    /// Updates every Step 3 preview cell that was generated from <paramref name="changedCrop"/>
+    /// in-place, without rebuilding <see cref="FieldAssignmentRows"/>.
+    ///
+    /// <para>
+    /// When the user picks a different crop type from a Step 2 timeline card, Avalonia would
+    /// ordinarily tear down all item containers and rebuild them if the underlying
+    /// <see cref="ObservableCollection{T}"/> reference changed. That teardown produces a
+    /// visible empty frame (flash). By instead writing directly to the observable properties
+    /// on each <see cref="YearCropAssignment"/> cell — <c>CropType</c>, <c>CropDisplay</c>,
+    /// and <c>CropBackground</c> — Avalonia only rebinds the affected individual bindings
+    /// with no container teardown and therefore no flash.
+    /// </para>
+    ///
+    /// <para>
+    /// The method mirrors the shift-offset modulo arithmetic in <see cref="GenerateFieldAssignmentRows"/>
+    /// to identify which cells belong to the changed crop: for each field row, the shift offset
+    /// is computed from <see cref="ShiftDirection"/>, then modulo is used to map each year column
+    /// to its source crop index. Cells whose computed index equals the index of
+    /// <paramref name="changedCrop"/> in <see cref="CropDtos"/> are patched.
+    /// </para>
+    ///
+    /// <para>
+    /// If <paramref name="changedCrop"/> is not found in <see cref="CropDtos"/> (e.g. it was
+    /// removed concurrently), the method falls back to a full <see cref="GenerateFieldAssignmentRows"/>
+    /// rebuild to keep the grid consistent.
+    /// </para>
+    ///
+    /// <para>
+    /// Each patched cell also gets a fresh cloned <see cref="ICropDto"/> (via
+    /// <see cref="ICropFactory.CreateDtoFromDtoTemplate"/>) so the cell-level DTO reflects
+    /// the new crop type without sharing state with the timeline source DTO.
+    /// </para>
+    /// </summary>
+    /// <param name="changedCrop">The timeline crop DTO whose <see cref="ICropDto.CropType"/> just changed.</param>
+    private void UpdatePreviewCellsForCropChange(ICropDto changedCrop)
+    {
+        if (FieldAssignmentRows == null || CropDtos == null)
+        {
+            return;
+        }
+
+        // Find the index of the changed crop in the rotation sequence
+        var crops = CropDtos.ToList();
+        int sourceCropIndex = crops.IndexOf(changedCrop);
+        if (sourceCropIndex < 0)
+        {
+            // Crop not found in the timeline — fall back to full rebuild
+            GenerateFieldAssignmentRows();
+            return;
+        }
+
+        var rotationLength = crops.Count;
+        var newCropType = changedCrop.CropType;
+        var newDisplay = _cropColorService?.GetCropDisplayName(newCropType) ?? newCropType.ToString();
+        var newBackground = _cropColorService is not null
+            ? Brush.Parse(_cropColorService.GetCropColorHex(newCropType))
+            : Brush.Parse("#F5F5F5");
+
+        // Walk every cell in the grid and update those that derive from the changed crop
+        for (int fieldIndex = 0; fieldIndex < FieldAssignmentRows.Count; fieldIndex++)
+        {
+            var row = FieldAssignmentRows[fieldIndex];
+            if (row.YearAssignments == null) continue;
+
+            int shiftOffset = ShiftDirection switch
+            {
+                RotationShiftDirection.RightShift => fieldIndex,
+                RotationShiftDirection.LeftShift => -fieldIndex,
+                RotationShiftDirection.None => 0,
+                _ => 0
+            };
+
+            for (int yearIndex = 0; yearIndex < row.YearAssignments.Count; yearIndex++)
+            {
+                int rawIndex = (yearIndex + shiftOffset) % rotationLength;
+                int cropIndex = (rawIndex + rotationLength) % rotationLength;
+
+                if (cropIndex == sourceCropIndex)
+                {
+                    var cell = row.YearAssignments[yearIndex];
+
+                    // Update the cell's visual properties in-place (all are observable via SetProperty)
+                    cell.CropType = newCropType;
+                    cell.CropDisplay = newDisplay;
+                    cell.CropBackground = newBackground;
+
+                    // Create a fresh DTO copy for this cell so it reflects the new crop type
+                    if (_cropFactory is not null)
+                    {
+                        var freshDto = (ICropDto)_cropFactory.CreateDtoFromDtoTemplate(changedCrop);
+                        freshDto.Year = int.Parse(cell.Year);
+                        freshDto.CopyToSimilarCrops = false;
+                        cell.CropDto = freshDto;
+                    }
+                }
+            }
         }
     }
 
@@ -1148,6 +1517,39 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         throw;
                     }
                 }
+            }
+        }
+
+        #endregion
+
+        #region Overrides
+
+        public override void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            base.OnNavigatedFrom(navigationContext);
+
+            if (_selectedRotationComponent is not null &&
+                _selectedRotationComponentDto is RotationComponentDto rotationComponentDto)
+            {
+                if (!rotationComponentDto.HasErrors)
+                {
+                    try
+                    {
+                        _rotationComponentService?.TransferRotationDtoToSystem(
+                            rotationComponentDto,
+                            _selectedRotationComponent);
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger?.LogError(exception, "Error saving rotation component changes during navigation");
+                    }
+                }
+            }
+
+            // Clean up event handlers
+            if (_selectedRotationComponentDto is RotationComponentDto dto)
+            {
+                dto.PropertyChanged -= RotationComponentDtoOnPropertyChanged;
             }
         }
 

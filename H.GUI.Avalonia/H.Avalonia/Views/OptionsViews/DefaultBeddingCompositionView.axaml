@@ -1,25 +1,25 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              x:Class="H.Avalonia.Views.OptionsViews.DefaultBeddingCompositionView">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<TextBlock Text="{x:Static properties:Resources.MessageDefaultBeddingComposition}" Padding="40, 15" Margin="0 0 0 20" Background="#3C4DBB" Foreground="WhiteSmoke" Grid.Row="0"/>
+		<TextBlock Text="{Binding [Message_DefaultBeddingComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="#3C4DBB" Foreground="WhiteSmoke" Grid.Row="0"/>
 
 		<DataGrid ItemsSource="{Binding Path=BeddingCompositionDTOs}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelComponentCategory}" Binding="{Binding Path=ComponentCategoryString}"/>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelBeddingTypeColumn}" Binding="{Binding Path=BeddingMaterialString}"/>
+				<DataGridTextColumn Header="{Binding [Label_ComponentCategory].Value, Source={StaticResource Loc}}" Binding="{Binding Path=ComponentCategoryString}"/>
+				<DataGridTextColumn Header="{Binding [Label_BeddingTypeColumn].Value, Source={StaticResource Loc}}" Binding="{Binding Path=BeddingMaterialString}"/>
 				<DataGridTextColumn Header="{Binding Path=NitrogenConcentrationHeader}" Binding="{Binding Path=TotalNitrogenKilogramsDryMatter}"/>
 				<DataGridTextColumn Header="{Binding Path=PhosphorusConcentrationHeader}" Binding="{Binding Path=TotalPhosphorusKilogramsDryMatter}"/>
 				<DataGridTextColumn Header="{Binding Path=CarbonConcentrationHeader}" Binding="{Binding Path=TotalCarbonKilogramsDryMatter}"/>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelCarbonToNitrogen}" Binding="{Binding Path=CarbonToNitrogenRatio}"/>
+				<DataGridTextColumn Header="{Binding [Label_CarbonToNitrogen].Value, Source={StaticResource Loc}}" Binding="{Binding Path=CarbonToNitrogenRatio}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

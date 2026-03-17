@@ -1,10 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:componentViews="clr-namespace:H.Avalonia.ViewModels.ComponentViews"
              xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="950"
              x:Class="H.Avalonia.Views.ComponentViews.ChooseComponentsView">
 
@@ -35,7 +35,7 @@
             <DockPanel>
                 <!-- Finish Button (docked right) -->
                 <Button DockPanel.Dock="Right"
-                        Content="{x:Static properties:Resources.LabelFinishSelectComponent}"
+                        Content="{Binding [Label_FinishSelectComponent].Value, Source={StaticResource Loc}}"
                         Command="{Binding OnFinishedAddingComponentsExecute}"
                         Classes="responsive-button"
                         VerticalAlignment="Center"
@@ -43,11 +43,11 @@
 
                 <!-- Title and Subtitle (left) -->
                 <StackPanel VerticalAlignment="Center" Spacing="4">
-                    <TextBlock Text="{x:Static properties:Resources.ChooseComponents}"
+                    <TextBlock Text="{Binding [Heading_ChooseComponents].Value, Source={StaticResource Loc}}"
                               Classes="title-textblock"
                               Margin="0"/>
                     <TextBlock Name="SubtitleText"
-                              Text="Select a category to browse available components"
+                              Text="{Binding [Label_SelectCategoryToBrowse].Value, Source={StaticResource Loc}}"
                               FontSize="{StaticResource GcdsFontSizeSmall}"
                               Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </StackPanel>
@@ -110,7 +110,7 @@
                                                       FontSize="{StaticResource GcdsFontSizeSmall}"
                                                       FontWeight="SemiBold"
                                                       Foreground="{StaticResource GcdsLinkDefaultBrush}"/>
-                                            <TextBlock Text="components available"
+                                            <TextBlock Text="{Binding [Label_ComponentsAvailable].Value, Source={StaticResource Loc}}"
                                                       FontSize="{StaticResource GcdsFontSizeSmall}"
                                                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                                         </StackPanel>
@@ -150,7 +150,7 @@
                                   FontSize="{StaticResource GcdsFontSizeBody}"
                                   Foreground="{StaticResource GcdsLinkDefaultBrush}"
                                   VerticalAlignment="Center"/>
-                        <TextBlock Text="Back to Categories"
+                        <TextBlock Text="{Binding [Label_BackToCategories].Value, Source={StaticResource Loc}}"
                                   FontSize="{StaticResource GcdsFontSizeBody}"
                                   Foreground="{StaticResource GcdsLinkDefaultBrush}"
                                   VerticalAlignment="Center"/>
@@ -198,7 +198,7 @@
                                 <DockPanel>
                                     <!-- Add Button (docked bottom) -->
                                     <Button DockPanel.Dock="Bottom"
-                                            Content="+ Add to Farm"
+                                            Content="{Binding [Button_AddToFarm].Value, Source={StaticResource Loc}}"
                                             Click="OnAddComponentClick"
                                             Tag="{Binding}"
                                             HorizontalAlignment="Left"

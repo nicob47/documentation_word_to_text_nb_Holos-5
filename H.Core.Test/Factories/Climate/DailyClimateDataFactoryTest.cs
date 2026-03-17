@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Factories.Climate;
+﻿using H.Core.Factories.Climate;
 using H.Core.Mappers;
 using H.Core.Models;
 using H.Core.Models.Climate;
@@ -27,21 +26,14 @@ namespace H.Core.Test.Factories.Climate
         {
             var mockContainerProvider = new Mock<IContainerProvider>();
 
-            // Setup mappers to return a working IMapper for each required profile
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(DailyClimateDataToDailyClimateDtoMapper))).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<DailyClimateDataToDailyClimateDtoMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<DailyClimateData, DailyClimateDto>), nameof(DailyClimateDataToDailyClimateDtoMapper)))
+                .Returns(new DailyClimateDataToDailyClimateDtoMapper());
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(DailyClimateDtoToDailyClimateDtoMapper))).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<DailyClimateDtoToDailyClimateDtoMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<DailyClimateDto, DailyClimateDto>), nameof(DailyClimateDtoToDailyClimateDtoMapper)))
+                .Returns(new DailyClimateDtoToDailyClimateDtoMapper());
 
-            mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(DailyClimateDtoToDailyClimateDataMapper))).Returns(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<DailyClimateDtoToDailyClimateDataMapper>();
-            }).CreateMapper());
+            mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<DailyClimateDto, DailyClimateData>), nameof(DailyClimateDtoToDailyClimateDataMapper)))
+                .Returns(new DailyClimateDtoToDailyClimateDataMapper());
 
             _factory = new DailyClimateDataFactory(mockContainerProvider.Object);
         }

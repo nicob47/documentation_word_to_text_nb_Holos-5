@@ -1,13 +1,9 @@
-﻿using AutoMapper;
-using H.Core.Factories;
 using H.Core.Factories.Animals;
 
 namespace H.Core.Mappers;
 
-public class ManagementPeriodDtoToManagementPeriodDtoMapper : Profile
+public class ManagementPeriodDtoToManagementPeriodDtoMapper : IModelMapper<ManagementPeriodDto, ManagementPeriodDto>
 {
-    public ManagementPeriodDtoToManagementPeriodDtoMapper()
-    {
-        CreateMap<ManagementPeriodDto, ManagementPeriodDto>();
-    }
+    public ManagementPeriodDto Map(ManagementPeriodDto source)
+        => PropertyMapper.Map<ManagementPeriodDto, ManagementPeriodDto>(source);
 }

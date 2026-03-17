@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using H.CLI.Interfaces;
 using H.Core.Enumerations;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.ComponentKeys
 {
@@ -22,7 +23,7 @@ namespace H.CLI.ComponentKeys
 
         public FieldKeys()
         {
-            this.MissingHeaders.Add(Properties.Resources.Key_NitrogenFixation, false);
+            this.MissingHeaders.Add(AppStrings.Column_NitrogenFixation, false);
         }
         public Dictionary<string, ImperialUnitsOfMeasurement?> Keys { get; set; } = new Dictionary<string, ImperialUnitsOfMeasurement?>()
         {
@@ -32,84 +33,84 @@ namespace H.CLI.ComponentKeys
             // When adding a string here, ensure property is added to FieldTemporaryInput class as well
 
             // Ordering matters here, the ordering of keys here must match the ordering of the columns in the input files (i.e. in FieldProcessor class)
-            {Properties.Resources.Key_PhaseNumber, null },
-            {Properties.Resources.Key_Name, null },
-            {Properties.Resources.Key_Area, ImperialUnitsOfMeasurement.Acres },
-            {Properties.Resources.Key_CurrentYear, null },
-            {Properties.Resources.Key_CropYear, null },
-            {Properties.Resources.Key_CropType, null },
-            {Properties.Resources.Key_TillageType, null },
-            {Properties.Resources.Key_YearInPerennialStand, null },
-            {Properties.Resources.Key_PerennialStandID, null },
-            {Properties.Resources.Key_PerennialStandLength, null },
-            {Properties.Resources.Key_BiomassCoefficientProduct, null },
-            {Properties.Resources.Key_BiomassCoefficientStraw, null },
-            {Properties.Resources.Key_BiomassCoefficientRoots, null },
-            {Properties.Resources.Key_BiomassCoefficientExtraroot, null },
-            {Properties.Resources.Key_NitrogenContentInProduct, ImperialUnitsOfMeasurement.PoundsPerPound },
-            {Properties.Resources.Key_NitrogenContentInStraw, ImperialUnitsOfMeasurement.PoundsPerPound },
-            {Properties.Resources.Key_NitrogenContentInRoots, ImperialUnitsOfMeasurement.PoundsPerPound },
-            {Properties.Resources.Key_NitrogenContentInExtraroot, ImperialUnitsOfMeasurement.PoundsPerPound },
-            {Properties.Resources.Key_NitrogenFixation, ImperialUnitsOfMeasurement.PoundsNitrogenPerAcrePerYear },
-            {Properties.Resources.Key_NitrogenDeposit, ImperialUnitsOfMeasurement.PoundsNitrogenPerAcre },
-            {Properties.Resources.Key_CarbonConcentration, ImperialUnitsOfMeasurement.PoundsPerPound },
-            {Properties.Resources.Key_Yield, ImperialUnitsOfMeasurement.BushelsPerAcre },
-            {Properties.Resources.Key_HarvestMethod, null },
-            {Properties.Resources.Key_NitrogenFertilizerRate, ImperialUnitsOfMeasurement.PoundsNitrogenPerAcre },
-            {Properties.Resources.Key_PhosphorousFertilizerRate, ImperialUnitsOfMeasurement.PoundsPhosphorousPerAcre },
-            {Properties.Resources.Key_IsIrrigated, null },
-            {Properties.Resources.Key_IrrigationType, null },
-            {Properties.Resources.Key_AmountOfIrrigation, ImperialUnitsOfMeasurement.InchesToMm },
-            {Properties.Resources.Key_MoistureContentOfCrop,  null},
-            {Properties.Resources.Key_MoistureContentOfCropPercentage,  ImperialUnitsOfMeasurement.Percentage},
-            {Properties.Resources.Key_PercentageOfStrawReturnedToSoil,  ImperialUnitsOfMeasurement.Percentage },
-            {Properties.Resources.Key_PercentageOfRootsReturnedToSoil,  ImperialUnitsOfMeasurement.Percentage },
-            {Properties.Resources.Key_PercentageOfProductYieldReturnedToSoil,  ImperialUnitsOfMeasurement.Percentage },
-            {Properties.Resources.Key_IsPesticideUsed, null },
-            {Properties.Resources.Key_NumberOfPesticidePasses, null },
-            {Properties.Resources.Key_ManureApplied, null },
-            {Properties.Resources.Key_AmountOfManureApplied, ImperialUnitsOfMeasurement.PoundsPerAcre },
-            {Properties.Resources.Key_ManureApplicationType, null },
-            {Properties.Resources.Key_ManureAnimalSourceType, null },
-            {Properties.Resources.Key_ManureStateType, null },
-            {Properties.Resources.Key_ManureLocationSourceType, null },
-            {Properties.Resources.Key_UnderSownCropsUsed, null },
-            {Properties.Resources.Key_CropIsGrazed, null },
-            {Properties.Resources.Key_FieldSystemComponentGuid, null },
-            {Properties.Resources.Key_TimePeriodCategoryString, null },
-            {Properties.Resources.Key_ClimateParameter, null },
-            {Properties.Resources.Key_TillageFactor, null },
-            {Properties.Resources.Key_ManagementFactor, null },
-            {Properties.Resources.Key_PlantCarbonInAgriculturalProduct, null },
-            {Properties.Resources.Key_CarbonInputFromProduct, null },
-            {Properties.Resources.Key_CarbonInputFromStraw, null },
-            {Properties.Resources.Key_CarbonInputFromRoots, null },
-            {Properties.Resources.Key_CarbonInputFromExtraroots, null },
-            {Properties.Resources.Key_SizeOfFirstRotationForField, null },
-            {Properties.Resources.Key_AboveGroundCarbonInput, null },
-            {Properties.Resources.Key_BelowGroundCarbonInput, null },
-            {Properties.Resources.Key_ManureCarbonInputsPerHectare, null },
-            {Properties.Resources.Key_DigestateCarbonInputsPerHectare, null },
-            {Properties.Resources.Key_TotalCarbonInputs, null },
-            {Properties.Resources.Key_Sand, null },
-            {Properties.Resources.Key_Lignin, null },
-            {Properties.Resources.Key_WFac, null },
-            {Properties.Resources.Key_TFac, null },
-            {Properties.Resources.Key_TotalNitrogenInputsForIpccTier2, null },
-            {Properties.Resources.Key_NitrogenContent, null },
-            {Properties.Resources.Key_AboveGroundResidueDryMatter, null },
-            {Properties.Resources.Key_BelowGroundResidueDryMatter, null },
-            {Properties.Resources.Key_FuelEnergy, null },
-            {Properties.Resources.Key_HerbicideEnergy, null },
-            {Properties.Resources.Key_FertilizerBlend, null },
+            {AppStrings.Column_PhaseNumber, null },
+            {AppStrings.Column_Name, null },
+            {AppStrings.Column_Area, ImperialUnitsOfMeasurement.Acres },
+            {AppStrings.Column_CurrentYear, null },
+            {AppStrings.Column_CropYear, null },
+            {AppStrings.Column_CropType, null },
+            {AppStrings.Column_TillageType, null },
+            {AppStrings.Column_YearInPerennialStand, null },
+            {AppStrings.Column_PerennialStandID, null },
+            {AppStrings.Column_PerennialStandLength, null },
+            {AppStrings.Column_BiomassCoefficientProduct, null },
+            {AppStrings.Column_BiomassCoefficientStraw, null },
+            {AppStrings.Column_BiomassCoefficientRoots, null },
+            {AppStrings.Column_BiomassCoefficientExtraroot, null },
+            {AppStrings.Column_NitrogenContentInProduct, ImperialUnitsOfMeasurement.PoundsPerPound },
+            {AppStrings.Column_NitrogenContentInStraw, ImperialUnitsOfMeasurement.PoundsPerPound },
+            {AppStrings.Column_NitrogenContentInRoots, ImperialUnitsOfMeasurement.PoundsPerPound },
+            {AppStrings.Column_NitrogenContentInExtraroot, ImperialUnitsOfMeasurement.PoundsPerPound },
+            {AppStrings.Column_NitrogenFixation, ImperialUnitsOfMeasurement.PoundsNitrogenPerAcrePerYear },
+            {AppStrings.Column_NitrogenDeposit, ImperialUnitsOfMeasurement.PoundsNitrogenPerAcre },
+            {AppStrings.Column_CarbonConcentration, ImperialUnitsOfMeasurement.PoundsPerPound },
+            {AppStrings.Column_Yield, ImperialUnitsOfMeasurement.BushelsPerAcre },
+            {AppStrings.Column_HarvestMethod, null },
+            {AppStrings.Column_NitrogenFertilizerRate, ImperialUnitsOfMeasurement.PoundsNitrogenPerAcre },
+            {AppStrings.Column_PhosphorousFertilizerRate, ImperialUnitsOfMeasurement.PoundsPhosphorousPerAcre },
+            {AppStrings.Column_IsIrrigated, null },
+            {AppStrings.Column_IrrigationType, null },
+            {AppStrings.Column_AmountOfIrrigation, ImperialUnitsOfMeasurement.InchesToMm },
+            {AppStrings.Column_MoistureContentOfCrop,  null},
+            {AppStrings.Column_MoistureContentOfCropPercentage,  ImperialUnitsOfMeasurement.Percentage},
+            {AppStrings.Column_PercentageOfStrawReturnedToSoil,  ImperialUnitsOfMeasurement.Percentage },
+            {AppStrings.Column_PercentageOfRootsReturnedToSoil,  ImperialUnitsOfMeasurement.Percentage },
+            {AppStrings.Column_PercentageOfProductYieldReturnedToSoil,  ImperialUnitsOfMeasurement.Percentage },
+            {AppStrings.Column_IsPesticideUsed, null },
+            {AppStrings.Column_NumberOfPesticidePasses, null },
+            {AppStrings.Column_ManureApplied, null },
+            {AppStrings.Column_AmountOfManureApplied, ImperialUnitsOfMeasurement.PoundsPerAcre },
+            {AppStrings.Column_ManureApplicationType, null },
+            {AppStrings.Column_ManureAnimalSourceType, null },
+            {AppStrings.Column_ManureStateType, null },
+            {AppStrings.Column_ManureLocationSourceType, null },
+            {AppStrings.Column_UnderSownCropsUsed, null },
+            {AppStrings.Column_CropIsGrazed, null },
+            {AppStrings.Column_FieldSystemComponentGuid, null },
+            {AppStrings.Column_TimePeriodCategoryString, null },
+            {AppStrings.Column_ClimateParameter, null },
+            {AppStrings.Column_TillageFactor, null },
+            {AppStrings.Column_ManagementFactor, null },
+            {AppStrings.Column_PlantCarbonInAgriculturalProduct, null },
+            {AppStrings.Column_CarbonInputFromProduct, null },
+            {AppStrings.Column_CarbonInputFromStraw, null },
+            {AppStrings.Column_CarbonInputFromRoots, null },
+            {AppStrings.Column_CarbonInputFromExtraroots, null },
+            {AppStrings.Column_SizeOfFirstRotationForField, null },
+            {AppStrings.Column_AboveGroundCarbonInput, null },
+            {AppStrings.Column_BelowGroundCarbonInput, null },
+            {AppStrings.Column_ManureCarbonInputsPerHectare, null },
+            {AppStrings.Column_DigestateCarbonInputsPerHectare, null },
+            {AppStrings.Column_TotalCarbonInputs, null },
+            {AppStrings.Column_Sand, null },
+            {AppStrings.Column_Lignin, null },
+            {AppStrings.Column_WFac, null },
+            {AppStrings.Column_TFac, null },
+            {AppStrings.Column_TotalNitrogenInputsForIpccTier2, null },
+            {AppStrings.Column_NitrogenContent, null },
+            {AppStrings.Column_AboveGroundResidueDryMatter, null },
+            {AppStrings.Column_BelowGroundResidueDryMatter, null },
+            {AppStrings.Column_FuelEnergy, null },
+            {AppStrings.Column_HerbicideEnergy, null },
+            {AppStrings.Column_FertilizerBlend, null },
         };
 
         //  Currently only 2 optional headers in the field keys
         public bool IsHeaderOptional(string s)
         {
-            if (s == Properties.Resources.Key_NitrogenFixation) return true;
-            else if (s == Properties.Resources.Key_FertilizerBlend) return true;
-            else if (s == Properties.Resources.Key_NitrogenDeposit) return true;
+            if (s == AppStrings.Column_NitrogenFixation) return true;
+            else if (s == AppStrings.Column_FertilizerBlend) return true;
+            else if (s == AppStrings.Column_NitrogenDeposit) return true;
             else return false;
         }
         // Populate with all the keys that exist currently and tell if it is missing or not

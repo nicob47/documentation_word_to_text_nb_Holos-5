@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using H.Core.Models;
 using H.Core.Providers;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.FileAndDirectoryAccessors
 {
@@ -22,7 +23,7 @@ namespace H.CLI.FileAndDirectoryAccessors
         /// </summary>
         public void CreateTemplateFarmIfNotExists(string pathToFarmsDirectory, GeographicDataProvider geographicDataProvider)
         {
-            var exampleFarmDirectoryPath = pathToFarmsDirectory + @"\" + Properties.Resources.HolosExampleFarm;
+            var exampleFarmDirectoryPath = pathToFarmsDirectory + @"\" + AppStrings.Label_HolosExampleFarm;
     
             if (!Directory.Exists(exampleFarmDirectoryPath))
             {

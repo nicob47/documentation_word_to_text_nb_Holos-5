@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:OptionsViews="clr-namespace:H.Avalonia.ViewModels.OptionsViews"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight=""
              x:Class="H.Avalonia.Views.OptionsViews.OptionUserSettingsView">
 	<Design.DataContext>
@@ -14,26 +14,26 @@
 		<ScrollViewer>
 		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 			
-			<TextBlock Background="#3C4DBB" Foreground="WhiteSmoke"  Grid.Row="0" Padding="40, 15" Text="{x:Static properties:Resources.LabelCarbonModelling}" />
+			<TextBlock Background="#3C4DBB" Foreground="WhiteSmoke"  Grid.Row="0" Padding="40, 15" Text="{Binding [Label_CarbonModelling].Value, Source={StaticResource Loc}}" />
 			<StackPanel Spacing="10" Grid.Row="1" Margin="20, 10" VerticalAlignment="Center" Width="380" >
-				<TextBlock Text="{x:Static properties:Resources.LabelCarbonModellingStrategy}"/>
+				<TextBlock Text="{Binding [Label_CarbonModellingStrategy].Value, Source={StaticResource Loc}}"/>
 				<ComboBox ItemsSource="{Binding Data.CarbonModellingStrategiesList}" SelectedItem="{Binding Data.CarbonModellingStrategy}" HorizontalAlignment="Stretch" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelRunInPeriod}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Years}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_RunInPeriod].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Years].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.DefaultRunInPeriod, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelCarbonConcentration}"/>
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.KilogramPerKilogram}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_CarbonConcentration].Value, Source={StaticResource Loc}}"/>
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramPerKilogram].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="0.01" FormatString="{}{0:0.00}" Value="{Binding Data.CarbonConcentration, Mode=TwoWay}" />
-				<TextBlock Text="{x:Static properties:Resources.LabelEquilibriumCalculationStrategy}"/>
+				<TextBlock Text="{Binding [Label_EquilibriumCalculationStrategy].Value, Source={StaticResource Loc}}"/>
 				<ComboBox ItemsSource="{Binding Data.EquilibriumCalculationStrategiesList}" SelectedItem="{Binding Data.EquilibriumCalculationStrategy}" HorizontalAlignment="Stretch" />
 				<Grid ColumnDefinitions="*, Auto">
 					<TextBlock VerticalAlignment="Center" Grid.Column="0">
-						<Run Text="{x:Static properties:Resources.LabelUseCustomEquilibriumCarbonValue}" />
-						<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.KilogramsCarbonPerHectare}"/><Run Text=")"/>
+						<Run Text="{Binding [Label_UseCustomEquilibriumCarbonValue].Value, Source={StaticResource Loc}}" />
+						<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsCarbonPerHectare].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 					</TextBlock>
 					<CheckBox Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomEquilibriumCarbonInput, Mode=TwoWay}" />
 				</Grid>
@@ -41,7 +41,7 @@
 							  IsEnabled="{Binding Data.ShowCustomEquilibriumCarbonInput}" IsVisible="{Binding Data.ShowCustomEquilibriumCarbonInput}" />
 				<Grid ColumnDefinitions="*, Auto">
 				<TextBlock VerticalAlignment="Center" Grid.Column="0">
-					<Run Text="{x:Static properties:Resources.LabelUseCustomRuninPeriodTillage}"/>
+					<Run Text="{Binding [Label_UseCustomRuninPeriodTillage].Value, Source={StaticResource Loc}}"/>
 				</TextBlock>
 				<CheckBox Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomRunInPeriodTillage, Mode=TwoWay}" />
 				</Grid>
@@ -49,85 +49,85 @@
 						  IsEnabled="{Binding Data.ShowCustomRunInPeriodTillage}" IsVisible="{Binding Data.ShowCustomRunInPeriodTillage}" />
 			</StackPanel>
 			
-			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="2" Padding="40, 15" Text="{x:Static properties:Resources.LabelBiomass}" />
+			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="2" Padding="40, 15" Text="{Binding [Label_Biomass].Value, Source={StaticResource Loc}}" />
 			<StackPanel Spacing="10" Margin="20, 10" VerticalAlignment="Center" Width="380" Grid.Row="3">
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelProductReturnedToSoilForAnnuals}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_ProductReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForAnnuals, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelStrawReturnedToSoilForAnnuals}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_StrawReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfStrawReturnedToSoilForAnnuals, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelRootsReturnedToSoilForAnnuals}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_RootsReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForAnnuals, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelProductReturnedToSoilForFodderCorn}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_ProductReturnedToSoilForFodderCorn].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForFodderCorn, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelRootsReturnedToSoilForFodderCorn}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_RootsReturnedToSoilForFodderCorn].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForFodderCorn, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelProductReturnedToSoilForPerennials}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_ProductReturnedToSoilForPerennials].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForPerennials, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelRootsReturnedToSoilForPerennials}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_RootsReturnedToSoilForPerennials].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForPerennials, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelProductReturnedToSoilForRootCrops}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_ProductReturnedToSoilForRootCrops].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForRootCrops, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelStrawReturnedToSoilForRootCrops}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_StrawReturnedToSoilForRootCrops].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfStrawReturnedToSoilForRootCrops, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelSupplementalFeedingLoss}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.Percentage}"/><Run Text=")"/></TextBlock>
+					<Run Text="{Binding [Label_SupplementalFeedingLoss].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/></TextBlock>
 				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.DefaultSupplementalFeedingLossPercentage, Mode=TwoWay}" />
 			</StackPanel>
 
-			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="4" Padding="40, 15" Text="{x:Static properties:Resources.LabelN2O}" />
+			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="4" Padding="40, 15" Text="{Binding [Label_N2O].Value, Source={StaticResource Loc}}" />
 			<StackPanel Spacing="10" Margin="20, 10" VerticalAlignment="Center" Width="380" Grid.Row="5">
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelVolatilizationEmissionFactor}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.KilogramsN2ONPerKilogramN}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_VolatilizationEmissionFactor].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsN2ONPerKilogramN].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.EmissionFactorForVolatilization, Mode=TwoWay}" />
 				<TextBlock>
-					<Run Text="{x:Static properties:Resources.LabelEmissionFactorForLeachingAndRunoff}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.KilogramsN2ONPerKilogramN}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_EmissionFactorForLeachingAndRunoff].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsN2ONPerKilogramN].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 				<NumericUpDown Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.EmissionFactorForLeachingAndRunoff, Mode=TwoWay}" />
 				<Grid ColumnDefinitions="*, Auto">
 				<TextBlock VerticalAlignment="Center" Grid.Column="0">
-					<Run Text="{x:Static properties:Resources.LabelUseCustomN2OEmissionFactor}" />
-					<Run Text="("/><Run FontStyle="Italic" Text="{x:Static properties:Resources.KilogramsN2ONPerKilogramN}"/><Run Text=")"/>
+					<Run Text="{Binding [Label_UseCustomN2OEmissionFactor].Value, Source={StaticResource Loc}}" />
+					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsN2ONPerKilogramN].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
 					<CheckBox Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomN2OEmissionFactor, Mode=TwoWay}" />
 				</Grid>
 				<NumericUpDown IsEnabled="{Binding Data.ShowCustomN2OEmissionFactor}" IsVisible="{Binding Data.ShowCustomN2OEmissionFactor}" Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.CustomN2OEmissionFactor, Mode=TwoWay}"/>
 			</StackPanel>
 
-			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="6" Padding="40, 15" Text="{x:Static properties:Resources.LabelIrrigation}" />
+			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="6" Padding="40, 15" Text="{Binding [Label_Irrigation].Value, Source={StaticResource Loc}}" />
 			<StackPanel Spacing="10" Margin="20, 10" VerticalAlignment="Center" Width="380" Grid.Row="7">
 				<TextBlock VerticalAlignment="Center" Grid.Column="0">
-					<Run Text="{x:Static properties:Resources.LabelPumpType}" />
+					<Run Text="{Binding [Label_PumpType].Value, Source={StaticResource Loc}}" />
 				</TextBlock>
 				<ComboBox  ItemsSource="{Binding Data.PumpTypeList}" SelectedItem="{Binding Data.DefaultPumpType}" HorizontalAlignment="Stretch" />
 			</StackPanel>

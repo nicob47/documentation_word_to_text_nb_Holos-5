@@ -1,15 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
 			          xmlns:viewSections="clr-namespace:H.Avalonia"
              x:Class="H.Avalonia.Views.OptionsViews.FileMenuViews.FileExportClimateView">
 
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<TextBlock Text="Export Climate"  HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969"/>
-		<TextBlock IsVisible="{Binding ShowGrid}" Classes="disclaimer" Text="{x:Static properties:Resources.LabelMultipleSelection}" >
+		<TextBlock Text="{Binding [Label_ExportClimate].Value, Source={StaticResource Loc}}"  HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969"/>
+		<TextBlock IsVisible="{Binding ShowGrid}" Classes="disclaimer" Text="{Binding [Label_MultipleSelection].Value, Source={StaticResource Loc}}" >
 		</TextBlock>
 		
 		<DataGrid Name="FarmsDataGrid" SelectionChanged="FarmsDataGrid_SelectionChanged" IsVisible="{Binding ShowGrid}" SelectedItem="{Binding Path=SelectedFarm}" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" SelectionMode="Extended" Margin="0 10 0 0" Padding="20" GridLinesVisibility="All" IsReadOnly="True" Height="250"
@@ -21,17 +21,17 @@
 				</Style>
 			</DataGrid.Styles>
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelFarmName}" Binding="{Binding Name}"  />
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelProvince}" Binding="{Binding Province}"  />
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelEcodistrict}" Binding="{Binding DefaultSoilData.EcodistrictName}"  />
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelComments}" Binding="{Binding Comments}"  />
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelCreatedOn}" Binding="{Binding DateCreated}" />
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelModifiedOn}" Binding="{Binding DateModified}"  />
+				<DataGridTextColumn Header="{Binding [Label_FarmName].Value, Source={StaticResource Loc}}" Binding="{Binding Name}"  />
+				<DataGridTextColumn Header="{Binding [Label_Province].Value, Source={StaticResource Loc}}" Binding="{Binding Province}"  />
+				<DataGridTextColumn Header="{Binding [Label_Ecodistrict].Value, Source={StaticResource Loc}}" Binding="{Binding DefaultSoilData.EcodistrictName}"  />
+				<DataGridTextColumn Header="{Binding [Label_Comments].Value, Source={StaticResource Loc}}" Binding="{Binding Comments}"  />
+				<DataGridTextColumn Header="{Binding [Label_CreatedOn].Value, Source={StaticResource Loc}}" Binding="{Binding DateCreated}" />
+				<DataGridTextColumn Header="{Binding [Label_ModifiedOn].Value, Source={StaticResource Loc}}" Binding="{Binding DateModified}"  />
 			</DataGrid.Columns>
 		</DataGrid>
 
 		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-			<Button Margin="0 20 0 0" IsEnabled="{Binding CanExportExecute}" Content="{x:Static properties:Resources.LabelExport}" Click="ExportButton_OnClick" />
+			<Button Margin="0 20 0 0" IsEnabled="{Binding CanExportExecute}" Content="{Binding [Label_Export].Value, Source={StaticResource Loc}}" Click="ExportButton_OnClick" />
 		</StackPanel>
 	</StackPanel>
 	

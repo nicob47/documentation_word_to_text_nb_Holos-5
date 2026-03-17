@@ -4,6 +4,7 @@ using System.Reflection;
 using H.Core.Enumerations;
 using H.Core.Models.Animals.Beef;
 using H.Core.Models;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.TemporaryComponentStorage
 {
@@ -100,8 +101,8 @@ namespace H.CLI.TemporaryComponentStorage
             Console.ForegroundColor = ConsoleColor.White;
             if (String.IsNullOrEmpty(value))
             {
-                Console.WriteLine(String.Format(Properties.Resources.EmptyDataInput, row + 1, col + 1, filePath));
-                throw new FormatException(String.Format(Properties.Resources.EmptyDataInput, row + 1, col + 1, filePath));
+                Console.WriteLine(String.Format(AppStrings.Error_EmptyDataInput, row + 1, col + 1, filePath));
+                throw new FormatException(String.Format(AppStrings.Error_EmptyDataInput, row + 1, col + 1, filePath));
             }
 
             if (value.ToUpper() == "N/A")
@@ -137,7 +138,7 @@ namespace H.CLI.TemporaryComponentStorage
                         }
                         catch
                         {
-                            this.ThrowInvalidInput(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath);
+                            this.ThrowInvalidInput(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath);
                         }
 
                         break;
@@ -158,7 +159,7 @@ namespace H.CLI.TemporaryComponentStorage
                         }
                         catch
                         {
-                            this.ThrowInvalidInput(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath);
+                            this.ThrowInvalidInput(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath);
                         }
 
                         break;
@@ -179,7 +180,7 @@ namespace H.CLI.TemporaryComponentStorage
                     }
                     catch
                     {
-                        this.ThrowInvalidInput(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath);
+                        this.ThrowInvalidInput(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath);
                     }
 
                     break;
@@ -200,7 +201,7 @@ namespace H.CLI.TemporaryComponentStorage
                     }
                     catch
                     {
-                        this.ThrowInvalidInput(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath);
+                        this.ThrowInvalidInput(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath);
                     }
 
                     break;
@@ -221,7 +222,7 @@ namespace H.CLI.TemporaryComponentStorage
                         }
                         catch
                         {
-                            this.ThrowInvalidInput(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath);
+                            this.ThrowInvalidInput(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath);
                         }
 
                         break;
@@ -242,7 +243,7 @@ namespace H.CLI.TemporaryComponentStorage
                     }
                     catch
                     {
-                        this.ThrowInvalidInput(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath);
+                        this.ThrowInvalidInput(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath);
                     }
 
                     break;
@@ -268,7 +269,7 @@ namespace H.CLI.TemporaryComponentStorage
                         }
                         catch (Exception)
                         {
-                            this.ThrowInvalidInput(Properties.Resources.InvalidDate, value, row + 1, col + 1, filePath);
+                            this.ThrowInvalidInput(AppStrings.Error_InvalidDate, value, row + 1, col + 1, filePath);
                         }
 
                         break;
@@ -288,7 +289,7 @@ namespace H.CLI.TemporaryComponentStorage
 
         private void ThrowInvalidInput(string message, string value, int row, int col, string filePath)
         {
-            throw new FormatException(String.Format(Properties.Resources.InvalidDataInput, value, row + 1, col + 1, filePath));
+            throw new FormatException(String.Format(AppStrings.Error_InvalidDataInput, value, row + 1, col + 1, filePath));
         }
 
         #endregion

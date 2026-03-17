@@ -2,7 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:otherAnimals="clr-namespace:H.Avalonia.Views.ComponentViews.OtherAnimals"
+			 xmlns:beef="clr-namespace:H.Avalonia.Views.ComponentViews.Beef"
+			 xmlns:componentViews="clr-namespace:H.Avalonia.ViewModels.ComponentViews"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.Beef.CowCalfComponentView">
-  This is a cow calf
+
+	<Design.DataContext>
+        <componentViews:AnimalComponentViewModelDesign/>
+	</Design.DataContext>
+
+	<ScrollViewer VerticalScrollBarVisibility="Auto"
+				 HorizontalScrollBarVisibility="Disabled">
+		<StackPanel>
+			<beef:BeefLifecycleVisualizationView/>
+			<otherAnimals:OtherAnimalsComponentsView/>
+		</StackPanel>
+	</ScrollViewer>
+
 </UserControl>

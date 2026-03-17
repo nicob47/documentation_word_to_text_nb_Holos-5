@@ -1,14 +1,9 @@
-﻿using AutoMapper;
-using H.Core.Factories;
 using H.Core.Factories.Animals;
 
 namespace H.Core.Mappers;
 
-public class AnimalComponentDtoToAnimalComponentDtoMapper : Profile
+public class AnimalComponentDtoToAnimalComponentDtoMapper : IModelMapper<AnimalComponentDto, AnimalComponentDto>
 {
-    
-    public AnimalComponentDtoToAnimalComponentDtoMapper()
-    {
-        CreateMap<IAnimalComponentDto, IAnimalComponentDto>();
-    }
+    public AnimalComponentDto Map(AnimalComponentDto source)
+        => PropertyMapper.Map<AnimalComponentDto, AnimalComponentDto>(source);
 }

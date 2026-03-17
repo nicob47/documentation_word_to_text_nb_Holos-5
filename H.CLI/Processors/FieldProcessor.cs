@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Processors
 {
@@ -58,9 +59,9 @@ namespace H.CLI.Processors
 
             var finalResults = _fieldResultsService.CalculateFinalResults(farm);
 
-            var farmName = farm.Name + Properties.Resources.Results;
+            var farmName = farm.Name + AppStrings.Column_Results;
 
-            string filePath = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + Properties.Resources.Outputs + @"\" + farmName + @"\" + Properties.Resources.DefaultFieldsInputFolder + @"\";
+            string filePath = InfrastructureConstants.BaseOutputDirectoryPath + @"\" + AppStrings.Column_Outputs + @"\" + farmName + @"\" + AppStrings.Filename_DefaultFieldsInput + @"\";
 
             //write field system data to file
             _fieldResultsService.ExportResultsToFile(

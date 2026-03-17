@@ -1,49 +1,50 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationFinalizeView">
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationFinalizeView">
 
-    <Design.DataContext>
-        <rotation:RotationComponentViewModelDesign/>
-    </Design.DataContext>
+   <Design.DataContext>
+       <rotation:RotationComponentViewModelDesign/>
+   </Design.DataContext>
 
-    <!-- Step 4: Create Rotation -->
-    <Border Classes="step-container"
-            Margin="{StaticResource DefaultUserControlMargin}">
-        <StackPanel>
-            <!-- Step Header -->
-            <StackPanel Margin="0,0,0,20">
-                <Border Classes="step-badge" HorizontalAlignment="Left">
-                    <TextBlock Text="Step 4" Classes="step-badge-text"/>
-                </Border>
-                <TextBlock Text="Finalize and Create"
-                           Classes="step-number-description"
-                           Margin="0,8,0,0"/>
-            </StackPanel>
+   <!-- Step 4: Create Rotation -->
+   <Border Classes="step-container"
+           Margin="{StaticResource DefaultUserControlMargin}">
+       <StackPanel>
+           <!-- Step Header -->
+           <StackPanel Margin="0,0,0,20">
+               <Border Classes="step-badge" HorizontalAlignment="Left">
+                   <TextBlock Text="{Binding [Label_StepFour].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
+               </Border>
+               <TextBlock Text="{Binding [Label_FinalizeAndCreate].Value, Source={StaticResource Loc}}"
+                          Classes="step-number-description"
+                          Margin="0,8,0,0"/>
+           </StackPanel>
 
-            <!-- Create Button -->
-            <Button Content="Create Rotation"
-                    Command="{Binding CreateRotationCommand}"
-                    HorizontalAlignment="Center"
-                    FontSize="16"
-                    Padding="24,12"
-                    Margin="0,0,0,12"/>
+           <!-- Create Button -->
+           <Button Content="{Binding [Button_CreateRotation].Value, Source={StaticResource Loc}}"
+                   Command="{Binding CreateRotationCommand}"
+                   HorizontalAlignment="Center"
+                   FontSize="16"
+                   Padding="24,12"
+                   Margin="0,0,0,12"/>
 
-            <!-- Status Messages -->
-            <Border Background="{StaticResource GcdsBgLightBrush}"
-                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
-                    BorderThickness="1"
-                    CornerRadius="6"
-                    Padding="12"
-                    IsVisible="{Binding ShowValidationMessage}">
-                <TextBlock Text="{Binding ValidationMessage}"
-                           TextWrapping="Wrap"
-                           Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                           TextAlignment="Center"/>
-            </Border>
-        </StackPanel>
-    </Border>
+           <!-- Status Messages -->
+           <Border Background="{StaticResource GcdsBgLightBrush}"
+                   BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                   BorderThickness="1"
+                   CornerRadius="6"
+                   Padding="12"
+                   IsVisible="{Binding ShowValidationMessage}">
+               <TextBlock Text="{Binding ValidationMessage}"
+                          TextWrapping="Wrap"
+                          Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                          TextAlignment="Center"/>
+           </Border>
+       </StackPanel>
+   </Border>
 </UserControl>

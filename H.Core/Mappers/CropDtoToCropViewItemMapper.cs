@@ -1,14 +1,19 @@
-﻿using AutoMapper;
 using H.Core.Factories.Crops;
 using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Mappers;
 
-public class CropDtoToCropViewItemMapper : Profile
+/// <summary>
+/// Maps ICropDto (v5 DTO) back to CropViewItem (v4 domain model).
+/// WetYield on the DTO maps to Yield on CropViewItem.
+/// </summary>
+public class CropDtoToCropViewItemMapper : IModelMapper<ICropDto, CropViewItem>
 {
-    public CropDtoToCropViewItemMapper()
+    public CropViewItem Map(ICropDto source)
     {
-        CreateMap<ICropDto, CropViewItem>()
-            .ForMember(destinationMember: cropViewItem => cropViewItem.Yield, memberOptions: options => options.MapFrom(cropDto => cropDto.WetYield));
+        var dest = new CropViewItem();
+        PropertyMapper.CopyTo(source, dest);
+        dest.Yield = source.WetYield;
+        return dest;
     }
 }

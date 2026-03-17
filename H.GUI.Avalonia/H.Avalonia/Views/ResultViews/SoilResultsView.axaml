@@ -1,8 +1,8 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:properties="clr-namespace:H.Avalonia.Core.Properties;assembly=H.Avalonia.Core"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:results="clr-namespace:H.Avalonia.ViewModels.Results"
              xmlns:infrastructure1="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
@@ -24,7 +24,7 @@
                     HorizontalAlignment="Left"
                     Cursor="Hand">
             <PathIcon Data="{StaticResource arrow_left_regular}"/>
-            <Label Content="{x:Static properties:Resources.LabelBack}"/>
+            <Label Content="{Binding [Label_Back].Value, Source={StaticResource Loc}}"/>
         </StackPanel>
         <avaloniaProgressRing:ProgressRing Grid.Row="1"
                                Width="30"
@@ -38,7 +38,7 @@
         <StackPanel Grid.Row="2" 
                     Orientation="Horizontal">
             <Button Name="ChooseSelectedSoilButton"
-                    Content="Choose Selected Soil"
+                    Content="{Binding [Label_ChooseSelectedSoil].Value, Source={StaticResource Loc}}"
                     IsEnabled="{Binding !IsProcessingData, Mode=TwoWay}"
                     Click="ChooseSelectedSoilButton_OnClick"
                     HorizontalAlignment="Left"
@@ -47,7 +47,7 @@
                     Cursor="Hand"/>
 
 			<Button Name="ExportDataButton"
-                    Content="{x:Static properties:Resources.LabelExportToCSV}"
+                    Content="{Binding [Label_ExportToCSV].Value, Source={StaticResource Loc}}"
                     IsEnabled="{Binding !IsProcessingData, Mode=TwoWay}"
                     Click="ExportDataButton_OnClick"
                     HorizontalAlignment="Right"
@@ -70,7 +70,7 @@
                            Width="15" 
                            Height="15"
                            RenderOptions.BitmapInterpolationMode="HighQuality"/>
-                    <TextBlock Text="{x:Static properties:Resources.LabelClimateData}"
+                    <TextBlock Text="{Binding [Label_ClimateData].Value, Source={StaticResource Loc}}"
                                Padding="10, 0, 0, 5"/>
                 </StackPanel>
             </Button>
@@ -83,28 +83,28 @@
                   SelectedItem="{Binding SelectedSingleSoilResult}"
                   IsVisible="{Binding StoragePlaceholder.ShowSingleCoordinateResults}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelLatitude}"
+                <DataGridTextColumn Header="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Latitude, StringFormat={}{0:0.###}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelLongitude}"
+                <DataGridTextColumn Header="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Longitude, StringFormat={}{0:0.###}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelProvince}"
+                <DataGridTextColumn Header="{Binding [Label_Province].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Province, Converter={StaticResource EnumDescriptionConverter}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelSoilGreatGroup}"
+                <DataGridTextColumn Header="{Binding [Label_SoilGreatGroup].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding SoilGreatGroup, Converter={StaticResource EnumDescriptionConverter}}"
                                     Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelSoilTexture}"
+                <DataGridTextColumn Header="{Binding [Label_SoilTexture].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding SoilTexture, Converter={StaticResource EnumDescriptionConverter}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelPercentClayInSoil}"
+                <DataGridTextColumn Header="{Binding [Label_PercentClayInSoil].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding PercentClayInSoil, StringFormat={}{0:0.##}}"
                                     Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelSoilPh}"
+                <DataGridTextColumn Header="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding SoilPh, StringFormat={}{0:0.##}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelOrganicMatterSoil}"
+                <DataGridTextColumn Header="{Binding [Label_OrganicMatterSoil].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding PercentOrganicMatterInSoil, StringFormat={}{0:0.##}}"
                                     Width="Auto"/>
             </DataGrid.Columns>
@@ -116,28 +116,28 @@
                   IsReadOnly="True"
                   IsVisible="{Binding StoragePlaceholder.ShowMultipleCoordinateResults}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelLatitude}"
+                <DataGridTextColumn Header="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Latitude, StringFormat={}{0:0.##}}"
                                     Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelLongitude}"
+                <DataGridTextColumn Header="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Longitude, StringFormat={}{0:0.##}}"
                                     Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelProvince}"
+                <DataGridTextColumn Header="{Binding [Label_Province].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Province}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelSoilGreatGroup}"
+                <DataGridTextColumn Header="{Binding [Label_SoilGreatGroup].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding SoilGreatGroup, Converter={StaticResource EnumDescriptionConverter}}"
                                     Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelSoilTexture}"
+                <DataGridTextColumn Header="{Binding [Label_SoilTexture].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding SoilTexture, Converter={StaticResource EnumDescriptionConverter}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelPercentClayInSoil}"
+                <DataGridTextColumn Header="{Binding [Label_PercentClayInSoil].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding PercentClayInSoil, StringFormat={}{0:0.##}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelSoilPh}"
+                <DataGridTextColumn Header="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding SoilPh, StringFormat={}{0:0.##}}"
                                     Width="*"/>
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelOrganicMatterSoil}"
+                <DataGridTextColumn Header="{Binding [Label_OrganicMatterSoil].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding PercentOrganicMatterInSoil, StringFormat={}{0:0.##}}"
                                     Width="Auto"/>
             </DataGrid.Columns>

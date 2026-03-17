@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using H.Core.Models;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Processors
 {
@@ -36,7 +37,7 @@ namespace H.CLI.Processors
             foreach (var currentFarm in applicationData.Farms)
             {
                 var seenComponentTypes = new List<Type>();
-                Console.WriteLine(String.Format(Properties.Resources.StartingIndividualComponentProcessing, currentFarm.Name));
+                Console.WriteLine(String.Format(AppStrings.Status_StartingIndividualComponentProcessing, currentFarm.Name));
                 foreach (var component in currentFarm.Components)
                 {
                     //Later on if more Components have different output files, add their categories here or filter the list somewhere else

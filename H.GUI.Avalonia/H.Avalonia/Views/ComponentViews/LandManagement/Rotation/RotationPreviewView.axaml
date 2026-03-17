@@ -2,6 +2,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
          xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"
          xmlns:converters="clr-namespace:H.Avalonia.Converters"
          mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
@@ -24,12 +25,12 @@
             <!-- Step Header -->
             <StackPanel Margin="0,0,0,20">
                 <Border Classes="step-badge" HorizontalAlignment="Left">
-                    <TextBlock Text="Step 3" Classes="step-badge-text"/>
+                    <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
                 </Border>
-                <TextBlock Text="Preview Field Assignments"
+                <TextBlock Text="{Binding [Label_PreviewFieldAssignments].Value, Source={StaticResource Loc}}"
                            Classes="step-number-description"
                            Margin="0,8,0,0"/>
-                <TextBlock Text="Review how crops will be distributed across fields over time. Each row represents a field, each column represents a year."
+                <TextBlock Text="{Binding [Label_ReviewHowCropsDistributed].Value, Source={StaticResource Loc}}"
                            Foreground="{StaticResource GcdsTextSecondaryBrush}"
                            FontSize="12"
                            Margin="0,4,0,0"/>
@@ -48,7 +49,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <!-- Each row showing one field's crop assignments across years -->
-                                    <Border BorderBrush="{StaticResource GcdsBorderLightBrush}" 
+                                    <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
                                             BorderThickness="0,0,0,1"
                                             Padding="8,12">
                                         <Grid>
@@ -61,11 +62,11 @@
 
                                             <!-- Field Name -->
                                             <Border Grid.Column="0"
-                                                    Background="{StaticResource GcdsBgLightBrush}" 
+                                                    Background="{StaticResource GcdsBgLightBrush}"
                                                     Padding="12,8"
                                                     Margin="0,0,8,0"
                                                     CornerRadius="4">
-                                                <TextBlock Text="{Binding FieldName}" 
+                                                <TextBlock Text="{Binding FieldName}"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"/>
                                             </Border>
@@ -107,7 +108,7 @@
                                                                         <Setter Property="Opacity" Value="0.85"/>
                                                                     </Style>
                                                                 </Border.Styles>
-                                                                <StackPanel Spacing="4" VerticalAlignment="Center">
+                                                                <StackPanel Spacing="2" VerticalAlignment="Center">
                                                                     <!-- Year label -->
                                                                     <TextBlock Text="{Binding Year}"
                                                                                FontSize="12"
@@ -115,7 +116,7 @@
                                                                                Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                                                                TextAlignment="Center"/>
                                                                     <!-- Crop name with icon - with text trimming -->
-                                                                    <TextBlock Text="{Binding CropDisplay}" 
+                                                                    <TextBlock Text="{Binding CropDisplay}"
                                                                                TextAlignment="Center"
                                                                                TextWrapping="Wrap"
                                                                                TextTrimming="CharacterEllipsis"
@@ -123,6 +124,16 @@
                                                                                FontWeight="Medium"
                                                                                Foreground="{DynamicResource TextControlForeground}"
                                                                                ToolTip.Tip="{Binding CropDisplay}"/>
+                                                                    <!-- Cover crop indicator -->
+                                                                    <TextBlock Text="{Binding CoverCropDisplay}"
+                                                                               IsVisible="{Binding HasCoverCrop}"
+                                                                               TextAlignment="Center"
+                                                                               FontSize="10"
+                                                                               FontStyle="Italic"
+                                                                               Foreground="#2E7D32"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               MaxLines="1"
+                                                                               ToolTip.Tip="{Binding CoverCropDisplay}"/>
                                                                 </StackPanel>
                                                             </Border>
                                                         </Button>
@@ -131,7 +142,7 @@
                                             </ItemsControl>
                                         </Grid>
                                     </Border>
-                                                </DataTemplate>
+                                </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Grid>
@@ -147,9 +158,9 @@
                     Padding="16"
                     Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Text="Preview requirements:" FontWeight="SemiBold" Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,4"/>
-                    <TextBlock Text="• Configure the number of fields in Step 1" Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,2"/>
-                    <TextBlock Text="• Add at least one crop in Step 2" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                    <TextBlock Text="{Binding [Label_PreviewRequirements].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <TextBlock Text="{Binding [Label_PreviewRequireFields].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}" Margin="0,0,0,2"/>
+                    <TextBlock Text="{Binding [Label_PreviewRequireCrops].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
                 </StackPanel>
             </Border>
 
@@ -162,9 +173,8 @@
                     Margin="0,12,0,0"
                     IsVisible="{Binding IsShiftEnabled}">
                 <TextBlock TextWrapping="Wrap" Foreground="{StaticResource GcdsTextSecondaryBrush}">
-                    <Run Text="Rotation shifting is enabled." FontWeight="SemiBold"/>
-                    <Run Text=" Each field will grow a different sequence of crops, starting at different points in the rotation."/>
-                    <Run Text=" This diversifies operational risk and distributes workload across the growing season."/>
+                    <Run Text="{Binding [Label_RotationShiftingEnabled].Value, Source={StaticResource Loc}}" FontWeight="SemiBold"/>
+                    <Run Text="{Binding [Label_RotationShiftingDesc].Value, Source={StaticResource Loc}}"/>
                 </TextBlock>
             </Border>
 
@@ -176,8 +186,8 @@
                     Padding="12"
                     Margin="0,12,0,0">
                 <TextBlock TextWrapping="Wrap" Foreground="{StaticResource GcdsTextSecondaryBrush}">
-                    <Run Text="Next step:" FontWeight="SemiBold"/>
-                    <Run Text=" Click any cell in the preview grid to edit crop-specific details (yield, irrigation, etc.) for that field and year."/>
+                    <Run Text="{Binding [Label_NextStep].Value, Source={StaticResource Loc}}" FontWeight="SemiBold"/>
+                    <Run Text="{Binding [Label_NextStepPreviewDesc].Value, Source={StaticResource Loc}}"/>
                 </TextBlock>
             </Border>
         </StackPanel>

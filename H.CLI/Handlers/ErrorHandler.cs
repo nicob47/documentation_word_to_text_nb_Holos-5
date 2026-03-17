@@ -4,6 +4,7 @@ using System.Linq;
 using H.CLI.FileAndDirectoryAccessors;
 using H.CLI.Interfaces;
 using H.CLI.TemporaryComponentStorage;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.Handlers
 {
@@ -57,14 +58,14 @@ namespace H.CLI.Handlers
                 if (uniqueName.Exists(x => x.Name == componentList.Value[0].Name))
                 {
                     var indexOfUniqueNameUsedForComparison = uniqueName.FindIndex(x => x.Name == componentList.Value[0].Name);
-                    Console.WriteLine(String.Format(Properties.Resources.SameNameError, typeOfComponent, componentList.Key, uniqueName[indexOfUniqueNameUsedForComparison].Name));
+                    Console.WriteLine(String.Format(AppStrings.Error_SameName, typeOfComponent, componentList.Key, uniqueName[indexOfUniqueNameUsedForComparison].Name));
                     Console.WriteLine(Environment.NewLine);
                     counter++;
 
                     if (!uniqueName[indexOfUniqueNameUsedForComparison].Displayed)
                     {
                         counter++;
-                        Console.WriteLine(String.Format(Properties.Resources.SameNameError, typeOfComponent, uniqueName[indexOfUniqueNameUsedForComparison].FileName, uniqueName[indexOfUniqueNameUsedForComparison].Name));
+                        Console.WriteLine(String.Format(AppStrings.Error_SameName, typeOfComponent, uniqueName[indexOfUniqueNameUsedForComparison].FileName, uniqueName[indexOfUniqueNameUsedForComparison].Name));
                         Console.WriteLine(Environment.NewLine);
                         uniqueName[indexOfUniqueNameUsedForComparison].Displayed = true;
                     }
@@ -80,7 +81,7 @@ namespace H.CLI.Handlers
             }
             if (counter > 0)
             {
-                throw new FormatException(String.Format(Properties.Resources.SameNameErrorExceptionMessage, counter, typeOfComponent));
+                throw new FormatException(String.Format(AppStrings.Error_SameNameMessage, counter, typeOfComponent));
             }
 
         }
@@ -110,9 +111,9 @@ namespace H.CLI.Handlers
                     if (checkForMultipleGroupTypesInARow.Any())
                     {
                         var combineInvalidGroupTypesString = string.Join(",", checkForMultipleGroupTypesInARow.SelectMany(x => x.Select(y => y.GroupType.ToString())));
-                        Console.WriteLine(String.Format(Properties.Resources.DuplicateAnimalGroupTypesReferringToSameAnimalGroup, combineInvalidGroupTypesString, group.Key, fileToListOfDataRows.Key));
+                        Console.WriteLine(String.Format(AppStrings.Error_DuplicateAnimalGroupTypes, combineInvalidGroupTypesString, group.Key, fileToListOfDataRows.Key));
                         Console.WriteLine(Environment.NewLine);
-                        throw new Exception(String.Format(Properties.Resources.DuplicateAnimalGroupTypesReferringToSameAnimalGroup, combineInvalidGroupTypesString, group.Key, fileToListOfDataRows.Key));
+                        throw new Exception(String.Format(AppStrings.Error_DuplicateAnimalGroupTypes, combineInvalidGroupTypesString, group.Key, fileToListOfDataRows.Key));
                     }
                 }
             }

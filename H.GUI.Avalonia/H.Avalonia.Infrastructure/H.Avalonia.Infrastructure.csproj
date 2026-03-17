@@ -10,7 +10,7 @@
   <!-- Disable Avalonia XAML IL debug info so original.pdb is never generated -->
   <PropertyGroup>
     <UseSharedCompilation>false</UseSharedCompilation>
-    <AvaloniaXamlIlDebugInfo>false</AvaloniaXamlIlDebugInfo>
+    <XamlILDebugInfo>false</XamlILDebugInfo>
   </PropertyGroup>
 
   <!-- Clean up Avalonia XAML compiler intermediate files before each build
@@ -48,6 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\H.Core\H.Core.csproj" />
     <ProjectReference Include="..\..\H.Infrastructure\H.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\H.Localization\H.Localization.csproj" />
     <ProjectReference Include="..\H.Avalonia.Core\H.Avalonia.Core.csproj" />
   </ItemGroup>
 

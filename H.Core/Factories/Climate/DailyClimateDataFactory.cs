@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Mappers;
+﻿using H.Core.Mappers;
 using H.Core.Models;
 using H.Core.Models.Climate;
 using H.Core.Providers.Climate;
@@ -14,9 +13,9 @@ public class DailyClimateDataFactory : IDailyClimateDataFactory
 {
     #region Fields
 
-    private readonly IMapper _dailyClimateDataToDtoMapper;
-    private readonly IMapper _dailyClimateDtoToDtoMapper;
-    private readonly IMapper _dailyClimateDtoToDataMapper;
+    private readonly IModelMapper<DailyClimateData, DailyClimateDto> _dailyClimateDataToDtoMapper;
+    private readonly IModelMapper<DailyClimateDto, DailyClimateDto> _dailyClimateDtoToDtoMapper;
+    private readonly IModelMapper<DailyClimateDto, DailyClimateData> _dailyClimateDtoToDataMapper;
 
     #endregion
 
@@ -26,9 +25,9 @@ public class DailyClimateDataFactory : IDailyClimateDataFactory
     {
         if (containerProvider != null)
         {
-            _dailyClimateDataToDtoMapper = containerProvider.Resolve<IMapper>(nameof(DailyClimateDataToDailyClimateDtoMapper));
-            _dailyClimateDtoToDtoMapper = containerProvider.Resolve<IMapper>(nameof(DailyClimateDtoToDailyClimateDtoMapper));
-            _dailyClimateDtoToDataMapper = containerProvider.Resolve<IMapper>(nameof(DailyClimateDtoToDailyClimateDataMapper));
+            _dailyClimateDataToDtoMapper = containerProvider.Resolve<IModelMapper<DailyClimateData, DailyClimateDto>>(nameof(DailyClimateDataToDailyClimateDtoMapper));
+            _dailyClimateDtoToDtoMapper = containerProvider.Resolve<IModelMapper<DailyClimateDto, DailyClimateDto>>(nameof(DailyClimateDtoToDailyClimateDtoMapper));
+            _dailyClimateDtoToDataMapper = containerProvider.Resolve<IModelMapper<DailyClimateDto, DailyClimateData>>(nameof(DailyClimateDtoToDailyClimateDataMapper));
         }
         else
         {
@@ -60,27 +59,22 @@ public class DailyClimateDataFactory : IDailyClimateDataFactory
     {
         var dailyClimateDto = new DailyClimateDto();
 
-        _dailyClimateDtoToDtoMapper.Map(template, dailyClimateDto);
+        if (template is DailyClimateDto dtoTemplate)
+        {
+            PropertyMapper.CopyTo(dtoTemplate, dailyClimateDto);
+        }
 
         return dailyClimateDto;
     }
 
     public DailyClimateDto CreateDto(DailyClimateData dailyClimateData)
     {
-        var dto = new DailyClimateDto();
-
-        _dailyClimateDataToDtoMapper.Map(dailyClimateData, dto);
-
-        return dto;
+        return _dailyClimateDataToDtoMapper.Map(dailyClimateData);
     }
 
     public DailyClimateData CreateData(DailyClimateDto dailyClimateDto)
     {
-        var data = new DailyClimateData();
-
-        _dailyClimateDtoToDataMapper.Map(dailyClimateDto, data);
-
-        return data;
+        return _dailyClimateDtoToDataMapper.Map(dailyClimateDto);
     }
 
     #endregion

@@ -1,0 +1,369 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:converters="clr-namespace:H.Avalonia.Converters"
+           mc:Ignorable="d"
+           x:Class="H.Avalonia.Views.ComponentViews.Swine.SwineLifecycleVisualizationView">
+
+<UserControl.Resources>
+  <converters:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter"/>
+  <converters:BoolToBorderThicknessConverter x:Key="BoolToBorderThicknessConverter"/>
+</UserControl.Resources>
+
+  <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
+          BorderThickness="2"
+          CornerRadius="8"
+          Background="White"
+          Padding="20"
+          Margin="0,0,0,16">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+      <!-- Title -->
+      <StackPanel Grid.Row="0" Margin="0,0,0,24">
+        <TextBlock Text="Swine Production Chain"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Click on a stage to learn more about each phase of swine production"
+                   FontSize="13"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   HorizontalAlignment="Center"
+                   Margin="0,4,0,0"/>
+      </StackPanel>
+
+      <!-- Main Production Chain Visualization -->
+      <Canvas Grid.Row="1"
+              Width="1100"
+              Height="340"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+
+        <!-- ══════════════════════════════════════════════════════════════ -->
+        <!-- LIFECYCLE STAGES (top row) -->
+        <!-- ══════════════════════════════════════════════════════════════ -->
+
+        <!-- Stage: Breeding -->
+        <Border Canvas.Left="10"
+                Canvas.Top="30"
+                Width="170"
+                Height="115"
+                Background="#E8EAF6"
+                BorderBrush="{Binding IsBreedingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsBreedingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Breeding_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Breeding"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#283593"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Boars, Sows, Gilts, Dry Sows"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Breeding → Farrowing -->
+        <Path Canvas.Left="180"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 50,0 M 45,-5 L 50,0 L 45,5"/>
+        <TextBlock Canvas.Left="183"
+                   Canvas.Top="65"
+                   Text="Mating"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Stage: Farrowing -->
+        <Border Canvas.Left="230"
+                Canvas.Top="30"
+                Width="170"
+                Height="115"
+                Background="#FCE4EC"
+                BorderBrush="{Binding IsFarrowingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsFarrowingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Farrowing_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Farrowing"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#AD1457"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Lactating sows nursing piglets"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Farrowing → Nursery -->
+        <Path Canvas.Left="400"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 50,0 M 45,-5 L 50,0 L 45,5"/>
+        <TextBlock Canvas.Left="400"
+                   Canvas.Top="65"
+                   Text="Weaning"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Stage: Nursery -->
+        <Border Canvas.Left="450"
+                Canvas.Top="30"
+                Width="170"
+                Height="115"
+                Background="#FFF3E0"
+                BorderBrush="{Binding IsNurserySelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsNurserySelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Nursery_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Nursery"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#E65100"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Weaned piglets (starters)"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Nursery → Growing -->
+        <Path Canvas.Left="620"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 50,0 M 45,-5 L 50,0 L 45,5"/>
+
+        <!-- Stage: Growing -->
+        <Border Canvas.Left="670"
+                Canvas.Top="30"
+                Width="170"
+                Height="115"
+                Background="#E8F5E9"
+                BorderBrush="{Binding IsGrowingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsGrowingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Growing_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Growing"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#2E7D32"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Grower pigs (25-60 kg)"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Growing → Finishing -->
+        <Path Canvas.Left="840"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 50,0 M 45,-5 L 50,0 L 45,5"/>
+
+        <!-- Stage: Finishing -->
+        <Border Canvas.Left="890"
+                Canvas.Top="30"
+                Width="170"
+                Height="115"
+                Background="#FFEBEE"
+                BorderBrush="{Binding IsFinishingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsFinishingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Finishing_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Finishing"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#C62828"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Finisher pigs (60-120 kg) to market"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Feedback loop: Breeding stock replacement (dashed arc across top) -->
+        <Path Canvas.Left="10"
+              Canvas.Top="0"
+              Stroke="#283593"
+              StrokeThickness="2"
+              StrokeDashArray="4,2"
+              Data="M 940,145 Q 475,180 85,145"/>
+        <Path Canvas.Left="95"
+              Canvas.Top="145"
+              Stroke="#283593"
+              StrokeThickness="2"
+              Fill="#283593"
+              Data="M 0,0 L -7,-10 L 5,-8 Z"/>
+        <Border Canvas.Left="430"
+                Canvas.Top="165"
+                Background="White"
+                Padding="4,1">
+          <TextBlock Text="Replacement gilts selected from finishing"
+                     FontSize="9"
+                     Foreground="#283593"
+                     FontWeight="Bold"/>
+        </Border>
+
+        <!-- ══════════════════════════════════════════════════════════════ -->
+        <!-- PRODUCTION SYSTEM BRACKETS (bottom) -->
+        <!-- ══════════════════════════════════════════════════════════════ -->
+
+        <!-- Farrow-to-Finish bracket (covers all stages) -->
+        <Path Canvas.Left="10"
+              Canvas.Top="195"
+              Stroke="#1565C0"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 1050,10 L 1050,0"/>
+        <Border Canvas.Left="420"
+                Canvas.Top="210"
+                Background="#E3F2FD"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="FarrowToFinish_PointerPressed">
+          <TextBlock Text="Farrow-to-Finish"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#1565C0"/>
+        </Border>
+
+        <!-- Farrow-to-Wean bracket (Breeding → Nursery) -->
+        <Path Canvas.Left="10"
+              Canvas.Top="245"
+              Stroke="#6A1B9A"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 610,10 L 610,0"/>
+        <Border Canvas.Left="210"
+                Canvas.Top="260"
+                Background="#F3E5F5"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="FarrowToWean_PointerPressed">
+          <TextBlock Text="Farrow-to-Wean"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#6A1B9A"/>
+        </Border>
+
+        <!-- Iso-Wean bracket (Nursery only) -->
+        <Path Canvas.Left="450"
+              Canvas.Top="290"
+              Stroke="#E65100"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 170,10 L 170,0"/>
+        <Border Canvas.Left="490"
+                Canvas.Top="305"
+                Background="#FFF3E0"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="IsoWean_PointerPressed">
+          <TextBlock Text="Iso-Wean"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#E65100"/>
+        </Border>
+
+        <!-- Grower-to-Finish bracket (Growing → Finishing) -->
+        <Path Canvas.Left="670"
+              Canvas.Top="245"
+              Stroke="#2E7D32"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 390,10 L 390,0"/>
+        <Border Canvas.Left="800"
+                Canvas.Top="260"
+                Background="#E8F5E9"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="GrowerToFinish_PointerPressed">
+          <TextBlock Text="Grower-to-Finish"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#2E7D32"/>
+        </Border>
+
+      </Canvas>
+
+      <!-- Stage Information Box -->
+      <Border Grid.Row="2"
+              Background="{StaticResource GcdsBgLightBrush}"
+              BorderBrush="{StaticResource GcdsBorderLightBrush}"
+              BorderThickness="1"
+              CornerRadius="6"
+              Padding="16"
+              Margin="0,16,0,16"
+              IsVisible="{Binding HasSelection}">
+        <StackPanel>
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0"
+                       Text="{Binding SelectedStageTitle}"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+            <Button Grid.Column="1"
+                    Content="X"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="14"
+                    Foreground="#999"
+                    Cursor="Hand"
+                    Click="CloseInfo_Click"
+                    Padding="8,0"/>
+          </Grid>
+          <TextBlock Text="{Binding SelectedStageDescription}"
+                     TextWrapping="Wrap"
+                     FontSize="12"
+                     Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                     LineHeight="18"
+                     Margin="0,8,0,0"/>
+        </StackPanel>
+      </Border>
+
+    </Grid>
+  </Border>
+
+</UserControl>

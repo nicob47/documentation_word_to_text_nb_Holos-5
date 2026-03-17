@@ -1,7 +1,7 @@
-﻿using AutoMapper;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
 using H.Core.Mappers;
+using H.Core.Models.Animals;
 using Moq;
 using Prism.Ioc;
 
@@ -33,15 +33,8 @@ public class AnimalComponentFactoryTests
     {
         var mockContainerProvider = new Mock<IContainerProvider>();
 
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalComponentDtoToAnimalComponentMapper>();
-        }).CreateMapper());
-
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), It.IsAny<string>())).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AnimalComponentBaseToAnimalComponentDtoMapper>();
-        }).CreateMapper());
+        mockContainerProvider.Setup(x => x.Resolve(typeof(IModelMapper<AnimalComponentDto, AnimalComponentDto>), It.IsAny<string>()))
+            .Returns(new AnimalComponentDtoToAnimalComponentDtoMapper());
 
         _sut = new AnimalComponentFactory(mockContainerProvider.Object);
     }

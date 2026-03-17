@@ -6,6 +6,7 @@ using H.CLI.Converters;
 using H.CLI.Parser;
 using H.Core.Models;
 using H.Core.Services;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.FileAndDirectoryAccessors
 {
@@ -69,8 +70,8 @@ namespace H.CLI.FileAndDirectoryAccessors
                     }
 
                 }
-                Console.WriteLine(Properties.Resources.ParsingFinished);
-                Console.WriteLine(Properties.Resources.ConversionFinished);
+                Console.WriteLine(AppStrings.Status_ParsingFinished);
+                Console.WriteLine(AppStrings.Status_ConversionFinished);
                 return farm;
             
         }

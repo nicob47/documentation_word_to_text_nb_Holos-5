@@ -2,6 +2,7 @@
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
 xmlns:dairy="clr-namespace:H.Avalonia.Views.ComponentViews.Dairy"
 xmlns:dairyVm="clr-namespace:H.Avalonia.ViewModels.ComponentViews.Dairy"
 xmlns:shared="clr-namespace:H.Avalonia.Views.ComponentViews.Shared"
@@ -31,8 +32,8 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.DairyComponentView">
     <!-- Advanced Options Toggle Section -->
     <shared:AdvancedOptionsToggleView Grid.Row="1"
                                       Margin="{StaticResource DefaultUserControlMargin}"
-                                      Title="Show Advanced Options"
-                                      Description="Display additional configuration options for detailed dairy operation management"
+                                      Title="{Binding [Label_ShowAdvancedOptions].Value, Source={StaticResource Loc}}"
+                                      Description="{Binding [Label_ShowAdvancedOptionsDairyDesc].Value, Source={StaticResource Loc}}"
                                       IsChecked="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairy:DairyComponentView}, Mode=TwoWay}"/>
 
     <ScrollViewer Grid.Row="2" 

@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:field="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Field"
              xmlns:fieldViews="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.Field"
              mc:Ignorable="d"
@@ -15,9 +16,9 @@
         <!-- Step Header -->
         <StackPanel Margin="0,0,0,20">
             <Border Classes="step-badge" HorizontalAlignment="Left">
-                <TextBlock Text="Step 1" Classes="step-badge-text"/>
+                <TextBlock Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
             </Border>
-            <TextBlock Text="Enter basic information for this field"
+            <TextBlock Text="{Binding [Label_EnterBasicInfoForField].Value, Source={StaticResource Loc}}"
                        Classes="step-number-description"
                        Margin="0,8,0,0"/>
         </StackPanel>
@@ -27,13 +28,13 @@
             <StackPanel>
                 <!-- Card Header -->
                 <StackPanel Margin="0,0,0,20">
-                    <TextBlock Text="Field Details"
+                    <TextBlock Text="{Binding [Label_FieldDetails].Value, Source={StaticResource Loc}}"
                               FontSize="{StaticResource GcdsFontSizeH6}"
                               FontWeight="Bold"
                               FontFamily="{StaticResource GcdsHeadingFont}"
                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
                               Margin="0,0,0,4"/>
-                    <TextBlock Text="Configure the area and time period for this field"
+                    <TextBlock Text="{Binding [Label_ConfigureAreaAndTimePeriod].Value, Source={StaticResource Loc}}"
                               FontSize="{StaticResource GcdsFontSizeSmall}"
                               Foreground="{StaticResource GcdsTextSecondaryBrush}"
                               FontStyle="Italic"/>
@@ -54,7 +55,7 @@
 
                     <!-- Field Size Row -->
                     <Label Grid.Row="0" Grid.Column="0"
-                           Content="Field size:"
+                           Content="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
                            Classes="input-label"/>
                     <NumericUpDown Grid.Row="0" Grid.Column="1"
                                   Minimum="0"
@@ -65,7 +66,7 @@
 
                     <!-- Start Year Row -->
                     <Label Grid.Row="1" Grid.Column="0"
-                           Content="Start year:"
+                           Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
                            Classes="input-label"/>
                     <NumericUpDown Grid.Row="1" Grid.Column="1"
                                   Minimum="0"
@@ -78,7 +79,7 @@
 
                     <!-- End Year Row -->
                     <Label Grid.Row="2" Grid.Column="0"
-                           Content="End year:"
+                           Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
                            Classes="input-label"/>
                     <NumericUpDown Grid.Row="2" Grid.Column="1"
                                   Minimum="0"

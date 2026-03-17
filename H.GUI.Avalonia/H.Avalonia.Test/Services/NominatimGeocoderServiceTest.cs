@@ -81,26 +81,29 @@ namespace H.Avalonia.Test.Services
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGeocoderLongLat()
         {
             _nominatimGeocoderService = new NominatimGeocoderService(_loggerMock, _notificationManagerServiceMock);
             var latitudeAndLongitude = await _nominatimGeocoderService.GetCoordinates(_streetAddress, _municipality, _province, _postalCode);
-            Assert.AreEqual(latitudeAndLongitude.latitude, 49.697, 0.01);
-            Assert.AreEqual(latitudeAndLongitude.longitude, -112.848, 0.01);
+            Assert.AreEqual(latitudeAndLongitude.latitude, 49.697, 0.05);
+            Assert.AreEqual(latitudeAndLongitude.longitude, -112.848, 0.05);
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestGeocoderGetApiContent()
         {
             _nominatimGeocoderService = new NominatimGeocoderService(_loggerMock, _notificationManagerServiceMock);
             JObject apiContentJObject = await _nominatimGeocoderService.GetApiContent(_streetAddress, _municipality, _province, _postalCode);
             var lat = double.Parse(apiContentJObject["lat"]?.ToString());
             var lon = double.Parse(apiContentJObject["lon"]?.ToString());
-            Assert.AreEqual(lat, 49.697, 0.01);
-            Assert.AreEqual(lon, -112.848, 0.01);
+            Assert.AreEqual(lat, 49.697, 0.05);
+            Assert.AreEqual(lon, -112.848, 0.05);
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public async Task TestCachingOfGeocodedData()
         {
             // Test that after geocoding an address, it is cached

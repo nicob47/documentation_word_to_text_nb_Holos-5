@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Factories;
 using H.Core.Mappers;
 using H.Core.Models.LandManagement.Fields;
@@ -52,38 +51,6 @@ public class FieldComponentServiceTest
         _mockFieldTransferService = new Mock<ITransferService<FieldSystemComponent, FieldSystemComponentDto>>();
 
         var mockLogger = new Mock<ILogger>();
-        var mockContainerProvider = new Mock<IContainerProvider>();
-
-        // Setup mappers to return a working IMapper for each required profile
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(CropViewItemToCropDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CropViewItemToCropDtoMapper>();
-        }).CreateMapper());
-
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(CropDtoToCropDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CropDtoToCropDtoMapper>();
-        }).CreateMapper());
-
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(CropDtoToCropViewItemMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CropDtoToCropViewItemMapper>();
-        }).CreateMapper());
-
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(FieldComponentToDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<FieldComponentToDtoMapper>();
-        }).CreateMapper());
-
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(FieldDtoToFieldComponentMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<FieldDtoToFieldComponentMapper>();
-        }).CreateMapper());
-
-        mockContainerProvider.Setup(x => x.Resolve(typeof(IMapper), nameof(FieldDtoToFieldDtoMapper))).Returns(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<FieldDtoToFieldDtoMapper>();
-        }).CreateMapper());
 
         _fieldComponentService = new FieldComponentService(
             _mockFieldComponentDtoFactory.Object,

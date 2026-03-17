@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using H.Core.CustomAttributes;
 using H.Core.Enumerations;
@@ -22,6 +23,12 @@ public partial class CropDto : DtoBase, ICropDto
     private bool _isSelected;
     private bool _herbicideUsed;
     private bool _copyToSimilarCrops;
+    private bool _isSecondaryCrop;
+    private CoverCropTerminationType _coverCropTerminationType;
+    private ICropDto? _coverCropDto;
+
+    // Lazily-built grouped list (string headers + CropType values)
+    private IReadOnlyList<object>? _groupedCropItems;
 
     #endregion
 
@@ -30,21 +37,23 @@ public partial class CropDto : DtoBase, ICropDto
     public CropDto()
     {
         // Initialize with diverse crop types representing all color categories
-        this.ValidCropTypes = new ObservableCollection<CropType>() 
-        { 
+        this.ValidCropTypes = new ObservableCollection<CropType>()
+        {
             CropType.NotSelected,
-            
-            // Cereals - Orange
+
+            // Cereals - Orange (IsSmallGrains + explicit fallbacks for Rye/Corn/Durum)
             CropType.Wheat,
             CropType.Barley,
             CropType.Oats,
             CropType.Rye,
             CropType.Corn,
             CropType.GrainCorn,
-            CropType.SilageCorn,
             CropType.Triticale,
             CropType.Durum,
-            
+
+            // Silage - Yellow (IsSilageCrop)
+            CropType.SilageCorn,
+
             // Oilseeds - Green
             CropType.Canola,
             CropType.Flax,
@@ -54,7 +63,7 @@ public partial class CropDto : DtoBase, ICropDto
             CropType.Soybeans,
             CropType.Mustard,
             CropType.MustardSeed,
-            
+
             // Pulses - Blue
             CropType.Peas,
             CropType.DryPeas,
@@ -64,7 +73,7 @@ public partial class CropDto : DtoBase, ICropDto
             CropType.FabaBeans,
             CropType.Beans,
             CropType.DryBean,
-            
+
             // Forages - Purple
             CropType.AlfalfaMedicagoSativaL,
             CropType.AlfalfaHay,
@@ -74,18 +83,29 @@ public partial class CropDto : DtoBase, ICropDto
             CropType.GrassHay,
             CropType.PerennialForages,
             CropType.Forage,
-            
+
             // Fallow - Gray
             CropType.Fallow,
             CropType.SummerFallow
         };
-        
+
         this.CropType = this.ValidCropTypes.ElementAt(0);
         this.Year = DateTime.Now.Year;
         this.AmountOfIrrigation = 0;
         this.WetYield = 0;
         this.HerbicideUsed = false;
         this.CopyToSimilarCrops = false;
+
+        // General defaults
+        this.TillageType = TillageType.Reduced;
+        this.HarvestMethod = HarvestMethods.CashCrop;
+        this.MoistureContentOfCropPercentage = 12;
+
+        // Fertilizer defaults
+        this.CustomReductionFactor = 1.0;
+
+        // Residue defaults
+        this.CarbonConcentration = 0.45;
 
         this.PropertyChanged += OnPropertyChanged;
     }
@@ -103,7 +123,50 @@ public partial class CropDto : DtoBase, ICropDto
     public ObservableCollection<CropType> ValidCropTypes
     {
         get => _cropTypes;
-        set => SetProperty(ref _cropTypes, value);
+        set
+        {
+            if (SetProperty(ref _cropTypes, value))
+            {
+                // Invalidate grouped list whenever the source list changes
+                _groupedCropItems = null;
+                RaisePropertyChanged(nameof(GroupedCropItems));
+            }
+        }
+    }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<object> GroupedCropItems
+    {
+        get
+        {
+            if (_groupedCropItems == null)
+            {
+                if (IsSecondaryCrop)
+                {
+                    // For cover crops, use the dedicated cover crop type list.
+                    // Set the backing field directly to avoid the ValidCropTypes setter
+                    // which would null-out _groupedCropItems and cause infinite recursion.
+                    _cropTypes = new ObservableCollection<CropType>(CropTypeExtensions.GetValidCoverCropTypes());
+                }
+                _groupedCropItems = BuildGroupedCropItems();
+            }
+            return _groupedCropItems;
+        }
+    }
+
+    /// <inheritdoc/>
+    public object? SelectedCropTypeItem
+    {
+        get => this.CropType;   // expose current crop type as the selected item
+        set
+        {
+            // Ignore header strings — clicking a category header must not change the crop
+            if (value is CropType cropType)
+            {
+                this.CropType = cropType;
+                RaisePropertyChanged(nameof(SelectedCropTypeItem));
+            }
+        }
     }
 
     public int Year
@@ -111,7 +174,6 @@ public partial class CropDto : DtoBase, ICropDto
         get => _year;
         set => SetProperty(ref _year, value);
     }
-
 
     [Units(MetricUnitsOfMeasurement.Millimeters)]
     public double AmountOfIrrigation
@@ -153,6 +215,132 @@ public partial class CropDto : DtoBase, ICropDto
     {
         get => _copyToSimilarCrops;
         set => SetProperty(ref _copyToSimilarCrops, value);
+    }
+
+    public bool IsSecondaryCrop
+    {
+        get => _isSecondaryCrop;
+        set
+        {
+            if (SetProperty(ref _isSecondaryCrop, value))
+            {
+                _groupedCropItems = null;
+                RaisePropertyChanged(nameof(GroupedCropItems));
+            }
+        }
+    }
+
+    public CoverCropTerminationType CoverCropTerminationType
+    {
+        get => _coverCropTerminationType;
+        set => SetProperty(ref _coverCropTerminationType, value);
+    }
+
+    public ICropDto? CoverCropDto
+    {
+        get => _coverCropDto;
+        set
+        {
+            if (SetProperty(ref _coverCropDto, value))
+            {
+                RaisePropertyChanged(nameof(HasCoverCrop));
+            }
+        }
+    }
+
+    public bool HasCoverCrop => CoverCropDto != null;
+
+    #endregion
+
+    #region Private Helpers
+
+    /// <summary>
+    /// Builds a flat list that interleaves category-header strings with
+    /// <see cref="CropType"/> values from <see cref="ValidCropTypes"/>.
+    /// The resulting list is used as the <c>ItemsSource</c> for the crop
+    /// ComboBox so that headers appear as non-selectable section dividers.
+    /// </summary>
+    private IReadOnlyList<object> BuildGroupedCropItems()
+    {
+        var result = new List<object>();
+        string? currentCategory = null;
+
+        foreach (var cropType in ValidCropTypes)
+        {
+            var category = GetCategoryName(cropType);
+
+            if (category != currentCategory)
+            {
+                currentCategory = category;
+                // Insert a plain-string header; the UI layer detects strings and
+                // renders them as non-selectable labels
+                if (category is not null)
+                {
+                    result.Add(category);
+                }
+            }
+
+            result.Add(cropType);
+        }
+
+        return result.AsReadOnly();
+    }
+
+    /// <summary>
+    /// Returns the display name of the category a crop belongs to,
+    /// or <c>null</c> for <see cref="CropType.NotSelected"/>.
+    /// Mirrors the colour buckets defined in <c>CropColorService</c>.
+    /// </summary>
+    private static string? GetCategoryName(CropType cropType)
+    {
+        if (cropType == CropType.NotSelected)
+            return null;
+
+        // Check explicit extension methods first
+        if (cropType.IsFallow())
+            return "Fallow";
+
+        if (cropType.IsSmallGrains())
+            return "Cereals";
+
+        if (cropType.IsOilSeed())
+            return "Oilseeds";
+
+        if (cropType.IsPulseCrop())
+            return "Pulses";
+
+        if (cropType.IsPerennial())
+            return "Forages";
+
+        if (cropType.IsRootCrop())
+            return "Root Crops";
+
+        if (cropType.IsSilageCrop())
+            return "Silage";
+
+        // Explicit fallbacks for crop types that don't match the extension methods
+        // but are present in ValidCropTypes — keeps them out of the "Other" bucket.
+        return cropType switch
+        {
+            // Cereals not covered by IsSmallGrains()
+            CropType.Rye or CropType.Corn or CropType.Durum
+                => "Cereals",
+
+            // Oilseeds not covered by IsOilSeed()
+            CropType.FlaxSeed or CropType.Sunflower or CropType.SunflowerSeed
+            or CropType.MustardSeed
+                => "Oilseeds",
+
+            // Pulses not covered by IsPulseCrop()
+            CropType.Peas or CropType.Beans or CropType.DryBean or CropType.FabaBeans
+                => "Pulses",
+
+            // Forages / perennials not covered by IsPerennial()
+            CropType.AlfalfaMedicagoSativaL or CropType.AlfalfaHay or CropType.GrassHay
+                => "Forages",
+
+            _ => "Other",
+        };
     }
 
     #endregion
@@ -209,6 +397,8 @@ public partial class CropDto : DtoBase, ICropDto
             {
                 // Ensure the crop type is valid
                 this.ValidateCropType();
+                // Keep SelectedCropTypeItem in sync
+                RaisePropertyChanged(nameof(SelectedCropTypeItem));
             }
             else if (e.PropertyName.Equals(nameof(AmountOfIrrigation)))
             {

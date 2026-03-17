@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
-             xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              xmlns:vm="clr-namespace:H.Avalonia.ViewModels.SupportingViews"
              x:Class="H.Avalonia.Views.SupportingViews.DietFormulatorView">
 
@@ -14,7 +14,7 @@
     <StackPanel Margin="20">
         
         <!-- Header -->
-        <TextBlock Text="{x:Static properties:Resources.LabelDietFormulator}" 
+        <TextBlock Text="{Binding [Label_DietFormulator].Value, Source={StaticResource Loc}}" 
                    FontSize="24" 
                    FontWeight="Bold" 
                    Margin="0,0,0,20"
@@ -24,7 +24,7 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,20">
             <Grid Width="300" VerticalAlignment="Center">
                 <TextBox Text="{Binding SearchText}" 
-                         Watermark="Search diets..." 
+                         Watermark="{Binding [Label_SearchDietsWatermark].Value, Source={StaticResource Loc}}" 
                          VerticalContentAlignment="Center" 
                          VerticalAlignment="Center" 
                          Foreground="#696969" 
@@ -64,47 +64,47 @@
 
             <DataGrid.Columns>
                 <!-- Diet Name -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelName}" 
+                <DataGridTextColumn Header="{Binding [Label_Name].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding Name}" 
                                     Width="200" />
                 
                 <!-- Animal Type -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelAnimalType}" 
+                <DataGridTextColumn Header="{Binding [Label_AnimalType].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding AnimalType}" 
                                     Width="150" />
                 
                 <!-- Diet Type -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelDietType}" 
+                <DataGridTextColumn Header="{Binding [Label_DietType].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding DietType}" 
                                     Width="150" />
                 
                 <!-- Crude Protein -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelCrudeProtein}" 
+                <DataGridTextColumn Header="{Binding [Label_CrudeProtein].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding CrudeProtein, StringFormat='{}{0:F2}'}" 
                                     Width="120" />
                 
                 <!-- Total Digestible Nutrient -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelTotalDigestibleNutrient}" 
+                <DataGridTextColumn Header="{Binding [Label_TotalDigestibleNutrient].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding TotalDigestibleNutrient, StringFormat='{}{0:F2}'}" 
                                     Width="120" />
                 
                 <!-- Forage -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelForage}" 
+                <DataGridTextColumn Header="{Binding [Label_Forage].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding Forage, StringFormat='{}{0:F2}'}" 
                                     Width="100" />
                 
                 <!-- Daily Dry Matter Feed Intake -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelDailyDryMatterFeedIntake}" 
+                <DataGridTextColumn Header="{Binding [Label_DailyDryMatterFeedIntake].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding DailyDryMatterFeedIntakeOfFeed, StringFormat='{}{0:F2}'}" 
                                     Width="150" />
                 
                 <!-- Methane Conversion Factor -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelMethaneConversionFactor}" 
+                <DataGridTextColumn Header="{Binding [Label_MethaneConversionFactor].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding MethaneConversionFactor, StringFormat='{}{0:F3}'}" 
                                     Width="150" />
                 
                 <!-- Comments -->
-                <DataGridTextColumn Header="{x:Static properties:Resources.LabelComments}" 
+                <DataGridTextColumn Header="{Binding [Label_Comments].Value, Source={StaticResource Loc}}" 
                                     Binding="{Binding Comments}" 
                                     Width="200" />
                 
@@ -113,7 +113,7 @@
 
         <!-- Status Bar -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <TextBlock Text="Total Diets: " FontWeight="SemiBold" />
+            <TextBlock Text="{Binding [Label_TotalDiets].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" />
             <TextBlock Text="{Binding Diets.Count}" FontWeight="Bold" />
         </StackPanel>
 

@@ -1,26 +1,26 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              x:Class="H.Avalonia.Views.OptionsViews.DefaultManureCompositionView">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<TextBlock Text="{x:Static properties:Resources.MessageDefaultManureComposition}" Padding="40, 15" Margin="0 0 0 20" Background="#3C4DBB" Foreground="WhiteSmoke" Grid.Row="0"/>
+		<TextBlock Text="{Binding [Message_DefaultManureComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="#3C4DBB" Foreground="WhiteSmoke" Grid.Row="0"/>
 		<!-- Hardcoded sizing to fix row display issue, couldn't get auto sizing to work for now -->
 		<DataGrid ItemsSource="{Binding Path=DefaultManureDTOs}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelManureType}" Binding="{Binding Path=AnimalType}"/>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelManureHandlingSystemColumn}" Binding="{Binding Path=ManureStateTypeString}"/>
+				<DataGridTextColumn Header="{Binding [Label_ManureType].Value, Source={StaticResource Loc}}" Binding="{Binding Path=AnimalType}"/>
+				<DataGridTextColumn Header="{Binding [Label_ManureHandlingSystemColumn].Value, Source={StaticResource Loc}}" Binding="{Binding Path=ManureStateTypeString}"/>
 				<DataGridTextColumn Header="{Binding Path=MoistureContentHeader}" Binding="{Binding Path=MoistureContent}"/>
 				<DataGridTextColumn Header="{Binding Path=NitrogenFractionHeader}" Binding="{Binding Path=NitrogenFraction}"/>
 				<DataGridTextColumn Header="{Binding Path=CarbonFractionHeader}" Binding="{Binding Path=CarbonFraction}"/>
 				<DataGridTextColumn Header="{Binding Path=PhosphorusFractionHeader}" Binding="{Binding Path=PhosphorusFraction}"/>
-				<DataGridTextColumn Header="{x:Static properties:Resources.LabelCarbonToNitrogen}" Binding="{Binding Path=CarbonToNitrogenRatio}"/>
+				<DataGridTextColumn Header="{Binding [Label_CarbonToNitrogen].Value, Source={StaticResource Loc}}" Binding="{Binding Path=CarbonToNitrogenRatio}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

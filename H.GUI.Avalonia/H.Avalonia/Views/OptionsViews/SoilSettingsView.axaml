@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			xmlns:OptionsViews="clr-namespace:H.Avalonia.ViewModels.OptionsViews"
-			 xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.OptionsViews.OptionSoilView">
 
@@ -13,41 +13,41 @@
 
 
   <Grid RowDefinitions="Auto,*">
-	  <TextBlock  Background="#3C4DBB" Foreground="WhiteSmoke" TextWrapping="Wrap" Grid.Row="0" Padding="40, 15" Text="{x:Static properties:Resources.DescriptionOptionSoilView}"  />
+	  <TextBlock  Background="#3C4DBB" Foreground="WhiteSmoke" TextWrapping="Wrap" Grid.Row="0" Padding="40, 15" Text="{Binding [Text_OptionSoilView].Value, Source={StaticResource Loc}}"  />
 	  <ScrollViewer Grid.Row="1">
 		  <StackPanel Margin="20" Spacing="10" Width="350" VerticalAlignment="Center" HorizontalAlignment="Center">
-			  <TextBlock Text="{x:Static properties:Resources.LabelEcodistrict}"/>
+			  <TextBlock Text="{Binding [Label_Ecodistrict].Value, Source={StaticResource Loc}}"/>
 			  <TextBox IsReadOnly="True" IsEnabled="False" Text="{Binding Data.BindingSoilData.EcodistrictName, Mode=TwoWay}"  />
-			  <TextBlock Text="{x:Static properties:Resources.SoilFunctionalCategory}"/>
+			  <TextBlock Text="{Binding [Label_SoilFunctionalCategory].Value, Source={StaticResource Loc}}"/>
 			  <TextBox IsReadOnly="True" IsEnabled="False" TextChanged="" Text="{Binding Data.BindingSoilData.SoilFunctionalCategoryString, Mode=TwoWay}"  />
-			  <TextBlock Text="{x:Static properties:Resources.LabelSoilGreatGroup}"/>
+			  <TextBlock Text="{Binding [Label_SoilGreatGroup].Value, Source={StaticResource Loc}}"/>
 			  <TextBox IsReadOnly="True" IsEnabled="False" TextChanged="" Text="{Binding Data.BindingSoilData.SoilGreatGroupString, Mode=TwoWay}"  />
-			  <TextBlock Text="{x:Static properties:Resources.SoilTexture}"/>
+			  <TextBlock Text="{Binding [Label_SoilTexture].Value, Source={StaticResource Loc}}"/>
 			  <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Data.SoilTextures}"  SelectedItem="{Binding Data.BindingSoilData.SoilTexture}" /> <!--SelectedItem="{Binding ActiveFarm.DefaultSoilData.SoilTexture, Mode=TwoWay}"-->
-			  <TextBlock Text="{x:Static properties:Resources.TopLayerThickness}">
+			  <TextBlock Text="{Binding [Label_TopLayerThickness].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
-				  <Run Text="{x:Static properties:Resources.UnitMm}"></Run>
+				  <Run Text="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"></Run>
 			  </TextBlock>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.TopLayerThickness, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.BulkDensity}"/>
+			  <TextBlock Text="{Binding [Label_BulkDensity].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.BulkDensity, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.ProportionOfClayInSoil}"/>
+			  <TextBlock Text="{Binding [Label_ProportionOfClayInSoil].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfClayInSoil, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.ProportionOfSandInSoil}"/>
+			  <TextBlock Text="{Binding [Label_ProportionOfSandInSoil].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSandInSoil, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.LabelPercentageOfSoilOrganicCarbon}">
+			  <TextBlock Text="{Binding [Label_PercentageOfSoilOrganicCarbon].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
-				  <Run Text="{x:Static properties:Resources.UnitPercentage}"></Run>
+				  <Run Text="{Binding [Label_UnitPercentage].Value, Source={StaticResource Loc}}"></Run>
 				  </TextBlock>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSoilOrganicCarbon, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.SoilPh}"/>
+			  <TextBlock Text="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown FormatString="{}{0:0.0}" Value="{Binding Data.SoilPh, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.LabelSoilCEC}">
+			  <TextBlock Text="{Binding [Label_SoilCEC].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
-				  <Run Text="{x:Static properties:Resources.UnitMiliEquivalentsPer100g}"></Run>
+				  <Run Text="{Binding [Label_UnitMiliEquivalentsPer100g].Value, Source={StaticResource Loc}}"></Run>
 				  </TextBlock>
 			  <NumericUpDown FormatString="{}{0:0}" Value="{Binding Data.SoilCec, Mode=TwoWay}" />
-			  <TextBlock Text="{x:Static properties:Resources.LabelCarbonModellingEquilibrium}"/>
+			  <TextBlock Text="{Binding [Label_CarbonModellingEquilibrium].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown FormatString="{}{0:0}" Value="{Binding Data.CarbonModellingEquilibriumYear, Mode=TwoWay}" />
 		  </StackPanel>
 	  </ScrollViewer>

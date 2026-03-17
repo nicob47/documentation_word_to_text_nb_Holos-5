@@ -1,5 +1,6 @@
 ﻿using H.Core.Enumerations;
 using System;
+using H.Localization.Resources.Strings;
 
 namespace H.CLI.UserInput
 {
@@ -31,7 +32,7 @@ namespace H.CLI.UserInput
                 {
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(Properties.Resources.InvalidUnitsArgument, argUnits);
+                    Console.WriteLine(AppStrings.Error_InvalidUnitsArgument, argUnits);
                     Console.ForegroundColor = ConsoleColor.White;
                 }       
             }
@@ -43,7 +44,7 @@ namespace H.CLI.UserInput
                 userChosenMeasurement = 0;
                 //Need to display this in both French and English at the start because we do not know their preferred language yet
                 Console.WriteLine();
-                Console.WriteLine(Properties.Resources.PromptUserForUnitsOfMeasurement);
+                Console.WriteLine(AppStrings.Prompt_UserForUnitsOfMeasurement);
                 userChosenMeasurementString = Console.ReadLine();
                 int.TryParse(userChosenMeasurementString, out userChosenMeasurement);
 

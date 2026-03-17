@@ -1,7 +1,7 @@
 ﻿#region Imports
 
-using AutoMapper;
 using H.Core.Enumerations;
+using H.Core.Mappers;
 using H.Core.Models;
 using H.Core.Models.Animals;
 using H.Core.Providers.Feed;
@@ -16,9 +16,7 @@ namespace H.Core.Services
     {
         #region Fields
 
-        private readonly IMapper _animalGroupMapper;
-        private readonly IMapper _managementPeriodMapper;
-        private readonly ITimePeriodHelper _timePeriodHelper = new TimePeriodHelper(); 
+        private readonly ITimePeriodHelper _timePeriodHelper = new TimePeriodHelper();
 
         #endregion
 
@@ -26,24 +24,6 @@ namespace H.Core.Services
 
         public AnimalComponentHelper()
         {
-            var animalGroupMapperConfiguration = new MapperConfiguration(x =>
-            {
-                x.CreateMap<AnimalGroup, AnimalGroup>()
-                    .ForMember(y => y.Guid, z => z.Ignore())
-                    .ForMember(y => y.ManagementPeriods, z => z.Ignore());
-            });
-
-            _animalGroupMapper = animalGroupMapperConfiguration.CreateMapper();
-
-            var managementPeriodMapperConfiguration = new MapperConfiguration(x =>
-            {
-                x.CreateMap<ManagementPeriod, ManagementPeriod>()
-                    .ForMember(y => y.Guid, z => z.Ignore())
-                    .ForMember(y => y.HousingDetails, z => z.Ignore())
-                    .ForMember(y => y.ManureDetails, z => z.Ignore());
-            });
-
-            _managementPeriodMapper = managementPeriodMapperConfiguration.CreateMapper();
         }
 
         #endregion
@@ -155,7 +135,7 @@ namespace H.Core.Services
         {
             var managementPeriod = new ManagementPeriod();
 
-            _managementPeriodMapper.Map(managementPeriodToReplicate, managementPeriod);
+            PropertyMapper.CopyTo(managementPeriodToReplicate, managementPeriod);
 
             managementPeriod.SelectedDiet = Diet.CopyDiet(managementPeriodToReplicate.SelectedDiet);
 
@@ -167,33 +147,15 @@ namespace H.Core.Services
 
         public void ReplicateManureDetails(ManagementPeriod from, ManagementPeriod to)
         {
-            var configuration = new MapperConfiguration(x =>
-            {
-                x.CreateMap<ManureDetails, ManureDetails>()
-                 .ForMember(y => y.Name, z => z.Ignore())
-                 .ForMember(y => y.Guid, z => z.Ignore());
-            });
-
-            var mapper = configuration.CreateMapper();
-
             var manureDetails = new ManureDetails();
-            mapper.Map(from.ManureDetails, manureDetails);
+            PropertyMapper.CopyTo(from.ManureDetails, manureDetails);
             to.ManureDetails = manureDetails;
         }
 
         public void ReplicateHousingDetails(ManagementPeriod from, ManagementPeriod to)
         {
-            var configuration = new MapperConfiguration(x =>
-            {
-                x.CreateMap<HousingDetails, HousingDetails>()
-                 .ForMember(y => y.Name, z => z.Ignore())
-                 .ForMember(y => y.Guid, z => z.Ignore());
-            });
-
-            var mapper = configuration.CreateMapper();
-
             var housingDetails = new HousingDetails();
-            mapper.Map(from.HousingDetails, housingDetails);
+            PropertyMapper.CopyTo(from.HousingDetails, housingDetails);
             to.HousingDetails = housingDetails;
         }
 
@@ -232,7 +194,7 @@ namespace H.Core.Services
                 if (animalGroup is AnimalGroup group)
                 {
                     var copiedGroup = new AnimalGroup();
-                    _animalGroupMapper.Map(group, copiedGroup);
+                    PropertyMapper.CopyTo(group, copiedGroup);
                     to.Groups.Add(copiedGroup);
 
                     foreach (var managementPeriod in group.ManagementPeriods)
