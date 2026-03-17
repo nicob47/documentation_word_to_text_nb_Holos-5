@@ -127,7 +127,7 @@
                             Command="{Binding Path=OnEditComponentsExecute}" 
                             Classes="responsive-button" 
                             Margin="5"/>
-                    <Button Content="Results"
+                    <Button Content="{Binding [Label_Results].Value, Source={StaticResource Loc}}"
                             Command="{Binding Path=OnResultsButtonClicked}"
                             Classes="responsive-button"
                             Margin="5"/>
