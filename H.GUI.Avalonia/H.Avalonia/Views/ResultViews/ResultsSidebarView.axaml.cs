@@ -11,6 +11,4 @@ public partial class ResultsSidebarView : UserControl
     {
         InitializeComponent();
     }
-
-    private ResultsSidebarViewModel _viewModel => DataContext as ResultsSidebarViewModel;
 }

@@ -21,23 +21,17 @@
 						<TextBlock Text="Units of Measurement:" Margin="0 0 0 5"/>
 						<ComboBox SelectedItem="{Binding SelectedEmissionType}" ItemsSource="{Binding EmissionTypeOptions}"/>
                     </StackPanel>
-				
-
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock Text="Show details:"/>
                     <ToggleSwitch IsChecked="{Binding ShowDetails}"/>
                 </StackPanel>
-
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock Text="Year: "/>
                     <ComboBox SelectedItem="{Binding SelectedYear}" ItemsSource="{Binding AvailableYears}"/>
- 
                 </StackPanel>
-
             </StackPanel>
         </Border>
         </Grid>
-        
         <lvcore:PieChart Grid.Column="1" Series="{Binding PieChartSeries}" LegendPosition="Bottom"  Margin="20" />
     </Grid>
 

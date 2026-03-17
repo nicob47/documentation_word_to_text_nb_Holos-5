@@ -175,7 +175,6 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Private Methods
 
-
         /// <summary>
         /// Populate chapter titles for the basic results view, these should correspond to the sections in the ResultsSummaryView.axaml
         /// </summary>
@@ -281,7 +280,6 @@ namespace H.Avalonia.ViewModels.Results
                 EventAggregator?.GetEvent<BasicChapterSelectedEvent>().Publish(SelectedBasicItem.Content?.ToString());
                 SelectedBasicItem = null;
             }
-
             // If advanced tab selected, navigate to that view using the region manager
             if (e.PropertyName == nameof(SelectedAdvancedItem) && SelectedAdvancedItem != null)
             {
