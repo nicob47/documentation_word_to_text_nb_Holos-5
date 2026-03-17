@@ -8,7 +8,7 @@ using Prism.Regions;
 
 namespace H.Avalonia.Views.ResultViews;
 
-public partial class ResultsSummaryView : UserControl, INavigationAware
+public partial class ResultsSummaryView : UserControl
 {
     private IEventAggregator _eventAggregator;
     private ScrollViewer _scrollViewer;
@@ -22,22 +22,13 @@ public partial class ResultsSummaryView : UserControl, INavigationAware
         _eventAggregator?.GetEvent<BasicChapterSelectedEvent>().Subscribe(ScrollToChapter);
     }
 
-    public void OnNavigatedTo(NavigationContext navigationContext)
-    {
-        if (navigationContext?.Parameters != null && navigationContext.Parameters.ContainsKey("chapter"))
-        {
-            var chapter = navigationContext.Parameters.GetValue<string>("chapter");
-            if (!string.IsNullOrEmpty(chapter))
-            {
-                // Post to UI thread so layout is complete before BringIntoView
-                Dispatcher.UIThread.Post(() => ScrollToChapter(chapter), DispatcherPriority.Background);
-            }
-        }
-    }
-
+    /// <summary>
+    /// Scrolls to the selected chapter in the results summary when a chapter is selected from the sidebar. The chapter names must match the named borders in the XAML for this to work.
+    /// </summary>
+    /// <param name="chapter"></param>
     private void ScrollToChapter(string chapter)
     {
-        // Named Borders in the XAML become fields: FarmProfileSection, AnnualProductionSection, etc.
+        // Named Borders in the XAML for navigation
         switch (chapter)
         {
             case "Farm Profile":
@@ -63,7 +54,4 @@ public partial class ResultsSummaryView : UserControl, INavigationAware
                 break;
         }
     }
-
-    public bool IsNavigationTarget(NavigationContext navigationContext) => true;
-    public void OnNavigatedFrom(NavigationContext navigationContext) { }
 }
