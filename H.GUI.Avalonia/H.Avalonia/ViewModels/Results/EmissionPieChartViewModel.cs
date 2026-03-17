@@ -35,8 +35,15 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the collection of data series displayed in the pie chart.
+        /// </summary>
         public IEnumerable<ISeries> PieChartSeries { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether detailed information is displayed in the user interface.
+        /// This serves no function as is, just tried to mock V4 GUI
+        /// </summary>
         public bool ShowDetails
         {
             get => _showDetails;
@@ -57,10 +64,7 @@ namespace H.Avalonia.ViewModels.Results
             {
                 throw new ArgumentNullException(nameof(logger));
             }
-
-
             ConstructPieChartContent();
-
         }
 
         #endregion
@@ -71,11 +75,14 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Private Methods
 
+        /// <summary>
+        /// Constructs and populates the content for the pie chart representing emission sources and their respective values.
+        /// </summary>
         private void ConstructPieChartContent()
         {
             PieChartSeries = new ISeries[] { };
 
-            EmissionPieChartViewItem entericMethane = new EmissionPieChartViewItem { GroupName = "Enteric CH4", EmissionType = "CH4", Value = 35, Label = "Enteric CH4" };
+            EmissionPieChartViewItem entericMethane = new EmissionPieChartViewItem { GroupName = "Enteric CH4", EmissionType = "CH4", Value = 100, Label = "Enteric CH4" };
             EmissionPieChartViewItem manureMethane = new EmissionPieChartViewItem { GroupName = "Manure CH4", EmissionType = "CH4", Value = 15, Label = "Manure CH4" };
             EmissionPieChartViewItem directNitrousOxide = new EmissionPieChartViewItem { GroupName = "Direct N20", EmissionType = "N20", Value = 20, Label = "Direct N20" };
             EmissionPieChartViewItem indirectNitrousOxide = new EmissionPieChartViewItem { GroupName = "Indirect N20", EmissionType = "N20", Value = 15, Label = "Indirect N20" };
@@ -90,6 +97,8 @@ namespace H.Avalonia.ViewModels.Results
                 energyCarbonDioxide
             };
 
+            SetPercentOfOutputPerGroup(items);
+
             PieChartSeries = items.Select(item =>
                 new PieSeries<EmissionPieChartViewItem>
                 {
@@ -103,6 +112,23 @@ namespace H.Avalonia.ViewModels.Results
                     IsHoverable = false,
                 }
             ).ToArray();
+        }
+
+        /// <summary>
+        /// Sets the values of the PieChartViewItems to their respective percentage 
+        /// </summary>
+        /// <param name="emissionsList">The list of PieChartViewItems that will be calculating percentage of</param>
+        private void SetPercentOfOutputPerGroup(List<EmissionPieChartViewItem> emissionsList)
+        {
+            var totalEmissions = 0;
+            foreach (var item in emissionsList)
+            {
+                totalEmissions += (int)item.Value;
+            }
+            foreach (var item in emissionsList)
+            {
+                item.Value = Math.Round((item.Value / totalEmissions) * 100, 2);
+            }
         }
 
         #endregion
