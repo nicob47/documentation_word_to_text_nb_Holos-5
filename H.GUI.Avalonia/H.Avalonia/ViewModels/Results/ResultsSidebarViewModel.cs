@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using H.Avalonia.Views.OptionsViews;
 using H.Core.Services;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
@@ -22,7 +23,6 @@ namespace H.Avalonia.ViewModels.Results
         #region Fields
 
         private ILogger _logger;
-        private IEventAggregator _eventAggregator;
 
         private bool _isAdvancedMode = false;
 
@@ -39,12 +39,16 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Constructors
 
-        public ResultsSidebarViewModel(IRegionManager regionManager, ILogger logger, IEventAggregator eventAggregator) : base(regionManager)
+        public ResultsSidebarViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ILogger logger) : base(regionManager, eventAggregator)
         {
-            _logger = logger;
-            _eventAggregator = eventAggregator;
+            if (logger != null)
+                _logger = logger;
+            else
+                throw new ArgumentNullException(nameof(logger));
+
             PopulateBasicChaptersTitles();
             PopulateAdvancedTabs();
+
             this.PropertyChanged += OnSelectedOptionChanged;
         }
 
@@ -102,7 +106,7 @@ namespace H.Avalonia.ViewModels.Results
         {
             get
             {
-                if (SelectedAdvancedItem == null)
+                if (SelectedAdvancedItem == null) // Sets default selected advanced item to the first tab if no tab is selected, occurs when initially navigated to.
                     SelectedAdvancedItem = _advancedViewTabs.FirstOrDefault();
                 return _advancedViewTabs;
             }
@@ -128,16 +132,43 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Public Methods
 
-        public void OnGoBackExecuted()
+        /// <summary>
+        /// Handles navigation to the view and performs initialization when the view is activated.
+        /// </summary>
+        /// <param name="navigationContext">The context information associated with the navigation event, including parameters and state relevant to the navigation.</param>
+        public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(BlankView));
-            this.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(MyComponentsView));
+            base.OnNavigatedTo(navigationContext);
+
+            // Open to basic mode with first chapter selected
+            IsAdvancedMode = false;
         }
 
+        /// <summary>
+        /// When the options button is clicked, this method will navigate to the options view in the sidebar and the select option view in the content region.
+        /// </summary>
         public void OnOptionsExecute()
         {
-            base.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(Views.OptionsViews.OptionsView));
-            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(Views.OptionsViews.SelectOptionView));
+            base.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(OptionsView));
+            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(SelectOptionView));
+            _logger.LogInformation($"Options button selected in {nameof(ResultsSidebarViewModel)}. Sidebar region navigating to {nameof(OptionsViews)}.");
+        }
+
+        /// <summary>
+        /// When the back button is clicked, this method will clear the content region and navigate back to the components view in the sidebar.
+        /// </summary>
+        public void OnGoBackExecuted()
+        {
+            // Clear content region
+            var contentView = this.RegionManager?.Regions[UiRegions.ContentRegion].ActiveViews.SingleOrDefault();
+            if (contentView != null)
+            {
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Deactivate(contentView);
+                this.RegionManager?.Regions[UiRegions.ContentRegion].Remove(contentView);
+            }
+            // Navigate back to components view in the sidebar
+            base.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(MyComponentsView));
+            _logger.LogInformation($"Back button selected in {nameof(ResultsSidebarViewModel)}. Deactivating {contentView}, sidebar region navigating to {nameof(MyComponentsView)}.");
         }
 
         #endregion
@@ -172,16 +203,6 @@ namespace H.Avalonia.ViewModels.Results
             _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleOverallEmissions });
             _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleComponentEmissions });
             _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleDetailedEmissionsReport });
-        }
-
-        /// <summary>
-        /// This will load the requested chapter in the basic results view in to the content region.
-        /// </summary>
-        /// <param name="selectedOption">The requested chapter to be loaded in the content region.</param>
-        private void NavigateToBasicChapter(string selectedOption)
-        {
-            selectedOption = "ResultsSummaryView";
-            base.RegionManager.RequestNavigate(UiRegions.ContentRegion, selectedOption);
         }
 
         /// <summary>
@@ -229,15 +250,13 @@ namespace H.Avalonia.ViewModels.Results
         {
             if (!IsAdvancedMode)
             {
-                var selectedItem = _basicUIState.SelectedItem ?? _basicViewChapters.FirstOrDefault();
-                if (selectedItem != null)
-                {
-                    NavigateToBasicChapter(selectedItem.Content?.ToString());
-                }
+                _logger.LogInformation($"Basic results view selected in {nameof(ResultsSidebarViewModel)}. Content region navigating to {nameof(ResultsSummaryView)}.");
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
             }
             else
             {
                 var selectedItem = _advancedUIState.SelectedItem ?? _advancedViewTabs.FirstOrDefault();
+                _logger.LogInformation($"Advanced results view selected in {nameof(ResultsSidebarViewModel)}. Content region navigating to {selectedItem.Content?.ToString()}.");
                 if (selectedItem != null)
                 {
                     NavigateToAdvancedTab(selectedItem.Content?.ToString());
@@ -259,7 +278,8 @@ namespace H.Avalonia.ViewModels.Results
             // If basic chapter selected, publish event to update chapter in the results summary view
             if (e.PropertyName == nameof(SelectedBasicItem) && SelectedBasicItem != null)
             {
-                _eventAggregator?.GetEvent<BasicChapterSelectedEvent>().Publish(SelectedBasicItem.Content?.ToString());
+                EventAggregator?.GetEvent<BasicChapterSelectedEvent>().Publish(SelectedBasicItem.Content?.ToString());
+                SelectedBasicItem = null;
             }
 
             // If advanced tab selected, navigate to that view using the region manager

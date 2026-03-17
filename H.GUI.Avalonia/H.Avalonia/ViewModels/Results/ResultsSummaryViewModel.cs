@@ -10,6 +10,9 @@ using Prism.Regions;
 
 namespace H.Avalonia.ViewModels.Results
 {
+    /// <summary>
+    /// Placeholder view model for the results summary page
+    /// </summary>
     public class ResultsSummaryViewModel : ResultsViewModelBase
     {
         #region Fields

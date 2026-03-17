@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
              x:Class="H.Avalonia.Views.ResultViews.ResultsSummaryView">
-
+    <!-- Placeholder view  -->
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20" MaxWidth="900">
             

@@ -49,4 +49,4 @@ namespace H.Core.Services
             AdditionalState[key] = value;
         }
     }
-    }
+}
