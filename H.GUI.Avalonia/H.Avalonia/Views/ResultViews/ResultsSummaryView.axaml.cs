@@ -2,15 +2,24 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
+using H.Avalonia.Events;
+using Prism.Events;
 using Prism.Regions;
 
 namespace H.Avalonia.Views.ResultViews;
 
 public partial class ResultsSummaryView : UserControl, INavigationAware
 {
-    public ResultsSummaryView()
+    private IEventAggregator _eventAggregator;
+    private ScrollViewer _scrollViewer;
+
+    public ResultsSummaryView(IEventAggregator eventAggregator)
     {
         InitializeComponent();
+        _eventAggregator = eventAggregator;
+        _scrollViewer = this.FindControl<ScrollViewer>("ContentScrollViewer");
+
+        _eventAggregator?.GetEvent<BasicChapterSelectedEvent>().Subscribe(ScrollToChapter);
     }
 
     public void OnNavigatedTo(NavigationContext navigationContext)
@@ -31,25 +40,25 @@ public partial class ResultsSummaryView : UserControl, INavigationAware
         // Named Borders in the XAML become fields: FarmProfileSection, AnnualProductionSection, etc.
         switch (chapter)
         {
-            case "FarmProfileSection":
+            case "Farm Profile":
                 FarmProfileSection?.BringIntoView();
                 break;
-            case "AnnualProductionSection":
+            case "Annual Production Summary":
                 AnnualProductionSection?.BringIntoView();
                 break;
-            case "TotalGHGEmissionsSection":
+            case "Total GHG Emissions":
                 TotalGHGEmissionsSection?.BringIntoView();
                 break;
-            case "EmissionsBreakdownSection":
+            case "Emissions Breakdown By Category":
                 EmissionsBreakdownSection?.BringIntoView();
                 break;
-            case "CarbonSequestrationSection":
+            case "Carbon Sequestration Summary":
                 CarbonSequestrationSection?.BringIntoView();
                 break;
-            case "ManureManagementSection":
+            case "Manure Management Overview":
                 ManureManagementSection?.BringIntoView();
                 break;
-            case "KeyFindingsSection":
+            case "Key Findings and Recommendations":
                 KeyFindingsSection?.BringIntoView();
                 break;
         }

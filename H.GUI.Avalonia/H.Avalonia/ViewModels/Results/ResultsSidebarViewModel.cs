@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using H.Core.Services;
 using Microsoft.Extensions.Logging;
+using Prism.Events;
 
 namespace H.Avalonia.ViewModels.Results
 {
@@ -21,6 +22,7 @@ namespace H.Avalonia.ViewModels.Results
         #region Fields
 
         private ILogger _logger;
+        private IEventAggregator _eventAggregator;
 
         private bool _isAdvancedMode = false;
 
@@ -37,9 +39,10 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Constructors
 
-        public ResultsSidebarViewModel(IRegionManager regionManager, ILogger logger) : base(regionManager)
+        public ResultsSidebarViewModel(IRegionManager regionManager, ILogger logger, IEventAggregator eventAggregator) : base(regionManager)
         {
             _logger = logger;
+            _eventAggregator = eventAggregator;
             PopulateBasicChaptersTitles();
             PopulateAdvancedTabs();
             this.PropertyChanged += OnSelectedOptionChanged;
@@ -226,11 +229,19 @@ namespace H.Avalonia.ViewModels.Results
         {
             if (!IsAdvancedMode)
             {
-                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(_basicUIState.SelectedItem));
+                var selectedItem = _basicUIState.SelectedItem ?? _basicViewChapters.FirstOrDefault();
+                if (selectedItem != null)
+                {
+                    NavigateToBasicChapter(selectedItem.Content?.ToString());
+                }
             }
             else
             {
-                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(_advancedUIState.SelectedItem));
+                var selectedItem = _advancedUIState.SelectedItem ?? _advancedViewTabs.FirstOrDefault();
+                if (selectedItem != null)
+                {
+                    NavigateToAdvancedTab(selectedItem.Content?.ToString());
+                }
             }
         }
 
@@ -245,15 +256,16 @@ namespace H.Avalonia.ViewModels.Results
         /// <param name="e"></param>
         private void OnSelectedOptionChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (SelectedAdvancedItem is ListBoxItem item && item.Content != null)
+            // If basic chapter selected, publish event to update chapter in the results summary view
+            if (e.PropertyName == nameof(SelectedBasicItem) && SelectedBasicItem != null)
             {
-                string? selectedOption = item.Content.ToString();
-                if (!IsAdvancedMode)
-                {
-                    NavigateToBasicChapter(selectedOption);
-                }
-                else
-                    NavigateToAdvancedTab(selectedOption);
+                _eventAggregator?.GetEvent<BasicChapterSelectedEvent>().Publish(SelectedBasicItem.Content?.ToString());
+            }
+
+            // If advanced tab selected, navigate to that view using the region manager
+            if (e.PropertyName == nameof(SelectedAdvancedItem) && SelectedAdvancedItem != null)
+            {
+                NavigateToAdvancedTab(SelectedAdvancedItem.Content?.ToString());
             }
         }
 
