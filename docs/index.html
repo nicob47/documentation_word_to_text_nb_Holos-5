@@ -1395,6 +1395,151 @@ select.form-input { cursor: pointer; }
       </div>
     </div>
 
+    <!-- BEEF COMPONENT VIEW -->
+    <div id="view-beefComponent" class="view">
+      <div><input type="text" class="view-title-input" id="beefTitle" value="My Cow-Calf"></div>
+      <div class="title-underline"></div>
+
+      <div class="diagram-container">
+        <div class="diagram-title">Beef Production Chain</div>
+        <div class="diagram-subtitle">Click on a stage or production system bracket to learn more</div>
+        <svg viewBox="0 0 1050 300" width="100%" style="max-width: 1050px; display: block; margin: 0 auto;">
+
+          <!-- Stage: Cow-Calf -->
+          <rect x="10" y="30" width="200" height="115" rx="12" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="2" cursor="pointer" onclick="selectBeefStage('cowCalf')"/>
+          <text x="110" y="72" text-anchor="middle" fill="#283593" font-size="13" font-weight="bold">Cow-Calf</text>
+          <text x="110" y="95" text-anchor="middle" fill="#595959" font-size="10">Breeding cows, bulls,</text>
+          <text x="110" y="108" text-anchor="middle" fill="#595959" font-size="10">calves, replacement heifers</text>
+
+          <!-- Arrow: Cow-Calf → Backgrounding -->
+          <line x1="210" y1="87" x2="285" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="285,87 278,82 278,92" fill="#424242"/>
+          <text x="248" y="75" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Weaned calves</text>
+
+          <!-- Stage: Backgrounding -->
+          <rect x="290" y="30" width="200" height="115" rx="12" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="2" cursor="pointer" onclick="selectBeefStage('backgrounding')"/>
+          <text x="390" y="72" text-anchor="middle" fill="#2E7D32" font-size="13" font-weight="bold">Backgrounding</text>
+          <text x="390" y="95" text-anchor="middle" fill="#595959" font-size="10">Stocker steers &amp; heifers</text>
+          <text x="390" y="108" text-anchor="middle" fill="#595959" font-size="10">on forage-based diets</text>
+
+          <!-- Arrow: Backgrounding → Finishing -->
+          <line x1="490" y1="87" x2="565" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="565,87 558,82 558,92" fill="#424242"/>
+          <text x="528" y="75" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Feeder cattle</text>
+
+          <!-- Stage: Finishing -->
+          <rect x="570" y="30" width="200" height="115" rx="12" fill="#FFEBEE" stroke="#EF9A9A" stroke-width="2" cursor="pointer" onclick="selectBeefStage('finishing')"/>
+          <text x="670" y="72" text-anchor="middle" fill="#C62828" font-size="13" font-weight="bold">Finishing (Feedlot)</text>
+          <text x="670" y="95" text-anchor="middle" fill="#595959" font-size="10">High-energy diets to</text>
+          <text x="670" y="108" text-anchor="middle" fill="#595959" font-size="10">market weight (550–650 kg)</text>
+
+          <!-- Arrow: Finishing → Market -->
+          <line x1="770" y1="87" x2="845" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="845,87 838,82 838,92" fill="#424242"/>
+
+          <!-- Market box -->
+          <rect x="850" y="45" width="140" height="85" rx="12" fill="#F5F5F5" stroke="#BDBDBD" stroke-width="2"/>
+          <text x="920" y="80" text-anchor="middle" fill="#616161" font-size="13" font-weight="bold">Market</text>
+          <text x="920" y="100" text-anchor="middle" fill="#595959" font-size="10">Slaughter</text>
+
+          <!-- Feedback arc: replacement heifers -->
+          <path d="M 670,145 Q 350,180 110,145" fill="none" stroke="#283593" stroke-width="2" stroke-dasharray="4,2"/>
+          <polygon points="110,145 103,133 115,135" fill="#283593"/>
+          <rect x="300" y="160" width="250" height="16" rx="2" fill="white"/>
+          <text x="425" y="172" text-anchor="middle" fill="#283593" font-size="9" font-weight="bold">Replacement heifers retained for breeding</text>
+
+          <!-- Bracket: Cow-Calf -->
+          <line x1="10" y1="195" x2="10" y2="205" stroke="#283593" stroke-width="2"/>
+          <line x1="10" y1="205" x2="210" y2="205" stroke="#283593" stroke-width="2"/>
+          <line x1="210" y1="195" x2="210" y2="205" stroke="#283593" stroke-width="2"/>
+          <rect x="65" y="210" width="100" height="22" rx="4" fill="#E8EAF6" cursor="pointer" onclick="selectBeefStage('cowCalfSystem')"/>
+          <text x="115" y="225" text-anchor="middle" fill="#283593" font-size="11" font-weight="bold">Cow-Calf</text>
+
+          <!-- Bracket: Backgrounding -->
+          <line x1="290" y1="195" x2="290" y2="205" stroke="#2E7D32" stroke-width="2"/>
+          <line x1="290" y1="205" x2="490" y2="205" stroke="#2E7D32" stroke-width="2"/>
+          <line x1="490" y1="195" x2="490" y2="205" stroke="#2E7D32" stroke-width="2"/>
+          <rect x="330" y="210" width="120" height="22" rx="4" fill="#E8F5E9" cursor="pointer" onclick="selectBeefStage('backgroundingSystem')"/>
+          <text x="390" y="225" text-anchor="middle" fill="#2E7D32" font-size="11" font-weight="bold">Backgrounding</text>
+
+          <!-- Bracket: Finishing -->
+          <line x1="570" y1="195" x2="570" y2="205" stroke="#C62828" stroke-width="2"/>
+          <line x1="570" y1="205" x2="770" y2="205" stroke="#C62828" stroke-width="2"/>
+          <line x1="770" y1="195" x2="770" y2="205" stroke="#C62828" stroke-width="2"/>
+          <rect x="610" y="210" width="120" height="22" rx="4" fill="#FFEBEE" cursor="pointer" onclick="selectBeefStage('finishingSystem')"/>
+          <text x="670" y="225" text-anchor="middle" fill="#C62828" font-size="11" font-weight="bold">Finishing</text>
+
+          <!-- Bracket: Full cycle -->
+          <line x1="10" y1="245" x2="10" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <line x1="10" y1="255" x2="770" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <line x1="770" y1="245" x2="770" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <rect x="310" y="260" width="160" height="22" rx="4" fill="#F3E5F5" cursor="pointer" onclick="selectBeefStage('fullCycle')"/>
+          <text x="390" y="275" text-anchor="middle" fill="#6A1B9A" font-size="11" font-weight="bold">Full Production Cycle</text>
+
+        </svg>
+
+        <div id="beefStageInfoPanel" class="info-banner" style="display:none;">
+          <button class="close-btn" onclick="document.getElementById('beefStageInfoPanel').style.display='none'">✕</button>
+          <h3 id="beefStageInfoTitle"></h3>
+          <p id="beefStageInfoDesc"></p>
+        </div>
+      </div>
+
+      <!-- Beef 3-step wizard -->
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 1</span><span class="step-description">Define your animal groups</span></div>
+        <div style="margin-bottom: 12px;"><button class="btn btn-primary" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Group</button></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Animal Groups</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Cows (Lactating)</option><option>Cows (Dry)</option><option>Calves</option><option>Bulls</option><option>Replacement Heifers</option></select>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">Breeding Cows</div>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 2</span><span class="step-description">Define management periods</span></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Management Periods</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <div style="font-size: var(--font-small); font-weight: 600;">Period #1</div>
+              <div style="font-size: var(--font-caption); color: var(--text-secondary);">Jan 1 – Dec 31</div>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">150 animals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 3</span><span class="step-description">Configure management practices</span></div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'btab-housing')">Housing</button>
+          <button class="tab-btn" onclick="switchTab(this, 'btab-manure')">Manure</button>
+          <button class="tab-btn" onclick="switchTab(this, 'btab-details')">Animal Details</button>
+        </div>
+        <div id="btab-housing" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Housing type</label><select class="form-input"><option>Pasture</option><option>Confined – no barn</option><option>Housing (barn)</option></select><span class="form-unit"></span>
+            <label class="form-label">Bedding type</label><select class="form-input"><option>Straw</option><option>Wood shavings</option><option>None</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="btab-manure" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Manure handling</label><select class="form-input"><option>Pasture / Range</option><option>Solid storage</option><option>Composting – passive</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="btab-details" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Number of animals</label><input type="number" class="form-input" value="150"><span class="form-unit">head</span>
+            <label class="form-label">Average weight</label><input type="number" class="form-input" value="600"><span class="form-unit">kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SWINE COMPONENT VIEW -->
     <div id="view-swineComponent" class="view">
       <div><input type="text" class="view-title-input" id="swineTitle" value="My Farrow-to-Finish"></div>
@@ -2179,7 +2324,7 @@ const categories = [
     { type: 'Crop Rotation', desc: 'Multi-year crop rotation planning and carbon modeling' },
     { type: 'Shelterbelt', desc: 'Tree-based windbreak and carbon sequestration' }
   ]},
-  { name: 'Beef Production', components: [
+  { name: 'Beef Production', isBeef: true, components: [
     { type: 'Cow-Calf', desc: 'Cow-calf operation including breeding herd and calves' },
     { type: 'Backgrounding', desc: 'Growing cattle from weaning to feedlot entry' },
     { type: 'Finishing', desc: 'Feedlot finishing of cattle for market' }
@@ -2222,7 +2367,7 @@ const categories = [
 
 let myComponents = [
   { name: 'East Pasture', type: 'Field', desc: 'Main grazing field — 160 acres mixed grass', category: 'Land Management' },
-  { name: 'Cow-Calf Herd', type: 'Cow-Calf', desc: '150 head cow-calf operation on native pasture', category: 'Beef Production' },
+  { name: 'Cow-Calf Herd', type: 'Cow-Calf', desc: '150 head cow-calf operation on native pasture', category: 'Beef Production', isBeef: true },
   { name: 'Egg Barn', type: 'Chicken Egg Production', desc: '2000 laying hens — free run barn system', category: 'Poultry', isPoultry: true },
   { name: 'Hog Barn', type: 'Farrow-to-Finish', desc: '200 sow farrow-to-finish operation', category: 'Swine', isSwine: true }
 ];
@@ -2370,6 +2515,9 @@ function openComponent(i) {
   } else if (comp.isSwine) {
     document.getElementById('swineTitle').value = comp.name;
     showView('swineComponent');
+  } else if (comp.isBeef) {
+    document.getElementById('beefTitle').value = comp.name;
+    showView('beefComponent');
   } else if (comp.type === 'Crop Rotation') {
     document.getElementById('rotationComponentTitle').value = comp.name;
     showView('rotationComponent');
@@ -2408,7 +2556,7 @@ function showCategoryComponents(ci) {
     '<div class="comp-desc">' + comp.desc + '</div>' +
     '<div style="margin-top:auto; padding-top:12px;">' +
     '<button class="btn btn-primary" style="font-size:var(--font-small); padding:8px 16px;" ' +
-    'onclick="addComponent(\'' + comp.type + '\', \'' + comp.desc.replace(/'/g, "\\'") + '\', \'' + cat.name + '\', ' + (cat.isPoultry||false) + ', ' + (cat.isSwine||false) + ')">Add to Farm</button></div></div>'
+    'onclick="addComponent(\'' + comp.type + '\', \'' + comp.desc.replace(/'/g, "\\'") + '\', \'' + cat.name + '\', ' + (cat.isPoultry||false) + ', ' + (cat.isSwine||false) + ', ' + (cat.isBeef||false) + ')">Add to Farm</button></div></div>'
   ).join('');
 }
 
@@ -2417,8 +2565,8 @@ function backToCategories() {
   document.getElementById('componentPanel').style.display = 'none';
 }
 
-function addComponent(type, desc, category, isPoultry, isSwine) {
-  myComponents.push({ name: 'My ' + type, type: type, desc: desc, category: category, isPoultry: isPoultry, isSwine: isSwine });
+function addComponent(type, desc, category, isPoultry, isSwine, isBeef) {
+  myComponents.push({ name: 'My ' + type, type: type, desc: desc, category: category, isPoultry: isPoultry, isSwine: isSwine, isBeef: isBeef });
   renderMyComponents();
   // Auto-select the newly added component
   openComponent(myComponents.length - 1);
@@ -2516,6 +2664,27 @@ function selectStage(stage) {
   document.getElementById('stageInfoTitle').textContent = info.title;
   document.getElementById('stageInfoDesc').textContent = info.desc;
   document.getElementById('stageInfoPanel').style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BEEF DIAGRAM
+   ═══════════════════════════════════════════════════════════════ */
+const beefStageInfo = {
+  cowCalf: { title: 'Cow-Calf Stage', desc: 'The cow-calf stage is the foundation of beef production. A breeding herd of cows and bulls produces calves each year. The herd includes lactating cows nursing calves, dry cows, bulls, and replacement heifers. Calves are raised on pasture until weaning at 6–8 months (200–300 kg). This stage accounts for the largest share of lifetime greenhouse gas emissions due to enteric methane from forage digestion.' },
+  backgrounding: { title: 'Backgrounding Stage', desc: 'Backgrounding (stocker/growing) is a transitional phase where weaned calves grow on forage-based diets before entering the feedlot. Cattle gain 0.5–1.0 kg/day on pasture, silage, or hay rations over 3–8 months, adding 100–200 kg of body weight. This builds frame size before high-energy finishing diets.' },
+  finishing: { title: 'Finishing (Feedlot) Stage', desc: 'Finishing cattle are fed high-energy grain-based diets to reach market weight of 550–650 kg. Steers and heifers gain 1.2–1.8 kg/day over 120–200 days in feedlot pens. Feed conversion is approximately 6:1. This stage has the highest daily feed intake and most concentrated manure output.' },
+  cowCalfSystem: { title: 'Cow-Calf Production System', desc: 'A cow-calf operation maintains a breeding herd to produce weaned calves. It manages the full breeding cycle: bull selection, gestation (~283 days), calving, lactation, and weaning. Operations are predominantly pasture-based with winter supplemental feeding. Calves are sold at weaning or after preconditioning.' },
+  backgroundingSystem: { title: 'Backgrounding Production System', desc: 'A backgrounding operation purchases weaned calves and grows them on forage before feedlot entry. These operations add frame and weight at lower cost than feedlot finishing. Backgrounding can be on pasture (stocker), in drylots, or a combination. Animals are sold to finishing operations at an appropriate weight and frame size.' },
+  finishingSystem: { title: 'Finishing (Feedlot) Production System', desc: 'A finishing operation purchases backgrounded or weaned cattle and feeds high-energy diets to slaughter weight. Feedlots range from small farmer-feeders to large commercial yards. Cattle are penned in groups and fed total mixed rations. Implants and ionophores are commonly used to improve efficiency. Manure management is a major environmental component.' },
+  fullCycle: { title: 'Full Beef Production Cycle', desc: 'The full cycle spans cow-calf, backgrounding, and finishing — typically 18–24 months from birth to slaughter. Some operations integrate all stages; most cattle move between specialized farms. The cow-calf stage accounts for the largest share of lifetime emissions (enteric methane), while finishing has the highest daily emissions intensity.' }
+};
+
+function selectBeefStage(stage) {
+  const info = beefStageInfo[stage];
+  if (!info) return;
+  document.getElementById('beefStageInfoTitle').textContent = info.title;
+  document.getElementById('beefStageInfoDesc').textContent = info.desc;
+  document.getElementById('beefStageInfoPanel').style.display = 'block';
 }
 
 /* ═══════════════════════════════════════════════════════════════
