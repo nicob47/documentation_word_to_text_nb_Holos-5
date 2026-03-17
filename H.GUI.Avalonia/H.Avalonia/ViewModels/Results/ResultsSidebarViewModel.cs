@@ -140,7 +140,7 @@ namespace H.Avalonia.ViewModels.Results
         {
             base.OnNavigatedTo(navigationContext);
 
-            // Open to basic mode with first chapter selected
+            // Open to basic mode when navigated to
             IsAdvancedMode = false;
         }
 

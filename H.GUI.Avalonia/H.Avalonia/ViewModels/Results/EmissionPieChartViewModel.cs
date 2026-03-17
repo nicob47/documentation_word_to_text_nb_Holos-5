@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using H.Avalonia.Models.Results;
 using H.Core.Services;
 using LiveChartsCore.SkiaSharpView;
@@ -30,6 +31,7 @@ namespace H.Avalonia.ViewModels.Results
 
         private readonly ILogger _logger;
         private bool _showDetails = true;
+        private ComboBoxItem _selectedEmissionType = new();
 
         #endregion
 
@@ -39,6 +41,28 @@ namespace H.Avalonia.ViewModels.Results
         /// Gets or sets the collection of data series displayed in the pie chart.
         /// </summary>
         public IEnumerable<ISeries> PieChartSeries { get; set; }
+
+        public ObservableCollection<ComboBoxItem> EmissionTypeOptions { get; set; } = new ObservableCollection<ComboBoxItem>
+        {
+            new ComboBoxItem { Content = "Kg CO2e" },
+            new ComboBoxItem { Content = "Mg CO2e" },
+            new ComboBoxItem { Content = "Kg GHGs" },
+            new ComboBoxItem { Content = "Mg GHGs" }
+        };
+
+        public ComboBoxItem SelectedEmissionType
+        {
+            get => _selectedEmissionType;
+            set => SetProperty(ref _selectedEmissionType, value);
+        }
+
+        public ObservableCollection<int> AvailableYears { get; set; } = new ObservableCollection<int>()
+        {
+            2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018,
+        };
+
+
+        public int SelectedYear { set; get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether detailed information is displayed in the user interface.
@@ -65,6 +89,10 @@ namespace H.Avalonia.ViewModels.Results
                 throw new ArgumentNullException(nameof(logger));
             }
             ConstructPieChartContent();
+
+            // Set defaults to first item in each collection
+            SelectedEmissionType = EmissionTypeOptions.FirstOrDefault();
+            SelectedYear = AvailableYears.FirstOrDefault();
         }
 
         #endregion

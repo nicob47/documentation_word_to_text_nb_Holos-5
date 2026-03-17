@@ -12,19 +12,14 @@
                 BorderThickness="1"
                 CornerRadius="6"
                 Padding="16,12"
-                Margin="5,5,5,5"
+                Margin="5,5,5,5" 
                 Grid.Row="1"
                 VerticalAlignment="Center"
                 MinHeight="250">
 			<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 					<StackPanel Orientation="Vertical" Margin="10">
 						<TextBlock Text="Units of Measurement:" Margin="0 0 0 5"/>
-						<ComboBox SelectedIndex="0">
-							<ComboBoxItem>Kg CO2e</ComboBoxItem>
-							<ComboBoxItem>Mg CO2e</ComboBoxItem>
-							<ComboBoxItem>Kg GHGs</ComboBoxItem>
-							<ComboBoxItem>Mg GHGs</ComboBoxItem>
-						</ComboBox>
+						<ComboBox SelectedItem="{Binding SelectedEmissionType}" ItemsSource="{Binding EmissionTypeOptions}"/>
                     </StackPanel>
 				
 
@@ -35,16 +30,8 @@
 
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock Text="Year: "/>
-                    <ComboBox SelectedIndex="0">
-                        <ComboBoxItem>2026</ComboBoxItem>
-                        <ComboBoxItem>2025</ComboBoxItem>
-                        <ComboBoxItem>2024</ComboBoxItem>
-                        <ComboBoxItem>2023</ComboBoxItem>
-                        <ComboBoxItem>2022</ComboBoxItem>
-                        <ComboBoxItem>2021</ComboBoxItem>
-                        <ComboBoxItem>2020</ComboBoxItem>
-                        <ComboBoxItem>2019</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox SelectedItem="{Binding SelectedYear}" ItemsSource="{Binding AvailableYears}"/>
+ 
                 </StackPanel>
 
             </StackPanel>
