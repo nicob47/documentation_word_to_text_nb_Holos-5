@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cropTabs="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.CropTabs"
+             xmlns:field="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Field"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="950"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Field.SelectedCropTabView">
 
@@ -11,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
@@ -54,6 +56,13 @@
                 <ScrollViewer><cropTabs:CropEconomicsTabView/></ScrollViewer>
             </TabItem>
         </TabControl>
+
+        <!-- Cover Crop Editor - visible when cover crop is active on the selected crop -->
+        <Border Grid.Row="2"
+                IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
+                Margin="0,12,0,0">
+            <cropTabs:CoverCropEditorView DataContext="{Binding SelectedCropDto.CoverCropDto}"/>
+        </Border>
 
     </Grid>
 </UserControl>

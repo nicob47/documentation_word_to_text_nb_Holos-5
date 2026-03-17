@@ -31,6 +31,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         private CropType _cropType;
         private string _cropDisplay = string.Empty;
         private IBrush _cropBackground = null!;
+        private string? _coverCropDisplay;
 
         /// <summary>
         /// The calendar year for this assignment.
@@ -117,5 +118,20 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             get => _isSelected;
             set => SetProperty(ref _isSelected, value);
         }
+
+        /// <summary>
+        /// Display text for the cover crop, if one is assigned.
+        /// Shown in the preview grid cell beneath the main crop name in green italic text.
+        /// </summary>
+        public string? CoverCropDisplay
+        {
+            get => _coverCropDisplay;
+            set => SetProperty(ref _coverCropDisplay, value);
+        }
+
+        /// <summary>
+        /// Whether this cell's crop has a cover crop assigned.
+        /// </summary>
+        public bool HasCoverCrop => !string.IsNullOrEmpty(CoverCropDisplay);
     }
 }

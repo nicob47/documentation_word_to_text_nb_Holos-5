@@ -99,6 +99,37 @@
                                                           MinWidth="140"
                                                           HorizontalAlignment="Stretch" />
                                             </StackPanel>
+
+                                            <!-- Cover Crop Toggle -->
+                                            <Button Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Padding="0"
+                                                    HorizontalAlignment="Left"
+                                                    Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).ToggleCoverCropCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
+                                                              IsHitTestVisible="False"/>
+                                                    <TextBlock Text="Cover Crop"
+                                                               FontSize="11"
+                                                               Foreground="#2E7D32"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+
+                                            <!-- Cover Crop Type Selector (visible when cover crop enabled) -->
+                                            <StackPanel Spacing="4"
+                                                        IsVisible="{Binding HasCoverCrop}">
+                                                <TextBlock Text="Cover Crop Type"
+                                                           FontSize="11"
+                                                           Foreground="#2E7D32"
+                                                           FontWeight="SemiBold"
+                                                           HorizontalAlignment="Left" />
+                                                <ComboBox ItemsSource="{Binding CoverCropDto.ValidCropTypes}"
+                                                          SelectedItem="{Binding CoverCropDto.CropType}"
+                                                          MinWidth="140"
+                                                          HorizontalAlignment="Stretch" />
+                                            </StackPanel>
                                         </StackPanel>
                                     </Border>
                                 </Button>
