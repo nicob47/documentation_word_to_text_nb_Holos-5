@@ -95,6 +95,16 @@ public interface IFieldComponentService
     CropViewItem? GetCropViewItemFromDto(ICropDto cropDto, FieldSystemComponent fieldSystemComponent);
 
     /// <summary>
+    /// Adds a cover crop to the <see cref="FieldSystemComponent.CoverCrops"/> collection
+    /// </summary>
+    void AddCoverCropToSystem(FieldSystemComponent fieldSystemComponent, ICropDto coverCropDto);
+
+    /// <summary>
+    /// Removes a cover crop from the <see cref="FieldSystemComponent.CoverCrops"/> collection
+    /// </summary>
+    void RemoveCoverCropFromSystem(FieldSystemComponent fieldSystemComponent, ICropDto coverCropDto);
+
+    /// <summary>
     /// Saves the UI state for a field component to preserve across ViewModel disposal cycles
     /// </summary>
     /// <param name="fieldComponentGuid">The GUID of the field component</param>

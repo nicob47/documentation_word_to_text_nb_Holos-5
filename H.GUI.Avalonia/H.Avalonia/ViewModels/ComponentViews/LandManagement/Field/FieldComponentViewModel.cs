@@ -89,6 +89,7 @@ public class FieldComponentViewModel : ViewModelBase
         this.RemoveCropCommand = new DelegateCommand<object>(OnRemoveCropExecute, RemoveCropCanExecute);
         this.SetSelectedCropCommand = new DelegateCommand<object>(OnSetSelectedCropExecute);
         this.RemoveSpecificCropCommand = new DelegateCommand<object>(OnRemoveSpecificCropExecute);
+        this.ToggleCoverCropCommand = new DelegateCommand<object>(OnToggleCoverCropExecute);
     }
 
     #endregion
@@ -114,6 +115,11 @@ public class FieldComponentViewModel : ViewModelBase
     /// Responsible for removing a specific crop from the timeline cards
     /// </summary>
     public DelegateCommand<object> RemoveSpecificCropCommand { get; set; } = null!;
+
+    /// <summary>
+    /// Toggles cover crop on/off for a given crop DTO
+    /// </summary>
+    public DelegateCommand<object> ToggleCoverCropCommand { get; set; } = null!;
 
     /// <summary>
     /// The selected <see cref="SelectedFieldSystemComponentDto"/>
@@ -151,6 +157,7 @@ public class FieldComponentViewModel : ViewModelBase
     public IReadOnlyList<ManureAnimalSourceTypes> ManureAnimalSourceTypes { get; } = Enum.GetValues<ManureAnimalSourceTypes>();
     public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
     public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
+    public IReadOnlyList<CoverCropTerminationType> CoverCropTerminationTypes { get; } = Enum.GetValues<CoverCropTerminationType>();
 
     #endregion
 
@@ -435,6 +442,71 @@ public class FieldComponentViewModel : ViewModelBase
         }
     }
 
+    private void OnToggleCoverCropExecute(object obj)
+    {
+        if (IsDisposed || obj is not ICropDto cropDto || _cropFactory is null) return;
+
+        try
+        {
+            if (cropDto.HasCoverCrop)
+            {
+                // Remove cover crop
+                if (_selectedFieldSystemComponent is not null && cropDto.CoverCropDto is not null)
+                {
+                    _fieldComponentService?.RemoveCoverCropFromSystem(_selectedFieldSystemComponent, cropDto.CoverCropDto);
+                }
+                cropDto.CoverCropDto = null;
+            }
+            else
+            {
+                // Add cover crop
+                var coverDto = _cropFactory.CreateCoverCropDto(cropDto.Year);
+                cropDto.CoverCropDto = coverDto;
+
+                if (_selectedFieldSystemComponent is not null)
+                {
+                    _fieldComponentService?.AddCoverCropToSystem(_selectedFieldSystemComponent, coverDto);
+                }
+
+                // Subscribe to cover crop property changes
+                coverDto.PropertyChanged += CoverCropDtoOnPropertyChanged;
+            }
+
+            // Force UI to re-evaluate all SelectedCropDto.* bindings (e.g. HasCoverCrop)
+            if (ReferenceEquals(cropDto, SelectedCropDto))
+            {
+                RaisePropertyChanged(nameof(SelectedCropDto));
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Failed to toggle cover crop");
+        }
+    }
+
+    private void CoverCropDtoOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (IsDisposed) return;
+
+        if (sender is CropDto coverCropDto && !coverCropDto.HasErrors && _selectedFieldSystemComponent is not null)
+        {
+            try
+            {
+                var viewItem = _selectedFieldSystemComponent.CoverCrops
+                    .SingleOrDefault(cc => cc.Guid.Equals(coverCropDto.Guid));
+
+                if (viewItem is not null)
+                {
+                    _fieldComponentService?.TransferCropDtoToSystem(coverCropDto, viewItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Failed to transfer cover crop DTO to system");
+            }
+        }
+    }
+
     private void ViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (IsDisposed) return;
@@ -448,6 +520,13 @@ public class FieldComponentViewModel : ViewModelBase
                 // Clean up previous event handler before adding new one
                 this.SelectedCropDto.PropertyChanged -= CropDtoOnPropertyChanged;
                 this.SelectedCropDto.PropertyChanged += CropDtoOnPropertyChanged;
+
+                // Subscribe to cover crop changes if present
+                if (this.SelectedCropDto.CoverCropDto is CropDto coverDto)
+                {
+                    coverDto.PropertyChanged -= CoverCropDtoOnPropertyChanged;
+                    coverDto.PropertyChanged += CoverCropDtoOnPropertyChanged;
+                }
 
                 try
                 {

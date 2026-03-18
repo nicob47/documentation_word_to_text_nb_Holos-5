@@ -1,0 +1,328 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:converters="clr-namespace:H.Avalonia.Converters"
+           mc:Ignorable="d"
+           x:Class="H.Avalonia.Views.ComponentViews.Beef.BeefLifecycleVisualizationView">
+
+<UserControl.Resources>
+  <converters:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter"/>
+  <converters:BoolToBorderThicknessConverter x:Key="BoolToBorderThicknessConverter"/>
+</UserControl.Resources>
+
+  <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
+          BorderThickness="2"
+          CornerRadius="8"
+          Background="White"
+          Padding="20"
+          Margin="0,0,0,16">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+      <!-- Title -->
+      <StackPanel Grid.Row="0" Margin="0,0,0,24">
+        <TextBlock Text="Beef Production Chain"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Click on a stage or production system bracket to learn more"
+                   FontSize="13"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   HorizontalAlignment="Center"
+                   Margin="0,4,0,0"/>
+      </StackPanel>
+
+      <!-- Main Production Chain Visualization -->
+      <Canvas Grid.Row="1"
+              Width="1100"
+              Height="320"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+
+        <!-- Stage: Cow-Calf -->
+        <Border Canvas.Left="10"
+                Canvas.Top="30"
+                Width="200"
+                Height="115"
+                Background="#E8EAF6"
+                BorderBrush="{Binding IsCowCalfSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsCowCalfSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="CowCalf_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Cow-Calf"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#283593"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Breeding cows, bulls, calves, replacement heifers"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Cow-Calf → Backgrounding -->
+        <Path Canvas.Left="210"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 80,0 M 75,-5 L 80,0 L 75,5"/>
+        <TextBlock Canvas.Left="218"
+                   Canvas.Top="65"
+                   Text="Weaned calves"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Stage: Backgrounding -->
+        <Border Canvas.Left="290"
+                Canvas.Top="30"
+                Width="200"
+                Height="115"
+                Background="#E8F5E9"
+                BorderBrush="{Binding IsBackgroundingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsBackgroundingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Backgrounding_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Backgrounding"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#2E7D32"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Stocker steers and heifers on forage-based diets"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Backgrounding → Finishing -->
+        <Path Canvas.Left="490"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 80,0 M 75,-5 L 80,0 L 75,5"/>
+        <TextBlock Canvas.Left="495"
+                   Canvas.Top="65"
+                   Text="Feeder cattle"
+                   FontSize="9"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontStyle="Italic"/>
+
+        <!-- Stage: Finishing -->
+        <Border Canvas.Left="570"
+                Canvas.Top="30"
+                Width="200"
+                Height="115"
+                Background="#FFEBEE"
+                BorderBrush="{Binding IsFinishingSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                BorderThickness="{Binding IsFinishingSelected, Converter={StaticResource BoolToBorderThicknessConverter}}"
+                CornerRadius="12"
+                Padding="10"
+                Cursor="Hand"
+                PointerPressed="Finishing_PointerPressed">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Finishing (Feedlot)"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#C62828"
+                       Margin="0,0,0,6"/>
+            <TextBlock Text="Steers and heifers on high-energy diets to market weight"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Arrow: Finishing → Market -->
+        <Path Canvas.Left="770"
+              Canvas.Top="85"
+              Stroke="#424242"
+              StrokeThickness="2"
+              Data="M 0,0 L 80,0 M 75,-5 L 80,0 L 75,5"/>
+
+        <!-- Market box -->
+        <Border Canvas.Left="850"
+                Canvas.Top="45"
+                Width="140"
+                Height="85"
+                Background="#F5F5F5"
+                BorderBrush="#BDBDBD"
+                BorderThickness="2"
+                CornerRadius="12"
+                Padding="10">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Market"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#616161"
+                       Margin="0,0,0,4"/>
+            <TextBlock Text="Slaughter (550-650 kg)"
+                       FontSize="10"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Feedback arc: replacement heifers -->
+        <Path Canvas.Left="10"
+              Canvas.Top="0"
+              Stroke="#283593"
+              StrokeThickness="2"
+              StrokeDashArray="4,2"
+              Data="M 670,145 Q 350,180 110,145"/>
+        <Path Canvas.Left="120"
+              Canvas.Top="145"
+              Stroke="#283593"
+              StrokeThickness="2"
+              Fill="#283593"
+              Data="M 0,0 L -7,-10 L 5,-8 Z"/>
+        <Border Canvas.Left="310"
+                Canvas.Top="165"
+                Background="White"
+                Padding="4,1">
+          <TextBlock Text="Replacement heifers retained for breeding"
+                     FontSize="9"
+                     Foreground="#283593"
+                     FontWeight="Bold"/>
+        </Border>
+
+        <!-- ══════════════════════════════════════════════════════════════ -->
+        <!-- PRODUCTION SYSTEM BRACKETS -->
+        <!-- ══════════════════════════════════════════════════════════════ -->
+
+        <!-- Cow-Calf bracket -->
+        <Path Canvas.Left="10"
+              Canvas.Top="195"
+              Stroke="#283593"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 200,10 L 200,0"/>
+        <Border Canvas.Left="60"
+                Canvas.Top="210"
+                Background="#E8EAF6"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="CowCalfSystem_PointerPressed">
+          <TextBlock Text="Cow-Calf"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#283593"/>
+        </Border>
+
+        <!-- Backgrounding bracket -->
+        <Path Canvas.Left="290"
+              Canvas.Top="195"
+              Stroke="#2E7D32"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 200,10 L 200,0"/>
+        <Border Canvas.Left="330"
+                Canvas.Top="210"
+                Background="#E8F5E9"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="BackgroundingSystem_PointerPressed">
+          <TextBlock Text="Backgrounding"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#2E7D32"/>
+        </Border>
+
+        <!-- Finishing bracket -->
+        <Path Canvas.Left="570"
+              Canvas.Top="195"
+              Stroke="#C62828"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 200,10 L 200,0"/>
+        <Border Canvas.Left="620"
+                Canvas.Top="210"
+                Background="#FFEBEE"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="FinishingSystem_PointerPressed">
+          <TextBlock Text="Finishing (Feedlot)"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#C62828"/>
+        </Border>
+
+        <!-- Full cycle bracket -->
+        <Path Canvas.Left="10"
+              Canvas.Top="245"
+              Stroke="#6A1B9A"
+              StrokeThickness="2"
+              Data="M 0,0 L 0,10 L 760,10 L 760,0"/>
+        <Border Canvas.Left="310"
+                Canvas.Top="260"
+                Background="#F3E5F5"
+                CornerRadius="4"
+                Padding="8,3"
+                Cursor="Hand"
+                PointerPressed="FullCycle_PointerPressed">
+          <TextBlock Text="Full Production Cycle"
+                     FontSize="11"
+                     FontWeight="Bold"
+                     Foreground="#6A1B9A"/>
+        </Border>
+
+      </Canvas>
+
+      <!-- Stage Information Box -->
+      <Border Grid.Row="2"
+              Background="{StaticResource GcdsBgLightBrush}"
+              BorderBrush="{StaticResource GcdsBorderLightBrush}"
+              BorderThickness="1"
+              CornerRadius="6"
+              Padding="16"
+              Margin="0,16,0,16"
+              IsVisible="{Binding HasSelection}">
+        <StackPanel>
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0"
+                       Text="{Binding SelectedStageTitle}"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+            <Button Grid.Column="1"
+                    Content="X"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="14"
+                    Foreground="#999"
+                    Cursor="Hand"
+                    Click="CloseInfo_Click"
+                    Padding="8,0"/>
+          </Grid>
+          <TextBlock Text="{Binding SelectedStageDescription}"
+                     TextWrapping="Wrap"
+                     FontSize="12"
+                     Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                     LineHeight="18"
+                     Margin="0,8,0,0"/>
+        </StackPanel>
+      </Border>
+
+    </Grid>
+  </Border>
+
+</UserControl>

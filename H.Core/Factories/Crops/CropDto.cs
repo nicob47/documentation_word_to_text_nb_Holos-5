@@ -23,6 +23,9 @@ public partial class CropDto : DtoBase, ICropDto
     private bool _isSelected;
     private bool _herbicideUsed;
     private bool _copyToSimilarCrops;
+    private bool _isSecondaryCrop;
+    private CoverCropTerminationType _coverCropTerminationType;
+    private ICropDto? _coverCropDto;
 
     // Lazily-built grouped list (string headers + CropType values)
     private IReadOnlyList<object>? _groupedCropItems;
@@ -132,7 +135,24 @@ public partial class CropDto : DtoBase, ICropDto
     }
 
     /// <inheritdoc/>
-    public IReadOnlyList<object> GroupedCropItems => _groupedCropItems ??= BuildGroupedCropItems();
+    public IReadOnlyList<object> GroupedCropItems
+    {
+        get
+        {
+            if (_groupedCropItems == null)
+            {
+                if (IsSecondaryCrop)
+                {
+                    // For cover crops, use the dedicated cover crop type list.
+                    // Set the backing field directly to avoid the ValidCropTypes setter
+                    // which would null-out _groupedCropItems and cause infinite recursion.
+                    _cropTypes = new ObservableCollection<CropType>(CropTypeExtensions.GetValidCoverCropTypes());
+                }
+                _groupedCropItems = BuildGroupedCropItems();
+            }
+            return _groupedCropItems;
+        }
+    }
 
     /// <inheritdoc/>
     public object? SelectedCropTypeItem
@@ -196,6 +216,39 @@ public partial class CropDto : DtoBase, ICropDto
         get => _copyToSimilarCrops;
         set => SetProperty(ref _copyToSimilarCrops, value);
     }
+
+    public bool IsSecondaryCrop
+    {
+        get => _isSecondaryCrop;
+        set
+        {
+            if (SetProperty(ref _isSecondaryCrop, value))
+            {
+                _groupedCropItems = null;
+                RaisePropertyChanged(nameof(GroupedCropItems));
+            }
+        }
+    }
+
+    public CoverCropTerminationType CoverCropTerminationType
+    {
+        get => _coverCropTerminationType;
+        set => SetProperty(ref _coverCropTerminationType, value);
+    }
+
+    public ICropDto? CoverCropDto
+    {
+        get => _coverCropDto;
+        set
+        {
+            if (SetProperty(ref _coverCropDto, value))
+            {
+                RaisePropertyChanged(nameof(HasCoverCrop));
+            }
+        }
+    }
+
+    public bool HasCoverCrop => CoverCropDto != null;
 
     #endregion
 

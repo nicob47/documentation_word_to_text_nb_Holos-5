@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="300"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CoverCropEditorView">
+
+    <UserControl.Resources>
+        <infrastructure:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+
+    <Border Classes="step-card" Margin="16" BorderBrush="#4CAF50" BorderThickness="1" CornerRadius="6">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+
+            <!-- Section Header -->
+            <TextBlock Text="Cover Crop Properties"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="#2E7D32"
+                       Margin="0,0,0,8"/>
+
+            <!-- Cover Crop Type -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="220" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Cover Crop Type" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding ValidCropTypes}"
+                          SelectedItem="{Binding CropType}"
+                          HorizontalAlignment="Stretch"/>
+            </Grid>
+
+            <!-- Termination Type -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="220" SharedSizeGroup="Input"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Termination Type" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding DataContext.CoverCropTerminationTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=3}}"
+                          SelectedItem="{Binding CoverCropTerminationType}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <!-- Yield (wet weight) -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                               Value="{Binding WetYield}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_KgPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Moisture content -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_MoistureContent].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
+                               Value="{Binding MoistureContentOfCropPercentage}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+            <!-- Amount of irrigation -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                               Value="{Binding AmountOfIrrigation}" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Column="2" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</UserControl>

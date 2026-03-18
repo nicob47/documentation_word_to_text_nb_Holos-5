@@ -91,5 +91,21 @@ public class CropFactory : ICropFactory
         return _cropDtoToViewItemMapper.Map(cropDto);
     }
 
+    public CropDto CreateCoverCropDto(int year)
+    {
+        var coverCropTypes = CropTypeExtensions.GetValidCoverCropTypes().ToList();
+        var defaultType = coverCropTypes.FirstOrDefault(ct => ct != CropType.None);
+
+        var dto = new CropDto
+        {
+            IsSecondaryCrop = true,
+            Year = year,
+            CropType = defaultType,
+            CoverCropTerminationType = CoverCropTerminationType.Natural,
+        };
+
+        return dto;
+    }
+
     #endregion
 }

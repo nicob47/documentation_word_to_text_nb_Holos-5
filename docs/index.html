@@ -1159,16 +1159,20 @@ select.form-input { cursor: pointer; }
             <div class="timeline-card selected" style="min-width: 160px;">
               <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2025</div>
               <select class="form-input" style="min-width:120px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option><option>Native grass</option></select>
+              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" checked onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
+              <div class="cover-crop-selector" style="margin-top:4px;"><div style="font-size:11px; color:#2E7D32; font-weight:600; margin-bottom:2px;">Cover Crop Type</div><select class="form-input" style="min-width:120px; font-size:11px; border-color:#4CAF50;"><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select></div>
               <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
             </div>
             <div class="timeline-card" style="min-width: 160px;">
               <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2024</div>
               <select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>
+              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
               <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
             </div>
             <div class="timeline-card" style="min-width: 160px;">
               <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2023</div>
               <select class="form-input" style="min-width:120px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>
+              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
               <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
             </div>
           </div>
@@ -1242,6 +1246,28 @@ select.form-input { cursor: pointer; }
             <label class="form-label">Revenue from sale</label>
             <input type="number" class="form-input" value="848.00" step="1" disabled>
             <span class="form-unit">$ ha⁻¹</span>
+          </div>
+        </div>
+
+        <!-- Cover Crop Editor (shown when cover crop is active) -->
+        <div id="coverCropEditor" style="margin-top:16px; border:1px solid #4CAF50; border-radius:6px; padding:16px; background:#FAFFF9;">
+          <div style="font-size:14px; font-weight:600; color:#2E7D32; margin-bottom:12px;">Cover Crop Properties</div>
+          <div class="form-grid">
+            <label class="form-label">Cover crop type</label>
+            <select class="form-input"><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Termination type</label>
+            <select class="form-input"><option>Natural</option><option>Chemical</option><option>Mechanical</option></select>
+            <span class="form-unit"></span>
+            <label class="form-label">Yield (wet weight)</label>
+            <input type="number" class="form-input" value="1200" step="100">
+            <span class="form-unit">kg ha⁻¹</span>
+            <label class="form-label">Moisture content</label>
+            <input type="number" class="form-input" value="80.0" step="0.5">
+            <span class="form-unit">%</span>
+            <label class="form-label">Irrigation</label>
+            <input type="number" class="form-input" value="0" step="1">
+            <span class="form-unit">mm</span>
           </div>
         </div>
       </div>
@@ -1409,6 +1435,307 @@ select.form-input { cursor: pointer; }
       </div>
     </div>
 
+    <!-- BEEF COMPONENT VIEW -->
+    <div id="view-beefComponent" class="view">
+      <div><input type="text" class="view-title-input" id="beefTitle" value="My Cow-Calf"></div>
+      <div class="title-underline"></div>
+
+      <div class="diagram-container">
+        <div class="diagram-title">Beef Production Chain</div>
+        <div class="diagram-subtitle">Click on a stage or production system bracket to learn more</div>
+        <svg viewBox="0 0 1050 300" width="100%" style="max-width: 1050px; display: block; margin: 0 auto;">
+
+          <!-- Stage: Cow-Calf -->
+          <rect x="10" y="30" width="200" height="115" rx="12" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="2" cursor="pointer" onclick="selectBeefStage('cowCalf')"/>
+          <text x="110" y="72" text-anchor="middle" fill="#283593" font-size="13" font-weight="bold">Cow-Calf</text>
+          <text x="110" y="95" text-anchor="middle" fill="#595959" font-size="10">Breeding cows, bulls,</text>
+          <text x="110" y="108" text-anchor="middle" fill="#595959" font-size="10">calves, replacement heifers</text>
+
+          <!-- Arrow: Cow-Calf → Backgrounding -->
+          <line x1="210" y1="87" x2="285" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="285,87 278,82 278,92" fill="#424242"/>
+          <text x="248" y="75" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Weaned calves</text>
+
+          <!-- Stage: Backgrounding -->
+          <rect x="290" y="30" width="200" height="115" rx="12" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="2" cursor="pointer" onclick="selectBeefStage('backgrounding')"/>
+          <text x="390" y="72" text-anchor="middle" fill="#2E7D32" font-size="13" font-weight="bold">Backgrounding</text>
+          <text x="390" y="95" text-anchor="middle" fill="#595959" font-size="10">Stocker steers &amp; heifers</text>
+          <text x="390" y="108" text-anchor="middle" fill="#595959" font-size="10">on forage-based diets</text>
+
+          <!-- Arrow: Backgrounding → Finishing -->
+          <line x1="490" y1="87" x2="565" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="565,87 558,82 558,92" fill="#424242"/>
+          <text x="528" y="75" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Feeder cattle</text>
+
+          <!-- Stage: Finishing -->
+          <rect x="570" y="30" width="200" height="115" rx="12" fill="#FFEBEE" stroke="#EF9A9A" stroke-width="2" cursor="pointer" onclick="selectBeefStage('finishing')"/>
+          <text x="670" y="72" text-anchor="middle" fill="#C62828" font-size="13" font-weight="bold">Finishing (Feedlot)</text>
+          <text x="670" y="95" text-anchor="middle" fill="#595959" font-size="10">High-energy diets to</text>
+          <text x="670" y="108" text-anchor="middle" fill="#595959" font-size="10">market weight (550–650 kg)</text>
+
+          <!-- Arrow: Finishing → Market -->
+          <line x1="770" y1="87" x2="845" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="845,87 838,82 838,92" fill="#424242"/>
+
+          <!-- Market box -->
+          <rect x="850" y="45" width="140" height="85" rx="12" fill="#F5F5F5" stroke="#BDBDBD" stroke-width="2"/>
+          <text x="920" y="80" text-anchor="middle" fill="#616161" font-size="13" font-weight="bold">Market</text>
+          <text x="920" y="100" text-anchor="middle" fill="#595959" font-size="10">Slaughter</text>
+
+          <!-- Feedback arc: replacement heifers -->
+          <path d="M 670,145 Q 350,180 110,145" fill="none" stroke="#283593" stroke-width="2" stroke-dasharray="4,2"/>
+          <polygon points="110,145 103,133 115,135" fill="#283593"/>
+          <rect x="300" y="160" width="250" height="16" rx="2" fill="white"/>
+          <text x="425" y="172" text-anchor="middle" fill="#283593" font-size="9" font-weight="bold">Replacement heifers retained for breeding</text>
+
+          <!-- Bracket: Cow-Calf -->
+          <line x1="10" y1="195" x2="10" y2="205" stroke="#283593" stroke-width="2"/>
+          <line x1="10" y1="205" x2="210" y2="205" stroke="#283593" stroke-width="2"/>
+          <line x1="210" y1="195" x2="210" y2="205" stroke="#283593" stroke-width="2"/>
+          <rect x="65" y="210" width="100" height="22" rx="4" fill="#E8EAF6" cursor="pointer" onclick="selectBeefStage('cowCalfSystem')"/>
+          <text x="115" y="225" text-anchor="middle" fill="#283593" font-size="11" font-weight="bold">Cow-Calf</text>
+
+          <!-- Bracket: Backgrounding -->
+          <line x1="290" y1="195" x2="290" y2="205" stroke="#2E7D32" stroke-width="2"/>
+          <line x1="290" y1="205" x2="490" y2="205" stroke="#2E7D32" stroke-width="2"/>
+          <line x1="490" y1="195" x2="490" y2="205" stroke="#2E7D32" stroke-width="2"/>
+          <rect x="330" y="210" width="120" height="22" rx="4" fill="#E8F5E9" cursor="pointer" onclick="selectBeefStage('backgroundingSystem')"/>
+          <text x="390" y="225" text-anchor="middle" fill="#2E7D32" font-size="11" font-weight="bold">Backgrounding</text>
+
+          <!-- Bracket: Finishing -->
+          <line x1="570" y1="195" x2="570" y2="205" stroke="#C62828" stroke-width="2"/>
+          <line x1="570" y1="205" x2="770" y2="205" stroke="#C62828" stroke-width="2"/>
+          <line x1="770" y1="195" x2="770" y2="205" stroke="#C62828" stroke-width="2"/>
+          <rect x="610" y="210" width="120" height="22" rx="4" fill="#FFEBEE" cursor="pointer" onclick="selectBeefStage('finishingSystem')"/>
+          <text x="670" y="225" text-anchor="middle" fill="#C62828" font-size="11" font-weight="bold">Finishing</text>
+
+          <!-- Bracket: Full cycle -->
+          <line x1="10" y1="245" x2="10" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <line x1="10" y1="255" x2="770" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <line x1="770" y1="245" x2="770" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <rect x="310" y="260" width="160" height="22" rx="4" fill="#F3E5F5" cursor="pointer" onclick="selectBeefStage('fullCycle')"/>
+          <text x="390" y="275" text-anchor="middle" fill="#6A1B9A" font-size="11" font-weight="bold">Full Production Cycle</text>
+
+        </svg>
+
+        <div id="beefStageInfoPanel" class="info-banner" style="display:none;">
+          <button class="close-btn" onclick="document.getElementById('beefStageInfoPanel').style.display='none'">✕</button>
+          <h3 id="beefStageInfoTitle"></h3>
+          <p id="beefStageInfoDesc"></p>
+        </div>
+      </div>
+
+      <!-- Beef 3-step wizard -->
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 1</span><span class="step-description">Define your animal groups</span></div>
+        <div style="margin-bottom: 12px;"><button class="btn btn-primary" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Group</button></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Animal Groups</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Cows (Lactating)</option><option>Cows (Dry)</option><option>Calves</option><option>Bulls</option><option>Replacement Heifers</option></select>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">Breeding Cows</div>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 2</span><span class="step-description">Define management periods</span></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Management Periods</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <div style="font-size: var(--font-small); font-weight: 600;">Period #1</div>
+              <div style="font-size: var(--font-caption); color: var(--text-secondary);">Jan 1 – Dec 31</div>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">150 animals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 3</span><span class="step-description">Configure management practices</span></div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'btab-housing')">Housing</button>
+          <button class="tab-btn" onclick="switchTab(this, 'btab-manure')">Manure</button>
+          <button class="tab-btn" onclick="switchTab(this, 'btab-details')">Animal Details</button>
+        </div>
+        <div id="btab-housing" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Housing type</label><select class="form-input"><option>Pasture</option><option>Confined – no barn</option><option>Housing (barn)</option></select><span class="form-unit"></span>
+            <label class="form-label">Bedding type</label><select class="form-input"><option>Straw</option><option>Wood shavings</option><option>None</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="btab-manure" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Manure handling</label><select class="form-input"><option>Pasture / Range</option><option>Solid storage</option><option>Composting – passive</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="btab-details" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Number of animals</label><input type="number" class="form-input" value="150"><span class="form-unit">head</span>
+            <label class="form-label">Average weight</label><input type="number" class="form-input" value="600"><span class="form-unit">kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWINE COMPONENT VIEW -->
+    <div id="view-swineComponent" class="view">
+      <div><input type="text" class="view-title-input" id="swineTitle" value="My Farrow-to-Finish"></div>
+      <div class="title-underline"></div>
+
+      <div class="diagram-container">
+        <div class="diagram-title">Swine Production Chain</div>
+        <div class="diagram-subtitle">Click on a stage or production system bracket to learn more</div>
+        <svg viewBox="0 0 1100 340" width="100%" style="max-width: 1100px; display: block; margin: 0 auto;">
+
+          <!-- Stage: Breeding -->
+          <rect x="10" y="30" width="170" height="115" rx="12" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="2" cursor="pointer" onclick="selectSwineStage('breeding')"/>
+          <text x="95" y="72" text-anchor="middle" fill="#283593" font-size="13" font-weight="bold">Breeding</text>
+          <text x="95" y="95" text-anchor="middle" fill="#595959" font-size="10">Boars, Sows,</text>
+          <text x="95" y="108" text-anchor="middle" fill="#595959" font-size="10">Gilts, Dry Sows</text>
+
+          <!-- Arrow: Breeding → Farrowing -->
+          <line x1="180" y1="87" x2="225" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="225,87 218,82 218,92" fill="#424242"/>
+          <text x="200" y="75" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Mating</text>
+
+          <!-- Stage: Farrowing -->
+          <rect x="230" y="30" width="170" height="115" rx="12" fill="#FCE4EC" stroke="#F48FB1" stroke-width="2" cursor="pointer" onclick="selectSwineStage('farrowing')"/>
+          <text x="315" y="72" text-anchor="middle" fill="#AD1457" font-size="13" font-weight="bold">Farrowing</text>
+          <text x="315" y="95" text-anchor="middle" fill="#595959" font-size="10">Lactating sows</text>
+          <text x="315" y="108" text-anchor="middle" fill="#595959" font-size="10">nursing piglets</text>
+
+          <!-- Arrow: Farrowing → Nursery -->
+          <line x1="400" y1="87" x2="445" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="445,87 438,82 438,92" fill="#424242"/>
+          <text x="420" y="75" text-anchor="middle" fill="#595959" font-size="9" font-style="italic">Weaning</text>
+
+          <!-- Stage: Nursery -->
+          <rect x="450" y="30" width="170" height="115" rx="12" fill="#FFF3E0" stroke="#FFCC80" stroke-width="2" cursor="pointer" onclick="selectSwineStage('nursery')"/>
+          <text x="535" y="72" text-anchor="middle" fill="#E65100" font-size="13" font-weight="bold">Nursery</text>
+          <text x="535" y="95" text-anchor="middle" fill="#595959" font-size="10">Weaned piglets</text>
+          <text x="535" y="108" text-anchor="middle" fill="#595959" font-size="10">(starters)</text>
+
+          <!-- Arrow: Nursery → Growing -->
+          <line x1="620" y1="87" x2="665" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="665,87 658,82 658,92" fill="#424242"/>
+
+          <!-- Stage: Growing -->
+          <rect x="670" y="30" width="170" height="115" rx="12" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="2" cursor="pointer" onclick="selectSwineStage('growing')"/>
+          <text x="755" y="72" text-anchor="middle" fill="#2E7D32" font-size="13" font-weight="bold">Growing</text>
+          <text x="755" y="95" text-anchor="middle" fill="#595959" font-size="10">Grower pigs</text>
+          <text x="755" y="108" text-anchor="middle" fill="#595959" font-size="10">(25–60 kg)</text>
+
+          <!-- Arrow: Growing → Finishing -->
+          <line x1="840" y1="87" x2="885" y2="87" stroke="#424242" stroke-width="2"/>
+          <polygon points="885,87 878,82 878,92" fill="#424242"/>
+
+          <!-- Stage: Finishing -->
+          <rect x="890" y="30" width="170" height="115" rx="12" fill="#FFEBEE" stroke="#EF9A9A" stroke-width="2" cursor="pointer" onclick="selectSwineStage('finishing')"/>
+          <text x="975" y="72" text-anchor="middle" fill="#C62828" font-size="13" font-weight="bold">Finishing</text>
+          <text x="975" y="95" text-anchor="middle" fill="#595959" font-size="10">Finisher pigs</text>
+          <text x="975" y="108" text-anchor="middle" fill="#595959" font-size="10">(60–120 kg) → Market</text>
+
+          <!-- Feedback arc: replacement gilts -->
+          <path d="M 975,145 Q 500,180 95,145" fill="none" stroke="#283593" stroke-width="2" stroke-dasharray="4,2"/>
+          <polygon points="95,145 88,133 100,135" fill="#283593"/>
+          <rect x="415" y="160" width="240" height="16" rx="2" fill="white"/>
+          <text x="535" y="172" text-anchor="middle" fill="#283593" font-size="9" font-weight="bold">Replacement gilts selected from finishing</text>
+
+          <!-- Bracket: Farrow-to-Finish (all stages) -->
+          <line x1="10" y1="195" x2="10" y2="205" stroke="#1565C0" stroke-width="2"/>
+          <line x1="10" y1="205" x2="1060" y2="205" stroke="#1565C0" stroke-width="2"/>
+          <line x1="1060" y1="195" x2="1060" y2="205" stroke="#1565C0" stroke-width="2"/>
+          <rect x="460" y="210" width="140" height="22" rx="4" fill="#E3F2FD" cursor="pointer" onclick="selectSwineStage('farrowToFinish')"/>
+          <text x="530" y="225" text-anchor="middle" fill="#1565C0" font-size="11" font-weight="bold">Farrow-to-Finish</text>
+
+          <!-- Bracket: Farrow-to-Wean (Breeding → Nursery) -->
+          <line x1="10" y1="245" x2="10" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <line x1="10" y1="255" x2="620" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <line x1="620" y1="245" x2="620" y2="255" stroke="#6A1B9A" stroke-width="2"/>
+          <rect x="240" y="260" width="140" height="22" rx="4" fill="#F3E5F5" cursor="pointer" onclick="selectSwineStage('farrowToWean')"/>
+          <text x="310" y="275" text-anchor="middle" fill="#6A1B9A" font-size="11" font-weight="bold">Farrow-to-Wean</text>
+
+          <!-- Bracket: Iso-Wean (Nursery only) -->
+          <line x1="450" y1="290" x2="450" y2="300" stroke="#E65100" stroke-width="2"/>
+          <line x1="450" y1="300" x2="620" y2="300" stroke="#E65100" stroke-width="2"/>
+          <line x1="620" y1="290" x2="620" y2="300" stroke="#E65100" stroke-width="2"/>
+          <rect x="490" y="305" width="100" height="22" rx="4" fill="#FFF3E0" cursor="pointer" onclick="selectSwineStage('isoWean')"/>
+          <text x="540" y="320" text-anchor="middle" fill="#E65100" font-size="11" font-weight="bold">Iso-Wean</text>
+
+          <!-- Bracket: Grower-to-Finish (Growing → Finishing) -->
+          <line x1="670" y1="245" x2="670" y2="255" stroke="#2E7D32" stroke-width="2"/>
+          <line x1="670" y1="255" x2="1060" y2="255" stroke="#2E7D32" stroke-width="2"/>
+          <line x1="1060" y1="245" x2="1060" y2="255" stroke="#2E7D32" stroke-width="2"/>
+          <rect x="800" y="260" width="140" height="22" rx="4" fill="#E8F5E9" cursor="pointer" onclick="selectSwineStage('growerToFinish')"/>
+          <text x="870" y="275" text-anchor="middle" fill="#2E7D32" font-size="11" font-weight="bold">Grower-to-Finish</text>
+
+        </svg>
+
+        <div id="swineStageInfoPanel" class="info-banner" style="display:none;">
+          <button class="close-btn" onclick="document.getElementById('swineStageInfoPanel').style.display='none'">✕</button>
+          <h3 id="swineStageInfoTitle"></h3>
+          <p id="swineStageInfoDesc"></p>
+        </div>
+      </div>
+
+      <!-- Swine 3-step wizard -->
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 1</span><span class="step-description">Define your animal groups</span></div>
+        <div style="margin-bottom: 12px;"><button class="btn btn-primary" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Group</button></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Animal Groups</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Sows</option><option>Boar</option><option>Gilts</option><option>Lactating Sows</option><option>Dry Sows</option><option>Starters</option><option>Growers</option><option>Finishers</option></select>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">Breeding Sows</div>
+              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 2</span><span class="step-description">Define management periods</span></div>
+        <div class="timeline-container">
+          <div class="timeline-header">Management Periods</div>
+          <div class="timeline-scroll">
+            <div class="timeline-card selected">
+              <div style="font-size: var(--font-small); font-weight: 600;">Period #1</div>
+              <div style="font-size: var(--font-caption); color: var(--text-secondary);">Jan 1 – Dec 31</div>
+              <div style="font-size:13px; font-weight:500; margin-top:4px;">50 animals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-container">
+        <div class="step-header"><span class="step-badge">Step 3</span><span class="step-description">Configure management practices</span></div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this, 'stab-housing')">Housing</button>
+          <button class="tab-btn" onclick="switchTab(this, 'stab-manure')">Manure</button>
+          <button class="tab-btn" onclick="switchTab(this, 'stab-details')">Animal Details</button>
+        </div>
+        <div id="stab-housing" class="tab-content active">
+          <div class="form-grid">
+            <label class="form-label">Housing type</label><select class="form-input"><option>Confined – no barn</option><option>Housing (barn)</option><option>Enclosed pasture</option></select><span class="form-unit"></span>
+            <label class="form-label">Bedding type</label><select class="form-input"><option>Straw</option><option>Wood shavings</option><option>None</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="stab-manure" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Manure handling</label><select class="form-input"><option>Liquid / Slurry</option><option>Deep pit</option><option>Solid storage</option></select><span class="form-unit"></span>
+          </div>
+        </div>
+        <div id="stab-details" class="tab-content">
+          <div class="form-grid">
+            <label class="form-label">Number of animals</label><input type="number" class="form-input" value="50"><span class="form-unit">head</span>
+            <label class="form-label">Average weight</label><input type="number" class="form-input" value="85"><span class="form-unit">kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ROTATION COMPONENT VIEW -->
     <div id="view-rotationComponent" class="view">
       <div><input type="text" class="view-title-input" id="rotationComponentTitle" value="My Crop Rotation"></div>
@@ -1466,16 +1793,20 @@ select.form-input { cursor: pointer; }
             <div class="timeline-card selected" style="min-width: 150px;">
               <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 1</div>
               <select class="form-input" style="min-width:110px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option></select>
+              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" checked onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
+              <div class="cover-crop-selector" style="margin-top:4px;"><div style="font-size:11px; color:#2E7D32; font-weight:600; margin-bottom:2px;">Cover Crop Type</div><select class="form-input" style="min-width:110px; font-size:11px; border-color:#4CAF50;"><option>Winter Rye</option><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select></div>
               <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
             </div>
             <div class="timeline-card" style="min-width: 150px;">
               <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 2</div>
               <select class="form-input" style="min-width:110px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option></select>
+              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
               <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
             </div>
             <div class="timeline-card" style="min-width: 150px;">
               <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 3</div>
               <select class="form-input" style="min-width:110px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option></select>
+              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
               <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
             </div>
           </div>
@@ -1495,9 +1826,9 @@ select.form-input { cursor: pointer; }
               <tr><th></th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
             </thead>
             <tbody>
-              <tr><td style="font-weight:600;">Field 1</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td></tr>
-              <tr><td style="font-weight:600;">Field 2</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td></tr>
-              <tr><td style="font-weight:600;">Field 3</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat</td><td style="background:#FFF3E0;">Canola</td></tr>
+              <tr><td style="font-weight:600;">Field 1</td><td style="background:#E8F5E9;">Wheat<br><span style="font-size:10px; font-style:italic; color:#2E7D32;">Winter Rye</span></td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat<br><span style="font-size:10px; font-style:italic; color:#2E7D32;">Winter Rye</span></td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td></tr>
+              <tr><td style="font-weight:600;">Field 2</td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat<br><span style="font-size:10px; font-style:italic; color:#2E7D32;">Winter Rye</span></td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat<br><span style="font-size:10px; font-style:italic; color:#2E7D32;">Winter Rye</span></td></tr>
+              <tr><td style="font-weight:600;">Field 3</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat<br><span style="font-size:10px; font-style:italic; color:#2E7D32;">Winter Rye</span></td><td style="background:#FFF3E0;">Canola</td><td style="background:#E3F2FD;">Barley</td><td style="background:#E8F5E9;">Wheat<br><span style="font-size:10px; font-style:italic; color:#2E7D32;">Winter Rye</span></td><td style="background:#FFF3E0;">Canola</td></tr>
             </tbody>
           </table>
         </div>
@@ -2037,7 +2368,7 @@ const categories = [
     { type: 'Crop Rotation', desc: 'Multi-year crop rotation planning and carbon modeling' },
     { type: 'Shelterbelt', desc: 'Tree-based windbreak and carbon sequestration' }
   ]},
-  { name: 'Beef Production', components: [
+  { name: 'Beef Production', isBeef: true, components: [
     { type: 'Cow-Calf', desc: 'Cow-calf operation including breeding herd and calves' },
     { type: 'Backgrounding', desc: 'Growing cattle from weaning to feedlot entry' },
     { type: 'Finishing', desc: 'Feedlot finishing of cattle for market' }
@@ -2045,7 +2376,7 @@ const categories = [
   { name: 'Dairy', components: [
     { type: 'Dairy', desc: 'Full dairy operation with lactating, dry, heifer, and calf stages' }
   ]},
-  { name: 'Swine', components: [
+  { name: 'Swine', isSwine: true, components: [
     { type: 'Farrow-to-Wean', desc: 'Sow farrow-to-wean operation' },
     { type: 'Iso-Wean', desc: 'Isolated weaner pig operation' },
     { type: 'Farrow-to-Finish', desc: 'Combined farrowing and finishing operation' },
@@ -2080,8 +2411,9 @@ const categories = [
 
 let myComponents = [
   { name: 'East Pasture', type: 'Field', desc: 'Main grazing field — 160 acres mixed grass', category: 'Land Management' },
-  { name: 'Cow-Calf Herd', type: 'Cow-Calf', desc: '150 head cow-calf operation on native pasture', category: 'Beef Production' },
-  { name: 'Egg Barn', type: 'Chicken Egg Production', desc: '2000 laying hens — free run barn system', category: 'Poultry', isPoultry: true }
+  { name: 'Cow-Calf Herd', type: 'Cow-Calf', desc: '150 head cow-calf operation on native pasture', category: 'Beef Production', isBeef: true },
+  { name: 'Egg Barn', type: 'Chicken Egg Production', desc: '2000 laying hens — free run barn system', category: 'Poultry', isPoultry: true },
+  { name: 'Hog Barn', type: 'Farrow-to-Finish', desc: '200 sow farrow-to-finish operation', category: 'Swine', isSwine: true }
 ];
 
 let animalGroupCounter = 1;
@@ -2224,6 +2556,12 @@ function openComponent(i) {
   if (comp.isPoultry) {
     document.getElementById('poultryTitle').value = comp.name;
     showView('poultryComponent');
+  } else if (comp.isSwine) {
+    document.getElementById('swineTitle').value = comp.name;
+    showView('swineComponent');
+  } else if (comp.isBeef) {
+    document.getElementById('beefTitle').value = comp.name;
+    showView('beefComponent');
   } else if (comp.type === 'Crop Rotation') {
     document.getElementById('rotationComponentTitle').value = comp.name;
     showView('rotationComponent');
@@ -2262,7 +2600,7 @@ function showCategoryComponents(ci) {
     '<div class="comp-desc">' + comp.desc + '</div>' +
     '<div style="margin-top:auto; padding-top:12px;">' +
     '<button class="btn btn-primary" style="font-size:var(--font-small); padding:8px 16px;" ' +
-    'onclick="addComponent(\'' + comp.type + '\', \'' + comp.desc.replace(/'/g, "\\'") + '\', \'' + cat.name + '\', ' + (cat.isPoultry||false) + ')">Add to Farm</button></div></div>'
+    'onclick="addComponent(\'' + comp.type + '\', \'' + comp.desc.replace(/'/g, "\\'") + '\', \'' + cat.name + '\', ' + (cat.isPoultry||false) + ', ' + (cat.isSwine||false) + ', ' + (cat.isBeef||false) + ')">Add to Farm</button></div></div>'
   ).join('');
 }
 
@@ -2271,8 +2609,8 @@ function backToCategories() {
   document.getElementById('componentPanel').style.display = 'none';
 }
 
-function addComponent(type, desc, category, isPoultry) {
-  myComponents.push({ name: 'My ' + type, type: type, desc: desc, category: category, isPoultry: isPoultry });
+function addComponent(type, desc, category, isPoultry, isSwine, isBeef) {
+  myComponents.push({ name: 'My ' + type, type: type, desc: desc, category: category, isPoultry: isPoultry, isSwine: isSwine, isBeef: isBeef });
   renderMyComponents();
   // Auto-select the newly added component
   openComponent(myComponents.length - 1);
@@ -2311,6 +2649,7 @@ function addCropToField() {
   card.style.minWidth = '160px';
   card.innerHTML = '<div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">' + cropYearCounter + '</div>' +
     '<select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>' +
+    '<label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>' +
     '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove()">Delete</button>';
   card.onclick = function(e) {
     if (['BUTTON','SELECT','OPTION'].includes(e.target.tagName)) return;
@@ -2318,6 +2657,25 @@ function addCropToField() {
     card.classList.add('selected');
   };
   tl.appendChild(card);
+}
+
+function toggleCoverCrop(checkbox) {
+  const card = checkbox.closest('.timeline-card');
+  let selector = card.querySelector('.cover-crop-selector');
+  if (checkbox.checked) {
+    if (!selector) {
+      selector = document.createElement('div');
+      selector.className = 'cover-crop-selector';
+      selector.style.cssText = 'margin-top:4px;';
+      selector.innerHTML = '<div style="font-size:11px; color:#2E7D32; font-weight:600; margin-bottom:2px;">Cover Crop Type</div>' +
+        '<select class="form-input" style="min-width:120px; font-size:11px; border-color:#4CAF50;">' +
+        '<option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option>' +
+        '<option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select>';
+      checkbox.closest('label').after(selector);
+    }
+  } else {
+    if (selector) selector.remove();
+  }
 }
 
 function addManagementPeriod() {
@@ -2370,6 +2728,50 @@ function selectStage(stage) {
   document.getElementById('stageInfoTitle').textContent = info.title;
   document.getElementById('stageInfoDesc').textContent = info.desc;
   document.getElementById('stageInfoPanel').style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BEEF DIAGRAM
+   ═══════════════════════════════════════════════════════════════ */
+const beefStageInfo = {
+  cowCalf: { title: 'Cow-Calf Stage', desc: 'The cow-calf stage is the foundation of beef production. A breeding herd of cows and bulls produces calves each year. The herd includes lactating cows nursing calves, dry cows, bulls, and replacement heifers. Calves are raised on pasture until weaning at 6–8 months (200–300 kg). This stage accounts for the largest share of lifetime greenhouse gas emissions due to enteric methane from forage digestion.' },
+  backgrounding: { title: 'Backgrounding Stage', desc: 'Backgrounding (stocker/growing) is a transitional phase where weaned calves grow on forage-based diets before entering the feedlot. Cattle gain 0.5–1.0 kg/day on pasture, silage, or hay rations over 3–8 months, adding 100–200 kg of body weight. This builds frame size before high-energy finishing diets.' },
+  finishing: { title: 'Finishing (Feedlot) Stage', desc: 'Finishing cattle are fed high-energy grain-based diets to reach market weight of 550–650 kg. Steers and heifers gain 1.2–1.8 kg/day over 120–200 days in feedlot pens. Feed conversion is approximately 6:1. This stage has the highest daily feed intake and most concentrated manure output.' },
+  cowCalfSystem: { title: 'Cow-Calf Production System', desc: 'A cow-calf operation maintains a breeding herd to produce weaned calves. It manages the full breeding cycle: bull selection, gestation (~283 days), calving, lactation, and weaning. Operations are predominantly pasture-based with winter supplemental feeding. Calves are sold at weaning or after preconditioning.' },
+  backgroundingSystem: { title: 'Backgrounding Production System', desc: 'A backgrounding operation purchases weaned calves and grows them on forage before feedlot entry. These operations add frame and weight at lower cost than feedlot finishing. Backgrounding can be on pasture (stocker), in drylots, or a combination. Animals are sold to finishing operations at an appropriate weight and frame size.' },
+  finishingSystem: { title: 'Finishing (Feedlot) Production System', desc: 'A finishing operation purchases backgrounded or weaned cattle and feeds high-energy diets to slaughter weight. Feedlots range from small farmer-feeders to large commercial yards. Cattle are penned in groups and fed total mixed rations. Implants and ionophores are commonly used to improve efficiency. Manure management is a major environmental component.' },
+  fullCycle: { title: 'Full Beef Production Cycle', desc: 'The full cycle spans cow-calf, backgrounding, and finishing — typically 18–24 months from birth to slaughter. Some operations integrate all stages; most cattle move between specialized farms. The cow-calf stage accounts for the largest share of lifetime emissions (enteric methane), while finishing has the highest daily emissions intensity.' }
+};
+
+function selectBeefStage(stage) {
+  const info = beefStageInfo[stage];
+  if (!info) return;
+  document.getElementById('beefStageInfoTitle').textContent = info.title;
+  document.getElementById('beefStageInfoDesc').textContent = info.desc;
+  document.getElementById('beefStageInfoPanel').style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SWINE DIAGRAM
+   ═══════════════════════════════════════════════════════════════ */
+const swineStageInfo = {
+  breeding: { title: 'Breeding Stock', desc: 'The breeding stage includes boars, sows, gilts, and dry (non-lactating) sows. Boars are mature males used for breeding, while gilts are young females that have not yet had their first litter. The gestation period is approximately 114 days (3 months, 3 weeks, 3 days). Breeding stock is selected for litter size, growth rate, feed efficiency, and carcass quality.' },
+  farrowing: { title: 'Farrowing (Lactating Sows)', desc: 'Lactating sows give birth to and nurse piglets in specialized farrowing crates or pens. A sow typically produces 10–14 piglets per litter. Lactation lasts 3–4 weeks with very high nutritional requirements for milk production. This stage has significant feed intake and manure output.' },
+  nursery: { title: 'Nursery (Starters / Iso-Wean)', desc: 'Weaned piglets (starters) are moved to nursery barns at 3–4 weeks of age, weighing approximately 5–7 kg. This critical transition period requires highly digestible, nutrient-dense diets. In iso-wean systems, piglets are moved to isolated facilities to break disease cycles between sow herds and young pigs.' },
+  growing: { title: 'Growing Phase', desc: 'The growing phase starts when pigs reach ~25 kg at around 10 weeks of age. Pigs gain 0.7–0.9 kg/day on diets formulated for lean tissue growth. Feed costs represent 60–70% of total production costs. This stage continues until pigs reach approximately 60 kg.' },
+  finishing: { title: 'Finishing Phase', desc: 'Finisher pigs grow from ~60 kg to market weight of 110–130 kg. They have the highest absolute feed intake and produce the most manure per animal. Diets balance growth rate and carcass leanness. Pigs are marketed at 5–6 months of age. Replacement gilts may be selected and returned to breeding.' },
+  farrowToFinish: { title: 'Farrow-to-Finish Production System', desc: 'Encompasses the entire swine production cycle on a single farm — breeding, farrowing, nursery, growing, and finishing. Requires diverse facilities and management expertise but gives full control over pig flow and health status.' },
+  farrowToWean: { title: 'Farrow-to-Wean Production System', desc: 'Specializes in breeding, farrowing, and weaning piglets. Maintains the breeding herd and sells weaned piglets (3–4 weeks, 5–7 kg) to nursery or grower-to-finish operations. Focuses expertise on reproductive management and early piglet care.' },
+  isoWean: { title: 'Iso-Wean Production System', desc: 'Receives early-weaned piglets (2–3 weeks) and raises them in isolated facilities separated from the sow herd. Breaks the disease transmission cycle by removing piglets before maternal antibodies wane. Maintains strict biosecurity and all-in/all-out management.' },
+  growerToFinish: { title: 'Grower-to-Finish Production System', desc: 'Receives weaned or nursery-stage pigs (~20–25 kg) and raises them to market weight. Focuses on feed efficiency, growth rate, and carcass quality. Barns are designed for high-volume production with automated feeding and climate control.' }
+};
+
+function selectSwineStage(stage) {
+  const info = swineStageInfo[stage];
+  if (!info) return;
+  document.getElementById('swineStageInfoTitle').textContent = info.title;
+  document.getElementById('swineStageInfoDesc').textContent = info.desc;
+  document.getElementById('swineStageInfoPanel').style.display = 'block';
 }
 
 /* ═══════════════════════════════════════════════════════════════

@@ -144,16 +144,43 @@
                                                                FontWeight="SemiBold"
                                                                HorizontalAlignment="Left" />
 
-                                                    <!-- Grouped ComboBox: ItemsSource is the flat mixed list (headers + CropTypes).
-                                                         CropGroupedItemDataTemplate renders category-header strings as bold,
-                                                         non-interactive dividers and CropType values as coloured pill badges.
-                                                         SelectedCropTypeItem syncs back to CropDto.CropType; setting it to a
-                                                         header string is silently ignored by the DTO. -->
-                                                    <!-- Width = card Width(280) - CardPadding(12×2) - StackPanel Margin(8×2) = 240.
-                                                         Explicit Width ensures the popup inherits the same dimension. -->
+                                                    <!-- Grouped ComboBox -->
                                                     <ComboBox Classes="crop-selector"
                                                               ItemsSource="{Binding GroupedCropItems}"
                                                               SelectedItem="{Binding SelectedCropTypeItem}"
+                                                              ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                              Width="240"
+                                                              MaxDropDownHeight="320"/>
+                                                </StackPanel>
+
+                                                <!-- Cover Crop Toggle -->
+                                                <Button Background="Transparent"
+                                                        BorderThickness="0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Left"
+                                                        Command="{Binding $parent[UserControl].((rotation:RotationComponentViewModel)DataContext).ToggleCoverCropCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                        <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
+                                                                  IsHitTestVisible="False"/>
+                                                        <TextBlock Text="Cover Crop"
+                                                                   FontSize="11"
+                                                                   Foreground="#2E7D32"
+                                                                   VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <!-- Cover Crop Type Selector (visible when cover crop enabled) -->
+                                                <StackPanel Spacing="4"
+                                                            IsVisible="{Binding HasCoverCrop}">
+                                                    <TextBlock Text="Cover Crop Type"
+                                                               FontSize="12"
+                                                               Foreground="#2E7D32"
+                                                               FontWeight="SemiBold"
+                                                               HorizontalAlignment="Left" />
+                                                    <ComboBox Classes="crop-selector"
+                                                              ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
+                                                              SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
                                                               ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
                                                               Width="240"
                                                               MaxDropDownHeight="320"/>

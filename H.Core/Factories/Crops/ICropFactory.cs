@@ -15,5 +15,11 @@ public interface ICropFactory : IFactory<CropDto>
 
     CropViewItem CreateCropViewItem(ICropDto cropDto);
 
+    /// <summary>
+    /// Creates a new <see cref="CropDto"/> configured as a cover crop with
+    /// <see cref="CropDto.IsSecondaryCrop"/> set to <c>true</c>.
+    /// </summary>
+    CropDto CreateCoverCropDto(int year);
+
     #endregion
 }

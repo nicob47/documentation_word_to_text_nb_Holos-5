@@ -108,7 +108,7 @@
                                                                         <Setter Property="Opacity" Value="0.85"/>
                                                                     </Style>
                                                                 </Border.Styles>
-                                                                <StackPanel Spacing="4" VerticalAlignment="Center">
+                                                                <StackPanel Spacing="2" VerticalAlignment="Center">
                                                                     <!-- Year label -->
                                                                     <TextBlock Text="{Binding Year}"
                                                                                FontSize="12"
@@ -124,6 +124,16 @@
                                                                                FontWeight="Medium"
                                                                                Foreground="{DynamicResource TextControlForeground}"
                                                                                ToolTip.Tip="{Binding CropDisplay}"/>
+                                                                    <!-- Cover crop indicator -->
+                                                                    <TextBlock Text="{Binding CoverCropDisplay}"
+                                                                               IsVisible="{Binding HasCoverCrop}"
+                                                                               TextAlignment="Center"
+                                                                               FontSize="10"
+                                                                               FontStyle="Italic"
+                                                                               Foreground="#2E7D32"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               MaxLines="1"
+                                                                               ToolTip.Tip="{Binding CoverCropDisplay}"/>
                                                                 </StackPanel>
                                                             </Border>
                                                         </Button>

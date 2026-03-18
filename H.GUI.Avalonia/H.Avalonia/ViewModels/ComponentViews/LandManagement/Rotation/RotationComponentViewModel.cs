@@ -318,6 +318,11 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         public ICommand RemoveSpecificCropCommand { get; private set; } = null!;
 
+        /// <summary>
+        /// Command to toggle cover crop on/off for a given crop DTO
+        /// </summary>
+        public ICommand ToggleCoverCropCommand { get; private set; } = null!;
+
         // ── Enum lists for crop tab ComboBoxes ──
 
         public IReadOnlyList<TillageType> TillageTypes { get; } = Enum.GetValues<TillageType>();
@@ -329,6 +334,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         public IReadOnlyList<ManureAnimalSourceTypes> ManureAnimalSourceTypes { get; } = Enum.GetValues<ManureAnimalSourceTypes>();
         public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
         public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
+        public IReadOnlyList<CoverCropTerminationType> CoverCropTerminationTypes { get; } = Enum.GetValues<CoverCropTerminationType>();
 
         #endregion
 
@@ -488,6 +494,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             
             // Initialize command for removing a crop from the rotation
             this.RemoveSpecificCropCommand = new DelegateCommand<object>(OnRemoveSpecificCropExecute);
+
+            // Initialize command for toggling cover crop on/off
+            this.ToggleCoverCropCommand = new DelegateCommand<object>(OnToggleCoverCropExecute);
         }
 
         /// <summary>
@@ -620,7 +629,10 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         CropBackground = _cropColorService is not null
                             ? Brush.Parse(_cropColorService.GetCropColorHex(sourceCrop.CropType))
                             : Brush.Parse("#F5F5F5"),
-                        IsSelected = false // Initialize to not selected (updated when user clicks timeline card)
+                        IsSelected = false, // Initialize to not selected (updated when user clicks timeline card)
+                        CoverCropDisplay = sourceCrop.HasCoverCrop && sourceCrop.CoverCropDto != null
+                            ? (_cropColorService?.GetCropDisplayName(sourceCrop.CoverCropDto.CropType) ?? sourceCrop.CoverCropDto.CropType.ToString())
+                            : null,
                     };
 
                     row.YearAssignments.Add(assignment);
@@ -807,12 +819,118 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             }
         }
 
+        private void OnToggleCoverCropExecute(object obj)
+        {
+            if (IsDisposed || obj is not ICropDto cropDto || _cropFactory is null) return;
+
+            try
+            {
+                if (cropDto.HasCoverCrop)
+                {
+                    // Unsubscribe from cover crop DTO property changes
+                    if (cropDto.CoverCropDto is INotifyPropertyChanged oldCoverDto)
+                    {
+                        oldCoverDto.PropertyChanged -= OnCoverCropDtoPropertyChanged;
+                    }
+
+                    cropDto.CoverCropDto = null;
+                }
+                else
+                {
+                    var coverDto = _cropFactory.CreateCoverCropDto(cropDto.Year);
+                    cropDto.CoverCropDto = coverDto;
+
+                    // Subscribe to cover crop DTO property changes so preview updates
+                    if (coverDto is INotifyPropertyChanged newCoverDto)
+                    {
+                        newCoverDto.PropertyChanged += OnCoverCropDtoPropertyChanged;
+                    }
+                }
+
+                // Regenerate preview to show cover crop indicators
+                GenerateFieldAssignmentRows();
+
+                // The selected cell DTO (Step 4) is a clone of the timeline crop,
+                // so it still has the old cover crop state. Sync it so the Step 4
+                // cover crop editor hides/shows correctly.
+                if (SelectedCropDto != null)
+                {
+                    SelectedCropDto.CoverCropDto = cropDto.HasCoverCrop ? cropDto.CoverCropDto : null;
+                    // Force UI to re-evaluate all SelectedCropDto.* bindings (e.g. HasCoverCrop)
+                    RaisePropertyChanged(nameof(SelectedCropDto));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, "Failed to toggle cover crop on rotation");
+            }
+        }
+
+        /// <summary>
+        /// Handles property changes on a cover crop DTO (child of a timeline crop).
+        /// When the cover crop type changes, updates preview cells in-place.
+        /// </summary>
+        private void OnCoverCropDtoPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is not ICropDto coverCropDto)
+                return;
+
+            // React to CropType or SelectedCropTypeItem changes (both indicate the cover crop type changed)
+            if (e.PropertyName != nameof(ICropDto.CropType) && e.PropertyName != nameof(ICropDto.SelectedCropTypeItem))
+                return;
+
+            // Find the parent crop that owns this cover crop DTO
+            if (CropDtos == null || FieldAssignmentRows == null) return;
+
+            var crops = CropDtos.ToList();
+            int sourceCropIndex = -1;
+            for (int i = 0; i < crops.Count; i++)
+            {
+                if (ReferenceEquals(crops[i].CoverCropDto, coverCropDto))
+                {
+                    sourceCropIndex = i;
+                    break;
+                }
+            }
+
+            if (sourceCropIndex < 0) return;
+
+            var rotationLength = crops.Count;
+            var newCoverDisplay = _cropColorService?.GetCropDisplayName(coverCropDto.CropType) ?? coverCropDto.CropType.ToString();
+
+            // Update CoverCropDisplay on all preview cells derived from the parent crop
+            for (int fieldIndex = 0; fieldIndex < FieldAssignmentRows.Count; fieldIndex++)
+            {
+                var row = FieldAssignmentRows[fieldIndex];
+                if (row.YearAssignments == null) continue;
+
+                int shiftOffset = ShiftDirection switch
+                {
+                    RotationShiftDirection.RightShift => fieldIndex,
+                    RotationShiftDirection.LeftShift => -fieldIndex,
+                    RotationShiftDirection.None => 0,
+                    _ => 0
+                };
+
+                for (int yearIndex = 0; yearIndex < row.YearAssignments.Count; yearIndex++)
+                {
+                    int rawIndex = (yearIndex + shiftOffset) % rotationLength;
+                    int cropIndex = (rawIndex + rotationLength) % rotationLength;
+
+                    if (cropIndex == sourceCropIndex)
+                    {
+                        row.YearAssignments[yearIndex].CoverCropDisplay = newCoverDisplay;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Updates the IsSelected property on all crop DTOs in the timeline (Step 2).
-        /// 
+        ///
         /// This creates a "radio button" effect where only one crop can be selected at a time.
         /// The selected crop card will show visual selection styling (highlighted border, scale effect).
-        /// 
+        ///
         /// This method is called when:
         /// - User clicks a crop card in the timeline
         /// - A crop is deleted and we need to select a different one
@@ -978,6 +1096,12 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     {
                         notifyPropertyChanged.PropertyChanged += OnCropDtoPropertyChanged;
                     }
+
+                    // Also subscribe to cover crop DTO if one already exists (e.g. loaded from saved farm)
+                    if (item is ICropDto cropDto && cropDto.CoverCropDto is INotifyPropertyChanged coverNotify)
+                    {
+                        coverNotify.PropertyChanged += OnCoverCropDtoPropertyChanged;
+                    }
                 }
             }
 
@@ -989,6 +1113,12 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     if (item is INotifyPropertyChanged notifyPropertyChanged)
                     {
                         notifyPropertyChanged.PropertyChanged -= OnCropDtoPropertyChanged;
+                    }
+
+                    // Also unsubscribe from cover crop DTO
+                    if (item is ICropDto cropDto && cropDto.CoverCropDto is INotifyPropertyChanged coverNotify)
+                    {
+                        coverNotify.PropertyChanged -= OnCoverCropDtoPropertyChanged;
                     }
                 }
             }

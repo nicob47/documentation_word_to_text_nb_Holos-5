@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using H.Core.Enumerations;
 using H.Core.Models.LandManagement.Fields;
+using System.Windows.Input;
 
 namespace H.Core.Factories.Crops;
 
@@ -81,4 +82,11 @@ public interface ICropDto : IDto
     // ── Economics ──
 
     bool CropEconomicDataApplied { get; set; }
+
+    // ── Cover Crop ──
+
+    bool IsSecondaryCrop { get; set; }
+    CoverCropTerminationType CoverCropTerminationType { get; set; }
+    ICropDto? CoverCropDto { get; set; }
+    bool HasCoverCrop { get; }
 }

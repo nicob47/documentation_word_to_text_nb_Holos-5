@@ -4,8 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
              xmlns:field="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Field"
+             xmlns:converters="clr-namespace:H.Avalonia.Converters"
+             xmlns:dataTemplates="clr-namespace:H.Avalonia.DataTemplates"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Field.FieldComponentStep2View">
+
+    <UserControl.Resources>
+        <converters:CropTypeToColorConverter x:Key="CropTypeToColorConverter"/>
+        <dataTemplates:CropGroupedItemDataTemplate x:Key="CropGroupedItemDataTemplate"/>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="ComboBox.crop-selector /template/ Border#Background">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style Selector="ComboBox.crop-selector ComboBoxItem">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="ComboBox.crop-selector ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#EBF2FA"/>
+        </Style>
+    </UserControl.Styles>
 
     <Design.DataContext>
         <field:FieldComponentViewModelDesign />
@@ -60,7 +81,8 @@
                                         Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).SetSelectedCropCommand}"
                                         CommandParameter="{Binding}">
 
-                                    <Border Classes="timeline-card">
+                                    <Border Classes="timeline-card"
+                                            Background="{Binding CropType, Converter={StaticResource CropTypeToColorConverter}}">
                                         <StackPanel Spacing="8" Margin="8">
                                             <!-- Top row with Year Badge and Delete Button in same DockPanel for perfect alignment -->
                                             <DockPanel LastChildFill="False">
@@ -94,10 +116,45 @@
                                                            FontWeight="SemiBold"
                                                            HorizontalAlignment="Left" />
 
-                                                <ComboBox ItemsSource="{Binding Path=ValidCropTypes}"
-                                                          SelectedItem="{Binding Path=CropType}"
-                                                          MinWidth="140"
-                                                          HorizontalAlignment="Stretch" />
+                                                <ComboBox Classes="crop-selector"
+                                                          ItemsSource="{Binding GroupedCropItems}"
+                                                          SelectedItem="{Binding SelectedCropTypeItem}"
+                                                          ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                          Width="240"
+                                                          MaxDropDownHeight="320"/>
+                                            </StackPanel>
+
+                                            <!-- Cover Crop Toggle -->
+                                            <Button Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Padding="0"
+                                                    HorizontalAlignment="Left"
+                                                    Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).ToggleCoverCropCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
+                                                              IsHitTestVisible="False"/>
+                                                    <TextBlock Text="Cover Crop"
+                                                               FontSize="11"
+                                                               Foreground="#2E7D32"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+
+                                            <!-- Cover Crop Type Selector (visible when cover crop enabled) -->
+                                            <StackPanel Spacing="4"
+                                                        IsVisible="{Binding HasCoverCrop}">
+                                                <TextBlock Text="Cover Crop Type"
+                                                           FontSize="12"
+                                                           Foreground="#2E7D32"
+                                                           FontWeight="SemiBold"
+                                                           HorizontalAlignment="Left" />
+                                                <ComboBox Classes="crop-selector"
+                                                          ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
+                                                          SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
+                                                          ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                          Width="240"
+                                                          MaxDropDownHeight="320"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>
