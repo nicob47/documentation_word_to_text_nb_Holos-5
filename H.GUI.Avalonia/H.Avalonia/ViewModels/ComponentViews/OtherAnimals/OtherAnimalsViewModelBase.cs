@@ -5,6 +5,7 @@ using H.Core.Models;
 using H.Core.Models.Animals;
 using H.Core.Services.Animals;
 using H.Core.Services.StorageService;
+using H.Localization;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Regions;
@@ -133,9 +134,16 @@ namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
             get => _selectedAnimalGroup;
             set
             {
+                var previous = _selectedAnimalGroup;
                 if (SetProperty(ref _selectedAnimalGroup, value))
                 {
+                    if (previous != null)
+                        previous.PropertyChanged -= OnSelectedGroupPropertyChanged;
+                    if (value != null)
+                        value.PropertyChanged += OnSelectedGroupPropertyChanged;
+
                     RaisePropertyChanged(nameof(IsGroupSelected));
+                    RaisePropertyChanged(nameof(ManagementPeriodIntroText));
                     UpdateSelectedGroupManagementPeriods();
                 }
             }
@@ -171,6 +179,15 @@ namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
         /// Whether a group is currently selected. Controls visibility of Steps 2 and 3.
         /// </summary>
         public bool IsGroupSelected => SelectedAnimalGroup != null;
+
+        /// <summary>
+        /// Dynamically formatted intro text for the Step 2 instruction panel.
+        /// Embeds the selected group's localized animal type description into the template string.
+        /// </summary>
+        public string ManagementPeriodIntroText =>
+            string.Format(
+                LocalizationService.Instance["Message_ManagementPeriodTableIntro"],
+                GetAnimalTypeDescription(SelectedAnimalGroup?.GroupType));
 
         /// <summary>
         /// Whether a management practice is currently selected. Controls visibility of the TabControl in Step 3.
@@ -428,6 +445,18 @@ namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
         }
 
         /// <summary>
+        /// Handles property changes on the currently selected group.
+        /// Re-raises <see cref="ManagementPeriodIntroText"/> when <see cref="AnimalGroupDto.GroupType"/> changes.
+        /// </summary>
+        private void OnSelectedGroupPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(AnimalGroupDto.GroupType))
+            {
+                RaisePropertyChanged(nameof(ManagementPeriodIntroText));
+            }
+        }
+
+        /// <summary>
         /// Validates all management periods in the selected group for overlapping date ranges.
         /// Two periods overlap when one starts before the other ends and ends after the other starts.
         /// Adds/removes overlap errors on each affected period.
@@ -467,6 +496,25 @@ namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the localized display name for an <see cref="AnimalType"/> value by reading
+        /// its <see cref="System.ComponentModel.DescriptionAttribute"/> (which
+        /// <see cref="H.Infrastructure.LocalizedDescriptionAttribute"/> overrides to return a
+        /// resource-file string). Falls back to <see cref="Enum.ToString"/> when no attribute exists.
+        /// </summary>
+        private static string GetAnimalTypeDescription(AnimalType? animalType)
+        {
+            if (animalType is null) return string.Empty;
+
+            var field = animalType.Value.GetType().GetField(animalType.Value.ToString());
+            if (field is null) return animalType.Value.ToString();
+
+            var attr = field.GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false)
+                            .FirstOrDefault() as System.ComponentModel.DescriptionAttribute;
+
+            return attr?.Description ?? animalType.Value.ToString();
         }
 
         #endregion

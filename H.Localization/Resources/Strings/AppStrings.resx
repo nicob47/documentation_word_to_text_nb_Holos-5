@@ -4221,4 +4221,26 @@ Hassan Afzaal</value>
     <value>Crop economic data applied:</value>
     <comment>GUI - Crop Economics tab</comment>
   </data>
+
+  <!-- ═══ Management period table instructions ═══ -->
+  <data name="Message_ManagementPeriodTableIntro" xml:space="preserve">
+    <value>Each row in the table below represents one management period for the &apos;{0}&apos; animal group. Use the buttons below to add or remove periods.</value>
+    <comment>GUI - OtherAnimalsStep2 instruction panel intro sentence; {0} = selected group name</comment>
+  </data>
+  <data name="Message_ManagementPeriodTipName" xml:space="preserve">
+    <value>• Name: Give each period a descriptive name that reflects the management context (e.g. "Winter Housing", "Summer Pasture 2024").</value>
+    <comment>GUI - OtherAnimalsStep2 instruction panel tip 1</comment>
+  </data>
+  <data name="Message_ManagementPeriodTipDates" xml:space="preserve">
+    <value>• Start &amp; End Date: Use the calendar pickers to set when each period begins and ends — this defines how long the period lasts.</value>
+    <comment>GUI - OtherAnimalsStep2 instruction panel tip 2</comment>
+  </data>
+  <data name="Message_ManagementPeriodTipDays" xml:space="preserve">
+    <value>• Number of Days: Calculated automatically from the start and end dates, but can be adjusted directly if needed.</value>
+    <comment>GUI - OtherAnimalsStep2 instruction panel tip 3</comment>
+  </data>
+  <data name="Message_ManagementPeriodTipAnimals" xml:space="preserve">
+    <value>• Number of Animals: Enter the size of this animal group during each period.</value>
+    <comment>GUI - OtherAnimalsStep2 instruction panel tip 4</comment>
+  </data>
 </root>
