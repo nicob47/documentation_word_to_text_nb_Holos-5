@@ -10,7 +10,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<TextBlock Text="{Binding [Message_DefaultManureComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="#3C4DBB" Foreground="WhiteSmoke" Grid.Row="0"/>
+		<TextBlock Text="{Binding [Message_DefaultManureComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" Grid.Row="0"/>
 		<!-- Hardcoded sizing to fix row display issue, couldn't get auto sizing to work for now -->
 		<DataGrid ItemsSource="{Binding Path=DefaultManureDTOs}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
 			<DataGrid.Columns>

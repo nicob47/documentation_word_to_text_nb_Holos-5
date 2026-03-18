@@ -10,7 +10,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<TextBlock Text="{Binding [Message_DefaultBeddingComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="#3C4DBB" Foreground="WhiteSmoke" Grid.Row="0"/>
+		<TextBlock Text="{Binding [Message_DefaultBeddingComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" Grid.Row="0"/>
 
 		<DataGrid ItemsSource="{Binding Path=BeddingCompositionDTOs}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
 			<DataGrid.Columns>

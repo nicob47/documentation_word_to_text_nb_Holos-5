@@ -16,7 +16,7 @@
 
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 		<TextBlock Text="{Binding [Label_OpenAnExistingFarm].Value, Source={StaticResource Loc}}"
-                   HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969" />
+				   HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="{StaticResource GcdsFontSizeH5}" Foreground="{StaticResource GcdsTextSecondaryBrush}" />
 
 		<farmCreationViews1:FarmDataGridSharedView/>
 		

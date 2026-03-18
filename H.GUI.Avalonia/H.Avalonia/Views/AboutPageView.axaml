@@ -12,13 +12,13 @@
   <StackPanel>
     <Image
          Width="200"
-         Source="/Assets/Images/HOLOSIE.png"
+         Source="/Assets/Images/holoslogo.png"
          RenderOptions.BitmapInterpolationMode="HighQuality">
     </Image>
     <TextBlock Text="{Binding [Title_Application].Value, Source={StaticResource Loc}}"
                FontFamily="{StaticResource GcdsHeadingFont}"
                FontWeight="Bold"
-               FontSize="37"
+               FontSize="{StaticResource GcdsFontSizeH1}"
                TextWrapping="Wrap"
                Width="240"
                TextAlignment="Center"
@@ -44,7 +44,7 @@
                 Padding="10">
           <StackPanel HorizontalAlignment="Center">
               <Label Content="{Binding [Label_Contributors].Value, Source={StaticResource Loc}}"
-                     FontSize="24"
+                     FontSize="{StaticResource GcdsFontSizeH4}"
                      FontFamily="{StaticResource GcdsHeadingFont}"/>
               <TextBlock Text="{Binding [Text_ContributorsList].Value, Source={StaticResource Loc}}"
                          Padding="10"/>
@@ -58,7 +58,7 @@
                 Padding="10">
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="{Binding [Label_UsefulLinks].Value, Source={StaticResource Loc}}"
-                       FontSize="24"
+                       FontSize="{StaticResource GcdsFontSizeH4}"
                        FontFamily="{StaticResource GcdsHeadingFont}"/>
                 <Label Content="{Binding [Label_Github].Value, Source={StaticResource Loc}}"
                        Padding="10, 10, 0, 0"/>

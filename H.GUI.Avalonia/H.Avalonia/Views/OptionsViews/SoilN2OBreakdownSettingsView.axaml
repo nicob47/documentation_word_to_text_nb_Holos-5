@@ -8,7 +8,7 @@
              x:Class="H.Avalonia.Views.OptionsViews.OptionSoilN2OBreakdownView">
 
   <Grid RowDefinitions="Auto,*">
-	  <TextBlock  Background="#3C4DBB" Foreground="WhiteSmoke" TextWrapping="Wrap" Grid.Row="0" Padding="40, 15" Text="{Binding [Text_OptionSoilN2OBreakdown].Value, Source={StaticResource Loc}}"  />
+	  <TextBlock  Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" TextWrapping="Wrap" Grid.Row="0" Padding="40, 15" Text="{Binding [Text_OptionSoilN2OBreakdown].Value, Source={StaticResource Loc}}"  />
       <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
 		  <TextBlock Text="{Binding TotalEnteredPercentForAllMonthsMessage}" Classes.inline-text-block-error="{Binding !AreEntriesValid}" Classes.inline-text-block-succeed="{Binding AreEntriesValid}"/>
       </StackPanel>

@@ -83,7 +83,7 @@
                                     Tag="{Binding}">
                                 <Border Width="280"
                                         MinHeight="100"
-                                        Background="White"
+                                        Background="{StaticResource GcdsBgWhiteBrush}"
                                         BorderBrush="{StaticResource GcdsBorderLightBrush}"
                                         BorderThickness="1"
                                         CornerRadius="8"
@@ -182,7 +182,7 @@
                             <!-- Component Card -->
                             <Border Width="280"
                                     Height="200"
-                                    Background="White"
+                                    Background="{StaticResource GcdsBgWhiteBrush}"
                                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                                     BorderThickness="1"
                                     CornerRadius="8"

@@ -6,9 +6,9 @@
              x:Class="H.Avalonia.Views.OptionsViews.SelectOptionView">
 	<Grid>
 		<TextBlock Text="{Binding [Label_SelectAnOption].Value, Source={StaticResource Loc}}"
-                   FontSize="20"
-                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+				   FontSize="{StaticResource GcdsFontSizeH5}"
+				   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"/>
 	</Grid>
 </UserControl>
