@@ -207,28 +207,13 @@ namespace H.Avalonia.ViewModels.SupportingViews.Disclaimer
         }
 
         /// <summary>
-        /// Re-reads country-specific and common localized strings from the
-        /// <see cref="LocalizationService"/> and assigns them to ViewModel properties.
-        /// These properties are bound directly in the Disclaimer XAML (they are
-        /// <b>not</b> part of the <c>LocalizedString / LocalizationProvider</c> pipeline
-        /// because they require runtime branching on <see cref="CountryVersion"/>).
+        /// Re-reads localized strings from the <see cref="LocalizationService"/>
+        /// and assigns them to ViewModel properties bound in the Disclaimer XAML.
         /// </summary>
         private void RefreshLocalizedStrings()
         {
-            // Get country-specific strings from localization
-            if (_countrySettings?.Version == CountryVersion.Canada)
-            {
-                this.AboutHolosString = LocalizationService.Instance["AboutHolos"];
-                this.ToBeKeptInformedString = LocalizationService.Instance["ToBeKeptInformed"];
-            }
-            else
-            {
-                // Ireland version
-                this.AboutHolosString = LocalizationService.Instance["AboutHolosIE"];
-                this.ToBeKeptInformedString = LocalizationService.Instance["ToBeKeptInformedIE"];
-            }
-
-            // Common localized strings
+            this.AboutHolosString = LocalizationService.Instance["AboutHolos"];
+            this.ToBeKeptInformedString = LocalizationService.Instance["ToBeKeptInformed"];
             this.DisclaimerTitle = LocalizationService.Instance["DisclaimerTitle"];
             this.DisclaimerText = LocalizationService.Instance["DisclaimerText"];
         }

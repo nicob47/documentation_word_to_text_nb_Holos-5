@@ -35,10 +35,6 @@
     <value>HOLOS - a tool to estimate and reduce greenhouse gas emissions from farms</value>
     <comment>GUI (H.Localization) - app description</comment>
   </data>
-  <data name="AboutHolosIE" xml:space="preserve">
-    <value>HOLOS-IE - a tool to estimate and reduce greenhouse gas emissions from farms</value>
-    <comment>GUI (H.Localization) - app description IE variant</comment>
-  </data>
   <data name="DisclaimerTitle" xml:space="preserve">
     <value>Disclaimer</value>
     <comment>GUI (H.Localization) - dialog title</comment>
@@ -77,7 +73,7 @@ or
 
 copyright.droitdauteur@communication.gc.ca
 
-Questions or comments regarding this policy, or the administration of the Privacy Act in Agriculture and Agri-Food Canada may be directed to the Privacy Co-ordinator by e-mail to jacquesd@agr.gc.ca or by calling (613) 759-7083 or writing to:
+may be directed to the Privacy Co-ordinator by e-mail to holos@agr.gc.ca or by writing to:
 
 Danielle Jacques
 Acting Access to Information and Privacy Coordinator
@@ -101,10 +97,6 @@ If you are not satisfied with our response to your privacy concern, you may wish
   <data name="ToBeKeptInformed" xml:space="preserve">
     <value>To be kept informed about future versions, please send your contact information (including email address) to holos@agr.gc.ca</value>
     <comment>GUI (H.Localization) - contact info message</comment>
-  </data>
-  <data name="ToBeKeptInformedIE" xml:space="preserve">
-    <value>To be kept informed about future versions, please send your contact information (including email address) to ibrahim.khalil1@ucd.ie</value>
-    <comment>GUI (H.Localization) - contact info message IE variant</comment>
   </data>
   <data name="Button_AddGroup" xml:space="preserve">
     <value>Add Group</value>

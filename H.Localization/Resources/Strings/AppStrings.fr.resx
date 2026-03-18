@@ -34,9 +34,6 @@
   <data name="AboutHolos" xml:space="preserve">
     <value>Holos - outil d&apos;evaluation et de reduction des emissions de gaz a effet de serre des fermes agricoles</value>
   </data>
-  <data name="AboutHolosIE" xml:space="preserve">
-    <value>HOLOS-IE - outil d&apos;evaluation et de reduction des emissions de gaz a effet de serre des fermes agricoles</value>
-  </data>
   <data name="Column_AboveGroundCarbonInput" xml:space="preserve">
     <value>apport de carbone aérien</value>
   </data>
@@ -760,7 +757,7 @@ ou
 
 copyright.droitdauteur@communication.gc.ca
 
-Si vous avez des questions ou des commentaires au sujet de cette politique ou de la façon dont l'Agriculture et Agroalimentaire Canada applique la Loi sur la protection des renseignements personnels, n'hésitez pas à vous adresser au coordonnateur de la protection des renseignements personnels par courriel à jacquesd@agr.gc.ca, par téléphone au 613-759-7083 ou par écrit à:
+n'hésitez pas à vous adresser au coordonnateur de la protection des renseignements personnels par courriel à holos@agr.gc.ca ou par écrit à:
 
 Danielle Jacques
 Coordonnateur intérimaire, Accès à l'information et protection des renseignements personnels
@@ -1395,9 +1392,6 @@ Si notre réponse à vos préoccupations au sujet de la protection des renseigne
   </data>
   <data name="ToBeKeptInformed" xml:space="preserve">
     <value>Pour etre informe de la publication des prochaines versions du logiciel, faites parvenir vos coordonnees (y compris votre adresse electronique) a holos@agr.gc.ca</value>
-  </data>
-  <data name="ToBeKeptInformedIE" xml:space="preserve">
-    <value>Pour etre informe de la publication des prochaines versions du logiciel, faites parvenir vos coordonnees (y compris votre adresse electronique) a ibrahim.khalil1@ucd.ie</value>
   </data>
   <data name="Button_AddGroup" xml:space="preserve">
     <value>Ajouter un groupe</value>
