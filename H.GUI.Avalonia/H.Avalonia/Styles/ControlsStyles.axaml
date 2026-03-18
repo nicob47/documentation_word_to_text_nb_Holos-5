@@ -183,7 +183,7 @@
 		<Setter Property="FontSize" Value="16"/>
 		<Setter Property="FontWeight" Value="Bold"/>
 		<Setter Property="Foreground" Value="{StaticResource GcdsTextSecondaryBrush}"/>
-		<Setter Property="Margin" Value="0,0,4,0"/>
+		<Setter Property="Margin" Value="0,8,0,0"/>
 	</Style>
 
 	<!-- TextBox Styles -->
@@ -381,17 +381,17 @@
 	</Style>
 
     <!-- Badge Styles -->
-    <Style Selector="Border.step-badge">
-        <Setter Property="Background" Value="{StaticResource BadgeBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="CornerRadius" Value="{StaticResource StepBadgeCornerRadius}"/>
-        <Setter Property="Padding" Value="{StaticResource StepBadgePadding}"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,0,12,0"/>
-        <Setter Property="MinHeight" Value="32"/>
-        <Setter Property="MinWidth" Value="48"/>
-    </Style>
+	<Style Selector="Border.step-badge">
+		<Setter Property="Background" Value="{StaticResource BadgeBackgroundBrush}"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="CornerRadius" Value="{StaticResource StepBadgeCornerRadius}"/>
+		<Setter Property="Padding" Value="{StaticResource StepBadgePadding}"/>
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+		<Setter Property="Margin" Value="0,0,0,0"/>
+		<Setter Property="MinHeight" Value="32"/>
+		<Setter Property="MinWidth" Value="48"/>
+	</Style>
 
     <Style Selector="Border.year-badge">
         <Setter Property="Background" Value="Transparent"/>
@@ -486,8 +486,7 @@
 
 	<!-- Step Header Styles -->
 	<Style Selector="StackPanel.step-header">
-		<Setter Property="Orientation" Value="Horizontal"/>
-		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="Orientation" Value="Vertical"/>
 		<Setter Property="Margin" Value="0,0,0,20"/>
 	</Style>
 

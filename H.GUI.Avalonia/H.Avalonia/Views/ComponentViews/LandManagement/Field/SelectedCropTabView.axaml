@@ -24,8 +24,7 @@
 
             <!-- Step Description -->
             <TextBlock Text="{Binding [Label_DefineManagementPractices].Value, Source={StaticResource Loc}}"
-                       Classes="step-number-description"
-                       VerticalAlignment="Center"/>
+                       Classes="step-number-description"/>
         </StackPanel>
 
         <!-- Crop Details TabControl -->

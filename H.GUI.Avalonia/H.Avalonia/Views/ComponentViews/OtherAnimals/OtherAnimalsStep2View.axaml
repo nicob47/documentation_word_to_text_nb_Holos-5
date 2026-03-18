@@ -21,8 +21,7 @@
 
                 <!-- Step Description -->
                 <TextBlock Text="{Binding [Label_Step2Text].Value, Source={StaticResource Loc}}"
-                           Classes="step-number-description"
-                           VerticalAlignment="Center" />
+                           Classes="step-number-description" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,10" Spacing="8">
