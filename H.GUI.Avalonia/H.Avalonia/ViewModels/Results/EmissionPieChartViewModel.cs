@@ -86,16 +86,9 @@ namespace H.Avalonia.ViewModels.Results
 
         #region Constructors
 
-        EmissionPieChartViewModel(IRegionManager regionManager, INotificationManagerService notificationManager, IStorageService storageService, ILogger logger) : base(regionManager, notificationManager, storageService)
+        EmissionPieChartViewModel()
         {
-            if (logger != null)
-            {
-                _logger = logger;
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
+
             ConstructPieChartContent();
 
             // Set defaults to first item in each collection
