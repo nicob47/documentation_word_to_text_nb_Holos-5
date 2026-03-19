@@ -32,7 +32,6 @@
     <StackPanel x:Name="MainStackPanel">
       <!-- Step Header -->
       <StackPanel x:Name="StepHeaderStackPanel"
-                  Orientation="Vertical"
                   Classes="step-header">
         <!-- Step Badge -->
         <Border Classes="step-badge" HorizontalAlignment="Left">

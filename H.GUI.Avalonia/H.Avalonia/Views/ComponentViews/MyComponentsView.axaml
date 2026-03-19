@@ -97,14 +97,14 @@
 					</ItemsControl>
 					
 					<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20" Margin="40" IsVisible="{Binding !MyComponentItems.Count}">
-						<TextBlock Text="{Binding [Label_NoComponentsAddedYet].Value, Source={StaticResource Loc}}" FontSize="24" FontWeight="SemiBold" Foreground="LightGray" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding [Label_NoComponentsAddedYet].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeH4}" FontWeight="SemiBold" Foreground="{StaticResource GcdsBorderDefaultBrush}" HorizontalAlignment="Center"/>
 						<TextBlock Text="{Binding [Label_ClickEditComponentsDesc].Value, Source={StaticResource Loc}}" FontSize="16" Foreground="{StaticResource GcdsTextSecondaryBrush}" FontStyle="Italic" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
 						<Border Background="{StaticResource GcdsBgLightBrush}" CornerRadius="8" Padding="16,12" HorizontalAlignment="Center">
 							<StackPanel Orientation="Horizontal" Spacing="8">
 								<Border Classes="tip-icon">
 									<TextBlock Classes="tip-icon-text"/>
 								</Border>
-								<TextBlock Text="{Binding [Label_TipStartWithFieldOrLivestock].Value, Source={StaticResource Loc}}" FontSize="14" Foreground="#666666" VerticalAlignment="Center"/>
+								<TextBlock Text="{Binding [Label_TipStartWithFieldOrLivestock].Value, Source={StaticResource Loc}}" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center"/>
 							</StackPanel>
 						</Border>
 					</StackPanel>

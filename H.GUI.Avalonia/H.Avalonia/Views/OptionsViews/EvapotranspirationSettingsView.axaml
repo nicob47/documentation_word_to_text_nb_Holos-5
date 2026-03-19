@@ -13,7 +13,7 @@
 	</Design.DataContext>
 	
 	<Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto,*">
-		<TextBlock Padding="40, 15" Grid.Row="0" Grid.ColumnSpan="2" Background="#3C4DBB" Foreground="WhiteSmoke" Text="{Binding [Label_MonthlyPrecipitationAveragesDesc].Value, Source={StaticResource Loc}}" />
+		<TextBlock Padding="40, 15" Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" Text="{Binding [Label_MonthlyPrecipitationAveragesDesc].Value, Source={StaticResource Loc}}" />
 		<ScrollViewer Grid.Row="1" Grid.Column="0">
 			<StackPanel Spacing="5" Width="180" Margin="15">
 				<TextBlock Text="{Binding [Label_January].Value, Source={StaticResource Loc}}"/>

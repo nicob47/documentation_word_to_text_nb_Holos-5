@@ -21,63 +21,73 @@
 	</UserControl.Resources>
 
 	<Grid Margin="20">
-		<Grid Margin="20">
-			<StackPanel Orientation="Vertical">
-				<Grid Name="ProductNameGrid">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.Column="0" Orientation="Horizontal">
-						<Label Content="{Binding VersionString}"/>
-						<TextBlock VerticalAlignment="Center">
-							<Run>(</Run>
-                            <Run Text="{x:Static h:GuiConstants.VersionReleaseDateString}"/>
-							<Run>)</Run>
-						</TextBlock>
-					</StackPanel>
-					<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="{Binding [LabelLanguage].Value, Source={StaticResource Loc}}" VerticalAlignment="Center"/>
-						<ComboBox ItemsSource="{Binding LanguageCollection}"
-								  SelectedItem="{Binding SelectedLanguage}"
-								  MinWidth="120"
-								  Margin="5,0,0,0"/>
-					</StackPanel>
-				</Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
 
-				<Grid Name="AboutHolosGrid" Margin="0,40,0,0">
-					<Label Content="{Binding Path=AboutHolosString}"/>
-				</Grid>
-
-				<Grid Name="ToBeKeptInformedGrid" Margin="0,10,0,0">
-					<Label Content="{Binding Path=ToBeKeptInformedString}"/>
-				</Grid>
-
-				<Grid Name="DisclaimerGrid" Margin="0,20,0,0">
-					<StackPanel Orientation="Vertical">
-                        <TextBlock FontSize="14" Text="{Binding DisclaimerTitle}" FontWeight="Bold" Margin="0,0,0,10"/>
-						<Border BorderBrush="Gray" BorderThickness="1" Height="200">
-							<ScrollViewer>
-								<TextBlock TextWrapping="Wrap" Text="{Binding DisclaimerText}" Margin="5"/>
-							</ScrollViewer>
-						</Border>
-					</StackPanel>
-				</Grid>
-
-				<Grid Name="CommandGrid">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-						<Button IsDefault="True"
-								Click="Button_OnClick"
-								Margin="0,10,0,0"
-                                Content="{Binding [LabelOk].Value, Source={StaticResource Loc}}"/>
-					</StackPanel>
-                </Grid>
+		<!-- Row 0: Version + Language selector -->
+		<Grid Grid.Row="0" Margin="0,0,0,16">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+				<Label Content="{Binding VersionString}"/>
+				<TextBlock VerticalAlignment="Center">
+					<Run>(</Run>
+					<Run Text="{x:Static h:GuiConstants.VersionReleaseDateString}"/>
+					<Run>)</Run>
+				</TextBlock>
+			</StackPanel>
+			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+				<Label Content="{Binding [LabelLanguage].Value, Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+				<ComboBox ItemsSource="{Binding LanguageCollection}"
+						  SelectedItem="{Binding SelectedLanguage}"
+						  MinWidth="120"
+						  Margin="5,0,0,0"/>
 			</StackPanel>
 		</Grid>
-    </Grid>
+
+		<!-- Row 1: About Holos -->
+		<Border Grid.Row="1" BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="1" CornerRadius="4" Padding="12" Margin="0,0,0,10" Background="{StaticResource GcdsBgLightBrush}">
+			<TextBlock TextWrapping="Wrap" Text="{Binding AboutHolosString}"/>
+		</Border>
+
+		<!-- Row 2: To Be Kept Informed -->
+		<Border Grid.Row="2" BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="1" CornerRadius="4" Padding="12" Margin="0,0,0,10" Background="{StaticResource GcdsBgLightBrush}">
+			<TextBlock TextWrapping="Wrap" Text="{Binding ToBeKeptInformedString}"/>
+		</Border>
+
+		<!-- Row 3: Disclaimer - expands to fill remaining space -->
+		<Grid Grid.Row="3" Margin="0,0,0,10">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0"
+					   FontFamily="{StaticResource GcdsHeadingFont}"
+					   FontSize="{StaticResource GcdsFontSizeH6}"
+					   FontWeight="Bold"
+					   Foreground="{StaticResource GcdsTextPrimaryBrush}"
+					   Text="{Binding DisclaimerTitle}"
+					   Margin="0,0,0,8"/>
+			<Border Grid.Row="1" BorderBrush="{StaticResource GcdsBorderDefaultBrush}" BorderThickness="1" CornerRadius="4">
+				<ScrollViewer>
+					<TextBlock TextWrapping="Wrap" Text="{Binding DisclaimerText}" Margin="8"/>
+				</ScrollViewer>
+			</Border>
+		</Grid>
+
+		<!-- Row 4: OK button -->
+		<Button Grid.Row="4"
+				IsDefault="True"
+				Click="Button_OnClick"
+				HorizontalAlignment="Center"
+				Padding="24,6"
+				Content="{Binding [LabelOk].Value, Source={StaticResource Loc}}"/>
+	</Grid>
 </UserControl>

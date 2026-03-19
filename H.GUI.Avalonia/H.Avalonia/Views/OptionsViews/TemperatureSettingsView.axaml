@@ -23,7 +23,7 @@
 		</Grid.ColumnDefinitions>
 
 
-		<TextBlock Padding="40, 15" Grid.Row="0" Grid.ColumnSpan="2" Background="#3C4DBB" Foreground="WhiteSmoke" Text="{Binding [Message_MonthlyTemperatureBreakdownHeader].Value, Source={StaticResource Loc}}" />
+		<TextBlock Padding="40, 15" Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" Text="{Binding [Message_MonthlyTemperatureBreakdownHeader].Value, Source={StaticResource Loc}}" />
 
 		<ScrollViewer Grid.Row="1" Grid.Column="0">
 			<StackPanel Spacing="5" Margin="15 15 15 15">

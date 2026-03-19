@@ -28,7 +28,7 @@
                                IsActive="{Binding IsProcessingData}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Top"
-                               Foreground="Green"
+                               Foreground="{StaticResource GcdsSuccessBrush}"
                                Margin="0,-10,0,20"/>
         <Button Name="ExportDataButton"
                 Grid.Row="2"

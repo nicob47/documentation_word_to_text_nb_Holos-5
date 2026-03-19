@@ -13,7 +13,7 @@
 
 
   <Grid RowDefinitions="Auto,*">
-	  <TextBlock  Background="#3C4DBB" Foreground="WhiteSmoke" TextWrapping="Wrap" Grid.Row="0" Padding="40, 15" Text="{Binding [Text_OptionSoilView].Value, Source={StaticResource Loc}}"  />
+	  <TextBlock  Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" TextWrapping="Wrap" Grid.Row="0" Padding="40, 15" Text="{Binding [Text_OptionSoilView].Value, Source={StaticResource Loc}}"  />
 	  <ScrollViewer Grid.Row="1">
 		  <StackPanel Margin="20" Spacing="10" Width="350" VerticalAlignment="Center" HorizontalAlignment="Center">
 			  <TextBlock Text="{Binding [Label_Ecodistrict].Value, Source={StaticResource Loc}}"/>

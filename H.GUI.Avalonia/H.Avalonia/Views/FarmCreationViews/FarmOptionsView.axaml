@@ -8,7 +8,7 @@
              x:Class="H.Avalonia.Views.FarmCreationViews.FarmOptionsView">
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 		<TextBlock Text="{Binding [Label_WouldYouLikeToOpenAnExistingFarmOrCreateANewOne].Value, Source={StaticResource Loc}}"
-                   HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="20" Foreground="#696969" />
+				   HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="{StaticResource GcdsFontSizeH5}" Foreground="{StaticResource GcdsTextSecondaryBrush}" />
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
 			<Button Content="{Binding [Button_CreateNewFarm].Value, Source={StaticResource Loc}}" Margin="0 0 5 0" Command="{Binding NavigateToCreateNewFarmCommand}">
 				
@@ -19,7 +19,7 @@
 		</StackPanel>
 		<Border BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="0,0,0,1" Margin="0,20" Width="450" />
 		<TextBlock Text="{Binding [Label_OrImportFromAFile].Value, Source={StaticResource Loc}}"
-                   HorizontalAlignment="Center" Margin="0,0,0,10" FontWeight="Bold" FontSize="15" Foreground="#696969" />
+				   HorizontalAlignment="Center" Margin="0,0,0,10" FontWeight="Bold" FontSize="{StaticResource GcdsFontSizeBody}" Foreground="{StaticResource GcdsTextSecondaryBrush}" />
 		<Button Content="{Binding [Button_Import].Value, Source={StaticResource Loc}}" Margin="0 10 0 0" HorizontalAlignment="Center" Command="{Binding NavigateToImportFarmCommand}"/>
 	</StackPanel>
 </UserControl>

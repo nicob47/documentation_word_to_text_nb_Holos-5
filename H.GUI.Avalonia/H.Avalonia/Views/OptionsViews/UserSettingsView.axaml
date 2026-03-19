@@ -14,7 +14,7 @@
 		<ScrollViewer>
 		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 			
-			<TextBlock Background="#3C4DBB" Foreground="WhiteSmoke"  Grid.Row="0" Padding="40, 15" Text="{Binding [Label_CarbonModelling].Value, Source={StaticResource Loc}}" />
+			<TextBlock Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White"  Grid.Row="0" Padding="40, 15" Text="{Binding [Label_CarbonModelling].Value, Source={StaticResource Loc}}" />
 			<StackPanel Spacing="10" Grid.Row="1" Margin="20, 10" VerticalAlignment="Center" Width="380" >
 				<TextBlock Text="{Binding [Label_CarbonModellingStrategy].Value, Source={StaticResource Loc}}"/>
 				<ComboBox ItemsSource="{Binding Data.CarbonModellingStrategiesList}" SelectedItem="{Binding Data.CarbonModellingStrategy}" HorizontalAlignment="Stretch" />
