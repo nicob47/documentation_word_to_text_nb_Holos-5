@@ -31,25 +31,25 @@ public partial class ResultsSummaryView : UserControl
         // Named Borders in the XAML for navigation
         switch (chapter)
         {
-            case "Farm Profile":
+            case "1. Farm Profile":
                 FarmProfileSection?.BringIntoView();
                 break;
-            case "Annual Production Summary":
+            case "2. Annual Production Summary":
                 AnnualProductionSection?.BringIntoView();
                 break;
-            case "Total GHG Emissions":
+            case "3. Total GHG Emissions":
                 TotalGHGEmissionsSection?.BringIntoView();
                 break;
-            case "Emissions Breakdown By Category":
+            case "4. Emissions Breakdown By Category":
                 EmissionsBreakdownSection?.BringIntoView();
                 break;
-            case "Carbon Sequestration Summary":
+            case "5. Carbon Sequestration Summary":
                 CarbonSequestrationSection?.BringIntoView();
                 break;
-            case "Manure Management Overview":
+            case "6. Manure Management Overview":
                 ManureManagementSection?.BringIntoView();
                 break;
-            case "Key Findings and Recommendations":
+            case "7. Key Findings and Recommendations":
                 KeyFindingsSection?.BringIntoView();
                 break;
         }

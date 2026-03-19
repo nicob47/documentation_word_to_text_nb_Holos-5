@@ -3550,6 +3550,15 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Component Emissions.
+        /// </summary>
+        public static string Label_ComponentEmissions {
+            get {
+                return ResourceManager.GetString("Label_ComponentEmissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to components available.
         /// </summary>
         public static string Label_ComponentsAvailable {
@@ -3937,6 +3946,15 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detailed Emissions Report.
+        /// </summary>
+        public static string Label_DetailedEmissionsReport {
+            get {
+                return ResourceManager.GetString("Label_DetailedEmissionsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diet.
         /// </summary>
         public static string Label_Diet {
@@ -4144,6 +4162,15 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Emissions Pie Chart.
+        /// </summary>
+        public static string Label_EmissionsPieChart {
+            get {
+                return ResourceManager.GetString("Label_EmissionsPieChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End Date.
         /// </summary>
         public static string Label_EndDate {
@@ -4221,6 +4248,15 @@ namespace H.Localization.Resources.Strings {
         public static string Label_EquilibriumCalculationStrategy {
             get {
                 return ResourceManager.GetString("Label_EquilibriumCalculationStrategy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estimates of Production.
+        /// </summary>
+        public static string Label_EstimatesOfProduction {
+            get {
+                return ResourceManager.GetString("Label_EstimatesOfProduction", resourceCulture);
             }
         }
         
@@ -4365,6 +4401,15 @@ namespace H.Localization.Resources.Strings {
         public static string Label_February {
             get {
                 return ResourceManager.GetString("Label_February", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feed Estimate Report.
+        /// </summary>
+        public static string Label_FeedEstimateReport {
+            get {
+                return ResourceManager.GetString("Label_FeedEstimateReport", resourceCulture);
             }
         }
         
@@ -4608,6 +4653,15 @@ namespace H.Localization.Resources.Strings {
         public static string Label_Github {
             get {
                 return ResourceManager.GetString("Label_Github", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go Back.
+        /// </summary>
+        public static string Label_GoBack {
+            get {
+                return ResourceManager.GetString("Label_GoBack", resourceCulture);
             }
         }
         
@@ -5899,6 +5953,15 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overall Emissions.
+        /// </summary>
+        public static string Label_OverallEmissions {
+            get {
+                return ResourceManager.GetString("Label_OverallEmissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pasture/range/paddock.
         /// </summary>
         public static string Label_PastureHandlingSystem {
@@ -6561,6 +6624,15 @@ namespace H.Localization.Resources.Strings {
         public static string Label_ShowAdvancedOptionsRotationDesc {
             get {
                 return ResourceManager.GetString("Label_ShowAdvancedOptionsRotationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Details.
+        /// </summary>
+        public static string Label_ShowDetails {
+            get {
+                return ResourceManager.GetString("Label_ShowDetails", resourceCulture);
             }
         }
         

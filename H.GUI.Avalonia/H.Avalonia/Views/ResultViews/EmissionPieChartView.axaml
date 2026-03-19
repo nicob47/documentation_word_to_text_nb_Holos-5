@@ -11,22 +11,28 @@
                 BorderBrush="#E9ECEF"
                 BorderThickness="1"
                 CornerRadius="6"
-                Padding="16,12"
+                Padding="10"
                 Margin="5,5,5,5" 
                 Grid.Row="1"
                 VerticalAlignment="Center"
                 MinHeight="250">
 			<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 					<StackPanel Orientation="Vertical" Margin="10">
-						<TextBlock Text="Units of Measurement:" Margin="0 0 0 5"/>
+                        <TextBlock>
+                            <Run Text="{Binding [Label_UnitsOfMeasurement].Value, Source={StaticResource Loc}}"/><Run Text=":"/>
+                        </TextBlock>
 						<ComboBox SelectedItem="{Binding SelectedEmissionType}" ItemsSource="{Binding EmissionTypeOptions}"/>
                     </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="10">
-                    <TextBlock Text="Show details:"/>
+                    <TextBlock>
+                        <Run Text="{Binding [Label_ShowDetails].Value, Source={StaticResource Loc}}"/><Run Text=":"/>
+                    </TextBlock>
                     <ToggleSwitch IsChecked="{Binding ShowDetails}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="10">
-                    <TextBlock Text="Year: "/>
+                    <TextBlock>
+                        <Run Text="{Binding [Label_Year].Value, Source={StaticResource Loc}}"/><Run Text=":"/>
+                    </TextBlock>
                     <ComboBox SelectedItem="{Binding SelectedYear}" ItemsSource="{Binding AvailableYears}"/>
                 </StackPanel>
             </StackPanel>

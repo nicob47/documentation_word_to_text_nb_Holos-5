@@ -4255,4 +4255,28 @@ Hassan Afzaal</value>
   <data name="Label_Results" xml:space="preserve">
     <value>Results</value>
   </data>
+  <data name="Label_EstimatesOfProduction" xml:space="preserve">
+    <value>Estimates of Production</value>
+  </data>
+  <data name="Label_FeedEstimateReport" xml:space="preserve">
+    <value>Feed Estimate Report</value>
+  </data>
+  <data name="Label_EmissionsPieChart" xml:space="preserve">
+    <value>Emissions Pie Chart</value>
+  </data>
+  <data name="Label_OverallEmissions" xml:space="preserve">
+    <value>Overall Emissions</value>
+  </data>
+  <data name="Label_ComponentEmissions" xml:space="preserve">
+    <value>Component Emissions</value>
+  </data>
+  <data name="Label_DetailedEmissionsReport" xml:space="preserve">
+    <value>Detailed Emissions Report</value>
+  </data>
+  <data name="Label_GoBack" xml:space="preserve">
+    <value>Go Back</value>
+  </data>
+  <data name="Label_ShowDetails" xml:space="preserve">
+    <value>Show Details</value>
+  </data>
 </root>

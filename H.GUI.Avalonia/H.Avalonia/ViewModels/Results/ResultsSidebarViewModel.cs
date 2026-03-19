@@ -176,17 +176,18 @@ namespace H.Avalonia.ViewModels.Results
         #region Private Methods
 
         /// <summary>
-        /// Populate chapter titles for the basic results view, these should correspond to the sections in the ResultsSummaryView.axaml
+        /// Populate chapter titles for the basic results view. ListBoxItem content must match chapter names used in <see cref="ResultsSummaryView"/> code-behind ScrollToChapter method for navigation to work correctly
         /// </summary>
         private void PopulateBasicChaptersTitles()
         {
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Farm Profile" });
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Annual Production Summary" });
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Total GHG Emissions" });
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Emissions Breakdown By Category" });
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Carbon Sequestration Summary" });
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Manure Management Overview" });
-            _basicViewChapters.Add(new ListBoxItem() { Content = "Key Findings and Recommendations" });
+            // Strings not added to resources as these chapter titles will likely be different for release
+            _basicViewChapters.Add(new ListBoxItem() { Content = "1. Farm Profile" });
+            _basicViewChapters.Add(new ListBoxItem() { Content = "2. Annual Production Summary" });
+            _basicViewChapters.Add(new ListBoxItem() { Content = "3. Total GHG Emissions" });
+            _basicViewChapters.Add(new ListBoxItem() { Content = "4. Emissions Breakdown By Category" });
+            _basicViewChapters.Add(new ListBoxItem() { Content = "5. Carbon Sequestration Summary" });
+            _basicViewChapters.Add(new ListBoxItem() { Content = "6. Manure Management Overview" });
+            _basicViewChapters.Add(new ListBoxItem() { Content = "7. Key Findings and Recommendations" });
         }
 
         /// <summary>
