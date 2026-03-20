@@ -64,7 +64,7 @@ namespace H.Avalonia.ViewModels.Results
             get => _selectedBasicItem;
             set
             {
-                if (_selectedBasicItem != null)
+                if (value != null)
                 {
                     SetProperty(ref _selectedBasicItem, value);
                     _basicUIState.SelectedItem = _selectedBasicItem;
@@ -81,7 +81,7 @@ namespace H.Avalonia.ViewModels.Results
             get => _selectedAdvancedItem;
             set
             {
-                if (_selectedAdvancedItem != null)
+                if (value != null)
                 {
                     SetProperty(ref _selectedAdvancedItem, value);
                     _advancedUIState.SelectedItem = _selectedAdvancedItem;
