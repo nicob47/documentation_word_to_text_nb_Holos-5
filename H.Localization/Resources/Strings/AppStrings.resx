@@ -1,18 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -27,10 +105,18 @@
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
   <data name="AboutHolos" xml:space="preserve">
     <value>HOLOS - a tool to estimate and reduce greenhouse gas emissions from farms</value>
     <comment>GUI (H.Localization) - app description</comment>
@@ -1067,7 +1153,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>CLI - error message</comment>
   </data>
   <data name="Error_ExitAndRunHolosForFarmLocation" xml:space="preserve">
-    <value>1. Exit and run Holos to determine your Farm&apos;s location</value>
+    <value>1. Exit and run Holos to determine your Farm's location</value>
     <comment>CLI - error message</comment>
   </data>
   <data name="Error_FarmDoesNotContainAnyData" xml:space="preserve">
@@ -1211,11 +1297,11 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>CLI - error message</comment>
   </data>
   <data name="Error_UnknownEcozone" xml:space="preserve">
-    <value>Unknown ecozone &apos;{0}&apos;</value>
+    <value>Unknown ecozone '{0}'</value>
     <comment>GUI (H.Avalonia.Core) - error message</comment>
   </data>
   <data name="Error_UnknownSoilTexture" xml:space="preserve">
-    <value>Unknown soil type &apos;{0}&apos;</value>
+    <value>Unknown soil type '{0}'</value>
     <comment>GUI (H.Avalonia.Core) - error message</comment>
   </data>
   <data name="Filename_ClimateDataExport" xml:space="preserve">
@@ -2051,11 +2137,11 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>GUI (H.Core) - informational message</comment>
   </data>
   <data name="Message_AnimalHousingTab" xml:space="preserve">
-    <value>Animal housing details can be entered on this tab. If animals are to be placed on a pasture, ensure at least one field component has been added to the farm and then set the &apos;Housing type&apos; to pasture. You can then specify which pasture the animals are to be placed.</value>
+    <value>Animal housing details can be entered on this tab. If animals are to be placed on a pasture, ensure at least one field component has been added to the farm and then set the 'Housing type' to pasture. You can then specify which pasture the animals are to be placed.</value>
     <comment>GUI (H.Core) - informational message</comment>
   </data>
   <data name="Message_AnimalManureTab" xml:space="preserve">
-    <value>Manure handling system details can be entered on this tab. To adjust optional manure handling system information, click the &apos;Show Additional Information&apos; button.</value>
+    <value>Manure handling system details can be entered on this tab. To adjust optional manure handling system information, click the 'Show Additional Information' button.</value>
     <comment>GUI (H.Core) - informational message</comment>
   </data>
   <data name="Message_DataInputMistakeData" xml:space="preserve">
@@ -2067,7 +2153,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>CLI - informational message</comment>
   </data>
   <data name="Message_DataMissingOptionalHeader" xml:space="preserve">
-    <value>An optional header named &quot;{0}&quot; is missing. Holos will use a default value in {1}</value>
+    <value>An optional header named "{0}" is missing. Holos will use a default value in {1}</value>
     <comment>CLI - informational message</comment>
   </data>
   <data name="Message_DefaultBeddingComposition" xml:space="preserve">
@@ -2115,7 +2201,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>CLI - CLI user prompt</comment>
   </data>
   <data name="Prompt_ForFarmsFolderLocation" xml:space="preserve">
-    <value>Please enter the location of your &quot;Farms&quot; folder to run the Holos Command Line Interface</value>
+    <value>Please enter the location of your "Farms" folder to run the Holos Command Line Interface</value>
     <comment>CLI - CLI user prompt</comment>
   </data>
   <data name="Prompt_SelectPolygonOptions" xml:space="preserve">
@@ -2131,7 +2217,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>CLI - CLI user prompt</comment>
   </data>
   <data name="Prompt_UserForPolygonSelection" xml:space="preserve">
-    <value>In order to process the data for your Farm, the Holos Command Line Interface needs to know the location of your Farm to produce results. If you do not know your location of your Farm, please run Holos and determine the location by selecting your geographical area in the &apos;Setting Your Farm Location&apos; section. The Farm that does not have a settings file is: {0}</value>
+    <value>In order to process the data for your Farm, the Holos Command Line Interface needs to know the location of your Farm to produce results. If you do not know your location of your Farm, please run Holos and determine the location by selecting your geographical area in the 'Setting Your Farm Location' section. The Farm that does not have a settings file is: {0}</value>
     <comment>CLI - CLI user prompt</comment>
   </data>
   <data name="Prompt_UserForUnitsOfMeasurement" xml:space="preserve">
@@ -2784,7 +2870,7 @@ Would you like to continue using this directory?</value>
     <comment>CLI - CLI progress status</comment>
   </data>
   <data name="Status_CreatingDefaultLethbridgeGeographicData" xml:space="preserve">
-    <value>The Holos Command Line Interface is creating a default settings file with the Farm location set to the following location: Lethbridge, Alberta. The settings file can be found in this location: {0}. Please refer to this location when you modify the settings file to match your Farm&apos;s location data</value>
+    <value>The Holos Command Line Interface is creating a default settings file with the Farm location set to the following location: Lethbridge, Alberta. The settings file can be found in this location: {0}. Please refer to this location when you modify the settings file to match your Farm's location data</value>
     <comment>CLI - CLI progress status</comment>
   </data>
   <data name="Status_CreatingFieldInputFiles" xml:space="preserve">
@@ -2877,11 +2963,11 @@ Hassan Afzaal</value>
     <comment>GUI (H.Avalonia.Core) - body paragraph text</comment>
   </data>
   <data name="Text_OptionSoilN2OBreakdown" xml:space="preserve">
-    <value>The monthly emissions distribution for the year. This distribution can be adjusted based on your farm&apos;s results. Please note that the addition of all montly percentages</value>
+    <value>The monthly emissions distribution for the year. This distribution can be adjusted based on your farm's results. Please note that the addition of all montly percentages</value>
     <comment>GUI (H.Core) - body paragraph text</comment>
   </data>
   <data name="Text_OptionSoilView" xml:space="preserve">
-    <value>The Soil tab can be used to change the soil properties for the entire farm. The default values are shown for the current soil type. The soil for the farm can be customized by changing individual soil properties. In order to change the soil type for the specific field only, go to the specific field and select &apos;soil&apos; tab within the field.</value>
+    <value>The Soil tab can be used to change the soil properties for the entire farm. The default values are shown for the current soil type. The soil for the farm can be customized by changing individual soil properties. In order to change the soil type for the specific field only, go to the specific field and select 'soil' tab within the field.</value>
     <comment>GUI (H.Core) - body paragraph text</comment>
   </data>
   <data name="Text_SaveAs" xml:space="preserve">
@@ -2901,7 +2987,7 @@ Hassan Afzaal</value>
     <comment>GUI (H.Core) - body paragraph text</comment>
   </data>
   <data name="Text_SoilDataViewStepThreeDesc" xml:space="preserve">
-    <value>Once you&apos;ve entered your location, click below to retrieve soil data.</value>
+    <value>Once you've entered your location, click below to retrieve soil data.</value>
     <comment>GUI (H.Core) - body paragraph text</comment>
   </data>
   <data name="Text_SoilDataViewStepTwoDesc" xml:space="preserve">
@@ -2936,8 +3022,6 @@ Hassan Afzaal</value>
     <value>Save Holos</value>
     <comment>GUI (H.Core) - dialog or window title</comment>
   </data>
-
-  <!-- ═══ Shared: Advanced Options Toggle ═══ -->
   <data name="Label_ShowAdvancedOptions" xml:space="preserve">
     <value>Show Advanced Options</value>
     <comment>GUI - advanced options toggle title used across all component views</comment>
@@ -2950,14 +3034,10 @@ Hassan Afzaal</value>
     <value>Display additional configuration options for detailed crop rotation management</value>
     <comment>GUI - advanced options toggle description for the Rotation component</comment>
   </data>
-
-  <!-- ═══ Shared: Step badges ═══ -->
   <data name="Label_StepFour" xml:space="preserve">
     <value>Step 4</value>
     <comment>GUI - step badge label</comment>
   </data>
-
-  <!-- ═══ Shared: common input labels ═══ -->
   <data name="Label_FieldSize" xml:space="preserve">
     <value>Field size:</value>
     <comment>GUI - Field component Step 1 input label</comment>
@@ -2966,8 +3046,6 @@ Hassan Afzaal</value>
     <value>ADVANCED</value>
     <comment>GUI - badge shown on advanced-only cards</comment>
   </data>
-
-  <!-- ═══ Rotation component — Step 1: Overview ═══ -->
   <data name="Label_DefineRotationParameters" xml:space="preserve">
     <value>Define Rotation Parameters</value>
     <comment>GUI - Rotation Step 1 header description</comment>
@@ -3008,8 +3086,6 @@ Hassan Afzaal</value>
     <value>Crop-years:</value>
     <comment>GUI - Rotation summary label</comment>
   </data>
-
-  <!-- ═══ Rotation component — Step 2: Timeline ═══ -->
   <data name="Label_BuildYourRotationSequence" xml:space="preserve">
     <value>Build Your Rotation Sequence</value>
     <comment>GUI - Rotation Step 2 header</comment>
@@ -3042,8 +3118,6 @@ Hassan Afzaal</value>
     <value>Add at least one crop to create your rotation</value>
     <comment>GUI - Rotation Step 2 empty-state message</comment>
   </data>
-
-  <!-- ═══ Rotation component — Field Configuration (advanced) ═══ -->
   <data name="Label_RotationShiftDirection" xml:space="preserve">
     <value>Rotation shift direction:</value>
     <comment>GUI - Rotation field config advanced section label</comment>
@@ -3060,8 +3134,6 @@ Hassan Afzaal</value>
     <value>Left Shift</value>
     <comment>GUI - Rotation shift direction option (left)</comment>
   </data>
-
-  <!-- ═══ Rotation component — Step 3: Preview ═══ -->
   <data name="Label_PreviewFieldAssignments" xml:space="preserve">
     <value>Preview Field Assignments</value>
     <comment>GUI - Rotation Step 3 header</comment>
@@ -3098,8 +3170,6 @@ Hassan Afzaal</value>
     <value>Click any cell in the preview grid to edit crop-specific details (yield, irrigation, etc.) for that field and year.</value>
     <comment>GUI - Rotation Step 3 guidance description</comment>
   </data>
-
-  <!-- ═══ Rotation component — Step 4: Edit Crop Details ═══ -->
   <data name="Label_EditCropDetails" xml:space="preserve">
     <value>Edit Crop Details</value>
     <comment>GUI - Rotation Step 4 header</comment>
@@ -3156,8 +3226,6 @@ Hassan Afzaal</value>
     <value>Click a cell in the preview grid (Step 3) to edit its details</value>
     <comment>GUI - Rotation Step 4 empty-state message</comment>
   </data>
-
-  <!-- ═══ Field component — Step 1 ═══ -->
   <data name="Label_EnterBasicInfoForField" xml:space="preserve">
     <value>Enter basic information for this field</value>
     <comment>GUI - Field Step 1 header description</comment>
@@ -3170,8 +3238,6 @@ Hassan Afzaal</value>
     <value>Configure the area and time period for this field</value>
     <comment>GUI - Field Step 1 card sub-header</comment>
   </data>
-
-  <!-- ═══ Field component — Step 2 ═══ -->
   <data name="Label_EnterFieldHistory" xml:space="preserve">
     <value>Enter field history</value>
     <comment>GUI - Field Step 2 header description</comment>
@@ -3184,8 +3250,6 @@ Hassan Afzaal</value>
     <value>Field History Timeline</value>
     <comment>GUI - Field Step 2 timeline panel header</comment>
   </data>
-
-  <!-- ═══ Field component — Step 3 ═══ -->
   <data name="Label_DefineManagementPractices" xml:space="preserve">
     <value>Define management practices for your selected crop</value>
     <comment>GUI - Field Step 3 header description</comment>
@@ -3210,8 +3274,6 @@ Hassan Afzaal</value>
     <value>This section will be implemented in a future update</value>
     <comment>GUI - Field Step 3 Fertilizer placeholder message</comment>
   </data>
-
-  <!-- ═══ Shared: single/plural field labels ═══ -->
   <data name="Label_Fields" xml:space="preserve">
     <value>Fields:</value>
     <comment>GUI - label for number-of-fields input and summary</comment>
@@ -3220,8 +3282,6 @@ Hassan Afzaal</value>
     <value>Field:</value>
     <comment>GUI - label for a single field (e.g., Currently editing indicator)</comment>
   </data>
-
-  <!-- ═══ Dairy: Advanced Options Toggle ═══ -->
   <data name="Label_Basic" xml:space="preserve">
     <value>Basic</value>
     <comment>GUI - Dairy AdvancedOptionsToggle off-state label</comment>
@@ -3230,8 +3290,6 @@ Hassan Afzaal</value>
     <value>Display additional configuration options for detailed dairy operation management</value>
     <comment>GUI - DairyComponentView advanced options expander description</comment>
   </data>
-
-  <!-- ═══ Dairy: Stage View shared strings ═══ -->
   <data name="Label_Practice" xml:space="preserve">
     <value>Practice:</value>
     <comment>GUI - Dairy stage view practice selector label</comment>
@@ -3392,8 +3450,6 @@ Hassan Afzaal</value>
     <value>kg/day</value>
     <comment>GUI - unit label: kilograms per day</comment>
   </data>
-
-  <!-- ═══ Dairy: Lactating Stage only ═══ -->
   <data name="Label_MilkProduction" xml:space="preserve">
     <value>Milk Production</value>
     <comment>GUI - Dairy LactatingStageView Milk Production tab header</comment>
@@ -3426,8 +3482,6 @@ Hassan Afzaal</value>
     <value>MJ/kg²</value>
     <comment>GUI - unit label: megajoules per kilogram squared</comment>
   </data>
-
-  <!-- ═══ Dairy: LifecycleConfigurationView stage headers ═══ -->
   <data name="Label_ManagementPracticesCalfStage" xml:space="preserve">
     <value>Management Practices - Calf Stage</value>
     <comment>GUI - LifecycleConfigurationView Calf panel title</comment>
@@ -3512,8 +3566,6 @@ Hassan Afzaal</value>
     <value>to configure its specific management practices and production parameters.</value>
     <comment>GUI - LifecycleConfigurationView default panel instruction line 2</comment>
   </data>
-
-  <!-- ═══ Dairy: CalculatedHerdCompositionView ═══ -->
   <data name="Label_DefineSteadyStateHerdComposition" xml:space="preserve">
     <value>Define Steady-State Herd Composition</value>
     <comment>GUI - CalculatedHerdCompositionView Step 1 title</comment>
@@ -3646,8 +3698,6 @@ Hassan Afzaal</value>
     <value>How many dry cows are in the herd?</value>
     <comment>GUI - CalculatedHerdCompositionView Dry population question</comment>
   </data>
-
-  <!-- ═══ OtherAnimals Step 1 ═══ -->
   <data name="Label_AnimalGroupsTitle" xml:space="preserve">
     <value>Animal Groups</value>
     <comment>GUI - OtherAnimalsStep1View timeline header (no colon)</comment>
@@ -3656,8 +3706,6 @@ Hassan Afzaal</value>
     <value>Tip: Scroll horizontally to view all groups, click on a group to select it</value>
     <comment>GUI - OtherAnimalsStep1View timeline hint</comment>
   </data>
-
-  <!-- ═══ ChooseComponentsView ═══ -->
   <data name="Label_SelectCategoryToBrowse" xml:space="preserve">
     <value>Select a category to browse available components</value>
     <comment>GUI - ChooseComponentsView header subtitle</comment>
@@ -3674,8 +3722,6 @@ Hassan Afzaal</value>
     <value>+ Add to Farm</value>
     <comment>GUI - ChooseComponentsView component card add button</comment>
   </data>
-
-  <!-- ═══ MyComponentsView ═══ -->
   <data name="Label_NoComponentsAddedYet" xml:space="preserve">
     <value>No components added yet</value>
     <comment>GUI - MyComponentsView empty-state heading</comment>
@@ -3688,8 +3734,6 @@ Hassan Afzaal</value>
     <value>Tip: Start with field or livestock components</value>
     <comment>GUI - MyComponentsView empty-state tip</comment>
   </data>
-
-  <!-- ═══ Rotation: RotationFinalizeView ═══ -->
   <data name="Label_FinalizeAndCreate" xml:space="preserve">
     <value>Finalize and Create</value>
     <comment>GUI - RotationFinalizeView Step 4 title</comment>
@@ -3698,7 +3742,6 @@ Hassan Afzaal</value>
     <value>Create Rotation</value>
     <comment>GUI - RotationFinalizeView create rotation button</comment>
   </data>
-
   <data name="Label_SelectCountry" xml:space="preserve">
     <value>Select Country</value>
   </data>
@@ -3936,8 +3979,6 @@ Hassan Afzaal</value>
   <data name="Label_HeifersEnterHerd" xml:space="preserve">
     <value>Heifers enter herd</value>
   </data>
-
-  <!-- ═══ Poultry Production Chain Diagram ═══ -->
   <data name="Label_PoultryProductionChain" xml:space="preserve">
     <value>Poultry Production Chain</value>
   </data>
@@ -4007,10 +4048,6 @@ Hassan Afzaal</value>
   <data name="Label_TurkeyEggs" xml:space="preserve">
     <value>Turkey eggs</value>
   </data>
-
-  <!-- ═══ Crop Tabs — shared by Rotation Step 4 & Field Step 3 ═══ -->
-
-  <!-- Tab headers -->
   <data name="Tab_General" xml:space="preserve">
     <value>General</value>
     <comment>GUI - Crop details tab header</comment>
@@ -4039,8 +4076,6 @@ Hassan Afzaal</value>
     <value>Economics</value>
     <comment>GUI - Crop details tab header</comment>
   </data>
-
-  <!-- General tab labels -->
   <data name="Label_DryYield" xml:space="preserve">
     <value>Dry yield:</value>
     <comment>GUI - Crop General tab</comment>
@@ -4065,8 +4100,6 @@ Hassan Afzaal</value>
     <value>Number of pesticide passes:</value>
     <comment>GUI - Crop General tab</comment>
   </data>
-
-  <!-- Fertilizer tab labels -->
   <data name="Label_NitrogenFertilizerRate" xml:space="preserve">
     <value>Nitrogen fertilizer rate:</value>
     <comment>GUI - Crop Fertilizer tab</comment>
@@ -4115,8 +4148,6 @@ Hassan Afzaal</value>
     <value>Custom reduction factor:</value>
     <comment>GUI - Crop Fertilizer tab</comment>
   </data>
-
-  <!-- Manure tab labels -->
   <data name="Label_ManureApplied" xml:space="preserve">
     <value>Manure applied:</value>
     <comment>GUI - Crop Manure tab</comment>
@@ -4141,8 +4172,6 @@ Hassan Afzaal</value>
     <value>Manure state type:</value>
     <comment>GUI - Crop Manure tab</comment>
   </data>
-
-  <!-- Grazing tab labels -->
   <data name="Label_CropIsGrazed" xml:space="preserve">
     <value>Crop is grazed:</value>
     <comment>GUI - Crop Grazing tab</comment>
@@ -4151,8 +4180,6 @@ Hassan Afzaal</value>
     <value>Forage utilization rate:</value>
     <comment>GUI - Crop Grazing tab</comment>
   </data>
-
-  <!-- Soil tab labels -->
   <data name="Label_ClimateParameter" xml:space="preserve">
     <value>Climate parameter:</value>
     <comment>GUI - Crop Soil tab</comment>
@@ -4165,8 +4192,6 @@ Hassan Afzaal</value>
     <value>Management factor:</value>
     <comment>GUI - Crop Soil tab</comment>
   </data>
-
-  <!-- Residue tab labels -->
   <data name="Label_BiomassCoefficients" xml:space="preserve">
     <value>Biomass Coefficients</value>
     <comment>GUI - Crop Residue tab section header</comment>
@@ -4215,16 +4240,12 @@ Hassan Afzaal</value>
     <value>Lignin content:</value>
     <comment>GUI - Crop Residue tab</comment>
   </data>
-
-  <!-- Economics tab labels -->
   <data name="Label_CropEconomicDataApplied" xml:space="preserve">
     <value>Crop economic data applied:</value>
     <comment>GUI - Crop Economics tab</comment>
   </data>
-
-  <!-- ═══ Management period table instructions ═══ -->
   <data name="Message_ManagementPeriodTableIntro" xml:space="preserve">
-    <value>Each row in the table below represents one management period for the &apos;{0}&apos; animal group. Use the buttons below to add or remove periods.</value>
+    <value>Each row in the table below represents one management period for the '{0}' animal group. Use the buttons below to add or remove periods.</value>
     <comment>GUI - OtherAnimalsStep2 instruction panel intro sentence; {0} = selected group name</comment>
   </data>
   <data name="Message_ManagementPeriodTipName" xml:space="preserve">
@@ -4269,5 +4290,8 @@ Hassan Afzaal</value>
   </data>
   <data name="Label_ShowDetails" xml:space="preserve">
     <value>Show Details</value>
+  </data>
+  <data name="Label_MultiYearCarbonModelling" xml:space="preserve">
+    <value>Multiyear Carbon Modelling</value>
   </data>
 </root>

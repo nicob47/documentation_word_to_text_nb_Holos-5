@@ -16778,15 +16778,6 @@ namespace H.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Component Emissions.
-        /// </summary>
-        public static string TitleComponentEmissions {
-            get {
-                return ResourceManager.GetString("TitleComponentEmissions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Beef Cow-Calf.
         /// </summary>
         public static string TitleCowCalfComponentDisplayString {
@@ -16850,15 +16841,6 @@ namespace H.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detailed Emissions Report.
-        /// </summary>
-        public static string TitleDetailedEmissionsReport {
-            get {
-                return ResourceManager.GetString("TitleDetailedEmissionsReport", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Digestate.
         /// </summary>
         public static string TitleDigestate {
@@ -16904,29 +16886,11 @@ namespace H.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emissions Pie Chart.
-        /// </summary>
-        public static string TitleEmissionsPieChart {
-            get {
-                return ResourceManager.GetString("TitleEmissionsPieChart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Energy.
         /// </summary>
         public static string TitleEnergy {
             get {
                 return ResourceManager.GetString("TitleEnergy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Estimates of Production.
-        /// </summary>
-        public static string TitleEstimatesOfProduction {
-            get {
-                return ResourceManager.GetString("TitleEstimatesOfProduction", resourceCulture);
             }
         }
         
@@ -16972,15 +16936,6 @@ namespace H.Core.Properties {
         public static string TitleFarmManureApplication {
             get {
                 return ResourceManager.GetString("TitleFarmManureApplication", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feed Estimate Report.
-        /// </summary>
-        public static string TitleFeedEstimateReport {
-            get {
-                return ResourceManager.GetString("TitleFeedEstimateReport", resourceCulture);
             }
         }
         
@@ -17165,15 +17120,6 @@ namespace H.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overall Emissions.
-        /// </summary>
-        public static string TitleOverallEmissions {
-            get {
-                return ResourceManager.GetString("TitleOverallEmissions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Pesticide.
         /// </summary>
         public static string TitlePesticide {
@@ -17188,15 +17134,6 @@ namespace H.Core.Properties {
         public static string TitlePoultry {
             get {
                 return ResourceManager.GetString("TitlePoultry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results.
-        /// </summary>
-        public static string TitleResults {
-            get {
-                return ResourceManager.GetString("TitleResults", resourceCulture);
             }
         }
         

@@ -195,14 +195,14 @@ namespace H.Avalonia.ViewModels.Results
         /// </summary>
         private void PopulateAdvancedTabs()
         {
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleMultiYearCarbonModelling });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleEstimatesOfProduction });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleFeedEstimateReport });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.LabelManureManagement });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleEmissionsPieChart });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleOverallEmissions });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleComponentEmissions });
-            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Core.Properties.Resources.TitleDetailedEmissionsReport });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_MultiYearCarbonModelling });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_EstimatesOfProduction });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_FeedEstimateReport });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_ManureManagement });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_EmissionsPieChart });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_OverallEmissions });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_ComponentEmissions });
+            _advancedViewTabs.Add(new ListBoxItem() { Content = H.Localization.Resources.Strings.AppStrings.Label_DetailedEmissionsReport });
         }
 
         /// <summary>
@@ -213,28 +213,28 @@ namespace H.Avalonia.ViewModels.Results
         {
             switch (selectedOption)
             {
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleMultiYearCarbonModelling:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_MultiYearCarbonModelling:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(MultiYearCarbonModellingView));
                     break;
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleEstimatesOfProduction:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_EstimatesOfProduction:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EstimatesOfProductionView));
                     break;
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleFeedEstimateReport:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_FeedEstimateReport:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FeedEstimateReportView));
                     break;
                 case var _ when selectedOption == H.Core.Properties.Resources.LabelManureManagement:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ManureManagementResultsView));
                     break;
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleEmissionsPieChart:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_EmissionsPieChart:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EmissionPieChartView));
                     break;
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleOverallEmissions:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_OverallEmissions:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(OverallEmissionsResultsView));
                     break;
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleComponentEmissions:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_ComponentEmissions:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ComponentEmissionsResultsView));
                     break;
-                case var _ when selectedOption == H.Core.Properties.Resources.TitleDetailedEmissionsReport:
+                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_DetailedEmissionsReport:
                     base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(DetailedEmissionsReportResultsView));
                     break;
                 default:

@@ -70,15 +70,6 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HOLOS-IE - a tool to estimate and reduce greenhouse gas emissions from farms.
-        /// </summary>
-        public static string AboutHolosIE {
-            get {
-                return ResourceManager.GetString("AboutHolosIE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to + Add Crop.
         /// </summary>
         public static string Button_AddCrop {
@@ -5647,6 +5638,15 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multiyear Carbon Modelling.
+        /// </summary>
+        public static string Label_MultiYearCarbonModelling {
+            get {
+                return ResourceManager.GetString("Label_MultiYearCarbonModelling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N₂O.
         /// </summary>
         public static string Label_N2O {
@@ -7587,6 +7587,51 @@ namespace H.Localization.Resources.Strings {
         public static string Message_InvalidCoordinateEntered {
             get {
                 return ResourceManager.GetString("Message_InvalidCoordinateEntered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each row in the table below represents one management period for the &apos;{0}&apos; animal group. Use the buttons below to add or remove periods..
+        /// </summary>
+        public static string Message_ManagementPeriodTableIntro {
+            get {
+                return ResourceManager.GetString("Message_ManagementPeriodTableIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • Number of Animals: Enter the size of this animal group during each period..
+        /// </summary>
+        public static string Message_ManagementPeriodTipAnimals {
+            get {
+                return ResourceManager.GetString("Message_ManagementPeriodTipAnimals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • Start &amp; End Date: Use the calendar pickers to set when each period begins and ends — this defines how long the period lasts..
+        /// </summary>
+        public static string Message_ManagementPeriodTipDates {
+            get {
+                return ResourceManager.GetString("Message_ManagementPeriodTipDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • Number of Days: Calculated automatically from the start and end dates, but can be adjusted directly if needed..
+        /// </summary>
+        public static string Message_ManagementPeriodTipDays {
+            get {
+                return ResourceManager.GetString("Message_ManagementPeriodTipDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • Name: Give each period a descriptive name that reflects the management context (e.g. &quot;Winter Housing&quot;, &quot;Summer Pasture 2024&quot;)..
+        /// </summary>
+        public static string Message_ManagementPeriodTipName {
+            get {
+                return ResourceManager.GetString("Message_ManagementPeriodTipName", resourceCulture);
             }
         }
         
@@ -9542,15 +9587,6 @@ namespace H.Localization.Resources.Strings {
         public static string ToBeKeptInformed {
             get {
                 return ResourceManager.GetString("ToBeKeptInformed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To be kept informed about future versions, please send your contact information (including email address) to ibrahim.khalil1@ucd.ie.
-        /// </summary>
-        public static string ToBeKeptInformedIE {
-            get {
-                return ResourceManager.GetString("ToBeKeptInformedIE", resourceCulture);
             }
         }
         
