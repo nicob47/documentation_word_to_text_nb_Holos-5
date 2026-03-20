@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H.Avalonia.ViewModels.Results
 {
-    public class DetailedEmissionsReportResultsViewModel
+    public class DetailedEmissionsReportResultsViewModel : ResultsViewModelBase
     {
     }
 }
