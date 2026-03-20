@@ -64,9 +64,12 @@ namespace H.Avalonia.ViewModels.Results
             get => _selectedBasicItem;
             set
             {
-                SetProperty(ref _selectedBasicItem, value);
-                _basicUIState.SelectedItem = _selectedBasicItem;
-                _basicUIState.LastAccessed = DateTime.Now;
+                if (_selectedBasicItem != null)
+                {
+                    SetProperty(ref _selectedBasicItem, value);
+                    _basicUIState.SelectedItem = _selectedBasicItem;
+                    _basicUIState.LastAccessed = DateTime.Now;
+                }
             }
         }
 
@@ -78,9 +81,12 @@ namespace H.Avalonia.ViewModels.Results
             get => _selectedAdvancedItem;
             set
             {
-                SetProperty(ref _selectedAdvancedItem, value);
-                _advancedUIState.SelectedItem = _selectedAdvancedItem;
-                _advancedUIState.LastAccessed = DateTime.Now;
+                if (_selectedAdvancedItem != null)
+                {
+                    SetProperty(ref _selectedAdvancedItem, value);
+                    _advancedUIState.SelectedItem = _selectedAdvancedItem;
+                    _advancedUIState.LastAccessed = DateTime.Now;
+                }
             }
 
         }
@@ -211,35 +217,26 @@ namespace H.Avalonia.ViewModels.Results
         /// <param name="selectedOption">The requested tab to be loaded in the content region.</param>
         private void NavigateToAdvancedTab(string selectedOption)
         {
-            switch (selectedOption)
+            // Map each advanced tab label to its corresponding view
+            var viewMapping = new Dictionary<string, string>
             {
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_MultiYearCarbonModelling:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(MultiYearCarbonModellingView));
-                    break;
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_EstimatesOfProduction:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EstimatesOfProductionView));
-                    break;
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_FeedEstimateReport:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FeedEstimateReportView));
-                    break;
-                case var _ when selectedOption == H.Core.Properties.Resources.LabelManureManagement:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ManureManagementResultsView));
-                    break;
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_EmissionsPieChart:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(EmissionPieChartView));
-                    break;
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_OverallEmissions:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(OverallEmissionsResultsView));
-                    break;
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_ComponentEmissions:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ComponentEmissionsResultsView));
-                    break;
-                case var _ when selectedOption == H.Localization.Resources.Strings.AppStrings.Label_DetailedEmissionsReport:
-                    base.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(DetailedEmissionsReportResultsView));
-                    break;
-                default:
-                    _logger.LogError($"Attempted to navigate to advanced tab {selectedOption} that does not exist in {nameof(ResultsSidebarView)}.");
-                    return;
+                { H.Localization.Resources.Strings.AppStrings.Label_MultiYearCarbonModelling, nameof(MultiYearCarbonModellingView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_EstimatesOfProduction, nameof(EstimatesOfProductionView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_FeedEstimateReport, nameof(FeedEstimateReportView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_ManureManagement, nameof(ManureManagementResultsView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_EmissionsPieChart, nameof(EmissionPieChartView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_OverallEmissions, nameof(OverallEmissionsResultsView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_ComponentEmissions, nameof(ComponentEmissionsResultsView) },
+                { H.Localization.Resources.Strings.AppStrings.Label_DetailedEmissionsReport, nameof(DetailedEmissionsReportResultsView) },
+            };
+            // Attempt to navigate to selected view, log error selection does not exist in mapping
+            if (viewMapping.TryGetValue(selectedOption, out var viewName))
+            {
+                base.RegionManager.RequestNavigate(UiRegions.ContentRegion, viewName);
+            }
+            else
+            {
+                _logger.LogError($"Attempted to navigate to advanced tab {selectedOption} that does not exist in {nameof(ResultsSidebarView)}.");
             }
         }
 
