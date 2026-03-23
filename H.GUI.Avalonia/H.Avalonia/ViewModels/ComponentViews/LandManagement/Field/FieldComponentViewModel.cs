@@ -142,6 +142,9 @@ public class FieldComponentViewModel : ViewModelBase
             {
                 // Update selection states for all crops
                 UpdateCropSelectionStates(value);
+
+                // Reset to main crop editing when selection changes
+                IsEditingCoverCrop = false;
             }
         }
     }
@@ -158,6 +161,17 @@ public class FieldComponentViewModel : ViewModelBase
     public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
     public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
     public IReadOnlyList<CoverCropTerminationType> CoverCropTerminationTypes { get; } = Enum.GetValues<CoverCropTerminationType>();
+
+    private bool _isEditingCoverCrop;
+
+    /// <summary>
+    /// When true, the crop editor area shows cover crop properties instead of the main crop tabs.
+    /// </summary>
+    public bool IsEditingCoverCrop
+    {
+        get => _isEditingCoverCrop;
+        set => SetProperty(ref _isEditingCoverCrop, value);
+    }
 
     #endregion
 
@@ -456,6 +470,9 @@ public class FieldComponentViewModel : ViewModelBase
                     _fieldComponentService?.RemoveCoverCropFromSystem(_selectedFieldSystemComponent, cropDto.CoverCropDto);
                 }
                 cropDto.CoverCropDto = null;
+
+                // Switch back to main crop editing since cover crop no longer exists
+                IsEditingCoverCrop = false;
             }
             else
             {

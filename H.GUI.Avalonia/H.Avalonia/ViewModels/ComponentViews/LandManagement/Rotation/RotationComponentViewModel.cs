@@ -194,6 +194,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         _selectedCropDto.PropertyChanged += OnSelectedCropDtoPropertyChanged;
                     }
 
+                    // Reset to main crop editing when selection changes
+                    IsEditingCoverCrop = false;
+
                     // Update the visual highlighting when the selected crop changes
                     UpdateCopyTargetHighlighting();
                 }
@@ -335,6 +338,17 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         public IReadOnlyList<ManureApplicationTypes> ManureApplicationTypes { get; } = Enum.GetValues<ManureApplicationTypes>();
         public IReadOnlyList<ManureStateType> ManureStateTypes { get; } = Enum.GetValues<ManureStateType>();
         public IReadOnlyList<CoverCropTerminationType> CoverCropTerminationTypes { get; } = Enum.GetValues<CoverCropTerminationType>();
+
+        private bool _isEditingCoverCrop;
+
+        /// <summary>
+        /// When true, the crop editor area shows cover crop properties instead of the main crop tabs.
+        /// </summary>
+        public bool IsEditingCoverCrop
+        {
+            get => _isEditingCoverCrop;
+            set => SetProperty(ref _isEditingCoverCrop, value);
+        }
 
         #endregion
 
@@ -834,6 +848,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     }
 
                     cropDto.CoverCropDto = null;
+
+                    // Switch back to main crop editing since cover crop no longer exists
+                    IsEditingCoverCrop = false;
                 }
                 else
                 {

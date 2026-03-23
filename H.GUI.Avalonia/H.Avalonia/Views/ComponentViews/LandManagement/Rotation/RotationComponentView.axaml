@@ -150,8 +150,16 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 							</StackPanel>
 						</Border>
 
-						<!-- Crop Details TabControl -->
-						<TabControl IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
+						<!-- Editing context toggle: Main Crop ↔ Cover Crop -->
+						<Border IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
+								Margin="0,0,0,12">
+							<ToggleSwitch IsChecked="{Binding IsEditingCoverCrop}"
+										  OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
+										  OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"/>
+						</Border>
+
+						<!-- Crop Details TabControl - shown when NOT editing cover crop -->
+						<TabControl IsVisible="{Binding IsEditingCoverCrop, Converter={x:Static BoolConverters.Not}}"
 									DataContext="{Binding SelectedCropDto}"
 									Background="White"
 									MinHeight="450">
@@ -178,9 +186,9 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 							</TabItem>
 						</TabControl>
 
-						<!-- Cover Crop Editor - visible when cover crop is active on the selected crop -->
-						<Border IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
-								Margin="0,12,0,0">
+						<!-- Cover Crop Editor - shown when editing cover crop -->
+						<Border IsVisible="{Binding IsEditingCoverCrop}"
+								MinHeight="450">
 							<cropTabs:CoverCropEditorView DataContext="{Binding SelectedCropDto.CoverCropDto}"/>
 						</Border>
 

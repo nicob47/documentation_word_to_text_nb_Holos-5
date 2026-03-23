@@ -11,8 +11,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
@@ -27,9 +27,18 @@
                        Classes="step-number-description"/>
         </StackPanel>
 
-        <!-- Crop Details TabControl -->
-        <TabControl Grid.Row="1"
-                    IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
+        <!-- Editing context toggle: Main Crop ↔ Cover Crop -->
+        <Border Grid.Row="1"
+                IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
+                Margin="10,0,10,12">
+            <ToggleSwitch IsChecked="{Binding IsEditingCoverCrop}"
+                          OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
+                          OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"/>
+        </Border>
+
+        <!-- Main Crop Details TabControl - shown when NOT editing cover crop -->
+        <TabControl Grid.Row="2"
+                    IsVisible="{Binding IsEditingCoverCrop, Converter={x:Static BoolConverters.Not}}"
                     DataContext="{Binding SelectedCropDto}"
                     Background="White"
                     MinHeight="450">
@@ -56,10 +65,10 @@
             </TabItem>
         </TabControl>
 
-        <!-- Cover Crop Editor - visible when cover crop is active on the selected crop -->
+        <!-- Cover Crop Editor - shown when editing cover crop -->
         <Border Grid.Row="2"
-                IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
-                Margin="0,12,0,0">
+                IsVisible="{Binding IsEditingCoverCrop}"
+                MinHeight="450">
             <cropTabs:CoverCropEditorView DataContext="{Binding SelectedCropDto.CoverCropDto}"/>
         </Border>
 
