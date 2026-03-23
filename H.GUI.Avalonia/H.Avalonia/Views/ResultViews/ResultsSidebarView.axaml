@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:properties="clr-namespace:H.Core.Properties;assembly=H.Core"
+             xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             x:Class="H.Avalonia.Views.ResultViews.ResultsSidebarView">
+
+	<Grid Name="MyResultsViewsGrid" HorizontalAlignment="Stretch">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+		<Grid Grid.Row="0" Grid.Column="0" Name="MyResultsHeaderHeaderGrid" HorizontalAlignment="Stretch" MinWidth="300">
+			<StackPanel Margin="10,10,10,5" VerticalAlignment="Center">
+				<Border Background="#F8F9FA" 
+					   BorderBrush="#E9ECEF" 
+					   BorderThickness="1" 
+					   CornerRadius="6" 
+					   Padding="20,16" 
+					   Margin="0">
+
+                    <Grid HorizontalAlignment="Stretch" RowDefinitions="*,*">
+						<TextBlock Grid.Row="0" Classes="title-textblock" Text="{Binding [Label_Results].Value, Source={StaticResource Loc}}" HorizontalAlignment="Left"/>
+                        <ToggleSwitch Grid.Row="1" IsChecked="{Binding IsAdvancedMode, Mode=TwoWay}" OffContent="{Binding [Label_BasicMode].Value, Source={StaticResource Loc}}"  OnContent="{Binding [Label_AdvancedMode].Value, Source={StaticResource Loc}}" HorizontalAlignment="Left" Margin="20, 0, 0, 0"/>
+						<Button Grid.Row="1" HorizontalAlignment="Right" Padding="5" Margin="10,0" Background="Transparent" Classes="back-button" CornerRadius="50" Command="{Binding Path=OnOptionsExecute}">
+							<Image Source="avares://H.Avalonia/Assets/Images/Icons/Gear-icon.png" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip.Tip="{Binding [Label_Settings].Value, Source={StaticResource Loc}}"/>
+						</Button>
+					</Grid>
+				</Border>
+			</StackPanel>
+		</Grid>
+        <!-- Basic Mode: Chapter headings for summary navigation -->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" IsVisible="{Binding !IsAdvancedMode}">
+            <Border Background="#F8F9FA" 
+                    BorderBrush="#E9ECEF" 
+                    BorderThickness="1" 
+                    CornerRadius="6" 
+                    Padding="16,12" 
+                    Margin="10,5,10,5">
+                <StackPanel  Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                    <ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedBasicItem}" ItemsSource="{Binding Path=BasicViewChapters}" TabIndex="0" />
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+        <!-- Advanced Mode -->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" IsVisible="{Binding IsAdvancedMode}">
+            <Border Background="#F8F9FA" 
+                    BorderBrush="#E9ECEF" 
+                    BorderThickness="1" 
+                    CornerRadius="6" 
+                    Padding="16,12" 
+                    Margin="10,5,10,5">
+                <StackPanel  Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                    <ListBox SelectionMode="Single" Margin="5,0" SelectedItem="{Binding Path=SelectedAdvancedItem}" ItemsSource="{Binding Path= AdvancedViewTabs }" TabIndex="0" />
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+
+		<Border Name="ButtonsBorder" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Height="120">
+			<Border Background="#F8F9FA" 
+                   BorderBrush="#E9ECEF" 
+                   BorderThickness="1" 
+                   CornerRadius="6" 
+                   Padding="16,12" 
+                   Margin="10,5,10,10">
+                <WrapPanel HorizontalAlignment="Center" 
+                          VerticalAlignment="Center" 
+                          Orientation="Horizontal" 
+                          Margin="10">
+                    <Button Content="{Binding [Label_GoBack].Value, Source={StaticResource Loc}}" 
+                            Command="{Binding Path=OnGoBackExecuted}" 
+                            Classes="responsive-button" 
+                            Margin="5"/>
+                </WrapPanel>
+            </Border>
+        </Border>
+	</Grid>
+</UserControl>

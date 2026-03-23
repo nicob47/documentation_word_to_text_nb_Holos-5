@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using H.Avalonia.Events;
 using H.Avalonia.Models;
+using H.Avalonia.Views;
 using H.Avalonia.Views.ComponentViews;
+using H.Avalonia.Views.ResultViews;
 using H.Core.Models;
 using H.Core.Services;
 using H.Core.Services.StorageService;
@@ -225,6 +227,12 @@ public class MyComponentsViewModel : ViewModelBase
         {
             this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(ChooseComponentsView));
         }
+    }
+
+    public void OnResultsButtonClicked()
+    {
+        this.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
+        this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
     }
 
     public void OnRemoveComponentExecute()

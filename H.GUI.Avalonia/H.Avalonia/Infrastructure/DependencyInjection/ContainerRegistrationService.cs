@@ -37,6 +37,7 @@ using H.Avalonia.Views.ComponentViews.Swine;
 using H.Avalonia.Views.FarmCreationViews;
 using H.Avalonia.Views.OptionsViews;
 using H.Avalonia.Views.OptionsViews.FileMenuViews;
+using H.Avalonia.Views.ResultViews;
 using H.Avalonia.Views.SupportingViews;
 using H.Avalonia.Views.SupportingViews.CountrySelection;
 using H.Avalonia.Views.SupportingViews.Disclaimer;
@@ -159,6 +160,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             
             RegisterCoreViews(containerRegistry);
             RegisterOptionsViews(containerRegistry);
+            RegisterResultsViews(containerRegistry);
             RegisterComponentViews(containerRegistry);
             RegisterAnimalComponentViews(containerRegistry);
             RegisterDietViews(containerRegistry);
@@ -183,6 +185,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterForNavigation<ClimateResultsView, ClimateResultsViewModel>();
             containerRegistry.RegisterForNavigation<SoilResultsView, SoilResultsViewModel>();
             containerRegistry.RegisterForNavigation<MyComponentsView, MyComponentsViewModel>();
+            containerRegistry.RegisterForNavigation<ResultsSidebarView, ResultsSidebarViewModel>();
             containerRegistry.RegisterForNavigation<ChooseComponentsView, ChooseComponentsViewModel>();
             containerRegistry.RegisterForNavigation<FieldComponentView, FieldComponentViewModel>();
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>();
@@ -230,6 +233,24 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterForNavigation<FileExportManureView, FileExportManureViewModel>();
             
             _logger.LogDebug("Completed registration of options and settings views");
+        }
+
+        private void RegisterResultsViews(IContainerRegistry containerRegistry)
+        {
+            _logger.LogDebug("Registering results views");
+
+            
+            containerRegistry.RegisterForNavigation<ResultsSummaryView, ResultsSummaryViewModel>();
+            containerRegistry.RegisterForNavigation<MultiYearCarbonModellingView, MultiYearCarbonModellingViewModel>();
+            containerRegistry.RegisterForNavigation<EstimatesOfProductionView, EstimatesOfProductionViewModel>();
+            containerRegistry.RegisterForNavigation<FeedEstimateReportView, FeedEstimateReportViewModel>();
+            containerRegistry.RegisterForNavigation<ManureManagementResultsView, ManureManagementResultsViewModel>();
+            containerRegistry.RegisterForNavigation<EmissionPieChartView, EmissionPieChartViewModel>();
+            containerRegistry.RegisterForNavigation<OverallEmissionsResultsView, OverallEmissionsResultsViewModel>();
+            containerRegistry.RegisterForNavigation<ComponentEmissionsResultsView, ComponentEmissionsResultsViewModel>();
+            containerRegistry.RegisterForNavigation<DetailedEmissionsReportResultsView, DetailedEmissionsReportResultsViewModel>();
+
+            _logger.LogDebug("Completed registration of results views");
         }
 
         /// <summary>
