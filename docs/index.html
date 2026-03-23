@@ -465,6 +465,26 @@ body {
 }
 .sidebar-empty h3 { font-size: 16px; color: var(--gcds-gray-200); margin-bottom: 8px; }
 .sidebar-empty p { font-size: 13px; }
+
+/* Results sidebar nav */
+.results-nav-item {
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #2c3e50;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+  background: transparent;
+}
+.results-nav-item:hover { background: #e9ecef; }
+.results-nav-item.active {
+  background: var(--selection-bg);
+  border-color: var(--selection-border);
+  font-weight: 600;
+  color: #1f497a;
+}
+
 .sidebar-footer-bar {
   background: var(--bg-light);
   border-top: 1px solid var(--border-light);
@@ -983,8 +1003,9 @@ select.form-input { cursor: pointer; }
       </div>
     </div>
     <div class="sidebar-components" id="sidebarComponentList"></div>
-    <div class="sidebar-footer-bar">
-      <button class="btn btn-primary" onclick="showView('chooseComponents')">Edit Components</button>
+    <div class="sidebar-footer-bar" style="display:flex; gap:6px; flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="showView('chooseComponents')" style="flex:1;">Edit Components</button>
+      <button class="btn btn-secondary" onclick="showView('results')" style="flex:1;">Results</button>
     </div>
   </aside>
 
@@ -2132,88 +2153,390 @@ select.form-input { cursor: pointer; }
 
     <!-- RESULTS VIEW -->
     <div id="view-results" class="view">
-      <div class="header-bar">
-        <div><h1>Results</h1><div class="subtitle">Greenhouse gas emissions and environmental indicators</div></div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn btn-secondary" style="font-size:var(--font-small);">Export to CSV</button>
-        </div>
-      </div>
-
-      <!-- Results tab navigation -->
-      <div class="tab-bar" style="margin-bottom:0;">
-        <button class="tab-btn active" onclick="switchTab(this, 'tab-results-ghg')">GHG Emissions</button>
-        <button class="tab-btn" onclick="switchTab(this, 'tab-results-climate')">Climate Data</button>
-        <button class="tab-btn" onclick="switchTab(this, 'tab-results-soil')">Soil Carbon</button>
-      </div>
-
-      <!-- GHG Results -->
-      <div id="tab-results-ghg" class="tab-content active" style="display:block;">
-        <div class="step-container">
-          <h3 style="margin-bottom:16px;">Emissions Summary by Component</h3>
-          <div style="overflow-x:auto;">
-            <table class="data-grid">
-              <thead>
-                <tr><th>Component</th><th>Enteric CH₄<br><small>kg CO₂e</small></th><th>Manure CH₄<br><small>kg CO₂e</small></th><th>Manure N₂O<br><small>kg CO₂e</small></th><th>Soil N₂O<br><small>kg CO₂e</small></th><th>Energy CO₂<br><small>kg CO₂e</small></th><th>Total<br><small>kg CO₂e</small></th></tr>
-              </thead>
-              <tbody>
-                <tr><td>East Pasture</td><td>—</td><td>—</td><td>—</td><td>12,450</td><td>3,200</td><td style="font-weight:600;">15,650</td></tr>
-                <tr><td>Cow-Calf Herd</td><td>245,800</td><td>18,400</td><td>8,920</td><td>15,200</td><td>1,850</td><td style="font-weight:600;">290,170</td></tr>
-                <tr><td>Egg Barn</td><td>—</td><td>3,200</td><td>1,450</td><td>—</td><td>4,600</td><td style="font-weight:600;">9,250</td></tr>
-                <tr style="font-weight:700; background:var(--bg-light);"><td>FARM TOTAL</td><td>245,800</td><td>21,600</td><td>10,370</td><td>27,650</td><td>9,650</td><td style="color:var(--danger);">315,070</td></tr>
-              </tbody>
-            </table>
+      <div style="display:grid; grid-template-columns:220px 1fr; height:100%; overflow:hidden;">
+        <!-- Results Sidebar -->
+        <div style="background:#f8f9fa; border-right:1px solid #e9ecef; display:flex; flex-direction:column; height:100%;">
+          <!-- Header -->
+          <div style="padding:16px; border-bottom:1px solid #e9ecef;">
+            <h2 style="font-size:18px; font-weight:600; color:#1f497a; margin:0 0 12px 0;">Results</h2>
+            <div style="display:flex; align-items:center; gap:8px; font-size:13px;">
+              <span id="results-mode-label-basic" style="font-weight:600; color:#1f497a;">Basic</span>
+              <label style="position:relative; display:inline-block; width:40px; height:22px; cursor:pointer;">
+                <input type="checkbox" id="results-mode-toggle" onchange="toggleResultsMode(this)" style="opacity:0; width:0; height:0;">
+                <span id="results-toggle-track" style="position:absolute; top:0; left:0; right:0; bottom:0; background:#ccc; border-radius:11px; transition:0.3s;"></span>
+                <span id="results-toggle-knob" style="position:absolute; top:2px; left:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition:0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>
+              </label>
+              <span id="results-mode-label-adv" style="color:#888;">Advanced</span>
+            </div>
           </div>
-          <div style="margin-top:24px; padding:20px; background:var(--bg-light); border-radius:var(--radius); text-align:center;">
-            <div style="font-size:var(--font-caption); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Total Farm Emissions</div>
-            <div style="font-size:36px; font-weight:700; color:var(--danger); margin:8px 0;">315.1 t CO₂e</div>
-            <div style="font-size:var(--font-small); color:var(--text-secondary);">Emissions intensity: <strong>2.03 t CO₂e ha⁻¹</strong></div>
+          <!-- Navigation List -->
+          <div style="flex:1; overflow-y:auto; padding:8px;">
+            <!-- Basic chapters -->
+            <div id="results-nav-basic">
+              <div class="results-nav-item active" onclick="selectResultsChapter(this, 'results-ch1')">1. Farm Profile</div>
+              <div class="results-nav-item" onclick="selectResultsChapter(this, 'results-ch2')">2. Annual Production Summary</div>
+              <div class="results-nav-item" onclick="selectResultsChapter(this, 'results-ch3')">3. Total GHG Emissions</div>
+              <div class="results-nav-item" onclick="selectResultsChapter(this, 'results-ch4')">4. Emissions Breakdown</div>
+              <div class="results-nav-item" onclick="selectResultsChapter(this, 'results-ch5')">5. Carbon Sequestration</div>
+              <div class="results-nav-item" onclick="selectResultsChapter(this, 'results-ch6')">6. Manure Management</div>
+              <div class="results-nav-item" onclick="selectResultsChapter(this, 'results-ch7')">7. Key Findings</div>
+            </div>
+            <!-- Advanced tabs -->
+            <div id="results-nav-advanced" style="display:none;">
+              <div class="results-nav-item active" onclick="selectResultsAdvanced(this, 'results-adv-carbon')">Multi-Year Carbon Modelling</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-production')">Estimates of Production</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-feed')">Feed Estimate Report</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-manure')">Manure Management</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-pie')">Emissions Pie Chart</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-overall')">Overall Emissions</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-component')">Component Emissions</div>
+              <div class="results-nav-item" onclick="selectResultsAdvanced(this, 'results-adv-detailed')">Detailed Emissions Report</div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Climate Results -->
-      <div id="tab-results-climate" class="tab-content">
-        <div class="step-container">
-          <h3 style="margin-bottom:16px;">Climate Data Results</h3>
-          <div style="overflow-x:auto;">
-            <table class="data-grid">
-              <thead>
-                <tr><th>Latitude</th><th>Longitude</th><th>Year</th><th>Total PPT (mm)</th><th>Total PET (mm)</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>49.695</td><td>-112.819</td><td>2020</td><td>425.1</td><td>501.6</td></tr>
-                <tr><td>49.695</td><td>-112.819</td><td>2021</td><td>398.7</td><td>512.3</td></tr>
-                <tr><td>49.695</td><td>-112.819</td><td>2022</td><td>441.3</td><td>498.1</td></tr>
-                <tr><td>49.695</td><td>-112.819</td><td>2023</td><td>387.9</td><td>524.5</td></tr>
-                <tr><td>49.695</td><td>-112.819</td><td>2024</td><td>412.6</td><td>507.8</td></tr>
-                <tr><td>49.695</td><td>-112.819</td><td>2025</td><td>435.2</td><td>495.3</td></tr>
-              </tbody>
-            </table>
+          <!-- Footer -->
+          <div style="padding:12px; border-top:1px solid #e9ecef;">
+            <button class="btn btn-secondary" onclick="showView('myComponents')" style="width:100%; font-size:13px;">Go Back</button>
           </div>
         </div>
-      </div>
 
-      <!-- Soil Results -->
-      <div id="tab-results-soil" class="tab-content">
-        <div class="step-container">
-          <h3 style="margin-bottom:16px;">Soil Carbon Change</h3>
-          <div style="overflow-x:auto;">
-            <table class="data-grid">
-              <thead>
-                <tr><th>Field</th><th>Province</th><th>Soil Great Group</th><th>Soil Texture</th><th>Clay %</th><th>pH</th><th>SOC (Mg C ha⁻¹)</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>East Pasture</td><td>Alberta</td><td>Black Chernozem</td><td>Medium (loam)</td><td>28</td><td>6.5</td><td>82.4</td></tr>
-              </tbody>
-            </table>
+        <!-- Results Content Area -->
+        <div style="overflow-y:auto; padding:32px; max-width:960px;">
+
+          <!-- ═══════ BASIC MODE: 7-Chapter Report ═══════ -->
+          <div id="results-basic-content">
+            <h1 style="font-size:28px; font-weight:700; color:#1f497a; text-align:center; margin-bottom:32px;">Farm Emissions Report</h1>
+
+            <!-- Chapter 1: Farm Profile -->
+            <div id="results-ch1" class="results-chapter">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">1. Farm Profile</h2>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:20px;">
+                <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Farm Overview</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <div style="background:#fff; padding:12px; border-radius:6px; border:1px solid #e9ecef;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Total Area</div>
+                    <div style="font-size:18px; font-weight:600; color:#2c3e50;">500 hectares</div>
+                  </div>
+                  <div style="background:#fff; padding:12px; border-radius:6px; border:1px solid #e9ecef;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Location</div>
+                    <div style="font-size:18px; font-weight:600; color:#2c3e50;">Southern Alberta</div>
+                  </div>
+                  <div style="background:#fff; padding:12px; border-radius:6px; border:1px solid #e9ecef;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Primary Crops</div>
+                    <div style="font-size:18px; font-weight:600; color:#2c3e50;">Wheat, Barley, Canola</div>
+                  </div>
+                  <div style="background:#fff; padding:12px; border-radius:6px; border:1px solid #e9ecef;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Livestock</div>
+                    <div style="font-size:18px; font-weight:600; color:#2c3e50;">Beef Cattle (200 head)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 2: Annual Production Summary -->
+            <div id="results-ch2" class="results-chapter" style="margin-top:25px;">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">2. Annual Production Summary</h2>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:20px;">
+                  <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Crop Production</h3>
+                  <table style="width:100%; font-size:14px; border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid #dee2e6;"><td style="padding:8px 0; color:#6c757d;">Total Grain Produced</td><td style="padding:8px 0; text-align:right; font-weight:600;">2,500 tonnes</td></tr>
+                    <tr><td style="padding:8px 0; color:#6c757d;">Total Forage Produced</td><td style="padding:8px 0; text-align:right; font-weight:600;">1,200 tonnes DM</td></tr>
+                  </table>
+                </div>
+                <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:20px;">
+                  <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Livestock Production</h3>
+                  <table style="width:100%; font-size:14px; border-collapse:collapse;">
+                    <tr><td style="padding:8px 0; color:#6c757d;">Total Beef Produced</td><td style="padding:8px 0; text-align:right; font-weight:600;">85,000 kg</td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 3: Total GHG Emissions (highlighted) -->
+            <div id="results-ch3" class="results-chapter" style="margin-top:25px;">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">3. Total GHG Emissions</h2>
+              <div style="background:#fff3cd; border:1px solid #ffc107; border-radius:8px; padding:24px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; text-align:center;">
+                  <div style="background:#fff; padding:16px; border-radius:8px;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Total Emissions</div>
+                    <div style="font-size:28px; font-weight:700; color:#dc3545; margin:8px 0;">3,250.5</div>
+                    <div style="font-size:13px; color:#6c757d;">tonnes CO₂e/year</div>
+                  </div>
+                  <div style="background:#fff; padding:16px; border-radius:8px;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Per Hectare</div>
+                    <div style="font-size:28px; font-weight:700; color:#e67e22; margin:8px 0;">6.5</div>
+                    <div style="font-size:13px; color:#6c757d;">tonnes CO₂e/ha</div>
+                  </div>
+                  <div style="background:#fff; padding:16px; border-radius:8px;">
+                    <div style="font-size:11px; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px;">Net Carbon Balance</div>
+                    <div style="font-size:28px; font-weight:700; color:#28a745; margin:8px 0;">-450.2</div>
+                    <div style="font-size:13px; color:#6c757d;">tonnes CO₂e/year</div>
+                  </div>
+                </div>
+                <div style="margin-top:16px; padding:12px; background:#fff; border-radius:6px; font-size:13px; color:#6c757d; text-align:center;">
+                  A negative net carbon balance indicates the farm is sequestering more carbon than it emits from soil processes.
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 4: Emissions Breakdown -->
+            <div id="results-ch4" class="results-chapter" style="margin-top:25px;">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">4. Emissions Breakdown by Category</h2>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:20px;">
+                <!-- Bar chart rows -->
+                <div style="display:grid; grid-template-columns:160px 1fr 60px; gap:8px; align-items:center; margin-bottom:12px;">
+                  <div style="font-size:14px; color:#2c3e50;">Enteric Fermentation</div>
+                  <div style="background:#e9ecef; border-radius:4px; height:28px; overflow:hidden;">
+                    <div style="width:45.2%; height:100%; background:#3498db; border-radius:4px;"></div>
+                  </div>
+                  <div style="font-size:14px; font-weight:600; text-align:right;">45.2%</div>
+                </div>
+                <div style="display:grid; grid-template-columns:160px 1fr 60px; gap:8px; align-items:center; margin-bottom:12px;">
+                  <div style="font-size:14px; color:#2c3e50;">Manure Management</div>
+                  <div style="background:#e9ecef; border-radius:4px; height:28px; overflow:hidden;">
+                    <div style="width:25.8%; height:100%; background:#e67e22; border-radius:4px;"></div>
+                  </div>
+                  <div style="font-size:14px; font-weight:600; text-align:right;">25.8%</div>
+                </div>
+                <div style="display:grid; grid-template-columns:160px 1fr 60px; gap:8px; align-items:center; margin-bottom:12px;">
+                  <div style="font-size:14px; color:#2c3e50;">Soil N₂O Emissions</div>
+                  <div style="background:#e9ecef; border-radius:4px; height:28px; overflow:hidden;">
+                    <div style="width:18.5%; height:100%; background:#27ae60; border-radius:4px;"></div>
+                  </div>
+                  <div style="font-size:14px; font-weight:600; text-align:right;">18.5%</div>
+                </div>
+                <div style="display:grid; grid-template-columns:160px 1fr 60px; gap:8px; align-items:center;">
+                  <div style="font-size:14px; color:#2c3e50;">Energy Use</div>
+                  <div style="background:#e9ecef; border-radius:4px; height:28px; overflow:hidden;">
+                    <div style="width:10.5%; height:100%; background:#95a5a6; border-radius:4px;"></div>
+                  </div>
+                  <div style="font-size:14px; font-weight:600; text-align:right;">10.5%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 5: Carbon Sequestration -->
+            <div id="results-ch5" class="results-chapter" style="margin-top:25px;">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">5. Carbon Sequestration Summary</h2>
+              <div style="background:#d4edda; border:1px solid #28a745; border-radius:8px; padding:24px; text-align:center;">
+                <div style="font-size:11px; color:#155724; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Total Carbon Sequestration</div>
+                <div style="font-size:36px; font-weight:700; color:#155724;">650 tonnes CO₂e/year</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:20px;">
+                  <div style="background:#fff; padding:14px; border-radius:8px;">
+                    <div style="font-size:12px; color:#6c757d;">Shelterbelts</div>
+                    <div style="font-size:20px; font-weight:600; color:#28a745;">180</div>
+                    <div style="font-size:11px; color:#6c757d;">tonnes CO₂e</div>
+                  </div>
+                  <div style="background:#fff; padding:14px; border-radius:8px;">
+                    <div style="font-size:12px; color:#6c757d;">Pastureland</div>
+                    <div style="font-size:20px; font-weight:600; color:#28a745;">320</div>
+                    <div style="font-size:11px; color:#6c757d;">tonnes CO₂e</div>
+                  </div>
+                  <div style="background:#fff; padding:14px; border-radius:8px;">
+                    <div style="font-size:12px; color:#6c757d;">Cropped Land</div>
+                    <div style="font-size:20px; font-weight:600; color:#28a745;">150</div>
+                    <div style="font-size:11px; color:#6c757d;">tonnes CO₂e</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 6: Manure Management -->
+            <div id="results-ch6" class="results-chapter" style="margin-top:25px;">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">6. Manure Management Overview</h2>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:16px;">
+                  <div style="font-size:12px; color:#6c757d; text-transform:uppercase;">Storage System</div>
+                  <div style="font-size:16px; font-weight:600; color:#2c3e50; margin-top:4px;">Solid Storage, Composted</div>
+                </div>
+                <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:16px;">
+                  <div style="font-size:12px; color:#6c757d; text-transform:uppercase;">Annual Manure</div>
+                  <div style="font-size:16px; font-weight:600; color:#2c3e50; margin-top:4px;">2,400 tonnes/year</div>
+                </div>
+                <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:16px;">
+                  <div style="font-size:12px; color:#6c757d; text-transform:uppercase;">N₂O Emissions</div>
+                  <div style="font-size:16px; font-weight:600; color:#e67e22; margin-top:4px;">425.3 tonnes CO₂e/year</div>
+                </div>
+                <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:16px;">
+                  <div style="font-size:12px; color:#6c757d; text-transform:uppercase;">CH₄ Emissions</div>
+                  <div style="font-size:16px; font-weight:600; color:#e67e22; margin-top:4px;">385.7 tonnes CO₂e/year</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 7: Key Findings -->
+            <div id="results-ch7" class="results-chapter" style="margin-top:25px;">
+              <h2 style="font-size:22px; font-weight:700; color:#2c3e50; border-bottom:2px solid #dee2e6; padding-bottom:8px; margin-bottom:16px;">7. Key Findings and Recommendations</h2>
+              <div style="background:#e7f3ff; border:1px solid #3498db; border-radius:8px; padding:24px;">
+                <h3 style="font-size:16px; font-weight:600; color:#1f497a; margin-bottom:12px;">Key Findings</h3>
+                <div style="background:#fff; padding:12px 16px; border-radius:6px; margin-bottom:8px; font-size:14px; color:#2c3e50;">
+                  Enteric fermentation from beef cattle accounts for 45.2% of total farm emissions, making it the single largest emission source.
+                </div>
+                <div style="background:#fff; padding:12px 16px; border-radius:6px; margin-bottom:8px; font-size:14px; color:#2c3e50;">
+                  Carbon sequestration offsets approximately 20% of gross emissions, primarily from pastureland management.
+                </div>
+                <div style="background:#fff; padding:12px 16px; border-radius:6px; margin-bottom:16px; font-size:14px; color:#2c3e50;">
+                  Manure management contributes 25.8% of emissions, with potential for reduction through improved storage practices.
+                </div>
+                <h3 style="font-size:16px; font-weight:600; color:#1f497a; margin-bottom:12px;">Recommendations</h3>
+                <div style="background:#fff; padding:12px 16px; border-radius:6px; margin-bottom:8px; font-size:14px; color:#2c3e50;">
+                  <strong>1.</strong> Consider feed additives or dietary modifications to reduce enteric methane production from the cattle herd.
+                </div>
+                <div style="background:#fff; padding:12px 16px; border-radius:6px; margin-bottom:8px; font-size:14px; color:#2c3e50;">
+                  <strong>2.</strong> Expand shelterbelt plantings to increase carbon sequestration capacity on cropped land margins.
+                </div>
+                <div style="background:#fff; padding:12px 16px; border-radius:6px; font-size:14px; color:#2c3e50;">
+                  <strong>3.</strong> Evaluate composting or covered storage options to reduce CH₄ and N₂O from manure management.
+                </div>
+              </div>
+            </div>
           </div>
-          <div style="margin-top:24px; padding:20px; background:var(--bg-light); border-radius:var(--radius); text-align:center;">
-            <div style="font-size:var(--font-caption); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Net Soil Carbon Change</div>
-            <div style="font-size:36px; font-weight:700; color:var(--success); margin:8px 0;">+1.2 t C ha⁻¹</div>
-            <div style="font-size:var(--font-small); color:var(--text-secondary);">Soil is sequestering carbon under current management</div>
-          </div>
-        </div>
-      </div>
+
+          <!-- ═══════ ADVANCED MODE ═══════ -->
+          <div id="results-advanced-content" style="display:none;">
+
+            <!-- Multi-Year Carbon Modelling -->
+            <div id="results-adv-carbon" class="results-adv-panel">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Multi-Year Carbon Modelling</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:40px; text-align:center; color:#6c757d;">
+                <div style="font-size:32px; opacity:0.3; margin-bottom:8px;">📈</div>
+                <div style="font-size:14px;">Carbon modelling results will appear here after running the simulation.</div>
+              </div>
+            </div>
+
+            <!-- Estimates of Production -->
+            <div id="results-adv-production" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Estimates of Production</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:40px; text-align:center; color:#6c757d;">
+                <div style="font-size:32px; opacity:0.3; margin-bottom:8px;">🌾</div>
+                <div style="font-size:14px;">Production estimates will appear here after running the simulation.</div>
+              </div>
+            </div>
+
+            <!-- Feed Estimate Report -->
+            <div id="results-adv-feed" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Feed Estimate Report</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:40px; text-align:center; color:#6c757d;">
+                <div style="font-size:32px; opacity:0.3; margin-bottom:8px;">🐄</div>
+                <div style="font-size:14px;">Feed estimates will appear here after running the simulation.</div>
+              </div>
+            </div>
+
+            <!-- Manure Management -->
+            <div id="results-adv-manure" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Manure Management</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:40px; text-align:center; color:#6c757d;">
+                <div style="font-size:32px; opacity:0.3; margin-bottom:8px;">💩</div>
+                <div style="font-size:14px;">Manure management results will appear here after running the simulation.</div>
+              </div>
+            </div>
+
+            <!-- Emissions Pie Chart -->
+            <div id="results-adv-pie" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Emissions Pie Chart</h2>
+              </div>
+              <div style="display:grid; grid-template-columns:200px 1fr; gap:24px;">
+                <!-- Controls -->
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div>
+                    <label style="font-size:12px; color:#6c757d; display:block; margin-bottom:4px;">Units of Measurement</label>
+                    <select class="form-input" style="width:100%;">
+                      <option>Kg CO₂e</option>
+                      <option>Mg CO₂e</option>
+                      <option>Kg GHGs</option>
+                      <option>Mg GHGs</option>
+                    </select>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <label style="font-size:13px; color:#2c3e50;">Show Details</label>
+                    <input type="checkbox" checked>
+                  </div>
+                  <div>
+                    <label style="font-size:12px; color:#6c757d; display:block; margin-bottom:4px;">Year</label>
+                    <select class="form-input" style="width:100%;">
+                      <option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Pie Chart (CSS-drawn) -->
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                  <div style="width:300px; height:300px; border-radius:50%; background:conic-gradient(#3498db 0% 35.5%, #e67e22 35.5% 40.8%, #27ae60 40.8% 47.9%, #9b59b6 47.9% 53.2%, #95a5a6 53.2% 58.5%, #1abc9c 58.5% 100%); position:relative; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:120px; height:120px; border-radius:50%; background:#fff;"></div>
+                  </div>
+                  <!-- Legend -->
+                  <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:20px; justify-content:center;">
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><span style="width:12px; height:12px; border-radius:2px; background:#3498db; display:inline-block;"></span> Enteric CH₄ (35.5%)</div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><span style="width:12px; height:12px; border-radius:2px; background:#e67e22; display:inline-block;"></span> Manure CH₄ (5.3%)</div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><span style="width:12px; height:12px; border-radius:2px; background:#27ae60; display:inline-block;"></span> Direct N₂O (7.1%)</div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><span style="width:12px; height:12px; border-radius:2px; background:#9b59b6; display:inline-block;"></span> Indirect N₂O (5.3%)</div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><span style="width:12px; height:12px; border-radius:2px; background:#95a5a6; display:inline-block;"></span> Energy CO₂ (5.3%)</div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><span style="width:12px; height:12px; border-radius:2px; background:#1abc9c; display:inline-block;"></span> Other (41.5%)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Overall Emissions -->
+            <div id="results-adv-overall" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Overall Emissions</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="data-grid">
+                  <thead>
+                    <tr><th>Component</th><th>Enteric CH₄<br><small>kg CO₂e</small></th><th>Manure CH₄<br><small>kg CO₂e</small></th><th>Manure N₂O<br><small>kg CO₂e</small></th><th>Soil N₂O<br><small>kg CO₂e</small></th><th>Energy CO₂<br><small>kg CO₂e</small></th><th>Total<br><small>kg CO₂e</small></th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>East Pasture</td><td>—</td><td>—</td><td>—</td><td>12,450</td><td>3,200</td><td style="font-weight:600;">15,650</td></tr>
+                    <tr><td>Cow-Calf Herd</td><td>245,800</td><td>18,400</td><td>8,920</td><td>15,200</td><td>1,850</td><td style="font-weight:600;">290,170</td></tr>
+                    <tr><td>Egg Barn</td><td>—</td><td>3,200</td><td>1,450</td><td>—</td><td>4,600</td><td style="font-weight:600;">9,250</td></tr>
+                    <tr style="font-weight:700; background:var(--bg-light);"><td>FARM TOTAL</td><td>245,800</td><td>21,600</td><td>10,370</td><td>27,650</td><td>9,650</td><td style="color:var(--danger);">315,070</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Component Emissions -->
+            <div id="results-adv-component" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Component Emissions</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:40px; text-align:center; color:#6c757d;">
+                <div style="font-size:32px; opacity:0.3; margin-bottom:8px;">📊</div>
+                <div style="font-size:14px;">Component-level emissions breakdown will appear here after running the simulation.</div>
+              </div>
+            </div>
+
+            <!-- Detailed Emissions Report -->
+            <div id="results-adv-detailed" class="results-adv-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <h2 style="font-size:22px; font-weight:600; color:#1f497a; margin:0;">Detailed Emissions Report</h2>
+                <button class="btn btn-secondary" style="font-size:12px; margin-left:auto;">Export to CSV</button>
+              </div>
+              <div style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:40px; text-align:center; color:#6c757d;">
+                <div style="font-size:32px; opacity:0.3; margin-bottom:8px;">📋</div>
+                <div style="font-size:14px;">Detailed emissions report will appear here after running the simulation.</div>
+              </div>
+            </div>
+
+          </div><!-- /results-advanced-content -->
+        </div><!-- /content area -->
+      </div><!-- /grid -->
     </div>
 
     <!-- CLIMATE DATA VIEW -->
@@ -2675,6 +2998,44 @@ function addCropToField() {
     card.classList.add('selected');
   };
   tl.appendChild(card);
+}
+
+/* ── Results view navigation ── */
+function toggleResultsMode(toggle) {
+  const basicNav = document.getElementById('results-nav-basic');
+  const advNav = document.getElementById('results-nav-advanced');
+  const basicContent = document.getElementById('results-basic-content');
+  const advContent = document.getElementById('results-advanced-content');
+  const knob = document.getElementById('results-toggle-knob');
+  const lblBasic = document.getElementById('results-mode-label-basic');
+  const lblAdv = document.getElementById('results-mode-label-adv');
+  if (toggle.checked) {
+    basicNav.style.display = 'none'; advNav.style.display = 'block';
+    basicContent.style.display = 'none'; advContent.style.display = 'block';
+    knob.style.left = '20px'; document.getElementById('results-toggle-track').style.background = '#1f497a';
+    lblBasic.style.cssText = 'color:#888;'; lblAdv.style.cssText = 'font-weight:600; color:#1f497a;';
+    // Show first advanced panel
+    document.querySelectorAll('.results-adv-panel').forEach(p => p.style.display = 'none');
+    document.querySelector('.results-adv-panel').style.display = 'block';
+  } else {
+    basicNav.style.display = 'block'; advNav.style.display = 'none';
+    basicContent.style.display = 'block'; advContent.style.display = 'none';
+    knob.style.left = '2px'; document.getElementById('results-toggle-track').style.background = '#ccc';
+    lblBasic.style.cssText = 'font-weight:600; color:#1f497a;'; lblAdv.style.cssText = 'color:#888;';
+  }
+}
+function selectResultsChapter(el, chapterId) {
+  el.parentElement.querySelectorAll('.results-nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const chapter = document.getElementById(chapterId);
+  if (chapter) chapter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function selectResultsAdvanced(el, panelId) {
+  el.parentElement.querySelectorAll('.results-nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.results-adv-panel').forEach(p => p.style.display = 'none');
+  const panel = document.getElementById(panelId);
+  if (panel) panel.style.display = 'block';
 }
 
 function toggleCoverCrop(checkbox) {
