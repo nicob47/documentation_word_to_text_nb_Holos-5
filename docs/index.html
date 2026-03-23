@@ -2813,11 +2813,14 @@ function showView(viewName) {
   // Toggle sidebar visibility: hide when in options (options has its own sidebar menu)
   const sidebar = document.querySelector('.sidebar');
   const shell = document.getElementById('appShell');
-  if (viewName === 'options') {
+  const toolbar = document.getElementById('appToolbar');
+  if (viewName === 'options' || viewName === 'results') {
     sidebar.style.display = 'none';
+    if (toolbar) toolbar.style.display = 'none';
     shell.classList.add('no-sidebar');
   } else {
     sidebar.style.display = '';
+    if (toolbar) toolbar.style.display = '';
     shell.classList.remove('no-sidebar');
   }
 
