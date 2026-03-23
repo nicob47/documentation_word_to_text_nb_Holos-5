@@ -103,25 +103,34 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 								CornerRadius="6"
 								Padding="12"
 								Margin="0,0,0,16">
-							<StackPanel Orientation="Horizontal" Spacing="8">
-								<StackPanel VerticalAlignment="Center">
-									<TextBlock>
-										<Run Text="{Binding [Label_CurrentlyEditing].Value, Source={StaticResource Loc}}"/>
-										<Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}"
-											 FontWeight="Bold"/>
-										<Run Text="(Year"/>
-										<Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}"
-											 FontWeight="Bold"/>
-										<Run Text=")"/>
-									</TextBlock>
-									<TextBlock FontSize="12"
-											   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-											   Margin="0,2,0,0">
-										<Run Text="{Binding [Label_Field].Value, Source={StaticResource Loc}}"/>
-										<Run Text="{Binding SelectedFieldName, Mode=OneWay}"
-											 FontWeight="SemiBold"/>
-									</TextBlock>
+							<StackPanel Spacing="4">
+								<StackPanel Orientation="Horizontal" Spacing="8">
+									<StackPanel VerticalAlignment="Center">
+										<TextBlock>
+											<Run Text="{Binding [Label_CurrentlyEditing].Value, Source={StaticResource Loc}}"/>
+											<Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}"
+												 FontWeight="Bold"/>
+											<Run Text="(Year"/>
+											<Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}"
+												 FontWeight="Bold"/>
+											<Run Text=")"/>
+										</TextBlock>
+										<TextBlock FontSize="12"
+												   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+												   Margin="0,2,0,0">
+											<Run Text="{Binding [Label_Field].Value, Source={StaticResource Loc}}"/>
+											<Run Text="{Binding SelectedFieldName, Mode=OneWay}"
+												 FontWeight="SemiBold"/>
+										</TextBlock>
+									</StackPanel>
 								</StackPanel>
+
+								<!-- Cover crop editing toggle - inside the banner -->
+								<ToggleSwitch IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
+											  IsChecked="{Binding IsEditingCoverCrop}"
+											  OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
+											  OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"
+											  Margin="0,4,0,0"/>
 							</StackPanel>
 						</Border>
 
@@ -148,14 +157,6 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 											  OnContent="{Binding [Label_CopyEnabled].Value, Source={StaticResource Loc}}"
 											  OffContent="{Binding [Label_CopyDisabled].Value, Source={StaticResource Loc}}"/>
 							</StackPanel>
-						</Border>
-
-						<!-- Editing context toggle: Main Crop ↔ Cover Crop -->
-						<Border IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
-								Margin="0,0,0,12">
-							<ToggleSwitch IsChecked="{Binding IsEditingCoverCrop}"
-										  OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
-										  OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"/>
 						</Border>
 
 						<!-- Crop Details TabControl - shown when NOT editing cover crop -->

@@ -636,6 +636,17 @@ body {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
+/* Cover Crop Toggle Switch (Avalonia-style) */
+.toggle-switch input:checked + .toggle-slider {
+  background: #4CAF50 !important;
+}
+.toggle-switch input:checked + .toggle-slider + .toggle-knob {
+  transform: translateX(16px);
+}
+.toggle-switch input:focus + .toggle-slider {
+  box-shadow: 0 0 2px #4CAF50;
+}
+
 /* Forms */
 .form-grid {
   display: grid;
@@ -1217,88 +1228,107 @@ select.form-input { cursor: pointer; }
           <span class="step-badge">Step 3</span>
           <span class="step-description">Configure details for the selected crop year</span>
         </div>
-        <div class="tab-bar">
-          <button class="tab-btn active" onclick="switchTab(this, 'tab-field-general')">General</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-field-residues')">Residues</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-field-economics')">Economics</button>
-        </div>
-        <div id="tab-field-general" class="tab-content active">
-          <div class="form-grid">
-            <label class="form-label">Crop type</label>
-            <select class="form-input"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Yield</label>
-            <input type="number" class="form-input" value="3200" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-            <label class="form-label">Tillage type</label>
-            <select class="form-input"><option>Reduced tillage</option><option>Intensive tillage</option><option>No-till</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Nitrogen fertilizer rate</label>
-            <input type="number" class="form-input" value="75" step="1">
-            <span class="form-unit">kg N ha⁻¹</span>
-            <label class="form-label">Phosphorus fertilizer rate</label>
-            <input type="number" class="form-input" value="20" step="1">
-            <span class="form-unit">kg P₂O₅ ha⁻¹</span>
-            <label class="form-label">Pesticide passes</label>
-            <input type="number" class="form-input" value="2" step="1">
-            <span class="form-unit">passes</span>
-            <label class="form-label">Irrigation</label>
-            <select class="form-input"><option>Irrigated</option><option>Rainfed</option></select>
-            <span class="form-unit"></span>
-          </div>
-        </div>
-        <div id="tab-field-residues" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Carbon concentration</label>
-            <input type="number" class="form-input" value="0.45" step="0.01">
-            <span class="form-unit">kg C kg⁻¹</span>
-            <label class="form-label">Moisture content of crop</label>
-            <input type="number" class="form-input" value="12.0" step="0.1">
-            <span class="form-unit">%</span>
-            <label class="form-label">Above-ground residue</label>
-            <input type="number" class="form-input" value="2800" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-            <label class="form-label">Below-ground residue</label>
-            <input type="number" class="form-input" value="1200" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-            <label class="form-label">Residue returned to soil</label>
-            <input type="number" class="form-input" value="100" step="1">
-            <span class="form-unit">%</span>
-          </div>
-        </div>
-        <div id="tab-field-economics" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Crop price</label>
-            <input type="number" class="form-input" value="265.00" step="1">
-            <span class="form-unit">$ t⁻¹</span>
-            <label class="form-label">Cost of production</label>
-            <input type="number" class="form-input" value="425.00" step="1">
-            <span class="form-unit">$ ha⁻¹</span>
-            <label class="form-label">Revenue from sale</label>
-            <input type="number" class="form-input" value="848.00" step="1" disabled>
-            <span class="form-unit">$ ha⁻¹</span>
+
+        <!-- Currently editing banner with cover crop toggle -->
+        <div style="margin-bottom:12px; padding:10px 14px; background:var(--selection-bg); border:1px solid var(--selection-border); border-radius:var(--radius-sm); font-size:var(--font-small);">
+          <div>Currently editing: <strong>Barley</strong> (Year 1910) / Field: Field 1</div>
+          <div id="fieldCoverCropToggle" style="display:none; align-items:center; gap:8px; margin-top:4px;">
+            <span id="fieldToggleLabel" style="font-size:11px; color:var(--selection-border); font-weight:600;">Main Crop</span>
+            <label class="toggle-switch" style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+              <input type="checkbox" id="fieldCoverCropSwitch" style="opacity:0; width:0; height:0;" onchange="toggleCoverCropEditor('field', this.checked)">
+              <span class="toggle-slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+              <span class="toggle-knob" style="position:absolute; content:''; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+            </label>
+            <span style="font-size:11px; color:#558B2F;">Cover Crop</span>
           </div>
         </div>
 
-        <!-- Cover Crop Editor (shown when cover crop is active) -->
-        <div id="coverCropEditor" style="margin-top:16px; border:1px solid #4CAF50; border-radius:6px; padding:16px; background:#FAFFF9;">
-          <div style="font-size:14px; font-weight:600; color:#2E7D32; margin-bottom:12px;">Cover Crop Properties</div>
-          <div class="form-grid">
-            <label class="form-label">Cover crop type</label>
-            <select class="form-input"><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Termination type</label>
-            <select class="form-input"><option>Natural</option><option>Chemical</option><option>Mechanical</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Yield (wet weight)</label>
-            <input type="number" class="form-input" value="1200" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-            <label class="form-label">Moisture content</label>
-            <input type="number" class="form-input" value="80.0" step="0.5">
-            <span class="form-unit">%</span>
-            <label class="form-label">Irrigation</label>
-            <input type="number" class="form-input" value="0" step="1">
-            <span class="form-unit">mm</span>
+        <!-- Main crop tabs -->
+        <div id="fieldMainCropTabs">
+          <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this, 'tab-field-general')">General</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-field-residues')">Residues</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-field-economics')">Economics</button>
+          </div>
+          <div id="tab-field-general" class="tab-content active">
+            <div class="form-grid">
+              <label class="form-label">Crop type</label>
+              <select class="form-input"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Yield</label>
+              <input type="number" class="form-input" value="3200" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Tillage type</label>
+              <select class="form-input"><option>Reduced tillage</option><option>Intensive tillage</option><option>No-till</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Nitrogen fertilizer rate</label>
+              <input type="number" class="form-input" value="75" step="1">
+              <span class="form-unit">kg N ha⁻¹</span>
+              <label class="form-label">Phosphorus fertilizer rate</label>
+              <input type="number" class="form-input" value="20" step="1">
+              <span class="form-unit">kg P₂O₅ ha⁻¹</span>
+              <label class="form-label">Pesticide passes</label>
+              <input type="number" class="form-input" value="2" step="1">
+              <span class="form-unit">passes</span>
+              <label class="form-label">Irrigation</label>
+              <select class="form-input"><option>Irrigated</option><option>Rainfed</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+          <div id="tab-field-residues" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Carbon concentration</label>
+              <input type="number" class="form-input" value="0.45" step="0.01">
+              <span class="form-unit">kg C kg⁻¹</span>
+              <label class="form-label">Moisture content of crop</label>
+              <input type="number" class="form-input" value="12.0" step="0.1">
+              <span class="form-unit">%</span>
+              <label class="form-label">Above-ground residue</label>
+              <input type="number" class="form-input" value="2800" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Below-ground residue</label>
+              <input type="number" class="form-input" value="1200" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Residue returned to soil</label>
+              <input type="number" class="form-input" value="100" step="1">
+              <span class="form-unit">%</span>
+            </div>
+          </div>
+          <div id="tab-field-economics" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Crop price</label>
+              <input type="number" class="form-input" value="265.00" step="1">
+              <span class="form-unit">$ t⁻¹</span>
+              <label class="form-label">Cost of production</label>
+              <input type="number" class="form-input" value="425.00" step="1">
+              <span class="form-unit">$ ha⁻¹</span>
+              <label class="form-label">Revenue from sale</label>
+              <input type="number" class="form-input" value="848.00" step="1" disabled>
+              <span class="form-unit">$ ha⁻¹</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cover Crop Editor (shown when toggle is ON) -->
+        <div id="fieldCoverCropEditor" style="display:none;">
+          <div style="padding:16px; background:#FAFFF9; border:1px solid #C5E1A5; border-radius:6px;">
+            <div class="form-grid">
+              <label class="form-label">Cover crop type</label>
+              <select class="form-input" style="border-color:#4CAF50;"><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Termination type</label>
+              <select class="form-input" style="border-color:#4CAF50;"><option>Natural</option><option>Chemical</option><option>Mechanical</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Yield (wet weight)</label>
+              <input type="number" class="form-input" value="1200" step="100" style="border-color:#4CAF50;">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Moisture content</label>
+              <input type="number" class="form-input" value="80.0" step="0.5" style="border-color:#4CAF50;">
+              <span class="form-unit">%</span>
+              <label class="form-label">Irrigation</label>
+              <input type="number" class="form-input" value="0" step="1" style="border-color:#4CAF50;">
+              <span class="form-unit">mm</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1872,85 +1902,121 @@ select.form-input { cursor: pointer; }
           <span class="step-description">Configure details for selected crop</span>
         </div>
         <div style="margin-bottom:12px; padding:10px 14px; background:var(--selection-bg); border:1px solid var(--selection-border); border-radius:var(--radius-sm); font-size:var(--font-small);">
-          Currently editing: <strong>Wheat</strong> · Year 1 · Field 1
-        </div>
-        <div class="tab-bar">
-          <button class="tab-btn active" onclick="switchTab(this, 'tab-rot-general')">General</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-fertilizer')">Fertilizer</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-manure')">Manure</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-grazing')">Grazing</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-soil')">Soil</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-residue')">Residue</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tab-rot-economics')">Economics</button>
-        </div>
-        <div id="tab-rot-general" class="tab-content active">
-          <div class="form-grid">
-            <label class="form-label">Crop type</label>
-            <select class="form-input"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Yield</label>
-            <input type="number" class="form-input" value="3200" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-            <label class="form-label">Tillage type</label>
-            <select class="form-input"><option>Reduced tillage</option><option>No-till</option><option>Intensive tillage</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Irrigation</label>
-            <select class="form-input"><option>Rainfed</option><option>Irrigated</option></select>
-            <span class="form-unit"></span>
+          <div>Currently editing: <strong>Wheat</strong> (Year 1) / Field: Field 1</div>
+          <div id="rotCoverCropToggle" style="display:none; align-items:center; gap:8px; margin-top:4px;">
+            <span id="rotToggleLabel" style="font-size:11px; color:var(--selection-border); font-weight:600;">Main Crop</span>
+            <label class="toggle-switch" style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+              <input type="checkbox" id="rotCoverCropSwitch" style="opacity:0; width:0; height:0;" onchange="toggleCoverCropEditor('rot', this.checked)">
+              <span class="toggle-slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+              <span class="toggle-knob" style="position:absolute; content:''; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+            </label>
+            <span style="font-size:11px; color:#558B2F;">Cover Crop</span>
           </div>
         </div>
-        <div id="tab-rot-fertilizer" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Nitrogen rate</label>
-            <input type="number" class="form-input" value="75" step="1">
-            <span class="form-unit">kg N ha⁻¹</span>
-            <label class="form-label">Phosphorus rate</label>
-            <input type="number" class="form-input" value="20" step="1">
-            <span class="form-unit">kg P₂O₅ ha⁻¹</span>
+
+        <!-- Main crop tabs -->
+        <div id="rotMainCropTabs">
+          <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this, 'tab-rot-general')">General</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-fertilizer')">Fertilizer</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-manure')">Manure</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-grazing')">Grazing</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-soil')">Soil</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-residue')">Residue</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-economics')">Economics</button>
+          </div>
+          <div id="tab-rot-general" class="tab-content active">
+            <div class="form-grid">
+              <label class="form-label">Crop type</label>
+              <select class="form-input"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Yield</label>
+              <input type="number" class="form-input" value="3200" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Tillage type</label>
+              <select class="form-input"><option>Reduced tillage</option><option>No-till</option><option>Intensive tillage</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Irrigation</label>
+              <select class="form-input"><option>Rainfed</option><option>Irrigated</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+          <div id="tab-rot-fertilizer" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Nitrogen rate</label>
+              <input type="number" class="form-input" value="75" step="1">
+              <span class="form-unit">kg N ha⁻¹</span>
+              <label class="form-label">Phosphorus rate</label>
+              <input type="number" class="form-input" value="20" step="1">
+              <span class="form-unit">kg P₂O₅ ha⁻¹</span>
+            </div>
+          </div>
+          <div id="tab-rot-manure" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Manure applied</label>
+              <select class="form-input"><option>No</option><option>Yes</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Amount applied</label>
+              <input type="number" class="form-input" value="0" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+            </div>
+          </div>
+          <div id="tab-rot-grazing" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Grazed</label>
+              <select class="form-input"><option>No</option><option>Yes</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+          <div id="tab-rot-soil" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Soil texture override</label>
+              <select class="form-input"><option>Use farm default</option><option>Fine (clay)</option><option>Medium (loam)</option><option>Coarse (sand)</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+          <div id="tab-rot-residue" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Above-ground residue</label>
+              <input type="number" class="form-input" value="2800" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Below-ground residue</label>
+              <input type="number" class="form-input" value="1200" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+            </div>
+          </div>
+          <div id="tab-rot-economics" class="tab-content">
+            <div class="form-grid">
+              <label class="form-label">Crop price</label>
+              <input type="number" class="form-input" value="310" step="1">
+              <span class="form-unit">$ t⁻¹</span>
+              <label class="form-label">Cost of production</label>
+              <input type="number" class="form-input" value="450" step="1">
+              <span class="form-unit">$ ha⁻¹</span>
+            </div>
           </div>
         </div>
-        <div id="tab-rot-manure" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Manure applied</label>
-            <select class="form-input"><option>No</option><option>Yes</option></select>
-            <span class="form-unit"></span>
-            <label class="form-label">Amount applied</label>
-            <input type="number" class="form-input" value="0" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-          </div>
-        </div>
-        <div id="tab-rot-grazing" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Grazed</label>
-            <select class="form-input"><option>No</option><option>Yes</option></select>
-            <span class="form-unit"></span>
-          </div>
-        </div>
-        <div id="tab-rot-soil" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Soil texture override</label>
-            <select class="form-input"><option>Use farm default</option><option>Fine (clay)</option><option>Medium (loam)</option><option>Coarse (sand)</option></select>
-            <span class="form-unit"></span>
-          </div>
-        </div>
-        <div id="tab-rot-residue" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Above-ground residue</label>
-            <input type="number" class="form-input" value="2800" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-            <label class="form-label">Below-ground residue</label>
-            <input type="number" class="form-input" value="1200" step="100">
-            <span class="form-unit">kg ha⁻¹</span>
-          </div>
-        </div>
-        <div id="tab-rot-economics" class="tab-content">
-          <div class="form-grid">
-            <label class="form-label">Crop price</label>
-            <input type="number" class="form-input" value="310" step="1">
-            <span class="form-unit">$ t⁻¹</span>
-            <label class="form-label">Cost of production</label>
-            <input type="number" class="form-input" value="450" step="1">
-            <span class="form-unit">$ ha⁻¹</span>
+
+        <!-- Cover Crop Editor (shown when toggle is ON) -->
+        <div id="rotCoverCropEditor" style="display:none;">
+          <div style="padding:16px; background:#FAFFF9; border:1px solid #C5E1A5; border-radius:6px;">
+            <div class="form-grid">
+              <label class="form-label">Cover crop type</label>
+              <select class="form-input" style="border-color:#4CAF50;"><option>Winter Rye</option><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Termination type</label>
+              <select class="form-input" style="border-color:#4CAF50;"><option>Natural</option><option>Chemical</option><option>Mechanical</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Yield (wet weight)</label>
+              <input type="number" class="form-input" value="1200" step="100" style="border-color:#4CAF50;">
+              <span class="form-unit">kg ha⁻¹</span>
+              <label class="form-label">Moisture content</label>
+              <input type="number" class="form-input" value="80.0" step="0.5" style="border-color:#4CAF50;">
+              <span class="form-unit">%</span>
+              <label class="form-label">Irrigation</label>
+              <input type="number" class="form-input" value="0" step="1" style="border-color:#4CAF50;">
+              <span class="form-unit">mm</span>
+            </div>
           </div>
         </div>
       </div>
@@ -3058,6 +3124,89 @@ function toggleCoverCrop(checkbox) {
   } else {
     if (selector) selector.remove();
   }
+  // Show/hide the cover crop toggle switch based on whether selected card has cover crop active
+  updateCoverCropToggleVisibility();
+}
+
+function updateCoverCropToggleVisibility() {
+  // Field component toggle
+  var fieldToggle = document.getElementById('fieldCoverCropToggle');
+  if (fieldToggle) {
+    var fieldTimeline = document.getElementById('cropTimeline');
+    if (fieldTimeline) {
+      var selectedCard = fieldTimeline.querySelector('.timeline-card.selected');
+      var hasCoverCrop = selectedCard && selectedCard.querySelector('input[type="checkbox"]') && selectedCard.querySelector('input[type="checkbox"]').checked;
+      fieldToggle.style.display = hasCoverCrop ? 'flex' : 'none';
+      if (!hasCoverCrop) {
+        // Reset toggle to OFF when cover crop is unchecked
+        var sw = document.getElementById('fieldCoverCropSwitch');
+        if (sw && sw.checked) { sw.checked = false; toggleCoverCropEditor('field', false); }
+      }
+      // Update the label with crop name
+      if (hasCoverCrop) {
+        var cropSelect = selectedCard.querySelector('select.form-input');
+        var cropName = cropSelect ? cropSelect.value : 'Crop';
+        var coverSelect = selectedCard.querySelector('.cover-crop-selector select');
+        var coverName = coverSelect ? coverSelect.value : 'Cover Crop';
+        var sw = document.getElementById('fieldCoverCropSwitch');
+        var label = document.getElementById('fieldToggleLabel');
+        if (label) {
+          label.textContent = sw && sw.checked ? 'Editing Cover Crop (' + coverName + ')' : 'Editing Main Crop (' + cropName + ')';
+        }
+      }
+    }
+  }
+  // Rotation component toggle
+  var rotToggle = document.getElementById('rotCoverCropToggle');
+  if (rotToggle) {
+    var rotTimeline = document.getElementById('rotationTimeline');
+    if (rotTimeline) {
+      var selectedCard = rotTimeline.querySelector('.timeline-card.selected');
+      var hasCoverCrop = selectedCard && selectedCard.querySelector('input[type="checkbox"]') && selectedCard.querySelector('input[type="checkbox"]').checked;
+      rotToggle.style.display = hasCoverCrop ? 'flex' : 'none';
+      if (!hasCoverCrop) {
+        var sw = document.getElementById('rotCoverCropSwitch');
+        if (sw && sw.checked) { sw.checked = false; toggleCoverCropEditor('rot', false); }
+      }
+      if (hasCoverCrop) {
+        var cropSelect = selectedCard.querySelector('select.form-input');
+        var cropName = cropSelect ? cropSelect.value : 'Crop';
+        var coverSelect = selectedCard.querySelector('.cover-crop-selector select');
+        var coverName = coverSelect ? coverSelect.value : 'Cover Crop';
+        var sw = document.getElementById('rotCoverCropSwitch');
+        var label = document.getElementById('rotToggleLabel');
+        if (label) {
+          label.textContent = sw && sw.checked ? 'Editing Cover Crop (' + coverName + ')' : 'Editing Main Crop (' + cropName + ')';
+        }
+      }
+    }
+  }
+}
+
+function toggleCoverCropEditor(prefix, isOn) {
+  var mainTabs = document.getElementById(prefix + 'MainCropTabs');
+  var coverEditor = document.getElementById(prefix + 'CoverCropEditor');
+  var label = document.getElementById(prefix + 'ToggleLabel');
+  var slider = document.getElementById(prefix + 'CoverCropSwitch');
+
+  if (isOn) {
+    if (mainTabs) mainTabs.style.display = 'none';
+    if (coverEditor) coverEditor.style.display = 'block';
+  } else {
+    if (mainTabs) mainTabs.style.display = '';
+    if (coverEditor) coverEditor.style.display = 'none';
+  }
+
+  // Update the toggle slider visual
+  if (slider) {
+    var sliderTrack = slider.nextElementSibling;
+    if (sliderTrack) sliderTrack.style.background = isOn ? '#4CAF50' : '#9E9E9E';
+    var knob = sliderTrack ? sliderTrack.nextElementSibling : null;
+    if (knob) knob.style.transform = isOn ? 'translateX(16px)' : 'translateX(0)';
+  }
+
+  // Update the label text
+  updateCoverCropToggleVisibility();
 }
 
 function addManagementPeriod() {
@@ -3229,6 +3378,12 @@ function setToolbarFarmName(name) {
   const el = document.getElementById('toolbarFarmName');
   if (el) el.textContent = name || 'My Farm';
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   INITIALIZATION
+   ═══════════════════════════════════════════════════════════════ */
+// Set initial visibility of cover crop toggle switches
+updateCoverCropToggleVisibility();
 </script>
 
 </body>

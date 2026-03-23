@@ -27,13 +27,31 @@
                        Classes="step-number-description"/>
         </StackPanel>
 
-        <!-- Editing context toggle: Main Crop ↔ Cover Crop -->
+        <!-- Currently Editing Indicator with cover crop toggle -->
         <Border Grid.Row="1"
-                IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
+                IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
+                Background="{StaticResource GcdsSelectionBgBrush}"
+                BorderBrush="{StaticResource GcdsLinkDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="6"
+                Padding="12"
                 Margin="10,0,10,12">
-            <ToggleSwitch IsChecked="{Binding IsEditingCoverCrop}"
-                          OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
-                          OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"/>
+            <StackPanel Spacing="4">
+                <TextBlock>
+                    <Run Text="{Binding [Label_CurrentlyEditing].Value, Source={StaticResource Loc}}"/>
+                    <Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}" FontWeight="Bold"/>
+                    <Run Text="(Year"/>
+                    <Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}" FontWeight="Bold"/>
+                    <Run Text=")"/>
+                </TextBlock>
+
+                <!-- Cover crop editing toggle - inside the banner -->
+                <ToggleSwitch IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
+                              IsChecked="{Binding IsEditingCoverCrop}"
+                              OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
+                              OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"
+                              Margin="0,4,0,0"/>
+            </StackPanel>
         </Border>
 
         <!-- Main Crop Details TabControl - shown when NOT editing cover crop -->
