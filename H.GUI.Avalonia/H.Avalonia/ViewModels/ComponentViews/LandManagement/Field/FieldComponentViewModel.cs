@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using Avalonia.Media;
 using H.Core.Enumerations;
 using H.Avalonia.Views.ComponentViews;
 using H.Avalonia.Views.ComponentViews.LandManagement.Field;
+using H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation;
 using H.Core.Factories;
 using H.Core.Factories.Crops;
 using H.Core.Factories.Fields;
 using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
+using H.Core.Services.CropColorService;
 using H.Core.Services.LandManagement.Fields;
 using H.Core.Services.StorageService;
 using Microsoft.Extensions.Logging;
@@ -58,6 +63,8 @@ public class FieldComponentViewModel : ViewModelBase
 
     private readonly ICropFactory? _cropFactory;
 
+    private readonly ICropColorService? _cropColorService;
+
     #endregion
 
     #region Constructors
@@ -72,16 +79,18 @@ public class FieldComponentViewModel : ViewModelBase
     }
 
     public FieldComponentViewModel(
-        IRegionManager regionManager, 
-        IEventAggregator eventAggregator, 
+        IRegionManager regionManager,
+        IEventAggregator eventAggregator,
         IStorageService storageService,
         IFieldComponentService fieldComponentService,
         ILogger logger,
-        ICropFactory cropFactory) : base(regionManager, eventAggregator, storageService, logger)
+        ICropFactory cropFactory,
+        ICropColorService cropColorService) : base(regionManager, eventAggregator, storageService, logger)
     {
         _cropFactory = cropFactory ?? throw new ArgumentNullException(nameof(cropFactory));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _fieldComponentService = fieldComponentService ?? throw new ArgumentNullException(nameof(fieldComponentService));
+        _cropColorService = cropColorService ?? throw new ArgumentNullException(nameof(cropColorService));
 
         this.Construct();
 
@@ -90,6 +99,43 @@ public class FieldComponentViewModel : ViewModelBase
         this.SetSelectedCropCommand = new DelegateCommand<object>(OnSetSelectedCropExecute);
         this.RemoveSpecificCropCommand = new DelegateCommand<object>(OnRemoveSpecificCropExecute);
         this.ToggleCoverCropCommand = new DelegateCommand<object>(OnToggleCoverCropExecute);
+        this.MoveCropUpCommand = new DelegateCommand<object>(OnMoveCropUpExecute);
+        this.MoveCropDownCommand = new DelegateCommand<object>(OnMoveCropDownExecute);
+        this.SetSelectedCropFromCellCommand = new DelegateCommand<object>(OnSetSelectedCropFromCellExecute);
+    }
+
+    private void OnMoveCropUpExecute(object parameter)
+    {
+        if (parameter is ICropDto cropDto && SelectedFieldSystemComponentDto?.CropDtos is { } cropDtos)
+        {
+            var index = cropDtos.IndexOf(cropDto);
+            if (index > 0)
+            {
+                cropDtos.Move(index, index - 1);
+                UpdateSequenceNumbers(cropDtos);
+            }
+        }
+    }
+
+    private void OnMoveCropDownExecute(object parameter)
+    {
+        if (parameter is ICropDto cropDto && SelectedFieldSystemComponentDto?.CropDtos is { } cropDtos)
+        {
+            var index = cropDtos.IndexOf(cropDto);
+            if (index >= 0 && index < cropDtos.Count - 1)
+            {
+                cropDtos.Move(index, index + 1);
+                UpdateSequenceNumbers(cropDtos);
+            }
+        }
+    }
+
+    private static void UpdateSequenceNumbers(System.Collections.ObjectModel.ObservableCollection<ICropDto> cropDtos)
+    {
+        for (var i = 0; i < cropDtos.Count; i++)
+        {
+            cropDtos[i].SequenceNumber = i + 1;
+        }
     }
 
     #endregion
@@ -122,6 +168,39 @@ public class FieldComponentViewModel : ViewModelBase
     public DelegateCommand<object> ToggleCoverCropCommand { get; set; } = null!;
 
     /// <summary>
+    /// Moves a crop one position earlier in the field history sequence.
+    /// </summary>
+    public DelegateCommand<object> MoveCropUpCommand { get; set; } = null!;
+
+    /// <summary>
+    /// Moves a crop one position later in the field history sequence.
+    /// </summary>
+    public DelegateCommand<object> MoveCropDownCommand { get; set; } = null!;
+
+    /// <summary>
+    /// Selects a crop from the preview grid cell
+    /// </summary>
+    public DelegateCommand<object> SetSelectedCropFromCellCommand { get; set; } = null!;
+
+    /// <summary>
+    /// Flat list of year/crop assignments for the field preview strip
+    /// </summary>
+    private ObservableCollection<YearCropAssignment> _fieldPreviewAssignments = new();
+    public ObservableCollection<YearCropAssignment> FieldPreviewAssignments
+    {
+        get => _fieldPreviewAssignments;
+        set => SetProperty(ref _fieldPreviewAssignments, value);
+    }
+
+    /// <summary>
+    /// Whether the field preview strip should be visible
+    /// </summary>
+    public bool ShouldShowFieldPreview =>
+        SelectedFieldSystemComponentDto != null &&
+        SelectedFieldSystemComponentDto.CropDtos != null &&
+        SelectedFieldSystemComponentDto.CropDtos.Count > 0;
+
+    /// <summary>
     /// The selected <see cref="SelectedFieldSystemComponentDto"/>
     /// </summary>
     public IFieldComponentDto? SelectedFieldSystemComponentDto
@@ -143,8 +222,11 @@ public class FieldComponentViewModel : ViewModelBase
                 // Update selection states for all crops
                 UpdateCropSelectionStates(value);
 
-                // Reset to main crop editing when selection changes
-                IsEditingCoverCrop = false;
+                // If the newly selected crop doesn't have a cover crop, reset to main crop editing
+                if (value?.HasCoverCrop != true)
+                {
+                    IsEditingCoverCrop = false;
+                }
             }
         }
     }
@@ -171,6 +253,50 @@ public class FieldComponentViewModel : ViewModelBase
     {
         get => _isEditingCoverCrop;
         set => SetProperty(ref _isEditingCoverCrop, value);
+    }
+
+    // ── Checklist category toggles ──
+
+    private bool _isFertilizerActive = true;
+    public bool IsFertilizerActive
+    {
+        get => _isFertilizerActive;
+        set => SetProperty(ref _isFertilizerActive, value);
+    }
+
+    private bool _isManureActive;
+    public bool IsManureActive
+    {
+        get => _isManureActive;
+        set => SetProperty(ref _isManureActive, value);
+    }
+
+    private bool _isGrazingActive;
+    public bool IsGrazingActive
+    {
+        get => _isGrazingActive;
+        set => SetProperty(ref _isGrazingActive, value);
+    }
+
+    private bool _isSoilActive;
+    public bool IsSoilActive
+    {
+        get => _isSoilActive;
+        set => SetProperty(ref _isSoilActive, value);
+    }
+
+    private bool _isResidueActive;
+    public bool IsResidueActive
+    {
+        get => _isResidueActive;
+        set => SetProperty(ref _isResidueActive, value);
+    }
+
+    private bool _isEconomicsActive;
+    public bool IsEconomicsActive
+    {
+        get => _isEconomicsActive;
+        set => SetProperty(ref _isEconomicsActive, value);
     }
 
     #endregion
@@ -267,6 +393,9 @@ public class FieldComponentViewModel : ViewModelBase
 
         // Assign the DTO to the property that is bound to the view
         this.SelectedFieldSystemComponentDto = fieldComponentDto;
+
+        // Subscribe to crop collection changes for preview regeneration
+        SubscribeToCropDtoChanges();
     }
 
     /// <summary>
@@ -371,6 +500,13 @@ public class FieldComponentViewModel : ViewModelBase
                     if (_selectedFieldSystemComponent is not null)
                     {
                         _fieldComponentService?.TransferFieldDtoToSystem(fieldSystemComponentDto, _selectedFieldSystemComponent);
+                    }
+
+                    // Regenerate preview when start/end year changes
+                    if (e.PropertyName == nameof(IFieldComponentDto.StartYear) ||
+                        e.PropertyName == nameof(IFieldComponentDto.EndYear))
+                    {
+                        GenerateFieldPreview();
                     }
                 }
                 catch (Exception exception)
@@ -628,6 +764,7 @@ public class FieldComponentViewModel : ViewModelBase
         SaveCurrentUIState();
 
         // Clean up FieldComponentViewModel-specific event handlers
+        UnsubscribeFromCropDtoChanges();
         this.PropertyChanged -= ViewModelOnPropertyChanged;
 
         if (_selectedFieldSystemComponentDto is FieldSystemComponentDto fieldDto)
@@ -755,6 +892,155 @@ public class FieldComponentViewModel : ViewModelBase
     private void FinalizeInitialization()
     {
         this.AddCropCommand.RaiseCanExecuteChanged();
+        GenerateFieldPreview();
+    }
+
+    /// <summary>
+    /// Handles clicking a cell in the field preview strip to select the corresponding crop DTO
+    /// </summary>
+    private void OnSetSelectedCropFromCellExecute(object obj)
+    {
+        if (IsDisposed || obj is not YearCropAssignment assignment) return;
+
+        this.SelectedCropDto = assignment.CropDto;
+
+        // Update selection state on preview cells
+        foreach (var cell in FieldPreviewAssignments)
+        {
+            cell.IsSelected = ReferenceEquals(cell.CropDto, assignment.CropDto);
+        }
+    }
+
+    /// <summary>
+    /// Generates the flat list of year/crop assignments for the field preview strip
+    /// </summary>
+    private void GenerateFieldPreview()
+    {
+        var assignments = new ObservableCollection<YearCropAssignment>();
+
+        if (SelectedFieldSystemComponentDto?.CropDtos == null || SelectedFieldSystemComponentDto.CropDtos.Count == 0)
+        {
+            FieldPreviewAssignments = assignments;
+            RaisePropertyChanged(nameof(ShouldShowFieldPreview));
+            return;
+        }
+
+        var cropDtos = SelectedFieldSystemComponentDto.CropDtos;
+        var startYear = SelectedFieldSystemComponentDto.StartYear;
+        var endYear = SelectedFieldSystemComponentDto.EndYear;
+
+        if (startYear <= 0 || endYear <= 0 || endYear < startYear)
+        {
+            FieldPreviewAssignments = assignments;
+            RaisePropertyChanged(nameof(ShouldShowFieldPreview));
+            return;
+        }
+
+        var totalYears = endYear - startYear + 1;
+
+        for (int yearIndex = 0; yearIndex < totalYears; yearIndex++)
+        {
+            int year = startYear + yearIndex;
+            int cropIndex = yearIndex % cropDtos.Count;
+            var sourceCrop = cropDtos[cropIndex];
+
+            // Create a cloned DTO for this cell
+            ICropDto cellCropDto;
+            if (_cropFactory is not null)
+            {
+                cellCropDto = (ICropDto)_cropFactory.CreateDtoFromDtoTemplate(sourceCrop);
+                cellCropDto.Year = year;
+            }
+            else
+            {
+                cellCropDto = sourceCrop;
+            }
+
+            var assignment = new YearCropAssignment
+            {
+                Year = year.ToString(),
+                CropType = sourceCrop.CropType,
+                CropDto = cellCropDto,
+                CropDisplay = _cropColorService?.GetCropDisplayName(sourceCrop.CropType) ?? sourceCrop.CropType.ToString(),
+                CropBackground = _cropColorService is not null
+                    ? Brush.Parse(_cropColorService.GetCropColorHex(sourceCrop.CropType))
+                    : Brush.Parse("#F5F5F5"),
+                IsSelected = false,
+                CoverCropDisplay = sourceCrop.HasCoverCrop && sourceCrop.CoverCropDto != null
+                    ? (_cropColorService?.GetCropDisplayName(sourceCrop.CoverCropDto.CropType) ?? sourceCrop.CoverCropDto.CropType.ToString())
+                    : null,
+            };
+
+            assignments.Add(assignment);
+        }
+
+        FieldPreviewAssignments = assignments;
+        RaisePropertyChanged(nameof(ShouldShowFieldPreview));
+    }
+
+    /// <summary>
+    /// Subscribes to CropDtos collection changes and individual DTO property changes for preview regeneration
+    /// </summary>
+    private void SubscribeToCropDtoChanges()
+    {
+        if (SelectedFieldSystemComponentDto?.CropDtos == null) return;
+
+        SelectedFieldSystemComponentDto.CropDtos.CollectionChanged += CropDtosCollectionChangedForPreview;
+
+        foreach (var cropDto in SelectedFieldSystemComponentDto.CropDtos)
+        {
+            cropDto.PropertyChanged += CropDtoPropertyChangedForPreview;
+        }
+    }
+
+    /// <summary>
+    /// Unsubscribes from CropDtos collection changes for preview regeneration
+    /// </summary>
+    private void UnsubscribeFromCropDtoChanges()
+    {
+        if (SelectedFieldSystemComponentDto?.CropDtos == null) return;
+
+        SelectedFieldSystemComponentDto.CropDtos.CollectionChanged -= CropDtosCollectionChangedForPreview;
+
+        foreach (var cropDto in SelectedFieldSystemComponentDto.CropDtos)
+        {
+            cropDto.PropertyChanged -= CropDtoPropertyChangedForPreview;
+        }
+    }
+
+    private void CropDtosCollectionChangedForPreview(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (IsDisposed) return;
+
+        // Subscribe/unsubscribe from individual items
+        if (e.NewItems != null)
+        {
+            foreach (ICropDto item in e.NewItems)
+            {
+                item.PropertyChanged += CropDtoPropertyChangedForPreview;
+            }
+        }
+
+        if (e.OldItems != null)
+        {
+            foreach (ICropDto item in e.OldItems)
+            {
+                item.PropertyChanged -= CropDtoPropertyChangedForPreview;
+            }
+        }
+
+        GenerateFieldPreview();
+    }
+
+    private void CropDtoPropertyChangedForPreview(object? sender, PropertyChangedEventArgs e)
+    {
+        if (IsDisposed) return;
+
+        // Regenerate preview when crop type changes
+        if (e.PropertyName == nameof(ICropDto.CropType) || e.PropertyName == nameof(ICropDto.HasCoverCrop))
+        {
+            GenerateFieldPreview();
+        }
     }
 
     #endregion

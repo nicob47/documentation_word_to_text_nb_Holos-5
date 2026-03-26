@@ -1195,31 +1195,37 @@ select.form-input { cursor: pointer; }
         <div style="margin-bottom: 12px;">
           <button class="btn btn-primary" onclick="addCropToField()" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Crop to Field</button>
         </div>
-        <div class="timeline-container">
-          <div class="timeline-header">Crop History</div>
-          <div class="timeline-scroll" id="cropTimeline">
-            <div class="timeline-card selected" style="min-width: 160px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2025</div>
-              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option><option>Native grass</option></select>
-              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" checked onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
-              <div class="cover-crop-selector" style="margin-top:4px;"><div style="font-size:11px; color:#2E7D32; font-weight:600; margin-bottom:2px;">Cover Crop Type</div><select class="form-input" style="min-width:120px; font-size:11px; border-color:#4CAF50;"><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select></div>
-              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
-            </div>
-            <div class="timeline-card" style="min-width: 160px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2024</div>
-              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>
-              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
-              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
-            </div>
-            <div class="timeline-card" style="min-width: 160px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">2023</div>
-              <select class="form-input" style="min-width:120px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>
-              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
-              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
-            </div>
-          </div>
-          <div class="timeline-hint">Tip: Scroll horizontally to see more crop years</div>
-        </div>
+        <table id="fieldCropTable" style="width:100%; border-collapse: collapse; border: 1px solid #D1D5DB; border-radius: 6px;">
+          <thead>
+            <tr style="background: #F3F4F6;">
+              <th style="padding: 8px; text-align: left; font-size: 12px; color: #6B7280;">Sequence</th>
+              <th style="padding: 8px; text-align: left; font-size: 12px; color: #6B7280;">Main Crop</th>
+              <th style="padding: 8px; text-align: left; font-size: 12px; color: #6B7280;">Cover Crop</th>
+              <th style="padding: 8px; text-align: center; font-size: 12px; color: #6B7280;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="crop-row selected-row" style="background: #FFF8E7; border-left: 3px solid #26428B;" onclick="selectCropRow(this, 'field')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">1st crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option><option>Native grass</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" checked onchange="toggleTableCoverCrop(this)"><select class="form-input" style="min-width:110px; font-size:11px; border-color:#4CAF50;"><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+            <tr class="crop-row" style="background: #FAFAFA;" onclick="selectCropRow(this, 'field')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">2nd crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+            <tr class="crop-row" style="background: white;" onclick="selectCropRow(this, 'field')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">3rd crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size: 11px; color: #6B7280; font-style: italic; margin-top: 8px;">This defines the crop rotation cycle. The actual year each crop is grown depends on the field and its starting position in the rotation.</div>
       </div>
 
       <!-- Step 3: Crop detail editing (tabbed) -->
@@ -1243,14 +1249,102 @@ select.form-input { cursor: pointer; }
           </div>
         </div>
 
-        <!-- Main crop tabs -->
-        <div id="fieldMainCropTabs">
-          <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab(this, 'tab-field-general')">General</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-field-residues')">Residues</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-field-economics')">Economics</button>
+        <!-- Instructional text -->
+        <p style="font-size:var(--font-small); color:var(--text-secondary); margin-bottom:12px;">Select the categories relevant to your operation. Only active categories show input fields below.</p>
+
+        <!-- Checklist Toggle Cards Grid -->
+        <div id="fieldMainCropTabs" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:16px;">
+          <!-- General - always active -->
+          <div class="toggle-card active" style="border:2px solid #26428B; background:#E8F0FE; border-radius:var(--radius); padding:12px; cursor:default;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:#26428B;">General</span>
+              <span style="color:#26428B; font-size:16px;">&#10003;</span>
+            </div>
+            <div style="font-size:var(--font-small); color:#4a6fa5; margin-top:4px;">Crop type, yield, tillage</div>
+            <div style="font-size:var(--font-caption); color:#26428B; margin-top:6px; font-weight:600;">Always active</div>
           </div>
-          <div id="tab-field-general" class="tab-content active">
+          <!-- Fertilizer - active by default -->
+          <div class="toggle-card active" data-category="field-fertilizer" style="border:2px solid #4CAF50; background:#E8F5E9; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'field-fertilizer')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:#2E7D32;">Fertilizer</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" checked style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'field-fertilizer')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#4CAF50; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:20px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Nitrogen, phosphorus rates</div>
+          </div>
+          <!-- Manure - inactive -->
+          <div class="toggle-card" data-category="field-manure" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'field-manure')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Manure</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'field-manure')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Manure application settings</div>
+          </div>
+          <!-- Grazing - inactive -->
+          <div class="toggle-card" data-category="field-grazing" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'field-grazing')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Grazing</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'field-grazing')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Grazing period configuration</div>
+          </div>
+          <!-- Soil - inactive -->
+          <div class="toggle-card" data-category="field-soil" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'field-soil')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Soil</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'field-soil')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Soil texture overrides</div>
+          </div>
+          <!-- Residue - inactive -->
+          <div class="toggle-card" data-category="field-residue" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'field-residue')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Residue</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'field-residue')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Crop residue management</div>
+          </div>
+          <!-- Economics - inactive -->
+          <div class="toggle-card" data-category="field-economics" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'field-economics')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Economics</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'field-economics')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Crop price, cost of production</div>
+          </div>
+        </div>
+
+        <!-- Expandable sections for active categories -->
+        <!-- General - always shown -->
+        <div class="category-section" id="section-field-general" style="margin-bottom:10px; border:1px solid #26428B; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-general')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F0FE; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#26428B;">General</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Crop type</label>
               <select class="form-input"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option></select>
@@ -1261,12 +1355,6 @@ select.form-input { cursor: pointer; }
               <label class="form-label">Tillage type</label>
               <select class="form-input"><option>Reduced tillage</option><option>Intensive tillage</option><option>No-till</option></select>
               <span class="form-unit"></span>
-              <label class="form-label">Nitrogen fertilizer rate</label>
-              <input type="number" class="form-input" value="75" step="1">
-              <span class="form-unit">kg N ha⁻¹</span>
-              <label class="form-label">Phosphorus fertilizer rate</label>
-              <input type="number" class="form-input" value="20" step="1">
-              <span class="form-unit">kg P₂O₅ ha⁻¹</span>
               <label class="form-label">Pesticide passes</label>
               <input type="number" class="form-input" value="2" step="1">
               <span class="form-unit">passes</span>
@@ -1275,7 +1363,76 @@ select.form-input { cursor: pointer; }
               <span class="form-unit"></span>
             </div>
           </div>
-          <div id="tab-field-residues" class="tab-content">
+        </div>
+        <!-- Fertilizer - shown (active by default) -->
+        <div class="category-section" id="section-field-fertilizer" style="margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-fertilizer')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Fertilizer</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
+            <div class="form-grid">
+              <label class="form-label">Nitrogen fertilizer rate</label>
+              <input type="number" class="form-input" value="75" step="1">
+              <span class="form-unit">kg N ha⁻¹</span>
+              <label class="form-label">Phosphorus fertilizer rate</label>
+              <input type="number" class="form-input" value="20" step="1">
+              <span class="form-unit">kg P₂O₅ ha⁻¹</span>
+            </div>
+          </div>
+        </div>
+        <!-- Manure - hidden -->
+        <div class="category-section" id="section-field-manure" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-manure')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Manure</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
+            <div class="form-grid">
+              <label class="form-label">Manure applied</label>
+              <select class="form-input"><option>No</option><option>Yes</option></select>
+              <span class="form-unit"></span>
+              <label class="form-label">Amount applied</label>
+              <input type="number" class="form-input" value="0" step="100">
+              <span class="form-unit">kg ha⁻¹</span>
+            </div>
+          </div>
+        </div>
+        <!-- Grazing - hidden -->
+        <div class="category-section" id="section-field-grazing" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-grazing')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Grazing</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
+            <div class="form-grid">
+              <label class="form-label">Grazed</label>
+              <select class="form-input"><option>No</option><option>Yes</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+        </div>
+        <!-- Soil - hidden -->
+        <div class="category-section" id="section-field-soil" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-soil')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Soil</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
+            <div class="form-grid">
+              <label class="form-label">Soil texture override</label>
+              <select class="form-input"><option>Use farm default</option><option>Fine (clay)</option><option>Medium (loam)</option><option>Coarse (sand)</option></select>
+              <span class="form-unit"></span>
+            </div>
+          </div>
+        </div>
+        <!-- Residue - hidden -->
+        <div class="category-section" id="section-field-residue" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-residue')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Residue</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Carbon concentration</label>
               <input type="number" class="form-input" value="0.45" step="0.01">
@@ -1294,7 +1451,14 @@ select.form-input { cursor: pointer; }
               <span class="form-unit">%</span>
             </div>
           </div>
-          <div id="tab-field-economics" class="tab-content">
+        </div>
+        <!-- Economics - hidden -->
+        <div class="category-section" id="section-field-economics" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-field-economics')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Economics</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Crop price</label>
               <input type="number" class="form-input" value="265.00" step="1">
@@ -1848,31 +2012,43 @@ select.form-input { cursor: pointer; }
           <button class="btn btn-primary" onclick="addRotationCrop()" style="font-size: var(--font-small); padding: 8px 16px;">+ Add Crop</button>
           <span style="font-size:var(--font-small); color:var(--text-secondary);">Crops in sequence: <strong id="rotationCropCount">3</strong></span>
         </div>
-        <div class="timeline-container">
-          <div class="timeline-header">Rotation Sequence</div>
-          <div class="timeline-scroll" id="rotationTimeline">
-            <div class="timeline-card selected" style="min-width: 150px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 1</div>
-              <select class="form-input" style="min-width:110px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option></select>
-              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" checked onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
-              <div class="cover-crop-selector" style="margin-top:4px;"><div style="font-size:11px; color:#2E7D32; font-weight:600; margin-bottom:2px;">Cover Crop Type</div><select class="form-input" style="min-width:110px; font-size:11px; border-color:#4CAF50;"><option>Winter Rye</option><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select></div>
-              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
-            </div>
-            <div class="timeline-card" style="min-width: 150px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 2</div>
-              <select class="form-input" style="min-width:110px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option></select>
-              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
-              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
-            </div>
-            <div class="timeline-card" style="min-width: 150px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Year 3</div>
-              <select class="form-input" style="min-width:110px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option></select>
-              <label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>
-              <button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;">Delete</button>
-            </div>
-          </div>
-          <div class="timeline-hint">Tip: Define one cycle — it repeats across all fields</div>
-        </div>
+        <table id="rotationCropTable" style="width:100%; border-collapse: collapse; border: 1px solid #D1D5DB; border-radius: 6px;">
+          <thead>
+            <tr style="background: #F3F4F6;">
+              <th style="padding: 8px; text-align: left; font-size: 12px; color: #6B7280;">Sequence</th>
+              <th style="padding: 8px; text-align: left; font-size: 12px; color: #6B7280;">Main Crop</th>
+              <th style="padding: 8px; text-align: left; font-size: 12px; color: #6B7280;">Cover Crop</th>
+              <th style="padding: 8px; text-align: center; font-size: 12px; color: #6B7280;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="crop-row selected-row" style="background: #FFF8E7; border-left: 3px solid #26428B;" onclick="selectCropRow(this, 'rotation')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">1st crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" checked onchange="toggleTableCoverCrop(this)"><select class="form-input" style="min-width:110px; font-size:11px; border-color:#4CAF50;"><option>Winter Rye</option><option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option></select></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+            <tr class="crop-row" style="background: #FAFAFA;" onclick="selectCropRow(this, 'rotation')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">2nd crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Canola</option><option>Wheat</option><option>Barley</option><option>Oats</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+            <tr class="crop-row" style="background: white;" onclick="selectCropRow(this, 'rotation')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">3rd crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Barley</option><option>Wheat</option><option>Canola</option><option>Oats</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+            <tr class="crop-row" style="background: #FAFAFA;" onclick="selectCropRow(this, 'rotation')">
+              <td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">4th crop</td>
+              <td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Oats</option><option>Wheat</option><option>Barley</option><option>Canola</option></select></td>
+              <td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>
+              <td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size: 11px; color: #6B7280; font-style: italic; margin-top: 8px;">This defines the crop rotation cycle. The actual year each crop is grown depends on the field and its starting position in the rotation.</div>
       </div>
 
       <!-- Step 3: Rotation Preview (field × year grid) -->
@@ -1914,18 +2090,102 @@ select.form-input { cursor: pointer; }
           </div>
         </div>
 
-        <!-- Main crop tabs -->
-        <div id="rotMainCropTabs">
-          <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab(this, 'tab-rot-general')">General</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-fertilizer')">Fertilizer</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-manure')">Manure</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-grazing')">Grazing</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-soil')">Soil</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-residue')">Residue</button>
-            <button class="tab-btn" onclick="switchTab(this, 'tab-rot-economics')">Economics</button>
+        <!-- Instructional text -->
+        <p style="font-size:var(--font-small); color:var(--text-secondary); margin-bottom:12px;">Select the categories relevant to your operation. Only active categories show input fields below.</p>
+
+        <!-- Checklist Toggle Cards Grid -->
+        <div id="rotMainCropTabs" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:16px;">
+          <!-- General - always active -->
+          <div class="toggle-card active" style="border:2px solid #26428B; background:#E8F0FE; border-radius:var(--radius); padding:12px; cursor:default;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:#26428B;">General</span>
+              <span style="color:#26428B; font-size:16px;">&#10003;</span>
+            </div>
+            <div style="font-size:var(--font-small); color:#4a6fa5; margin-top:4px;">Crop type, yield, tillage</div>
+            <div style="font-size:var(--font-caption); color:#26428B; margin-top:6px; font-weight:600;">Always active</div>
           </div>
-          <div id="tab-rot-general" class="tab-content active">
+          <!-- Fertilizer - active by default -->
+          <div class="toggle-card active" data-category="rot-fertilizer" style="border:2px solid #4CAF50; background:#E8F5E9; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'rot-fertilizer')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:#2E7D32;">Fertilizer</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" checked style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'rot-fertilizer')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#4CAF50; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:20px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Nitrogen, phosphorus rates</div>
+          </div>
+          <!-- Manure - inactive -->
+          <div class="toggle-card" data-category="rot-manure" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'rot-manure')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Manure</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'rot-manure')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Manure application settings</div>
+          </div>
+          <!-- Grazing - inactive -->
+          <div class="toggle-card" data-category="rot-grazing" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'rot-grazing')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Grazing</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'rot-grazing')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Grazing period configuration</div>
+          </div>
+          <!-- Soil - inactive -->
+          <div class="toggle-card" data-category="rot-soil" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'rot-soil')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Soil</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'rot-soil')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Soil texture overrides</div>
+          </div>
+          <!-- Residue - inactive -->
+          <div class="toggle-card" data-category="rot-residue" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'rot-residue')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Residue</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'rot-residue')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Crop residue management</div>
+          </div>
+          <!-- Economics - inactive -->
+          <div class="toggle-card" data-category="rot-economics" style="border:2px solid #D1D5DB; background:#F9FAFB; border-radius:var(--radius); padding:12px; cursor:pointer;" onclick="toggleCategoryCard(this, 'rot-economics')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; font-size:var(--font-body); color:var(--text-secondary);">Economics</span>
+              <label style="position:relative; display:inline-block; width:36px; height:18px; flex-shrink:0;">
+                <input type="checkbox" style="opacity:0; width:0; height:0;" onchange="toggleCategoryCard(this.closest('.toggle-card'), 'rot-economics')">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#9E9E9E; border-radius:9px; transition:.3s;"></span>
+                <span style="position:absolute; height:14px; width:14px; left:2px; bottom:2px; background:white; border-radius:50%; transition:.3s; pointer-events:none;"></span>
+              </label>
+            </div>
+            <div style="font-size:var(--font-small); color:var(--text-secondary); margin-top:4px;">Crop price, cost of production</div>
+          </div>
+        </div>
+
+        <!-- Expandable sections for active categories -->
+        <!-- General - always shown -->
+        <div class="category-section" id="section-rot-general" style="margin-bottom:10px; border:1px solid #26428B; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-general')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F0FE; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#26428B;">General</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Crop type</label>
               <select class="form-input"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option></select>
@@ -1941,7 +2201,14 @@ select.form-input { cursor: pointer; }
               <span class="form-unit"></span>
             </div>
           </div>
-          <div id="tab-rot-fertilizer" class="tab-content">
+        </div>
+        <!-- Fertilizer - shown (active by default) -->
+        <div class="category-section" id="section-rot-fertilizer" style="margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-fertilizer')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Fertilizer</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Nitrogen rate</label>
               <input type="number" class="form-input" value="75" step="1">
@@ -1951,7 +2218,14 @@ select.form-input { cursor: pointer; }
               <span class="form-unit">kg P₂O₅ ha⁻¹</span>
             </div>
           </div>
-          <div id="tab-rot-manure" class="tab-content">
+        </div>
+        <!-- Manure - hidden -->
+        <div class="category-section" id="section-rot-manure" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-manure')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Manure</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Manure applied</label>
               <select class="form-input"><option>No</option><option>Yes</option></select>
@@ -1961,21 +2235,42 @@ select.form-input { cursor: pointer; }
               <span class="form-unit">kg ha⁻¹</span>
             </div>
           </div>
-          <div id="tab-rot-grazing" class="tab-content">
+        </div>
+        <!-- Grazing - hidden -->
+        <div class="category-section" id="section-rot-grazing" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-grazing')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Grazing</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Grazed</label>
               <select class="form-input"><option>No</option><option>Yes</option></select>
               <span class="form-unit"></span>
             </div>
           </div>
-          <div id="tab-rot-soil" class="tab-content">
+        </div>
+        <!-- Soil - hidden -->
+        <div class="category-section" id="section-rot-soil" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-soil')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Soil</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Soil texture override</label>
               <select class="form-input"><option>Use farm default</option><option>Fine (clay)</option><option>Medium (loam)</option><option>Coarse (sand)</option></select>
               <span class="form-unit"></span>
             </div>
           </div>
-          <div id="tab-rot-residue" class="tab-content">
+        </div>
+        <!-- Residue - hidden -->
+        <div class="category-section" id="section-rot-residue" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-residue')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Residue</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Above-ground residue</label>
               <input type="number" class="form-input" value="2800" step="100">
@@ -1985,7 +2280,14 @@ select.form-input { cursor: pointer; }
               <span class="form-unit">kg ha⁻¹</span>
             </div>
           </div>
-          <div id="tab-rot-economics" class="tab-content">
+        </div>
+        <!-- Economics - hidden -->
+        <div class="category-section" id="section-rot-economics" style="display:none; margin-bottom:10px; border:1px solid #4CAF50; border-radius:var(--radius); overflow:hidden;">
+          <div onclick="toggleSection('section-rot-economics')" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E8F5E9; cursor:pointer; user-select:none;">
+            <span class="section-arrow" style="transition:transform .2s; display:inline-block;">&#9660;</span>
+            <span style="font-weight:700; color:#2E7D32;">Economics</span>
+          </div>
+          <div class="section-body" style="padding:12px 14px;">
             <div class="form-grid">
               <label class="form-label">Crop price</label>
               <input type="number" class="form-input" value="310" step="1">
@@ -3050,23 +3352,19 @@ function updateMgmtPeriodIntroText(groupType) {
   span.textContent = name;
 }
 
-let cropYearCounter
 function addCropToField() {
-  cropYearCounter--;
-  const tl = document.getElementById('cropTimeline');
-  const card = document.createElement('div');
-  card.className = 'timeline-card';
-  card.style.minWidth = '160px';
-  card.innerHTML = '<div style="font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">' + cropYearCounter + '</div>' +
-    '<select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>' +
-    '<label style="display:flex; align-items:center; gap:4px; margin-top:8px; cursor:pointer;"><input type="checkbox" onchange="toggleCoverCrop(this)"><span style="font-size:11px; color:#2E7D32;">Cover Crop</span></label>' +
-    '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove()">Delete</button>';
-  card.onclick = function(e) {
-    if (['BUTTON','SELECT','OPTION'].includes(e.target.tagName)) return;
-    tl.querySelectorAll('.timeline-card').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-  };
-  tl.appendChild(card);
+  const tbody = document.getElementById('fieldCropTable').querySelector('tbody');
+  const rowCount = tbody.rows.length;
+  const bg = rowCount % 2 === 0 ? 'white' : '#FAFAFA';
+  const tr = document.createElement('tr');
+  tr.className = 'crop-row';
+  tr.style.background = bg;
+  tr.setAttribute('onclick', "selectCropRow(this, 'field')");
+  tr.innerHTML = '<td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">' + getOrdinal(rowCount + 1) + ' crop</td>' +
+    '<td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option><option>Native grass</option></select></td>' +
+    '<td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>' +
+    '<td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>';
+  tbody.appendChild(tr);
 }
 
 /* ── Results view navigation ── */
@@ -3108,7 +3406,9 @@ function selectResultsAdvanced(el, panelId) {
 }
 
 function toggleCoverCrop(checkbox) {
+  // Legacy support for any remaining timeline cards
   const card = checkbox.closest('.timeline-card');
+  if (!card) return;
   let selector = card.querySelector('.cover-crop-selector');
   if (checkbox.checked) {
     if (!selector) {
@@ -3124,29 +3424,130 @@ function toggleCoverCrop(checkbox) {
   } else {
     if (selector) selector.remove();
   }
-  // Show/hide the cover crop toggle switch based on whether selected card has cover crop active
   updateCoverCropToggleVisibility();
+}
+
+/* ── Table-based cover crop toggle ── */
+function toggleTableCoverCrop(checkbox) {
+  const label = checkbox.closest('label');
+  const noneSpan = label.querySelector('span');
+  const existingSelect = label.querySelector('select');
+  if (checkbox.checked) {
+    if (noneSpan) noneSpan.remove();
+    if (!existingSelect) {
+      const sel = document.createElement('select');
+      sel.className = 'form-input';
+      sel.style.cssText = 'min-width:110px; font-size:11px; border-color:#4CAF50;';
+      sel.innerHTML = '<option>Red Clover</option><option>Hairy Vetch</option><option>Crimson Clover</option><option>Winter Rye</option><option>Annual Ryegrass</option><option>Rapeseed</option><option>Forage Radish</option><option>Oat</option><option>Barley</option>';
+      label.appendChild(sel);
+    }
+  } else {
+    if (existingSelect) existingSelect.remove();
+    if (!label.querySelector('span')) {
+      const span = document.createElement('span');
+      span.style.cssText = 'color:#9CA3AF; font-style:italic; font-size:12px;';
+      span.textContent = 'None';
+      label.appendChild(span);
+    }
+  }
+  updateCoverCropToggleVisibility();
+}
+
+/* ── Row selection ── */
+function selectCropRow(row, tableType) {
+  if (event && (event.target.tagName === 'BUTTON' || event.target.tagName === 'SELECT' || event.target.tagName === 'OPTION' || event.target.tagName === 'INPUT')) return;
+  const tableId = tableType === 'field' ? 'fieldCropTable' : 'rotationCropTable';
+  const tbody = document.getElementById(tableId).querySelector('tbody');
+  tbody.querySelectorAll('tr').forEach(function(tr, i) {
+    tr.classList.remove('selected-row');
+    tr.style.background = i % 2 === 0 ? 'white' : '#FAFAFA';
+    tr.style.borderLeft = 'none';
+  });
+  row.classList.add('selected-row');
+  row.style.background = '#FFF8E7';
+  row.style.borderLeft = '3px solid #26428B';
+}
+
+/* ── Move crop up ── */
+function moveCropUp(btn) {
+  event.stopPropagation();
+  const row = btn.closest('tr');
+  const tbody = row.parentNode;
+  const prev = row.previousElementSibling;
+  if (prev) {
+    tbody.insertBefore(row, prev);
+    resequenceCropRows(tbody);
+  }
+}
+
+/* ── Move crop down ── */
+function moveCropDown(btn) {
+  event.stopPropagation();
+  const row = btn.closest('tr');
+  const tbody = row.parentNode;
+  const next = row.nextElementSibling;
+  if (next) {
+    tbody.insertBefore(next, row);
+    resequenceCropRows(tbody);
+  }
+}
+
+/* ── Delete crop row ── */
+function deleteCropRow(btn) {
+  event.stopPropagation();
+  const row = btn.closest('tr');
+  const tbody = row.parentNode;
+  const table = tbody.closest('table');
+  row.remove();
+  resequenceCropRows(tbody);
+  // Update rotation count if applicable
+  if (table.id === 'rotationCropTable') {
+    updateRotationCount();
+  }
+}
+
+/* ── Resequence labels and alternating backgrounds ── */
+function resequenceCropRows(tbody) {
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach(function(tr, i) {
+    // Update sequence label
+    var seqCell = tr.querySelector('td:first-child');
+    if (seqCell) seqCell.textContent = getOrdinal(i + 1) + ' crop';
+    // Update alternating backgrounds (preserve selected-row)
+    if (tr.classList.contains('selected-row')) {
+      tr.style.background = '#FFF8E7';
+      tr.style.borderLeft = '3px solid #26428B';
+    } else {
+      tr.style.background = i % 2 === 0 ? 'white' : '#FAFAFA';
+      tr.style.borderLeft = 'none';
+    }
+  });
+}
+
+/* ── Ordinal helper (1st, 2nd, 3rd, 4th ...) ── */
+function getOrdinal(n) {
+  var s = ['th','st','nd','rd'];
+  var v = n % 100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
 }
 
 function updateCoverCropToggleVisibility() {
   // Field component toggle
   var fieldToggle = document.getElementById('fieldCoverCropToggle');
   if (fieldToggle) {
-    var fieldTimeline = document.getElementById('cropTimeline');
-    if (fieldTimeline) {
-      var selectedCard = fieldTimeline.querySelector('.timeline-card.selected');
-      var hasCoverCrop = selectedCard && selectedCard.querySelector('input[type="checkbox"]') && selectedCard.querySelector('input[type="checkbox"]').checked;
+    var fieldTable = document.getElementById('fieldCropTable');
+    if (fieldTable) {
+      var selectedRow = fieldTable.querySelector('.selected-row');
+      var hasCoverCrop = selectedRow && selectedRow.querySelector('input[type="checkbox"]') && selectedRow.querySelector('input[type="checkbox"]').checked;
       fieldToggle.style.display = hasCoverCrop ? 'flex' : 'none';
       if (!hasCoverCrop) {
-        // Reset toggle to OFF when cover crop is unchecked
         var sw = document.getElementById('fieldCoverCropSwitch');
         if (sw && sw.checked) { sw.checked = false; toggleCoverCropEditor('field', false); }
       }
-      // Update the label with crop name
       if (hasCoverCrop) {
-        var cropSelect = selectedCard.querySelector('select.form-input');
+        var cropSelect = selectedRow.querySelector('td:nth-child(2) select');
         var cropName = cropSelect ? cropSelect.value : 'Crop';
-        var coverSelect = selectedCard.querySelector('.cover-crop-selector select');
+        var coverSelect = selectedRow.querySelector('td:nth-child(3) select');
         var coverName = coverSelect ? coverSelect.value : 'Cover Crop';
         var sw = document.getElementById('fieldCoverCropSwitch');
         var label = document.getElementById('fieldToggleLabel');
@@ -3159,19 +3560,19 @@ function updateCoverCropToggleVisibility() {
   // Rotation component toggle
   var rotToggle = document.getElementById('rotCoverCropToggle');
   if (rotToggle) {
-    var rotTimeline = document.getElementById('rotationTimeline');
-    if (rotTimeline) {
-      var selectedCard = rotTimeline.querySelector('.timeline-card.selected');
-      var hasCoverCrop = selectedCard && selectedCard.querySelector('input[type="checkbox"]') && selectedCard.querySelector('input[type="checkbox"]').checked;
+    var rotTable = document.getElementById('rotationCropTable');
+    if (rotTable) {
+      var selectedRow = rotTable.querySelector('.selected-row');
+      var hasCoverCrop = selectedRow && selectedRow.querySelector('input[type="checkbox"]') && selectedRow.querySelector('input[type="checkbox"]').checked;
       rotToggle.style.display = hasCoverCrop ? 'flex' : 'none';
       if (!hasCoverCrop) {
         var sw = document.getElementById('rotCoverCropSwitch');
         if (sw && sw.checked) { sw.checked = false; toggleCoverCropEditor('rot', false); }
       }
       if (hasCoverCrop) {
-        var cropSelect = selectedCard.querySelector('select.form-input');
+        var cropSelect = selectedRow.querySelector('td:nth-child(2) select');
         var cropName = cropSelect ? cropSelect.value : 'Crop';
-        var coverSelect = selectedCard.querySelector('.cover-crop-selector select');
+        var coverSelect = selectedRow.querySelector('td:nth-child(3) select');
         var coverName = coverSelect ? coverSelect.value : 'Cover Crop';
         var sw = document.getElementById('rotCoverCropSwitch');
         var label = document.getElementById('rotToggleLabel');
@@ -3238,6 +3639,55 @@ function switchTab(btn, tabId) {
   btn.classList.add('active');
   container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CHECKLIST TOGGLE CARDS
+   ═══════════════════════════════════════════════════════════════ */
+function toggleCategoryCard(card, categoryId) {
+  const isActive = card.classList.contains('active');
+  const section = document.getElementById('section-' + categoryId);
+  const checkbox = card.querySelector('input[type="checkbox"]');
+  if (isActive) {
+    // Deactivate
+    card.classList.remove('active');
+    card.style.border = '2px solid #D1D5DB';
+    card.style.background = '#F9FAFB';
+    card.querySelector('span[style*="font-weight:700"]').style.color = 'var(--text-secondary)';
+    if (checkbox) checkbox.checked = false;
+    // Update toggle slider
+    const slider = card.querySelector('span[style*="border-radius:9px"]');
+    const knob = card.querySelector('span[style*="border-radius:50%"]');
+    if (slider) slider.style.background = '#9E9E9E';
+    if (knob) knob.style.left = '2px';
+    if (section) section.style.display = 'none';
+  } else {
+    // Activate
+    card.classList.add('active');
+    card.style.border = '2px solid #4CAF50';
+    card.style.background = '#E8F5E9';
+    card.querySelector('span[style*="font-weight:700"]').style.color = '#2E7D32';
+    if (checkbox) checkbox.checked = true;
+    // Update toggle slider
+    const slider = card.querySelector('span[style*="border-radius:9px"]');
+    const knob = card.querySelector('span[style*="border-radius:50%"]');
+    if (slider) slider.style.background = '#4CAF50';
+    if (knob) knob.style.left = '20px';
+    if (section) section.style.display = '';
+  }
+}
+
+function toggleSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  const body = section.querySelector('.section-body');
+  const arrow = section.querySelector('.section-arrow');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    arrow.style.transform = '';
+  } else {
+    body.style.display = 'none';
+    arrow.style.transform = 'rotate(-90deg)';
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -3353,21 +3803,23 @@ function selectDairyStage(stage) {
 /* ═══════════════════════════════════════════════════════════════
    ROTATION HELPERS
    ═══════════════════════════════════════════════════════════════ */
-let rotationYearCounter = 3;
 function addRotationCrop() {
-  rotationYearCounter++;
-  const tl = document.getElementById('rotationTimeline');
-  const card = document.createElement('div');
-  card.className = 'timeline-card';
-  card.style.minWidth = '150px';
-  card.innerHTML = '<div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:6px;">Year ' + rotationYearCounter + '</div>' +
-    '<select class="form-input" style="min-width:110px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option></select>' +
-    '<button class="btn-danger" style="font-size:11px; padding:4px 10px; margin-top:8px;" onclick="this.closest(\'.timeline-card\').remove(); updateRotationCount();">Delete</button>';
-  tl.appendChild(card);
+  const tbody = document.getElementById('rotationCropTable').querySelector('tbody');
+  const rowCount = tbody.rows.length;
+  const bg = rowCount % 2 === 0 ? 'white' : '#FAFAFA';
+  const tr = document.createElement('tr');
+  tr.className = 'crop-row';
+  tr.style.background = bg;
+  tr.setAttribute('onclick', "selectCropRow(this, 'rotation')");
+  tr.innerHTML = '<td style="padding: 8px; font-size: 12px; font-weight: 600; color: var(--primary);">' + getOrdinal(rowCount + 1) + ' crop</td>' +
+    '<td style="padding: 8px;"><select class="form-input" style="min-width:120px; font-size:12px;"><option>Wheat</option><option>Barley</option><option>Canola</option><option>Oats</option><option>Corn</option><option>Soybean</option><option>Alfalfa</option><option>Fallow</option><option>Tame grass</option></select></td>' +
+    '<td style="padding: 8px;"><label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" onchange="toggleTableCoverCrop(this)"><span style="color:#9CA3AF; font-style:italic; font-size:12px;">None</span></label></td>' +
+    '<td style="padding: 8px; text-align: center; white-space: nowrap;"><button onclick="moveCropUp(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move up">&#9650;</button> <button onclick="moveCropDown(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#6B7280; font-size:12px;" title="Move down">&#9660;</button> <button onclick="deleteCropRow(this)" style="background:none; border:1px solid #D1D5DB; border-radius:3px; padding:2px 6px; cursor:pointer; color:#DC2626; font-size:12px;" title="Delete">&#128465;</button></td>';
+  tbody.appendChild(tr);
   updateRotationCount();
 }
 function updateRotationCount() {
-  const count = document.getElementById('rotationTimeline').children.length;
+  const count = document.getElementById('rotationCropTable').querySelector('tbody').rows.length;
   document.getElementById('rotationCropCount').textContent = count;
 }
 

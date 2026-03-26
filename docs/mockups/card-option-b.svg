@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .title { font-family: Segoe UI, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #1F2937; }
+      .desc { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #6B7280; }
+      .section-label { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 600; fill: #6B7280; text-transform: uppercase; letter-spacing: 1px; }
+      .card-text { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #1F2937; }
+      .card-text-sm { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; fill: #6B7280; }
+      .year-text { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #1F2937; }
+      .year-text-white { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+      .delete-text { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #DC2626; }
+      .cover-text { font-family: Segoe UI, Arial, sans-serif; font-size: 10px; fill: #4CAF50; }
+      .pill-crop { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #1F2937; font-weight: 500; }
+      .dropdown-arrow { font-family: Segoe UI, Arial, sans-serif; font-size: 10px; fill: #6B7280; }
+      .step-badge-text { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#F9FAFB"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1200" height="60" fill="#FFFFFF"/>
+  <rect x="0" y="59" width="1200" height="1" fill="#E5E7EB"/>
+  <rect x="30" y="18" width="8" height="24" rx="2" fill="#C26A1B"/>
+  <text x="48" y="37" class="title">Option B: Compact Pills with Click-to-Edit</text>
+  <text x="48" y="54" class="desc">Cards are minimal pills showing year + crop name. Click to expand and edit. Cover crops shown as small green sub-tags.</text>
+
+  <!-- CURRENT DESIGN section -->
+  <text x="50" y="95" class="section-label">Current Design (for comparison)</text>
+  <rect x="50" y="105" width="300" height="140" rx="8" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+  <rect x="60" y="115" width="50" height="22" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="85" y="130" class="year-text" text-anchor="middle">1907</text>
+  <rect x="60" y="145" width="120" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="70" y="163" class="card-text">Wheat</text>
+  <text x="168" y="163" class="dropdown-arrow">&#9660;</text>
+  <text x="60" y="195" class="card-text-sm">Cover Crop:</text>
+  <rect x="60" y="200" width="120" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="70" y="218" class="card-text" style="fill: #6B7280;">None</text>
+  <text x="325" y="130" class="delete-text">&#215;</text>
+  <text x="400" y="175" class="card-text-sm" style="font-style: italic;">Tall card, lots of whitespace.</text>
+  <text x="400" y="192" class="card-text-sm" style="font-style: italic;">Shows all controls always.</text>
+
+  <!-- NEW DESIGN section -->
+  <text x="50" y="280" class="section-label">New Design: Compact Pills (collapsed state)</text>
+
+  <!-- Timeline connector line -->
+  <line x1="70" y1="320" x2="1050" y2="320" stroke="#D1D5DB" stroke-width="2"/>
+
+  <!-- Pill 1: 1907 Wheat (collapsed, simple) -->
+  <rect x="60" y="295" width="120" height="50" rx="25" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1.5"/>
+  <rect x="68" y="305" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="86" y="319" class="year-text-white" text-anchor="middle">1907</text>
+  <text x="110" y="330" class="pill-crop">Wheat</text>
+  <text x="168" y="322" class="delete-text" style="font-size: 11px;">&#215;</text>
+
+  <!-- Pill 2: 1908 Barley (collapsed) -->
+  <rect x="200" y="295" width="125" height="50" rx="25" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1.5"/>
+  <rect x="208" y="305" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="226" y="319" class="year-text-white" text-anchor="middle">1908</text>
+  <text x="250" y="330" class="pill-crop">Barley</text>
+  <text x="313" y="322" class="delete-text" style="font-size: 11px;">&#215;</text>
+
+  <!-- Pill 3: 1909 Oats with cover crop sub-pill (collapsed) -->
+  <rect x="345" y="295" width="120" height="50" rx="25" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+  <rect x="353" y="305" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="371" y="319" class="year-text-white" text-anchor="middle">1909</text>
+  <text x="395" y="330" class="pill-crop">Oats</text>
+  <text x="453" y="322" class="delete-text" style="font-size: 11px;">&#215;</text>
+  <!-- Cover crop sub-pill -->
+  <rect x="350" y="350" width="110" height="22" rx="11" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="362" y="365" class="cover-text" style="font-size: 11px;">&#127793; Red Clover</text>
+
+  <!-- Pill 4: 1910 Wheat (collapsed) -->
+  <rect x="490" y="295" width="120" height="50" rx="25" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1.5"/>
+  <rect x="498" y="305" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="516" y="319" class="year-text-white" text-anchor="middle">1910</text>
+  <text x="540" y="330" class="pill-crop">Wheat</text>
+  <text x="598" y="322" class="delete-text" style="font-size: 11px;">&#215;</text>
+
+  <!-- Pill 5: 1911 Canola (collapsed) -->
+  <rect x="630" y="295" width="130" height="50" rx="25" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1.5"/>
+  <rect x="638" y="305" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="656" y="319" class="year-text-white" text-anchor="middle">1911</text>
+  <text x="680" y="330" class="pill-crop">Canola</text>
+  <text x="748" y="322" class="delete-text" style="font-size: 11px;">&#215;</text>
+
+  <!-- + Add pill -->
+  <rect x="780" y="295" width="50" height="50" rx="25" fill="#FFFFFF" stroke="#26428B" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="805" y="326" text-anchor="middle" style="font-family: Segoe UI, Arial, sans-serif; font-size: 20px; fill: #26428B; font-weight: 300;">+</text>
+
+  <!-- Annotation: click arrow pointing to 1909 -->
+  <text x="390" y="400" class="card-text-sm" style="fill: #26428B; font-weight: 600;">&#8593; Selected &amp; has cover crop</text>
+
+  <!-- EXPANDED STATE section -->
+  <text x="50" y="450" class="section-label">Expanded / Editing State (click a pill to edit)</text>
+
+  <!-- Timeline connector -->
+  <line x1="70" y1="510" x2="1050" y2="510" stroke="#D1D5DB" stroke-width="2"/>
+
+  <!-- Pill 1: 1907 (collapsed) -->
+  <rect x="60" y="485" width="120" height="50" rx="25" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1.5"/>
+  <rect x="68" y="495" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="86" y="509" class="year-text-white" text-anchor="middle">1907</text>
+  <text x="110" y="520" class="pill-crop">Wheat</text>
+  <text x="168" y="512" class="delete-text" style="font-size: 11px;">&#215;</text>
+
+  <!-- Pill 2: 1908 (EXPANDED - editing state) -->
+  <rect x="200" y="470" width="260" height="140" rx="12" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+  <!-- Shadow hint -->
+  <rect x="203" y="473" width="254" height="134" rx="10" fill="none" stroke="#26428B" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Year in expanded -->
+  <rect x="215" y="480" width="50" height="22" rx="4" fill="#26428B"/>
+  <text x="240" y="495" class="year-text-white" text-anchor="middle">1908</text>
+
+  <!-- Editing label -->
+  <text x="275" y="495" class="card-text-sm" style="fill: #26428B; font-weight: 600;">Editing</text>
+
+  <!-- Delete in expanded -->
+  <text x="440" y="494" class="delete-text">&#215;</text>
+
+  <!-- Main Crop dropdown -->
+  <text x="215" y="518" class="card-text-sm">Main Crop</text>
+  <rect x="215" y="522" width="220" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="225" y="540" class="card-text">Barley</text>
+  <text x="421" y="540" class="dropdown-arrow">&#9660;</text>
+
+  <!-- Cover crop toggle -->
+  <rect x="215" y="558" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="235" y="570" class="card-text-sm">Cover Crop</text>
+  <rect x="310" y="556" width="125" height="24" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="320" y="572" class="card-text-sm">Select crop...</text>
+
+  <!-- Done button -->
+  <rect x="215" y="585" width="60" height="22" rx="4" fill="#26428B"/>
+  <text x="245" y="600" text-anchor="middle" style="font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #FFFFFF;">Done</text>
+
+  <!-- Pill 3: 1909 Oats (collapsed, pushed right) -->
+  <rect x="480" y="485" width="120" height="50" rx="25" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1.5"/>
+  <rect x="488" y="495" width="36" height="20" rx="10" fill="#26428B"/>
+  <text x="506" y="509" class="year-text-white" text-anchor="middle">1909</text>
+  <text x="530" y="520" class="pill-crop">Oats</text>
+  <text x="588" y="512" class="delete-text" style="font-size: 11px;">&#215;</text>
+  <!-- Cover crop sub-pill -->
+  <rect x="485" y="540" width="110" height="22" rx="11" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="497" y="555" class="cover-text" style="font-size: 11px;">&#127793; Red Clover</text>
+
+  <!-- Annotation arrow -->
+  <line x1="330" y1="620" x2="330" y2="640" stroke="#C26A1B" stroke-width="1.5"/>
+  <text x="330" y="655" class="card-text-sm" text-anchor="middle" style="fill: #C26A1B; font-weight: 600;">Expanded editing panel</text>
+  <text x="330" y="670" class="card-text-sm" text-anchor="middle">Click "Done" or click away to collapse</text>
+
+  <!-- Features box -->
+  <rect x="50" y="695" width="700" height="90" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="70" y="718" class="card-text" style="font-weight: 700;">Key Features:</text>
+  <text x="70" y="736" class="card-text-sm">&#8226; Pills are ~120px wide in collapsed state; only the active card expands to show edit controls</text>
+  <text x="70" y="754" class="card-text-sm">&#8226; Cover crops appear as green sub-pills below the main pill, always visible</text>
+  <text x="70" y="772" class="card-text-sm">&#8226; 5-6 crop years fit in a single row without scrolling; progressive disclosure keeps UI clean</text>
+</svg>

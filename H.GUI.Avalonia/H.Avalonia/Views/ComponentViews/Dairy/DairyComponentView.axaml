@@ -17,8 +17,6 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.DairyComponentView">
     <Grid.RowDefinitions>
       <!-- Title -->
       <RowDefinition Height="Auto"/>
-      <!-- Advanced Options Toggle -->
-      <RowDefinition Height="Auto"/>
       <!-- Content -->
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
@@ -29,14 +27,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.DairyComponentView">
       <Border Classes="title-underline"/>
     </StackPanel>
 
-    <!-- Advanced Options Toggle Section -->
-    <shared:AdvancedOptionsToggleView Grid.Row="1"
-                                      Margin="{StaticResource DefaultUserControlMargin}"
-                                      Title="{Binding [Label_ShowAdvancedOptions].Value, Source={StaticResource Loc}}"
-                                      Description="{Binding [Label_ShowAdvancedOptionsDairyDesc].Value, Source={StaticResource Loc}}"
-                                      IsChecked="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=dairy:DairyComponentView}, Mode=TwoWay}"/>
-
-    <ScrollViewer Grid.Row="2" 
+    <ScrollViewer Grid.Row="1" 
                   VerticalScrollBarVisibility="Auto" 
                   HorizontalScrollBarVisibility="Disabled">
       <StackPanel Margin="{StaticResource DefaultUserControlMargin}">

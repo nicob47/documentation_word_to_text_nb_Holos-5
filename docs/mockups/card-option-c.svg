@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .title { font-family: Segoe UI, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #1F2937; }
+      .desc { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #6B7280; }
+      .section-label { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 600; fill: #6B7280; text-transform: uppercase; letter-spacing: 1px; }
+      .card-text { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #1F2937; }
+      .card-text-sm { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; fill: #6B7280; }
+      .year-text { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1F2937; }
+      .delete-text { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #DC2626; }
+      .cover-text { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; fill: #4CAF50; }
+      .dropdown-arrow { font-family: Segoe UI, Arial, sans-serif; font-size: 10px; fill: #6B7280; }
+      .header-text { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; }
+      .row-number { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #C26A1B; }
+      .check-text { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #FFFFFF; }
+      .none-text { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #9CA3AF; font-style: italic; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#F9FAFB"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1200" height="60" fill="#FFFFFF"/>
+  <rect x="0" y="59" width="1200" height="1" fill="#E5E7EB"/>
+  <rect x="30" y="18" width="8" height="24" rx="2" fill="#C26A1B"/>
+  <text x="48" y="37" class="title">Option C: Editable Table Grid</text>
+  <text x="48" y="54" class="desc">All crops displayed in a structured table. Each row is one year. Dropdowns inline in cells. No cards needed.</text>
+
+  <!-- CURRENT DESIGN section -->
+  <text x="50" y="95" class="section-label">Current Design (for comparison)</text>
+  <rect x="50" y="105" width="300" height="140" rx="8" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+  <rect x="60" y="115" width="50" height="22" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="85" y="130" class="year-text" text-anchor="middle">1907</text>
+  <rect x="60" y="145" width="120" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="70" y="163" class="card-text">Wheat</text>
+  <text x="168" y="163" class="dropdown-arrow">&#9660;</text>
+  <text x="60" y="195" class="card-text-sm">Cover Crop:</text>
+  <rect x="60" y="200" width="120" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="70" y="218" class="card-text" style="fill: #6B7280;">None</text>
+  <text x="325" y="130" class="delete-text">&#215;</text>
+  <text x="400" y="165" class="card-text-sm" style="font-style: italic;">Cards arranged horizontally.</text>
+  <text x="400" y="182" class="card-text-sm" style="font-style: italic;">Hard to scan across years.</text>
+  <text x="400" y="199" class="card-text-sm" style="font-style: italic;">Requires scrolling.</text>
+
+  <!-- NEW DESIGN section -->
+  <text x="50" y="280" class="section-label">New Design: Editable Table Grid</text>
+
+  <!-- Table container -->
+  <rect x="50" y="295" width="820" height="280" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Table header -->
+  <rect x="50" y="295" width="820" height="38" rx="8" fill="#F3F4F6"/>
+  <!-- Fix bottom corners of header to be square -->
+  <rect x="50" y="315" width="820" height="18" fill="#F3F4F6"/>
+  <rect x="50" y="332" width="820" height="1" fill="#E5E7EB"/>
+
+  <!-- Column headers -->
+  <text x="75" y="319" class="header-text">#</text>
+  <text x="110" y="319" class="header-text">Year</text>
+  <text x="210" y="319" class="header-text">Main Crop</text>
+  <text x="440" y="319" class="header-text">Cover Crop</text>
+  <text x="730" y="319" class="header-text">Actions</text>
+
+  <!-- Column separator lines -->
+  <line x1="95" y1="300" x2="95" y2="575" stroke="#F3F4F6" stroke-width="1"/>
+  <line x1="195" y1="300" x2="195" y2="575" stroke="#F3F4F6" stroke-width="1"/>
+  <line x1="420" y1="300" x2="420" y2="575" stroke="#F3F4F6" stroke-width="1"/>
+  <line x1="710" y1="300" x2="710" y2="575" stroke="#F3F4F6" stroke-width="1"/>
+
+  <!-- Row 1: 1907 Wheat, no cover crop -->
+  <rect x="51" y="333" width="818" height="46" fill="#FFFFFF"/>
+  <line x1="50" y1="379" x2="870" y2="379" stroke="#F3F4F6" stroke-width="1"/>
+  <text x="75" y="361" class="row-number">1</text>
+  <!-- Year -->
+  <rect x="110" y="345" width="70" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="145" y="362" class="year-text" text-anchor="middle">1907</text>
+  <!-- Main Crop dropdown -->
+  <rect x="210" y="345" width="190" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="220" y="362" class="card-text">Wheat</text>
+  <text x="386" y="362" class="dropdown-arrow">&#9660;</text>
+  <!-- Cover crop: None -->
+  <rect x="440" y="349" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="462" y="362" class="none-text">None</text>
+  <!-- Delete -->
+  <rect x="730" y="345" width="26" height="26" rx="4" fill="#FEF2F2"/>
+  <text x="743" y="363" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Row 2: 1908 Barley, no cover crop (alternate bg) -->
+  <rect x="51" y="379" width="818" height="46" fill="#FAFAFA"/>
+  <line x1="50" y1="425" x2="870" y2="425" stroke="#F3F4F6" stroke-width="1"/>
+  <text x="75" y="407" class="row-number">2</text>
+  <rect x="110" y="391" width="70" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="145" y="408" class="year-text" text-anchor="middle">1908</text>
+  <rect x="210" y="391" width="190" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="220" y="408" class="card-text">Barley</text>
+  <text x="386" y="408" class="dropdown-arrow">&#9660;</text>
+  <rect x="440" y="395" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="462" y="408" class="none-text">None</text>
+  <rect x="730" y="391" width="26" height="26" rx="4" fill="#FEF2F2"/>
+  <text x="743" y="409" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Row 3: 1909 Oats, with cover crop Red Clover (SELECTED ROW) -->
+  <rect x="51" y="425" width="818" height="46" fill="#FFF8E7"/>
+  <!-- Selected row blue left border -->
+  <rect x="50" y="425" width="4" height="46" fill="#26428B"/>
+  <line x1="50" y1="471" x2="870" y2="471" stroke="#F3F4F6" stroke-width="1"/>
+  <text x="75" y="453" class="row-number">3</text>
+  <rect x="110" y="437" width="70" height="26" rx="4" fill="#FFFFFF" stroke="#26428B" stroke-width="1.5"/>
+  <text x="145" y="454" class="year-text" text-anchor="middle">1909</text>
+  <rect x="210" y="437" width="190" height="26" rx="4" fill="#FFFFFF" stroke="#26428B" stroke-width="1.5"/>
+  <text x="220" y="454" class="card-text">Oats</text>
+  <text x="386" y="454" class="dropdown-arrow">&#9660;</text>
+  <!-- Cover crop checked -->
+  <rect x="440" y="441" width="14" height="14" rx="3" fill="#4CAF50" stroke="#4CAF50" stroke-width="1"/>
+  <text x="447" y="453" class="check-text" style="font-size: 10px;">&#10003;</text>
+  <!-- Cover crop dropdown -->
+  <rect x="462" y="437" width="170" height="26" rx="4" fill="#F0FFF0" stroke="#4CAF50" stroke-width="1"/>
+  <text x="472" y="454" class="cover-text">Red Clover</text>
+  <text x="618" y="454" class="dropdown-arrow" style="fill: #4CAF50;">&#9660;</text>
+  <!-- Delete -->
+  <rect x="730" y="437" width="26" height="26" rx="4" fill="#FEF2F2"/>
+  <text x="743" y="455" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Row 4: 1910 Wheat (alternate bg) -->
+  <rect x="51" y="471" width="818" height="46" fill="#FAFAFA"/>
+  <line x1="50" y1="517" x2="870" y2="517" stroke="#F3F4F6" stroke-width="1"/>
+  <text x="75" y="499" class="row-number">4</text>
+  <rect x="110" y="483" width="70" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="145" y="500" class="year-text" text-anchor="middle">1910</text>
+  <rect x="210" y="483" width="190" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="220" y="500" class="card-text">Wheat</text>
+  <text x="386" y="500" class="dropdown-arrow">&#9660;</text>
+  <rect x="440" y="487" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="462" y="500" class="none-text">None</text>
+  <rect x="730" y="483" width="26" height="26" rx="4" fill="#FEF2F2"/>
+  <text x="743" y="501" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Row 5: 1911 Canola -->
+  <rect x="51" y="517" width="818" height="46" fill="#FFFFFF"/>
+  <text x="75" y="545" class="row-number">5</text>
+  <rect x="110" y="529" width="70" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="145" y="546" class="year-text" text-anchor="middle">1911</text>
+  <rect x="210" y="529" width="190" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="220" y="546" class="card-text">Canola</text>
+  <text x="386" y="546" class="dropdown-arrow">&#9660;</text>
+  <rect x="440" y="533" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="462" y="546" class="none-text">None</text>
+  <rect x="730" y="529" width="26" height="26" rx="4" fill="#FEF2F2"/>
+  <text x="743" y="547" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Bottom border radius fix -->
+  <rect x="51" y="563" width="818" height="12" rx="0" fill="#FFFFFF"/>
+  <rect x="51" y="563" width="818" height="12" rx="8" fill="#FFFFFF"/>
+
+  <!-- Add row button -->
+  <rect x="50" y="585" width="820" height="36" rx="6" fill="#FFFFFF" stroke="#26428B" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="460" y="608" text-anchor="middle" style="font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #26428B; font-weight: 600;">+ Add Crop Year</text>
+
+  <!-- Annotation: selected row -->
+  <line x1="880" y1="448" x2="920" y2="448" stroke="#26428B" stroke-width="1.5"/>
+  <text x="930" y="445" class="card-text-sm" style="fill: #26428B; font-weight: 600;">Selected row</text>
+  <text x="930" y="460" class="card-text-sm">Blue left border + warm bg</text>
+
+  <!-- Annotation: cover crop -->
+  <line x1="640" y1="448" x2="680" y2="480" stroke="#4CAF50" stroke-width="1"/>
+  <text x="685" y="485" class="card-text-sm" style="fill: #4CAF50; font-weight: 600;">Cover crop enabled</text>
+  <text x="685" y="500" class="card-text-sm">Checkbox + dropdown appear</text>
+
+  <!-- Features box -->
+  <rect x="50" y="640" width="820" height="110" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="70" y="665" class="card-text" style="font-weight: 700;">Key Features:</text>
+  <text x="70" y="685" class="card-text-sm">&#8226; Familiar spreadsheet-like layout; easy to scan and compare crops across years</text>
+  <text x="70" y="703" class="card-text-sm">&#8226; Alternating row backgrounds improve readability; selected row has blue accent</text>
+  <text x="70" y="721" class="card-text-sm">&#8226; Cover crop checkbox toggles the dropdown inline; unchecked shows "None"</text>
+  <text x="70" y="739" class="card-text-sm">&#8226; 5 years fit in ~280px vertical space; 10+ years still readable without scrolling on most screens</text>
+
+  <!-- Bottom description -->
+  <text x="50" y="780" class="desc" style="font-size: 14px; fill: #1F2937; font-weight: 600;">
+    The table format is naturally compact and scannable. Easy to compare crops across years.
+  </text>
+</svg>

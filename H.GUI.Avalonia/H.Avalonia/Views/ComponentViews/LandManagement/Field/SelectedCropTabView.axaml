@@ -15,80 +15,77 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header Section -->
-        <StackPanel Grid.Row="0" Classes="step-header" Margin="10,8,0,20">
-            <!-- Step Badge -->
-            <Border Classes="step-badge">
-                <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
-            </Border>
+        <!-- Step Header with inline editing info -->
+        <Grid Grid.Row="0" Margin="10,8,10,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Step Description -->
-            <TextBlock Text="{Binding [Label_DefineManagementPractices].Value, Source={StaticResource Loc}}"
-                       Classes="step-number-description"/>
-        </StackPanel>
+            <!-- Left: Step badge + title -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12">
+                <Border Classes="step-badge" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding [Label_StepFour].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Label_DefineManagementPractices].Value, Source={StaticResource Loc}}"
+                               Classes="step-number-description"/>
+                </StackPanel>
+            </StackPanel>
 
-        <!-- Currently Editing Indicator with cover crop toggle -->
-        <Border Grid.Row="1"
-                IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}"
-                Background="{StaticResource GcdsSelectionBgBrush}"
-                BorderBrush="{StaticResource GcdsLinkDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="6"
-                Padding="12"
-                Margin="10,0,10,12">
-            <StackPanel Spacing="4">
-                <TextBlock>
-                    <Run Text="{Binding [Label_CurrentlyEditing].Value, Source={StaticResource Loc}}"/>
-                    <Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}" FontWeight="Bold"/>
-                    <Run Text="(Year"/>
-                    <Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}" FontWeight="Bold"/>
-                    <Run Text=")"/>
-                </TextBlock>
+            <!-- Right: Currently editing info + toggles -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <!-- Crop info -->
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock FontSize="13" FontWeight="SemiBold">
+                        <Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}"/>
+                        <Run Text="("/>
+                        <Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}"/>
+                        <Run Text=")"/>
+                    </TextBlock>
+                </StackPanel>
 
-                <!-- Cover crop editing toggle - inside the banner -->
+                <!-- Separator -->
+                <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="1,0,0,0" Height="30"/>
+
+                <!-- Cover crop toggle -->
                 <ToggleSwitch IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
                               IsChecked="{Binding IsEditingCoverCrop}"
-                              OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Editing Cover Crop ({0})'}"
-                              OffContent="{Binding SelectedCropDto.CropType, StringFormat='Editing Main Crop ({0})'}"
-                              Margin="0,4,0,0"/>
+                              OnContent="{Binding SelectedCropDto.CoverCropDto.CropType, StringFormat='Cover Crop ({0})'}"
+                              OffContent="{Binding SelectedCropDto.CropType, StringFormat='Main Crop ({0})'}"
+                              VerticalAlignment="Center" Padding="0" Margin="0"/>
+
+                <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="1,0,0,0" Height="30"
+                        IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"/>
             </StackPanel>
-        </Border>
+        </Grid>
 
-        <!-- Main Crop Details TabControl - shown when NOT editing cover crop -->
-        <TabControl Grid.Row="2"
-                    IsVisible="{Binding IsEditingCoverCrop, Converter={x:Static BoolConverters.Not}}"
-                    DataContext="{Binding SelectedCropDto}"
-                    Background="White"
-                    MinHeight="450">
-            <TabItem Header="{Binding [Tab_General].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropGeneralTabView/></ScrollViewer>
-            </TabItem>
-            <TabItem Header="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropFertilizerTabView/></ScrollViewer>
-            </TabItem>
-            <TabItem Header="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropManureTabView/></ScrollViewer>
-            </TabItem>
-            <TabItem Header="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropGrazingTabView/></ScrollViewer>
-            </TabItem>
-            <TabItem Header="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropSoilTabView/></ScrollViewer>
-            </TabItem>
-            <TabItem Header="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropResidueTabView/></ScrollViewer>
-            </TabItem>
-            <TabItem Header="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}">
-                <ScrollViewer><cropTabs:CropEconomicsTabView/></ScrollViewer>
-            </TabItem>
-        </TabControl>
+        <!-- Step header separator -->
+        <Border Grid.Row="1" BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
 
-        <!-- Cover Crop Editor - shown when editing cover crop -->
-        <Border Grid.Row="2"
-                IsVisible="{Binding IsEditingCoverCrop}"
-                MinHeight="450">
-            <cropTabs:CoverCropEditorView DataContext="{Binding SelectedCropDto.CoverCropDto}"/>
-        </Border>
+        <!-- Checklist Editor - shown when NOT editing cover crop -->
+        <cropTabs:CropChecklistEditorView Grid.Row="2"
+            IsVisible="{Binding DataContext.IsEditingCoverCrop, Converter={x:Static BoolConverters.Not}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            DataContext="{Binding SelectedCropDto}"
+            IsFertilizerActive="{Binding DataContext.IsFertilizerActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsManureActive="{Binding DataContext.IsManureActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsGrazingActive="{Binding DataContext.IsGrazingActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsSoilActive="{Binding DataContext.IsSoilActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsResidueActive="{Binding DataContext.IsResidueActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsEconomicsActive="{Binding DataContext.IsEconomicsActive, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+        <!-- Checklist Editor - shown when editing cover crop -->
+        <cropTabs:CropChecklistEditorView Grid.Row="2"
+            IsVisible="{Binding DataContext.IsEditingCoverCrop, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            DataContext="{Binding SelectedCropDto.CoverCropDto}"
+            IsFertilizerActive="{Binding DataContext.IsFertilizerActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsManureActive="{Binding DataContext.IsManureActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsGrazingActive="{Binding DataContext.IsGrazingActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsSoilActive="{Binding DataContext.IsSoilActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsResidueActive="{Binding DataContext.IsResidueActive, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IsEconomicsActive="{Binding DataContext.IsEconomicsActive, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
     </Grid>
 </UserControl>

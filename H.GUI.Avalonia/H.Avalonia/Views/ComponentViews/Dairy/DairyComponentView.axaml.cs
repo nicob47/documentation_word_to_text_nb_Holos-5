@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using H.Avalonia.Infrastructure;
 
 namespace H.Avalonia.Views.ComponentViews.Dairy;
 
@@ -33,12 +34,20 @@ public partial class DairyComponentView : UserControl
     public DairyComponentView()
     {
         InitializeComponent();
-        
+
         // Set default value for design time - makes it easier to see all options in the designer
         if (Design.IsDesignMode)
         {
             ShowAdvancedOptions = true;
         }
+
+        // Sync with the shared AppViewSettings singleton
+        AppViewSettings.Instance.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(AppViewSettings.ShowAdvancedOptions))
+                ShowAdvancedOptions = AppViewSettings.Instance.ShowAdvancedOptions;
+        };
+        ShowAdvancedOptions = AppViewSettings.Instance.ShowAdvancedOptions;
     }
 
     #endregion

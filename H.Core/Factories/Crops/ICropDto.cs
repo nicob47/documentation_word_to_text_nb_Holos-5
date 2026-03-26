@@ -83,6 +83,13 @@ public interface ICropDto : IDto
 
     bool CropEconomicDataApplied { get; set; }
 
+    // ── Sequence ──
+
+    /// <summary>
+    /// 1-based position in the rotation/field history sequence. Updated by the VM after add/remove/move.
+    /// </summary>
+    int SequenceNumber { get; set; }
+
     // ── Cover Crop ──
 
     bool IsSecondaryCrop { get; set; }

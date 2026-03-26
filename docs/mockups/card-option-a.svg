@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .title { font-family: Segoe UI, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #1F2937; }
+      .desc { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #6B7280; }
+      .section-label { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 600; fill: #6B7280; text-transform: uppercase; letter-spacing: 1px; }
+      .card-text { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; fill: #1F2937; }
+      .card-text-sm { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; fill: #6B7280; }
+      .year-text { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1F2937; }
+      .delete-text { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #DC2626; }
+      .cover-text { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; fill: #4CAF50; }
+      .dropdown-arrow { font-family: Segoe UI, Arial, sans-serif; font-size: 10px; fill: #6B7280; }
+      .step-badge-text { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #FFFFFF; }
+      .current-label { font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #C26A1B; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#F9FAFB" rx="0"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1200" height="60" fill="#FFFFFF"/>
+  <rect x="0" y="59" width="1200" height="1" fill="#E5E7EB"/>
+  <rect x="30" y="18" width="8" height="24" rx="2" fill="#C26A1B"/>
+  <text x="48" y="37" class="title">Option A: Horizontal Inline Strips</text>
+  <text x="48" y="54" class="desc">Each crop is a single horizontal row. All controls inline. Cards stack vertically in a list instead of scrolling horizontally. Maximizes density.</text>
+
+  <!-- CURRENT DESIGN section -->
+  <text x="50" y="95" class="section-label">Current Design (for comparison)</text>
+  <rect x="50" y="105" width="300" height="140" rx="8" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+  <rect x="60" y="115" width="50" height="22" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="85" y="130" class="year-text" text-anchor="middle">1907</text>
+  <rect x="60" y="145" width="120" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="70" y="163" class="card-text">Wheat</text>
+  <text x="168" y="163" class="dropdown-arrow">&#9660;</text>
+  <text x="60" y="195" class="card-text-sm">Cover Crop:</text>
+  <rect x="60" y="200" width="120" height="28" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="70" y="218" class="card-text" style="fill: #6B7280;">None</text>
+  <text x="325" y="130" class="delete-text" text-anchor="middle">&#215;</text>
+  <text x="400" y="175" class="card-text-sm" style="font-style: italic;">Tall card with stacked layout.</text>
+  <text x="400" y="192" class="card-text-sm" style="font-style: italic;">Takes significant vertical space.</text>
+  <text x="400" y="209" class="card-text-sm" style="font-style: italic;">Scrolls horizontally.</text>
+
+  <!-- NEW DESIGN section -->
+  <text x="50" y="280" class="section-label">New Design: Inline Strips</text>
+
+  <!-- Card 1: 1907 Wheat (selected) -->
+  <rect x="50" y="295" width="780" height="50" rx="6" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+  <rect x="55" y="297" width="4" height="46" rx="2" fill="#26428B"/>
+  <!-- Step badge -->
+  <rect x="68" y="307" width="22" height="22" rx="4" fill="#C26A1B"/>
+  <text x="79" y="322" class="step-badge-text" text-anchor="middle">1</text>
+  <!-- Year badge -->
+  <rect x="100" y="307" width="52" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="126" y="324" class="year-text" text-anchor="middle">1907</text>
+  <!-- Crop dropdown -->
+  <rect x="164" y="307" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="174" y="324" class="card-text">Wheat</text>
+  <text x="290" y="324" class="dropdown-arrow">&#9660;</text>
+  <!-- Cover crop checkbox (unchecked) -->
+  <rect x="320" y="311" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="342" y="324" class="card-text-sm">Cover Crop</text>
+  <!-- Delete -->
+  <text x="800" y="325" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Card 2: 1908 Barley (unselected) -->
+  <rect x="50" y="355" width="780" height="50" rx="6" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- Step badge -->
+  <rect x="68" y="367" width="22" height="22" rx="4" fill="#C26A1B"/>
+  <text x="79" y="382" class="step-badge-text" text-anchor="middle">2</text>
+  <!-- Year badge -->
+  <rect x="100" y="367" width="52" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="126" y="384" class="year-text" text-anchor="middle">1908</text>
+  <!-- Crop dropdown -->
+  <rect x="164" y="367" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="174" y="384" class="card-text">Barley</text>
+  <text x="290" y="384" class="dropdown-arrow">&#9660;</text>
+  <!-- Cover crop checkbox (unchecked) -->
+  <rect x="320" y="371" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="342" y="384" class="card-text-sm">Cover Crop</text>
+  <!-- Delete -->
+  <text x="800" y="385" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Card 3: 1909 Oats with Cover Crop (expanded) -->
+  <rect x="50" y="415" width="780" height="50" rx="6" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- Step badge -->
+  <rect x="68" y="427" width="22" height="22" rx="4" fill="#C26A1B"/>
+  <text x="79" y="442" class="step-badge-text" text-anchor="middle">3</text>
+  <!-- Year badge -->
+  <rect x="100" y="427" width="52" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="126" y="444" class="year-text" text-anchor="middle">1909</text>
+  <!-- Crop dropdown -->
+  <rect x="164" y="427" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="174" y="444" class="card-text">Oats</text>
+  <text x="290" y="444" class="dropdown-arrow">&#9660;</text>
+  <!-- Cover crop checkbox (checked) -->
+  <rect x="320" y="431" width="16" height="16" rx="3" fill="#4CAF50" stroke="#4CAF50" stroke-width="1"/>
+  <text x="328" y="444" style="font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #FFFFFF;">&#10003;</text>
+  <text x="342" y="444" class="cover-text" style="font-weight: 600;">Cover Crop</text>
+  <!-- Cover crop dropdown -->
+  <rect x="420" y="427" width="150" height="26" rx="4" fill="#F0FFF0" stroke="#4CAF50" stroke-width="1"/>
+  <text x="430" y="444" class="cover-text" style="font-size: 13px; fill: #1F2937;">Red Clover</text>
+  <text x="556" y="444" class="dropdown-arrow" style="fill: #4CAF50;">&#9660;</text>
+  <!-- Delete -->
+  <text x="800" y="445" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Card 4: 1910 Wheat (unselected) -->
+  <rect x="50" y="475" width="780" height="50" rx="6" fill="#FFF8E7" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- Step badge -->
+  <rect x="68" y="487" width="22" height="22" rx="4" fill="#C26A1B"/>
+  <text x="79" y="502" class="step-badge-text" text-anchor="middle">4</text>
+  <!-- Year badge -->
+  <rect x="100" y="487" width="52" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="126" y="504" class="year-text" text-anchor="middle">1910</text>
+  <!-- Crop dropdown -->
+  <rect x="164" y="487" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="174" y="504" class="card-text">Wheat</text>
+  <text x="290" y="504" class="dropdown-arrow">&#9660;</text>
+  <!-- Cover crop checkbox (unchecked) -->
+  <rect x="320" y="491" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="342" y="504" class="card-text-sm">Cover Crop</text>
+  <!-- Delete -->
+  <text x="800" y="505" class="delete-text" text-anchor="middle">&#215;</text>
+
+  <!-- Annotations -->
+  <rect x="50" y="555" width="780" height="110" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="70" y="580" class="card-text" style="font-weight: 700;">Key Features:</text>
+  <text x="70" y="600" class="card-text-sm">&#8226; All controls on a single horizontal row per crop year</text>
+  <text x="70" y="618" class="card-text-sm">&#8226; Cover crop checkbox toggles inline dropdown visibility</text>
+  <text x="70" y="636" class="card-text-sm">&#8226; 4 crops fit in ~200px vertical space vs ~600px+ with current tall cards</text>
+  <text x="70" y="654" class="card-text-sm">&#8226; No horizontal scrolling needed; vertical list is more natural for reading</text>
+
+  <!-- Dimension callouts -->
+  <!-- Width marker -->
+  <line x1="50" y1="540" x2="830" y2="540" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="440" y="552" class="card-text-sm" text-anchor="middle">780px wide</text>
+  <!-- Height marker -->
+  <line x1="845" y1="295" x2="845" y2="525" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="855" y="415" class="card-text-sm" style="writing-mode: tb;">~230px for 4 rows</text>
+
+  <!-- Bottom description -->
+  <text x="50" y="710" class="desc" style="font-size: 14px; fill: #1F2937; font-weight: 600;">
+    Each crop is a single horizontal row. All controls inline. Cards stack vertically.
+  </text>
+  <text x="50" y="730" class="desc" style="font-size: 13px;">
+    Maximizes density: 4 crops visible in the space of 1 old card. No scrolling needed for typical rotation lengths.
+  </text>
+
+  <!-- Add crop button -->
+  <rect x="50" y="745" width="140" height="32" rx="6" fill="#FFFFFF" stroke="#26428B" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="120" y="766" class="card-text" text-anchor="middle" style="fill: #26428B; font-weight: 600;">+ Add Crop Year</text>
+</svg>

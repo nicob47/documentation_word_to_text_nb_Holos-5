@@ -14,83 +14,62 @@
 
 	<StackPanel>
         <!-- Step Header -->
-        <StackPanel Margin="0,0,0,20">
-            <Border Classes="step-badge" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+            <Border Classes="step-badge" VerticalAlignment="Top">
                 <TextBlock Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
             </Border>
-            <TextBlock Text="{Binding [Label_EnterBasicInfoForField].Value, Source={StaticResource Loc}}"
-                       Classes="step-number-description"
-                       Margin="0,8,0,0"/>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="{Binding [Label_EnterBasicInfoForField].Value, Source={StaticResource Loc}}"
+                           Classes="step-number-description"/>
+            </StackPanel>
         </StackPanel>
 
-        <!-- Field Information Card -->
-        <Border Classes="step-card">
-            <StackPanel>
-                <!-- Card Header -->
-                <StackPanel Margin="0,0,0,20">
-                    <TextBlock Text="{Binding [Label_FieldDetails].Value, Source={StaticResource Loc}}"
-                              FontSize="{StaticResource GcdsFontSizeH6}"
-                              FontWeight="Bold"
-                              FontFamily="{StaticResource GcdsHeadingFont}"
-                              Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                              Margin="0,0,0,4"/>
-                    <TextBlock Text="{Binding [Label_ConfigureAreaAndTimePeriod].Value, Source={StaticResource Loc}}"
-                              FontSize="{StaticResource GcdsFontSizeSmall}"
-                              Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                              FontStyle="Italic"/>
-                </StackPanel>
+        <!-- Step header separator -->
+        <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
 
-                <!-- Card Content -->
-                <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition MinWidth="160"/>
-                        <ColumnDefinition MinWidth="120"/>
-                        <ColumnDefinition MinWidth="120"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        <!-- Field details — inline inputs -->
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,4,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="160"/>
+                <ColumnDefinition MinWidth="120"/>
+                <ColumnDefinition MinWidth="120"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                    <!-- Field Size Row -->
-                    <Label Grid.Row="0" Grid.Column="0"
-                           Content="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
-                           Classes="input-label"/>
-                    <NumericUpDown Grid.Row="0" Grid.Column="1"
-                                  Minimum="0"
-                                  Value="{Binding Path=SelectedFieldSystemComponentDto.FieldArea}"/>
-                    <Label Grid.Row="0" Grid.Column="2"
-                           Classes="unit-label"
-                           Content="{Binding Path=StorageService.Storage.ApplicationData.DisplayUnitStrings.HectaresString}"/>
+            <!-- Field Size Row -->
+            <Label Grid.Row="0" Grid.Column="0"
+                   Content="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
+                   Classes="input-label"/>
+            <NumericUpDown Grid.Row="0" Grid.Column="1"
+                          Minimum="0"
+                          Value="{Binding Path=SelectedFieldSystemComponentDto.FieldArea}"/>
+            <Label Grid.Row="0" Grid.Column="2"
+                   Classes="unit-label"
+                   Content="{Binding Path=StorageService.Storage.ApplicationData.DisplayUnitStrings.HectaresString}"/>
 
-                    <!-- Start Year Row -->
-                    <Label Grid.Row="1" Grid.Column="0"
-                           Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
-                           Classes="input-label"/>
-                    <NumericUpDown Grid.Row="1" Grid.Column="1"
-                                  Minimum="0"
-                                  FormatString="0"
-                                  ParsingNumberStyle="Integer"
-                                  Value="{Binding Path=SelectedFieldSystemComponentDto.StartYear}"/>
-                    <Label Grid.Row="1" Grid.Column="2"
-                           Classes="unit-label"
-                           Content=""/>
+            <!-- Start Year Row -->
+            <Label Grid.Row="1" Grid.Column="0"
+                   Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
+                   Classes="input-label"/>
+            <NumericUpDown Grid.Row="1" Grid.Column="1"
+                          Minimum="0"
+                          FormatString="0"
+                          ParsingNumberStyle="Integer"
+                          Value="{Binding Path=SelectedFieldSystemComponentDto.StartYear}"/>
 
-                    <!-- End Year Row -->
-                    <Label Grid.Row="2" Grid.Column="0"
-                           Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
-                           Classes="input-label"/>
-                    <NumericUpDown Grid.Row="2" Grid.Column="1"
-                                  Minimum="0"
-                                  FormatString="0"
-                                  ParsingNumberStyle="Integer"
-                                  Value="{Binding Path=SelectedFieldSystemComponentDto.EndYear}"/>
-                    <Label Grid.Row="2" Grid.Column="2"
-                           Classes="unit-label"
-                           Content=""/>
-                </Grid>
-            </StackPanel>
-        </Border>
+            <!-- End Year Row -->
+            <Label Grid.Row="2" Grid.Column="0"
+                   Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
+                   Classes="input-label"/>
+            <NumericUpDown Grid.Row="2" Grid.Column="1"
+                          Minimum="0"
+                          FormatString="0"
+                          ParsingNumberStyle="Integer"
+                          Value="{Binding Path=SelectedFieldSystemComponentDto.EndYear}"/>
+        </Grid>
 	</StackPanel>
 </UserControl>

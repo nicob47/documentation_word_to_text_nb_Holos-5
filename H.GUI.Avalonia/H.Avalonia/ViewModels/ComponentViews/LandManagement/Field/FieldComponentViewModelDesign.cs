@@ -4,6 +4,7 @@ using H.Core.Factories;
 using H.Core.Factories.Crops;
 using H.Core.Factories.Fields;
 using H.Core.Models;
+using H.Core.Services.CropColorService;
 using H.Core.Services.LandManagement.Fields;
 using H.Core.Services.StorageService;
 using Microsoft.Extensions.Logging;
@@ -45,7 +46,7 @@ public class FieldComponentViewModelDesign : FieldComponentViewModel
         base.SelectedCropDto.AmountOfIrrigation = 100;
     }
 
-    public FieldComponentViewModelDesign(IRegionManager regionManager, IEventAggregator eventAggregator, IStorageService storageService, IFieldFactory fieldFactory, ICropFactory cropFactory, IFieldComponentService fieldComponentService, ILogger logger) : base(regionManager, eventAggregator, storageService, fieldComponentService, logger, cropFactory)
+    public FieldComponentViewModelDesign(IRegionManager regionManager, IEventAggregator eventAggregator, IStorageService storageService, IFieldFactory fieldFactory, ICropFactory cropFactory, IFieldComponentService fieldComponentService, ILogger logger, ICropColorService cropColorService) : base(regionManager, eventAggregator, storageService, fieldComponentService, logger, cropFactory, cropColorService)
     {
     }
 }

@@ -17,123 +17,99 @@
     <Border x:Name="StepContainerBorder" Classes="step-container">
         <StackPanel>
             <!-- Step Header -->
-            <StackPanel x:Name="StepHeaderPanel" Margin="0,0,0,20">
-                <Border x:Name="StepBadgeBorder" Classes="step-badge" HorizontalAlignment="Left">
+            <StackPanel x:Name="StepHeaderPanel" Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+                <Border x:Name="StepBadgeBorder" Classes="step-badge" VerticalAlignment="Top">
                     <TextBlock x:Name="StepNumberTextBlock" Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
                 </Border>
-                <TextBlock x:Name="StepDescriptionTextBlock"
-                           Text="{Binding [Label_DefineRotationParameters].Value, Source={StaticResource Loc}}"
-                           Classes="step-number-description"
-                           Margin="0,8,0,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="StepDescriptionTextBlock"
+                               Text="{Binding [Label_DefineRotationParameters].Value, Source={StaticResource Loc}}"
+                               Classes="step-number-description"/>
+                </StackPanel>
             </StackPanel>
 
-            <!-- Rotation Parameters Card (full-width, Time Period + Field Configuration side by side) -->
-            <Border Classes="step-card" x:Name="RotationParametersCard">
+            <!-- Step header separator -->
+            <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
+
+            <!-- Rotation Parameters — side-by-side input groups -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Spacing="32"
+                        Margin="0,4,0,0">
+
+                <!-- Time Period group -->
                 <StackPanel>
-                    <!-- Card Header -->
-                    <StackPanel Margin="0,0,0,20">
-                        <TextBlock Text="{Binding [Label_RotationParameters].Value, Source={StaticResource Loc}}"
-                                   FontSize="{StaticResource GcdsFontSizeH6}"
-                                   FontWeight="Bold"
-                                   FontFamily="{StaticResource GcdsHeadingFont}"
-                                   Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                                   Margin="0,0,0,4"/>
-                        <TextBlock Text="{Binding [Label_ConfigureTimePeriodAndFieldSetup].Value, Source={StaticResource Loc}}"
-                                   FontSize="{StaticResource GcdsFontSizeSmall}"
-                                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                                   FontStyle="Italic"/>
-                    </StackPanel>
-
-                    <!-- Side-by-side input groups -->
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Left"
-                                Spacing="32"
-                                Grid.IsSharedSizeScope="True">
-
-                        <!-- Time Period group -->
-                        <StackPanel>
-                            <TextBlock x:Name="TimePeriodTitleTextBlock"
-                                       Text="{Binding [Label_TimePeriod].Value, Source={StaticResource Loc}}"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                                       Margin="0,0,0,10"/>
-                            <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition MinWidth="160"/>
-                                    <ColumnDefinition MinWidth="120"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Start Year -->
-                                <Label Grid.Row="0" Grid.Column="0"
-                                       Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
-                                       Classes="input-label"/>
-                                <NumericUpDown x:Name="StartYearInputNumericUpDown"
-                                               Grid.Row="0" Grid.Column="1"
-                                               Minimum="1900"
-                                               Maximum="2200"
-                                               FormatString="0"
-                                               Increment="1"
-                                               Value="{Binding Path=SelectedRotationComponentDto.StartYear}"/>
-
-                                <!-- End Year -->
-                                <Label Grid.Row="1" Grid.Column="0"
-                                       Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
-                                       Classes="input-label"/>
-                                <NumericUpDown x:Name="EndYearInputNumericUpDown"
-                                               Grid.Row="1" Grid.Column="1"
-                                               Minimum="1900"
-                                               Maximum="2200"
-                                               FormatString="0"
-                                               Increment="1"
-                                               Value="{Binding Path=SelectedRotationComponentDto.EndYear}"/>
-                            </Grid>
-                        </StackPanel>
-
-                        <!-- Vertical divider -->
-                        <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}"
-                                BorderThickness="1,0,0,0"/>
-
-                        <!-- Field Configuration group -->
-                        <StackPanel>
-                            <TextBlock Text="{Binding [Label_FieldConfiguration].Value, Source={StaticResource Loc}}"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                                       Margin="0,0,0,10"/>
-                            <rotationViews:RotationFieldConfigurationView x:Name="FieldConfigurationUserControl"
-                                                                          DataContext="{Binding}"/>
-                        </StackPanel>
-
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-
-            <!-- Rotation Summary Card (Advanced Option, full-width) -->
-            <Border Classes="step-card"
-                    x:Name="RotationSummaryPanel"
-                    Margin="0,16,0,0"
-                    IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource FindAncestor, AncestorType=rotationViews:RotationComponentView}, FallbackValue=False}">
-                <StackPanel>
-                    <StackPanel Margin="0,0,0,20">
-                        <TextBlock x:Name="SummaryTitleTextBlock"
-                                   Text="{Binding [Label_RotationSummary].Value, Source={StaticResource Loc}}"
-                                   FontSize="{StaticResource GcdsFontSizeH6}"
-                                   FontWeight="Bold"
-                                   FontFamily="{StaticResource GcdsHeadingFont}"
-                                   Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                                   Margin="0,0,0,4"/>
-                        <TextBlock Text="{Binding [Label_CalculatedTotalsForThisRotation].Value, Source={StaticResource Loc}}"
-                                   FontSize="{StaticResource GcdsFontSizeSmall}"
-                                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                                   FontStyle="Italic"/>
-                    </StackPanel>
-
-                    <Grid x:Name="SummaryDataGrid" HorizontalAlignment="Left">
+                    <TextBlock x:Name="TimePeriodTitleTextBlock"
+                               Text="{Binding [Label_TimePeriod].Value, Source={StaticResource Loc}}"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
+                               Margin="0,0,0,10"/>
+                    <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="160"/>
+                            <ColumnDefinition MinWidth="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Start Year -->
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
+                               Classes="input-label"/>
+                        <NumericUpDown x:Name="StartYearInputNumericUpDown"
+                                       Grid.Row="0" Grid.Column="1"
+                                       Minimum="1900"
+                                       Maximum="2200"
+                                       FormatString="0"
+                                       Increment="1"
+                                       Value="{Binding Path=SelectedRotationComponentDto.StartYear}"/>
+
+                        <!-- End Year -->
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
+                               Classes="input-label"/>
+                        <NumericUpDown x:Name="EndYearInputNumericUpDown"
+                                       Grid.Row="1" Grid.Column="1"
+                                       Minimum="1900"
+                                       Maximum="2200"
+                                       FormatString="0"
+                                       Increment="1"
+                                       Value="{Binding Path=SelectedRotationComponentDto.EndYear}"/>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Vertical divider -->
+                <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}"
+                        BorderThickness="1,0,0,0"/>
+
+                <!-- Field Configuration group -->
+                <StackPanel>
+                    <TextBlock Text="{Binding [Label_FieldConfiguration].Value, Source={StaticResource Loc}}"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
+                               Margin="0,0,0,10"/>
+                    <rotationViews:RotationFieldConfigurationView x:Name="FieldConfigurationUserControl"
+                                                                  DataContext="{Binding}"/>
+                </StackPanel>
+
+                <!-- Vertical divider (advanced) -->
+                <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource FindAncestor, AncestorType=rotationViews:RotationComponentView}, FallbackValue=False}"/>
+
+                <!-- Rotation Summary (Advanced Option) — inline -->
+                <StackPanel x:Name="RotationSummaryPanel"
+                            IsVisible="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource FindAncestor, AncestorType=rotationViews:RotationComponentView}, FallbackValue=False}">
+                    <TextBlock x:Name="SummaryTitleTextBlock"
+                               Text="{Binding [Label_RotationSummary].Value, Source={StaticResource Loc}}"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
+                               Margin="0,0,0,10"/>
+                    <Grid x:Name="SummaryDataGrid" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="130"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -143,47 +119,29 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Total Area -->
                         <Label Grid.Row="0" Grid.Column="0" Content="{Binding [Label_TotalArea].Value, Source={StaticResource Loc}}" Classes="input-label"/>
-                        <TextBlock x:Name="TotalAreaValueTextBlock"
-                                   Grid.Row="0" Grid.Column="1"
+                        <TextBlock x:Name="TotalAreaValueTextBlock" Grid.Row="0" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.TotalRotationArea, StringFormat='{}{0:F2} ha'}"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="0,0,0,4"/>
+                                   FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                        <!-- Number of Fields -->
                         <Label Grid.Row="1" Grid.Column="0" Content="{Binding [Label_Fields].Value, Source={StaticResource Loc}}" Classes="input-label"/>
-                        <TextBlock x:Name="NumberOfFieldsValueTextBlock"
-                                   Grid.Row="1" Grid.Column="1"
+                        <TextBlock x:Name="NumberOfFieldsValueTextBlock" Grid.Row="1" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.NumberOfFields}"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="0,0,0,4"/>
+                                   FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                        <!-- Years per Field -->
                         <Label Grid.Row="2" Grid.Column="0" Content="{Binding [Label_YearsPerField].Value, Source={StaticResource Loc}}" Classes="input-label"/>
-                        <TextBlock x:Name="YearsPerFieldValueTextBlock"
-                                   Grid.Row="2" Grid.Column="1"
+                        <TextBlock x:Name="YearsPerFieldValueTextBlock" Grid.Row="2" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.RotationLength}"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="0,0,0,4"/>
+                                   FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                        <!-- Total Crop-Years -->
                         <Label Grid.Row="3" Grid.Column="0" Content="{Binding [Label_CropYears].Value, Source={StaticResource Loc}}" Classes="input-label"/>
-                        <TextBlock x:Name="TotalCropYearsValueTextBlock"
-                                   Grid.Row="3" Grid.Column="1"
+                        <TextBlock x:Name="TotalCropYearsValueTextBlock" Grid.Row="3" Grid.Column="1"
                                    Text="{Binding Path=SelectedRotationComponentDto.TotalCropYears}"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"/>
+                                   FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>
-            </Border>
+
+            </StackPanel>
         </StackPanel>
     </Border>
 </UserControl>

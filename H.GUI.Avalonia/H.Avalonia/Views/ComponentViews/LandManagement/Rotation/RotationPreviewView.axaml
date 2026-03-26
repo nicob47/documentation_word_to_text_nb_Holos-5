@@ -23,27 +23,27 @@
             Margin="{StaticResource DefaultUserControlMargin}">
         <StackPanel>
             <!-- Step Header -->
-            <StackPanel Margin="0,0,0,20">
-                <Border Classes="step-badge" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+                <Border Classes="step-badge" VerticalAlignment="Top">
                     <TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
                 </Border>
-                <TextBlock Text="{Binding [Label_PreviewFieldAssignments].Value, Source={StaticResource Loc}}"
-                           Classes="step-number-description"
-                           Margin="0,8,0,0"/>
-                <TextBlock Text="{Binding [Label_ReviewHowCropsDistributed].Value, Source={StaticResource Loc}}"
-                           Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                           FontSize="12"
-                           Margin="0,4,0,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Label_PreviewFieldAssignments].Value, Source={StaticResource Loc}}"
+                               Classes="step-number-description"/>
+                    <TextBlock Text="{Binding [Label_ReviewHowCropsDistributed].Value, Source={StaticResource Loc}}"
+                               Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                               FontSize="12"
+                               Margin="0,2,0,0"/>
+                </StackPanel>
             </StackPanel>
 
+            <!-- Step header separator -->
+            <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
+
             <!-- Preview Grid - Only visible when both NumberOfFields > 0 AND crops exist -->
-            <Border BorderBrush="{StaticResource GcdsBorderDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="6"
-                    Background="White"
-                    IsVisible="{Binding ShouldShowPreview}">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                    <Grid Margin="12">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          IsVisible="{Binding ShouldShowPreview}">
+                    <Grid Margin="0,0,0,16">
                         <!-- Dynamic ItemsControl to display field rows -->
                         <ItemsControl ItemsSource="{Binding FieldAssignmentRows}">
                             <ItemsControl.ItemTemplate>
@@ -146,8 +146,14 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Grid>
-                </ScrollViewer>
-            </Border>
+            </ScrollViewer>
+
+            <!-- Hint text -->
+            <TextBlock Text="Click a crop card above to edit its properties."
+                       FontSize="12" FontStyle="Italic"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       Margin="0,4,0,0"
+                       IsVisible="{Binding ShouldShowPreview}"/>
 
             <!-- Empty State Message when preview should not be shown -->
             <Border IsVisible="{Binding !ShouldShowPreview}"
@@ -164,32 +170,6 @@
                 </StackPanel>
             </Border>
 
-            <!-- Helpful Note -->
-            <Border Background="{StaticResource GcdsBgLightBrush}"
-                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
-                    BorderThickness="1"
-                    CornerRadius="6"
-                    Padding="12"
-                    Margin="0,12,0,0"
-                    IsVisible="{Binding IsShiftEnabled}">
-                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource GcdsTextSecondaryBrush}">
-                    <Run Text="{Binding [Label_RotationShiftingEnabled].Value, Source={StaticResource Loc}}" FontWeight="SemiBold"/>
-                    <Run Text="{Binding [Label_RotationShiftingDesc].Value, Source={StaticResource Loc}}"/>
-                </TextBlock>
-            </Border>
-
-            <!-- Next Step Guidance -->
-            <Border Background="{StaticResource GcdsBgLightBrush}"
-                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
-                    BorderThickness="1"
-                    CornerRadius="6"
-                    Padding="12"
-                    Margin="0,12,0,0">
-                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource GcdsTextSecondaryBrush}">
-                    <Run Text="{Binding [Label_NextStep].Value, Source={StaticResource Loc}}" FontWeight="SemiBold"/>
-                    <Run Text="{Binding [Label_NextStepPreviewDesc].Value, Source={StaticResource Loc}}"/>
-                </TextBlock>
-            </Border>
         </StackPanel>
     </Border>
 </UserControl>

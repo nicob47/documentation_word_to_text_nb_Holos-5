@@ -8,6 +8,8 @@
              xmlns:shared="clr-namespace:H.Avalonia.Views.ComponentViews.Shared"
              xmlns:properties="clr-namespace:H.Avalonia.Infrastructure.Properties;assembly=H.Avalonia.Infrastructure"
              xmlns:avalonia="clr-namespace:H.Avalonia"
+             xmlns:converters="clr-namespace:H.Avalonia.Converters"
+             xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="950"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Field.FieldComponentView">
 
@@ -15,72 +17,148 @@
 		<field:FieldComponentViewModelDesign/>
 	</Design.DataContext>
 
+	<UserControl.Resources>
+		<converters:BoolToSelectionBorderThicknessConverter x:Key="BoolToSelectionBorderThicknessConverter"/>
+		<converters:BoolToSelectionBorderBrushConverter x:Key="BoolToSelectionBorderBrushConverter"/>
+	</UserControl.Resources>
+
 	<Grid>
 		<Grid.RowDefinitions>
-			<!-- Title -->
-			<RowDefinition Height="Auto"/>
-			<!-- Advanced Options Toggle -->
+			<!-- Title + Advanced Toggle -->
 			<RowDefinition Height="Auto"/>
 			<!-- Content -->
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0">
-			<!-- Title -->
 			<TextBox Classes="view-title" Text="{Binding Path=SelectedFieldSystemComponentDto.Name}"/>
 			<Border Classes="title-underline"/>
 		</StackPanel>
 
-		<!-- Advanced Options Toggle Section -->
-		<shared:AdvancedOptionsToggleView Grid.Row="1"
-		                                  Margin="{StaticResource DefaultUserControlMargin}"
-		                                  Title="{Binding [Label_ShowAdvancedOptions].Value, Source={StaticResource Loc}}"
-		                                  Description="{Binding [Label_ShowAdvancedOptionsFieldDesc].Value, Source={StaticResource Loc}}"
-		                                  IsChecked="{Binding ShowAdvancedOptions, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"/>
-
-		<ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
 			<Grid>
 			<Grid.RowDefinitions>
-				<!-- Step 1 row -->
-                <RowDefinition Height="Auto"/>
-
-                <!-- Step 1 GridSplitter row -->
 				<RowDefinition Height="Auto"/>
-
-                <!-- Step 2 row - Auto height to accommodate timeline -->
 				<RowDefinition Height="Auto"/>
-
-                <!-- Step 2 GridSplitter row -->
 				<RowDefinition Height="Auto"/>
-
-                <!-- Step 3 row - Auto height to ensure visibility -->
 				<RowDefinition Height="Auto"/>
-				
 			</Grid.RowDefinitions>
 
-		<!-- Begin step 1 -->
-		<Border Grid.Row="0"
-		        Classes="step-container"
-		        Margin="{StaticResource DefaultUserControlMargin}">
+		<!-- Step 1 -->
+		<Border Grid.Row="0" Classes="step-container" Margin="{StaticResource DefaultUserControlMargin}">
 			<fieldViews:FieldComponentStep1View/>
 		</Border>
-		<!-- End step 1 -->
 
-		<!-- Begin step 2 -->
-		<Border Grid.Row="2"
-		        Classes="step-container"
-		        Margin="{StaticResource DefaultUserControlMargin}">
+		<!-- Step 2 -->
+		<Border Grid.Row="1" Classes="step-container" Margin="{StaticResource DefaultUserControlMargin}">
 			<fieldViews:FieldComponentStep2View/>
 		</Border>
-		<!-- End step 2 -->
 
-		<!-- Begin step 3 -->
-		<Border Grid.Row="4"
-		        Classes="step-container"
-		        Margin="{StaticResource DefaultUserControlMargin}">
+		<!-- Field Preview Strip -->
+		<Border Grid.Row="2" Classes="step-container" Margin="{StaticResource DefaultUserControlMargin}"
+		        IsVisible="{Binding ShouldShowFieldPreview}">
+			<StackPanel>
+				<!-- Step Header -->
+				<StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+					<Border Classes="step-badge" VerticalAlignment="Top">
+						<TextBlock Text="{Binding [Label_StepThree].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
+					</Border>
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Preview Field Assignments"
+						           Classes="step-number-description"/>
+						<TextBlock Text="Review how crops are assigned across years"
+						           Foreground="{StaticResource GcdsTextSecondaryBrush}"
+						           FontSize="12"
+						           Margin="0,2,0,0"/>
+					</StackPanel>
+				</StackPanel>
+
+				<!-- Step header separator -->
+				<Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
+
+				<!-- Preview Grid -->
+				<ScrollViewer HorizontalScrollBarVisibility="Auto">
+					<ItemsControl ItemsSource="{Binding FieldPreviewAssignments}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal" Spacing="8"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Button Background="Transparent"
+								        BorderThickness="0"
+								        Padding="0"
+								        Cursor="Hand"
+								        Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).SetSelectedCropFromCellCommand}"
+								        CommandParameter="{Binding}">
+									<Button.Styles>
+										<Style Selector="Button:pointerover">
+											<Setter Property="Background" Value="Transparent"/>
+										</Style>
+										<Style Selector="Button:pressed">
+											<Setter Property="Background" Value="Transparent"/>
+										</Style>
+									</Button.Styles>
+									<Border Background="{Binding CropBackground}"
+									        Padding="8,8"
+									        Width="120"
+									        Height="80"
+									        CornerRadius="4"
+									        BorderBrush="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderBrushConverter}}"
+									        BorderThickness="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderThicknessConverter}}">
+										<Border.Styles>
+											<Style Selector="Border:pointerover">
+												<Setter Property="Opacity" Value="0.85"/>
+											</Style>
+										</Border.Styles>
+										<StackPanel Spacing="2" VerticalAlignment="Center">
+											<!-- Year label -->
+											<TextBlock Text="{Binding Year}"
+											           FontSize="12"
+											           FontWeight="SemiBold"
+											           Foreground="{StaticResource GcdsTextSecondaryBrush}"
+											           TextAlignment="Center"/>
+											<!-- Crop name -->
+											<TextBlock Text="{Binding CropDisplay}"
+											           TextAlignment="Center"
+											           TextWrapping="Wrap"
+											           TextTrimming="CharacterEllipsis"
+											           MaxLines="2"
+											           FontWeight="Medium"
+											           Foreground="{DynamicResource TextControlForeground}"
+											           ToolTip.Tip="{Binding CropDisplay}"/>
+											<!-- Cover crop indicator -->
+											<TextBlock Text="{Binding CoverCropDisplay}"
+											           IsVisible="{Binding HasCoverCrop}"
+											           TextAlignment="Center"
+											           FontSize="10"
+											           FontStyle="Italic"
+											           Foreground="#2E7D32"
+											           TextTrimming="CharacterEllipsis"
+											           MaxLines="1"
+											           ToolTip.Tip="{Binding CoverCropDisplay}"/>
+										</StackPanel>
+									</Border>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+
+				<!-- Hint text -->
+				<TextBlock Text="Click a crop card above to edit its properties."
+				           FontSize="12" FontStyle="Italic"
+				           Foreground="{StaticResource GcdsTextSecondaryBrush}"
+				           Margin="0,8,0,0"/>
+			</StackPanel>
+		</Border>
+
+		<!-- Step 4 — only visible when a crop is selected -->
+		<Border Grid.Row="3" Classes="step-container" Margin="{StaticResource DefaultUserControlMargin}"
+		        IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}">
 			<fieldViews:SelectedCropTabView x:Name="SelectedCropTabViewControl"/>
 		</Border>
-		<!-- End step 3 -->
 
 			</Grid>
 		</ScrollViewer>

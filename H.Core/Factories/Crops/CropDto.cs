@@ -23,6 +23,7 @@ public partial class CropDto : DtoBase, ICropDto
     private bool _isSelected;
     private bool _herbicideUsed;
     private bool _copyToSimilarCrops;
+    private int _sequenceNumber;
     private bool _isSecondaryCrop;
     private CoverCropTerminationType _coverCropTerminationType;
     private ICropDto? _coverCropDto;
@@ -215,6 +216,32 @@ public partial class CropDto : DtoBase, ICropDto
     {
         get => _copyToSimilarCrops;
         set => SetProperty(ref _copyToSimilarCrops, value);
+    }
+
+    public int SequenceNumber
+    {
+        get => _sequenceNumber;
+        set
+        {
+            if (SetProperty(ref _sequenceNumber, value))
+            {
+                RaisePropertyChanged(nameof(SequenceLabel));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Display label like "1st crop", "2nd crop", etc. Derived from <see cref="SequenceNumber"/>.
+    /// </summary>
+    public string SequenceLabel
+    {
+        get
+        {
+            var n = SequenceNumber;
+            if (n <= 0) return "—";
+            var suffix = n switch { 1 => "st", 2 => "nd", 3 => "rd", _ => "th" };
+            return $"{n}{suffix} crop";
+        }
     }
 
     public bool IsSecondaryCrop

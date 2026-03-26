@@ -1,0 +1,498 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 2200" width="1400" height="2200">
+  <defs>
+    <filter id="shadow1" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.1"/>
+    </filter>
+    <filter id="shadow2" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+    <clipPath id="tableClip">
+      <rect x="50" y="310" width="1300" height="400" rx="8"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="2200" fill="#F3F4F6"/>
+
+  <!-- ==================== STEP 1 ==================== -->
+  <g transform="translate(0,20)">
+    <!-- Step 1 container -->
+    <rect x="30" y="0" width="1340" height="80" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" filter="url(#shadow1)"/>
+    <!-- Badge -->
+    <rect x="50" y="22" width="70" height="36" rx="18" fill="#C26A1B"/>
+    <text x="85" y="46" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Step 1</text>
+    <!-- Title -->
+    <text x="136" y="36" font-family="Segoe UI, sans-serif" font-size="18" font-weight="700" fill="#1F2937">Rotation Overview</text>
+    <!-- Compact summary -->
+    <text x="136" y="58" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">
+      <tspan font-weight="600" fill="#1F2937">Name:</tspan> Crop Rotation test
+      <tspan dx="20" font-weight="600" fill="#1F2937">Start:</tspan> 1907
+      <tspan dx="20" font-weight="600" fill="#1F2937">End:</tspan> 2026
+      <tspan dx="20" font-weight="600" fill="#1F2937">Fields:</tspan> 3
+    </text>
+    <!-- Collapse chevron -->
+    <text x="1330" y="46" font-family="Segoe UI, sans-serif" font-size="18" fill="#6B7280" text-anchor="middle">&#x25B2;</text>
+  </g>
+
+  <!-- ==================== STEP 2 ==================== -->
+  <g transform="translate(0,120)">
+    <!-- Step 2 container -->
+    <rect x="30" y="0" width="1340" height="790" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" filter="url(#shadow2)"/>
+
+    <!-- Header row -->
+    <rect x="50" y="16" width="70" height="36" rx="18" fill="#C26A1B"/>
+    <text x="85" y="40" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Step 2</text>
+    <text x="136" y="32" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1F2937">Build Your Rotation Sequence</text>
+    <text x="136" y="52" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Define the crops grown in each position of the rotation cycle</text>
+
+    <!-- Add button and count -->
+    <rect x="50" y="70" width="150" height="36" rx="6" fill="#26428B"/>
+    <text x="80" y="93" font-family="Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF">+ Add Crop</text>
+    <text x="220" y="93" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">5 crops in sequence</text>
+
+    <!-- ===== TABLE ===== -->
+    <!-- Table outer border with rounded corners -->
+    <rect x="50" y="120" width="1300" height="338" rx="8" fill="none" stroke="#D1D5DB" stroke-width="1"/>
+
+    <!-- Table Header -->
+    <rect x="51" y="121" width="1298" height="44" rx="0" fill="#F3F4F6"/>
+    <!-- Round top corners manually -->
+    <rect x="51" y="121" width="1298" height="8" fill="#F3F4F6"/>
+    <rect x="51" y="121" width="8" height="8" fill="#F3F4F6"/>
+    <rect x="50" y="120" width="1300" height="46" rx="8" fill="#F3F4F6"/>
+    <rect x="50" y="145" width="1300" height="21" fill="#F3F4F6"/>
+    <!-- Bottom line of header -->
+    <line x1="50" y1="166" x2="1350" y2="166" stroke="#D1D5DB" stroke-width="1"/>
+
+    <!-- Header text -->
+    <text x="120" y="149" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#6B7280" text-anchor="middle">Sequence</text>
+    <text x="380" y="149" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#6B7280">Main Crop</text>
+    <text x="760" y="149" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#6B7280">Cover Crop</text>
+    <text x="1195" y="149" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#6B7280" text-anchor="middle">Actions</text>
+
+    <!-- Column dividers in header -->
+    <line x1="190" y1="121" x2="190" y2="166" stroke="#D1D5DB" stroke-width="1"/>
+    <line x1="680" y1="121" x2="680" y2="166" stroke="#D1D5DB" stroke-width="1"/>
+    <line x1="1040" y1="121" x2="1040" y2="166" stroke="#D1D5DB" stroke-width="1"/>
+
+    <!-- ===== ROW 1: 1st crop Wheat (white bg) ===== -->
+    <rect x="51" y="167" width="1298" height="52" fill="#FFFFFF"/>
+    <line x1="50" y1="219" x2="1350" y2="219" stroke="#D1D5DB" stroke-width="0.5"/>
+    <!-- Column dividers -->
+    <line x1="190" y1="167" x2="190" y2="219" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="680" y1="167" x2="680" y2="219" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="1040" y1="167" x2="1040" y2="219" stroke="#D1D5DB" stroke-width="0.5"/>
+    <!-- Sequence badge -->
+    <rect x="87" y="182" width="66" height="24" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="120" y="199" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#1F2937" text-anchor="middle">1st crop</text>
+    <!-- Main Crop dropdown -->
+    <rect x="210" y="180" width="260" height="30" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="226" y="200" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Wheat</text>
+    <text x="450" y="200" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+    <!-- Cover crop unchecked -->
+    <rect x="700" y="186" width="18" height="18" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.5"/>
+    <text x="730" y="200" font-family="Segoe UI, sans-serif" font-size="14" fill="#9CA3AF">None</text>
+    <!-- Move Up (disabled - first row) -->
+    <rect x="1055" y="180" width="26" height="26" rx="4" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="0.5"/>
+    <text x="1068" y="199" font-family="Segoe UI, sans-serif" font-size="14" fill="#D1D5DB" text-anchor="middle">&#x25B2;</text>
+    <!-- Move Down -->
+    <rect x="1087" y="180" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1100" y="199" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25BC;</text>
+    <!-- Delete -->
+    <rect x="1119" y="180" width="26" height="26" rx="4" fill="#FEE2E2"/>
+    <text x="1132" y="199" font-family="Segoe UI, sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">&#x2715;</text>
+
+    <!-- ===== ROW 2: 2nd crop Barley (alternating) ===== -->
+    <rect x="51" y="219" width="1298" height="52" fill="#FAFAFA"/>
+    <line x1="50" y1="271" x2="1350" y2="271" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="190" y1="219" x2="190" y2="271" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="680" y1="219" x2="680" y2="271" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="1040" y1="219" x2="1040" y2="271" stroke="#D1D5DB" stroke-width="0.5"/>
+    <rect x="87" y="234" width="66" height="24" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="120" y="251" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#1F2937" text-anchor="middle">2nd crop</text>
+    <rect x="210" y="232" width="260" height="30" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="226" y="252" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Barley</text>
+    <text x="450" y="252" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+    <rect x="700" y="238" width="18" height="18" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.5"/>
+    <text x="730" y="252" font-family="Segoe UI, sans-serif" font-size="14" fill="#9CA3AF">None</text>
+    <!-- Move Up -->
+    <rect x="1055" y="232" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1068" y="251" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25B2;</text>
+    <!-- Move Down -->
+    <rect x="1087" y="232" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1100" y="251" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25BC;</text>
+    <!-- Delete -->
+    <rect x="1119" y="232" width="26" height="26" rx="4" fill="#FEE2E2"/>
+    <text x="1132" y="251" font-family="Segoe UI, sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">&#x2715;</text>
+
+    <!-- ===== ROW 3: 3rd crop Dry Peas — SELECTED ===== -->
+    <rect x="51" y="271" width="1298" height="56" fill="#FFF8E7"/>
+    <!-- Selected left border -->
+    <rect x="50" y="271" width="4" height="56" fill="#26428B"/>
+    <line x1="50" y1="327" x2="1350" y2="327" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="190" y1="271" x2="190" y2="327" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="680" y1="271" x2="680" y2="327" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="1040" y1="271" x2="1040" y2="327" stroke="#D1D5DB" stroke-width="0.5"/>
+    <rect x="87" y="288" width="66" height="24" rx="4" fill="#26428B"/>
+    <text x="120" y="305" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">3rd crop</text>
+    <!-- Main Crop dropdown (selected styling) -->
+    <rect x="210" y="286" width="260" height="30" rx="5" fill="#FFFFFF" stroke="#26428B" stroke-width="1.5"/>
+    <text x="226" y="306" font-family="Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#1F2937">Dry Peas</text>
+    <text x="450" y="306" font-family="Segoe UI, sans-serif" font-size="12" fill="#26428B">&#x25BC;</text>
+    <!-- Cover crop CHECKED with green dropdown -->
+    <rect x="700" y="290" width="18" height="18" rx="3" fill="#4CAF50" stroke="#4CAF50" stroke-width="1.5"/>
+    <text x="709" y="304" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">&#x2713;</text>
+    <rect x="726" y="286" width="200" height="30" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5"/>
+    <text x="742" y="306" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Red Clover</text>
+    <text x="906" y="306" font-family="Segoe UI, sans-serif" font-size="12" fill="#4CAF50">&#x25BC;</text>
+    <!-- Move Up -->
+    <rect x="1055" y="286" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1068" y="305" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25B2;</text>
+    <!-- Move Down -->
+    <rect x="1087" y="286" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1100" y="305" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25BC;</text>
+    <!-- Delete -->
+    <rect x="1119" y="286" width="26" height="26" rx="4" fill="#FEE2E2"/>
+    <text x="1132" y="305" font-family="Segoe UI, sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">&#x2715;</text>
+
+    <!-- ===== ROW 4: 4th crop Wheat (alternating) ===== -->
+    <rect x="51" y="327" width="1298" height="52" fill="#FAFAFA"/>
+    <line x1="50" y1="379" x2="1350" y2="379" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="190" y1="327" x2="190" y2="379" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="680" y1="327" x2="680" y2="379" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="1040" y1="327" x2="1040" y2="379" stroke="#D1D5DB" stroke-width="0.5"/>
+    <rect x="87" y="342" width="66" height="24" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="120" y="359" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#1F2937" text-anchor="middle">4th crop</text>
+    <rect x="210" y="340" width="260" height="30" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="226" y="360" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Wheat</text>
+    <text x="450" y="360" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+    <rect x="700" y="346" width="18" height="18" rx="3" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.5"/>
+    <text x="730" y="360" font-family="Segoe UI, sans-serif" font-size="14" fill="#9CA3AF">None</text>
+    <!-- Move Up -->
+    <rect x="1055" y="340" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1068" y="359" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25B2;</text>
+    <!-- Move Down -->
+    <rect x="1087" y="340" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1100" y="359" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25BC;</text>
+    <!-- Delete -->
+    <rect x="1119" y="340" width="26" height="26" rx="4" fill="#FEE2E2"/>
+    <text x="1132" y="359" font-family="Segoe UI, sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">&#x2715;</text>
+
+    <!-- ===== ROW 5: 5th crop Oats (white bg) ===== -->
+    <rect x="51" y="379" width="1298" height="52" fill="#FFFFFF"/>
+    <!-- Round bottom corners -->
+    <rect x="50" y="410" width="1300" height="25" rx="8" fill="#FFFFFF" stroke="none"/>
+    <line x1="190" y1="379" x2="190" y2="431" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="680" y1="379" x2="680" y2="431" stroke="#D1D5DB" stroke-width="0.5"/>
+    <line x1="1040" y1="379" x2="1040" y2="431" stroke="#D1D5DB" stroke-width="0.5"/>
+    <rect x="87" y="394" width="66" height="24" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="120" y="411" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#1F2937" text-anchor="middle">5th crop</text>
+    <rect x="210" y="392" width="260" height="30" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="226" y="412" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Oats</text>
+    <text x="450" y="412" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+    <!-- Cover crop CHECKED -->
+    <rect x="700" y="398" width="18" height="18" rx="3" fill="#4CAF50" stroke="#4CAF50" stroke-width="1.5"/>
+    <text x="709" y="412" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">&#x2713;</text>
+    <rect x="726" y="392" width="200" height="30" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5"/>
+    <text x="742" y="412" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Winter Rye</text>
+    <text x="906" y="412" font-family="Segoe UI, sans-serif" font-size="12" fill="#4CAF50">&#x25BC;</text>
+    <!-- Move Up -->
+    <rect x="1055" y="392" width="26" height="26" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1068" y="411" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">&#x25B2;</text>
+    <!-- Move Down (disabled - last row) -->
+    <rect x="1087" y="392" width="26" height="26" rx="4" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="0.5"/>
+    <text x="1100" y="411" font-family="Segoe UI, sans-serif" font-size="14" fill="#D1D5DB" text-anchor="middle">&#x25BC;</text>
+    <!-- Delete -->
+    <rect x="1119" y="392" width="26" height="26" rx="4" fill="#FEE2E2"/>
+    <text x="1132" y="411" font-family="Segoe UI, sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">&#x2715;</text>
+
+    <!-- Table outer border redraw for clean corners -->
+    <rect x="50" y="120" width="1300" height="338" rx="8" fill="none" stroke="#D1D5DB" stroke-width="1"/>
+
+    <!-- Help text below table -->
+    <text x="50" y="480" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280" font-style="italic">This defines the crop rotation cycle. The actual year each crop is grown depends on the field and its starting position in the rotation. Click any row to edit details in Step 4.</text>
+
+    <!-- ===== ANNOTATIONS ===== -->
+    <!-- Annotation 1: Table format -->
+    <g>
+      <rect x="50" y="500" width="370" height="40" rx="8" fill="#E8F0FE" stroke="#26428B" stroke-width="1"/>
+      <text x="66" y="525" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#26428B">&#x2190; Familiar table format -- all crops visible at once</text>
+    </g>
+
+    <!-- Annotation 2: Cover crop checkbox -->
+    <g>
+      <line x1="850" y1="460" x2="850" y2="500" stroke="#4CAF50" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="690" y="500" width="350" height="40" rx="8" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+      <text x="706" y="525" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#2E7D32">&#x2191; Toggle cover crops with a simple checkbox</text>
+    </g>
+
+    <!-- Annotation 3: Selected row -->
+    <g>
+      <line x1="1200" y1="327" x2="1200" y2="556" stroke="#C26A1B" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="1060" y="556" width="290" height="40" rx="8" fill="#FFF8E7" stroke="#C26A1B" stroke-width="1"/>
+      <text x="1076" y="581" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#C26A1B">&#x2191; Click to select -- details in Step 4</text>
+    </g>
+  </g>
+
+  <!-- ==================== STEP 3 ==================== -->
+  <g transform="translate(0,950)">
+    <rect x="30" y="0" width="1340" height="440" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" filter="url(#shadow2)"/>
+
+    <!-- Header -->
+    <rect x="50" y="16" width="70" height="36" rx="18" fill="#C26A1B"/>
+    <text x="85" y="40" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Step 3</text>
+    <text x="136" y="32" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1F2937">Preview Field Assignments</text>
+    <text x="136" y="52" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">See how the rotation maps across your fields over time</text>
+
+    <!-- Field label column -->
+    <text x="50" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280">FIELD</text>
+
+    <!-- Year headers -->
+    <text x="185" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1907</text>
+    <text x="325" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1908</text>
+    <text x="465" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#26428B" font-style="italic" text-anchor="middle">1909</text>
+    <text x="605" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1910</text>
+    <text x="745" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1911</text>
+    <text x="885" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1912</text>
+    <text x="1025" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1913</text>
+    <text x="1165" y="95" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">1914</text>
+
+    <!-- ===== Field 1 Row ===== -->
+    <text x="50" y="138" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#1F2937">Field 1</text>
+    <!-- 1907: Wheat -->
+    <rect x="125" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="185" y="132" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1908: Barley -->
+    <rect x="265" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="325" y="132" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Barley</text>
+    <!-- 1909: Dry Peas HIGHLIGHTED -->
+    <rect x="405" y="108" width="120" height="50" rx="4" fill="#FFF8E7" stroke="#26428B" stroke-width="2"/>
+    <text x="465" y="128" font-family="Segoe UI, sans-serif" font-size="12" font-weight="600" fill="#26428B" text-anchor="middle">Dry Peas</text>
+    <text x="465" y="147" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Red Clover</text>
+    <!-- 1910: Wheat -->
+    <rect x="545" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="605" y="132" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1911: Oats -->
+    <rect x="685" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="745" y="128" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Oats</text>
+    <text x="745" y="147" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Winter Rye</text>
+    <!-- 1912: Wheat -->
+    <rect x="825" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="885" y="132" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1913: Barley -->
+    <rect x="965" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1025" y="132" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Barley</text>
+    <!-- 1914: Dry Peas -->
+    <rect x="1105" y="108" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1165" y="128" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Dry Peas</text>
+    <text x="1165" y="147" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Red Clover</text>
+
+    <!-- ===== Field 2 Row (offset by 1) ===== -->
+    <text x="50" y="200" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#1F2937">Field 2</text>
+    <!-- 1907: Oats -->
+    <rect x="125" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="185" y="192" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Oats</text>
+    <text x="185" y="211" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Winter Rye</text>
+    <!-- 1908: Wheat -->
+    <rect x="265" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="325" y="197" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1909: Barley -->
+    <rect x="405" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="465" y="197" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Barley</text>
+    <!-- 1910: Dry Peas -->
+    <rect x="545" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="605" y="192" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Dry Peas</text>
+    <text x="605" y="211" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Red Clover</text>
+    <!-- 1911: Wheat -->
+    <rect x="685" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="745" y="197" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1912: Barley -->
+    <rect x="825" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="885" y="197" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Barley</text>
+    <!-- 1913: Dry Peas -->
+    <rect x="965" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1025" y="192" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Dry Peas</text>
+    <text x="1025" y="211" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Red Clover</text>
+    <!-- 1914: Oats -->
+    <rect x="1105" y="172" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1165" y="192" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Oats</text>
+    <text x="1165" y="211" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Winter Rye</text>
+
+    <!-- ===== Field 3 Row (offset by 2) ===== -->
+    <text x="50" y="264" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#1F2937">Field 3</text>
+    <!-- 1907: Dry Peas -->
+    <rect x="125" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="185" y="256" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Dry Peas</text>
+    <text x="185" y="275" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Red Clover</text>
+    <!-- 1908: Wheat -->
+    <rect x="265" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="325" y="261" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1909: Barley (not highlighted for Field 3) -->
+    <rect x="405" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="465" y="261" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Oats</text>
+    <text x="465" y="278" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Winter Rye</text>
+    <!-- 1910: Barley -->
+    <rect x="545" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="605" y="261" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1911: Dry Peas -->
+    <rect x="685" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="745" y="256" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Barley</text>
+    <!-- 1912: Oats -->
+    <rect x="825" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="885" y="256" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Dry Peas</text>
+    <text x="885" y="275" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Red Clover</text>
+    <!-- 1913: Wheat -->
+    <rect x="965" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1025" y="261" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Wheat</text>
+    <!-- 1914: Barley -->
+    <rect x="1105" y="236" width="120" height="50" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="1165" y="261" font-family="Segoe UI, sans-serif" font-size="12" fill="#1F2937" text-anchor="middle">Oats</text>
+    <text x="1165" y="278" font-family="Segoe UI, sans-serif" font-size="10" fill="#4CAF50" text-anchor="middle">Winter Rye</text>
+
+    <!-- Scroll hint arrows -->
+    <text x="1310" y="200" font-family="Segoe UI, sans-serif" font-size="20" fill="#6B7280">&#x25B6;</text>
+
+    <!-- Info banner -->
+    <rect x="50" y="310" width="1280" height="50" rx="6" fill="#E8F0FE" stroke="#26428B" stroke-width="0.5"/>
+    <text x="80" y="330" font-family="Segoe UI, sans-serif" font-size="14" fill="#26428B" font-weight="600">&#x24D8;  Rotation Shifting:</text>
+    <text x="268" y="330" font-family="Segoe UI, sans-serif" font-size="13" fill="#1F2937">Each field starts at a different point in the rotation so crops are staggered across the farm.</text>
+    <text x="80" y="350" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">The sequence repeats every 5 years. Field assignments are generated automatically from your rotation definition.</text>
+  </g>
+
+  <!-- ==================== STEP 4 ==================== -->
+  <g transform="translate(0,1420)">
+    <rect x="30" y="0" width="1340" height="750" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" filter="url(#shadow2)"/>
+
+    <!-- Header -->
+    <rect x="50" y="16" width="70" height="36" rx="18" fill="#C26A1B"/>
+    <text x="85" y="40" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Step 4</text>
+    <text x="136" y="32" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1F2937">Edit Crop Details</text>
+    <text x="136" y="52" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Configure management practices for the selected crop in the sequence</text>
+
+    <!-- Currently Editing banner -->
+    <rect x="50" y="70" width="1280" height="80" rx="8" fill="#FFF8E7" stroke="#C26A1B" stroke-width="1"/>
+    <rect x="50" y="70" width="5" height="80" rx="2" fill="#C26A1B"/>
+    <text x="76" y="95" font-family="Segoe UI, sans-serif" font-size="15" font-weight="700" fill="#1F2937">Currently editing: Dry Peas (3rd crop) -- Field 1</text>
+    <!-- Cover crop toggle -->
+    <text x="76" y="118" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Cover crop:</text>
+    <rect x="163" y="106" width="36" height="20" rx="10" fill="#4CAF50"/>
+    <circle cx="189" cy="116" r="8" fill="#FFFFFF"/>
+    <text x="208" y="118" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#4CAF50">Red Clover</text>
+    <!-- Copy toggle -->
+    <text x="480" y="118" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Copy to similar crops:</text>
+    <rect x="625" y="106" width="36" height="20" rx="10" fill="#D1D5DB"/>
+    <circle cx="637" cy="116" r="8" fill="#FFFFFF"/>
+    <text x="670" y="118" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Off</text>
+
+    <!-- ===== Checklist Card Grid ===== -->
+    <text x="50" y="178" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700" fill="#1F2937">Data Categories</text>
+    <text x="180" y="178" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">-- toggle ON to provide optional data</text>
+
+    <!-- Row 1 of cards -->
+    <!-- Card 1: General (always active, blue) -->
+    <rect x="50" y="192" width="180" height="60" rx="8" fill="#E8F0FE" stroke="#26428B" stroke-width="1.5"/>
+    <text x="74" y="220" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700" fill="#26428B">&#x2699; General</text>
+    <text x="74" y="238" font-family="Segoe UI, sans-serif" font-size="11" fill="#6B7280">Yield, tillage, moisture</text>
+
+    <!-- Card 2: Fertilizer (green, ON) -->
+    <rect x="245" y="192" width="180" height="60" rx="8" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5"/>
+    <rect x="385" y="203" width="30" height="16" rx="8" fill="#4CAF50"/>
+    <circle cx="407" cy="211" r="6" fill="#FFFFFF"/>
+    <text x="269" y="220" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700" fill="#2E7D32">&#x1F33F; Fertilizer</text>
+    <text x="269" y="238" font-family="Segoe UI, sans-serif" font-size="11" fill="#6B7280">N, P, K applications</text>
+
+    <!-- Card 3: Manure (gray, OFF) -->
+    <rect x="440" y="192" width="180" height="60" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+    <rect x="580" y="203" width="30" height="16" rx="8" fill="#D1D5DB"/>
+    <circle cx="592" cy="211" r="6" fill="#FFFFFF"/>
+    <text x="464" y="220" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">Manure</text>
+    <text x="464" y="238" font-family="Segoe UI, sans-serif" font-size="11" fill="#9CA3AF">Organic amendments</text>
+
+    <!-- Card 4: Grazing (gray, OFF) -->
+    <rect x="635" y="192" width="180" height="60" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+    <rect x="775" y="203" width="30" height="16" rx="8" fill="#D1D5DB"/>
+    <circle cx="787" cy="211" r="6" fill="#FFFFFF"/>
+    <text x="659" y="220" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">Grazing</text>
+    <text x="659" y="238" font-family="Segoe UI, sans-serif" font-size="11" fill="#9CA3AF">Livestock on fields</text>
+
+    <!-- Row 2 of cards -->
+    <!-- Card 5: Soil (gray, OFF) -->
+    <rect x="50" y="262" width="180" height="60" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+    <rect x="190" y="273" width="30" height="16" rx="8" fill="#D1D5DB"/>
+    <circle cx="202" cy="281" r="6" fill="#FFFFFF"/>
+    <text x="74" y="290" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">Soil</text>
+    <text x="74" y="308" font-family="Segoe UI, sans-serif" font-size="11" fill="#9CA3AF">Soil properties</text>
+
+    <!-- Card 6: Residue (gray, OFF) -->
+    <rect x="245" y="262" width="180" height="60" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+    <rect x="385" y="273" width="30" height="16" rx="8" fill="#D1D5DB"/>
+    <circle cx="397" cy="281" r="6" fill="#FFFFFF"/>
+    <text x="269" y="290" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">Residue</text>
+    <text x="269" y="308" font-family="Segoe UI, sans-serif" font-size="11" fill="#9CA3AF">Crop residue mgmt</text>
+
+    <!-- Card 7: Economics (gray, OFF) -->
+    <rect x="440" y="262" width="180" height="60" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+    <rect x="580" y="273" width="30" height="16" rx="8" fill="#D1D5DB"/>
+    <circle cx="592" cy="281" r="6" fill="#FFFFFF"/>
+    <text x="464" y="290" font-family="Segoe UI, sans-serif" font-size="14" fill="#6B7280">Economics</text>
+    <text x="464" y="308" font-family="Segoe UI, sans-serif" font-size="11" fill="#9CA3AF">Revenue, costs</text>
+
+    <!-- ===== General Section ===== -->
+    <rect x="50" y="342" width="1280" height="4" rx="2" fill="#26428B"/>
+    <text x="50" y="370" font-family="Segoe UI, sans-serif" font-size="16" font-weight="700" fill="#26428B">General</text>
+
+    <!-- Form fields row 1 -->
+    <text x="50" y="400" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Yield (kg/ha)</text>
+    <rect x="50" y="408" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="66" y="430" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">3200</text>
+
+    <text x="280" y="400" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Moisture (%)</text>
+    <rect x="280" y="408" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="296" y="430" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">14.5</text>
+
+    <text x="510" y="400" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Tillage Type</text>
+    <rect x="510" y="408" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="526" y="430" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Reduced Tillage</text>
+    <text x="692" y="430" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+
+    <text x="740" y="400" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Pesticide Passes</text>
+    <rect x="740" y="408" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="756" y="430" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">2</text>
+
+    <!-- ===== Fertilizer Section ===== -->
+    <rect x="50" y="466" width="1280" height="4" rx="2" fill="#4CAF50"/>
+    <text x="50" y="494" font-family="Segoe UI, sans-serif" font-size="16" font-weight="700" fill="#2E7D32">Fertilizer</text>
+
+    <!-- Form fields -->
+    <text x="50" y="524" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Blend</text>
+    <rect x="50" y="532" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="66" y="554" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Urea</text>
+    <text x="232" y="554" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+
+    <text x="280" y="524" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">N Rate (kg N/ha)</text>
+    <rect x="280" y="532" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="296" y="554" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">80</text>
+
+    <text x="510" y="524" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">P Rate (kg P/ha)</text>
+    <rect x="510" y="532" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="526" y="554" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">25</text>
+
+    <text x="740" y="524" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">K Rate (kg K/ha)</text>
+    <rect x="740" y="532" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="756" y="554" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">40</text>
+
+    <text x="50" y="590" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Application Method</text>
+    <rect x="50" y="598" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="66" y="620" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Banded</text>
+    <text x="232" y="620" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+
+    <text x="280" y="590" font-family="Segoe UI, sans-serif" font-size="13" fill="#6B7280">Season</text>
+    <rect x="280" y="598" width="200" height="34" rx="5" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="296" y="620" font-family="Segoe UI, sans-serif" font-size="14" fill="#1F2937">Spring</text>
+    <text x="462" y="620" font-family="Segoe UI, sans-serif" font-size="12" fill="#6B7280">&#x25BC;</text>
+
+    <!-- Grayed out sections hint -->
+    <rect x="50" y="656" width="1280" height="36" rx="6" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="0.5"/>
+    <text x="640" y="679" font-family="Segoe UI, sans-serif" font-size="13" fill="#9CA3AF" text-anchor="middle">Manure, Grazing, Soil, Residue, Economics -- toggle ON in the cards above to enter data</text>
+  </g>
+</svg>

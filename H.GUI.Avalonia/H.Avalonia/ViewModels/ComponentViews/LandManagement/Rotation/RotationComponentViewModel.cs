@@ -194,8 +194,11 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                         _selectedCropDto.PropertyChanged += OnSelectedCropDtoPropertyChanged;
                     }
 
-                    // Reset to main crop editing when selection changes
-                    IsEditingCoverCrop = false;
+                    // If the newly selected crop doesn't have a cover crop, reset to main crop editing
+                    if (_selectedCropDto?.HasCoverCrop != true)
+                    {
+                        IsEditingCoverCrop = false;
+                    }
 
                     // Update the visual highlighting when the selected crop changes
                     UpdateCopyTargetHighlighting();
@@ -326,6 +329,16 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         public ICommand ToggleCoverCropCommand { get; private set; } = null!;
 
+        /// <summary>
+        /// Moves a crop one position earlier in the rotation sequence.
+        /// </summary>
+        public ICommand MoveCropUpCommand { get; private set; } = null!;
+
+        /// <summary>
+        /// Moves a crop one position later in the rotation sequence.
+        /// </summary>
+        public ICommand MoveCropDownCommand { get; private set; } = null!;
+
         // ── Enum lists for crop tab ComboBoxes ──
 
         public IReadOnlyList<TillageType> TillageTypes { get; } = Enum.GetValues<TillageType>();
@@ -348,6 +361,50 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         {
             get => _isEditingCoverCrop;
             set => SetProperty(ref _isEditingCoverCrop, value);
+        }
+
+        // ── Checklist category toggles ──
+
+        private bool _isFertilizerActive = true;
+        public bool IsFertilizerActive
+        {
+            get => _isFertilizerActive;
+            set => SetProperty(ref _isFertilizerActive, value);
+        }
+
+        private bool _isManureActive;
+        public bool IsManureActive
+        {
+            get => _isManureActive;
+            set => SetProperty(ref _isManureActive, value);
+        }
+
+        private bool _isGrazingActive;
+        public bool IsGrazingActive
+        {
+            get => _isGrazingActive;
+            set => SetProperty(ref _isGrazingActive, value);
+        }
+
+        private bool _isSoilActive;
+        public bool IsSoilActive
+        {
+            get => _isSoilActive;
+            set => SetProperty(ref _isSoilActive, value);
+        }
+
+        private bool _isResidueActive;
+        public bool IsResidueActive
+        {
+            get => _isResidueActive;
+            set => SetProperty(ref _isResidueActive, value);
+        }
+
+        private bool _isEconomicsActive;
+        public bool IsEconomicsActive
+        {
+            get => _isEconomicsActive;
+            set => SetProperty(ref _isEconomicsActive, value);
         }
 
         #endregion
@@ -511,6 +568,49 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
 
             // Initialize command for toggling cover crop on/off
             this.ToggleCoverCropCommand = new DelegateCommand<object>(OnToggleCoverCropExecute);
+
+            // Initialize commands for reordering crops in the rotation sequence
+            this.MoveCropUpCommand = new DelegateCommand<object>(OnMoveCropUpExecute);
+            this.MoveCropDownCommand = new DelegateCommand<object>(OnMoveCropDownExecute);
+        }
+
+        private void OnMoveCropUpExecute(object parameter)
+        {
+            if (parameter is ICropDto cropDto)
+            {
+                var index = CropDtos.IndexOf(cropDto);
+                if (index > 0)
+                {
+                    CropDtos.Move(index, index - 1);
+                    UpdateSequenceNumbers();
+                    GenerateFieldAssignmentRows();
+                }
+            }
+        }
+
+        private void OnMoveCropDownExecute(object parameter)
+        {
+            if (parameter is ICropDto cropDto)
+            {
+                var index = CropDtos.IndexOf(cropDto);
+                if (index >= 0 && index < CropDtos.Count - 1)
+                {
+                    CropDtos.Move(index, index + 1);
+                    UpdateSequenceNumbers();
+                    GenerateFieldAssignmentRows();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the <see cref="ICropDto.SequenceNumber"/> on each crop DTO to reflect its current position.
+        /// </summary>
+        private void UpdateSequenceNumbers()
+        {
+            for (var i = 0; i < CropDtos.Count; i++)
+            {
+                CropDtos[i].SequenceNumber = i + 1;
+            }
         }
 
         /// <summary>
@@ -731,8 +831,8 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                     this.SelectedFieldName = fieldName;
                 }
 
-                // Set the flag to true - grid cell selection SHOULD trigger auto-scroll
-                this.ShouldTriggerAutoScroll = true;
+                // Do not auto-scroll — user needs Step 3 visible to select the next crop
+                this.ShouldTriggerAutoScroll = false;
                 
                 // Set the selected crop for editing in Step 4
                 // This will trigger UpdateCopyTargetHighlighting via the property setter
@@ -1140,9 +1240,10 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                 }
             }
 
-            // Regenerate the preview grid when crops are added or removed
+            // Update sequence labels and regenerate the preview grid
+            UpdateSequenceNumbers();
             GenerateFieldAssignmentRows();
-            
+
             // Notify UI that HasNoCrops and ShouldShowPreview may have changed
             RaisePropertyChanged(nameof(HasNoCrops));
             RaisePropertyChanged(nameof(ShouldShowPreview));

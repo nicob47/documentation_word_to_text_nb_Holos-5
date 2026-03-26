@@ -16,14 +16,18 @@
            Margin="{StaticResource DefaultUserControlMargin}">
        <StackPanel>
            <!-- Step Header -->
-           <StackPanel Margin="0,0,0,20">
-               <Border Classes="step-badge" HorizontalAlignment="Left">
+           <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+               <Border Classes="step-badge" VerticalAlignment="Top">
                    <TextBlock Text="{Binding [Label_StepFour].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
                </Border>
-               <TextBlock Text="{Binding [Label_FinalizeAndCreate].Value, Source={StaticResource Loc}}"
-                          Classes="step-number-description"
-                          Margin="0,8,0,0"/>
+               <StackPanel VerticalAlignment="Center">
+                   <TextBlock Text="{Binding [Label_FinalizeAndCreate].Value, Source={StaticResource Loc}}"
+                              Classes="step-number-description"/>
+               </StackPanel>
            </StackPanel>
+
+           <!-- Step header separator -->
+           <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
 
            <!-- Create Button -->
            <Button Content="{Binding [Button_CreateRotation].Value, Source={StaticResource Loc}}"

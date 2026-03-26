@@ -21,15 +21,17 @@
     <Border x:Name="RootPanel" Classes="step-container" IsVisible="{Binding HasManagementPeriods}">
         <StackPanel Spacing="16">
 
-            <StackPanel Classes="step-header">
+            <StackPanel Classes="step-header" Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
                 <!-- Step Badge -->
-                <Border Classes="step-badge">
+                <Border Classes="step-badge" VerticalAlignment="Top">
                     <TextBlock Text="{Binding [Label_Step3].Value, Source={StaticResource Loc}}" Classes="step-badge-text" />
                 </Border>
 
-                <!-- Step Description -->
-                <TextBlock Text="{Binding [Label_Step3Text].Value, Source={StaticResource Loc}}"
-                           Classes="step-number-description" />
+                <StackPanel VerticalAlignment="Center">
+                    <!-- Step Description -->
+                    <TextBlock Text="{Binding [Label_Step3Text].Value, Source={StaticResource Loc}}"
+                               Classes="step-number-description" />
+                </StackPanel>
             </StackPanel>
 
             <!-- ═══ Practice Selector Bar ═══ -->

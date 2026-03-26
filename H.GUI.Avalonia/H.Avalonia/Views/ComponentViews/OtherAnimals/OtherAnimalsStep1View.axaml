@@ -19,15 +19,17 @@
     <Border Classes="step-container" Margin="0,0,0,16">
         <StackPanel>
 
-            <StackPanel Classes="step-header">
+            <StackPanel Classes="step-header" Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
                 <!-- Step Badge -->
-                <Border Classes="step-badge">
+                <Border Classes="step-badge" VerticalAlignment="Top">
                     <TextBlock Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text" />
                 </Border>
 
-                <!-- Step Description -->
-                <TextBlock Text="{Binding [Label_Step1Text].Value, Source={StaticResource Loc}}"
-                           Classes="step-number-description" />
+                <StackPanel VerticalAlignment="Center">
+                    <!-- Step Description -->
+                    <TextBlock Text="{Binding [Label_Step1Text].Value, Source={StaticResource Loc}}"
+                               Classes="step-number-description" />
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,10">

@@ -11,6 +11,7 @@
 
     <UserControl.Resources>
         <converters:CropTypeToColorConverter x:Key="CropTypeToColorConverter"/>
+        <converters:IndexToOrdinalConverter x:Key="IndexToOrdinalConverter"/>
         <dataTemplates:CropGroupedItemDataTemplate x:Key="CropGroupedItemDataTemplate"/>
     </UserControl.Resources>
 
@@ -35,139 +36,127 @@
     <StackPanel>
 
         <!-- Step Header with Vertical Layout -->
-        <StackPanel Margin="0,0,0,20">
+        <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
             <!-- Step Badge -->
-            <Border Classes="step-badge" HorizontalAlignment="Left">
+            <Border Classes="step-badge" VerticalAlignment="Top">
                 <TextBlock Text="{Binding [Label_StepTwo].Value, Source={StaticResource Loc}}" Classes="step-badge-text" />
             </Border>
 
-            <!-- Step Description below badge -->
-            <TextBlock Text="{Binding [Label_EnterFieldHistory].Value, Source={StaticResource Loc}}"
-                       Classes="step-number-description"
-                       Margin="0,8,0,0" />
+            <StackPanel VerticalAlignment="Center">
+                <!-- Step Description -->
+                <TextBlock Text="{Binding [Label_EnterFieldHistory].Value, Source={StaticResource Loc}}"
+                           Classes="step-number-description" />
+            </StackPanel>
         </StackPanel>
+
+        <!-- Step header separator -->
+        <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12"/>
 
         <StackPanel Orientation="Horizontal" Margin="0,10">
             <Button Command="{Binding AddCropCommand}" Classes="add-group" Content="{Binding [Button_AddCropToField].Value, Source={StaticResource Loc}}" />
         </StackPanel>
 
-        <!-- Timeline Container -->
-        <Border Classes="timeline-container">
-            <StackPanel>
-                <!-- Timeline Header -->
-                <TextBlock Text="{Binding [Label_FieldHistoryTimeline].Value, Source={StaticResource Loc}}" Classes="timeline-header" />
+        <!-- Crop Table — only visible when crops exist -->
+        <StackPanel IsVisible="{Binding SelectedFieldSystemComponentDto.CropDtos.Count}">
 
-                <!-- Timeline Scrollable Area -->
-                <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Hidden"
-                              MaxHeight="250"
-                              MinHeight="150">
-                    <ItemsControl ItemsSource="{Binding Path=SelectedFieldSystemComponentDto.CropDtos}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="16" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+            <!-- Table Header -->
+            <Border Background="#F3F4F6" Padding="8,6"
+                    BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                    BorderThickness="1,1,1,1" CornerRadius="6,6,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Year" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="Main Crop" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    <TextBlock Grid.Column="2" Text="Cover Crop" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    <TextBlock Grid.Column="3" Text="" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <!-- Timeline Card -->
-                                <Button Background="Transparent"
-                                        BorderThickness="0"
-                                        Padding="0"
-                                        Margin="4"
-                                        HorizontalContentAlignment="Stretch"
-                                        VerticalContentAlignment="Stretch"
-                                        Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).SetSelectedCropCommand}"
-                                        CommandParameter="{Binding}">
+            <!-- Table Rows -->
+            <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                    BorderThickness="1,0,1,1" CornerRadius="0,0,6,6"
+                    ClipToBounds="True">
+                <ItemsControl ItemsSource="{Binding Path=SelectedFieldSystemComponentDto.CropDtos}" HorizontalAlignment="Stretch">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel HorizontalAlignment="Stretch"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Styles>
+                        <Style Selector="ItemsControl > ContentPresenter">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ItemsControl.Styles>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                                <Border Padding="8,6"
+                                        BorderBrush="{StaticResource GcdsBorderLightBrush}"
+                                        BorderThickness="0,0,0,1"
+                                        Background="{Binding CropType, Converter={StaticResource CropTypeToColorConverter}}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Border Classes="timeline-card"
-                                            Background="{Binding CropType, Converter={StaticResource CropTypeToColorConverter}}">
-                                        <StackPanel Spacing="8" Margin="8">
-                                            <!-- Top row with Year Badge and Delete Button in same DockPanel for perfect alignment -->
-                                            <DockPanel LastChildFill="False">
-                                                <!-- Year Badge -->
-                                                <Border Classes="year-badge"
-                                                        DockPanel.Dock="Left"
-                                                        VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding Path=Year}"
-                                                               Classes="year-badge-text"
-                                                               VerticalAlignment="Center"
-                                                               HorizontalAlignment="Center" />
-                                                </Border>
+                                        <!-- Year -->
+                                        <TextBlock Grid.Column="0" FontSize="12" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Year}"/>
 
-                                                <!-- Delete Button -->
-                                                <Button Classes="delete-button"
-                                                        DockPanel.Dock="Right"
-                                                        VerticalAlignment="Center"
-                                                        Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).RemoveSpecificCropCommand}"
-                                                        CommandParameter="{Binding}">
-                                                    <TextBlock Name="DeleteTextBlock"
-                                                               Classes="delete-text"
-                                                               Text="{Binding [Label_Delete].Value, Source={StaticResource Loc}}"/>
-                                                </Button>
-                                            </DockPanel>
+                                        <!-- Main Crop -->
+                                        <ComboBox Grid.Column="1" Classes="crop-selector"
+                                                  ItemsSource="{Binding GroupedCropItems}"
+                                                  SelectedItem="{Binding SelectedCropTypeItem}"
+                                                  ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                  HorizontalAlignment="Stretch"
+                                                  Margin="8,0,0,0"
+                                                  MaxDropDownHeight="320"/>
 
-                                            <!-- Crop Type Section -->
-                                            <StackPanel Spacing="4">
-                                                <TextBlock Text="{Binding [Label_SelectCrop].Value, Source={StaticResource Loc}}"
-                                                           FontSize="11"
-                                                           Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                                                           FontWeight="SemiBold"
-                                                           HorizontalAlignment="Left" />
-
-                                                <ComboBox Classes="crop-selector"
-                                                          ItemsSource="{Binding GroupedCropItems}"
-                                                          SelectedItem="{Binding SelectedCropTypeItem}"
-                                                          ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
-                                                          Width="240"
-                                                          MaxDropDownHeight="320"/>
-                                            </StackPanel>
-
-                                            <!-- Cover Crop Toggle -->
-                                            <Button Background="Transparent"
-                                                    BorderThickness="0"
-                                                    Padding="0"
-                                                    HorizontalAlignment="Left"
+                                        <!-- Cover Crop -->
+                                        <DockPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
+                                            <Button DockPanel.Dock="Left" Background="Transparent" BorderThickness="0" Padding="0" Margin="0,0,6,0"
                                                     Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).ToggleCoverCropCommand}"
                                                     CommandParameter="{Binding}">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
-                                                              IsHitTestVisible="False"/>
-                                                    <TextBlock Text="Cover Crop"
-                                                               FontSize="11"
-                                                               Foreground="#2E7D32"
-                                                               VerticalAlignment="Center"/>
-                                                </StackPanel>
+                                                <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
+                                                          IsHitTestVisible="False" MinWidth="0" Padding="0"/>
                                             </Button>
+                                            <TextBlock DockPanel.Dock="Left" Text="None" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                                       IsVisible="{Binding !HasCoverCrop}" VerticalAlignment="Center" FontStyle="Italic"/>
+                                            <ComboBox Classes="crop-selector"
+                                                      IsVisible="{Binding HasCoverCrop}"
+                                                      ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
+                                                      SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
+                                                      ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                      HorizontalAlignment="Stretch"
+                                                      MaxDropDownHeight="320"/>
+                                        </DockPanel>
 
-                                            <!-- Cover Crop Type Selector (visible when cover crop enabled) -->
-                                            <StackPanel Spacing="4"
-                                                        IsVisible="{Binding HasCoverCrop}">
-                                                <TextBlock Text="Cover Crop Type"
-                                                           FontSize="12"
-                                                           Foreground="#2E7D32"
-                                                           FontWeight="SemiBold"
-                                                           HorizontalAlignment="Left" />
-                                                <ComboBox Classes="crop-selector"
-                                                          ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
-                                                          SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
-                                                          ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
-                                                          Width="240"
-                                                          MaxDropDownHeight="320"/>
-                                            </StackPanel>
+                                        <!-- Actions -->
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Button Background="#FEE2E2" BorderBrush="#DC2626" BorderThickness="1"
+                                                    CornerRadius="4" Padding="4,2" MinWidth="0" MinHeight="0" Width="24" Height="24"
+                                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                    Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).RemoveSpecificCropCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock Text="🗑" FontSize="11"/>
+                                            </Button>
                                         </StackPanel>
-                                    </Border>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-
-                <!-- Timeline Navigation Hint -->
-                <TextBlock Text="{Binding [Label_TimelineScrollHint].Value, Source={StaticResource Loc}}"
-                           Classes="timeline-hint" />
-            </StackPanel>
-        </Border>
+                                    </Grid>
+                                </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </StackPanel>
     </StackPanel>
 </UserControl>

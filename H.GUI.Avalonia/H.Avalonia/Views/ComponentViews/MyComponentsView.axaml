@@ -7,6 +7,7 @@
 			 xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
 			 xmlns:avalonia="clr-namespace:H.Avalonia"
 			 xmlns:componentViews="clr-namespace:H.Avalonia.Views.ComponentViews"
+			 xmlns:infra="clr-namespace:H.Avalonia.Infrastructure"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 
              x:Class="H.Avalonia.Views.ComponentViews.MyComponentsView">
@@ -28,18 +29,24 @@
 
 		<Grid Grid.Row="0" Name="MyComponentHeaderGrid" HorizontalAlignment="Stretch">
 			<StackPanel Margin="10,10,10,5" VerticalAlignment="Center">
-				<Border Background="{StaticResource GcdsBgLightBrush}" 
-					   BorderBrush="{StaticResource GcdsBorderLightBrush}" 
-					   BorderThickness="1" 
-					   CornerRadius="6" 
-					   Padding="20,16" 
+				<Border Background="{StaticResource GcdsBgLightBrush}"
+					   BorderBrush="{StaticResource GcdsBorderLightBrush}"
+					   BorderThickness="1"
+					   CornerRadius="6"
+					   Padding="20,16"
 					   Margin="0">
-					<Grid HorizontalAlignment="Stretch">
-						<TextBlock Classes="title-textblock" Text="{Binding [Heading_MyComponents].Value, Source={StaticResource Loc}}" HorizontalAlignment="Left"/>
-						<Button HorizontalAlignment="Right" Padding="5" Margin="10,0" Background="Transparent" Classes="back-button" CornerRadius="50" Command="{Binding Path=OnOptionsExecute}">
-							<Image Source="avares://H.Avalonia/Assets/Images/Icons/Gear-icon.png" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
-						</Button>
-					</Grid>
+					<StackPanel Spacing="6">
+						<Grid HorizontalAlignment="Stretch">
+							<TextBlock Classes="title-textblock" Text="{Binding [Heading_MyComponents].Value, Source={StaticResource Loc}}" HorizontalAlignment="Left"/>
+							<Button HorizontalAlignment="Right" Padding="5" Margin="10,0" Background="Transparent" Classes="back-button" CornerRadius="50" Command="{Binding Path=OnOptionsExecute}">
+								<Image Source="avares://H.Avalonia/Assets/Images/Icons/Gear-icon.png" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
+							</Button>
+						</Grid>
+						<ToggleSwitch IsChecked="{Binding ShowAdvancedOptions, Source={x:Static infra:AppViewSettings.Instance}}"
+									  OnContent="Advanced" OffContent="Basic"
+									  Padding="0" Margin="0"
+									  HorizontalAlignment="Left"/>
+					</StackPanel>
 				</Border>
 			</StackPanel>
 		</Grid>

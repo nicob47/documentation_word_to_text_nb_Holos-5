@@ -6,6 +6,7 @@ using H.Core.Factories.Fields;
 using H.Core.Models;
 using H.Core.Models.Animals.Beef;
 using H.Core.Models.LandManagement.Fields;
+using H.Core.Services.CropColorService;
 using H.Core.Services.LandManagement.Fields;
 using H.Core.Services.StorageService;
 using Microsoft.Extensions.Logging;
@@ -64,7 +65,7 @@ public class FieldComponentViewModelTest
         _mockFieldComponentDtoFactory.Setup(x => x.CreateDto(It.IsAny<Farm>())).Returns(new FieldSystemComponentDto());
         _mockFieldComponentService.Setup(x => x.TransferToFieldComponentDto(It.IsAny<FieldSystemComponent>())).Returns(new FieldSystemComponentDto());
 
-        _viewModel = new FieldComponentViewModel(mockRegionManager.Object, mockEventAggregator.Object, mockStorageService.Object, _mockFieldComponentService.Object, mockLogger.Object, _mockCropFactory.Object);
+        _viewModel = new FieldComponentViewModel(mockRegionManager.Object, mockEventAggregator.Object, mockStorageService.Object, _mockFieldComponentService.Object, mockLogger.Object, _mockCropFactory.Object, new Mock<ICropColorService>().Object);
     }
 
     [TestCleanup]
@@ -129,7 +130,8 @@ public class FieldComponentViewModelTest
             mockStorageService.Object,
             _mockFieldComponentService.Object,
             new Mock<ILogger>().Object,
-            _mockCropFactory.Object);
+            _mockCropFactory.Object,
+            new Mock<ICropColorService>().Object);
 
         viewModel.InitializeViewModel(fieldSystemComponent);
 

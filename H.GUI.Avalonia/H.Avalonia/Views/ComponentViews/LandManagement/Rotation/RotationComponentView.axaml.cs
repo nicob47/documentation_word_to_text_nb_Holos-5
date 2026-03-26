@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using H.Avalonia.Infrastructure;
 using H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation;
 using System;
 
@@ -46,12 +47,20 @@ public partial class RotationComponentView : UserControl
     public RotationComponentView()
     {
         InitializeComponent();
-        
+
         // Set default value for design time - makes it easier to see all options in the designer
         if (Design.IsDesignMode)
         {
             ShowAdvancedOptions = true;
         }
+
+        // Sync with the shared AppViewSettings singleton
+        AppViewSettings.Instance.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(AppViewSettings.ShowAdvancedOptions))
+                ShowAdvancedOptions = AppViewSettings.Instance.ShowAdvancedOptions;
+        };
+        ShowAdvancedOptions = AppViewSettings.Instance.ShowAdvancedOptions;
 
         // Subscribe to DataContext changes to handle ViewModel lifecycle events
         // This allows us to properly attach/detach event handlers when the ViewModel changes

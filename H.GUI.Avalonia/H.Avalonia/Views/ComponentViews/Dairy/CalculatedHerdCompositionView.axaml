@@ -32,25 +32,27 @@
     <StackPanel x:Name="MainStackPanel">
       <!-- Step Header -->
       <StackPanel x:Name="StepHeaderStackPanel"
-                  Classes="step-header">
+                  Classes="step-header"
+                  Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
         <!-- Step Badge -->
-        <Border Classes="step-badge" HorizontalAlignment="Left">
+        <Border Classes="step-badge" VerticalAlignment="Top">
           <TextBlock Text="{Binding [Label_StepOne].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
         </Border>
 
-        <!-- Title -->
-        <TextBlock x:Name="HeaderTitleTextBlock"
-                   Text="{Binding [Label_DefineSteadyStateHerdComposition].Value, Source={StaticResource Loc}}"
-                   Classes="step-number-description"
-                   Margin="0,12,0,0"/>
+        <StackPanel VerticalAlignment="Center">
+          <!-- Title -->
+          <TextBlock x:Name="HeaderTitleTextBlock"
+                     Text="{Binding [Label_DefineSteadyStateHerdComposition].Value, Source={StaticResource Loc}}"
+                     Classes="step-number-description"/>
 
-        <!-- Description -->
-        <TextBlock x:Name="HeaderDescriptionTextBlock"
-                   Text="{Binding [Label_ClickStageCardBelowDesc].Value, Source={StaticResource Loc}}"
-                   FontSize="13"
-                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                   TextWrapping="Wrap"
-                   Margin="0,12,0,0"/>
+          <!-- Description -->
+          <TextBlock x:Name="HeaderDescriptionTextBlock"
+                     Text="{Binding [Label_ClickStageCardBelowDesc].Value, Source={StaticResource Loc}}"
+                     FontSize="13"
+                     Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                     TextWrapping="Wrap"
+                     Margin="0,2,0,0"/>
+        </StackPanel>
       </StackPanel>
 
       <!-- Main Content with Cards and Calculations -->
@@ -288,23 +290,24 @@
           IsVisible="{Binding IsAnyStageSelected}">
     <StackPanel Grid.IsSharedSizeScope="True">
       <!-- Step Header -->
-      <StackPanel Orientation="Vertical" Classes="step-header">
+      <StackPanel Orientation="Horizontal" Classes="step-header" Spacing="12" Margin="0,0,0,12">
         <!-- Step Badge -->
-        <Border Classes="step-badge" HorizontalAlignment="Left">
+        <Border Classes="step-badge" VerticalAlignment="Top">
           <TextBlock Text="{Binding [Label_StepTwo].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
         </Border>
 
-        <!-- Title -->
-        <TextBlock Text="{Binding [Label_ConfigureStagePoplAndDuration].Value, Source={StaticResource Loc}}"
-                   Classes="step-number-description"
-                   Margin="0,12,0,0"/>
+        <StackPanel VerticalAlignment="Center">
+          <!-- Title -->
+          <TextBlock Text="{Binding [Label_ConfigureStagePoplAndDuration].Value, Source={StaticResource Loc}}"
+                     Classes="step-number-description"/>
 
-        <!-- Description -->
-        <TextBlock Text="{Binding [Label_EnterSteadyStatePopDesc].Value, Source={StaticResource Loc}}"
-                   FontSize="13"
-                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                   TextWrapping="Wrap"
-                   Margin="0,12,0,0"/>
+          <!-- Description -->
+          <TextBlock Text="{Binding [Label_EnterSteadyStatePopDesc].Value, Source={StaticResource Loc}}"
+                     FontSize="13"
+                     Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                     TextWrapping="Wrap"
+                     Margin="0,2,0,0"/>
+        </StackPanel>
       </StackPanel>
 
       <!-- Mode Toggle -->
