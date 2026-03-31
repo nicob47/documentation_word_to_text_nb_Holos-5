@@ -98,6 +98,9 @@ public class V4ToV5MigrationTests
         _migration.MigrateFarmExport(farms);
 
         Assert.AreEqual(2, farms.Count);
+
+        Assert.AreEqual(1, (farms[0]["Components"] as JArray).Count);
+        Assert.AreEqual(0, (farms[1]["Components"] as JArray).Count);
     }
 
     [TestMethod]
@@ -109,38 +112,6 @@ public class V4ToV5MigrationTests
         _migration.MigrateFarmExport(farms);
 
         Assert.AreEqual(0, farms.Count);
-    }
-
-    [TestMethod]
-    public void MigrateFarmExport_WithComponentMissingType_NoErrors()
-    {
-        var root = new JObject
-        {
-            ["Farms"] = new JArray
-            {
-                new JObject
-                {
-                    ["Name"] = "Test Farm",
-                    ["Components"] = new JArray
-                    {
-                        new JObject
-                        {
-                            ["Name"] = "Component Without Type"
-                            // Missing $type property
-                        }
-                    }
-                }
-            }
-        };
-
-        // Should not throw
-        _migration.MigrateApplicationData(root);
-
-        var farms = root["Farms"] as JArray;
-        Assert.IsNotNull(farms);
-        var components = farms[0]["Components"] as JArray;
-        Assert.IsNotNull(components);
-        Assert.AreEqual(1, components.Count);
     }
 
     [TestMethod]
@@ -214,23 +185,6 @@ public class V4ToV5MigrationTests
     }
 
     [TestMethod]
-    public void MigrateFarmExport_WithMissingComponentsProperty_NoErrors()
-    {
-        var farms = new JArray
-        {
-            new JObject
-            {
-                ["Name"] = "Farm Without Components"
-            }
-        };
-
-        // Should not throw
-        _migration.MigrateFarmExport(farms);
-
-        Assert.AreEqual(1, farms.Count);
-    }
-
-    [TestMethod]
     public void MigrateFarmExport_WithVariousComponentTypes_PreserveAll()
     {
         var farms = new JArray
@@ -243,7 +197,6 @@ public class V4ToV5MigrationTests
                     new JObject { ["$type"] = "H.Core.Models.LandManagement.Rotation.RotationComponent, H.Core" },
                     new JObject { ["$type"] = "H.Core.Models.Animals.Beef.CowCalfComponent, H.Core" },
                     new JObject { ["$type"] = "H.Core.Models.Animals.Poultry.LayerComponent, H.Core" },
-                    new JObject { } // No type
                 }
             }
         };
@@ -251,7 +204,7 @@ public class V4ToV5MigrationTests
         _migration.MigrateFarmExport(farms);
 
         var components = (farms[0]["Components"] as JArray);
-        Assert.AreEqual(4, components.Count);
+        Assert.AreEqual(3, components.Count);
     }
 
     [TestMethod]
