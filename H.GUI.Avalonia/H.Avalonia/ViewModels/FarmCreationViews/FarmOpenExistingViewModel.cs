@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace H.Avalonia.ViewModels.FarmCreationViews
 {
-    public class FarmOpenExistingViewmodel : FarmOpenExistingViewModelBase
+    public class FarmOpenExistingViewModel : FarmOpenExistingViewModelBase
     {
         #region Fields
 
@@ -19,7 +19,7 @@ namespace H.Avalonia.ViewModels.FarmCreationViews
 
         #region Constructors
 
-        public FarmOpenExistingViewmodel(IRegionManager regionManager, IStorageService storageService, INotificationManagerService notificationManager) : base(regionManager, storageService, notificationManager)
+        public FarmOpenExistingViewModel(IRegionManager regionManager, IStorageService storageService, INotificationManagerService notificationManager) : base(regionManager, storageService, notificationManager)
         {
             NavigateToPreviousPage = new DelegateCommand(OnNavigateToPreviousPage);
         }
