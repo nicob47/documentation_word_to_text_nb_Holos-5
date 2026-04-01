@@ -1221,6 +1221,12 @@ Si notre réponse à vos préoccupations au sujet de la protection des renseigne
   <data name="Label_EndYear" xml:space="preserve">
     <value>Année de fin</value>
   </data>
+  <data name="Label_RotationStartYear" xml:space="preserve">
+    <value>En quelle année cette rotation commence-t-elle ?</value>
+  </data>
+  <data name="Label_RotationEndYear" xml:space="preserve">
+    <value>En quelle année cette rotation se termine-t-elle ?</value>
+  </data>
   <data name="Label_EquilibriumCalculationStrategy" xml:space="preserve">
     <value>Stratégie de calcul du rendement de l'année d'équilibre</value>
   </data>
@@ -2318,13 +2324,13 @@ Hassan Afzaal</value>
     <value>Étape 4</value>
   </data>
   <data name="Label_FieldSize" xml:space="preserve">
-    <value>Superficie du champ :</value>
+    <value>Sélectionnez une superficie à utiliser pour tous les champs de cette rotation :</value>
   </data>
   <data name="Label_Advanced" xml:space="preserve">
     <value>AVANCÉ</value>
   </data>
   <data name="Label_DefineRotationParameters" xml:space="preserve">
-    <value>Définir les paramètres de rotation</value>
+    <value>Configurer la période et les champs de votre rotation</value>
   </data>
   <data name="Label_RotationParameters" xml:space="preserve">
     <value>Paramètres de rotation</value>
@@ -2495,7 +2501,7 @@ Hassan Afzaal</value>
     <value>Cette section sera implémentée dans une mise à jour future</value>
   </data>
   <data name="Label_Fields" xml:space="preserve">
-    <value>Champs :</value>
+    <value>Combien de champs y a-t-il dans cette rotation ?</value>
   </data>
   <data name="Label_Field" xml:space="preserve">
     <value>Champ :</value>

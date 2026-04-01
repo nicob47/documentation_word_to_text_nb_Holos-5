@@ -71,16 +71,6 @@
                         Content="{Binding [Button_AddCrop].Value, Source={StaticResource Loc}}"
                         Command="{Binding AddCropToRotationCommand}"
                         Margin="0,0,8,0"/>
-                <TextBlock x:Name="CropsInSequenceLabelTextBlock"
-                           Text="{Binding [Label_CropsInSequence].Value, Source={StaticResource Loc}}"
-                           VerticalAlignment="Center"
-                           Margin="8,0,8,0"
-                           IsVisible="{Binding CropDtos.Count}"/>
-                <TextBlock x:Name="CropsCountTextBlock"
-                           Text="{Binding CropDtos.Count}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"
-                           IsVisible="{Binding CropDtos.Count}"/>
             </StackPanel>
 
             <!-- Crop Table - Only visible when crops exist -->

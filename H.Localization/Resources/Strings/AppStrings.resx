@@ -1576,6 +1576,14 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>End Year</value>
     <comment>GUI (H.Avalonia.Core) - field/control label</comment>
   </data>
+  <data name="Label_RotationStartYear" xml:space="preserve">
+    <value>What year does this rotation start?</value>
+    <comment>GUI - Rotation Step 1 start year input label</comment>
+  </data>
+  <data name="Label_RotationEndYear" xml:space="preserve">
+    <value>What year does this rotation end?</value>
+    <comment>GUI - Rotation Step 1 end year input label</comment>
+  </data>
   <data name="Label_EquilibriumCalculationStrategy" xml:space="preserve">
     <value>Equilibrium year yield calculation strategy</value>
     <comment>GUI (H.Core) - field/control label</comment>
@@ -3039,7 +3047,7 @@ Hassan Afzaal</value>
     <comment>GUI - step badge label</comment>
   </data>
   <data name="Label_FieldSize" xml:space="preserve">
-    <value>Field size:</value>
+    <value>Select a field size to be used for all fields in this rotation:</value>
     <comment>GUI - Field component Step 1 input label</comment>
   </data>
   <data name="Label_Advanced" xml:space="preserve">
@@ -3047,7 +3055,7 @@ Hassan Afzaal</value>
     <comment>GUI - badge shown on advanced-only cards</comment>
   </data>
   <data name="Label_DefineRotationParameters" xml:space="preserve">
-    <value>Define Rotation Parameters</value>
+    <value>Set Up Your Rotation Period and Fields</value>
     <comment>GUI - Rotation Step 1 header description</comment>
   </data>
   <data name="Label_RotationParameters" xml:space="preserve">
@@ -3275,7 +3283,7 @@ Hassan Afzaal</value>
     <comment>GUI - Field Step 3 Fertilizer placeholder message</comment>
   </data>
   <data name="Label_Fields" xml:space="preserve">
-    <value>Fields:</value>
+    <value>How many fields are in this rotation?</value>
     <comment>GUI - label for number-of-fields input and summary</comment>
   </data>
   <data name="Label_Field" xml:space="preserve">

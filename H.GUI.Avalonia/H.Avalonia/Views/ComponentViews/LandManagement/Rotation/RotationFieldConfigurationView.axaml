@@ -24,7 +24,7 @@
 
         <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="160"/>
+                <ColumnDefinition MinWidth="420"/>
                 <ColumnDefinition MinWidth="120"/>
                 <ColumnDefinition MinWidth="120"/>
             </Grid.ColumnDefinitions>

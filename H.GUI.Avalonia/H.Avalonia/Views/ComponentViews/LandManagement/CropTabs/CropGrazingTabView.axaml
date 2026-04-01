@@ -5,8 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropGrazingTabView">
 
-    <Border Classes="step-card" Margin="16">
-        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+    <Border Classes="step-card" Margin="0">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="0">
 
             <!-- Crop is grazed -->
             <Grid>

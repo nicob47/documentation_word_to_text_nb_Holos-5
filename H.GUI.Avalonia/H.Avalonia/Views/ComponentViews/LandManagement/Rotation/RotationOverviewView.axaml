@@ -25,6 +25,11 @@
                     <TextBlock x:Name="StepDescriptionTextBlock"
                                Text="{Binding [Label_DefineRotationParameters].Value, Source={StaticResource Loc}}"
                                Classes="step-number-description"/>
+                    <TextBlock x:Name="StepSubtitleTextBlock"
+                               Text="{Binding [Label_ConfigureTimePeriodAndFieldSetup].Value, Source={StaticResource Loc}}"
+                               Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                               FontSize="12"
+                               Margin="0,2,0,0"/>
                 </StackPanel>
             </StackPanel>
 
@@ -39,14 +44,9 @@
 
                 <!-- Time Period group -->
                 <StackPanel>
-                    <TextBlock x:Name="TimePeriodTitleTextBlock"
-                               Text="{Binding [Label_TimePeriod].Value, Source={StaticResource Loc}}"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                               Margin="0,0,0,10"/>
                     <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition MinWidth="160"/>
+                            <ColumnDefinition MinWidth="320"/>
                             <ColumnDefinition MinWidth="120"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -56,7 +56,7 @@
 
                         <!-- Start Year -->
                         <Label Grid.Row="0" Grid.Column="0"
-                               Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
+                               Content="{Binding [Label_RotationStartYear].Value, Source={StaticResource Loc}}"
                                Classes="input-label"/>
                         <NumericUpDown x:Name="StartYearInputNumericUpDown"
                                        Grid.Row="0" Grid.Column="1"
@@ -68,7 +68,7 @@
 
                         <!-- End Year -->
                         <Label Grid.Row="1" Grid.Column="0"
-                               Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
+                               Content="{Binding [Label_RotationEndYear].Value, Source={StaticResource Loc}}"
                                Classes="input-label"/>
                         <NumericUpDown x:Name="EndYearInputNumericUpDown"
                                        Grid.Row="1" Grid.Column="1"
@@ -86,10 +86,6 @@
 
                 <!-- Field Configuration group -->
                 <StackPanel>
-                    <TextBlock Text="{Binding [Label_FieldConfiguration].Value, Source={StaticResource Loc}}"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource GcdsTextPrimaryBrush}"
-                               Margin="0,0,0,10"/>
                     <rotationViews:RotationFieldConfigurationView x:Name="FieldConfigurationUserControl"
                                                                   DataContext="{Binding}"/>
                 </StackPanel>

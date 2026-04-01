@@ -27,6 +27,7 @@ public class RotationComponentDto : DtoBase, IRotationComponentDto
 
     public RotationComponentDto()
     {
+        _numberOfFields = 1;
         this.PropertyChanged += OnPropertyChanged;
     }
 

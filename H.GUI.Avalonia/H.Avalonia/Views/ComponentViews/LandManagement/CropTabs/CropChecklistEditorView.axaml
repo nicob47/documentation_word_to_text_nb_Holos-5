@@ -7,7 +7,7 @@
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropChecklistEditorView"
              x:Name="ChecklistRoot">
 
-    <StackPanel Spacing="16">
+    <StackPanel Spacing="8">
 
         <!-- ═══════════════════════════════════════════════════════════ -->
         <!-- CATEGORY TOGGLE CARD GRID                                  -->
