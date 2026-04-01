@@ -131,8 +131,9 @@
                                                                                FontSize="10"
                                                                                FontStyle="Italic"
                                                                                Foreground="#2E7D32"
+                                                                               TextWrapping="Wrap"
                                                                                TextTrimming="CharacterEllipsis"
-                                                                               MaxLines="1"
+                                                                               MaxLines="2"
                                                                                ToolTip.Tip="{Binding CoverCropDisplay}"/>
                                                                 </StackPanel>
                                                             </Border>

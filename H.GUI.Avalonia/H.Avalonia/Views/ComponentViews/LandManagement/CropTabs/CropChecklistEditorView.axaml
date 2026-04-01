@@ -20,108 +20,69 @@
 
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
-            <!-- General — always active -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
-                    BorderThickness="2"
-                    BorderBrush="{StaticResource GcdsLinkDefaultBrush}"
-                    Background="{StaticResource GcdsSelectionBgBrush}">
-                <StackPanel Spacing="4">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <TextBlock Text="✓" Foreground="{StaticResource GcdsLinkDefaultBrush}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding [Tab_General].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="Yield, moisture, tillage, harvest" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                    <TextBlock Text="Always active" FontSize="10" Foreground="{StaticResource GcdsLinkDefaultBrush}" FontStyle="Italic"/>
-                </StackPanel>
-            </Border>
-
             <!-- Fertilizer -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
+            <Border Margin="0,0,8,8" Padding="8,6" CornerRadius="6"
                     BorderThickness="1"
                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     Background="{StaticResource GcdsBgLightBrush}">
-                <StackPanel Spacing="4">
-                    <DockPanel>
-                        <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding IsFertilizerActive, ElementName=ChecklistRoot}" Margin="0" Padding="0"
-                                      OnContent="" OffContent=""/>
-                        <TextBlock Text="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <TextBlock Text="Nitrogen, phosphorus, potassium rates" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+                    <ToggleSwitch IsChecked="{Binding IsFertilizerActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
             <!-- Manure -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
+            <Border Margin="0,0,8,8" Padding="8,6" CornerRadius="6"
                     BorderThickness="1"
                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     Background="{StaticResource GcdsBgLightBrush}">
-                <StackPanel Spacing="4">
-                    <DockPanel>
-                        <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding IsManureActive, ElementName=ChecklistRoot}" Margin="0" Padding="0"
-                                      OnContent="" OffContent=""/>
-                        <TextBlock Text="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <TextBlock Text="Manure application settings" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+                    <ToggleSwitch IsChecked="{Binding IsManureActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
             <!-- Grazing -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
+            <Border Margin="0,0,8,8" Padding="8,6" CornerRadius="6"
                     BorderThickness="1"
                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     Background="{StaticResource GcdsBgLightBrush}">
-                <StackPanel Spacing="4">
-                    <DockPanel>
-                        <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding IsGrazingActive, ElementName=ChecklistRoot}" Margin="0" Padding="0"
-                                      OnContent="" OffContent=""/>
-                        <TextBlock Text="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <TextBlock Text="Grazing utilization rates" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+                    <ToggleSwitch IsChecked="{Binding IsGrazingActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
             <!-- Soil -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
+            <Border Margin="0,0,8,8" Padding="8,6" CornerRadius="6"
                     BorderThickness="1"
                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     Background="{StaticResource GcdsBgLightBrush}">
-                <StackPanel Spacing="4">
-                    <DockPanel>
-                        <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding IsSoilActive, ElementName=ChecklistRoot}" Margin="0" Padding="0"
-                                      OnContent="" OffContent=""/>
-                        <TextBlock Text="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <TextBlock Text="Climate, tillage, management factors" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+                    <ToggleSwitch IsChecked="{Binding IsSoilActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
             <!-- Residue -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
+            <Border Margin="0,0,8,8" Padding="8,6" CornerRadius="6"
                     BorderThickness="1"
                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     Background="{StaticResource GcdsBgLightBrush}">
-                <StackPanel Spacing="4">
-                    <DockPanel>
-                        <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding IsResidueActive, ElementName=ChecklistRoot}" Margin="0" Padding="0"
-                                      OnContent="" OffContent=""/>
-                        <TextBlock Text="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <TextBlock Text="Biomass coefficients, nitrogen content" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+                    <ToggleSwitch IsChecked="{Binding IsResidueActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
             <!-- Economics -->
-            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Width="260"
+            <Border Margin="0,0,8,8" Padding="8,6" CornerRadius="6"
                     BorderThickness="1"
                     BorderBrush="{StaticResource GcdsBorderLightBrush}"
                     Background="{StaticResource GcdsBgLightBrush}">
-                <StackPanel Spacing="4">
-                    <DockPanel>
-                        <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding IsEconomicsActive, ElementName=ChecklistRoot}" Margin="0" Padding="0"
-                                      OnContent="" OffContent=""/>
-                        <TextBlock Text="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <TextBlock Text="Revenue, costs, profit analysis" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+                    <ToggleSwitch IsChecked="{Binding IsEconomicsActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
