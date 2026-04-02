@@ -19,7 +19,6 @@ using H.Avalonia.Models.Results;
 using H.Core.Services;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ShimSkiaSharp;
 using SkiaSharp;
 

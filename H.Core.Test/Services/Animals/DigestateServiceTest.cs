@@ -122,7 +122,9 @@ namespace H.Core.Test.Services.Animals
 
             _sut.ADCalculator = _mockAdCalculator.Object;
 
-            _date = DateTime.Now;
+            // Use a fixed date that does not collide with any daily output dates (Apr 1-3)
+            // to avoid date-dependent test failures when DateTime.Now falls on an output date.
+            _date = new DateTime(DateTime.Now.Year, 6, 15);
             _state = DigestateState.LiquidPhase;
 
             _farm = base.GetTestFarm();
