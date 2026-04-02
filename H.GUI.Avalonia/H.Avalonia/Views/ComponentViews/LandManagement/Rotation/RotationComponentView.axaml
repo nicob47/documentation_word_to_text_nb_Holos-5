@@ -65,8 +65,16 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 									<TextBlock Text="{Binding [Label_StepFour].Value, Source={StaticResource Loc}}" Classes="step-badge-text"/>
 								</Border>
 								<StackPanel VerticalAlignment="Center">
-									<TextBlock Text="{Binding [Label_EditCropDetails].Value, Source={StaticResource Loc}}"
-											   Classes="step-number-description"/>
+									<TextBlock Classes="step-number-description">
+										<Run Text="{Binding [Label_EditCropDetails].Value, Source={StaticResource Loc}}"/>
+										<Run Text=" for "/>
+										<Run Text="{Binding SelectedFieldName, Mode=OneWay}"/>
+										<Run Text=" - "/>
+										<Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}"/>
+										<Run Text=" ("/>
+										<Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}"/>
+										<Run Text=")"/>
+									</TextBlock>
 									<TextBlock Text="{Binding [Label_EditCropDetailsDesc].Value, Source={StaticResource Loc}}"
 											   Foreground="{StaticResource GcdsTextSecondaryBrush}"
 											   FontSize="12"
@@ -74,25 +82,10 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 								</StackPanel>
 							</StackPanel>
 
-							<!-- Right: Currently editing info + copy toggle -->
+							<!-- Right: Cover crop toggle + copy toggle -->
 							<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16"
 										HorizontalAlignment="Right" VerticalAlignment="Center"
 										IsVisible="{Binding SelectedCropDto, Converter={x:Static ObjectConverters.IsNotNull}}">
-								<!-- Crop info -->
-								<StackPanel VerticalAlignment="Center">
-									<TextBlock FontSize="13" FontWeight="SemiBold">
-										<Run Text="{Binding SelectedCropDto.CropType, Mode=OneWay}"/>
-										<Run Text="("/>
-										<Run Text="{Binding SelectedCropDto.Year, Mode=OneWay}"/>
-										<Run Text=")"/>
-									</TextBlock>
-									<TextBlock FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}">
-										<Run Text="{Binding SelectedFieldName, Mode=OneWay}"/>
-									</TextBlock>
-								</StackPanel>
-
-								<!-- Separator -->
-								<Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="1,0,0,0" Height="30"/>
 
 								<!-- Cover crop toggle (only when cover crop exists) -->
 								<ToggleSwitch IsVisible="{Binding SelectedCropDto.HasCoverCrop, FallbackValue=False}"
