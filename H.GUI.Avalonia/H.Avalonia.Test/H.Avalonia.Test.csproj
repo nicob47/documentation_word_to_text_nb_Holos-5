@@ -27,8 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\H.Core\H.Core.csproj" />
     <ProjectReference Include="..\..\H.Infrastructure\H.Infrastructure.csproj" />
-    <ProjectReference Include="..\H.Avalonia.Core\H.Avalonia.Core.csproj" />
-    <ProjectReference Include="..\H.Avalonia.Infrastructure\H.Avalonia.Infrastructure.csproj" />
     <ProjectReference Include="..\H.Avalonia\H.Avalonia.csproj" />
   </ItemGroup>
 

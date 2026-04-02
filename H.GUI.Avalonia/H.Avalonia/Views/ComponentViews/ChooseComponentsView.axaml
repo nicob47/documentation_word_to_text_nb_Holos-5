@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:componentViews="clr-namespace:H.Avalonia.ViewModels.ComponentViews"
-             xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             xmlns:infrastructure="clr-namespace:H.Infrastructure.Controls.ValueConverters;assembly=H.Infrastructure"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="950"
              x:Class="H.Avalonia.Views.ComponentViews.ChooseComponentsView">
 

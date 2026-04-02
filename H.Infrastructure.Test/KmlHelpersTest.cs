@@ -1,4 +1,5 @@
-﻿using H.Core.Enumerations;
+﻿using H.Core;
+using H.Core.Enumerations;
 using H.Core.Providers;
 using SharpKml.Base;
 
@@ -42,10 +43,10 @@ namespace H.Infrastructure.Test
         }
 
         [TestMethod]
-        public void TestGetPolygonFromCoordinateAlberta()
+        public async Task TestGetPolygonFromCoordinateAsyncAlberta()
         {
             var coordinate = CoordinateList[0];
-            var polygon = _kmlHelpers.GetPolygonFromCoordinate(coordinate.Latitude, coordinate.Longitude);
+            var polygon = await _kmlHelpers.GetPolygonFromCoordinateAsync(coordinate.Latitude, coordinate.Longitude);
             var polygonData = _geographicDataProvider.GetGeographicalData(polygon);
             var soilData = polygonData.SoilDataForAllComponentsWithinPolygon;
             var firstSoil = soilData[0];
@@ -58,10 +59,10 @@ namespace H.Infrastructure.Test
         }
 
         [TestMethod]
-        public void TestGetPolygonFromCoordinateBC()
+        public async Task TestGetPolygonFromCoordinateAsyncBC()
         {
             var coordinate = CoordinateList[1];
-            var polygon = _kmlHelpers.GetPolygonFromCoordinate(coordinate.Latitude, coordinate.Longitude);
+            var polygon = await _kmlHelpers.GetPolygonFromCoordinateAsync(coordinate.Latitude, coordinate.Longitude);
             var polygonData = _geographicDataProvider.GetGeographicalData(polygon);
             var soilData = polygonData.SoilDataForAllComponentsWithinPolygon;
             var firstSoil = soilData[0];
@@ -75,10 +76,10 @@ namespace H.Infrastructure.Test
         }
 
         [TestMethod]
-        public void TestGetPolygonFromCoordinateInvalid()
+        public async Task TestGetPolygonFromCoordinateAsyncInvalid()
         {
             var coordinate = CoordinateList[2];
-            var polygon = _kmlHelpers.GetPolygonFromCoordinate(coordinate.Latitude, coordinate.Longitude);
+            var polygon = await _kmlHelpers.GetPolygonFromCoordinateAsync(coordinate.Latitude, coordinate.Longitude);
             Assert.AreEqual(0, polygon);
         }
     }

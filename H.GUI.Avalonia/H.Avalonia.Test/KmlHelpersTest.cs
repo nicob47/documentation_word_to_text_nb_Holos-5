@@ -1,6 +1,6 @@
 ﻿using H.Core.Enumerations;
 using H.Core.Providers;
-using H.Avalonia.Infrastructure;
+using H.Core;
 using SharpKml.Base;
 
 namespace H.Avalonia.Test

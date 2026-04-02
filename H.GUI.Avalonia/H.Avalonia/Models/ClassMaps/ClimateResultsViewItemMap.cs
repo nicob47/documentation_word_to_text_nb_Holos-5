@@ -11,12 +11,12 @@ namespace H.Avalonia.Models.ClassMaps
     {
         public ClimateResultsViewItemMap()
         {
-            Map(map => map.Latitude).Index(0).Name(H.Avalonia.Core.Properties.Resources.LabelLatitude);
-            Map(map => map.Longitude).Index(1).Name(H.Avalonia.Core.Properties.Resources.LabelLongitude);
-            Map(map => map.Year).Index(2).Name(H.Avalonia.Core.Properties.Resources.LabelYear);
-            Map(map => map.TotalPET).Index(3).Name(H.Avalonia.Core.Properties.Resources.LabelTotalPET);
-            Map(map => map.TotalPPT).Index(4).Name(H.Avalonia.Core.Properties.Resources.LabelTotalPPT);
-            Map(map => map.MonthlyPPT).Index(5).Name(H.Avalonia.Core.Properties.Resources.LabelMonthlyPPT);
+            Map(map => map.Latitude).Index(0).Name(H.Core.Properties.Resources.LabelLatitude);
+            Map(map => map.Longitude).Index(1).Name(H.Core.Properties.Resources.LabelLongitude);
+            Map(map => map.Year).Index(2).Name(H.Core.Properties.Resources.LabelYear);
+            Map(map => map.TotalPET).Index(3).Name(H.Core.Properties.Resources.LabelTotalPET);
+            Map(map => map.TotalPPT).Index(4).Name(H.Core.Properties.Resources.LabelTotalPPT);
+            Map(map => map.MonthlyPPT).Index(5).Name(H.Core.Properties.Resources.LabelMonthlyPPT);
         }
     }
 }

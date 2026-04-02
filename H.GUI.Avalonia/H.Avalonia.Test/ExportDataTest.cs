@@ -1,6 +1,6 @@
 ﻿using H.Avalonia.Models.ClassMaps;
 using H.Avalonia.ViewModels.Results;
-using H.Avalonia.Infrastructure;
+using H.Infrastructure;
 using H.Avalonia.Models;
 
 namespace H.Avalonia.Test

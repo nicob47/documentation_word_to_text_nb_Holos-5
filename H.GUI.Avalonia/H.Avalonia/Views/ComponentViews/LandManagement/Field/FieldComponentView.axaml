@@ -6,7 +6,6 @@
              xmlns:field="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Field"
              xmlns:fieldViews="clr-namespace:H.Avalonia.Views.ComponentViews.LandManagement.Field"
              xmlns:shared="clr-namespace:H.Avalonia.Views.ComponentViews.Shared"
-             xmlns:properties="clr-namespace:H.Avalonia.Infrastructure.Properties;assembly=H.Avalonia.Infrastructure"
              xmlns:avalonia="clr-namespace:H.Avalonia"
              xmlns:converters="clr-namespace:H.Avalonia.Converters"
              xmlns:rotation="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation"

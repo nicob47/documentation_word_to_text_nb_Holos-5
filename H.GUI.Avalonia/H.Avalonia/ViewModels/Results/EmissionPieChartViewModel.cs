@@ -1,4 +1,4 @@
-﻿using H.Avalonia.Infrastructure;
+﻿using H.Infrastructure;
 using H.Avalonia.Models;
 using H.Avalonia.Models.ClassMaps;
 using H.Avalonia.Services;

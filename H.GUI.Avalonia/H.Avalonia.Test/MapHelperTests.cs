@@ -1,4 +1,4 @@
-﻿using H.Avalonia.Infrastructure;
+﻿using H.Infrastructure;
 using Mapsui;
 
 namespace H.Avalonia.Test
