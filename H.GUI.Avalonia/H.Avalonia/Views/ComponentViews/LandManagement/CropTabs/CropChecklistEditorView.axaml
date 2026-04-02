@@ -12,12 +12,6 @@
         <!-- ═══════════════════════════════════════════════════════════ -->
         <!-- CATEGORY TOGGLE CARD GRID                                  -->
         <!-- ═══════════════════════════════════════════════════════════ -->
-        <TextBlock Text="Select the categories relevant to your operation. Only active categories show input fields below."
-                   FontSize="12"
-                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                   TextWrapping="Wrap"
-                   Margin="0,0,0,4"/>
-
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
             <!-- Fertilizer -->
@@ -94,67 +88,32 @@
         <!-- visual structure. Just a header + separator between them.   -->
         <!-- ═══════════════════════════════════════════════════════════ -->
 
-        <!-- General — always visible (blue to match card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0">
-            <TextBlock Text="{Binding [Tab_General].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="{StaticResource GcdsLinkDefaultBrush}"/>
-            <Border Height="2" Background="{StaticResource GcdsLinkDefaultBrush}" CornerRadius="1"/>
-            <cropTabs:CropGeneralTabView/>
-        </StackPanel>
+        <!-- General — always visible -->
+        <cropTabs:CropGeneralTabView Margin="0,4,0,0"/>
 
-        <!-- Fertilizer (green to match active card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0"
-                    IsVisible="{Binding IsFertilizerActive, ElementName=ChecklistRoot}">
-            <TextBlock Text="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="#4CAF50"/>
-            <Border Height="2" Background="#4CAF50" CornerRadius="1"/>
-            <cropTabs:CropFertilizerTabView/>
-        </StackPanel>
+        <!-- Fertilizer -->
+        <cropTabs:CropFertilizerTabView Margin="0,4,0,0"
+                    IsVisible="{Binding IsFertilizerActive, ElementName=ChecklistRoot}"/>
 
-        <!-- Manure (green to match active card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0"
-                    IsVisible="{Binding IsManureActive, ElementName=ChecklistRoot}">
-            <TextBlock Text="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="#4CAF50"/>
-            <Border Height="2" Background="#4CAF50" CornerRadius="1"/>
-            <cropTabs:CropManureTabView/>
-        </StackPanel>
+        <!-- Manure -->
+        <cropTabs:CropManureTabView Margin="0,4,0,0"
+                    IsVisible="{Binding IsManureActive, ElementName=ChecklistRoot}"/>
 
-        <!-- Grazing (green to match active card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0"
-                    IsVisible="{Binding IsGrazingActive, ElementName=ChecklistRoot}">
-            <TextBlock Text="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="#4CAF50"/>
-            <Border Height="2" Background="#4CAF50" CornerRadius="1"/>
-            <cropTabs:CropGrazingTabView/>
-        </StackPanel>
+        <!-- Grazing -->
+        <cropTabs:CropGrazingTabView Margin="0,4,0,0"
+                    IsVisible="{Binding IsGrazingActive, ElementName=ChecklistRoot}"/>
 
-        <!-- Soil (green to match active card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0"
-                    IsVisible="{Binding IsSoilActive, ElementName=ChecklistRoot}">
-            <TextBlock Text="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="#4CAF50"/>
-            <Border Height="2" Background="#4CAF50" CornerRadius="1"/>
-            <cropTabs:CropSoilTabView/>
-        </StackPanel>
+        <!-- Soil -->
+        <cropTabs:CropSoilTabView Margin="0,4,0,0"
+                    IsVisible="{Binding IsSoilActive, ElementName=ChecklistRoot}"/>
 
-        <!-- Residue (green to match active card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0"
-                    IsVisible="{Binding IsResidueActive, ElementName=ChecklistRoot}">
-            <TextBlock Text="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="#4CAF50"/>
-            <Border Height="2" Background="#4CAF50" CornerRadius="1"/>
-            <cropTabs:CropResidueTabView/>
-        </StackPanel>
+        <!-- Residue -->
+        <cropTabs:CropResidueTabView Margin="0,4,0,0"
+                    IsVisible="{Binding IsResidueActive, ElementName=ChecklistRoot}"/>
 
-        <!-- Economics (green to match active card) -->
-        <StackPanel Spacing="8" Margin="0,4,0,0"
-                    IsVisible="{Binding IsEconomicsActive, ElementName=ChecklistRoot}">
-            <TextBlock Text="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
-                       Foreground="#4CAF50"/>
-            <Border Height="2" Background="#4CAF50" CornerRadius="1"/>
-            <cropTabs:CropEconomicsTabView/>
-        </StackPanel>
+        <!-- Economics -->
+        <cropTabs:CropEconomicsTabView Margin="0,4,0,0"
+                    IsVisible="{Binding IsEconomicsActive, ElementName=ChecklistRoot}"/>
 
     </StackPanel>
 </UserControl>

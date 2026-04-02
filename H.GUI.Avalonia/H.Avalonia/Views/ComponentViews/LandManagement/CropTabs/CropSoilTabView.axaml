@@ -8,6 +8,11 @@
     <Border Classes="step-card" Margin="0">
         <StackPanel Grid.IsSharedSizeScope="True" Spacing="0">
 
+            <!-- Section Header -->
+            <TextBlock Text="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
+                       Foreground="#4CAF50"/>
+            <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,8,0,8"/>
+
             <!-- Climate parameter -->
             <Grid>
                 <Grid.ColumnDefinitions>

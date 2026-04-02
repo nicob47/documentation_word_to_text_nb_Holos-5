@@ -195,13 +195,7 @@
                 </Border>
             </StackPanel>
 
-            <!-- Help text -->
-            <TextBlock Text="This defines the crop rotation cycle. The actual year each crop is grown depends on the field and its starting position in the rotation."
-                       FontSize="11" FontStyle="Italic"
-                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                       TextWrapping="Wrap"
-                       Margin="0,8,0,0"
-                       IsVisible="{Binding CropDtos.Count}"/>
+
 
             <!-- Empty State Message -->
             <Border x:Name="EmptyStateMessageBorder"

@@ -2363,7 +2363,7 @@ Hassan Afzaal</value>
     <value>Construire votre séquence de rotation</value>
   </data>
   <data name="Label_AddCropsToRotationDesc" xml:space="preserve">
-    <value>Ajoutez des cultures pour créer votre calendrier de rotation. Chaque culture représente une année dans la séquence.</value>
+    <value>Ajoutez des cultures pour créer votre calendrier de rotation. Chaque culture représente une année dans la séquence. L'année réelle de chaque culture dépend du champ et de sa position de départ dans la rotation.</value>
   </data>
   <data name="Button_AddCrop" xml:space="preserve">
     <value>+ Ajouter une culture</value>
@@ -2399,7 +2399,7 @@ Hassan Afzaal</value>
     <value>Aperçu des affectations de champs</value>
   </data>
   <data name="Label_ReviewHowCropsDistributed" xml:space="preserve">
-    <value>Vérifiez comment les cultures seront réparties entre les champs au fil du temps. Chaque rangée représente un champ, chaque colonne représente une année.</value>
+    <value>Vérifiez comment les cultures seront réparties entre les champs au fil du temps. Chaque rangée représente un champ, chaque colonne représente une année. Cliquez sur une carte de culture pour modifier ses propriétés.</value>
   </data>
   <data name="Label_PreviewRequirements" xml:space="preserve">
     <value>Conditions requises pour l'aperçu :</value>
@@ -2426,7 +2426,7 @@ Hassan Afzaal</value>
     <value>Modifier les détails de la culture</value>
   </data>
   <data name="Label_EditCropDetailsDesc" xml:space="preserve">
-    <value>Configurez le rendement et l'irrigation pour chaque culture de votre rotation. Cliquez sur une cellule dans la grille d'aperçu ci-dessus pour modifier ses détails.</value>
+    <value>Configurez le rendement et l'irrigation pour chaque culture de votre rotation. Cliquez sur une cellule dans la grille d'aperçu ci-dessus pour modifier ses détails. Sélectionnez les catégories pertinentes à votre exploitation. Seules les catégories actives affichent les champs de saisie ci-dessous.</value>
   </data>
   <data name="Label_CurrentlyEditing" xml:space="preserve">
     <value>En cours de modification :</value>

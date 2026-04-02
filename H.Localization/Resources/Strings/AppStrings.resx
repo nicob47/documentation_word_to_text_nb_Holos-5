@@ -3099,7 +3099,7 @@ Hassan Afzaal</value>
     <comment>GUI - Rotation Step 2 header</comment>
   </data>
   <data name="Label_AddCropsToRotationDesc" xml:space="preserve">
-    <value>Add crops to create your rotation timeline. Each crop represents one year in the sequence.</value>
+    <value>Add crops to create your rotation timeline. Each crop represents one year in the sequence. The actual year each crop is grown depends on the field and its starting position in the rotation.</value>
     <comment>GUI - Rotation Step 2 description</comment>
   </data>
   <data name="Button_AddCrop" xml:space="preserve">
@@ -3147,7 +3147,7 @@ Hassan Afzaal</value>
     <comment>GUI - Rotation Step 3 header</comment>
   </data>
   <data name="Label_ReviewHowCropsDistributed" xml:space="preserve">
-    <value>Review how crops will be distributed across fields over time. Each row represents a field, each column represents a year.</value>
+    <value>Review how crops will be distributed across fields over time. Each row represents a field, each column represents a year. Click a crop card to edit its properties.</value>
     <comment>GUI - Rotation Step 3 description</comment>
   </data>
   <data name="Label_PreviewRequirements" xml:space="preserve">
@@ -3183,7 +3183,7 @@ Hassan Afzaal</value>
     <comment>GUI - Rotation Step 4 header</comment>
   </data>
   <data name="Label_EditCropDetailsDesc" xml:space="preserve">
-    <value>Configure yield and irrigation for each crop in your rotation. Click a cell in the preview grid above to edit its details.</value>
+    <value>Configure yield and irrigation for each crop in your rotation. Click a cell in the preview grid above to edit its details. Select the categories relevant to your operation. Only active categories show input fields below.</value>
     <comment>GUI - Rotation Step 4 description</comment>
   </data>
   <data name="Label_CurrentlyEditing" xml:space="preserve">
