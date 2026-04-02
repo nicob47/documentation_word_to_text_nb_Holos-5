@@ -1,4 +1,5 @@
 using H.Core.Enumerations;
+using H.Infrastructure;
 
 namespace H.Core.Services.CropColorService;
 
@@ -128,8 +129,9 @@ public class CropColorService : ICropColorService
             CropType.Fallow => "Fallow",
             CropType.SummerFallow => "Summer Fallow",
 
-            // Default fallback
-            _ => cropType.ToString()
+            // Default fallback — use the localized description so cover crop
+            // types (and any other unmapped values) display with proper spacing.
+            _ => cropType.GetDescription()
         };
     }
 

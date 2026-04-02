@@ -30,7 +30,13 @@
                 <ComboBox Grid.Column="1"
                           ItemsSource="{Binding ValidCropTypes}"
                           SelectedItem="{Binding CropType}"
-                          HorizontalAlignment="Stretch"/>
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <!-- Termination Type -->
