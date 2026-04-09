@@ -10,15 +10,15 @@ public partial class FarmOpenExistingView : UserControl
 
     #region Fields
 
-    private FarmOpenExistingViewmodel? _farmOpenExistingViewmodel;
+    private FarmOpenExistingViewModel? _farmOpenExistingViewmodel;
 
     #endregion
 
     #region Constructors
-    public FarmOpenExistingView(FarmOpenExistingViewmodel farmOpenExistingViewmodel)
+    public FarmOpenExistingView(FarmOpenExistingViewModel farmOpenExistingViewModel)
     {
         InitializeComponent();
-        _farmOpenExistingViewmodel = farmOpenExistingViewmodel ?? throw new ArgumentNullException(nameof(farmOpenExistingViewmodel));
+        _farmOpenExistingViewmodel = farmOpenExistingViewModel ?? throw new ArgumentNullException(nameof(farmOpenExistingViewModel));
     }
     public FarmOpenExistingView()
     {

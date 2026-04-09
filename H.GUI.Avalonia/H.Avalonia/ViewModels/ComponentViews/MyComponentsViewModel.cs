@@ -24,7 +24,6 @@ public class MyComponentsViewModel : ViewModelBase
     private ComponentItemViewModel? _selectedComponentItem;
     private ObservableCollection<ComponentBase> _myComponents = null!;
     private ObservableCollection<ComponentItemViewModel> _myComponentItems = null!;
-    private H.Core.Models.Farm? _selectedFarm;
 
     private IComponentInitializationService? _componentInitializationService;
 
@@ -61,6 +60,12 @@ public class MyComponentsViewModel : ViewModelBase
         
         base.EventAggregator?.GetEvent<ComponentAddedEvent>().Subscribe(OnComponentAddedEvent);
         base.EventAggregator?.GetEvent<EditingComponentsCompletedEvent>().Subscribe(OnEditingComponentsCompletedEvent);
+        
+        // Subscribe to active farm changes
+        if (base.StorageService?.Storage?.ApplicationData?.GlobalSettings != null)
+        {
+            base.StorageService.Storage.ApplicationData.GlobalSettings.PropertyChanged += OnActiveFarmChanged;
+        }
     }
 
     #endregion
@@ -105,11 +110,6 @@ public class MyComponentsViewModel : ViewModelBase
         get => _myComponentItems;
         set => SetProperty(ref _myComponentItems, value);
     }
-    public H.Core.Models.Farm? SelectedFarm
-    {
-        get => _selectedFarm;
-        set => SetProperty(ref _selectedFarm, value);
-    }
 
     public DelegateCommand RemoveComponent { get; } = null!;
     public DelegateCommand<object> SetSelectedComponentCommand { get; set; } = null!;
@@ -127,7 +127,7 @@ public class MyComponentsViewModel : ViewModelBase
 
     public override void InitializeViewModel()
     {
-        if (!base.IsInitialized && base.ActiveFarm is not null)
+        if (!IsInitialized && base.ActiveFarm is not null)
         {
             MyComponents.Clear();
             MyComponentItems.Clear();
@@ -148,6 +148,17 @@ public class MyComponentsViewModel : ViewModelBase
     #endregion
 
     #region Event Handlers
+
+    /// <summary>
+    /// Handles active farm changes and resets initialization state
+    /// </summary>
+    private void OnActiveFarmChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(GlobalSettings.ActiveFarm))
+        {
+            base.IsInitialized = false;
+        }
+    }
 
     /// <summary>
     /// Sets the selected component when a component card is clicked
