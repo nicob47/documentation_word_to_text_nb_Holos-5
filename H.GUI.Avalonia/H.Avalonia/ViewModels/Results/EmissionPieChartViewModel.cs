@@ -28,7 +28,6 @@ namespace H.Avalonia.ViewModels.Results
     {
         #region Fields
 
-        private readonly ILogger _logger;
         private bool _showDetails = true;
         private ComboBoxItem _selectedEmissionType = new();
 
@@ -39,7 +38,7 @@ namespace H.Avalonia.ViewModels.Results
         /// <summary>
         /// Gets or sets the collection of data series displayed in the pie chart.
         /// </summary>
-        public IEnumerable<ISeries> PieChartSeries { get; set; }
+        public IEnumerable<ISeries> PieChartSeries { get; set; } = null!;
 
         public ObservableCollection<ComboBoxItem> EmissionTypeOptions { get; set; } = new ObservableCollection<ComboBoxItem>
         {
@@ -91,7 +90,7 @@ namespace H.Avalonia.ViewModels.Results
             ConstructPieChartContent();
 
             // Set defaults to first item in each collection
-            SelectedEmissionType = EmissionTypeOptions.FirstOrDefault();
+            SelectedEmissionType = EmissionTypeOptions.FirstOrDefault()!;
             SelectedYear = AvailableYears.FirstOrDefault();
         }
 
@@ -127,6 +126,7 @@ namespace H.Avalonia.ViewModels.Results
 
             SetPercentOfOutputPerGroup(items);
 
+#pragma warning disable CS0618
             PieChartSeries = items.Select(item =>
                 new PieSeries<EmissionPieChartViewItem>
                 {
@@ -140,6 +140,7 @@ namespace H.Avalonia.ViewModels.Results
                     IsHoverable = false,
                 }
             ).ToArray();
+#pragma warning restore CS0618
         }
 
         /// <summary>

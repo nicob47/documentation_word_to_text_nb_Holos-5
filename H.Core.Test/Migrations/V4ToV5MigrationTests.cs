@@ -99,8 +99,8 @@ public class V4ToV5MigrationTests
 
         Assert.AreEqual(2, farms.Count);
 
-        Assert.AreEqual(1, (farms[0]["Components"] as JArray).Count);
-        Assert.AreEqual(0, (farms[1]["Components"] as JArray).Count);
+        Assert.AreEqual(1, (farms[0]["Components"] as JArray)!.Count);
+        Assert.AreEqual(0, (farms[1]["Components"] as JArray)!.Count);
     }
 
     [TestMethod]
@@ -180,8 +180,8 @@ public class V4ToV5MigrationTests
         var farms = root["Farms"] as JArray;
         Assert.IsNotNull(farms);
         Assert.AreEqual(2, farms.Count);
-        Assert.AreEqual(2, (farms[0]["Components"] as JArray).Count);
-        Assert.AreEqual(1, (farms[1]["Components"] as JArray).Count);
+        Assert.AreEqual(2, (farms[0]["Components"] as JArray)!.Count);
+        Assert.AreEqual(1, (farms[1]["Components"] as JArray)!.Count);
     }
 
     [TestMethod]
@@ -203,7 +203,7 @@ public class V4ToV5MigrationTests
 
         _migration.MigrateFarmExport(farms);
 
-        var components = (farms[0]["Components"] as JArray);
+        var components = (farms[0]["Components"] as JArray)!;
         Assert.AreEqual(3, components.Count);
     }
 

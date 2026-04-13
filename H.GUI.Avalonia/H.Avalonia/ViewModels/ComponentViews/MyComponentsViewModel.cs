@@ -242,8 +242,8 @@ public class MyComponentsViewModel : ViewModelBase
 
     public void OnResultsButtonClicked()
     {
-        this.RegionManager.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
-        this.RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
+        this.RegionManager?.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
+        this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
     }
 
     public void OnRemoveComponentExecute()

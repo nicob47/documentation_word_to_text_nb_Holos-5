@@ -18,7 +18,6 @@ namespace H.Avalonia.Views.FarmCreationViews
     public class FarmOpenExistingViewModelBase : ViewModelBase
     {
         #region Fields
-        private readonly IRegionManager _regionManager = null!;
         private Farm? _selectedFarm;
         private string _searchText = string.Empty;
         private ObservableCollection<Farm> _farms = null!;

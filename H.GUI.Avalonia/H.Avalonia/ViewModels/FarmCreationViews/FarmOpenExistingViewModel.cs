@@ -40,7 +40,7 @@ namespace H.Avalonia.ViewModels.FarmCreationViews
 
         private void OnNavigateToPreviousPage()
         {
-            RegionManager.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
+            RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(FarmOptionsView));
         }
 
         #endregion

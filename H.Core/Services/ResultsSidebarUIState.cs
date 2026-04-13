@@ -20,6 +20,6 @@ namespace H.Core.Services
         /// <summary>
         /// When this state was last accessed (for cleanup purposes)
         /// </summary>
-        public DateTime LastAccessed { get; set; }
+        public new DateTime LastAccessed { get; set; }
     }
 }
