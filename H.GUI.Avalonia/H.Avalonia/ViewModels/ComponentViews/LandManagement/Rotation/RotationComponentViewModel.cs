@@ -101,6 +101,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         /// </summary>
         private RotationShiftDirection _shiftDirection = RotationShiftDirection.RightShift;
 
+        /// <summary>
+        /// Guard flag set while <see cref="InitializeRotationComponent"/> is rebuilding
+        /// <see cref="CropDtos"/> from the underlying model. Prevents
+        /// <see cref="SyncCropDtosToModel"/> from firing during initialization, which
+        /// would otherwise wipe out the persisted crops before they can be read.
+        /// </summary>
+        private bool _isInitializingFromModel;
 
         #endregion
 
@@ -477,62 +484,87 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
                 return;
             }
 
-            // -----------------------------------------------------------------------
-            // Reset all transient ViewModel state so that switching to a new (or freshly
-            // created) rotation component always starts with a clean slate.
-            //
-            // CropDtos is pure UI state — it lives only in this ViewModel and is never
-            // serialized or loaded back from the domain model. Without this reset, crops
-            // added to a previous rotation remain visible when the user navigates to a
-            // different rotation or creates a brand-new one.
-            // -----------------------------------------------------------------------
-
-            // Unsubscribe property-changed listeners from every existing crop DTO
-            // before clearing the collection, so we don't hold stale event references.
-            if (CropDtos != null)
+            // Suppress SyncCropDtosToModel while we clear and repopulate CropDtos.
+            // Without this guard the Clear() below would write an empty CropViewItems
+            // collection back to the rotation component (wiping out the very crops
+            // we're about to restore), and the per-item Add() calls during restore
+            // would clobber the collection we're iterating.
+            _isInitializingFromModel = true;
+            try
             {
-                foreach (var crop in CropDtos)
+                // -----------------------------------------------------------------------
+                // Reset all transient ViewModel state so that switching to a new (or freshly
+                // created) rotation component always starts with a clean slate.
+                // -----------------------------------------------------------------------
+
+                // Unsubscribe property-changed listeners from every existing crop DTO
+                // before clearing the collection, so we don't hold stale event references.
+                if (CropDtos != null)
                 {
-                    if (crop is INotifyPropertyChanged npc)
+                    foreach (var crop in CropDtos)
                     {
-                        npc.PropertyChanged -= OnCropDtoPropertyChanged;
+                        if (crop is INotifyPropertyChanged npc)
+                        {
+                            npc.PropertyChanged -= OnCropDtoPropertyChanged;
+                        }
                     }
+
+                    CropDtos.Clear();
                 }
 
-                CropDtos.Clear();
+                // Clear the parallel field-component DTO collection as well.
+                FieldComponentDtos?.Clear();
+
+                // Clear the preview grid and reset selection state.
+                FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>();
+                SelectedCropDto = null;
+                SelectedFieldName = null;
+
+                // Reset shift direction to the default so each rotation starts consistently.
+                _shiftDirection = RotationShiftDirection.RightShift;
+                RaisePropertyChanged(nameof(ShiftDirection));
+                RaisePropertyChanged(nameof(IsShiftEnabled));
+                RaisePropertyChanged(nameof(HasNoCrops));
+                RaisePropertyChanged(nameof(ShouldShowPreview));
+
+                // -----------------------------------------------------------------------
+                // Now initialize for the incoming rotation component.
+                // -----------------------------------------------------------------------
+
+                // Hold a reference to the selected field system object
+                _selectedRotationComponent = rotationComponent;
+
+                // Build a DTO to represent the model/domain object
+                var rotationComponentDto = _rotationComponentService?.TransferToRotationComponentDto(rotationComponent);
+                if (rotationComponentDto is null) return;
+
+                // Listen for changes on the DTO so we can validate user input before assigning values to the model
+                rotationComponentDto.PropertyChanged += this.RotationComponentDtoOnPropertyChanged;
+
+                // Assign the DTO to the property that is bound to the view
+                this.SelectedRotationComponentDto = rotationComponentDto;
+
+                // Restore any crops previously added to this rotation from the underlying model.
+                // Without this, crops added in Step 2 vanish when the user navigates away and returns
+                // because CropDtos is transient ViewModel state. Crops are persisted to
+                // FieldSystemComponent.CropViewItems by SyncCropDtosToModel on every mutation.
+                //
+                // Snapshot the collection first so we iterate over a stable list independent
+                // of any downstream modifications to CropViewItems.
+                if (_cropFactory is not null && rotationComponent.FieldSystemComponent?.CropViewItems is { Count: > 0 } existingViewItems)
+                {
+                    var snapshot = existingViewItems.ToList();
+                    foreach (var viewItem in snapshot)
+                    {
+                        var cropDto = _cropFactory.CreateCropDto(viewItem);
+                        CropDtos.Add(cropDto);
+                    }
+                }
             }
-
-            // Clear the parallel field-component DTO collection as well.
-            FieldComponentDtos?.Clear();
-
-            // Clear the preview grid and reset selection state.
-            FieldAssignmentRows = new ObservableCollection<FieldAssignmentRow>();
-            SelectedCropDto = null;
-            SelectedFieldName = null;
-
-            // Reset shift direction to the default so each rotation starts consistently.
-            _shiftDirection = RotationShiftDirection.RightShift;
-            RaisePropertyChanged(nameof(ShiftDirection));
-            RaisePropertyChanged(nameof(IsShiftEnabled));
-            RaisePropertyChanged(nameof(HasNoCrops));
-            RaisePropertyChanged(nameof(ShouldShowPreview));
-
-            // -----------------------------------------------------------------------
-            // Now initialize for the incoming rotation component.
-            // -----------------------------------------------------------------------
-
-            // Hold a reference to the selected field system object
-            _selectedRotationComponent = rotationComponent;
-
-            // Build a DTO to represent the model/domain object
-            var rotationComponentDto = _rotationComponentService?.TransferToRotationComponentDto(rotationComponent);
-            if (rotationComponentDto is null) return;
-
-            // Listen for changes on the DTO so we can validate user input before assigning values to the model
-            rotationComponentDto.PropertyChanged += this.RotationComponentDtoOnPropertyChanged;
-
-            // Assign the DTO to the property that is bound to the view
-            this.SelectedRotationComponentDto = rotationComponentDto;
+            finally
+            {
+                _isInitializingFromModel = false;
+            }
         }
 
         #endregion
@@ -610,6 +642,39 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             for (var i = 0; i < CropDtos.Count; i++)
             {
                 CropDtos[i].SequenceNumber = i + 1;
+            }
+        }
+
+        /// <summary>
+        /// Persists the current <see cref="CropDtos"/> collection back to the underlying
+        /// <see cref="RotationComponent.FieldSystemComponent"/>'s <c>CropViewItems</c> so that
+        /// crops added/edited/reordered in the UI survive navigation away from this component.
+        ///
+        /// Without this sync, <see cref="CropDtos"/> is pure transient ViewModel state and
+        /// any crops the user adds in Step 2 are lost when the user navigates away and back.
+        /// </summary>
+        private void SyncCropDtosToModel()
+        {
+            // Suppress syncing while InitializeRotationComponent is rebuilding CropDtos
+            // from the model. Otherwise the clear/add cycle would wipe the persisted
+            // CropViewItems before they can be read back.
+            if (_isInitializingFromModel)
+            {
+                return;
+            }
+
+            if (_selectedRotationComponent?.FieldSystemComponent is null || _cropFactory is null)
+            {
+                return;
+            }
+
+            var container = _selectedRotationComponent.FieldSystemComponent;
+            container.CropViewItems.Clear();
+
+            foreach (var cropDto in CropDtos)
+            {
+                var viewItem = _cropFactory.CreateCropViewItem(cropDto);
+                container.CropViewItems.Add(viewItem);
             }
         }
 
@@ -1244,6 +1309,10 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
             UpdateSequenceNumbers();
             GenerateFieldAssignmentRows();
 
+            // Persist the current CropDtos back to the underlying model so the rotation
+            // survives navigation away from this component.
+            SyncCropDtosToModel();
+
             // Notify UI that HasNoCrops and ShouldShowPreview may have changed
             RaisePropertyChanged(nameof(HasNoCrops));
             RaisePropertyChanged(nameof(ShouldShowPreview));
@@ -1294,6 +1363,10 @@ namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Rotation
         {
             CopyValuesToSimilarCrops(cropDto, e.PropertyName);
         }
+
+        // Persist edits on existing crops back to the underlying model so changes
+        // survive navigation away from this component.
+        SyncCropDtosToModel();
     }
 
     /// <summary>
