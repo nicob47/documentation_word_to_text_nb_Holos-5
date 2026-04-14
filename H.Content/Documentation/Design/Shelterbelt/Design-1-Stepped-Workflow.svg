@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Lato, sans-serif">
+  <!-- Design 1: Classic Step-by-Step Workflow (matches Rotation/Field pattern) -->
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Canvas background -->
+  <rect width="1200" height="900" fill="#f8f9fa"/>
+
+  <!-- Design label -->
+  <text x="20" y="25" font-size="13" font-weight="700" fill="#26374a">DESIGN 1 · Classic Step-by-Step Workflow</text>
+  <text x="20" y="42" font-size="11" fill="#595959">Mirrors the existing Rotation/Field component patterns. Familiar, predictable, guided.</text>
+
+  <!-- Title bar with editable component name -->
+  <text x="40" y="90" font-size="28" font-weight="700" fill="#333333">Shelterbelt 1</text>
+  <rect x="40" y="102" width="1120" height="3" fill="#8c8c8c"/>
+
+  <!-- ============================================================= -->
+  <!-- STEP 1: Location & Context -->
+  <!-- ============================================================= -->
+  <rect x="40" y="130" width="1120" height="170" rx="8" fill="#ffffff" stroke="#8c8c8c" filter="url(#shadow)"/>
+
+  <!-- Step badge -->
+  <rect x="60" y="150" width="68" height="32" rx="4" fill="#1f497a"/>
+  <text x="94" y="171" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Step 1</text>
+
+  <text x="140" y="165" font-size="16" font-weight="700" fill="#333333">Location &amp; Context</text>
+  <text x="140" y="183" font-size="12" font-style="italic" fill="#595959">Set the farm location and observation year for this shelterbelt</text>
+
+  <line x1="60" y1="200" x2="1140" y2="200" stroke="#d9d9d9"/>
+
+  <!-- Form fields row 1 -->
+  <text x="60" y="230" font-size="12" font-weight="600" fill="#595959">Year of Observation</text>
+  <rect x="60" y="240" width="220" height="32" rx="4" fill="#ffffff" stroke="#cccccc"/>
+  <text x="72" y="260" font-size="13" fill="#333333">2024</text>
+  <polygon points="262,254 272,254 267,262" fill="#595959"/>
+
+  <text x="300" y="230" font-size="12" font-weight="600" fill="#595959">Hardiness Zone</text>
+  <rect x="300" y="240" width="220" height="32" rx="4" fill="#ffffff" stroke="#cccccc"/>
+  <text x="312" y="260" font-size="13" fill="#333333">3b</text>
+  <polygon points="502,254 512,254 507,262" fill="#595959"/>
+
+  <text x="540" y="230" font-size="12" font-weight="600" fill="#595959">Ecodistrict ID</text>
+  <rect x="540" y="240" width="220" height="32" rx="4" fill="#ffffff" stroke="#cccccc"/>
+  <text x="552" y="260" font-size="13" fill="#333333">748</text>
+
+  <text x="780" y="230" font-size="12" font-weight="600" fill="#595959">Planting Year (default)</text>
+  <rect x="780" y="240" width="220" height="32" rx="4" fill="#ffffff" stroke="#cccccc"/>
+  <text x="792" y="260" font-size="13" fill="#333333">2005</text>
+
+  <!-- ============================================================= -->
+  <!-- STEP 2: Add Rows -->
+  <!-- ============================================================= -->
+  <rect x="40" y="320" width="1120" height="400" rx="8" fill="#ffffff" stroke="#8c8c8c" filter="url(#shadow)"/>
+
+  <rect x="60" y="340" width="68" height="32" rx="4" fill="#1f497a"/>
+  <text x="94" y="361" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Step 2</text>
+
+  <text x="140" y="355" font-size="16" font-weight="700" fill="#333333">Shelterbelt Rows</text>
+  <text x="140" y="373" font-size="12" font-style="italic" fill="#595959">Add each row of trees in your shelterbelt and configure the tree groups within it</text>
+
+  <line x1="60" y1="390" x2="1140" y2="390" stroke="#d9d9d9"/>
+
+  <!-- Add row button -->
+  <rect x="60" y="410" width="140" height="36" rx="4" fill="#26374a"/>
+  <text x="130" y="433" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">+ Add Row</text>
+
+  <!-- Row table header -->
+  <rect x="60" y="460" width="1080" height="32" fill="#f2f2f2" stroke="#d9d9d9"/>
+  <text x="80" y="481" font-size="12" font-weight="700" fill="#595959">#</text>
+  <text x="130" y="481" font-size="12" font-weight="700" fill="#595959">Row Name</text>
+  <text x="340" y="481" font-size="12" font-weight="700" fill="#595959">Length (m)</text>
+  <text x="480" y="481" font-size="12" font-weight="700" fill="#595959">Tree Groups</text>
+  <text x="640" y="481" font-size="12" font-weight="700" fill="#595959">Species Mix</text>
+  <text x="1040" y="481" font-size="12" font-weight="700" fill="#595959">Actions</text>
+
+  <!-- Row 1: expanded -->
+  <rect x="60" y="492" width="1080" height="44" fill="#ebf2fa" stroke="#1f497a" stroke-width="2"/>
+  <polygon points="72,510 82,505 82,520" fill="#1f497a"/>
+  <text x="98" y="518" font-size="12" font-weight="600" fill="#595959">1</text>
+  <text x="130" y="518" font-size="13" fill="#333333">North Windbreak</text>
+  <text x="340" y="518" font-size="13" fill="#333333">320</text>
+  <text x="480" y="518" font-size="13" fill="#333333">2</text>
+  <!-- species chips -->
+  <rect x="640" y="505" width="90" height="20" rx="10" fill="#1f7a40"/>
+  <text x="685" y="519" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">White Spruce</text>
+  <rect x="738" y="505" width="76" height="20" rx="10" fill="#c67b2e"/>
+  <text x="776" y="519" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Caragana</text>
+  <!-- action icons -->
+  <rect x="1030" y="504" width="24" height="24" rx="4" fill="#ffffff" stroke="#cccccc"/>
+  <text x="1042" y="521" font-size="12" fill="#595959" text-anchor="middle">▲</text>
+  <rect x="1060" y="504" width="24" height="24" rx="4" fill="#ffffff" stroke="#cccccc"/>
+  <text x="1072" y="521" font-size="12" fill="#595959" text-anchor="middle">▼</text>
+  <rect x="1090" y="504" width="24" height="24" rx="4" fill="#fee2e2" stroke="#b3192e"/>
+  <text x="1102" y="521" font-size="12" fill="#b3192e" text-anchor="middle">×</text>
+
+  <!-- Row 1 expanded panel: tree groups -->
+  <rect x="100" y="540" width="1040" height="130" fill="#ffffff" stroke="#d9d9d9"/>
+  <text x="120" y="562" font-size="12" font-weight="700" fill="#333333">Tree Groups in this row</text>
+  <rect x="960" y="548" width="160" height="26" rx="4" fill="#ffffff" stroke="#1f497a"/>
+  <text x="1040" y="566" font-size="12" font-weight="700" fill="#1f497a" text-anchor="middle">+ Add Tree Group</text>
+
+  <!-- sub-header -->
+  <rect x="120" y="580" width="1000" height="26" fill="#f8f9fa" stroke="#e5e5e5"/>
+  <text x="134" y="597" font-size="11" font-weight="700" fill="#595959">Species</text>
+  <text x="310" y="597" font-size="11" font-weight="700" fill="#595959">Planted</text>
+  <text x="400" y="597" font-size="11" font-weight="700" fill="#595959">Alive</text>
+  <text x="480" y="597" font-size="11" font-weight="700" fill="#595959">Spacing (m)</text>
+  <text x="590" y="597" font-size="11" font-weight="700" fill="#595959">Plant Yr</text>
+  <text x="680" y="597" font-size="11" font-weight="700" fill="#595959">Cut Yr</text>
+  <text x="770" y="597" font-size="11" font-weight="700" fill="#595959">Circumf. (cm)</text>
+
+  <!-- group rows -->
+  <rect x="120" y="606" width="1000" height="30" fill="#ffffff" stroke="#f2f2f2"/>
+  <circle cx="140" cy="621" r="6" fill="#1f7a40"/>
+  <text x="155" y="625" font-size="12" fill="#333333">White Spruce</text>
+  <text x="310" y="625" font-size="12" fill="#333333">80</text>
+  <text x="400" y="625" font-size="12" fill="#333333">72</text>
+  <text x="480" y="625" font-size="12" fill="#333333">4.0</text>
+  <text x="590" y="625" font-size="12" fill="#333333">2005</text>
+  <text x="680" y="625" font-size="12" fill="#333333">2065</text>
+  <text x="770" y="625" font-size="12" fill="#333333">38.5</text>
+
+  <rect x="120" y="636" width="1000" height="30" fill="#f8f9fa" stroke="#f2f2f2"/>
+  <circle cx="140" cy="651" r="6" fill="#c67b2e"/>
+  <text x="155" y="655" font-size="12" fill="#333333">Caragana</text>
+  <text x="310" y="655" font-size="12" fill="#333333">400</text>
+  <text x="400" y="655" font-size="12" fill="#333333">380</text>
+  <text x="480" y="655" font-size="12" fill="#333333">0.8</text>
+  <text x="590" y="655" font-size="12" fill="#333333">2005</text>
+  <text x="680" y="655" font-size="12" fill="#333333">2060</text>
+  <text x="770" y="655" font-size="12" fill="#333333">6.2</text>
+
+  <!-- Row 2: collapsed -->
+  <rect x="60" y="684" width="1080" height="34" fill="#ffffff" stroke="#e5e5e5"/>
+  <polygon points="72,694 80,704 72,714" fill="#595959"/>
+  <text x="98" y="706" font-size="12" font-weight="600" fill="#595959">2</text>
+  <text x="130" y="706" font-size="13" fill="#333333">South Windbreak</text>
+  <text x="340" y="706" font-size="13" fill="#333333">280</text>
+  <text x="480" y="706" font-size="13" fill="#333333">1</text>
+  <rect x="640" y="693" width="86" height="20" rx="10" fill="#8b4f2d"/>
+  <text x="683" y="707" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Green Ash</text>
+
+  <!-- ============================================================= -->
+  <!-- STEP 3: Preview & Results summary -->
+  <!-- ============================================================= -->
+  <rect x="40" y="740" width="1120" height="130" rx="8" fill="#ffffff" stroke="#8c8c8c" filter="url(#shadow)"/>
+  <rect x="60" y="760" width="68" height="32" rx="4" fill="#1f497a"/>
+  <text x="94" y="781" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Step 3</text>
+
+  <text x="140" y="775" font-size="16" font-weight="700" fill="#333333">Summary</text>
+  <text x="140" y="793" font-size="12" font-style="italic" fill="#595959">Totals calculated from the rows above</text>
+
+  <line x1="60" y1="808" x2="1140" y2="808" stroke="#d9d9d9"/>
+
+  <text x="60" y="835" font-size="11" font-weight="700" fill="#595959">TOTAL LENGTH</text>
+  <text x="60" y="855" font-size="18" font-weight="700" fill="#333333">600 m</text>
+
+  <text x="280" y="835" font-size="11" font-weight="700" fill="#595959">TOTAL TREES ALIVE</text>
+  <text x="280" y="855" font-size="18" font-weight="700" fill="#333333">582</text>
+
+  <text x="500" y="835" font-size="11" font-weight="700" fill="#595959">SPECIES USED</text>
+  <text x="500" y="855" font-size="18" font-weight="700" fill="#333333">3</text>
+
+  <text x="720" y="835" font-size="11" font-weight="700" fill="#595959">ROWS</text>
+  <text x="720" y="855" font-size="18" font-weight="700" fill="#333333">2</text>
+
+  <text x="900" y="835" font-size="11" font-weight="700" fill="#595959">EST. C SEQUESTERED</text>
+  <text x="900" y="855" font-size="18" font-weight="700" fill="#1f7a40">23.4 Mg C</text>
+</svg>
