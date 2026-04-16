@@ -199,7 +199,7 @@ In order to import your own climate data into Holos, the file must be a Comma Se
 <br>
 <br>
 
-# Chapter 3 - User Settings
+# Chapter 3 - File Options
 
 When you are selecting your components for your farm, at the top of the screen to the right of *"My Components"* is a gear icon. Select this and you will be brought to the Options view. There is a scrollable region with five headings: **File**, **Farm Settings**, **Climate & Weather**, **Diet & Feed**, and **Soil & Manure Defaults**.
 
@@ -252,7 +252,7 @@ In the “**File**” section there are several options to manage your farm(s) f
 </p>
 <br>
 
-4. If you would like to **filter your farms more extensively** (i.e. a more detailed search), beside each header is a **funnel icon** that you can click. A window will pop up indicating options for you to filter the header you have chosen. **THIS FEATURE DOES NOT EXIST IN V5. REMOVE?**
+4. If you would like to **filter your farms more extensively** (i.e. a more detailed search), beside each header is a **funnel icon** that you can click. A window will pop up indicating options for you to filter the header you have chosen. **THIS FEATURE DOES NOT EXIST IN V5. REMOVE? V4->V5**
 
 <br>
 <p align="center">
@@ -283,7 +283,7 @@ In the “**File**” section there are several options to manage your farm(s) f
 <br>
 
 
-6. Select the farm you would like to open by clicking on one of the options. The selected farm will appear darker and will be indicated by a “>” on the left. To open the file, click “Open” at the bottom of the screen.
+6. Select the farm you would like to open by clicking on one of the options. The selected farm will appear darker To open the file, click “Open” at the bottom of the screen.
 
 <br>
 <p align="center">
@@ -305,21 +305,57 @@ In the “**File**” section there are several options to manage your farm(s) f
 
 <br>
 
+### Managing Farms
+
+In this section, you can see all the farms that are in the current file you are working on. You will see a list of each farm and their information. **You can remove your farms in this tab and modify some of their information.**
+
+1.	Click on the “**Farms**” icon under the “**File**” header at the top of the screen.
+2.	A window will pop up displaying each farm in the file. Each section of the farm such as **Name, Comments, Date Created and Date Modified** can be changed by clicking on the appropriate box and modifying its contents
+3. To **remove a farm**, select the farm you would like to remove by clicking on it and then click the “**Remove**” button at the bottom of the screen
+
+<br>
+<p align="center">
+ <img src="../../Images/UserGuide/enV5/chapter3/figure3-11.png" alt="Figure3-11" width="650"/>
+    <br>
+    <em>
+		Figure 3.11: Managing Farms Screen.
+		<br>
+		A: A list of farms.
+		<br>
+		B: After you have selected a farm, if you would like to remove that farm, click “Remove”.
+	</em>
+</p>
+<br>
+
+
+### Saving
+#### Save
+To save a file, click on the "**Save Options**" icon under the "**File**" header. The right side of the application will show two options. "Save Holos" and "Save As", simply click the "Save" button under "Save Holos" to save the current configuration of the farm file.
+
+**Note:** This process of saving a farms configuration occurs automatically when changes are made to a farm file. 
+#### Save As
+
+1.	If you already have a farm created but you would like to save it under another name and change it from there you can select “Save As”.  Like other products you might use “Save As” is a way of creating a copy.  Simply enter a name for this new copy in the "New farm name" entry field, and select “Save As”.
+2.	Holos will warn you if the name already exists and will prompt you to change the name.
+3.	You can now access this newly copied farm the same way you would by navigating to the "**[Open Farm](#opening)**" tab shown previously.
+
+<br>
+
 ### Exporting/Importing Farm Configuration Files
 
-You can export your farm configuration files to a JSON file (file extension ‘. json’) and then import them into Holos running on a different computer.  This only works for Holos 4, you cannot import old files from Holos 3 into Holos 4 and vice versa.
+You can export your farm configuration files to a JSON file (file extension ‘. json’) and then import them into Holos running on a different computer.  This only works for Holos 4 and Holos 5, you cannot import old files from Holos 3 into Holos 4 or Holos 5. Though you can import farms from Holos 4 into Holos 5 but you can not import farms made in Holos 5 back in to Holos 4.
 
 <br>
 
 #### Exporting Farms
 
-1.	To export a file, click on the “**Export Farm(s)**” icon under the “**File**” tab. This will open a window where you can see a list of farms that you can export. 
+1.	To export a file, click on the “**Export Farm(s)**” icon under the “**File**” section. A list of farms will be displayed that you can select to export. 
 2.	You can **add a description** to each farm or modify the name of the farm by clicking on the appropriate box and modifying its contents. 
 3. Click on the **farm**(s) you would like to include and click “**Export**” at the bottom to **choose a location for your exported file. The selected farm(s) will appear shaded*.*
 
 <br>
 <p align="center">
- <img src="../../Images/UserGuide/en/chapter3/figure3-6.png" alt="Figure3-6" width="650"/>
+ <img src="../../Images/UserGuide/enV5/chapter3/figure3-6.png" alt="Figure3-6" width="650"/>
     <br>
     <em>
 		Figure 3.6: Exporting a farm
@@ -358,7 +394,7 @@ You can export your farm configuration files to a JSON file (file extension ‘.
 
 #### Importing
 
-1.	To import your farm(s), click “**Import**” under the “**File**” tab. This will open a window (shown below) were you can see the locations of files on your computer. 
+1.	To import your farm(s), click “**Import Farm**” under the “**File**” header. This will open a window (shown below) were you can see the locations of files on your computer. 
 2. Navigate to the file you would like to import into Holos and select the file by clicking on it. Then, click “**Open**”.
 
 <br>
@@ -382,7 +418,7 @@ You can export your farm configuration files to a JSON file (file extension ‘.
 
 <br>
 <p align="center">
- <img src="../../Images/UserGuide/en/chapter3/figure3-9.png" alt="Figure3-9" width="650"/>
+ <img src="../../Images/UserGuide/enV5/chapter3/figure3-9.png" alt="Figure3-9" width="650"/>
     <br>
     <em>
 		Figure 3.9: Selecting Farm(s) to Import.
@@ -420,8 +456,8 @@ You can export your farm configuration files to a JSON file (file extension ‘.
 
 You can export your farms' climate data to a CSV file (file extension ‘. csv’), which can be viewed in software like Excel.  
 
-1.	To export a file, click on the “**Export Climate Data**” icon under the “**File**” tab. This will open a window where you can see a list of farms that you can export. 
-2.	You can **add a description** to each farm or modify the name of the farm by clicking on the appropriate box and modifying its contents. 
+1.	To export a file, click on the “**Export Climate**” under the “**File**” header on the left side of the screen. This will load the export climate view in the content region of the application where you can see a list of farms that you can export. 
+2.	You can **add a description** to each farm or modify the name of the farm by clicking on the appropriate box and modifying its contents. <strong>SHOULD THIS BE REMOVED? V4->V5</strong>
 3. Click on the **farm**(s) you would like to include and click “**Export**” at the bottom to **choose a location for your exported file. The selected farm(s) will appear shaded*.*
 4.	After you have selected your farm(s) and have clicked the “**Export**” button. You will be prompted to **choose a location where you would like the file to be created**. 
 5.	You can **navigate** through your system with the tabs on the left side of the screen. 
@@ -437,38 +473,7 @@ data for multiple farms results in multiple .csv files.
 <br>
 When exporting the climate data for multiple farms, step 4 in the process outlined above will repeat for the amount of farms you have chosen to export climate data for.
 
-#### Save As
-
-1.	If you already have a farm created but you would like to save it under another name and change it from there you can select “Save As”.  Like other products you might use “Save As” is a way of creating a copy.  Simply select “Save As” from the “File” tab and enter a name to save your new farm under.  
-2.	Holos will warn you if the name already exists and will prompt you to change the name.
-3.	You can now access this newly copied farm the same way you would open a farm from the “File” tab.
-
-<br>
-
-### Managing Farms
-
-In this section, you can see all the farms that are in the current file you are working on. You will see a list of each farm and their information. **You can remove your farms in this tab and modify some of their information.**
-
-1.	Click on the “**Farms**” icon under the “**File**” header at the top of the screen.
-2.	A window will pop up displaying each farm in the file. Each section of the farm such as **Name, Comments, Date Created and Date Modified** can be changed by clicking on the appropriate box and modifying its contents
-3. To **remove a farm**, select the farm you would like to remove by clicking on it and then click the “**Remove**” button at the bottom of the screen
-
-<br>
-<p align="center">
- <img src="../../Images/UserGuide/en/chapter3/figure3-11.png" alt="Figure3-11" width="650"/>
-    <br>
-    <em>
-		Figure 3.11: Managing Farms Screen.
-		<br>
-		A: A list of farms.
-		<br>
-		B: After you have selected a farm, if you would like to remove that farm, click “Remove”.
-	</em>
-</p>
-<br>
-
-
-## Help Tab
+## Help Tab <strong>(Add this in to V5? V4->V5)</strong>
 
 Under the “**Help**” tab, there is the option to “**Send Feedback**”, view “**About Holos**”, or view the “**Disclaimer**”.
 
@@ -482,7 +487,7 @@ Under the “**Help**” tab, there is the option to “**Send Feedback**”, vi
 </p>
 <br>
 
-### Send Feedback
+### Send Feedback <strong>(remove for? V4->V5)</strong>
 
 1.	Click on “**Send Feedback**”.
 2.	 You will be presented with form requesting certain information such as: first name, last name, reason for feedback and user feedback
@@ -536,7 +541,7 @@ Under the “**Help**” tab, there is the option to “**Send Feedback**”, vi
 <br>
 
 
-# Chapter 4 - Settings
+# Chapter 4 - Farm Settings
 
 Under the “**Defaults**” header, there are three options available: **Farm Details, User Settings and Crop Defaults**.
 
@@ -555,18 +560,18 @@ Under the “**Defaults**” header, there are three options available: **Farm D
 <br>
 
 
-## Farm Details
+## Farm Settings
 
-1.	Click on the “**Farm Details**” icon
+1.	Scroll to the “**Farm Settings**” header.
 2.	Here, you will be able to set certain default settings for your farm such as: **Farm**, **Soil, Precipitation, Temperature, Evaporation, Soil N2O breakdown, Default Bedding Composition, and Default Manure Composition**. Select the category you would like to modify the default settings for.
 3. Each category has its own set of input fields for you to populate. **Every time you create a new farm in this file, it will have these default settings.**
 
 <br>
 <p align="center">
- <img src="../../Images/UserGuide/en/chapter4/figure4-2.png" alt="Figure4-2" width="650"/>
+ <img src="../../Images/UserGuide/enV5/chapter4/figure4-2.png" alt="Figure4-2" width="650"/>
     <br>
     <em>
-		Figure 4.2: Farm Details Selection.
+		Figure 4.2: Farm Settings Selection.
 		<br>
 		A: The different defaults available.
 		<br>
@@ -577,11 +582,18 @@ Under the “**Defaults**” header, there are three options available: **Farm D
 
 In the farm details section, the farm details categories are:
 
-- **Farm**: Defaults related to general farm  information
+**Farm Settings**
+- **Farm**: Defaults related to general farm information
 - **Soil**: Soil defaults including texture, thickness etc.
-- **Precipitation**: Monthly precipitation averages for  the farm
+- **User Settings**: Carbon modelling, Biomass, N<sub>2</sub>O, & irrigation
+
+**Climate & Weather**
 - **Temperature**: Monthly temperature averages
+- **Barn Temperatures**: Monthly barn temperature averages
+- **Precipitation**: Monthly precipitation averages for the farm
 - **Evapotranspiration**: Monthly evapotranspiration values of the farm
+
+**Soil & Manure Defaults**
 - **Soil N2O breakdown**: Monthly emissions distribution for the year
 - **Default bedding composition**: Default bedding material for beef, dairy cattle, swine & poultry
 - **Default manure composition**: Manure types and default composition
@@ -592,24 +604,24 @@ In the farm details section, the farm details categories are:
 ## User Settings
 
 The default data for this screen is based on information found in the algorithm document which can be read here.
-1.	Click on the “User Settings” icon
+1.	Click on the “**User Settings**” tab.
 2.	Here, you will be able to set certain user default settings such as: Carbon concentration (kg kg^-1), Emergence day or Soil Top Thickness (mm). 
 3.	Click “OK” to save the changes to your User Settings
 
 <br>
 <p align="center">
- <img src="../../Images/UserGuide/en/chapter4/figure4-3.png" alt="Figure4-3" width="550"/>
+ <img src="../../Images/UserGuide/enV5/chapter4/figure4-3.png" alt="Figure4-3" width="550"/>
     <br>
     <em>
 		Figure 4.3: User Default Settings
 		<br>
-		The specific user default settings that can be adjusted for **all farms.**
+		The specific user default settings that can be adjusted for <strong>all farms</strong>.
 	</em>
 </p>
 
 <br>
 
-## Energy
+## Energy (Needs update V4->V5)
 -	The energy tab displays the conversion of energy from the farm (electricity, diesel, production) into greenhouse gas emissions.
 -	The energy tab provides the amount of energy used for each available farm component.
 
@@ -618,7 +630,7 @@ The default data for this screen is based on information found in the algorithm 
  <img src="../../Images/UserGuide/en/chapter4/figure4-4.png" alt="Figure4-4" width="650"/>
     <br>
     <em>
-		Figure 4.4: - Energy Settings
+		Figure 4.4: - Energy Settings (Needs update V4->V5)
 	</em>
 </p>
 <br>
