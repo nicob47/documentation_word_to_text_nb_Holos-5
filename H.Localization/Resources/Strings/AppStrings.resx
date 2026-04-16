@@ -4302,4 +4302,10 @@ Hassan Afzaal</value>
   <data name="Label_MultiYearCarbonModelling" xml:space="preserve">
     <value>Multiyear Carbon Modelling</value>
   </data>
+  <data name="Label_Energy" xml:space="preserve">
+    <value>Energy</value>
+  </data>
+  <data name="Label_CropDefaults" xml:space="preserve">
+    <value>Crop Defaults</value>
+  </data>
 </root>

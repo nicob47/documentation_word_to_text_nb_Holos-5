@@ -57,6 +57,8 @@
 					<ListBoxItem Content="{Binding [Label_Farm].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_Soil].Value, Source={StaticResource Loc}}"/>
 					<ListBoxItem Content="{Binding [Label_UserSettings].Value, Source={StaticResource Loc}}"/>
+                    <ListBoxItem Content="{Binding [Label_Energy].Value, Source={StaticResource Loc}}"/>
+                    <ListBoxItem Content="{Binding [Label_CropDefaults].Value, Source={StaticResource Loc}}"/>
 
 					<!-- Climate & Weather -->
 					<ListBoxItem Margin="-5, 10, 0, 0" IsEnabled="False" >

@@ -3712,6 +3712,15 @@ namespace H.Localization.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crop Defaults.
+        /// </summary>
+        public static string Label_CropDefaults {
+            get {
+                return ResourceManager.GetString("Label_CropDefaults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crop Details.
         /// </summary>
         public static string Label_CropDetails {
@@ -4185,6 +4194,15 @@ namespace H.Localization.Resources.Strings {
         public static string Label_EndYear {
             get {
                 return ResourceManager.GetString("Label_EndYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Energy.
+        /// </summary>
+        public static string Label_Energy {
+            get {
+                return ResourceManager.GetString("Label_Energy", resourceCulture);
             }
         }
         
