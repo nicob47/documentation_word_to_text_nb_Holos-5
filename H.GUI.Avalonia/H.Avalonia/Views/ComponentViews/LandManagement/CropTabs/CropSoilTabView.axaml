@@ -5,8 +5,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropSoilTabView">
 
-    <Border Classes="step-card" Margin="16">
-        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+    <Border Classes="step-card" Margin="0">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="0">
+
+            <!-- Section Header -->
+            <TextBlock Text="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
+                       Foreground="#4CAF50"/>
+            <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,8,0,8"/>
 
             <!-- Climate parameter -->
             <Grid>

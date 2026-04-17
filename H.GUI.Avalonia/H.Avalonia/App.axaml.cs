@@ -20,7 +20,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Regions;
 using System;
-using KmlHelpers = H.Avalonia.Infrastructure.KmlHelpers;
+using KmlHelpers = H.Core.KmlHelpers;
 
 namespace H.Avalonia
 {

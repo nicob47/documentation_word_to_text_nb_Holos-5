@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             xmlns:infrastructure="clr-namespace:H.Infrastructure.Controls.ValueConverters;assembly=H.Infrastructure"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ComponentViews.LandManagement.CropTabs.CropGeneralTabView">
 
@@ -10,8 +10,13 @@
         <infrastructure:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
 
-    <Border Classes="step-card" Margin="16">
-        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+    <Border Classes="step-card" Margin="0">
+        <StackPanel Grid.IsSharedSizeScope="True" Spacing="0">
+
+            <!-- Section Header -->
+            <TextBlock Text="{Binding [Tab_General].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="14"
+                       Foreground="{StaticResource GcdsLinkDefaultBrush}"/>
+            <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1" Margin="0,8,0,8"/>
 
             <!-- Yield (wet weight) -->
             <Grid>

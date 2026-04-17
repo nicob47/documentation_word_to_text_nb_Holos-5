@@ -46,6 +46,7 @@ namespace H.Avalonia.ViewModels.OptionsViews
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
+            SelectedItem = null;
             this.PropertyChanged += OnSelectedOptionChanged;
             EventAggregator?.GetEvent<ValidationErrorOccurredEvent>().Subscribe(LockNavigation);
             EventAggregator?.GetEvent<ValidationPassOccurredEvent>().Subscribe(UnlockNavigation);

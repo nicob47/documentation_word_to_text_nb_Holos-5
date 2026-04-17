@@ -1,3 +1,4 @@
+using H.Infrastructure;
 using H.Avalonia.Infrastructure.Dialogs;
 using H.Avalonia.Infrastructure.MapperServices;
 using H.Avalonia.Services;
@@ -195,7 +196,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterForNavigation<CountrySelectionView, CountrySelectionViewModel>();
             containerRegistry.RegisterForNavigation<FarmOptionsView, FarmOptionsViewModel>();
             containerRegistry.RegisterForNavigation<FarmCreationView, FarmCreationViewModel>();
-            containerRegistry.RegisterForNavigation<FarmOpenExistingView, FarmOpenExistingViewmodel>();
+            containerRegistry.RegisterForNavigation<FarmOpenExistingView, FarmOpenExistingViewModel>();
             containerRegistry.RegisterForNavigation<StartView, StartViewModel>();
             
             _logger.LogDebug("Completed registration of core application views");

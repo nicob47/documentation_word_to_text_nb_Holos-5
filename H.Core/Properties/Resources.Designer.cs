@@ -19110,5 +19110,446 @@ namespace H.Core.Properties {
                 return ResourceManager.GetString("Yukon", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Holos Data Extraction Tool.
+        /// </summary>
+        public static string ApplicationTitle {
+            get {
+                return ResourceManager.GetString("ApplicationTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Climate_Data.
+        /// </summary>
+        public static string ClimateDataExportDefaultName {
+            get {
+                return ResourceManager.GetString("ClimateDataExportDefaultName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Aaron McPherson\nHassan Afzaal.
+        /// </summary>
+        public static string ContributorsList {
+            get {
+                return ResourceManager.GetString("ContributorsList", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export File.
+        /// </summary>
+        public static string ExportDefaultName {
+            get {
+                return ResourceManager.GetString("ExportDefaultName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import File.
+        /// </summary>
+        public static string ImportDefaultName {
+            get {
+                return ResourceManager.GetString("ImportDefaultName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string LabelAbout {
+            get {
+                return ResourceManager.GetString("LabelAbout", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to About Holos.
+        /// </summary>
+        public static string LabelAboutHolos {
+            get {
+                return ResourceManager.GetString("LabelAboutHolos", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string LabelAddress {
+            get {
+                return ResourceManager.GetString("LabelAddress", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add row.
+        /// </summary>
+        public static string LabelAddRow {
+            get {
+                return ResourceManager.GetString("LabelAddRow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string LabelBack {
+            get {
+                return ResourceManager.GetString("LabelBack", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Calculate Monthly PPT?.
+        /// </summary>
+        public static string LabelCalculateMonthlyPPT {
+            get {
+                return ResourceManager.GetString("LabelCalculateMonthlyPPT", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string LabelCancel {
+            get {
+                return ResourceManager.GetString("LabelCancel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Climate Data.
+        /// </summary>
+        public static string LabelClimateData {
+            get {
+                return ResourceManager.GetString("LabelClimateData", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Contributors.
+        /// </summary>
+        public static string LabelContributors {
+            get {
+                return ResourceManager.GetString("LabelContributors", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string LabelDelete {
+            get {
+                return ResourceManager.GetString("LabelDelete", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to End Year.
+        /// </summary>
+        public static string LabelEndYear {
+            get {
+                return ResourceManager.GetString("LabelEndYear", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export to CSV.
+        /// </summary>
+        public static string LabelExportToCSV {
+            get {
+                return ResourceManager.GetString("LabelExportToCSV", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Find Coordinate.
+        /// </summary>
+        public static string LabelFindCoordinate {
+            get {
+                return ResourceManager.GetString("LabelFindCoordinate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Get Climate Data.
+        /// </summary>
+        public static string LabelGetClimateData {
+            get {
+                return ResourceManager.GetString("LabelGetClimateData", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Get Soil Data.
+        /// </summary>
+        public static string LabelGetSoilData {
+            get {
+                return ResourceManager.GetString("LabelGetSoilData", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Github.
+        /// </summary>
+        public static string LabelGithub {
+            get {
+                return ResourceManager.GetString("LabelGithub", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Holos official page.
+        /// </summary>
+        public static string LabelHolosOfficialPage {
+            get {
+                return ResourceManager.GetString("LabelHolosOfficialPage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import From CSV.
+        /// </summary>
+        public static string LabelImportFromCSV {
+            get {
+                return ResourceManager.GetString("LabelImportFromCSV", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Julian Day End.
+        /// </summary>
+        public static string LabelJulianEndDay {
+            get {
+                return ResourceManager.GetString("LabelJulianEndDay", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Julian Day Start.
+        /// </summary>
+        public static string LabelJulianStartDay {
+            get {
+                return ResourceManager.GetString("LabelJulianStartDay", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string LabelLatitude {
+            get {
+                return ResourceManager.GetString("LabelLatitude", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string LabelLongitude {
+            get {
+                return ResourceManager.GetString("LabelLongitude", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly PPT.
+        /// </summary>
+        public static string LabelMonthlyPPT {
+            get {
+                return ResourceManager.GetString("LabelMonthlyPPT", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple Coordinates.
+        /// </summary>
+        public static string LabelMultipleCoordinates {
+            get {
+                return ResourceManager.GetString("LabelMultipleCoordinates", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string LabelOk {
+            get {
+                return ResourceManager.GetString("LabelOk", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to % Organic Matter in Soil.
+        /// </summary>
+        public static string LabelOrganicMatterSoil {
+            get {
+                return ResourceManager.GetString("LabelOrganicMatterSoil", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to % Clay in Soil.
+        /// </summary>
+        public static string LabelPercentClayInSoil {
+            get {
+                return ResourceManager.GetString("LabelPercentClayInSoil", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select All.
+        /// </summary>
+        public static string LabelSelectAllRows {
+            get {
+                return ResourceManager.GetString("LabelSelectAllRows", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Single Coordinate.
+        /// </summary>
+        public static string LabelSingleCoordinate {
+            get {
+                return ResourceManager.GetString("LabelSingleCoordinate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Soil Data.
+        /// </summary>
+        public static string LabelSoilData {
+            get {
+                return ResourceManager.GetString("LabelSoilData", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Start Year.
+        /// </summary>
+        public static string LabelStartYear {
+            get {
+                return ResourceManager.GetString("LabelStartYear", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Total PET.
+        /// </summary>
+        public static string LabelTotalPET {
+            get {
+                return ResourceManager.GetString("LabelTotalPET", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Total PPT.
+        /// </summary>
+        public static string LabelTotalPPT {
+            get {
+                return ResourceManager.GetString("LabelTotalPPT", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Useful Links.
+        /// </summary>
+        public static string LabelUsefulLinks {
+            get {
+                return ResourceManager.GetString("LabelUsefulLinks", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Address field is empty. Please try again..
+        /// </summary>
+        public static string MessageEmptyAddress {
+            get {
+                return ResourceManager.GetString("MessageEmptyAddress", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The address entered was incorrect. Please try again..
+        /// </summary>
+        public static string MessageIncorrectAddress {
+            get {
+                return ResourceManager.GetString("MessageIncorrectAddress", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find the address for this coordinate. Please select a valid location..
+        /// </summary>
+        public static string MessageIncorrectLocationSelected {
+            get {
+                return ResourceManager.GetString("MessageIncorrectLocationSelected", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An invalid coordinate was entered....
+        /// </summary>
+        public static string MessageInValidCoordinateEntered {
+            get {
+                return ResourceManager.GetString("MessageInValidCoordinateEntered", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete row(s)?.
+        /// </summary>
+        public static string RowDeleteMessage {
+            get {
+                return ResourceManager.GetString("RowDeleteMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Soil_Data.
+        /// </summary>
+        public static string SoilDataExportDefaultName {
+            get {
+                return ResourceManager.GetString("SoilDataExportDefaultName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to John Doe.
+        /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Another Contributor.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This application is a tool that provides users with access to climate and soil data....
+        /// </summary>
+        public static string TextAboutPage {
+            get {
+                return ResourceManager.GetString("TextAboutPage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Row.
+        /// </summary>
+        public static string TitleDeleteRowDialog {
+            get {
+                return ResourceManager.GetString("TitleDeleteRowDialog", resourceCulture);
+            }
+        }
     }
 }

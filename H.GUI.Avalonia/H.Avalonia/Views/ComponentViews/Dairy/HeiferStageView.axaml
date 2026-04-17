@@ -4,7 +4,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:loc="clr-namespace:H.Localization.Resources.Strings;assembly=H.Localization"
            xmlns:converters="clr-namespace:H.Avalonia.Converters"
-           xmlns:infrastructure="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+           xmlns:infrastructure="clr-namespace:H.Infrastructure.Controls.ValueConverters;assembly=H.Infrastructure"
            xmlns:dairy="clr-namespace:H.Avalonia.ViewModels.ComponentViews.Dairy"
            xmlns:dtoModel="clr-namespace:H.Core.Factories.Animals;assembly=H.Core"
            xmlns:dairyViews="clr-namespace:H.Avalonia.Views.ComponentViews.Dairy"

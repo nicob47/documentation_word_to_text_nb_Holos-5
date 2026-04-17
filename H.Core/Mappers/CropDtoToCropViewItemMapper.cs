@@ -14,6 +14,13 @@ public class CropDtoToCropViewItemMapper : IModelMapper<ICropDto, CropViewItem>
         var dest = new CropViewItem();
         PropertyMapper.CopyTo(source, dest);
         dest.Yield = source.WetYield;
+
+        // PropertyMapper skips the Guid property by design, but when a DTO is being
+        // added to the model as a new CropViewItem, the view item must share the DTO's
+        // Guid so that subsequent lookups via FieldComponentService.GetCropViewItemFromDto
+        // / RemoveCropFromSystem (which match by Guid) can find the correct view item
+        // when the user later edits or removes that crop.
+        dest.Guid = source.Guid;
         return dest;
     }
 }

@@ -43,14 +43,14 @@
             <!-- Preview Grid - Only visible when both NumberOfFields > 0 AND crops exist -->
             <ScrollViewer HorizontalScrollBarVisibility="Auto"
                           IsVisible="{Binding ShouldShowPreview}">
-                    <Grid Margin="0,0,0,16">
+                    <Grid Margin="0,0,0,0">
                         <!-- Dynamic ItemsControl to display field rows -->
                         <ItemsControl ItemsSource="{Binding FieldAssignmentRows}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <!-- Each row showing one field's crop assignments across years -->
                                     <Border BorderBrush="{StaticResource GcdsBorderLightBrush}"
-                                            BorderThickness="0,0,0,1"
+                                            BorderThickness="0"
                                             Padding="8,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -79,6 +79,12 @@
                                                         <StackPanel Orientation="Horizontal" Spacing="8"/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
+                                                <ItemsControl.Styles>
+                                                    <Style Selector="ItemsControl > ContentPresenter">
+                                                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                                                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                                    </Style>
+                                                </ItemsControl.Styles>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <!-- Each year/crop cell with fixed width and selection highlighting - Now clickable -->
@@ -86,6 +92,8 @@
                                                                 BorderThickness="0"
                                                                 Padding="0"
                                                                 Cursor="Hand"
+                                                                VerticalAlignment="Stretch"
+                                                                VerticalContentAlignment="Stretch"
                                                                 Command="{Binding $parent[UserControl].((rotation:RotationComponentViewModel)DataContext).SetSelectedCropFromCellCommand}"
                                                                 CommandParameter="{Binding}">
                                                             <Button.Styles>
@@ -99,7 +107,7 @@
                                                             <Border Background="{Binding CropBackground}"
                                                                     Padding="8,8"
                                                                     Width="120"
-                                                                    Height="80"
+                                                                    MinHeight="80"
                                                                     CornerRadius="4"
                                                                     BorderBrush="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderBrushConverter}}"
                                                                     BorderThickness="{Binding IsSelected, Converter={StaticResource BoolToSelectionBorderThicknessConverter}}">
@@ -131,8 +139,9 @@
                                                                                FontSize="10"
                                                                                FontStyle="Italic"
                                                                                Foreground="#2E7D32"
+                                                                               TextWrapping="Wrap"
                                                                                TextTrimming="CharacterEllipsis"
-                                                                               MaxLines="1"
+                                                                               MaxLines="2"
                                                                                ToolTip.Tip="{Binding CoverCropDisplay}"/>
                                                                 </StackPanel>
                                                             </Border>
@@ -147,13 +156,6 @@
                         </ItemsControl>
                     </Grid>
             </ScrollViewer>
-
-            <!-- Hint text -->
-            <TextBlock Text="Click a crop card above to edit its properties."
-                       FontSize="12" FontStyle="Italic"
-                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                       Margin="0,4,0,0"
-                       IsVisible="{Binding ShouldShowPreview}"/>
 
             <!-- Empty State Message when preview should not be shown -->
             <Border IsVisible="{Binding !ShouldShowPreview}"

@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:results="clr-namespace:H.Avalonia.ViewModels.Results"
-             xmlns:infrastructure1="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             xmlns:infrastructure1="clr-namespace:H.Infrastructure.Controls.ValueConverters;assembly=H.Infrastructure"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.ResultViews.SoilResultsView">
     <Design.DataContext>

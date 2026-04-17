@@ -1036,6 +1036,27 @@ public class FieldComponentViewModel : ViewModelBase
     {
         if (IsDisposed) return;
 
+        // Persist the property change to the underlying model so edits made on Step 2
+        // timeline cards (e.g. crop type changes) survive navigation away from the field
+        // component. Without this, CropDtoOnPropertyChanged is only subscribed to the
+        // currently SelectedCropDto, so changes on other timeline cards never reach the
+        // model and are lost when the view is re-initialized from the model on return.
+        if (sender is CropDto cropDto && !cropDto.HasErrors && _selectedFieldSystemComponent is not null)
+        {
+            try
+            {
+                var viewItem = _fieldComponentService?.GetCropViewItemFromDto(cropDto, _selectedFieldSystemComponent);
+                if (viewItem is not null)
+                {
+                    _fieldComponentService?.TransferCropDtoToSystem(cropDto, viewItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Failed to persist timeline crop DTO change to the model");
+            }
+        }
+
         // Regenerate preview when crop type changes
         if (e.PropertyName == nameof(ICropDto.CropType) || e.PropertyName == nameof(ICropDto.HasCoverCrop))
         {

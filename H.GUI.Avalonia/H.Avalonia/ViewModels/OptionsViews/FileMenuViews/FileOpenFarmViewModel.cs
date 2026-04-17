@@ -1,10 +1,11 @@
 ﻿using H.Avalonia.ViewModels.FarmCreationViews;
+using H.Avalonia.Views.FarmCreationViews;
 using H.Core.Services.StorageService;
 using Prism.Regions;
 
 namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
 {
-    public class FileOpenFarmViewModel : FarmOpenExistingViewmodel
+    public class FileOpenFarmViewModel : FarmOpenExistingViewModelBase
     {
         #region Constructors
 

@@ -38,12 +38,11 @@ public class AnimalComponentMapperTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(NotSupportedException))]
     public void AnimalComponentDtoToModel_ThrowsForAbstractType()
     {
         var mapper = new AnimalComponentDtoToAnimalComponentMapper();
         var source = new AnimalComponentDto { Name = "Test" };
-        mapper.Map(source);
+        Assert.ThrowsExactly<NotSupportedException>(() => mapper.Map(source));
     }
 
     [TestMethod]

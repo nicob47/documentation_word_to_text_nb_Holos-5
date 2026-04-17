@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:H.Avalonia.ViewModels"
              xmlns:mapsui="clr-namespace:Mapsui.UI.Avalonia;assembly=Mapsui.UI.Avalonia"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
-             xmlns:infrastructure1="clr-namespace:H.Avalonia.Infrastructure;assembly=H.Avalonia.Infrastructure"
+             xmlns:infrastructure1="clr-namespace:H.Infrastructure.Controls.ValueConverters;assembly=H.Infrastructure"
              mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="450"
              x:Class="H.Avalonia.Views.SoilDataView">
 	<Design.DataContext>

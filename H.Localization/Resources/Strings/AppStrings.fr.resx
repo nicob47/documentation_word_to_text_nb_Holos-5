@@ -1221,6 +1221,12 @@ Si notre réponse à vos préoccupations au sujet de la protection des renseigne
   <data name="Label_EndYear" xml:space="preserve">
     <value>Année de fin</value>
   </data>
+  <data name="Label_RotationStartYear" xml:space="preserve">
+    <value>En quelle année cette rotation commence-t-elle ?</value>
+  </data>
+  <data name="Label_RotationEndYear" xml:space="preserve">
+    <value>En quelle année cette rotation se termine-t-elle ?</value>
+  </data>
   <data name="Label_EquilibriumCalculationStrategy" xml:space="preserve">
     <value>Stratégie de calcul du rendement de l'année d'équilibre</value>
   </data>
@@ -2318,13 +2324,13 @@ Hassan Afzaal</value>
     <value>Étape 4</value>
   </data>
   <data name="Label_FieldSize" xml:space="preserve">
-    <value>Superficie du champ :</value>
+    <value>Sélectionnez une superficie à utiliser pour tous les champs de cette rotation :</value>
   </data>
   <data name="Label_Advanced" xml:space="preserve">
     <value>AVANCÉ</value>
   </data>
   <data name="Label_DefineRotationParameters" xml:space="preserve">
-    <value>Définir les paramètres de rotation</value>
+    <value>Configurer la période et les champs de votre rotation</value>
   </data>
   <data name="Label_RotationParameters" xml:space="preserve">
     <value>Paramètres de rotation</value>
@@ -2357,7 +2363,7 @@ Hassan Afzaal</value>
     <value>Construire votre séquence de rotation</value>
   </data>
   <data name="Label_AddCropsToRotationDesc" xml:space="preserve">
-    <value>Ajoutez des cultures pour créer votre calendrier de rotation. Chaque culture représente une année dans la séquence.</value>
+    <value>Ajoutez des cultures pour créer votre calendrier de rotation. Chaque culture représente une année dans la séquence. L'année réelle de chaque culture dépend du champ et de sa position de départ dans la rotation.</value>
   </data>
   <data name="Button_AddCrop" xml:space="preserve">
     <value>+ Ajouter une culture</value>
@@ -2393,7 +2399,7 @@ Hassan Afzaal</value>
     <value>Aperçu des affectations de champs</value>
   </data>
   <data name="Label_ReviewHowCropsDistributed" xml:space="preserve">
-    <value>Vérifiez comment les cultures seront réparties entre les champs au fil du temps. Chaque rangée représente un champ, chaque colonne représente une année.</value>
+    <value>Vérifiez comment les cultures seront réparties entre les champs au fil du temps. Chaque rangée représente un champ, chaque colonne représente une année. Cliquez sur une carte de culture pour modifier ses propriétés.</value>
   </data>
   <data name="Label_PreviewRequirements" xml:space="preserve">
     <value>Conditions requises pour l'aperçu :</value>
@@ -2420,7 +2426,7 @@ Hassan Afzaal</value>
     <value>Modifier les détails de la culture</value>
   </data>
   <data name="Label_EditCropDetailsDesc" xml:space="preserve">
-    <value>Configurez le rendement et l'irrigation pour chaque culture de votre rotation. Cliquez sur une cellule dans la grille d'aperçu ci-dessus pour modifier ses détails.</value>
+    <value>Configurez le rendement et l'irrigation pour chaque culture de votre rotation. Cliquez sur une cellule dans la grille d'aperçu ci-dessus pour modifier ses détails. Sélectionnez les catégories pertinentes à votre exploitation. Seules les catégories actives affichent les champs de saisie ci-dessous.</value>
   </data>
   <data name="Label_CurrentlyEditing" xml:space="preserve">
     <value>En cours de modification :</value>
@@ -2495,7 +2501,7 @@ Hassan Afzaal</value>
     <value>Cette section sera implémentée dans une mise à jour future</value>
   </data>
   <data name="Label_Fields" xml:space="preserve">
-    <value>Champs :</value>
+    <value>Combien de champs y a-t-il dans cette rotation ?</value>
   </data>
   <data name="Label_Field" xml:space="preserve">
     <value>Champ :</value>

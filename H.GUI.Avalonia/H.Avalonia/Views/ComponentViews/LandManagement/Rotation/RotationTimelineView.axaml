@@ -71,16 +71,6 @@
                         Content="{Binding [Button_AddCrop].Value, Source={StaticResource Loc}}"
                         Command="{Binding AddCropToRotationCommand}"
                         Margin="0,0,8,0"/>
-                <TextBlock x:Name="CropsInSequenceLabelTextBlock"
-                           Text="{Binding [Label_CropsInSequence].Value, Source={StaticResource Loc}}"
-                           VerticalAlignment="Center"
-                           Margin="8,0,8,0"
-                           IsVisible="{Binding CropDtos.Count}"/>
-                <TextBlock x:Name="CropsCountTextBlock"
-                           Text="{Binding CropDtos.Count}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"
-                           IsVisible="{Binding CropDtos.Count}"/>
             </StackPanel>
 
             <!-- Crop Table - Only visible when crops exist -->
@@ -124,8 +114,7 @@
                             <DataTemplate>
                                 <Border Padding="8,6"
                                         BorderBrush="{StaticResource GcdsBorderLightBrush}"
-                                        BorderThickness="0,0,0,1"
-                                        Background="{Binding CropType, Converter={StaticResource CropTypeToColorConverter}}">
+                                        BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="90"/>
@@ -133,6 +122,12 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="110"/>
                                         </Grid.ColumnDefinitions>
+
+                                            <!-- Sequence column color accent: negative margins negate the parent's Padding="8,6" on
+                                                 left/top/bottom so the color fills flush to the row edges, stopping at Column 0. -->
+                                            <Border Grid.Column="0"
+                                                    Margin="-8,-6,0,-6"
+                                                    Background="{Binding CropType, Converter={StaticResource CropTypeToColorConverter}}"/>
 
                                             <!-- Sequence -->
                                             <TextBlock Grid.Column="0" FontSize="12" FontWeight="SemiBold"
@@ -200,13 +195,7 @@
                 </Border>
             </StackPanel>
 
-            <!-- Help text -->
-            <TextBlock Text="This defines the crop rotation cycle. The actual year each crop is grown depends on the field and its starting position in the rotation."
-                       FontSize="11" FontStyle="Italic"
-                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
-                       TextWrapping="Wrap"
-                       Margin="0,8,0,0"
-                       IsVisible="{Binding CropDtos.Count}"/>
+
 
             <!-- Empty State Message -->
             <Border x:Name="EmptyStateMessageBorder"

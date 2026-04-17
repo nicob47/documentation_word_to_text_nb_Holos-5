@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls.Notifications;
 using Avalonia.Platform.Storage;
 using H.Avalonia.Models.ClassMaps;
-using H.Avalonia.Infrastructure;
+using H.Infrastructure;
 using Prism.Commands;
 using Prism.Regions;
 using System;

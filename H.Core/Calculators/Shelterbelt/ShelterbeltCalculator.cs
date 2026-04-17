@@ -323,8 +323,10 @@ namespace H.Core.Calculators.Shelterbelt
 
             var livingBiomass = totalEcosystemCarbon - deadOrganicMatter;
 
-            // Equation 2.3.4-2
-            var deadOrganicMatterFraction = deadOrganicMatter * trannumData.RealGrowthRatio;
+            // DOM is not adjusted by the real growth ratio — RealGrowthRatio is derived
+            // from living biomass only and should not scale dead organic matter pools.
+            // See GitHub issue #429.
+            var deadOrganicMatterFraction = deadOrganicMatter;
 
             // Equation 2.3.3-6
             var livingBiomassFraction = livingBiomass * trannumData.RealGrowthRatio;
@@ -332,7 +334,7 @@ namespace H.Core.Calculators.Shelterbelt
             // Calculate the estimated biomass carbon based on the real growth ratio
             trannumData.EstimatedTotalLivingBiomassCarbonBasedOnRealGrowth = livingBiomassFraction;
 
-            // Calculate the estimated dead organic matter based on the real growth ratio
+            // Calculate the estimated dead organic matter (unscaled lookup value)
             trannumData.EstimatedDeadOrganicMatterBasedOnRealGrowth = deadOrganicMatterFraction;
         }
 

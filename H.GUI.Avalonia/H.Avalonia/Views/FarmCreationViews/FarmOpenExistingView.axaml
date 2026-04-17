@@ -11,7 +11,7 @@
 			 x:Class="H.Avalonia.Views.FarmCreationViews.FarmOpenExistingView">
 
 	<Design.DataContext>
-		<farmCreationViews:FarmOpenExistingViewmodel />
+		<farmCreationViews:FarmOpenExistingViewModel />
 	</Design.DataContext>
 
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

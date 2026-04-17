@@ -10,14 +10,19 @@ namespace H.Avalonia.Views.ResultViews;
 
 public partial class ResultsSummaryView : UserControl
 {
-    private IEventAggregator _eventAggregator;
-    private ScrollViewer _scrollViewer;
+    private IEventAggregator _eventAggregator = null!;
+    private ScrollViewer _scrollViewer = null!;
+
+    public ResultsSummaryView()
+    {
+        InitializeComponent();
+    }
 
     public ResultsSummaryView(IEventAggregator eventAggregator)
     {
         InitializeComponent();
         _eventAggregator = eventAggregator;
-        _scrollViewer = this.FindControl<ScrollViewer>("ContentScrollViewer");
+        _scrollViewer = this.FindControl<ScrollViewer>("ContentScrollViewer")!;
 
         _eventAggregator?.GetEvent<BasicChapterSelectedEvent>().Subscribe(ScrollToChapter);
     }

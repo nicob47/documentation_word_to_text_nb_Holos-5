@@ -17,9 +17,9 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
     /// <summary>
     /// ViewModel responsible for handling farm export functionality. 
     /// Allows users to select farms and export them to JSON format files.
-    /// Inherits from FarmOpenExistingViewmodel to provide base farm management capabilities.
+    /// Inherits from FarmOpenExistingViewModel to provide base farm management capabilities.
     /// </summary>
-    public class FileExportFarmViewModel : FarmOpenExistingViewmodel
+    public class FileExportFarmViewModel : FarmOpenExistingViewModel
     {
         #region Fields
         /// <summary>
