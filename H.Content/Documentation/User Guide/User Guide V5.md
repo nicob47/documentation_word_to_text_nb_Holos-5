@@ -4,7 +4,7 @@
 </p>
 
 
-# Chapter - 1 Introduction
+# Chapter - 1 Introduction (Needs update V4->V5)
 
 To install Holos navigate [here](https://agriculture.canada.ca/en/agricultural-production/holos-software-program) on the web.  Click on the specified zip file to download it. Once downloaded, navigate to your downloads folder, and double click the installer named **setup**.  You will be asked if you would like to install the application, click **install**.
 
@@ -60,7 +60,7 @@ Holos can handle multiple farms created by the user, each representing different
 
 ## Creating a new farm
 
-1. On every Holos start-up you either create a new farm or open an existing farm or import a farm from file.  Figure  2.1 displays the interface you are greeted with on every start-up. Your initial start-up of Holos after installation will skip this screen and send you to step two, automatically selecting “New” for you, to begin the creation process. 
+1. On every Holos start-up you either create a new farm or open an existing farm or import a farm from file. Figure  2.1 displays the interface you are greeted with on every start-up. Your initial start-up of Holos after installation will skip this screen and send you to step two, automatically selecting “New” for you, to begin the creation process. 
 
 <br>
 <p align="center">
@@ -97,7 +97,7 @@ Holos can handle multiple farms created by the user, each representing different
 
 ## Selecting farm location
 
-On your screen, you will will now see a map of Canada. On the left section of the you will see steps laid out step one through step 3.
+On your screen, you will will now see a map of Canada. On the left section of the you will see steps laid out step one through step three. Work through these steps to set the location of your farm that will be used to obtain soil and environmental data for the selected location.
 
 <br>
 <p align="center">
@@ -107,7 +107,7 @@ On your screen, you will will now see a map of Canada. On the left section of th
 </p>
 <br>
 
-1. On the left side of the screen starting in Step 1 select the province that the farm is located in. The map view will zoom in on the province selected. You will now see many regions for the province you selected. You can adjust the magnification (i.e. zoom in/out) of the map by using your mouse wheel or by selecting the magnifying glass near the bottom of the screen. (see figure 2.5). 
+1. On the left side of the screen starting in Step 1 select the province that the farm is located in. The map view on the right will zoom in on the province selected. You will now see many regions for the province you selected. You can adjust the magnification (i.e. zoom in/out) of the map by using your mouse wheel or by selecting the the "**+**" or "**-**" button near the bottom right of the screen. (see figure 2.5). 
 
 <br>
 <p align="center">
@@ -121,7 +121,13 @@ On your screen, you will will now see a map of Canada. On the left section of th
 </p>
 <br>
 
-2. For Step 2, Holos 5 provides three choices on how to locate a farm. One, the user can right click on the location of the farm on the map view. Two, the user can enter the latitude and longitude coordinates to locate the farm. Three, the user can the name of the nearest road, municipality, and postal code to their farm. All three of these options will select a location on the map.
+2. For Step 2, Holos 5 provides three choices on how to locate a farm. 
+
+    A. Right click on the location of the farm on the map view.
+    
+    B. Enter the latitude and longitude coordinates to locate the farm. 
+    
+    C. Enter the name of the nearest road, municipality, and postal code to their farm. All three of these options will select a location on the map.
 
 3. Once Step 1 and 2 are complete, move on to Step 3 and click the *"Get Soil Data"* button. Once this button has been clicked, Holos will download the climate data directly from NASA. A progress bar will display the progress in downloading the data, it should only take a few seconds. Holos will then progress to the next screen where soil characteristics are presented.
 
@@ -452,12 +458,12 @@ You can export your farm configuration files to a JSON file (file extension ‘.
 </p>
 <br>
 
-#### Exporting Climate Data Files
+#### Exporting Climate Data Files <strong>V4->V5 update needed</strong>
 
 You can export your farms' climate data to a CSV file (file extension ‘. csv’), which can be viewed in software like Excel.  
 
 1.	To export a file, click on the “**Export Climate**” under the “**File**” header on the left side of the screen. This will load the export climate view in the content region of the application where you can see a list of farms that you can export. 
-2.	You can **add a description** to each farm or modify the name of the farm by clicking on the appropriate box and modifying its contents. <strong>SHOULD THIS BE REMOVED? V4->V5</strong>
+2.	You can **add a description** to each farm or modify the name of the farm by clicking on the appropriate box and modifying its contents.
 3. Click on the **farm**(s) you would like to include and click “**Export**” at the bottom to **choose a location for your exported file. The selected farm(s) will appear shaded*.*
 4.	After you have selected your farm(s) and have clicked the “**Export**” button. You will be prompted to **choose a location where you would like the file to be created**. 
 5.	You can **navigate** through your system with the tabs on the left side of the screen. 
@@ -473,7 +479,7 @@ data for multiple farms results in multiple .csv files.
 <br>
 When exporting the climate data for multiple farms, step 4 in the process outlined above will repeat for the amount of farms you have chosen to export climate data for.
 
-## Help Tab <strong>(Add this in to V5? V4->V5)</strong>
+## Help Tab <strong>V4->V5 update needed</strong>
 
 Under the “**Help**” tab, there is the option to “**Send Feedback**”, view “**About Holos**”, or view the “**Disclaimer**”.
 
@@ -543,14 +549,14 @@ Under the “**Help**” tab, there is the option to “**Send Feedback**”, vi
 
 # Chapter 4 - Farm Settings
 
-Under the “**Defaults**” header, there are three options available: **Farm Details, User Settings and Crop Defaults**.
+Under the “**Farm Settings**” header, there are three options available: **Farm Details, User Settings and Crop Defaults**. <strong>V4->V5 update needed</strong>
 
 <br>
 <p align="center">
  <img src="../../Images/UserGuide/en/chapter4/figure4-1.png" alt="Figure4-1" width=""/>
     <br>
     <em>
-		Figure 4.1: Defaults Options
+		Figure 4.1: Defaults Options <strong>V4->V5 update needed</strong>
 		<br>
 		A: A list of options available to set the defaults for your operations.
 		<br>
@@ -586,6 +592,9 @@ In the farm details section, the farm details categories are:
 - **Farm**: Defaults related to general farm information
 - **Soil**: Soil defaults including texture, thickness etc.
 - **User Settings**: Carbon modelling, Biomass, N<sub>2</sub>O, & irrigation
+- **Energy**: Energy conversion into GHGs, amount of energy used for each farm component
+- **Crop Defaults**: Specify default values for each crop type.
+
 
 **Climate & Weather**
 - **Temperature**: Monthly temperature averages
@@ -635,7 +644,7 @@ The default data for this screen is based on information found in the algorithm 
 </p>
 <br>
 
-## Crop Defaults
+## Crop Defaults  (Needs update V4->V5)
 
 1.	Select “**Crop Defaults**” 
 2.	This view allows you to specify default values for each crop that you might come across in Holos.  For example, every time you enter barley as the crop in a field component, Holos will use the values recorded here to complete its calculations.
@@ -646,7 +655,7 @@ The default data for this screen is based on information found in the algorithm 
  <img src="../../Images/UserGuide/en/chapter4/figure4-5.png" alt="Figure4-5" width="650"/>
     <br>
     <em>
-		Figure 4.5: Crop Defaults
+		Figure 4.5: Crop (Needs update V4->V5)
 		<br>
 		A: Step 1. Select a crop type for which you'd like to supply custom default values.
 		<br>
@@ -662,7 +671,7 @@ The default data for this screen is based on information found in the algorithm 
  <img src="../../Images/UserGuide/en/chapter4/figure4-6.png" alt="Figure4-6" width="650"/>
     <br>
     <em>
-		Figure 4.6 - Step 3 section.
+		Figure 4.6 - Step 3 section. (Needs update V4->V5)
 		<br>
 		This section appears when the user selects 'yes' in Step 2.
  	</em>
@@ -670,7 +679,7 @@ The default data for this screen is based on information found in the algorithm 
 <br>
 
 
-# Chapter 5 - Tools
+# Chapter 5 - Tools (Needs update V4->V5)
 
 Under the “**Tools**” header, you can create a custom diet for your chosen livestock
 
@@ -684,7 +693,7 @@ Under the “**Tools**” header, you can create a custom diet for your chosen l
 </p>
 <br>
 
-## Custom Diet Creator
+## Custom Diet Creator (Needs update V4->V5)
 
 -	With the custom diet creator, you can **create diets for each animal type that you have on your farm**. This will include details about the diet such as: Forage (%), Starch (% DM), and Fat (% DM).
 - After selecting a specific diet creator, a new window will pop-up which will allow the user to create a custom diet for their chosen livestock.
@@ -692,7 +701,7 @@ Under the “**Tools**” header, you can create a custom diet for your chosen l
 -	To **create a Custom Diet**, click “**Add Custom Diet**” at the top of the window.
 <br>
 
-### Creating A Custom Diet
+### Creating A Custom Diet (Needs update V4->V5)
 
 1.	Click on “**Add Custom Diet**”
 2.	For each diet that is added, it will be displayed underneath the “**My Custom Diets**” section. You can change the name, the animal type and any field associated with that diet. 
@@ -725,7 +734,7 @@ Under the “**Tools**” header, you can create a custom diet for your chosen l
 <br>
 
 
-### Modifying a Default Diet
+### Modifying a Default Diet (Needs update V4->V5)
 
 To modify one of the default diets in Holos for a specific animal group and management period, it is best to make a copy of the default diet and then alter the data inputs for the copy. 
 
@@ -771,7 +780,7 @@ Please note: if the user selects the same diet (either the original default diet
 
 
 
-### Adding Feed Ingredients
+### Adding Feed Ingredients (Needs update V4->V5)
 
 1.	**Select the diet** you would like to add a feed ingredient to or select  “**Add Custom Diet**” to add a new diet.
 2.	**Click on the feed ingredient** you would like to add under the “**Step 2**” section. You can modify the data associated with the selected ingredient by clicking on the box of the data field you would like to modify. The selected ingredient will shaded.
@@ -791,7 +800,7 @@ You can click on “Yes” beside “Show Additional Columns” to see additiona
 
 <br>
 
-### Creating a Custom Ingredient
+### Creating a Custom Ingredient (Needs update V4->V5)
 
 1.	Under “**Available Feed Ingredients**” click on “**Create A Custom Ingredient**”
 2. An empty field of data will appear in the list of available feed ingredients. You can customize each data field to conform to the custom ingredient that you wish to add such as the name, **Forage (%), Dry matter (% AF) and Crude protein (% DM)**.
@@ -808,7 +817,7 @@ You can click on “Yes” beside “Show Additional Columns” to see additiona
 
 <br>
 
-## Tooltips
+## Tooltips (Needs update V4->V5)
 
 Tooltips are an informational message that help describe various elements in the program. The Holos software incorporates tooltips throughout the program to provide further explanation for various terms and abbreviations. 
 
@@ -850,50 +859,52 @@ Tooltips are also available for abbreviated terms found in various parts of the 
 
 ## Introducing Component Selection
 
-With Holos, you can create your own farm through a selection of **components** that are available under the “**All Components**” section.
+With Holos, you can create your own farm through a selection of **components** that are available to add to your farm after selecting the "**Edit Components**" button in the bottom left of the application.
 
 **Each** component is categorized by their type and include the following: **Land Management, Beef Production, Dairy, Swine, Poultry, Sheep and Other livestock.** 
 
 <br>
 <p align="center">
- <img src="../../Images/UserGuide/en/chapter6/figure6-1.png" alt="Figure6-1" width="950"/>
+ <img src="../../Images/UserGuide/enV5/chapter6/figure6-1.png" alt="Figure6-1" width="950"/>
     <br>
     <em>
-		Figure 6.1 - Component Selection 
+		Figure 6.1 - Empty farm file with no components added 
 	 	<br>
-		A: All the possible Components, separated by Component Categories that can be added to the Farm
+		A: Edit Components button that when pressed will display all available components that can be added to the farm.
 		<br>
-		B: A single Component Category
+		B: The region where added components for the farm file will appear. 
 		<br>
-		C: All the components that have been added to the Farm
+		C: The component selection screen displayed after "<Strong>Edit Components</Strong>". This presents the categories of components that can be added to the farm. 
 	</em>
 </p>
 <br>
 
 ### Adding a Component to Your Farm
 
-1.	To add a component to your farm, you must **double click** or **drag a component** from the “**Available Components**” list into “**My Farm**”.
-2.	As a result, the component will appear under the “**My Farm**” tab and the data associated with that component you have chosen will be displayed in the section to the right of “My Components”.
+1.	After selecting the "**Edit Components**" button, the right side of the application will display a grid of component categories to select from. Select a category of the component type you would then press the "**+ Add to Farm**" for the specific component. Once added to the farm, you can either select the "**Back to Categories**" button to add more components, or "**Finished Selecting Components**" to return and configure added components.
+2.	As a result, the component will appear under the “**My Components**” tab and the data associated with that component you have chosen will be displayed in the section to the right of “My Components”.
 3.	To switch between selected farm components, click on the component that you want to see, and the program will automatically switch to display that component’s information.
 4.	See Figure 6.2 below for a visual representation.
 
 <br>
 <p align="center">
- <img src="../../Images/UserGuide/en/chapter6/figure6-2.png" alt="Figure6-2" width="850"/>
+ <img src="../../Images/UserGuide/enV5/chapter6/figure6-2.png" alt="Figure6-2" width="850"/>
     <br>
     <em>
-		Figure 6.2- Adding a Component 
+		Figure 6.2- Adding a Land Management Component 
 	 	<br>
-		A: A list of all available components that can be added to the farm, separated by component category.
+		A: The "<Strong>+ Add to Farm</Strong>" button on a component used to add it to a farm.
 		<br>
-		B: A list of components that have been added to the farm.
+		B: The "<Strong>Back to Categories</Strong>" that will navigate back to the component category selection screen.
 		<br>
-		C: The data associated with the selected component.
+		C: The "<Strong>Finished Selecting Categories</Strong>" button that will take the user back to the screen to configure the added components.
+		<br>
+		D: A component added to the "<Strong>My Components</Strong>" of the farm after selecting "<Strong>+ Add to Farm</Strong>". 
 	</em>
 </p>
 <br>
 
-### Copying a Component in Your Farm
+### Copying a Component in Your Farm (Needs update V4->V5)
 
 1.	You can copy a component in you farm by right clicking on the component and selecting “**Create a Copy**”.
 2.	A window will appear.  You can select how many copies you would like to create. Press “**OK**” when finished (**see Figure 6.3**).
