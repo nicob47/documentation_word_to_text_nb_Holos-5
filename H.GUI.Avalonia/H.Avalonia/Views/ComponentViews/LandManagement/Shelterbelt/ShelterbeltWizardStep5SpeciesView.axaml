@@ -1,0 +1,128 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Shelterbelt.ShelterbeltWizardStep5SpeciesView">
+
+    <StackPanel Spacing="20" Margin="0,8,0,8">
+
+        <!-- Section 1: Species picker chips -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="Select the species present in this row. Each selection adds a detail card below."
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                       FontSize="14"
+                       TextWrapping="Wrap"/>
+
+            <ItemsControl ItemsSource="{Binding AvailableSpecies}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="0,0,8,8"
+                                Command="{Binding $parent[UserControl].DataContext.ToggleSpeciesCommand}"
+                                CommandParameter="{Binding}"
+                                Padding="12,6">
+                            <Button.Styles>
+                                <Style Selector="Button">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="{StaticResource GcdsTextPrimaryBrush}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="{StaticResource CardHoverBackgroundBrush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource GcdsTextPrimaryBrush}"/>
+                                </Style>
+                            </Button.Styles>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <!-- Green dot — only visible when selected -->
+                                <Ellipse Width="8" Height="8"
+                                         Fill="{StaticResource BadgeBackgroundBrush}"
+                                         VerticalAlignment="Center"
+                                         IsVisible="{Binding IsSelected}"/>
+                                <TextBlock Text="{Binding DisplayName}"
+                                           VerticalAlignment="Center"
+                                           Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+        <!-- Section 2: Tree group detail cards -->
+        <StackPanel Spacing="12"
+                    IsVisible="{Binding TreeGroupCards.Count, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Border BorderBrush="{StaticResource GcdsBorderSubtleBrush}" BorderThickness="0,0,0,1"/>
+            <TextBlock Text="Tree group details"
+                       FontWeight="SemiBold"
+                       FontSize="15"
+                       Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+
+            <ItemsControl ItemsSource="{Binding TreeGroupCards}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Classes="input-card" Margin="0,0,0,8">
+                            <StackPanel Spacing="0">
+                                <TextBlock Text="{Binding DisplayName}"
+                                           FontWeight="Bold"
+                                           FontSize="14"
+                                           Margin="0,0,0,12"
+                                           Foreground="{StaticResource GcdsTextPrimaryBrush}"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="160" Width="Auto"/>
+                                        <ColumnDefinition MinWidth="120" Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Trees planted -->
+                                    <Label Grid.Row="0" Grid.Column="0" Content="Trees planted" Classes="input-label" VerticalAlignment="Center"/>
+                                    <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding PlantedCount}" Minimum="1" FormatString="N0" MinWidth="100"/>
+
+                                    <!-- Trees alive -->
+                                    <Label Grid.Row="1" Grid.Column="0" Content="Trees alive" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding LiveCount}" Minimum="0" FormatString="N0" MinWidth="100" Margin="0,4,0,0"/>
+
+                                    <!-- Spacing -->
+                                    <Label Grid.Row="2" Grid.Column="0" Content="Tree spacing" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Spacing}" Minimum="0" FormatString="N2" MinWidth="100" Margin="0,4,0,0"/>
+                                    <Label Grid.Row="2" Grid.Column="2" Content="m" Classes="unit-label" VerticalAlignment="Center" Margin="8,4,0,0"/>
+
+                                    <!-- Year planted -->
+                                    <Label Grid.Row="3" Grid.Column="0" Content="Year planted" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PlantYear}" Minimum="1900" Maximum="2100" FormatString="0" ParsingNumberStyle="Integer" MinWidth="100" Margin="0,4,0,0"/>
+
+                                    <!-- Circumference -->
+                                    <Label Grid.Row="4" Grid.Column="0" Content="Circumference" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding Circumference}" Minimum="0" FormatString="N1" MinWidth="100" Margin="0,4,0,0"/>
+                                    <Label Grid.Row="4" Grid.Column="2" Content="cm" Classes="unit-label" VerticalAlignment="Center" Margin="8,4,0,0"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+        <TextBlock IsVisible="{Binding !TreeGroupCards.Count}"
+                   Text="Select at least one species above to continue."
+                   FontStyle="Italic"
+                   FontSize="12"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+
+    </StackPanel>
+</UserControl>

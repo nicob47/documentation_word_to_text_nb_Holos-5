@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Shelterbelt.ShelterbeltWizardStep2LocationView">
+
+    <StackPanel Spacing="16" Margin="0,8,0,8">
+
+        <TextBlock Text="Select the hardiness zone for this shelterbelt's location. Holos uses this to determine which species are viable and to look up climate data."
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontSize="14"
+                   TextWrapping="Wrap"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="160" Width="Auto"/>
+                <ColumnDefinition MinWidth="200" Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Hardiness Zone -->
+            <Label Grid.Row="0" Grid.Column="0"
+                   Content="Hardiness Zone"
+                   VerticalAlignment="Center"
+                   Classes="input-label"/>
+            <ComboBox Grid.Row="0" Grid.Column="1"
+                      ItemsSource="{Binding HardinessZones}"
+                      SelectedItem="{Binding SelectedHardinessZone}"
+                      MinWidth="200"/>
+
+            <!-- Eco-district ID -->
+            <Label Grid.Row="1" Grid.Column="0"
+                   Content="Eco-district ID"
+                   VerticalAlignment="Center"
+                   Classes="input-label"
+                   Margin="0,8,0,0"/>
+            <NumericUpDown Grid.Row="1" Grid.Column="1"
+                           Value="{Binding EcoDistrictId}"
+                           Minimum="0"
+                           FormatString="0"
+                           ParsingNumberStyle="Integer"
+                           Margin="0,8,0,0"
+                           MinWidth="120"/>
+        </Grid>
+
+        <TextBlock Text="The eco-district ID is optional. Leave it as 0 if you do not know it — Holos will use default values for the selected hardiness zone."
+                   FontSize="12"
+                   FontStyle="Italic"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   TextWrapping="Wrap"/>
+
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:H.Avalonia.ViewModels.ComponentViews.LandManagement.Shelterbelt"
+             mc:Ignorable="d"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Shelterbelt.ShelterbeltWizardStep1WelcomeView">
+
+    <StackPanel Spacing="16" Margin="0,8,0,8">
+
+        <TextBlock Text="Give your shelterbelt a name to get started."
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontSize="14"
+                   TextWrapping="Wrap"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="160" Width="Auto"/>
+                <ColumnDefinition MinWidth="260" Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0"
+                   Content="Shelterbelt Name"
+                   VerticalAlignment="Center"
+                   Classes="input-label"/>
+            <TextBox Grid.Column="1" Grid.Row="0"
+                     Text="{Binding ShelterbeltName}"
+                     Watermark="e.g. North field windbreak"
+                     MinWidth="240"/>
+        </Grid>
+
+    </StackPanel>
+</UserControl>

@@ -795,6 +795,38 @@ select.form-input { cursor: pointer; }
   z-index: 1000; border-bottom-left-radius: 6px;
   letter-spacing: 0.5px;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SHELTERBELT WIZARD
+   ═══════════════════════════════════════════════════════════════ */
+.sb-chip {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  background: white;
+  border: 1px solid #8c8c8c;
+  cursor: pointer;
+}
+.sb-chip.selected {
+  border-color: #1f7a40;
+  background: #f0f8f0;
+  font-weight: 600;
+}
+.sb-card {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: white;
+}
+.sb-summary-card {
+  background: #f2f2f2;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
 </style>
 </head>
 <body>
@@ -3051,6 +3083,92 @@ select.form-input { cursor: pointer; }
         </div>
       </div>
     </div>
+
+    <!-- SHELTERBELT COMPONENT VIEW -->
+    <div id="view-shelterbeltComponent" class="view" style="display:none; flex-direction:column; padding:0; overflow:hidden;">
+      <!-- Title bar -->
+      <div style="padding:16px 16px 0;">
+        <input type="text" class="view-title-input" id="shelterbeltTitle" value="My Shelterbelt">
+      </div>
+      <div class="title-underline" style="margin:4px 16px 0;"></div>
+
+      <!-- WIZARD STATE -->
+      <div id="sb-wizard-panel" style="display:flex; flex-direction:column; flex:1; overflow:hidden;">
+        <!-- Progress header -->
+        <div class="step-container" style="margin:8px 16px 0; flex-shrink:0;">
+          <div class="step-header" style="margin-bottom:0;">
+            <span class="step-badge" id="sb-badge">Step 1 of 6</span>
+            <span class="step-description" id="sb-step-title">Welcome</span>
+          </div>
+        </div>
+
+        <!-- Step content (scrollable) -->
+        <div class="step-container" style="margin:8px 16px; flex:1; overflow-y:auto;">
+
+          <!-- Step 1: Welcome -->
+          <div id="sb-step-1">
+            <p style="color:#595959; font-size:14px; margin-bottom:16px;">Give this shelterbelt a name to help you identify it on your farm.</p>
+            <div class="form-grid">
+              <label class="form-label">Shelterbelt name</label>
+              <input type="text" class="form-input" id="sb-name" value="North Windbreak">
+              <span class="form-unit"></span>
+            </div>
+          </div>
+
+          <!-- Step 2: Location -->
+          <div id="sb-step-2" style="display:none;">
+            <p style="color:#595959; font-size:14px; margin-bottom:16px;">Select the hardiness zone for this shelterbelt location. This is used for climate lookup and species suitability calculations.</p>
+            <div class="form-grid">
+              <label class="form-label">Hardiness zone</label>
+              <select class="form-input" id="sb-zone">
+                <option>H2a</option><option>H2b</option><option>H3a</option><option selected>H3b</option>
+                <option>H4a</option><option>H4b</option><option>H5a</option><option>H5b</option>
+                <option>H6a</option><option>H6b</option><option>H7</option><option>H8</option>
+                <option>H9a</option><option>H9b</option>
+              </select>
+              <span class="form-unit"></span>
+              <label class="form-label">Eco-district ID</label>
+              <input type="number" class="form-input" id="sb-eco" value="740">
+              <span class="form-unit"></span>
+            </div>
+          </div>
+
+          <!-- Step 3: Row count -->
+          <div id="sb-step-3" style="display:none;">
+            <p style="color:#595959; font-size:14px; margin-bottom:16px;">How many rows of trees does this shelterbelt have? Steps 4 and 5 will repeat once for each row.</p>
+            <div class="form-grid">
+              <label class="form-label">Number of rows</label>
+              <input type="number" class="form-input" id="sb-numrows" min="1" max="5" value="2">
+              <span class="form-unit"></span>
+            </div>
+            <p style="font-size:12px; font-style:italic; color:#595959; margin-top:12px;">After you click Next, Holos will ask for name and length of each row (Step 4), then species and tree group details (Step 5).</p>
+          </div>
+
+          <!-- Step 4: Row details (populated by sbRenderStep4) -->
+          <div id="sb-step-4" style="display:none; min-height:200px;"></div>
+
+          <!-- Step 5: Species & tree groups (populated by sbRenderStep5) -->
+          <div id="sb-step-5" style="display:none; min-height:200px;"></div>
+
+          <!-- Step 6: Review (populated by sbRenderStep6) -->
+          <div id="sb-step-6" style="display:none;"></div>
+
+        </div><!-- /step-container scrollable -->
+
+        <!-- Nav buttons -->
+        <div style="display:flex; justify-content:space-between; padding:8px 16px; flex-shrink:0; border-top:1px solid #d9d9d9;">
+          <button id="sb-back-btn" class="btn" onclick="sbGoBack()" style="display:none;">Back</button>
+          <div style="flex:1;"></div>
+          <button id="sb-next-btn" class="btn btn-primary" onclick="sbGoNext()">Next</button>
+        </div>
+      </div><!-- /sb-wizard-panel -->
+
+      <!-- SUMMARY STATE (shown after Finish) -->
+      <div id="sb-summary-panel" style="display:none; flex-direction:column; flex:1; overflow:hidden;">
+      </div>
+
+    </div><!-- /view-shelterbeltComponent -->
+
   </main>
 
   <footer class="footer">

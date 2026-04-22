@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Shelterbelt.ShelterbeltWizardStep3RowCountView">
+
+    <StackPanel Spacing="20" Margin="0,8,0,8">
+
+        <TextBlock Text="How many rows of trees does this shelterbelt have? Steps 4 and 5 will repeat once for each row."
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontSize="14"
+                   TextWrapping="Wrap"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="160" Width="Auto"/>
+                <ColumnDefinition MinWidth="120" Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Content="Number of rows"
+                   VerticalAlignment="Center"
+                   Classes="input-label"/>
+
+            <NumericUpDown Grid.Column="1"
+                           Value="{Binding NumberOfRows}"
+                           Minimum="1"
+                           Maximum="10"
+                           FormatString="0"
+                           ParsingNumberStyle="Integer"
+                           MinWidth="100"/>
+
+            <TextBlock Grid.Column="2"
+                       Text="(1 – 10)"
+                       VerticalAlignment="Center"
+                       Margin="8,0,0,0"
+                       FontSize="12"
+                       Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+        </Grid>
+
+        <TextBlock Text="After you click Next, Holos will ask you for the name and length of each row (Step 4), then the species and tree group details for each row (Step 5)."
+                   FontSize="12"
+                   FontStyle="Italic"
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   TextWrapping="Wrap"/>
+
+    </StackPanel>
+</UserControl>

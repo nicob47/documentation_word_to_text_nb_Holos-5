@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Shelterbelt.ShelterbeltWizardStep4RowDetailsView">
+
+    <StackPanel Spacing="16" Margin="0,8,0,8">
+
+        <TextBlock Text="Enter a name and the total length for this row of trees."
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontSize="14"
+                   TextWrapping="Wrap"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="160" Width="Auto"/>
+                <ColumnDefinition MinWidth="240" Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Row name -->
+            <Label Grid.Row="0" Grid.Column="0"
+                   Content="Row name"
+                   VerticalAlignment="Center"
+                   Classes="input-label"/>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Text="{Binding RowName}"
+                     Watermark="e.g. North side"
+                     MinWidth="220"/>
+
+            <!-- Row length -->
+            <Label Grid.Row="1" Grid.Column="0"
+                   Content="Row length"
+                   VerticalAlignment="Center"
+                   Classes="input-label"
+                   Margin="0,8,0,0"/>
+            <NumericUpDown Grid.Row="1" Grid.Column="1"
+                           Value="{Binding RowLength}"
+                           Minimum="1"
+                           FormatString="N1"
+                           Margin="0,8,0,0"
+                           MinWidth="120"/>
+            <Label Grid.Row="1" Grid.Column="2"
+                   Content="m"
+                   VerticalAlignment="Center"
+                   Margin="8,8,0,0"
+                   Classes="unit-label"/>
+        </Grid>
+
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Shelterbelt.ShelterbeltWizardStep6ReviewView">
+
+    <StackPanel Spacing="16" Margin="0,8,0,8">
+
+        <TextBlock Text="Review everything below. Click Finish to save, or use the Edit buttons to go back and make changes."
+                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                   FontSize="14"
+                   TextWrapping="Wrap"/>
+
+        <!-- Shelterbelt summary card -->
+        <!-- HorizontalAlignment="Stretch" overrides input-card's "Left" so the star column gets real width -->
+        <Border Classes="input-card" HorizontalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="Shelterbelt"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               Margin="0,0,0,6"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Name:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding ShelterbeltName}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Hardiness zone:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding HardinessZoneDisplay}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Eco-district ID:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding EcoDistrictId}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="Edit"
+                        Command="{Binding JumpToStepCommand}"
+                        CommandParameter="0"
+                        VerticalAlignment="Top"
+                        Padding="10,4"/>
+            </Grid>
+        </Border>
+
+        <!-- Per-row summary cards -->
+        <ItemsControl ItemsSource="{Binding Rows}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- HorizontalAlignment="Stretch" overrides input-card's "Left" -->
+                    <Border Classes="input-card" HorizontalAlignment="Stretch" Margin="0,0,0,8">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="{Binding RowHeader}"
+                                       FontWeight="Bold"
+                                       FontSize="14"
+                                       Margin="0,0,0,6"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="Length:" FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding RowLength, StringFormat=N1}"/>
+                                <TextBlock Text="m" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding TreeGroups}" Margin="0,6,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                                   Margin="0,2,0,0"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </StackPanel>
+</UserControl>
