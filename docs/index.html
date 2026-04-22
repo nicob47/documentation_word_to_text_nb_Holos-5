@@ -799,6 +799,13 @@ select.form-input { cursor: pointer; }
 /* ═══════════════════════════════════════════════════════════════
    SHELTERBELT WIZARD
    ═══════════════════════════════════════════════════════════════ */
+#view-shelterbeltComponent.active {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 .sb-chip {
   display: inline-block;
   padding: 6px 14px;
@@ -3085,7 +3092,7 @@ select.form-input { cursor: pointer; }
     </div>
 
     <!-- SHELTERBELT COMPONENT VIEW -->
-    <div id="view-shelterbeltComponent" class="view" style="display:none; flex-direction:column; padding:0; overflow:hidden;">
+    <div id="view-shelterbeltComponent" class="view">
       <!-- Title bar -->
       <div style="padding:16px 16px 0;">
         <input type="text" class="view-title-input" id="shelterbeltTitle" value="My Shelterbelt">
@@ -3230,6 +3237,7 @@ const categories = [
 
 let myComponents = [
   { name: 'East Pasture', type: 'Field', desc: 'Main grazing field — 160 acres mixed grass', category: 'Land Management' },
+  { name: 'North Windbreak', type: 'Shelterbelt', desc: 'Tree-based windbreak and carbon sequestration', category: 'Land Management' },
   { name: 'Cow-Calf Herd', type: 'Cow-Calf', desc: '150 head cow-calf operation on native pasture', category: 'Beef Production', isBeef: true },
   { name: 'Egg Barn', type: 'Chicken Egg Production', desc: '2000 laying hens — free run barn system', category: 'Poultry', isPoultry: true },
   { name: 'Hog Barn', type: 'Farrow-to-Finish', desc: '200 sow farrow-to-finish operation', category: 'Swine', isSwine: true }
@@ -3311,7 +3319,7 @@ function showView(viewName) {
   }
 
   // Update sidebar component highlighting
-  if (!['editComponent','poultryComponent'].includes(viewName)) {
+  if (!['editComponent','poultryComponent','shelterbeltComponent'].includes(viewName)) {
     document.querySelectorAll('.sidebar-component-card').forEach(c => c.classList.remove('active'));
   }
   if (viewName === 'chooseComponents') {
@@ -3384,6 +3392,10 @@ function openComponent(i) {
   } else if (comp.isBeef) {
     document.getElementById('beefTitle').value = comp.name;
     showView('beefComponent');
+  } else if (comp.type === 'Shelterbelt') {
+    document.getElementById('shelterbeltTitle').value = comp.name;
+    showView('shelterbeltComponent');
+    sbInit();
   } else if (comp.type === 'Crop Rotation') {
     document.getElementById('rotationComponentTitle').value = comp.name;
     showView('rotationComponent');
@@ -3954,6 +3966,260 @@ function setToolbarFarmName(name) {
    ═══════════════════════════════════════════════════════════════ */
 // Set initial visibility of cover crop toggle switches
 updateCoverCropToggleVisibility();
+
+/* ═══════════════════════════════════════════════════════════════
+   SHELTERBELT WIZARD
+   ═══════════════════════════════════════════════════════════════ */
+let sbData = {
+  name: 'North Windbreak',
+  zone: 'H3b',
+  ecoDistrict: 740,
+  numRows: 2,
+  rows: []   // each: { name, length, species: [] } species: { label, planted, alive, spacing, year, circ }
+};
+let sbCurrentStep = 0;  // 0-based index into sbSteps array
+let sbSteps = [];       // built when entering the wizard
+
+const sbSpeciesOptions = [
+  'Caragana', 'Manitoba Maple', 'Hybrid Poplar', 'Green Ash', 'Scots Pine', 'Colorado Spruce'
+];
+
+function sbBuildSteps() {
+  sbData.rows = [];
+  for (let i = 0; i < sbData.numRows; i++) {
+    sbData.rows.push({ name: 'Row ' + (i+1), length: 100, species: [] });
+  }
+  // Steps: [welcome, location, rowcount, ...per-row pairs..., review]
+  sbSteps = ['welcome','location','rowcount'];
+  for (let i = 0; i < sbData.numRows; i++) {
+    sbSteps.push('row-details-' + i);
+    sbSteps.push('row-species-' + i);
+  }
+  sbSteps.push('review');
+}
+
+function sbInit() {
+  sbData.name = document.getElementById('shelterbeltTitle').value || 'My Shelterbelt';
+  sbData.numRows = 2;
+  sbData.rows = [];
+  sbCurrentStep = 0;
+  sbBuildSteps();
+  document.getElementById('sb-name').value = sbData.name;
+  document.getElementById('sb-numrows').value = sbData.numRows;
+  document.getElementById('sb-zone').value = sbData.zone;
+  document.getElementById('sb-eco').value = sbData.ecoDistrict;
+  document.getElementById('sb-wizard-panel').style.display = 'flex';
+  document.getElementById('sb-summary-panel').style.display = 'none';
+  sbRenderCurrentStep();
+}
+
+function sbGoNext() {
+  // Harvest current step data
+  const step = sbSteps[sbCurrentStep];
+  if (step === 'welcome') {
+    sbData.name = document.getElementById('sb-name').value;
+    document.getElementById('shelterbeltTitle').value = sbData.name;
+  } else if (step === 'location') {
+    sbData.zone = document.getElementById('sb-zone').value;
+    sbData.ecoDistrict = parseInt(document.getElementById('sb-eco').value) || 0;
+  } else if (step === 'rowcount') {
+    const n = parseInt(document.getElementById('sb-numrows').value) || 2;
+    sbData.numRows = Math.min(Math.max(n,1),5);
+    sbBuildSteps(); // rebuild step list
+  } else if (step.startsWith('row-details-')) {
+    const ri = parseInt(step.split('-')[2]);
+    sbData.rows[ri].name = document.getElementById('sb-row-name').value;
+    sbData.rows[ri].length = parseFloat(document.getElementById('sb-row-length').value) || 100;
+  } else if (step.startsWith('row-species-')) {
+    // species already tracked via chip clicks into sbData.rows[ri].species
+  }
+
+  if (sbCurrentStep === sbSteps.length - 1) {
+    // Finish
+    sbFinish();
+    return;
+  }
+  sbCurrentStep++;
+  sbRenderCurrentStep();
+}
+
+function sbGoBack() {
+  if (sbCurrentStep > 0) { sbCurrentStep--; sbRenderCurrentStep(); }
+}
+
+function sbGoToStep(stepIndex) {
+  sbCurrentStep = stepIndex;
+  sbRenderCurrentStep();
+}
+
+function sbRenderCurrentStep() {
+  const total = sbSteps.length;
+  const step = sbSteps[sbCurrentStep];
+  const num = sbCurrentStep + 1;
+
+  document.getElementById('sb-badge').textContent = 'Step ' + num + ' of ' + total;
+  document.getElementById('sb-back-btn').style.display = sbCurrentStep === 0 ? 'none' : '';
+  document.getElementById('sb-next-btn').textContent = sbCurrentStep === total - 1 ? 'Finish' : 'Next';
+
+  // Hide all step panels
+  ['sb-step-1','sb-step-2','sb-step-3','sb-step-4','sb-step-5','sb-step-6'].forEach(function(id) {
+    document.getElementById(id).style.display = 'none';
+  });
+
+  if (step === 'welcome') {
+    document.getElementById('sb-step-title').textContent = 'Welcome';
+    document.getElementById('sb-step-1').style.display = '';
+  } else if (step === 'location') {
+    document.getElementById('sb-step-title').textContent = 'Location';
+    document.getElementById('sb-step-2').style.display = '';
+  } else if (step === 'rowcount') {
+    document.getElementById('sb-step-title').textContent = 'How Many Rows?';
+    document.getElementById('sb-step-3').style.display = '';
+    document.getElementById('sb-numrows').value = sbData.numRows;
+  } else if (step.startsWith('row-details-')) {
+    const ri = parseInt(step.split('-')[2]);
+    document.getElementById('sb-step-title').textContent = 'Row Details — Row ' + (ri+1) + ' of ' + sbData.numRows;
+    sbRenderStep4(ri);
+    document.getElementById('sb-step-4').style.display = '';
+  } else if (step.startsWith('row-species-')) {
+    const ri = parseInt(step.split('-')[2]);
+    document.getElementById('sb-step-title').textContent = 'Species & Tree Groups — Row ' + (ri+1) + ' of ' + sbData.numRows;
+    sbRenderStep5(ri);
+    document.getElementById('sb-step-5').style.display = '';
+  } else if (step === 'review') {
+    document.getElementById('sb-step-title').textContent = 'Review & Confirm';
+    sbRenderStep6();
+    document.getElementById('sb-step-6').style.display = '';
+  }
+}
+
+function sbRenderStep4(ri) {
+  const row = sbData.rows[ri] || { name: 'Row ' + (ri+1), length: 100 };
+  document.getElementById('sb-step-4').innerHTML =
+    '<p style="color:#595959;font-size:14px;margin-bottom:16px;">Enter a name and the total length for this row of trees.</p>' +
+    '<div class="form-grid">' +
+    '<label class="form-label">Row name</label>' +
+    '<input type="text" class="form-input" id="sb-row-name" placeholder="e.g. North side" value="' + (row.name||'') + '">' +
+    '<span class="form-unit"></span>' +
+    '<label class="form-label">Row length</label>' +
+    '<input type="number" class="form-input" id="sb-row-length" value="' + (row.length||100) + '" min="1">' +
+    '<span class="form-unit">m</span>' +
+    '</div>';
+}
+
+function sbRenderStep5(ri) {
+  const row = sbData.rows[ri] || { species: [] };
+  if (!row.species) row.species = [];
+  let chipsHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">' +
+    sbSpeciesOptions.map(function(sp) {
+      const sel = row.species.some(function(s) { return s.label === sp; });
+      return '<button class="sb-chip' + (sel?' selected':'') + '" onclick="sbToggleSpecies(' + ri + ',\'' + sp + '\',this)">' + sp + '</button>';
+    }).join('') + '</div>';
+  let cardsHtml = '';
+  (row.species||[]).forEach(function(sp, si) {
+    cardsHtml += '<div class="sb-card">' +
+      '<div style="font-weight:700;font-size:14px;margin-bottom:12px;">' + sp.label + '</div>' +
+      '<div class="form-grid">' +
+      '<label class="form-label">Trees planted</label><input type="number" class="form-input" value="' + (sp.planted||10) + '" onchange="sbData.rows['+ri+'].species['+si+'].planted=this.value"><span class="form-unit"></span>' +
+      '<label class="form-label">Trees alive</label><input type="number" class="form-input" value="' + (sp.alive||10) + '" onchange="sbData.rows['+ri+'].species['+si+'].alive=this.value"><span class="form-unit"></span>' +
+      '<label class="form-label">Tree spacing</label><input type="number" class="form-input" value="' + (sp.spacing||1.5) + '" step="0.1" onchange="sbData.rows['+ri+'].species['+si+'].spacing=this.value"><span class="form-unit">m</span>' +
+      '<label class="form-label">Year planted</label><input type="number" class="form-input" value="' + (sp.year||2010) + '" onchange="sbData.rows['+ri+'].species['+si+'].year=this.value"><span class="form-unit"></span>' +
+      '<label class="form-label">Circumference</label><input type="number" class="form-input" value="' + (sp.circ||15) + '" onchange="sbData.rows['+ri+'].species['+si+'].circ=this.value"><span class="form-unit">cm</span>' +
+      '</div></div>';
+  });
+  let hint = row.species.length === 0 ? '<p style="font-size:12px;font-style:italic;color:#595959;">Select at least one species above to continue.</p>' : '';
+  document.getElementById('sb-step-5').innerHTML =
+    '<p style="color:#595959;font-size:14px;margin-bottom:12px;">Select the species present in this row. Each selection adds a detail card below.</p>' +
+    chipsHtml + hint + cardsHtml;
+}
+
+function sbToggleSpecies(ri, label, btn) {
+  if (!sbData.rows[ri].species) sbData.rows[ri].species = [];
+  const arr = sbData.rows[ri].species;
+  const idx = arr.findIndex(function(s) { return s.label === label; });
+  if (idx >= 0) {
+    arr.splice(idx, 1);
+    btn.classList.remove('selected');
+  } else {
+    arr.push({ label: label, planted: 10, alive: 10, spacing: 1.5, year: 2010, circ: 15 });
+    btn.classList.add('selected');
+  }
+  // Re-render the cards section
+  sbRenderStep5(ri);
+}
+
+function sbRenderStep6() {
+  let html = '<p style="color:#595959;font-size:14px;margin-bottom:16px;">Review everything below. Click Finish to save.</p>';
+  // Shelterbelt card
+  html += '<div class="sb-summary-card" style="display:flex;justify-content:space-between;align-items:flex-start;">' +
+    '<div>' +
+    '<div style="font-weight:700;font-size:14px;margin-bottom:8px;">Shelterbelt</div>' +
+    '<div><span style="font-weight:600;">Name:</span> ' + sbData.name + '</div>' +
+    '<div><span style="font-weight:600;">Hardiness zone:</span> ' + sbData.zone + '</div>' +
+    '<div><span style="font-weight:600;">Eco-district ID:</span> ' + sbData.ecoDistrict + '</div>' +
+    '</div>' +
+    '<button class="btn" style="font-size:12px;padding:4px 12px;" onclick="sbGoToStep(0)">Edit</button>' +
+    '</div>';
+  // Row cards
+  sbData.rows.forEach(function(row, ri) {
+    html += '<div class="sb-summary-card">' +
+      '<div style="font-weight:700;font-size:14px;margin-bottom:6px;">Row ' + (ri+1) + ' \u2014 ' + (row.name||'') + '</div>' +
+      '<div><span style="font-weight:600;">Length:</span> ' + (row.length||100) + ' m</div>';
+    (row.species||[]).forEach(function(sp) {
+      html += '<div style="font-size:12px;color:#595959;margin-top:4px;">' + sp.label + ' \u2014 planted: ' + sp.planted + ', alive: ' + sp.alive + ', spacing: ' + sp.spacing + ' m, year: ' + sp.year + ', circ: ' + sp.circ + ' cm</div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('sb-step-6').innerHTML = html;
+}
+
+function sbFinish() {
+  document.getElementById('sb-wizard-panel').style.display = 'none';
+  const summary = document.getElementById('sb-summary-panel');
+  summary.style.display = 'flex';
+  // Build summary content
+  let rowCards = sbData.rows.map(function(row, ri) {
+    let tg = (row.species||[]).map(function(sp) {
+      return '<div style="font-size:12px;color:#595959;margin-top:2px;">' + sp.label + ' \u2014 planted: ' + sp.planted + ', alive: ' + sp.alive + ', spacing: ' + sp.spacing + ' m, year: ' + sp.year + '</div>';
+    }).join('');
+    return '<div class="sb-summary-card">' +
+      '<div style="font-weight:600;font-size:14px;margin-bottom:6px;">Row ' + (ri+1) + ' \u2014 ' + (row.name||'') + '</div>' +
+      '<div><span style="font-weight:600;">Length:</span> ' + (row.length||100) + ' m</div>' + tg + '</div>';
+  }).join('');
+  summary.innerHTML =
+    // Header
+    '<div class="step-container" style="margin:8px 16px 0;flex-shrink:0;">' +
+    '<div class="step-header" style="align-items:center;margin-bottom:0;">' +
+    '<span style="font-size:13px;font-weight:600;color:#595959;">&#x2713; Saved</span>' +
+    '<span style="color:#8c8c8c;margin:0 8px;">|</span>' +
+    '<span class="step-description">' + sbData.name + '</span>' +
+    '</div></div>' +
+    // Scrollable content
+    '<div class="step-container" style="margin:8px 16px;flex:1;overflow-y:auto;">' +
+    '<div style="display:flex;gap:20px;margin-bottom:12px;flex-wrap:wrap;">' +
+    '<span><strong>Hardiness zone:</strong> ' + sbData.zone + '</span>' +
+    '<span><strong>Eco-district:</strong> ' + sbData.ecoDistrict + '</span>' +
+    '<span><strong>Rows:</strong> ' + sbData.numRows + '</span>' +
+    '</div>' +
+    '<hr style="border:none;border-top:1px solid #cccccc;margin-bottom:12px;">' +
+    rowCards + '</div>' +
+    // Footer
+    '<div style="padding:8px 16px;flex-shrink:0;border-top:1px solid #d9d9d9;">' +
+    '<button class="btn" onclick="sbStartEditMode()" style="padding:8px 16px;">Edit wizard</button>' +
+    '</div>';
+}
+
+function sbStartEditMode() {
+  sbCurrentStep = 0;
+  sbBuildSteps();
+  document.getElementById('sb-summary-panel').style.display = 'none';
+  document.getElementById('sb-wizard-panel').style.display = 'flex';
+  document.getElementById('sb-name').value = sbData.name;
+  document.getElementById('sb-zone').value = sbData.zone;
+  document.getElementById('sb-eco').value = sbData.ecoDistrict;
+  document.getElementById('sb-numrows').value = sbData.numRows;
+  sbRenderCurrentStep();
+}
 </script>
 
 </body>
