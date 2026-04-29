@@ -218,6 +218,180 @@ namespace H.Core.Test.Calculators.Nitrogen
             Assert.IsTrue(result > 0);
         }
 
+        #region Poultry land application EF (Sheppard et al. 2009b, Table 6 + Table 5)
+
+        /// <summary>
+        /// Nov–Mar: zero emissions regardless of tillage.
+        /// </summary>
+        [TestMethod]
+        [DataRow(11)] [DataRow(12)] [DataRow(1)] [DataRow(2)] [DataRow(3)]
+        public void GetPoultryLandApplicationEmissionFactor_WinterMonths_ReturnsZero(int month)
+        {
+            Assert.AreEqual(0.00, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.Reduced, month));
+            Assert.AreEqual(0.00, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.NoTill,  month));
+        }
+
+        /// <summary>
+        /// Tilled (reduced + intensive): Apr/Sep/Oct → 0.47
+        /// </summary>
+        [TestMethod]
+        [DataRow(4)] [DataRow(9)] [DataRow(10)]
+        public void GetPoultryLandApplicationEmissionFactor_TilledAprilSepOct_Returns047(int month)
+        {
+            Assert.AreEqual(0.47, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.Reduced,   month));
+            Assert.AreEqual(0.47, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.Intensive, month));
+        }
+
+        /// <summary>
+        /// Tilled (reduced + intensive): May–Aug → 0.42
+        /// </summary>
+        [TestMethod]
+        [DataRow(5)] [DataRow(6)] [DataRow(7)] [DataRow(8)]
+        public void GetPoultryLandApplicationEmissionFactor_TilledMayToAug_Returns042(int month)
+        {
+            Assert.AreEqual(0.42, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.Reduced,   month));
+            Assert.AreEqual(0.42, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.Intensive, month));
+        }
+
+        /// <summary>
+        /// Untilled (no-till): Apr–Oct → 0.69
+        /// </summary>
+        [TestMethod]
+        [DataRow(4)] [DataRow(5)] [DataRow(6)] [DataRow(7)] [DataRow(8)] [DataRow(9)] [DataRow(10)]
+        public void GetPoultryLandApplicationEmissionFactor_NoTillGrowingSeason_Returns069(int month)
+        {
+            Assert.AreEqual(0.69, _sut.GetPoultryLandApplicationEmissionFactor(TillageType.NoTill, month));
+        }
+
+        /// <summary>
+        /// Rain modification factor: Sheppard et al. 2009b, Table 5 / Brentrup et al. 2000, Table 5.
+        /// </summary>
+        [TestMethod]
+        public void GetRainModificationFactorForPoultryManure_ReturnsCorrectFactorForEachTemperatureBand()
+        {
+            Assert.AreEqual(0.85, _sut.GetRainModificationFactorForPoultryManure(15.0));
+            Assert.AreEqual(0.85, _sut.GetRainModificationFactorForPoultryManure(20.0));
+            Assert.AreEqual(0.73, _sut.GetRainModificationFactorForPoultryManure(10.0));
+            Assert.AreEqual(0.73, _sut.GetRainModificationFactorForPoultryManure(12.5));
+            Assert.AreEqual(0.35, _sut.GetRainModificationFactorForPoultryManure(5.0));
+            Assert.AreEqual(0.35, _sut.GetRainModificationFactorForPoultryManure(7.0));
+            Assert.AreEqual(0.25, _sut.GetRainModificationFactorForPoultryManure(4.9));
+            Assert.AreEqual(0.25, _sut.GetRainModificationFactorForPoultryManure(-10.0));
+        }
+
+        // ---- Integration regression tests ----
+        // These exercise CalculateNH3NLossFromLandAppliedManure end-to-end and pin down that:
+        //   (a) the EF comes from the tillage+season table (not the old temperature fraction), and
+        //   (b) the rain modifier is applied only when precipitation > 0 the day after application.
+        // TAN is mocked to 25 kg N in TestInitialize.
+
+        /// <summary>
+        /// Regression: the old implementation applied the rain modification factors (0.85/0.73/0.35/0.25)
+        /// as the primary temperature-dependent EF, applied to manure VOLUME.
+        /// Correct: June + reduced tillage → base EF = 0.42; no rain → result = 0.42 × 25 TAN = 10.5.
+        /// Old wrong result would have been: 0.85 (T=19 °C) × 50 volume × 1 ha = 42.5.
+        /// </summary>
+        [TestMethod]
+        public void CalculateNH3NLossFromLandAppliedManure_PoultryTilledJuneNoRain_UsesCorrectEFAndTAN()
+        {
+            var manureApplicationViewItem = new ManureApplicationViewItem
+            {
+                AnimalType = AnimalType.Broilers,
+                ManureLocationSourceType = ManureLocationSourceType.Livestock,
+                DateOfApplication = new DateTime(2024, 6, 15),   // June → tilled EF = 0.42
+                AmountOfManureAppliedPerHectare = 50,
+                AmountOfNitrogenAppliedPerHectare = 100,
+            };
+
+            var viewItem = new CropViewItem
+            {
+                TillageType = TillageType.Reduced,
+                Area = 1,
+                Year = 2024,
+            };
+
+            _mockClimateProvider
+                .Setup(x => x.GetMeanPrecipitationForDay(It.IsAny<Farm>(), It.IsAny<DateTime>()))
+                .Returns(0);    // no rain — rain modifier must NOT apply
+
+            var result = _sut.CalculateNH3NLossFromLandAppliedManure(_farm, viewItem, manureApplicationViewItem);
+
+            // 0.42 × 25 = 10.5
+            Assert.AreEqual(10.5, result, 1e-10);
+        }
+
+        /// <summary>
+        /// When precipitation > 0 the day after application and T ≥ 15 °C (rain modifier = 0.85),
+        /// the result is EF × modifier × TAN: 0.42 × 0.85 × 25 = 8.925.
+        /// </summary>
+        [TestMethod]
+        public void CalculateNH3NLossFromLandAppliedManure_PoultryTilledJuneWithRain_AppliesRainModifier()
+        {
+            var manureApplicationViewItem = new ManureApplicationViewItem
+            {
+                AnimalType = AnimalType.Broilers,
+                ManureLocationSourceType = ManureLocationSourceType.Livestock,
+                DateOfApplication = new DateTime(2024, 6, 15),   // June → tilled EF = 0.42
+                AmountOfManureAppliedPerHectare = 50,
+                AmountOfNitrogenAppliedPerHectare = 100,
+            };
+
+            var viewItem = new CropViewItem
+            {
+                TillageType = TillageType.Reduced,
+                Area = 1,
+                Year = 2024,
+            };
+
+            // Rain the day after; temperature on that day ≥ 15 °C → modifier = 0.85
+            _mockClimateProvider
+                .Setup(x => x.GetMeanPrecipitationForDay(It.IsAny<Farm>(), It.IsAny<DateTime>()))
+                .Returns(5.0);
+            _mockClimateProvider
+                .Setup(x => x.GetMeanTemperatureForDay(It.IsAny<Farm>(), It.IsAny<DateTime>()))
+                .Returns(19.0);
+
+            var result = _sut.CalculateNH3NLossFromLandAppliedManure(_farm, viewItem, manureApplicationViewItem);
+
+            // 0.42 × 0.85 × 25 = 8.925
+            Assert.AreEqual(8.925, result, 1e-10);
+        }
+
+        /// <summary>
+        /// Regression: the old code returned non-zero NH3 in winter because the temperature fraction
+        /// was always positive. Correct behaviour: EF = 0.00 Nov–Mar, so result = 0 regardless of
+        /// temperature, rain, or TAN.
+        /// </summary>
+        [TestMethod]
+        public void CalculateNH3NLossFromLandAppliedManure_PoultryWinterApplication_ReturnsZero()
+        {
+            var manureApplicationViewItem = new ManureApplicationViewItem
+            {
+                AnimalType = AnimalType.Broilers,
+                ManureLocationSourceType = ManureLocationSourceType.Livestock,
+                DateOfApplication = new DateTime(2024, 1, 15),   // January → EF = 0.00
+                AmountOfManureAppliedPerHectare = 50,
+                AmountOfNitrogenAppliedPerHectare = 100,
+            };
+
+            var viewItem = new CropViewItem
+            {
+                TillageType = TillageType.Reduced,
+                Area = 1,
+                Year = 2024,
+            };
+
+            _mockClimateProvider
+                .Setup(x => x.GetMeanPrecipitationForDay(It.IsAny<Farm>(), It.IsAny<DateTime>()))
+                .Returns(0);
+
+            var result = _sut.CalculateNH3NLossFromLandAppliedManure(_farm, viewItem, manureApplicationViewItem);
+
+            Assert.AreEqual(0.0, result, 1e-10);
+        }
+
+        #endregion
+
         #endregion
 
         [TestMethod]

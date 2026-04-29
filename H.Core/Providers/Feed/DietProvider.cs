@@ -572,6 +572,7 @@ namespace H.Core.Providers.Feed
                 TotalDigestibleNutrient = 60,
                 CrudeProtein = 17.7,
                 Ash = 8,
+                Forage = 85,
                 MethaneConversionFactor = 0.067,
             });
 
@@ -584,6 +585,7 @@ namespace H.Core.Providers.Feed
                 TotalDigestibleNutrient = 55,
                 CrudeProtein = 12.4,
                 Ash = 8,
+                Forage = 97,
                 MethaneConversionFactor = 0.067,
             });
 
@@ -596,6 +598,7 @@ namespace H.Core.Providers.Feed
                 TotalDigestibleNutrient = 48,
                 CrudeProtein = 5.7,
                 Ash = 8,
+                Forage = 100,
                 MethaneConversionFactor = 0.067,
             });
 

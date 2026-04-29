@@ -1,4 +1,6 @@
 | Date | Commit ID | Summary of changes |
 | -------- | ------- | ------- |
+| April 29, 2026 | See algorithm document section 4.6.2 — Ammonia emissions from farm-produced land-applied manure from broilers, layers and turkeys | Fix NH3 emission factors for land-applied solid poultry manure (broilers, layers, turkeys). EFs are now based on tillage type and month of application, with a rain-based modification factor applied when precipitation occurs the day after application. |
+| April 28, 2026 | [See Issue #424](https://github.com/holos-aafc/Holos/issues/424) | Fix default sheep diet forage percentages. The three default sheep diets (Good, Average, and Poor quality forage) had their forage percentage incorrectly set to 0% instead of 85%, 97%, and 100% respectively. This caused the volatile solids calculation (Equation 4.1.2-1) to use a urinary energy coefficient of 0.02 instead of the correct 0.04, underestimating volatile solid excretion for all sheep components. The forage percentages in `Table_18_26_Diet_Coefficients_For_Beef_Dairy_Sheep.csv` were also corrected to match. |
 | August 30, 2024 | [f6466ba](https://github.com/HOLOS-International-Solutions/HOLOS-Intl/commit/f6466ba01748fe802f59fe55b0697761aa7f6bdd) | Add country/version enumeration |
 

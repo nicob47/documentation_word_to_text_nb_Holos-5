@@ -830,8 +830,9 @@ namespace H.Core.Services.DietService
                     DietType = DietType.GoodQualityForage,
                     AnimalType = AnimalType.Sheep,
                     TotalDigestibleNutrient = 60.0,
-                    CrudeProtein = 17.7, 
+                    CrudeProtein = 17.7,
                     Ash = 8.0,
+                    Forage = 85,
                     MethaneConversionFactor = 0.067,
                 },
 
@@ -843,6 +844,7 @@ namespace H.Core.Services.DietService
                     TotalDigestibleNutrient = 55,
                     CrudeProtein = 12.4,
                     Ash = 8,
+                    Forage = 97,
                     MethaneConversionFactor = 0.067,
                 },
 
@@ -855,6 +857,7 @@ namespace H.Core.Services.DietService
                     TotalDigestibleNutrient = 48,
                     CrudeProtein = 5.7,
                     Ash = 8,
+                    Forage = 100,
                     MethaneConversionFactor = 0.067,
                 },
 

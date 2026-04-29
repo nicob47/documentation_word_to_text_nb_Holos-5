@@ -154,6 +154,11 @@ namespace H.Core.Services.Climate
             return _climateProvider.GetMeanTemperatureForDay(farm, dateTime);
         }
 
+        public double GetMeanPrecipitationForDay(Farm farm, DateTime dateTime)
+        {
+            return _climateProvider.GetMeanPrecipitationForDay(farm, dateTime);
+        }
+
         public double GetAnnualEvapotranspiration(Farm farm, DateTime dateTime)
         {
             return _climateProvider.GetAnnualEvapotranspiration(farm, dateTime);
