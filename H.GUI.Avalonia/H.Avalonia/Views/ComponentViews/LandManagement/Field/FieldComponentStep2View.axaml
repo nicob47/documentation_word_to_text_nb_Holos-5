@@ -72,7 +72,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Year" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Column="1" Text="Main Crop" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
-                    <TextBlock Grid.Column="2" Text="Cover Crop" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    <TextBlock Grid.Column="2" Text="Cover Crop (optional)" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" Margin="8,0,0,0">
+                        <ToolTip.Tip>A cover crop is grown between main crop seasons to protect and enrich the soil</ToolTip.Tip>
+                    </TextBlock>
                     <TextBlock Grid.Column="3" Text="" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource GcdsTextSecondaryBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </Border>
@@ -132,16 +134,18 @@
                                             <Button DockPanel.Dock="Left" Background="Transparent" BorderThickness="0" Padding="0" Margin="0,0,6,0"
                                                     Command="{Binding $parent[UserControl].((field:FieldComponentViewModel)DataContext).ToggleCoverCropCommand}"
                                                     CommandParameter="{Binding}">
+                                                <ToolTip.Tip>Check to add a cover crop to this year</ToolTip.Tip>
                                                 <CheckBox IsChecked="{Binding HasCoverCrop, Mode=OneWay}"
                                                           IsHitTestVisible="False" MinWidth="0" Padding="0"/>
                                             </Button>
-                                            <TextBlock DockPanel.Dock="Left" Text="None" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                            <TextBlock DockPanel.Dock="Left" Text="Add cover crop" FontSize="11" Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                                        IsVisible="{Binding !HasCoverCrop}" VerticalAlignment="Center" FontStyle="Italic"/>
                                             <ComboBox Classes="crop-selector"
                                                       IsVisible="{Binding HasCoverCrop}"
                                                       ItemsSource="{Binding CoverCropDto.GroupedCropItems}"
                                                       SelectedItem="{Binding CoverCropDto.SelectedCropTypeItem}"
                                                       ItemTemplate="{StaticResource CropGroupedItemDataTemplate}"
+                                                      PlaceholderText="Select cover crop type..."
                                                       HorizontalAlignment="Stretch"
                                                       MaxDropDownHeight="320"/>
                                         </DockPanel>
