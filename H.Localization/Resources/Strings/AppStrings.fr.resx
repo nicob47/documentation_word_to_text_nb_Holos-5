@@ -3350,4 +3350,10 @@ Hassan Afzaal</value>
   <data name="Label_MultiYearCarbonModelling" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
+  <data name="Label_Energy" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Label_CropDefaults" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
 </root>

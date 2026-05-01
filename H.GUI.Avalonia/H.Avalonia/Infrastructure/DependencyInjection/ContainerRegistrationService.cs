@@ -232,6 +232,8 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterForNavigation<FarmImportFileView, FarmImportFileViewModel>();
             containerRegistry.RegisterForNavigation<FileExportClimateView, FileExportClimateViewModel>();
             containerRegistry.RegisterForNavigation<FileExportManureView, FileExportManureViewModel>();
+            containerRegistry.RegisterForNavigation<EnergySettingsView, EnergySettingsViewModel>();
+            containerRegistry.RegisterForNavigation<CropDefaultsSettingsView, CropDefaultsSettingsViewModel>();
             
             _logger.LogDebug("Completed registration of options and settings views");
         }

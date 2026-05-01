@@ -144,6 +144,12 @@ namespace H.Avalonia.ViewModels.OptionsViews
                     case "User Settings":
                         base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(Views.OptionsViews.OptionUserSettingsView));
                         break;
+                    case "Energy":
+                        base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(Views.OptionsViews.EnergySettingsView));
+                        break;
+                    case "Crop Defaults":
+                        base.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(Views.OptionsViews.CropDefaultsSettingsView));
+                        break;
                 }
             }
         }
