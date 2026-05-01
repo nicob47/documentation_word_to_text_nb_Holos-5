@@ -102,7 +102,8 @@ public class DietFactoryTest
     [TestMethod]
     public void Create_SheepGoodQualityForage_HasCorrectForagePercentage()
     {
-        var diet = _sut.Create(DietType.GoodQualityForage, AnimalType.Sheep);
+        // Forage is on the concrete DietDto, not on IDietDto, so cast to access it.
+        var diet = (DietDto)_sut.Create(DietType.GoodQualityForage, AnimalType.Sheep);
 
         Assert.AreEqual(85, diet.Forage);
     }
@@ -113,7 +114,7 @@ public class DietFactoryTest
     [TestMethod]
     public void Create_SheepAverageQualityForage_HasCorrectForagePercentage()
     {
-        var diet = _sut.Create(DietType.AverageQualityForage, AnimalType.Sheep);
+        var diet = (DietDto)_sut.Create(DietType.AverageQualityForage, AnimalType.Sheep);
 
         Assert.AreEqual(97, diet.Forage);
     }
@@ -124,7 +125,7 @@ public class DietFactoryTest
     [TestMethod]
     public void Create_SheepPoorQualityForage_HasCorrectForagePercentage()
     {
-        var diet = _sut.Create(DietType.PoorQualityForage, AnimalType.Sheep);
+        var diet = (DietDto)_sut.Create(DietType.PoorQualityForage, AnimalType.Sheep);
 
         Assert.AreEqual(100, diet.Forage);
     }
