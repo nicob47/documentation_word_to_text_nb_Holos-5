@@ -3708,11 +3708,11 @@ Hassan Afzaal</value>
   </data>
   <data name="Label_AnimalGroupsTitle" xml:space="preserve">
     <value>Animal Groups</value>
-    <comment>GUI - OtherAnimalsStep1View timeline header (no colon)</comment>
+    <comment>GUI - AnimalsStep1View timeline header (no colon)</comment>
   </data>
   <data name="Label_TipScrollHorizontally" xml:space="preserve">
     <value>Tip: Scroll horizontally to view all groups, click on a group to select it</value>
-    <comment>GUI - OtherAnimalsStep1View timeline hint</comment>
+    <comment>GUI - AnimalsStep1View timeline hint</comment>
   </data>
   <data name="Label_SelectCategoryToBrowse" xml:space="preserve">
     <value>Select a category to browse available components</value>

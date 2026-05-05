@@ -1,4 +1,5 @@
-﻿using H.Avalonia.ViewModels.ComponentViews.OtherAnimals;
+﻿using H.Avalonia.ViewModels.ComponentViews.Animals;
+using H.Avalonia.ViewModels.ComponentViews.OtherAnimals;
 using H.Core;
 using H.Core.Enumerations;
 using H.Core.Models;
@@ -70,7 +71,7 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
             Assert.AreEqual(expectedAnimalType, _viewModel.AnimalType);
         }
 
-        // Below we are testing methods found in OtherAnimalsViewModelBase (abstract) used by all child classes (horses, bison, goats, etc.)
+        // Below we are testing methods found in AnimalsViewModelBase (abstract) used by all child classes (horses, bison, goats, etc.)
 
         [TestMethod]
         public void TestConstructorInitializingCollections()

@@ -1,3 +1,4 @@
+using H.Avalonia.ViewModels.ComponentViews.Animals;
 using H.Avalonia.ViewModels.ComponentViews.OtherAnimals;
 using H.Core;
 using H.Core.Enumerations;
@@ -11,16 +12,16 @@ using Moq;
 
 #nullable disable
 
-namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
+namespace H.Avalonia.Test.ViewModels.ComponentViews.Animals
 {
     /// <summary>
-    /// Tests for <see cref="OtherAnimalsViewModelBase"/> functionality, exercised through
+    /// Tests for <see cref="AnimalsViewModelBase"/> functionality, exercised through
     /// <see cref="HorsesComponentViewModel"/> (a concrete subclass).
     /// Covers: group selection, management period add/remove, HasManagementPeriods,
     /// sequential default dates, and overlapping period validation.
     /// </summary>
     [TestClass]
-    public class OtherAnimalsViewModelBaseTests
+    public class AnimalsViewModelBaseTests
     {
         #region Fields
 

@@ -2,12 +2,13 @@ using H.Core.Enumerations;
 using H.Core.Factories.Animals;
 using System;
 using System.Collections.ObjectModel;
+using H.Avalonia.ViewModels.ComponentViews.Animals;
 
-namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
+namespace H.Avalonia.ViewModels.ComponentViews.Animals
 {
-    public class OtherAnimalsViewModelDesign : OtherAnimalsViewModelBase
+    public class AnimalsViewModelDesign : AnimalsViewModelBase
     {
-        public OtherAnimalsViewModelDesign()
+        public AnimalsViewModelDesign()
         {
             ViewName = "Bison";
 

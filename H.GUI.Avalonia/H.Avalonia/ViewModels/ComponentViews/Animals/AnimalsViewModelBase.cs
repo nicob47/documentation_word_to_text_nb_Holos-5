@@ -15,15 +15,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using H.Avalonia.ViewModels.ComponentViews.Animals;
 
-namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
+namespace H.Avalonia.ViewModels.ComponentViews.Animals
 {
     /// <summary>
     /// Intermediate base ViewModel for all Other Animals components (Horses, Llamas, Mules, Bison, Goats, Deer, Elk, Alpacas).
     /// Provides group selection, management period filtering per group, and enum collections for ComboBox bindings.
     /// Follows the same 3-step pattern as DairyComponentViewModel: Define groups → Configure periods → Management practices.
     /// </summary>
-    public abstract class OtherAnimalsViewModelBase : AnimalComponentViewModelBase
+    public abstract class AnimalsViewModelBase : AnimalComponentViewModelBase
     {
         #region Fields
 
@@ -44,13 +45,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
 
         #region Constructors
 
-        public OtherAnimalsViewModelBase()
+        public AnimalsViewModelBase()
         {
             _selectedGroupManagementPeriods = new ObservableCollection<ManagementPeriodDto>();
             this.Construct();
         }
 
-        public OtherAnimalsViewModelBase(
+        public AnimalsViewModelBase(
             ILogger logger,
             IAnimalComponentService animalComponentService,
             IStorageService storageService,

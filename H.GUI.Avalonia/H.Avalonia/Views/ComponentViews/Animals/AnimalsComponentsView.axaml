@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:otherAnimals="clr-namespace:H.Avalonia.Views.ComponentViews.OtherAnimals"
+             xmlns:animals="clr-namespace:H.Avalonia.Views.ComponentViews.Animals"
              xmlns:componentViews="clr-namespace:H.Avalonia.ViewModels.ComponentViews"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="H.Avalonia.Views.ComponentViews.OtherAnimals.OtherAnimalsComponentsView">
+             x:Class="H.Avalonia.Views.ComponentViews.Animals.AnimalsComponentsView">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,13 +27,13 @@
             <StackPanel Margin="{StaticResource DefaultUserControlMargin}">
 
                 <!-- Step 1: Define Animal Groups -->
-                <otherAnimals:OtherAnimalsStep1View Margin="0,0,0,20"/>
+                <animals:AnimalsStep1View Margin="0,0,0,20"/>
 
                 <!-- Step 2: Management Periods (for selected group) -->
-                <otherAnimals:OtherAnimalsStep2View Margin="0,0,0,20"/>
+                <animals:AnimalsStep2View Margin="0,0,0,20"/>
 
                 <!-- Step 3: Management Practices Configuration -->
-                <otherAnimals:OtherAnimalsStep3View Margin="0,0,0,16"/>
+                <animals:AnimalsStep3View Margin="0,0,0,16"/>
 
             </StackPanel>
         </ScrollViewer>

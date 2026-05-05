@@ -2,10 +2,11 @@
 using H.Core.Services.Animals;
 using H.Core.Services.StorageService;
 using Microsoft.Extensions.Logging;
+using H.Avalonia.ViewModels.ComponentViews.Animals;
 
 namespace H.Avalonia.ViewModels.ComponentViews.OtherAnimals
 {
-    public class LlamaComponentViewModel : OtherAnimalsViewModelBase
+    public class LlamaComponentViewModel : AnimalsViewModelBase
     {
         #region
 
