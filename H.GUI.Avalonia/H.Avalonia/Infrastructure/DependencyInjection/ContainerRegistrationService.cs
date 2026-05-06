@@ -2,6 +2,7 @@ using H.Infrastructure;
 using H.Avalonia.Infrastructure.Dialogs;
 using H.Avalonia.Infrastructure.MapperServices;
 using H.Avalonia.Services;
+using H.Avalonia.Services.DietFormulator;
 using H.Avalonia.ViewModels;
 using H.Avalonia.ViewModels.ComponentViews;
 using H.Avalonia.ViewModels.ComponentViews.Beef;
@@ -393,6 +394,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterSingleton<IManagementPeriodService, ManagementPeriodService>();
             containerRegistry.RegisterSingleton<IErrorHandlerService, ErrorHandlerService>();
             containerRegistry.RegisterSingleton<INotificationManagerService, NotificationManagerService>();
+            containerRegistry.RegisterSingleton<IDietFormulatorWindowService, DietFormulatorWindowService>();
             containerRegistry.RegisterSingleton<IDefaultGeocoderService, NominatimGeocoderService>();
             containerRegistry.RegisterSingleton<ICropColorService, CropColorService>();
 

@@ -1,3 +1,4 @@
+using H.Avalonia.Services.DietFormulator;
 using H.Core.Enumerations;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
@@ -41,6 +42,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
         private IEnumerable<BeddingMaterialType>? _beddingMaterialTypes;
         private IEnumerable<DietAdditiveType>? _dietAdditiveTypes;
         private IEnumerable<DietType>? _availableDietTypes;
+        private IDietFormulatorWindowService? _dietFormulatorWindowService;
 
         #endregion
 
@@ -56,9 +58,11 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
             ILogger logger,
             IAnimalComponentService animalComponentService,
             IStorageService storageService,
-            IManagementPeriodService managementPeriodService) : base(animalComponentService, logger, storageService, managementPeriodService)
+            IManagementPeriodService managementPeriodService,
+            IDietFormulatorWindowService? dietFormulatorWindowService = null) : base(animalComponentService, logger, storageService, managementPeriodService)
         {
             _selectedGroupManagementPeriods = new ObservableCollection<ManagementPeriodDto>();
+            _dietFormulatorWindowService = dietFormulatorWindowService;
             this.Construct();
         }
 
@@ -103,6 +107,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
             SelectAnimalGroupCommand = new DelegateCommand<AnimalGroupDto>(OnSelectAnimalGroupExecute);
             AddManagementPracticeCommand = new DelegateCommand(OnAddManagementPracticeExecute);
             RemoveManagementPracticeCommand = new DelegateCommand<ManagementPeriodDto>(OnRemoveManagementPracticeExecute);
+            OpenDietFormulatorCommand = new DelegateCommand(OnOpenDietFormulatorExecute, CanOpenDietFormulator);
         }
 
         #endregion
@@ -129,6 +134,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
         /// </summary>
         public ICommand RemoveManagementPracticeCommand { get; private set; } = null!;
 
+        /// <summary>
+        /// Command to open the Diet Formulator modal scoped to the currently selected
+        /// animal group's animal type. Disabled when no group is selected or when no
+        /// <see cref="IDietFormulatorWindowService"/> was injected (e.g. design-time).
+        /// </summary>
+        public ICommand OpenDietFormulatorCommand { get; private set; } = null!;
+
         #endregion
 
         #region Properties
@@ -154,6 +166,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
                     RaisePropertyChanged(nameof(IsGroupSelected));
                     RaisePropertyChanged(nameof(ManagementPeriodIntroText));
                     UpdateSelectedGroupManagementPeriods();
+                    (OpenDietFormulatorCommand as DelegateCommand)?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -390,6 +403,27 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
 
             Logger?.LogDebug("Added management practice to group: {GroupName}", SelectedAnimalGroup.Name ?? "Unnamed");
         }
+
+        /// <summary>
+        /// Opens the Diet Formulator modal, scoped to the currently selected animal group's
+        /// animal type. The dialog service is responsible for resolving the parent window
+        /// and showing the modal asynchronously.
+        /// </summary>
+        private async void OnOpenDietFormulatorExecute()
+        {
+            if (_dietFormulatorWindowService == null || SelectedAnimalGroup?.GroupType == null)
+            {
+                return;
+            }
+            await _dietFormulatorWindowService.ShowAsync(SelectedAnimalGroup.GroupType.Value);
+        }
+
+        /// <summary>
+        /// Returns true when the Diet Formulator can be opened: a group must be selected
+        /// and the dialog service must have been injected.
+        /// </summary>
+        private bool CanOpenDietFormulator()
+            => _dietFormulatorWindowService != null && SelectedAnimalGroup != null;
 
         /// <summary>
         /// Removes a management practice from the selected group.

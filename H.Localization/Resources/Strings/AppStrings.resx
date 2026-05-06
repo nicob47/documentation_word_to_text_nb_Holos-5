@@ -1552,6 +1552,22 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>Diet Type</value>
     <comment>GUI (H.Core) - field/control label</comment>
   </data>
+  <data name="Label_AvailableIngredients" xml:space="preserve">
+    <value>Available Ingredients</value>
+    <comment>GUI - Diet Formulator panel header</comment>
+  </data>
+  <data name="Label_SelectedDietIngredients" xml:space="preserve">
+    <value>Selected Diet Ingredients</value>
+    <comment>GUI - Diet Formulator panel header</comment>
+  </data>
+  <data name="Label_PercentageInDiet" xml:space="preserve">
+    <value>% in Diet</value>
+    <comment>GUI - Diet Formulator column header</comment>
+  </data>
+  <data name="Label_Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>GUI - generic Close button label</comment>
+  </data>
   <data name="Label_DryMatter" xml:space="preserve">
     <value>Dry matter</value>
     <comment>GUI (H.Core) - field/control label</comment>
