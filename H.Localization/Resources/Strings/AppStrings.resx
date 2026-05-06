@@ -1568,6 +1568,26 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>Close</value>
     <comment>GUI - generic Close button label</comment>
   </data>
+  <data name="Label_AddIngredientToDiet" xml:space="preserve">
+    <value>+ Add to Diet</value>
+    <comment>GUI - Diet Formulator: button to add an ingredient from the library to the selected diet</comment>
+  </data>
+  <data name="Label_RemoveIngredientFromDiet" xml:space="preserve">
+    <value>− Remove from Diet</value>
+    <comment>GUI - Diet Formulator: button to remove an ingredient from the selected diet</comment>
+  </data>
+  <data name="Label_DietTotals" xml:space="preserve">
+    <value>Diet Totals</value>
+    <comment>GUI - Diet Formulator: live nutrient totals panel header</comment>
+  </data>
+  <data name="Label_TotalPercentageInDiet" xml:space="preserve">
+    <value>Total ingredient %:</value>
+    <comment>GUI - Diet Formulator: validation banner label</comment>
+  </data>
+  <data name="Warning_PercentageSumNot100" xml:space="preserve">
+    <value>(must equal 100%)</value>
+    <comment>GUI - Diet Formulator: warning shown when ingredient percentages don't sum to 100</comment>
+  </data>
   <data name="Label_DryMatter" xml:space="preserve">
     <value>Dry matter</value>
     <comment>GUI (H.Core) - field/control label</comment>

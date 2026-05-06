@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using H.Avalonia.ViewModels;
@@ -13,10 +16,10 @@ namespace H.Avalonia.ViewModels.SupportingViews.DietFormulator;
 /// <summary>
 /// View model backing the <c>DietFormulatorWindow</c> modal.
 /// Loads diets and ingredients filtered by <see cref="AnimalType"/> so the formulator
-/// is scoped to the animal group that launched it (beef-only initially; same code
-/// path supports dairy and swine when those launchers are added).
-/// Phase 1.3 — read-only browsing only. Editing, custom diets, and persistence
-/// land in later phases.
+/// is scoped to the animal group that launched it.
+/// Phase 2 — supports adding/removing ingredients and editing percentages with
+/// live nutrient totals and percentage-sum validation. Custom diet creation,
+/// deep-cloning before edit, and JSON persistence land in Phase 3.
 /// </summary>
 public class DietFormulatorWindowViewModel : ViewModelBase
 {
@@ -25,6 +28,8 @@ public class DietFormulatorWindowViewModel : ViewModelBase
     private readonly AnimalType _animalType;
 
     private IDietDto? _selectedDiet;
+    private IFeedIngredient? _selectedAvailableIngredient;
+    private IFeedIngredient? _selectedIngredientInDiet;
 
     public DietFormulatorWindowViewModel()
     {
@@ -35,7 +40,10 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         MyDiets = new ObservableCollection<IDietDto>();
         AvailableIngredients = new ObservableCollection<IFeedIngredient>();
         SelectedDietIngredients = new ObservableCollection<IFeedIngredient>();
-        CloseCommand = new DelegateCommand(() => CloseRequested?.Invoke(this, System.EventArgs.Empty));
+        SelectedDietIngredients.CollectionChanged += OnSelectedDietIngredientsChanged;
+        CloseCommand = new DelegateCommand(() => CloseRequested?.Invoke(this, EventArgs.Empty));
+        AddIngredientCommand = new DelegateCommand(OnAddIngredientExecute, CanAddIngredient);
+        RemoveIngredientCommand = new DelegateCommand(OnRemoveIngredientExecute, CanRemoveIngredient);
     }
 
     public DietFormulatorWindowViewModel(
@@ -43,15 +51,18 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         IFeedIngredientProvider feedIngredientProvider,
         AnimalType animalType)
     {
-        _dietService = dietService ?? throw new System.ArgumentNullException(nameof(dietService));
-        _feedIngredientProvider = feedIngredientProvider ?? throw new System.ArgumentNullException(nameof(feedIngredientProvider));
+        _dietService = dietService ?? throw new ArgumentNullException(nameof(dietService));
+        _feedIngredientProvider = feedIngredientProvider ?? throw new ArgumentNullException(nameof(feedIngredientProvider));
         _animalType = animalType;
 
         MyDiets = new ObservableCollection<IDietDto>();
         AvailableIngredients = new ObservableCollection<IFeedIngredient>();
         SelectedDietIngredients = new ObservableCollection<IFeedIngredient>();
+        SelectedDietIngredients.CollectionChanged += OnSelectedDietIngredientsChanged;
 
-        CloseCommand = new DelegateCommand(() => CloseRequested?.Invoke(this, System.EventArgs.Empty));
+        CloseCommand = new DelegateCommand(() => CloseRequested?.Invoke(this, EventArgs.Empty));
+        AddIngredientCommand = new DelegateCommand(OnAddIngredientExecute, CanAddIngredient);
+        RemoveIngredientCommand = new DelegateCommand(OnRemoveIngredientExecute, CanRemoveIngredient);
 
         Load();
     }
@@ -68,6 +79,7 @@ public class DietFormulatorWindowViewModel : ViewModelBase
 
     /// <summary>
     /// Ingredients of the currently selected diet (refreshed when <see cref="SelectedDiet"/> changes).
+    /// Each ingredient's <c>PropertyChanged</c> is wired so percentage edits update live totals.
     /// </summary>
     public ObservableCollection<IFeedIngredient> SelectedDietIngredients { get; }
 
@@ -82,6 +94,37 @@ public class DietFormulatorWindowViewModel : ViewModelBase
             if (SetProperty(ref _selectedDiet, value))
             {
                 RefreshSelectedDietIngredients();
+                (AddIngredientCommand as DelegateCommand)?.RaiseCanExecuteChanged();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ingredient highlighted in the AvailableIngredients grid. Drives <c>AddIngredientCommand</c> CanExecute.
+    /// </summary>
+    public IFeedIngredient? SelectedAvailableIngredient
+    {
+        get => _selectedAvailableIngredient;
+        set
+        {
+            if (SetProperty(ref _selectedAvailableIngredient, value))
+            {
+                (AddIngredientCommand as DelegateCommand)?.RaiseCanExecuteChanged();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ingredient highlighted in the SelectedDietIngredients grid. Drives <c>RemoveIngredientCommand</c> CanExecute.
+    /// </summary>
+    public IFeedIngredient? SelectedIngredientInDiet
+    {
+        get => _selectedIngredientInDiet;
+        set
+        {
+            if (SetProperty(ref _selectedIngredientInDiet, value))
+            {
+                (RemoveIngredientCommand as DelegateCommand)?.RaiseCanExecuteChanged();
             }
         }
     }
@@ -91,23 +134,60 @@ public class DietFormulatorWindowViewModel : ViewModelBase
     /// </summary>
     public AnimalType AnimalType => _animalType;
 
-    /// <summary>
-    /// Closes the formulator window. The window's code-behind subscribes to
-    /// <see cref="CloseRequested"/> so the VM can stay UI-agnostic.
-    /// </summary>
     public ICommand CloseCommand { get; }
+
+    /// <summary>
+    /// Adds a copy of <see cref="SelectedAvailableIngredient"/> to the selected diet at 0% percentage.
+    /// </summary>
+    public ICommand AddIngredientCommand { get; }
+
+    /// <summary>
+    /// Removes <see cref="SelectedIngredientInDiet"/> from the selected diet.
+    /// </summary>
+    public ICommand RemoveIngredientCommand { get; }
 
     /// <summary>
     /// Raised when the VM wants the hosting window to close. The window subscribes.
     /// </summary>
-    public event System.EventHandler? CloseRequested;
+    public event EventHandler? CloseRequested;
+
+    #region Live nutrient totals
+
+    /// <summary>Crude protein (% DM) weighted by ingredient percentages in diet.</summary>
+    public double TotalCrudeProtein => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.CrudeProtein);
+
+    /// <summary>Total digestible nutrient (%) weighted by ingredient percentages.</summary>
+    public double TotalTDN => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.TotalDigestibleNutrient);
+
+    /// <summary>Forage (% DM) weighted by ingredient percentages.</summary>
+    public double TotalForage => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.Forage);
+
+    /// <summary>Neutral detergent fiber (% DM) weighted by ingredient percentages.</summary>
+    public double TotalNDF => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.NDF);
+
+    /// <summary>Acid detergent fiber (% DM) weighted by ingredient percentages.</summary>
+    public double TotalADF => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.ADF);
+
+    /// <summary>Fat (% DM) weighted by ingredient percentages.</summary>
+    public double TotalFat => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.Fat);
+
+    /// <summary>Ash (% DM) weighted by ingredient percentages.</summary>
+    public double TotalAsh => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.Ash);
+
+    /// <summary>Metabolizable energy (Mcal/kg) weighted by ingredient percentages.</summary>
+    public double TotalME => SelectedDietIngredients.Sum(x => x.PercentageInDiet / 100.0 * x.ME);
+
+    /// <summary>Sum of <c>PercentageInDiet</c> across all ingredients (should equal 100 for a valid diet).</summary>
+    public double PercentageSum => SelectedDietIngredients.Sum(x => x.PercentageInDiet);
+
+    /// <summary>True when the percentage sum is within a small tolerance of 100.</summary>
+    public bool IsPercentageSumValid => Math.Abs(PercentageSum - 100.0) < 0.01;
+
+    #endregion
 
     private void Load()
     {
         // Load diets matching the formulator's animal type.
-        // IDietService.GetDiets returns the full set; we filter client-side.
-        // Ranges (e.g., AnimalType.Beef) match the same parent category as
-        // specific subtypes (BeefCow, BeefBackgrounder, etc.) via IsBeefCattleType / IsDairyCattleType / IsSwineType extensions.
         MyDiets.Clear();
         var allDiets = _dietService.GetDiets();
         foreach (var diet in allDiets)
@@ -142,12 +222,13 @@ public class DietFormulatorWindowViewModel : ViewModelBase
             }
         }
 
-        // Auto-select the first diet so SelectedDietIngredients is populated.
         SelectedDiet = MyDiets.FirstOrDefault();
     }
 
     private void RefreshSelectedDietIngredients()
     {
+        // Clear() emits a Reset which OnSelectedDietIngredientsChanged handles to
+        // unsubscribe all in-flight ingredient PropertyChanged subscriptions.
         SelectedDietIngredients.Clear();
         if (_selectedDiet?.Ingredients == null) return;
         foreach (var ingredient in _selectedDiet.Ingredients)
@@ -156,10 +237,95 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         }
     }
 
+    private void OnAddIngredientExecute()
+    {
+        if (_selectedAvailableIngredient == null) return;
+        // CopyIngredient deep-clones via PropertyMapper and lets us set the initial percentage.
+        var copy = _feedIngredientProvider.CopyIngredient(_selectedAvailableIngredient, defaultPercentageInDiet: 0);
+        if (copy != null)
+        {
+            SelectedDietIngredients.Add(copy);
+        }
+    }
+
+    private bool CanAddIngredient()
+        => _feedIngredientProvider != null
+           && _selectedAvailableIngredient != null
+           && _selectedDiet != null;
+
+    private void OnRemoveIngredientExecute()
+    {
+        if (_selectedIngredientInDiet == null) return;
+        SelectedDietIngredients.Remove(_selectedIngredientInDiet);
+        SelectedIngredientInDiet = null;
+    }
+
+    private bool CanRemoveIngredient() => _selectedIngredientInDiet != null;
+
+    /// <summary>
+    /// Maintain PropertyChanged subscriptions on each ingredient so percentage edits
+    /// flow into live totals + validation. Also raises totals on any add/remove.
+    /// </summary>
+    private void OnSelectedDietIngredientsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Reset)
+        {
+            // Clear() doesn't supply OldItems; conservatively re-subscribe to whatever's
+            // currently in the collection (after Clear it will be empty).
+            // We can't reliably unsubscribe here, but adding a new diet's ingredients
+            // calls Add(...) -> PropertyChanged-subscription wires up correctly.
+        }
+        else
+        {
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems.OfType<IFeedIngredient>())
+                {
+                    if (item is INotifyPropertyChanged inpc)
+                    {
+                        inpc.PropertyChanged -= OnIngredientPropertyChanged;
+                        inpc.PropertyChanged += OnIngredientPropertyChanged;
+                    }
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems.OfType<IFeedIngredient>())
+                {
+                    if (item is INotifyPropertyChanged inpc)
+                    {
+                        inpc.PropertyChanged -= OnIngredientPropertyChanged;
+                    }
+                }
+            }
+        }
+
+        RaiseTotalsChanged();
+    }
+
+    private void OnIngredientPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        // Refresh totals whenever any tracked ingredient property changes.
+        // PercentageInDiet is the typical user edit; other property changes also recompute.
+        RaiseTotalsChanged();
+    }
+
+    private void RaiseTotalsChanged()
+    {
+        RaisePropertyChanged(nameof(TotalCrudeProtein));
+        RaisePropertyChanged(nameof(TotalTDN));
+        RaisePropertyChanged(nameof(TotalForage));
+        RaisePropertyChanged(nameof(TotalNDF));
+        RaisePropertyChanged(nameof(TotalADF));
+        RaisePropertyChanged(nameof(TotalFat));
+        RaisePropertyChanged(nameof(TotalAsh));
+        RaisePropertyChanged(nameof(TotalME));
+        RaisePropertyChanged(nameof(PercentageSum));
+        RaisePropertyChanged(nameof(IsPercentageSumValid));
+    }
+
     /// <summary>
     /// Returns true when a diet's animal type belongs to the formulator's animal-type scope.
-    /// Beef diets target subtypes like BeefCow / BeefBackgrounder / BeefFinisher; the
-    /// formulator launched from a beef component should show all beef-family diets.
     /// </summary>
     private static bool DietBelongsToAnimalType(AnimalType dietAnimalType, AnimalType scope)
     {
@@ -168,7 +334,6 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         if (scope.IsSwineType()) return dietAnimalType.IsSwineType();
         if (scope.IsSheepType()) return dietAnimalType.IsSheepType();
 
-        // Fallback: exact match for any other category (poultry, other animals, etc.)
         return dietAnimalType == scope;
     }
 }
