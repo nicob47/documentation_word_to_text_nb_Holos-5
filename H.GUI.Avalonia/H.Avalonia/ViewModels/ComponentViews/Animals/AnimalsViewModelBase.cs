@@ -40,6 +40,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
         private IEnumerable<HousingType>? _housingTypes;
         private IEnumerable<BeddingMaterialType>? _beddingMaterialTypes;
         private IEnumerable<DietAdditiveType>? _dietAdditiveTypes;
+        private IEnumerable<DietType>? _availableDietTypes;
 
         #endregion
 
@@ -89,6 +90,13 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
 
             // Initialize diet additive types
             DietAdditiveTypes = Enum.GetValues<DietAdditiveType>().ToList();
+
+            // Initialize available diet types (full set by default; concrete subclasses can
+            // override to filter by AnimalType, e.g. beef vs dairy vs swine).
+            AvailableDietTypes = Enum.GetValues<DietType>()
+                .Where(x => !x.GetType().GetMember(x.ToString())[0]
+                    .GetCustomAttributes(typeof(ObsoleteAttribute), false).Any())
+                .ToList();
 
             // Initialize commands
             RemoveAnimalGroupCommand = new DelegateCommand<AnimalGroupDto>(OnRemoveAnimalGroupExecute);
@@ -235,6 +243,17 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
         {
             get => _dietAdditiveTypes;
             set => SetProperty(ref _dietAdditiveTypes, value);
+        }
+
+        /// <summary>
+        /// Collection of diet types available for selection on the Diet tab. Defaults to all
+        /// non-obsolete <see cref="DietType"/> values; concrete subclasses may override
+        /// to filter by the animal type they represent (e.g. beef-only diets for beef components).
+        /// </summary>
+        public IEnumerable<DietType>? AvailableDietTypes
+        {
+            get => _availableDietTypes;
+            set => SetProperty(ref _availableDietTypes, value);
         }
 
         #endregion

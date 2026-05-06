@@ -88,6 +88,13 @@ public class MapperRegistrationService
     {
         containerRegistry.RegisterInstance<IModelMapper<FeedIngredient, FeedIngredient>>(
             new FeedIngredientToFeedIngredientMapper(), nameof(FeedIngredientToFeedIngredientMapper));
+
+        // Diet round-trip mappers (used by the Diet Formulator modal)
+        containerRegistry.RegisterInstance<IModelMapper<Diet, DietDto>>(
+            new DietToDietDtoMapper(), nameof(DietToDietDtoMapper));
+
+        containerRegistry.RegisterInstance<IModelMapper<DietDto, Diet>>(
+            new DietDtoToDietMapper(), nameof(DietDtoToDietMapper));
     }
 
     private void RegisterAnimalComponentMappers(IContainerRegistry containerRegistry)

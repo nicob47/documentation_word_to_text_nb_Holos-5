@@ -331,7 +331,91 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ── TAB 3: ANIMAL DETAILS ── -->
+            <!-- ── TAB 3: DIET ── -->
+            <TabItem Header="{Binding [Label_Diet].Value, Source={StaticResource Loc}}">
+                <ScrollViewer>
+                    <Border Classes="step-card" Margin="16">
+                        <StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding [Label_DietTypeLabel].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding #RootPanel.DataContext.AvailableDietTypes}"
+                                          SelectedItem="{Binding SelectedDietType}"
+                                          HorizontalAlignment="Stretch">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+
+                            <!-- Nutritional Summary -->
+                            <Border Background="{StaticResource GcdsSelectionBgBrush}" CornerRadius="6" Padding="12">
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                               Text="{Binding CrudeProtein, StringFormat='Crude Protein: {0:F1}%'}"
+                                               FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                               Margin="0,0,0,6"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1"
+                                               Text="{Binding TotalDigestibleNutrient, StringFormat='TDN: {0:F1}%'}"
+                                               FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                               Margin="0,0,0,6"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                               Text="{Binding Forage, StringFormat='Forage: {0:F1}%'}"
+                                               FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1"
+                                               Text="{Binding DailyDryMatterFeedIntakeOfFeed, StringFormat='DMI: {0:F1} kg/day'}"
+                                               FontSize="{StaticResource GcdsFontSizeSmall}" Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
+                                </Grid>
+                            </Border>
+
+                            <Separator Background="{StaticResource GcdsBorderDefaultBrush}" Margin="0,4,0,0"/>
+                            <TextBlock Text="{Binding [Label_Advanced].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeSmall}"
+                                       Foreground="{StaticResource GcdsTextSecondaryBrush}" FontWeight="SemiBold"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding [Label_DietAdditive].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding #RootPanel.DataContext.DietAdditiveTypes}"
+                                          SelectedItem="{Binding DietAdditiveType}"
+                                          HorizontalAlignment="Stretch">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+
+                            <Button IsEnabled="False"
+                                    HorizontalAlignment="Left"
+                                    Padding="12,8"
+                                    ToolTip.Tip="{Binding [Tooltip_CustomDietFormulatorComingSoon].Value, Source={StaticResource Loc}}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Path Data="M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z"
+                                          Fill="{StaticResource GcdsTextSecondaryBrush}" Width="14" Height="14" Stretch="Uniform"/>
+                                    <TextBlock Text="{Binding [Label_CustomDietFormulator].Value, Source={StaticResource Loc}}" FontSize="{StaticResource GcdsFontSizeSmall}"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ── TAB 4: ANIMAL DETAILS ── -->
             <TabItem Header="{Binding [Label_AnimalDetails].Value, Source={StaticResource Loc}}">
                 <ScrollViewer>
                     <Border Classes="step-card" Margin="16">
