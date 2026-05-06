@@ -49,7 +49,7 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.OtherAnimals
             var mockLogger = new Mock<ILogger>();
             var mockManagementPeriodService = new Mock<IManagementPeriodService>();
 
-            _viewModel = new BisonComponentViewModel(mockLogger.Object, mockAnimalComponentService.Object, _storageServiceMock, mockManagementPeriodService.Object);
+            _viewModel = new BisonComponentViewModel(mockLogger.Object, mockAnimalComponentService.Object, _storageServiceMock, mockManagementPeriodService.Object, Mock.Of<H.Avalonia.Services.DietFormulator.IDietFormulatorWindowService>());
         }
 
         [TestCleanup]

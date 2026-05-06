@@ -3,6 +3,7 @@ using H.Core.Enumerations;
 using H.Core.Services.Animals;
 using H.Core.Services.StorageService;
 using H.Avalonia.ViewModels.ComponentViews.Animals;
+using H.Avalonia.Services.DietFormulator;
 using Microsoft.Extensions.Logging;
 
 namespace H.Avalonia.ViewModels.ComponentViews.Swine;
@@ -10,8 +11,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Swine;
 public class GrowerToFinishComponentViewModel : AnimalsViewModelBase
 {
     public GrowerToFinishComponentViewModel(ILogger logger, IAnimalComponentService componentService,
-        IStorageService storageService, IManagementPeriodService managementPeriodService)
-        : base(logger, componentService, storageService, managementPeriodService)
+        IStorageService storageService, IManagementPeriodService managementPeriodService, IDietFormulatorWindowService dietFormulatorWindowService) : base(logger, componentService, storageService, managementPeriodService, dietFormulatorWindowService)
     {
         ViewName = "GrowerToFinishComponentView";
         AnimalType = AnimalType.SwineGrower;

@@ -59,7 +59,7 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
             IAnimalComponentService animalComponentService,
             IStorageService storageService,
             IManagementPeriodService managementPeriodService,
-            IDietFormulatorWindowService? dietFormulatorWindowService = null) : base(animalComponentService, logger, storageService, managementPeriodService)
+            IDietFormulatorWindowService dietFormulatorWindowService) : base(animalComponentService, logger, storageService, managementPeriodService)
         {
             _selectedGroupManagementPeriods = new ObservableCollection<ManagementPeriodDto>();
             _dietFormulatorWindowService = dietFormulatorWindowService;

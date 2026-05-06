@@ -59,7 +59,8 @@ namespace H.Avalonia.Test.ViewModels.ComponentViews.Animals
                 mockLogger.Object,
                 mockAnimalComponentService.Object,
                 _mockStorageService.Object,
-                mockManagementPeriodService.Object);
+                mockManagementPeriodService.Object,
+                Mock.Of<H.Avalonia.Services.DietFormulator.IDietFormulatorWindowService>());
         }
 
         [TestCleanup]
