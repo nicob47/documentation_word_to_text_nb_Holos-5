@@ -412,7 +412,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
         /// </summary>
         private async void OnOpenDietFormulatorExecute()
         {
-            if (_dietFormulatorWindowService == null || SelectedAnimalGroup?.GroupType == null)
+            if (_dietFormulatorWindowService == null
+                || SelectedAnimalGroup?.GroupType == null
+                || SelectedAnimalGroup.GroupType == AnimalType.NotSelected)
             {
                 return;
             }
@@ -441,7 +443,10 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
         /// and the dialog service must have been injected.
         /// </summary>
         private bool CanOpenDietFormulator()
-            => _dietFormulatorWindowService != null && SelectedAnimalGroup != null;
+            => _dietFormulatorWindowService != null
+               && SelectedAnimalGroup != null
+               && SelectedAnimalGroup.GroupType.HasValue
+               && SelectedAnimalGroup.GroupType.Value != AnimalType.NotSelected;
 
         /// <summary>
         /// Removes a management practice from the selected group.
@@ -518,13 +523,16 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
 
         /// <summary>
         /// Handles property changes on the currently selected group.
-        /// Re-raises <see cref="ManagementPeriodIntroText"/> when <see cref="AnimalGroupDto.GroupType"/> changes.
+        /// Re-raises <see cref="ManagementPeriodIntroText"/> when <see cref="AnimalGroupDto.GroupType"/> changes,
+        /// and refreshes <see cref="OpenDietFormulatorCommand"/> CanExecute so the button enables/disables
+        /// as the user picks an animal type for the group.
         /// </summary>
         private void OnSelectedGroupPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(AnimalGroupDto.GroupType))
             {
                 RaisePropertyChanged(nameof(ManagementPeriodIntroText));
+                (OpenDietFormulatorCommand as DelegateCommand)?.RaiseCanExecuteChanged();
             }
         }
 
