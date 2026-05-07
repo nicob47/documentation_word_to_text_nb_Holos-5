@@ -201,12 +201,91 @@ public class FieldComponentViewModel : ViewModelBase
         SelectedFieldSystemComponentDto.CropDtos.Count > 0;
 
     /// <summary>
-    /// The selected <see cref="SelectedFieldSystemComponentDto"/>
+    /// The selected <see cref="SelectedFieldSystemComponentDto"/>.
+    /// On change, manages PropertyChanged subscriptions on every crop's CoverCropDto so
+    /// edits to ANY row's cover crop refresh the Step 3 preview, not just the currently
+    /// selected crop. Subscriptions are mirrored on the CropDtos collection so newly
+    /// added crops are wired automatically.
     /// </summary>
     public IFieldComponentDto? SelectedFieldSystemComponentDto
     {
         get => _selectedFieldSystemComponentDto;
-        set => SetProperty(ref _selectedFieldSystemComponentDto, value);
+        set
+        {
+            var previous = _selectedFieldSystemComponentDto;
+            if (SetProperty(ref _selectedFieldSystemComponentDto, value))
+            {
+                if (previous?.CropDtos is { } oldCrops)
+                {
+                    foreach (var crop in oldCrops)
+                    {
+                        UnsubscribeCoverCropChanges(crop);
+                    }
+                    if (oldCrops is INotifyCollectionChanged oldNcc)
+                    {
+                        oldNcc.CollectionChanged -= OnCropDtosCollectionChangedForCoverCrops;
+                    }
+                }
+
+                if (value?.CropDtos is { } newCrops)
+                {
+                    foreach (var crop in newCrops)
+                    {
+                        SubscribeCoverCropChanges(crop);
+                    }
+                    if (newCrops is INotifyCollectionChanged newNcc)
+                    {
+                        newNcc.CollectionChanged -= OnCropDtosCollectionChangedForCoverCrops;
+                        newNcc.CollectionChanged += OnCropDtosCollectionChangedForCoverCrops;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Subscribe to a crop's existing CoverCropDto so PropertyChanged fires the preview-refresh
+    /// handler. No-op when the crop has no cover crop. Idempotent: safe to call repeatedly
+    /// because we unsubscribe-before-subscribe.
+    /// </summary>
+    private void SubscribeCoverCropChanges(ICropDto crop)
+    {
+        if (crop?.CoverCropDto is INotifyPropertyChanged inpc)
+        {
+            inpc.PropertyChanged -= CoverCropDtoOnPropertyChanged;
+            inpc.PropertyChanged += CoverCropDtoOnPropertyChanged;
+        }
+    }
+
+    /// <summary>Unsubscribe a crop's CoverCropDto. No-op when there is no cover crop.</summary>
+    private void UnsubscribeCoverCropChanges(ICropDto crop)
+    {
+        if (crop?.CoverCropDto is INotifyPropertyChanged inpc)
+        {
+            inpc.PropertyChanged -= CoverCropDtoOnPropertyChanged;
+        }
+    }
+
+    /// <summary>
+    /// When a crop is added to (or removed from) the field's CropDtos collection, wire/unwire
+    /// its cover crop subscription so the preview refresh handler keeps catching all rows.
+    /// </summary>
+    private void OnCropDtosCollectionChangedForCoverCrops(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.NewItems != null)
+        {
+            foreach (var item in e.NewItems)
+            {
+                if (item is ICropDto crop) SubscribeCoverCropChanges(crop);
+            }
+        }
+        if (e.OldItems != null)
+        {
+            foreach (var item in e.OldItems)
+            {
+                if (item is ICropDto crop) UnsubscribeCoverCropChanges(crop);
+            }
+        }
     }
 
     /// <summary>
