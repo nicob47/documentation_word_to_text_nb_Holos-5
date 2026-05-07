@@ -56,6 +56,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Breeding"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Breeding"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Breeding_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -100,6 +102,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Farrowing"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Farrowing"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Farrowing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -144,6 +148,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Nursery"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Nursery"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Nursery_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -182,6 +188,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Growing"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Growing"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Growing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -220,6 +228,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Finishing"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Finishing"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Finishing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -279,6 +289,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="FarrowToFinish"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Farrow-to-Finish"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FarrowToFinish_PointerPressed">
           <TextBlock Text="Farrow-to-Finish"
@@ -301,6 +313,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="FarrowToWean"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Farrow-to-Wean"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FarrowToWean_PointerPressed">
           <TextBlock Text="Farrow-to-Wean"
@@ -323,6 +337,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="IsoWean"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Iso-Wean"
                 KeyDown="Card_KeyDown"
                 PointerPressed="IsoWean_PointerPressed">
           <TextBlock Text="Iso-Wean"
@@ -345,6 +361,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="GrowerToFinish"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Grower-to-Finish"
                 KeyDown="Card_KeyDown"
                 PointerPressed="GrowerToFinish_PointerPressed">
           <TextBlock Text="Grower-to-Finish"

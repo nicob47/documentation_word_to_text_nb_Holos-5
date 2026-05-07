@@ -72,6 +72,8 @@
                   Cursor="Hand"
                   Focusable="True"
                   Tag="Calf"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Calf].Value, Source={StaticResource Loc}}"
                   KeyDown="Card_KeyDown"
                   PointerPressed="OnCalfCardClick">
             <StackPanel x:Name="CalfContentStackPanel">
@@ -122,6 +124,8 @@
                   Cursor="Hand"
                   Focusable="True"
                   Tag="Heifer"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Heifer].Value, Source={StaticResource Loc}}"
                   KeyDown="Card_KeyDown"
                   PointerPressed="OnHeiferCardClick">
             <StackPanel x:Name="HeiferContentStackPanel">
@@ -171,6 +175,8 @@
                   Cursor="Hand"
                   Focusable="True"
                   Tag="Lactating"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Lactating].Value, Source={StaticResource Loc}}"
                   KeyDown="Card_KeyDown"
                   PointerPressed="OnLactatingCardClick">
             <StackPanel x:Name="LactatingContentStackPanel">
@@ -221,6 +227,8 @@
                   Cursor="Hand"
                   Focusable="True"
                   Tag="Dry"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Dry].Value, Source={StaticResource Loc}}"
                   KeyDown="Card_KeyDown"
                   PointerPressed="OnDryCardClick">
             <StackPanel x:Name="DryContentStackPanel">

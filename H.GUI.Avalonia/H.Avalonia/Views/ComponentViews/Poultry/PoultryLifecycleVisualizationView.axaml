@@ -68,6 +68,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Breeder"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_MultiplierBreeder].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Breeder_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -112,6 +114,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Hatchery"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_MultiplierHatchery].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Hatchery_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -156,6 +160,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Pullet"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_PulletFarm].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Pullet_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -207,6 +213,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Egg"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_EggProduction].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Egg_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -238,6 +246,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="ChickenMeat"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_ChickenMeatProduction].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="ChickenMeat_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -310,6 +320,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="TurkeyBreeder"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_TurkeyMultiplierBreeder].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="TurkeyBreeder_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -362,6 +374,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="TurkeyMeat"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_TurkeyMeatProduction].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="TurkeyMeat_PointerPressed">
           <StackPanel VerticalAlignment="Center">

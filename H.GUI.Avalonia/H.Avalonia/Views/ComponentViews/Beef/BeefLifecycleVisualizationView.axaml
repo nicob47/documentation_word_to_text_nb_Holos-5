@@ -52,6 +52,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="CowCalf"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Cow-Calf"
                 KeyDown="Card_KeyDown"
                 PointerPressed="CowCalf_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -96,6 +98,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Backgrounding"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Backgrounding"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Backgrounding_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -140,6 +144,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Finishing"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Finishing (Feedlot)"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Finishing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -232,6 +238,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="CowCalfSystem"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Cow-Calf System"
                 KeyDown="Card_KeyDown"
                 PointerPressed="CowCalfSystem_PointerPressed">
           <TextBlock Text="Cow-Calf"
@@ -254,6 +262,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="BackgroundingSystem"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Backgrounding System"
                 KeyDown="Card_KeyDown"
                 PointerPressed="BackgroundingSystem_PointerPressed">
           <TextBlock Text="Backgrounding"
@@ -276,6 +286,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="FinishingSystem"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Finishing System"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FinishingSystem_PointerPressed">
           <TextBlock Text="Finishing (Feedlot)"
@@ -298,6 +310,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="FullCycle"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="Full Production Cycle"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FullCycle_PointerPressed">
           <TextBlock Text="Full Production Cycle"

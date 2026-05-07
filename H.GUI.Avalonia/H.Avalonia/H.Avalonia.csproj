@@ -44,18 +44,13 @@
 
   <Target Name="CleanAvaloniaOriginalBackups" BeforeTargets="BeforeBuild">
     <!-- Kill published / self-contained executable if running -->
-    <Exec Command="taskkill /F /IM H.Avalonia.exe 2&gt;nul"
-          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="taskkill /F /IM H.Avalonia.exe 2&gt;nul" ContinueOnError="true" IgnoreExitCode="true" />
     <!-- Delete stale original_*.dll / original_*.pdb backup files from obj\Avalonia\ -->
-    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original_*.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original_*.dll&quot;&quot;"
-          ContinueOnError="true" IgnoreExitCode="true"/>
-    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original_*.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original_*.pdb&quot;&quot;"
-          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original_*.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original_*.dll&quot;&quot;" ContinueOnError="true" IgnoreExitCode="true" />
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original_*.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original_*.pdb&quot;&quot;" ContinueOnError="true" IgnoreExitCode="true" />
     <!-- Also clean legacy 'original.dll' / 'original.pdb' from before this fix -->
-    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot;&quot;"
-          ContinueOnError="true" IgnoreExitCode="true"/>
-    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot;&quot;"
-          ContinueOnError="true" IgnoreExitCode="true"/>
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.dll&quot;&quot;" ContinueOnError="true" IgnoreExitCode="true" />
+    <Exec Command="cmd /c &quot;if exist &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot; del /F /Q &quot;$(IntermediateOutputPath)Avalonia\original.pdb&quot;&quot;" ContinueOnError="true" IgnoreExitCode="true" />
   </Target>
 
   <ItemGroup>
@@ -195,6 +190,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controls\" />
     <Folder Include="Models\DTO\FarmDTO\" />
     <Folder Include="ViewModels\ComponentViews\AnimalCommon\" />
   </ItemGroup>

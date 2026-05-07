@@ -51,6 +51,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Calf"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Calf].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Calf_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -99,6 +101,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Heifer"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Heifer].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Heifer_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -147,6 +151,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Lactating"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_LactatingCow].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Lactating_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -195,6 +201,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Dry"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_DryCow].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Dry_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -260,6 +268,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Culling"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Culling].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Culling_PointerPressed">
           <StackPanel>
@@ -293,6 +303,8 @@
                 Cursor="Hand"
                 Focusable="True"
                 Tag="Replacement"
+                AutomationProperties.ControlTypeOverride="Button"
+                AutomationProperties.Name="{Binding [Label_Replacement].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Replacement_PointerPressed">
           <StackPanel>
