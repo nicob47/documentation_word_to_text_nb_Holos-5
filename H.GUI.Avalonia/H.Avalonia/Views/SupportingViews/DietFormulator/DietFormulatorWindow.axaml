@@ -94,14 +94,15 @@
                               HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{Binding [Label_Name].Value, Source={StaticResource Loc}}"
-                                                Binding="{Binding IngredientType, Converter={StaticResource EnumDescriptionConverter}}"
-                                                Width="*"/>
-                            <DataGridTextColumn Header="{Binding [Label_CrudeProtein].Value, Source={StaticResource Loc}}"
+                                                Binding="{Binding IngredientTypeString}"
+                                                Width="*"
+                                                MinWidth="180"/>
+                            <DataGridTextColumn Header="CP %"
                                                 Binding="{Binding CrudeProtein, StringFormat='{}{0:F1}'}"
-                                                Width="Auto"/>
-                            <DataGridTextColumn Header="{Binding [Label_TotalDigestibleNutrient].Value, Source={StaticResource Loc}}"
+                                                Width="60"/>
+                            <DataGridTextColumn Header="TDN %"
                                                 Binding="{Binding TotalDigestibleNutrient, StringFormat='{}{0:F1}'}"
-                                                Width="Auto"/>
+                                                Width="60"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -137,25 +138,26 @@
                               HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{Binding [Label_Name].Value, Source={StaticResource Loc}}"
-                                                Binding="{Binding IngredientType, Converter={StaticResource EnumDescriptionConverter}}"
+                                                Binding="{Binding IngredientTypeString}"
                                                 IsReadOnly="True"
-                                                Width="*"/>
+                                                Width="*"
+                                                MinWidth="220"/>
                             <DataGridTextColumn Header="{Binding [Label_PercentageInDiet].Value, Source={StaticResource Loc}}"
                                                 Binding="{Binding PercentageInDiet, StringFormat='{}{0:F1}', Mode=TwoWay}"
                                                 IsReadOnly="False"
-                                                Width="Auto"/>
-                            <DataGridTextColumn Header="{Binding [Label_CrudeProtein].Value, Source={StaticResource Loc}}"
+                                                Width="80"/>
+                            <DataGridTextColumn Header="CP %"
                                                 Binding="{Binding CrudeProtein, StringFormat='{}{0:F1}'}"
                                                 IsReadOnly="True"
-                                                Width="Auto"/>
-                            <DataGridTextColumn Header="{Binding [Label_TotalDigestibleNutrient].Value, Source={StaticResource Loc}}"
+                                                Width="65"/>
+                            <DataGridTextColumn Header="TDN %"
                                                 Binding="{Binding TotalDigestibleNutrient, StringFormat='{}{0:F1}'}"
                                                 IsReadOnly="True"
-                                                Width="Auto"/>
-                            <DataGridTextColumn Header="{Binding [Label_Forage].Value, Source={StaticResource Loc}}"
+                                                Width="65"/>
+                            <DataGridTextColumn Header="Forage %"
                                                 Binding="{Binding Forage, StringFormat='{}{0:F1}'}"
                                                 IsReadOnly="True"
-                                                Width="Auto"/>
+                                                Width="75"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
