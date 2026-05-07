@@ -8,6 +8,7 @@ using H.Avalonia.Views.SupportingViews.DietFormulator;
 using H.Core.Enumerations;
 using H.Core.Providers.Feed;
 using H.Core.Services.DietService;
+using H.Core.Services.StorageService;
 
 namespace H.Avalonia.Services.DietFormulator;
 
@@ -20,21 +21,22 @@ public class DietFormulatorWindowService : IDietFormulatorWindowService
 {
     private readonly IDietService _dietService;
     private readonly IFeedIngredientProvider _feedIngredientProvider;
+    private readonly IStorageService _storageService;
 
     public DietFormulatorWindowService(
         IDietService dietService,
-        IFeedIngredientProvider feedIngredientProvider)
+        IFeedIngredientProvider feedIngredientProvider,
+        IStorageService storageService)
     {
         _dietService = dietService ?? throw new ArgumentNullException(nameof(dietService));
         _feedIngredientProvider = feedIngredientProvider ?? throw new ArgumentNullException(nameof(feedIngredientProvider));
+        _storageService = storageService ?? throw new ArgumentNullException(nameof(storageService));
     }
 
-    public async Task ShowAsync(AnimalType animalType)
+    public async Task<DietDto?> ShowAsync(AnimalType animalType)
     {
-        var window = new DietFormulatorWindow
-        {
-            DataContext = new DietFormulatorWindowViewModel(_dietService, _feedIngredientProvider, animalType),
-        };
+        var vm = new DietFormulatorWindowViewModel(_dietService, _feedIngredientProvider, _storageService, animalType);
+        var window = new DietFormulatorWindow { DataContext = vm };
 
         var owner = GetOwnerWindow();
         if (owner != null)
@@ -47,6 +49,9 @@ public class DietFormulatorWindowService : IDietFormulatorWindowService
             // Show as a non-modal window instead of throwing so headless tests don't fail.
             window.Show();
         }
+
+        // After the modal closes, the VM's SavedDiet holds the working diet (Save) or null (Cancel/X).
+        return vm.SavedDiet;
     }
 
     private static Window? GetOwnerWindow()

@@ -1588,6 +1588,26 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>(must equal 100%)</value>
     <comment>GUI - Diet Formulator: warning shown when ingredient percentages don't sum to 100</comment>
   </data>
+  <data name="Label_Origin" xml:space="preserve">
+    <value>Origin</value>
+    <comment>GUI - Diet Formulator: column header showing whether a diet is custom or default</comment>
+  </data>
+  <data name="Label_CustomDiet" xml:space="preserve">
+    <value>Custom</value>
+    <comment>GUI - Diet Formulator: badge shown for user-created custom diets</comment>
+  </data>
+  <data name="Label_SaveAsCustom" xml:space="preserve">
+    <value>Save As Custom…</value>
+    <comment>GUI - Diet Formulator: button to save the working diet as a new custom diet on the farm</comment>
+  </data>
+  <data name="Label_NewDietName" xml:space="preserve">
+    <value>New diet name:</value>
+    <comment>GUI - Diet Formulator: label next to the inline name prompt for Save As Custom</comment>
+  </data>
+  <data name="Label_NewDietNameWatermark" xml:space="preserve">
+    <value>Enter a name for your custom diet</value>
+    <comment>GUI - Diet Formulator: placeholder text in the Save As Custom name input</comment>
+  </data>
   <data name="Label_DryMatter" xml:space="preserve">
     <value>Dry matter</value>
     <comment>GUI (H.Core) - field/control label</comment>

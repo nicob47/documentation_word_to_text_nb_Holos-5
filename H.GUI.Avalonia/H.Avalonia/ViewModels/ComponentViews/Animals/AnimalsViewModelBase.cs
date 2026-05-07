@@ -406,8 +406,9 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
 
         /// <summary>
         /// Opens the Diet Formulator modal, scoped to the currently selected animal group's
-        /// animal type. The dialog service is responsible for resolving the parent window
-        /// and showing the modal asynchronously.
+        /// animal type. When the user clicks Save in the modal, applies the saved diet
+        /// to the currently selected management practice's flattened diet fields so the
+        /// Diet tab refreshes immediately. Cancel/close discards.
         /// </summary>
         private async void OnOpenDietFormulatorExecute()
         {
@@ -415,7 +416,24 @@ namespace H.Avalonia.ViewModels.ComponentViews.Animals
             {
                 return;
             }
-            await _dietFormulatorWindowService.ShowAsync(SelectedAnimalGroup.GroupType.Value);
+
+            var saved = await _dietFormulatorWindowService.ShowAsync(SelectedAnimalGroup.GroupType.Value);
+            if (saved == null || SelectedManagementPractice == null)
+            {
+                return;
+            }
+
+            // Apply the saved diet's flattened fields to the management period DTO.
+            // The Diet tab binds to these properties directly, so the UI updates as soon
+            // as we set them. Round-tripping back to the underlying ManagementPeriod model's
+            // SelectedDiet (full Diet object) happens via the existing reverse mapper at
+            // save-farm time.
+            SelectedManagementPractice.SelectedDietType = saved.DietType;
+            SelectedManagementPractice.CrudeProtein = saved.CrudeProtein;
+            SelectedManagementPractice.Forage = saved.Forage;
+            SelectedManagementPractice.TotalDigestibleNutrient = saved.TotalDigestibleNutrient;
+            SelectedManagementPractice.DailyDryMatterFeedIntakeOfFeed = saved.DailyDryMatterFeedIntakeOfFeed;
+            SelectedManagementPractice.MethaneConversionFactor = saved.MethaneConversionFactor;
         }
 
         /// <summary>
