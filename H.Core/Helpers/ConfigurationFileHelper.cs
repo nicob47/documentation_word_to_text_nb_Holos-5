@@ -47,28 +47,7 @@ namespace H.Core.Helpers
         /// <returns>A value from the <see cref="CountryVersion"/> indicating which system version is enabled</returns>
         public static CountryVersion GetCountryVersion()
         {
-            CountryVersion countryVersion = CountryVersion.Canada;
-            const string settingName = "CountryVersion";
-
-            try
-            {
-                ConfigurationManager.RefreshSection("appSettings");
-
-                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                if (config.AppSettings.Settings.AllKeys.Contains(settingName))
-                {
-                    var setting = config.AppSettings.Settings[settingName]?.Value;
-                    if (setting != null && setting.Equals("ireland", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        countryVersion = CountryVersion.Ireland;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            return countryVersion;
+            return CountryVersion.Canada;
         }
 
         /// <summary>

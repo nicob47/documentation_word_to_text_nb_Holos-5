@@ -14,7 +14,7 @@ namespace H.Avalonia
         /// </summary>
         public static string LogFileName = "HolosOutput.txt";
 
-        public static string DefaultTitleBarTitle = "HOLOS-IE";
+        public static string DefaultTitleBarTitle = "HOLOS";
 
         public static string VersionReleaseDateString
         {
