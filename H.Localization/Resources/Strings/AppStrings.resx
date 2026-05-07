@@ -3973,6 +3973,18 @@ Hassan Afzaal</value>
   <data name="Label_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="AutomationName_DeleteSelectedRows" xml:space="preserve">
+    <value>Delete selected rows</value>
+  </data>
+  <data name="AutomationName_DeleteRow" xml:space="preserve">
+    <value>Delete row</value>
+  </data>
+  <data name="AutomationName_CanadaLogo" xml:space="preserve">
+    <value>Government of Canada – Agriculture and Agri-Food Canada logo</value>
+  </data>
+  <data name="AutomationName_HolosLogo" xml:space="preserve">
+    <value>HOLOS application logo</value>
+  </data>
   <data name="Label_FarmSettings" xml:space="preserve">
     <value>Farm Settings</value>
   </data>

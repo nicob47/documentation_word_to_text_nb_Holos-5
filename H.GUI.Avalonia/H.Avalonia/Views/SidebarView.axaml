@@ -27,7 +27,8 @@
         <Image Grid.Row="0"
                Width="120"
                Source="/Assets/Images/holoslogo.png"
-               RenderOptions.BitmapInterpolationMode="HighQuality">
+               RenderOptions.BitmapInterpolationMode="HighQuality"
+               AutomationProperties.Name="{Binding [AutomationName_HolosLogo].Value, Source={StaticResource Loc}}">
         </Image>
 
         <Label Padding="15"
@@ -54,7 +55,8 @@
                     <Image Source="/Assets/Images/Icons/climate-icon.png" 
                            Width="15" 
                            Height="15"
-                           RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                           RenderOptions.BitmapInterpolationMode="HighQuality"
+                           AutomationProperties.AccessibilityView="Raw"/>
                     <TextBlock Text="{Binding [Label_ClimateData].Value, Source={StaticResource Loc}}"
                                Padding="10, 0, 0, 5"/>
                 </StackPanel>
@@ -74,7 +76,8 @@
                            Width="15"
                            Height="15"
                            HorizontalAlignment="Left"
-                           RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                           RenderOptions.BitmapInterpolationMode="HighQuality"
+                           AutomationProperties.AccessibilityView="Raw"/>
                     <TextBlock Text="{Binding [Label_SoilData].Value, Source={StaticResource Loc}}"
                                Padding="10, 0, 0, 0"
                                HorizontalAlignment="Right"/>
@@ -98,7 +101,8 @@
                      Width="15"
                      Height="15"
                      HorizontalAlignment="Left"
-                     RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                     RenderOptions.BitmapInterpolationMode="HighQuality"
+                     AutomationProperties.AccessibilityView="Raw"/>
               <TextBlock Text="{Binding [Label_About].Value, Source={StaticResource Loc}}"
                          Padding="10, 0, 0, 0"
                          HorizontalAlignment="Right"/>

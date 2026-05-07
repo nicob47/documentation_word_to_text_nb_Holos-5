@@ -22,6 +22,7 @@
 			</DrawingImage.Drawing>
 		</DrawingImage>
 	</UserControl.Resources>
-    <Image Name="DynamicImage" Width="70" 
-           HorizontalAlignment="Right"/>
+	<Image Name="DynamicImage" Width="70" 
+		   HorizontalAlignment="Right"
+		   AutomationProperties.Name="{Binding [AutomationName_CanadaLogo].Value, Source={StaticResource Loc}}"/>
 </UserControl>

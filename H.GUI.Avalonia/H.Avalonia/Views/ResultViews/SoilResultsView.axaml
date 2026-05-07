@@ -68,7 +68,8 @@
                     <Image Source="/Assets/Images/Icons/climate-icon.png" 
                            Width="15" 
                            Height="15"
-                           RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                           RenderOptions.BitmapInterpolationMode="HighQuality"
+                           AutomationProperties.AccessibilityView="Raw"/>
                     <TextBlock Text="{Binding [Label_ClimateData].Value, Source={StaticResource Loc}}"
                                Padding="10, 0, 0, 5"/>
                 </StackPanel>

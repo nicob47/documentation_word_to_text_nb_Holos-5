@@ -2984,7 +2984,19 @@ Hassan Afzaal</value>
     <value>Exporter le fumier</value>
   </data>
   <data name="Label_Settings" xml:space="preserve">
-    <value>ParamÃ¨tres</value>
+    <value>Paramètres</value>
+  </data>
+  <data name="AutomationName_DeleteSelectedRows" xml:space="preserve">
+    <value>Supprimer les lignes sélectionnées</value>
+  </data>
+  <data name="AutomationName_DeleteRow" xml:space="preserve">
+    <value>Supprimer la ligne</value>
+  </data>
+  <data name="AutomationName_CanadaLogo" xml:space="preserve">
+    <value>Logo du gouvernement du Canada – Agriculture et Agroalimentaire Canada</value>
+  </data>
+  <data name="AutomationName_HolosLogo" xml:space="preserve">
+    <value>Logo de l'application HOLOS</value>
   </data>
   <data name="Label_FarmSettings" xml:space="preserve">
     <value>ParamÃ¨tres de la ferme</value>

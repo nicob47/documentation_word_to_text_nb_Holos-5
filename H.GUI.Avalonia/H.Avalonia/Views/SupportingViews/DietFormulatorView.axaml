@@ -37,7 +37,8 @@
                        Height="20" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Left" 
-                       Margin="10,0"/>
+                       Margin="10,0"
+                       AutomationProperties.AccessibilityView="Raw"/>
             </Grid>
         </StackPanel>
 

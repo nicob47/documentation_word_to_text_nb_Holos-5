@@ -44,7 +44,8 @@
                     Orientation="Horizontal">
             <Button Classes="multiple-row-delete-button row-delete-button--pointerOver"
                     Margin="20, 0,0,0"
-                    Command="{Binding DeleteSelectedRowsCommand}">
+                    Command="{Binding DeleteSelectedRowsCommand}"
+                    AutomationProperties.Name="{Binding [AutomationName_DeleteSelectedRows].Value, Source={StaticResource Loc}}">
                 <PathIcon Name="DeleteALlIcon"
                           Data="{DynamicResource delete_forever_regular}"/>
             </Button>
@@ -158,7 +159,8 @@
                             -->
                             <Button Classes="row-delete-button--pointerOver row-delete-button"
                                     Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
-                                    CommandParameter="{Binding}">
+                                    CommandParameter="{Binding}"
+                                    AutomationProperties.Name="{Binding [AutomationName_DeleteRow].Value, Source={StaticResource Loc}}">
                                 <PathIcon Data="{DynamicResource delete_forever_regular}"/>
                             </Button>
                             

@@ -38,7 +38,7 @@
 					<StackPanel Spacing="6">
 						<Grid HorizontalAlignment="Stretch">
 							<TextBlock Classes="title-textblock" Text="{Binding [Heading_MyComponents].Value, Source={StaticResource Loc}}" HorizontalAlignment="Left"/>
-							<Button HorizontalAlignment="Right" Padding="5" Margin="10,0" Background="Transparent" Classes="back-button" CornerRadius="50" Command="{Binding Path=OnOptionsExecute}">
+							<Button HorizontalAlignment="Right" Padding="5" Margin="10,0" Background="Transparent" Classes="back-button" CornerRadius="50" Command="{Binding Path=OnOptionsExecute}" AutomationProperties.Name="{Binding [Label_Settings].Value, Source={StaticResource Loc}}">
 								<Image Source="avares://H.Avalonia/Assets/Images/Icons/Gear-icon.png" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							</Button>
 						</Grid>
