@@ -296,7 +296,7 @@ protected override void RegisterTypes(IContainerRegistry containerRegistry)
 /// Equation 3.2.1-2
 /// Equation 3.3.1-3
 /// </summary>
-/// <param name="maintenanceCoefficient">Maintenance coefficient – adjusted for temperature (MJ day^-1 kg?¹)</param>
+/// <param name="maintenanceCoefficient">Maintenance coefficient ï¿½ adjusted for temperature (MJ day^-1 kg?ï¿½)</param>
 /// <param name="weight">Average weight (kg head^-1)</param>
 /// <returns>Net energy for maintenance (MJ head^-1 day^-1)</returns>
 public double CalculateNetEnergyForMaintenance(double maintenanceCoefficient, double weight)
@@ -319,7 +319,7 @@ containerRegistry.RegisterSingleton<IStorage, H.Core.Storage>();
 // Good - Explains non-obvious behavior
 if (temperature > 20)
 {
-    temperature = 20; // Upper limit = 20, temperatures above 20°C use 20°C
+    temperature = 20; // Upper limit = 20, temperatures above 20ï¿½C use 20ï¿½C
 }
 
 // Avoid - States the obvious
@@ -601,6 +601,72 @@ public class ExampleData : ModelBase
     #endregion
 }
 ```
+
+### Avalonia XAML Binding Pitfalls
+
+**Never combine `StringFormat` with a two-way / editable binding.** Avalonia
+throws `System.NotSupportedException: 'Two way bindings are not supported with
+a string format'` at runtime the first time the user commits an edit, because
+`StringFormat` is one-way (value â†’ display string) and there's no general way
+to parse the formatted text back to the source type.
+
+This affects:
+- `<TextBox Text="{Binding X, StringFormat=...}">` â€” `Text` is two-way by default
+- `<NumericUpDown Value="{Binding X, StringFormat=...}">` â€” `Value` is two-way by default
+- `<DataGridTextColumn Binding="{Binding X, StringFormat=...}">` whenever the column is editable (i.e., the parent `<DataGrid>` is not `IsReadOnly="True"` and the column itself is not `IsReadOnly="True"`)
+- Any binding with explicit `Mode=TwoWay` plus `StringFormat`
+
+```xml
+<!-- WRONG: crashes when the user finishes editing the cell -->
+<DataGridTextColumn Header="% in Diet"
+                    Binding="{Binding PercentageInDiet, StringFormat='{}{0:F1}', Mode=TwoWay}"
+                    IsReadOnly="False"/>
+
+<!-- WRONG: crashes when the user types into the TextBox -->
+<TextBox Text="{Binding Quantity, StringFormat='{}{0:F2}'}"/>
+```
+
+**Safe alternatives:**
+
+1. **For numeric editing, use `<NumericUpDown FormatString="...">`** â€” Avalonia's
+   `FormatString` attribute is a separate mechanism that survives editing because
+   the control parses input as numbers, then re-formats for display. This is the
+   idiomatic v5 pattern (see `AnimalsStep2View.axaml`, `ClimateDataView.axaml`).
+
+   ```xml
+   <NumericUpDown Value="{Binding Quantity}" FormatString="0.00"/>
+   ```
+
+2. **For non-editable display, use a `<TextBlock>`** â€” TextBlock is read-only by
+   nature, so `StringFormat` is always safe.
+
+   ```xml
+   <TextBlock Text="{Binding CrudeProtein, StringFormat='Crude Protein: {0:F1}%'}"/>
+   ```
+
+3. **For DataGrid display columns, mark them read-only and `StringFormat` is fine.**
+   Either set `IsReadOnly="True"` at the `DataGrid` level (covers all columns) or
+   on the individual `DataGridTextColumn`.
+
+   ```xml
+   <DataGrid IsReadOnly="True">
+       <DataGridTextColumn Binding="{Binding TDN, StringFormat='{}{0:F1}'}"/>
+   </DataGrid>
+   ```
+
+4. **For an editable cell that needs formatted display, drop `StringFormat`** and
+   accept the raw value while editing. Computed/summary panels elsewhere can show
+   the formatted version.
+
+   ```xml
+   <!-- RIGHT: editable, no formatting on the cell itself -->
+   <DataGridTextColumn Binding="{Binding PercentageInDiet, Mode=TwoWay}"
+                       IsReadOnly="False"/>
+   ```
+
+5. **If you genuinely need formatted-while-editing**, write an `IValueConverter`
+   that handles both directions (formats on `Convert`, parses on `ConvertBack`)
+   and use it instead of `StringFormat`.
 
 ---
 
