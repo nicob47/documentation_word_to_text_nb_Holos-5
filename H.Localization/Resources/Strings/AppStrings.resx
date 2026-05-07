@@ -1588,6 +1588,58 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>(must equal 100%)</value>
     <comment>GUI - Diet Formulator: warning shown when ingredient percentages don't sum to 100</comment>
   </data>
+  <data name="Label_Origin" xml:space="preserve">
+    <value>Origin</value>
+    <comment>GUI - Diet Formulator: column header showing whether a diet is custom or default</comment>
+  </data>
+  <data name="Label_CustomDiet" xml:space="preserve">
+    <value>Custom</value>
+    <comment>GUI - Diet Formulator: badge shown for user-created custom diets</comment>
+  </data>
+  <data name="Label_SaveAsCustom" xml:space="preserve">
+    <value>Save As Custom…</value>
+    <comment>GUI - Diet Formulator: button to save the working diet as a new custom diet on the farm</comment>
+  </data>
+  <data name="Label_NewDietName" xml:space="preserve">
+    <value>New diet name:</value>
+    <comment>GUI - Diet Formulator: label next to the inline name prompt for Save As Custom</comment>
+  </data>
+  <data name="Label_NewDietNameWatermark" xml:space="preserve">
+    <value>Enter a name for your custom diet</value>
+    <comment>GUI - Diet Formulator: placeholder text in the Save As Custom name input</comment>
+  </data>
+  <data name="Label_DietFormulatorStep1" xml:space="preserve">
+    <value>Step 1:</value>
+    <comment>GUI - Diet Formulator: step header above the diets list</comment>
+  </data>
+  <data name="Label_DietFormulatorStep1Description" xml:space="preserve">
+    <value>Pick an existing diet to edit, or click "Save As Custom…" below to start a new custom diet.</value>
+    <comment>GUI - Diet Formulator: instructional text for step 1</comment>
+  </data>
+  <data name="Label_DietFormulatorStep2" xml:space="preserve">
+    <value>Step 2:</value>
+    <comment>GUI - Diet Formulator: step header above the available ingredients</comment>
+  </data>
+  <data name="Label_DietFormulatorStep2Description" xml:space="preserve">
+    <value>Add ingredients to your diet by selecting one and clicking "+ Add to Diet".</value>
+    <comment>GUI - Diet Formulator: instructional text for step 2</comment>
+  </data>
+  <data name="Label_DietFormulatorStep3" xml:space="preserve">
+    <value>Step 3:</value>
+    <comment>GUI - Diet Formulator: step header above the selected diet ingredients</comment>
+  </data>
+  <data name="Label_DietFormulatorStep3GuidanceUnder" xml:space="preserve">
+    <value>Adjust the "% in Diet" values so the total of all ingredients equals 100%.</value>
+    <comment>GUI - Diet Formulator: step 3 guidance shown when ingredient percentages sum to less than 100</comment>
+  </data>
+  <data name="Label_DietFormulatorStep3GuidanceOver" xml:space="preserve">
+    <value>Total percentage exceeds 100% — lower the values so the total equals 100%.</value>
+    <comment>GUI - Diet Formulator: step 3 guidance shown when ingredient percentages sum to more than 100</comment>
+  </data>
+  <data name="Label_DietFormulatorStep3GuidanceComplete" xml:space="preserve">
+    <value>Diet is complete.</value>
+    <comment>GUI - Diet Formulator: step 3 guidance shown when ingredient percentages sum to exactly 100</comment>
+  </data>
   <data name="Label_DryMatter" xml:space="preserve">
     <value>Dry matter</value>
     <comment>GUI (H.Core) - field/control label</comment>
