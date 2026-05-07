@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         d:DesignWidth="1400" d:DesignHeight="820"
         Width="1400" Height="820"
-        MinWidth="1100" MinHeight="600"
+        MinWidth="950" MinHeight="550"
         CanResize="True"
         Title="{Binding [Label_DietFormulator].Value, Source={StaticResource Loc}}"
         WindowStartupLocation="CenterOwner"
