@@ -657,6 +657,18 @@ public class FieldComponentViewModel : ViewModelBase
             {
                 _logger?.LogError(ex, "Failed to transfer cover crop DTO to system");
             }
+
+            // Refresh the Step 3 preview so the cover-crop indicator on each year card
+            // reflects the new cover crop type. Each cell's CropDto is a CLONE of the
+            // source crop (built by CreateDtoFromDtoTemplate in GenerateFieldPreview),
+            // so reference-equality matching against the source's CoverCropDto won't
+            // work for in-place updates. Cover-crop type changes are infrequent user
+            // interactions, so a full preview rebuild is acceptable.
+            if (e.PropertyName == nameof(ICropDto.CropType)
+                || e.PropertyName == nameof(ICropDto.SelectedCropTypeItem))
+            {
+                GenerateFieldPreview();
+            }
         }
     }
 
