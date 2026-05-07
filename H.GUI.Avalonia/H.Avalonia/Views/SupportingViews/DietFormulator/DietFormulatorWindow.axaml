@@ -148,8 +148,16 @@
                                                 IsReadOnly="True"
                                                 Width="*"
                                                 MinWidth="220"/>
+                            <!--
+                                StringFormat is not used here: Avalonia does not support
+                                StringFormat on two-way bindings because the formatted text
+                                cannot be reliably parsed back to a double on commit.
+                                The cell shows the raw double value while editing; the live
+                                "Diet Totals" panel below the grid still displays formatted
+                                percentages so users see neat values in the summary.
+                            -->
                             <DataGridTextColumn Header="% in Diet"
-                                                Binding="{Binding PercentageInDiet, StringFormat='{}{0:F1}', Mode=TwoWay}"
+                                                Binding="{Binding PercentageInDiet, Mode=TwoWay}"
                                                 IsReadOnly="False"
                                                 Width="Auto"
                                                 MinWidth="100"/>
