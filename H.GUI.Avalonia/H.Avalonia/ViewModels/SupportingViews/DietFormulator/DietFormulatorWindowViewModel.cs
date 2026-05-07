@@ -201,6 +201,25 @@ public class DietFormulatorWindowViewModel : ViewModelBase
     public double PercentageSum => SelectedDietIngredients.Sum(x => x.PercentageInDiet);
     public bool IsPercentageSumValid => Math.Abs(PercentageSum - 100.0) < 0.01;
 
+    /// <summary>
+    /// Dynamic guidance shown beside the "Step 3" header above the right pane.
+    /// Mirrors v4's behaviour: prompts the user to bring the percentage sum to 100,
+    /// flags when it's over 100, and confirms when the diet is complete. Refreshed
+    /// from <see cref="RaiseTotalsChanged"/> whenever percentages change.
+    /// </summary>
+    public string Step3Guidance
+    {
+        get
+        {
+            var sum = PercentageSum;
+            if (Math.Abs(sum - 100.0) < 0.01)
+                return H.Localization.LocalizationService.Instance["Label_DietFormulatorStep3GuidanceComplete"];
+            if (sum > 100.0)
+                return H.Localization.LocalizationService.Instance["Label_DietFormulatorStep3GuidanceOver"];
+            return H.Localization.LocalizationService.Instance["Label_DietFormulatorStep3GuidanceUnder"];
+        }
+    }
+
     #endregion
 
     private void Load()
@@ -434,6 +453,7 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         RaisePropertyChanged(nameof(TotalME));
         RaisePropertyChanged(nameof(PercentageSum));
         RaisePropertyChanged(nameof(IsPercentageSumValid));
+        RaisePropertyChanged(nameof(Step3Guidance));
     }
 
     private static bool DietBelongsToAnimalType(AnimalType dietAnimalType, AnimalType scope)
