@@ -39,15 +39,19 @@
                 <Grid RowDefinitions="Auto,Auto,*">
                     <TextBlock Grid.Row="0" Text="{Binding [Label_Diets].Value, Source={StaticResource Loc}}"
                                FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}" Padding="10,8,10,2"/>
-                    <!-- Step 1 guidance -->
-                    <TextBlock Grid.Row="1" Padding="10,0,10,8" TextWrapping="Wrap">
-                        <Run FontWeight="Bold"
-                             Text="{Binding [Label_DietFormulatorStep1].Value, Source={StaticResource Loc}}"
-                             FontSize="{StaticResource GcdsFontSizeSmall}"/>
-                        <Run Text="{Binding [Label_DietFormulatorStep1Description].Value, Source={StaticResource Loc}}"
-                             FontSize="{StaticResource GcdsFontSizeSmall}"
-                             Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                    </TextBlock>
+                    <!-- Step 1 guidance: pill badge + description (matches AnimalsStep3View pattern) -->
+                    <Grid Grid.Row="1" Margin="10,0,10,8" ColumnDefinitions="Auto,*">
+                        <Border Grid.Column="0" Classes="step-badge" VerticalAlignment="Top" Margin="0,2,8,0">
+                            <TextBlock Text="{Binding [Label_DietFormulatorStep1].Value, Source={StaticResource Loc}}"
+                                       Classes="step-badge-text"/>
+                        </Border>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding [Label_DietFormulatorStep1Description].Value, Source={StaticResource Loc}}"
+                                   FontSize="{StaticResource GcdsFontSizeSmall}"
+                                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
                     <DataGrid Grid.Row="2"
                               ItemsSource="{Binding MyDiets}"
                               SelectedItem="{Binding SelectedDiet}"
@@ -89,15 +93,19 @@
                 <Grid RowDefinitions="Auto,Auto,Auto,*">
                     <TextBlock Grid.Row="0" Text="{Binding [Label_AvailableIngredients].Value, Source={StaticResource Loc}}"
                                FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}" Padding="10,8,10,2"/>
-                    <!-- Step 2 guidance -->
-                    <TextBlock Grid.Row="1" Padding="10,0,10,6" TextWrapping="Wrap">
-                        <Run FontWeight="Bold"
-                             Text="{Binding [Label_DietFormulatorStep2].Value, Source={StaticResource Loc}}"
-                             FontSize="{StaticResource GcdsFontSizeSmall}"/>
-                        <Run Text="{Binding [Label_DietFormulatorStep2Description].Value, Source={StaticResource Loc}}"
-                             FontSize="{StaticResource GcdsFontSizeSmall}"
-                             Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                    </TextBlock>
+                    <!-- Step 2 guidance: pill badge + description -->
+                    <Grid Grid.Row="1" Margin="10,0,10,6" ColumnDefinitions="Auto,*">
+                        <Border Grid.Column="0" Classes="step-badge" VerticalAlignment="Top" Margin="0,2,8,0">
+                            <TextBlock Text="{Binding [Label_DietFormulatorStep2].Value, Source={StaticResource Loc}}"
+                                       Classes="step-badge-text"/>
+                        </Border>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding [Label_DietFormulatorStep2Description].Value, Source={StaticResource Loc}}"
+                                   FontSize="{StaticResource GcdsFontSizeSmall}"
+                                   Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
                     <!-- Toolbar: Add to selected diet -->
                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,0,10,8" Spacing="8">
                         <Button Content="{Binding [Label_AddIngredientToDiet].Value, Source={StaticResource Loc}}"
@@ -143,15 +151,19 @@
                         <TextBlock Text="{Binding WorkingDietName}"
                                    FontSize="{StaticResource GcdsFontSizeSmall}"
                                    Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                        <!-- Step 3 dynamic guidance -->
-                        <TextBlock Margin="0,4,0,0" TextWrapping="Wrap">
-                            <Run FontWeight="Bold"
-                                 Text="{Binding [Label_DietFormulatorStep3].Value, Source={StaticResource Loc}}"
-                                 FontSize="{StaticResource GcdsFontSizeSmall}"/>
-                            <Run Text="{Binding Step3Guidance}"
-                                 FontSize="{StaticResource GcdsFontSizeSmall}"
-                                 Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
-                        </TextBlock>
+                        <!-- Step 3 dynamic guidance: pill badge + description -->
+                        <Grid Margin="0,6,0,0" ColumnDefinitions="Auto,*">
+                            <Border Grid.Column="0" Classes="step-badge" VerticalAlignment="Top" Margin="0,2,8,0">
+                                <TextBlock Text="{Binding [Label_DietFormulatorStep3].Value, Source={StaticResource Loc}}"
+                                           Classes="step-badge-text"/>
+                            </Border>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding Step3Guidance}"
+                                       FontSize="{StaticResource GcdsFontSizeSmall}"
+                                       Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
                     </StackPanel>
                     <!-- Toolbar: Remove from diet -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,8" Spacing="8">
