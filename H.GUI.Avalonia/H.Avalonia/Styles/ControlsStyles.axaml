@@ -576,6 +576,66 @@
 		<Setter Property="BorderBrush" Value="{StaticResource GcdsBorderDefaultBrush}"/>
 	</Style>
 
+	<!-- ══════════════════════════════════════════════════════════════════
+		 WCAG 2.4.7 — Focus Visible
+		 All interactive controls must show a clear focus indicator when
+		 reached by keyboard. We use GcdsFocusBrush (#1354ec) with a 2 px
+		 solid outline offset by 2 px, matching the GC Design System spec.
+		 ══════════════════════════════════════════════════════════════════ -->
+
+	<!-- Button: replace the default dotted focus rect with a solid blue outline -->
+	<Style Selector="Button:focus-visible /template/ ContentPresenter">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+	<Style Selector="Button:focus-visible">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
+	<!-- TextBox: blue border on keyboard focus -->
+	<Style Selector="TextBox:focus-within">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
+	<!-- ComboBox: blue border on keyboard focus -->
+	<Style Selector="ComboBox:focus-within">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
+	<!-- CheckBox / RadioButton: blue focus outline around the whole control -->
+	<Style Selector="CheckBox:focus-visible">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+	<Style Selector="RadioButton:focus-visible">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
+	<!-- ToggleSwitch: blue focus outline -->
+	<Style Selector="ToggleSwitch:focus-visible">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
+	<!-- Lifecycle stage cards (Border with Focusable="True"):
+		 rendered as a 2 px solid blue outline using a box-shadow equivalent.
+		 Avalonia does not support CSS outline on Border, so we swap the
+		 BorderBrush and BorderThickness via :focus-visible. -->
+	<Style Selector="Border:focus-visible">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
+	<!-- DataGrid selected-cell focus outline -->
+	<Style Selector="DataGridCell:focus">
+		<Setter Property="BorderBrush" Value="{StaticResource GcdsFocusBrush}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+	</Style>
+
 	<!-- ── Calendar / CalendarDatePicker Overrides ────────────────────── -->
 	<!-- The global Button style sets Background to dark navy and Foreground
 	     to White, which makes the Calendar header unreadable. These overrides
