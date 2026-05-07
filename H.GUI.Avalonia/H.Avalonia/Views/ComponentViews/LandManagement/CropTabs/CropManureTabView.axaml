@@ -25,7 +25,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ManureApplied].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ToggleSwitch Grid.Column="1" IsChecked="{Binding ManureApplied}"
+                <ToggleSwitch AutomationProperties.Name="{Binding [Label_ManureApplied].Value, Source={StaticResource Loc}}" Grid.Column="1" IsChecked="{Binding ManureApplied}"
                               OnContent="{Binding [Label_Yes].Value, Source={StaticResource Loc}}"
                               OffContent="{Binding [Label_No].Value, Source={StaticResource Loc}}"/>
             </Grid>
@@ -38,7 +38,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_AmountOfManureApplied].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_AmountOfManureApplied].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding AmountOfManureApplied}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -50,7 +50,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ManureLocationSource].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_ManureLocationSource].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.ManureLocationSourceTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding ManureLocationSourceType}"
                           HorizontalAlignment="Stretch">
@@ -69,7 +69,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ManureAnimalSource].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_ManureAnimalSource].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.ManureAnimalSourceTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding ManureAnimalSourceType}"
                           HorizontalAlignment="Stretch">
@@ -88,7 +88,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ManureApplicationType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_ManureApplicationType].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.ManureApplicationTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding ManureApplicationType}"
                           HorizontalAlignment="Stretch">
@@ -107,7 +107,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ManureStateType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_ManureStateType].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.ManureStateTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding ManureStateType}"
                           HorizontalAlignment="Stretch">

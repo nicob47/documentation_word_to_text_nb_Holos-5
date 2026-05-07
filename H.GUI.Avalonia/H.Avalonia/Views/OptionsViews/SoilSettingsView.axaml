@@ -17,38 +17,38 @@
 	  <ScrollViewer Grid.Row="1">
 		  <StackPanel Margin="20" Spacing="10" Width="350" VerticalAlignment="Center" HorizontalAlignment="Center">
 			  <TextBlock Text="{Binding [Label_Ecodistrict].Value, Source={StaticResource Loc}}"/>
-			  <TextBox IsReadOnly="True" IsEnabled="False" Text="{Binding Data.BindingSoilData.EcodistrictName, Mode=TwoWay}"  />
+			  <TextBox AutomationProperties.Name="{Binding [Label_Ecodistrict].Value, Source={StaticResource Loc}}" IsReadOnly="True" IsEnabled="False" Text="{Binding Data.BindingSoilData.EcodistrictName, Mode=TwoWay}"  />
 			  <TextBlock Text="{Binding [Label_SoilFunctionalCategory].Value, Source={StaticResource Loc}}"/>
-			  <TextBox IsReadOnly="True" IsEnabled="False" TextChanged="" Text="{Binding Data.BindingSoilData.SoilFunctionalCategoryString, Mode=TwoWay}"  />
+			  <TextBox AutomationProperties.Name="{Binding [Label_SoilFunctionalCategory].Value, Source={StaticResource Loc}}" IsReadOnly="True" IsEnabled="False" TextChanged="" Text="{Binding Data.BindingSoilData.SoilFunctionalCategoryString, Mode=TwoWay}"  />
 			  <TextBlock Text="{Binding [Label_SoilGreatGroup].Value, Source={StaticResource Loc}}"/>
-			  <TextBox IsReadOnly="True" IsEnabled="False" TextChanged="" Text="{Binding Data.BindingSoilData.SoilGreatGroupString, Mode=TwoWay}"  />
+			  <TextBox AutomationProperties.Name="{Binding [Label_SoilGreatGroup].Value, Source={StaticResource Loc}}" IsReadOnly="True" IsEnabled="False" TextChanged="" Text="{Binding Data.BindingSoilData.SoilGreatGroupString, Mode=TwoWay}"  />
 			  <TextBlock Text="{Binding [Label_SoilTexture].Value, Source={StaticResource Loc}}"/>
-			  <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Data.SoilTextures}"  SelectedItem="{Binding Data.BindingSoilData.SoilTexture}" /> <!--SelectedItem="{Binding ActiveFarm.DefaultSoilData.SoilTexture, Mode=TwoWay}"-->
+			  <ComboBox AutomationProperties.Name="{Binding [Label_SoilTexture].Value, Source={StaticResource Loc}}" HorizontalAlignment="Stretch" ItemsSource="{Binding Data.SoilTextures}"  SelectedItem="{Binding Data.BindingSoilData.SoilTexture}" /> <!--SelectedItem="{Binding ActiveFarm.DefaultSoilData.SoilTexture, Mode=TwoWay}"-->
 			  <TextBlock Text="{Binding [Label_TopLayerThickness].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
 				  <Run Text="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"></Run>
 			  </TextBlock>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.TopLayerThickness, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_BulkDensity].Value, Source={StaticResource Loc}}"/>
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.BulkDensity, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_BulkDensity].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.BulkDensity, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_ProportionOfClayInSoil].Value, Source={StaticResource Loc}}"/>
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfClayInSoil, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_ProportionOfClayInSoil].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfClayInSoil, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_ProportionOfSandInSoil].Value, Source={StaticResource Loc}}"/>
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSandInSoil, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_ProportionOfSandInSoil].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSandInSoil, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_PercentageOfSoilOrganicCarbon].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
 				  <Run Text="{Binding [Label_UnitPercentage].Value, Source={StaticResource Loc}}"></Run>
 				  </TextBlock>
 			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSoilOrganicCarbon, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}"/>
-			  <NumericUpDown FormatString="{}{0:0.0}" Value="{Binding Data.SoilPh, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.0}" Value="{Binding Data.SoilPh, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_SoilCEC].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
 				  <Run Text="{Binding [Label_UnitMiliEquivalentsPer100g].Value, Source={StaticResource Loc}}"></Run>
 				  </TextBlock>
 			  <NumericUpDown FormatString="{}{0:0}" Value="{Binding Data.SoilCec, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_CarbonModellingEquilibrium].Value, Source={StaticResource Loc}}"/>
-			  <NumericUpDown FormatString="{}{0:0}" Value="{Binding Data.CarbonModellingEquilibriumYear, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_CarbonModellingEquilibrium].Value, Source={StaticResource Loc}}" FormatString="{}{0:0}" Value="{Binding Data.CarbonModellingEquilibriumYear, Mode=TwoWay}" />
 		  </StackPanel>
 	  </ScrollViewer>
 

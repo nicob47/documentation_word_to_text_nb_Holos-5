@@ -66,7 +66,7 @@
                                        TextWrapping="Wrap"
                                        Margin="0,5,0,10"
                                        FontSize="14"/>
-						    <ComboBox ItemsSource="{Binding Provinces}"
+						    <ComboBox AutomationProperties.Name="{Binding [Text_SoilDataViewStepOneDesc].Value, Source={StaticResource Loc}}" ItemsSource="{Binding Provinces}"
                                       SelectedItem="{Binding SelectedProvince, Mode=TwoWay}">
 							    <ComboBox.ItemTemplate>
 								    <DataTemplate>

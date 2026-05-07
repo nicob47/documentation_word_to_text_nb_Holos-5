@@ -21,7 +21,7 @@
                     Background="{StaticResource GcdsBgLightBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    <ToggleSwitch IsChecked="{Binding IsFertilizerActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Tab_Fertilizer].Value, Source={StaticResource Loc}}" IsChecked="{Binding IsFertilizerActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
@@ -32,7 +32,7 @@
                     Background="{StaticResource GcdsBgLightBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    <ToggleSwitch IsChecked="{Binding IsManureActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Tab_Manure].Value, Source={StaticResource Loc}}" IsChecked="{Binding IsManureActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
@@ -43,7 +43,7 @@
                     Background="{StaticResource GcdsBgLightBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    <ToggleSwitch IsChecked="{Binding IsGrazingActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Tab_Grazing].Value, Source={StaticResource Loc}}" IsChecked="{Binding IsGrazingActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
@@ -54,7 +54,7 @@
                     Background="{StaticResource GcdsBgLightBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    <ToggleSwitch IsChecked="{Binding IsSoilActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Tab_Soil].Value, Source={StaticResource Loc}}" IsChecked="{Binding IsSoilActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
@@ -65,7 +65,7 @@
                     Background="{StaticResource GcdsBgLightBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    <ToggleSwitch IsChecked="{Binding IsResidueActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Tab_Residue].Value, Source={StaticResource Loc}}" IsChecked="{Binding IsResidueActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 
@@ -76,7 +76,7 @@
                     Background="{StaticResource GcdsBgLightBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                    <ToggleSwitch IsChecked="{Binding IsEconomicsActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Tab_Economics].Value, Source={StaticResource Loc}}" IsChecked="{Binding IsEconomicsActive, ElementName=ChecklistRoot}" Margin="0" Padding="0" OnContent="" OffContent=""/>
                 </StackPanel>
             </Border>
 

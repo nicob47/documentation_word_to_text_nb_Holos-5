@@ -363,7 +363,7 @@
               <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongCalvesRemain].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
-              <NumericUpDown Grid.Column="1"
+              <NumericUpDown AutomationProperties.Name="{Binding [Label_HowLongCalvesRemain].Value, Source={StaticResource Loc}}" Grid.Column="1"
                              Value="{Binding SelectedDairyComponentDto.CalfStageDurationDays}"
                              Minimum="30" Maximum="365"
                              FormatString="0" Increment="5"
@@ -385,7 +385,7 @@
                   <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyCalvesInHerd].Value, Source={StaticResource Loc}}"
                              Classes="input-label-text"
                              Margin="0,0,8,0"/>
-                  <NumericUpDown Grid.Column="1"
+                  <NumericUpDown AutomationProperties.Name="{Binding [Label_HowManyCalvesInHerd].Value, Source={StaticResource Loc}}" Grid.Column="1"
                                  Value="{Binding SelectedDairyComponentDto.SteadyStateCalves}"
                                  Minimum="0" Maximum="10000"
                                  FormatString="0" Increment="1"
@@ -497,7 +497,7 @@
               <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongHeifersRemain].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
-              <NumericUpDown Grid.Column="1"
+              <NumericUpDown AutomationProperties.Name="{Binding [Label_HowLongHeifersRemain].Value, Source={StaticResource Loc}}" Grid.Column="1"
                              Value="{Binding SelectedDairyComponentDto.HeiferStageDurationDays}"
                              Minimum="365" Maximum="1095"
                              FormatString="0" Increment="10"
@@ -518,7 +518,7 @@
                 <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyHeifersInHerd].Value, Source={StaticResource Loc}}"
                            Classes="input-label-text"
                            Margin="0,0,8,0"/>
-                <NumericUpDown Grid.Column="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_HowManyHeifersInHerd].Value, Source={StaticResource Loc}}" Grid.Column="1"
                                Value="{Binding SelectedDairyComponentDto.SteadyStateHeifers}"
                                Minimum="0" Maximum="10000"
                                FormatString="0" Increment="1"
@@ -619,7 +619,7 @@
               <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongLactationPeriod].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
-              <NumericUpDown Grid.Column="1"
+              <NumericUpDown AutomationProperties.Name="{Binding [Label_HowLongLactationPeriod].Value, Source={StaticResource Loc}}" Grid.Column="1"
                              Value="{Binding SelectedDairyComponentDto.LactationDurationDays}"
                              Minimum="200" Maximum="400"
                              FormatString="0" Increment="5"
@@ -640,7 +640,7 @@
                 <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyLactatingCowsInHerd].Value, Source={StaticResource Loc}}"
                            Classes="input-label-text"
                            Margin="0,0,8,0"/>
-                <NumericUpDown Grid.Column="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_HowManyLactatingCowsInHerd].Value, Source={StaticResource Loc}}" Grid.Column="1"
                                Value="{Binding SelectedDairyComponentDto.SteadyStateLactating}"
                                Minimum="0" Maximum="10000"
                                FormatString="0" Increment="1"
@@ -741,7 +741,7 @@
               <TextBlock Grid.Column="0" Text="{Binding [Label_HowLongDryPeriod].Value, Source={StaticResource Loc}}"
                          Classes="input-label-text"
                          Margin="0,0,8,0"/>
-              <NumericUpDown Grid.Column="1"
+              <NumericUpDown AutomationProperties.Name="{Binding [Label_HowLongDryPeriod].Value, Source={StaticResource Loc}}" Grid.Column="1"
                              Value="{Binding SelectedDairyComponentDto.DryPeriodDays}"
                              Minimum="0" Maximum="120"
                              FormatString="0" Increment="5"
@@ -762,7 +762,7 @@
                 <TextBlock Grid.Column="0" Text="{Binding [Label_HowManyDryCowsInHerd].Value, Source={StaticResource Loc}}"
                            Classes="input-label-text"
                            Margin="0,0,8,0"/>
-                <NumericUpDown Grid.Column="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_HowManyDryCowsInHerd].Value, Source={StaticResource Loc}}" Grid.Column="1"
                                Value="{Binding SelectedDairyComponentDto.SteadyStateDry}"
                                Minimum="0" Maximum="10000"
                                FormatString="0" Increment="1"

@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_CropIsGrazed].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ToggleSwitch Grid.Column="1" IsChecked="{Binding CropIsGrazed}"
+                <ToggleSwitch AutomationProperties.Name="{Binding [Label_CropIsGrazed].Value, Source={StaticResource Loc}}" Grid.Column="1" IsChecked="{Binding CropIsGrazed}"
                               OnContent="{Binding [Label_Yes].Value, Source={StaticResource Loc}}"
                               OffContent="{Binding [Label_No].Value, Source={StaticResource Loc}}"/>
             </Grid>
@@ -33,7 +33,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ForageUtilizationRate].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_ForageUtilizationRate].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
                                Value="{Binding ForageUtilizationRate}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>

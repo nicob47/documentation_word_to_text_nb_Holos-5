@@ -16,63 +16,63 @@
 		  <StackPanel Margin="20" Spacing="10" Width="350" VerticalAlignment="Center" HorizontalAlignment="Center">
 			  <TextBlock Text="{Binding [Label_January].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-				  <NumericUpDown Grid.Column="0" FormatString="{}{0:0.00}" Value="{Binding Data.January, Mode=TwoWay}" Minimum="0" Maximum="100" />
+				  <NumericUpDown AutomationProperties.Name="{Binding [Label_January].Value, Source={StaticResource Loc}}" Grid.Column="0" FormatString="{}{0:0.00}" Value="{Binding Data.January, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  
 			  <TextBlock Text="{Binding [Label_February].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-				  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.February, Mode=TwoWay}" Minimum="0" Maximum="100" />
+				  <NumericUpDown AutomationProperties.Name="{Binding [Label_February].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.February, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_March].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-				  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.March, Mode=TwoWay}" Minimum="0" Maximum="100" />
+				  <NumericUpDown AutomationProperties.Name="{Binding [Label_March].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.March, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_April].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.April, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_April].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.April, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_May].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-				<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.May, Mode=TwoWay}" Minimum="0" Maximum="100" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_May].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.May, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				<TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_June].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.June, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_June].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.June, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_July].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.July, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_July].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.July, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_August].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.August, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_August].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.August, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_September].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.September, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_September].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.September, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_October].Value, Source={StaticResource Loc}}"/>
 				  <Grid ColumnDefinitions="*, Auto">					   
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.October, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_October].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.October, Mode=TwoWay}" Minimum="0" Maximum="100" />
 					  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 				  </Grid>
 			  <TextBlock Text="{Binding [Label_November].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.November, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_November].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.November, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 			  <TextBlock Text="{Binding [Label_December].Value, Source={StaticResource Loc}}"/>
 			  <Grid ColumnDefinitions="*, Auto">
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.December, Mode=TwoWay}" Minimum="0" Maximum="100" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_December].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.December, Mode=TwoWay}" Minimum="0" Maximum="100" />
 				  <TextBlock Margin="8" VerticalAlignment="Center" Grid.Column="1" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/>
 			  </Grid>
 		  </StackPanel>

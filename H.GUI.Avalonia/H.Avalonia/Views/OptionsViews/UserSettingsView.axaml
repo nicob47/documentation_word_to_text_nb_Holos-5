@@ -17,7 +17,7 @@
 			<TextBlock Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White"  Grid.Row="0" Padding="40, 15" Text="{Binding [Label_CarbonModelling].Value, Source={StaticResource Loc}}" />
 			<StackPanel Spacing="10" Grid.Row="1" Margin="20, 10" VerticalAlignment="Center" Width="380" >
 				<TextBlock Text="{Binding [Label_CarbonModellingStrategy].Value, Source={StaticResource Loc}}"/>
-				<ComboBox ItemsSource="{Binding Data.CarbonModellingStrategiesList}" SelectedItem="{Binding Data.CarbonModellingStrategy}" HorizontalAlignment="Stretch" />
+				<ComboBox AutomationProperties.Name="{Binding [Label_CarbonModellingStrategy].Value, Source={StaticResource Loc}}" ItemsSource="{Binding Data.CarbonModellingStrategiesList}" SelectedItem="{Binding Data.CarbonModellingStrategy}" HorizontalAlignment="Stretch" />
 				<TextBlock>
 					<Run Text="{Binding [Label_RunInPeriod].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Years].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
@@ -29,7 +29,7 @@
 				</TextBlock>
 				<NumericUpDown Increment="0.01" FormatString="{}{0:0.00}" Value="{Binding Data.CarbonConcentration, Mode=TwoWay}" />
 				<TextBlock Text="{Binding [Label_EquilibriumCalculationStrategy].Value, Source={StaticResource Loc}}"/>
-				<ComboBox ItemsSource="{Binding Data.EquilibriumCalculationStrategiesList}" SelectedItem="{Binding Data.EquilibriumCalculationStrategy}" HorizontalAlignment="Stretch" />
+				<ComboBox AutomationProperties.Name="{Binding [Label_EquilibriumCalculationStrategy].Value, Source={StaticResource Loc}}" ItemsSource="{Binding Data.EquilibriumCalculationStrategiesList}" SelectedItem="{Binding Data.EquilibriumCalculationStrategy}" HorizontalAlignment="Stretch" />
 				<Grid ColumnDefinitions="*, Auto">
 					<TextBlock VerticalAlignment="Center" Grid.Column="0">
 						<Run Text="{Binding [Label_UseCustomEquilibriumCarbonValue].Value, Source={StaticResource Loc}}" />

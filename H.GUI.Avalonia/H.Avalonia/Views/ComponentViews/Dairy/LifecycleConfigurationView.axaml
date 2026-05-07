@@ -50,7 +50,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
-                      <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.CalfPopulationGroups}"
+                      <ComboBox AutomationProperties.Name="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}" ItemsSource="{Binding SelectedDairyComponentDto.CalfPopulationGroups}"
                                 SelectedItem="{Binding SelectedCalfGroup}"
                                 PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
@@ -165,7 +165,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
-                      <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.HeiferPopulationGroups}"
+                      <ComboBox AutomationProperties.Name="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}" ItemsSource="{Binding SelectedDairyComponentDto.HeiferPopulationGroups}"
                                 SelectedItem="{Binding SelectedHeiferGroup}"
                                 PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
@@ -283,7 +283,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
-                      <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.LactatingPopulationGroups}"
+                      <ComboBox AutomationProperties.Name="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}" ItemsSource="{Binding SelectedDairyComponentDto.LactatingPopulationGroups}"
                                 SelectedItem="{Binding SelectedLactatingGroup}"
                                 PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"
@@ -398,7 +398,7 @@ x:Class="H.Avalonia.Views.ComponentViews.Dairy.LifecycleConfigurationView">
                                  Foreground="{StaticResource GcdsTextSecondaryBrush}"
                                  TextWrapping="Wrap"
                                  Margin="0,0,0,12"/>
-                      <ComboBox ItemsSource="{Binding SelectedDairyComponentDto.DryPopulationGroups}"
+                      <ComboBox AutomationProperties.Name="{Binding [Label_YouHaveMultipleGroupsDesc].Value, Source={StaticResource Loc}}" ItemsSource="{Binding SelectedDairyComponentDto.DryPopulationGroups}"
                                 SelectedItem="{Binding SelectedDryGroup}"
                                 PlaceholderText="{Binding [Label_ChooseAGroup].Value, Source={StaticResource Loc}}"
                                 HorizontalAlignment="Stretch"

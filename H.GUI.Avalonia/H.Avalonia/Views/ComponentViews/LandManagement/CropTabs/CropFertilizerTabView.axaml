@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NitrogenFertilizerRate].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_NitrogenFertilizerRate].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding NitrogenFertilizerRate}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgNPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -39,7 +39,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_PhosphorusFertilizerRate].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_PhosphorusFertilizerRate].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding PhosphorusFertilizerRate}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgPPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -52,7 +52,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_PotassiumFertilizerRate].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_PotassiumFertilizerRate].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding PotassiumFertilizerRate}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgKPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -65,7 +65,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_SulphurFertilizerRate].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_SulphurFertilizerRate].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding SulphurFertilizerRate}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgSPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -78,7 +78,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NitrogenFertilizerType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_NitrogenFertilizerType].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.NitrogenFertilizerTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding NitrogenFertilizerType}"
                           HorizontalAlignment="Stretch">
@@ -98,7 +98,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_FertilizerBlend].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_FertilizerBlend].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.FertilizerBlendTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding FertilizerBlend}"
                           HorizontalAlignment="Stretch">
@@ -118,7 +118,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_SoilReductionFactor].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_SoilReductionFactor].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.SoilReductionFactorTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding SoilReductionFactor}"
                           HorizontalAlignment="Stretch">
@@ -138,7 +138,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_CustomReductionFactor].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.00" Increment="0.01"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_CustomReductionFactor].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.00" Increment="0.01"
                                Value="{Binding CustomReductionFactor}" HorizontalAlignment="Stretch"/>
             </Grid>
 

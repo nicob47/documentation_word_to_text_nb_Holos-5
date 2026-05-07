@@ -292,7 +292,7 @@
                            VerticalAlignment="Center"
                            FontWeight="SemiBold"
                            FontSize="{StaticResource GcdsFontSizeSmall}"/>
-                <TextBox Text="{Binding SaveAsName, Mode=TwoWay}"
+                <TextBox AutomationProperties.Name="{Binding [Label_NewDietName].Value, Source={StaticResource Loc}}" Text="{Binding SaveAsName, Mode=TwoWay}"
                          MinWidth="280"
                          Watermark="{Binding [Label_NewDietNameWatermark].Value, Source={StaticResource Loc}}"/>
                 <Button Content="{Binding [Label_OK].Value, Source={StaticResource Loc}}"

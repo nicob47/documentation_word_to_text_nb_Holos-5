@@ -18,7 +18,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
             <TextBlock Text="{Binding [Label_SelectRegion].Value, Source={StaticResource Loc}}" Margin="0,0,0,5" />
-            <ComboBox ItemsSource="{Binding RegionCollection}"
+            <ComboBox AutomationProperties.Name="{Binding [Label_SelectRegion].Value, Source={StaticResource Loc}}" ItemsSource="{Binding RegionCollection}"
                       SelectedItem="{Binding SelectedRegion}"
                       Width="200"/>
             <Button Content="{Binding [Button_Confirm].Value, Source={StaticResource Loc}}"

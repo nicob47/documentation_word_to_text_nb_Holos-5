@@ -23,7 +23,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_BiomassCoefficientProduct].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_BiomassCoefficientProduct].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding BiomassCoefficientProduct}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -33,7 +33,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_BiomassCoefficientStraw].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_BiomassCoefficientStraw].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding BiomassCoefficientStraw}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -43,7 +43,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_BiomassCoefficientRoots].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_BiomassCoefficientRoots].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding BiomassCoefficientRoots}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -53,7 +53,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_BiomassCoefficientExtraroots].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_BiomassCoefficientExtraroots].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding BiomassCoefficientExtraroot}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -69,7 +69,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ProductYieldReturned].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_ProductYieldReturned].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
                                Value="{Binding PercentageOfProductYieldReturnedToSoil}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -81,7 +81,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_StrawReturned].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_StrawReturned].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
                                Value="{Binding PercentageOfStrawReturnedToSoil}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -93,7 +93,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_RootsReturned].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_RootsReturned].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="1"
                                Value="{Binding PercentageOfRootsReturnedToSoil}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -109,7 +109,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NContentInProduct].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_NContentInProduct].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding NitrogenContentInProduct}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -119,7 +119,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NContentInStraw].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_NContentInStraw].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding NitrogenContentInStraw}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -129,7 +129,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NContentInRoots].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_NContentInRoots].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding NitrogenContentInRoots}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -139,7 +139,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NContentInExtraroot].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_NContentInExtraroot].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0000" Increment="0.001"
                                Value="{Binding NitrogenContentInExtraroot}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -154,7 +154,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_CarbonConcentration].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.00" Increment="0.01"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_CarbonConcentration].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.00" Increment="0.01"
                                Value="{Binding CarbonConcentration}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -164,7 +164,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_LigninContent].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_LigninContent].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="1" FormatString="0.0000" Increment="0.001"
                                Value="{Binding LigninContent}" HorizontalAlignment="Stretch"/>
             </Grid>
 

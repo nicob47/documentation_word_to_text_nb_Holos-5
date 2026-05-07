@@ -29,7 +29,7 @@
                 <TextBlock Text="{Binding [Label_AnimalType].Value, Source={StaticResource Loc}}" 
                            FontWeight="SemiBold" 
                            Margin="0,0,0,5" />
-                <ComboBox Width="200" 
+                <ComboBox AutomationProperties.Name="{Binding [Label_AnimalType].Value, Source={StaticResource Loc}}" Width="200" 
                           SelectedItem="{Binding SelectedAnimalType}"
                           ItemsSource="{Binding AvailableAnimalTypes}" />
             </StackPanel>

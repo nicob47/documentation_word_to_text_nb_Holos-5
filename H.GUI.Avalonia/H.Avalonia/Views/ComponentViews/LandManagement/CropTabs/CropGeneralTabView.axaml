@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding WetYield}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -39,7 +39,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_DryYield].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.00" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_DryYield].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.00" Increment="1"
                                Value="{Binding DryYield}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_KgDmPerHa].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -52,7 +52,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_MoistureContent].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_MoistureContent].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" Maximum="100" FormatString="0.0" Increment="0.5"
                                Value="{Binding MoistureContentOfCropPercentage}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -65,7 +65,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_TillageType].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_TillageType].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.TillageTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding TillageType}"
                           HorizontalAlignment="Stretch">
@@ -85,7 +85,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_HarvestMethod].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox AutomationProperties.Name="{Binding [Label_HarvestMethod].Value, Source={StaticResource Loc}}" Grid.Column="1"
                           ItemsSource="{Binding DataContext.HarvestMethodTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
                           SelectedItem="{Binding HarvestMethod}"
                           HorizontalAlignment="Stretch">
@@ -105,7 +105,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.0" Increment="1"
                                Value="{Binding AmountOfIrrigation}" HorizontalAlignment="Stretch"/>
                 <TextBlock Grid.Column="2" Text="{Binding [Label_Millimeters].Value, Source={StaticResource Loc}}" Classes="unit-label" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </Grid>
@@ -118,7 +118,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Unit"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_NumberOfPesticidePasses].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="{}{0:0}" Increment="1"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_NumberOfPesticidePasses].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="{}{0:0}" Increment="1"
                                Value="{Binding NumberOfPesticidePasses}" HorizontalAlignment="Stretch"/>
             </Grid>
 

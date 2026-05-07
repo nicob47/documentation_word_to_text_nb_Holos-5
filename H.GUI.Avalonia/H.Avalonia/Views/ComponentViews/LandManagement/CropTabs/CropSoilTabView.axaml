@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ClimateParameter].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_ClimateParameter].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
                                Value="{Binding ClimateParameter}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_TillageFactor].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_TillageFactor].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
                                Value="{Binding TillageFactor}" HorizontalAlignment="Stretch"/>
             </Grid>
 
@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_ManagementFactor].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <NumericUpDown Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
+                <NumericUpDown AutomationProperties.Name="{Binding [Label_ManagementFactor].Value, Source={StaticResource Loc}}" Grid.Column="1" Minimum="0" FormatString="0.000" Increment="0.01"
                                Value="{Binding ManagementFactor}" HorizontalAlignment="Stretch"/>
             </Grid>
 

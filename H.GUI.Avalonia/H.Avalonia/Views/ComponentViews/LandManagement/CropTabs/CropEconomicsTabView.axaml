@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="Auto" MinWidth="180" SharedSizeGroup="Input"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding [Label_CropEconomicDataApplied].Value, Source={StaticResource Loc}}" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <ToggleSwitch Grid.Column="1" IsChecked="{Binding CropEconomicDataApplied}"
+                <ToggleSwitch AutomationProperties.Name="{Binding [Label_CropEconomicDataApplied].Value, Source={StaticResource Loc}}" Grid.Column="1" IsChecked="{Binding CropEconomicDataApplied}"
                               OnContent="{Binding [Label_Yes].Value, Source={StaticResource Loc}}"
                               OffContent="{Binding [Label_No].Value, Source={StaticResource Loc}}"/>
             </Grid>
