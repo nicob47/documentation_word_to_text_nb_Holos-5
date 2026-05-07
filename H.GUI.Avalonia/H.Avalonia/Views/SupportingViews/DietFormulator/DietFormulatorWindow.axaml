@@ -5,9 +5,10 @@
         xmlns:vm="clr-namespace:H.Avalonia.ViewModels.SupportingViews.DietFormulator"
         xmlns:infrastructure="clr-namespace:H.Infrastructure.Controls.ValueConverters;assembly=H.Infrastructure"
         mc:Ignorable="d"
-        d:DesignWidth="1200" d:DesignHeight="700"
-        Width="1200" Height="700"
-        MinWidth="900" MinHeight="500"
+        d:DesignWidth="1400" d:DesignHeight="820"
+        Width="1400" Height="820"
+        MinWidth="1100" MinHeight="600"
+        CanResize="True"
         Title="{Binding [Label_DietFormulator].Value, Source={StaticResource Loc}}"
         WindowStartupLocation="CenterOwner"
         x:Class="H.Avalonia.Views.SupportingViews.DietFormulator.DietFormulatorWindow">
@@ -96,13 +97,13 @@
                             <DataGridTextColumn Header="{Binding [Label_Name].Value, Source={StaticResource Loc}}"
                                                 Binding="{Binding IngredientTypeString}"
                                                 Width="*"
-                                                MinWidth="180"/>
+                                                MinWidth="200"/>
                             <DataGridTextColumn Header="CP %"
                                                 Binding="{Binding CrudeProtein, StringFormat='{}{0:F1}'}"
-                                                Width="60"/>
+                                                Width="70"/>
                             <DataGridTextColumn Header="TDN %"
                                                 Binding="{Binding TotalDigestibleNutrient, StringFormat='{}{0:F1}'}"
-                                                Width="60"/>
+                                                Width="80"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -141,23 +142,23 @@
                                                 Binding="{Binding IngredientTypeString}"
                                                 IsReadOnly="True"
                                                 Width="*"
-                                                MinWidth="220"/>
-                            <DataGridTextColumn Header="{Binding [Label_PercentageInDiet].Value, Source={StaticResource Loc}}"
+                                                MinWidth="240"/>
+                            <DataGridTextColumn Header="% in Diet"
                                                 Binding="{Binding PercentageInDiet, StringFormat='{}{0:F1}', Mode=TwoWay}"
                                                 IsReadOnly="False"
-                                                Width="80"/>
+                                                Width="100"/>
                             <DataGridTextColumn Header="CP %"
                                                 Binding="{Binding CrudeProtein, StringFormat='{}{0:F1}'}"
                                                 IsReadOnly="True"
-                                                Width="65"/>
+                                                Width="80"/>
                             <DataGridTextColumn Header="TDN %"
                                                 Binding="{Binding TotalDigestibleNutrient, StringFormat='{}{0:F1}'}"
                                                 IsReadOnly="True"
-                                                Width="65"/>
+                                                Width="80"/>
                             <DataGridTextColumn Header="Forage %"
                                                 Binding="{Binding Forage, StringFormat='{}{0:F1}'}"
                                                 IsReadOnly="True"
-                                                Width="75"/>
+                                                Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
