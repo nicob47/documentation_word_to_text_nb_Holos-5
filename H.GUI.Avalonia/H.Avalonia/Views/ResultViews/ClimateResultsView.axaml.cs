@@ -27,15 +27,6 @@ namespace H.Avalonia.Views.ResultViews
             base.OnAttachedToVisualTree(e);
         }
 
-        private void GoBackPanel_OnPointerPressed(object? sender, PointerPressedEventArgs e)
-        {
-            if (sender is not StackPanel || ViewModel is null) return;
-            if (ViewModel.GoBackCommand.CanExecute())
-            {
-                ViewModel.GoBackCommand.Execute();
-            }
-        }
-
         private async void ExportDataButton_OnClick(object? sender, RoutedEventArgs e)
         {
             if (ViewModel is null) return;

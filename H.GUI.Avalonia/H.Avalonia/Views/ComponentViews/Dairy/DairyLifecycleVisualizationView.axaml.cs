@@ -86,6 +86,12 @@ public partial class DairyLifecycleVisualizationView : UserControl, INotifyPrope
         _ => ""
     };
 
+    private void Card_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is Key.Enter or Key.Space && sender is Border { Tag: string stage })
+            SelectedStage = stage;
+    }
+
     private void Calf_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         SelectedStage = "Calf";

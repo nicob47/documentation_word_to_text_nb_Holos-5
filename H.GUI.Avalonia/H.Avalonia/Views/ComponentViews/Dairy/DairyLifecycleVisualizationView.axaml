@@ -49,6 +49,9 @@
                 CornerRadius="12"
                 Padding="16"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Calf"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Calf_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_Calf].Value, Source={StaticResource Loc}}" 
@@ -94,6 +97,9 @@
                 CornerRadius="12"
                 Padding="16"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Heifer"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Heifer_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_Heifer].Value, Source={StaticResource Loc}}" 
@@ -139,6 +145,9 @@
                 CornerRadius="12"
                 Padding="16"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Lactating"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Lactating_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_LactatingCow].Value, Source={StaticResource Loc}}" 
@@ -184,6 +193,9 @@
                 CornerRadius="12"
                 Padding="16"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Dry"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Dry_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_DryCow].Value, Source={StaticResource Loc}}" 
@@ -246,6 +258,9 @@
                 CornerRadius="6"
                 Padding="12,8"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Culling"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Culling_PointerPressed">
           <StackPanel>
             <TextBlock Text="{Binding [Label_Culling].Value, Source={StaticResource Loc}}" 
@@ -276,6 +291,9 @@
                 CornerRadius="6"
                 Padding="12,8"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Replacement"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Replacement_PointerPressed">
           <StackPanel>
             <TextBlock Text="{Binding [Label_Replacement].Value, Source={StaticResource Loc}}" 

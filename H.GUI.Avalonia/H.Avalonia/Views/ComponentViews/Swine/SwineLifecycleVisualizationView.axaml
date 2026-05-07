@@ -54,6 +54,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Breeding"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Breeding_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Breeding"
@@ -95,6 +98,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Farrowing"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Farrowing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Farrowing"
@@ -136,6 +142,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Nursery"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Nursery_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Nursery"
@@ -171,6 +180,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Growing"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Growing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Growing"
@@ -206,6 +218,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Finishing"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Finishing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Finishing"
@@ -262,6 +277,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="FarrowToFinish"
+                KeyDown="Card_KeyDown"
                 PointerPressed="FarrowToFinish_PointerPressed">
           <TextBlock Text="Farrow-to-Finish"
                      FontSize="11"
@@ -281,6 +299,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="FarrowToWean"
+                KeyDown="Card_KeyDown"
                 PointerPressed="FarrowToWean_PointerPressed">
           <TextBlock Text="Farrow-to-Wean"
                      FontSize="11"
@@ -300,6 +321,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="IsoWean"
+                KeyDown="Card_KeyDown"
                 PointerPressed="IsoWean_PointerPressed">
           <TextBlock Text="Iso-Wean"
                      FontSize="11"
@@ -319,6 +343,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="GrowerToFinish"
+                KeyDown="Card_KeyDown"
                 PointerPressed="GrowerToFinish_PointerPressed">
           <TextBlock Text="Grower-to-Finish"
                      FontSize="11"

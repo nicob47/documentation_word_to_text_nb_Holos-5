@@ -95,6 +95,12 @@ public partial class SwineLifecycleVisualizationView : UserControl, INotifyPrope
     public bool IsGrowingSelected => SelectedStage == "Growing";
     public bool IsFinishingSelected => SelectedStage == "Finishing";
 
+    private void Card_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is Key.Enter or Key.Space && sender is Border { Tag: string stage })
+            SelectedStage = stage;
+    }
+
     private void Breeding_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Breeding";
     private void Farrowing_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Farrowing";
     private void Nursery_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Nursery";

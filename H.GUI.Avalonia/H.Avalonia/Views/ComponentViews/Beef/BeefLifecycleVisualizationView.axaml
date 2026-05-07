@@ -50,6 +50,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="CowCalf"
+                KeyDown="Card_KeyDown"
                 PointerPressed="CowCalf_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Cow-Calf"
@@ -91,6 +94,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Backgrounding"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Backgrounding_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Backgrounding"
@@ -132,6 +138,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Finishing"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Finishing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Finishing (Feedlot)"
@@ -221,6 +230,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="CowCalfSystem"
+                KeyDown="Card_KeyDown"
                 PointerPressed="CowCalfSystem_PointerPressed">
           <TextBlock Text="Cow-Calf"
                      FontSize="11"
@@ -240,6 +252,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="BackgroundingSystem"
+                KeyDown="Card_KeyDown"
                 PointerPressed="BackgroundingSystem_PointerPressed">
           <TextBlock Text="Backgrounding"
                      FontSize="11"
@@ -259,6 +274,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="FinishingSystem"
+                KeyDown="Card_KeyDown"
                 PointerPressed="FinishingSystem_PointerPressed">
           <TextBlock Text="Finishing (Feedlot)"
                      FontSize="11"
@@ -278,6 +296,9 @@
                 CornerRadius="4"
                 Padding="8,3"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="FullCycle"
+                KeyDown="Card_KeyDown"
                 PointerPressed="FullCycle_PointerPressed">
           <TextBlock Text="Full Production Cycle"
                      FontSize="11"

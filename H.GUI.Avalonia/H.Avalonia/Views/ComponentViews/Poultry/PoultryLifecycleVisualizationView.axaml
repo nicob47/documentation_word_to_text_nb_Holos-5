@@ -66,6 +66,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Breeder"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Breeder_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_MultiplierBreeder].Value, Source={StaticResource Loc}}"
@@ -107,6 +110,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Hatchery"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Hatchery_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_MultiplierHatchery].Value, Source={StaticResource Loc}}"
@@ -148,6 +154,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Pullet"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Pullet_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_PulletFarm].Value, Source={StaticResource Loc}}"
@@ -196,6 +205,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="Egg"
+                KeyDown="Card_KeyDown"
                 PointerPressed="Egg_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_EggProduction].Value, Source={StaticResource Loc}}"
@@ -224,6 +236,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="ChickenMeat"
+                KeyDown="Card_KeyDown"
                 PointerPressed="ChickenMeat_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_ChickenMeatProduction].Value, Source={StaticResource Loc}}"
@@ -293,6 +308,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="TurkeyBreeder"
+                KeyDown="Card_KeyDown"
                 PointerPressed="TurkeyBreeder_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_TurkeyMultiplierBreeder].Value, Source={StaticResource Loc}}"
@@ -342,6 +360,9 @@
                 CornerRadius="12"
                 Padding="10"
                 Cursor="Hand"
+                Focusable="True"
+                Tag="TurkeyMeat"
+                KeyDown="Card_KeyDown"
                 PointerPressed="TurkeyMeat_PointerPressed">
           <StackPanel VerticalAlignment="Center">
             <TextBlock Text="{Binding [Label_TurkeyMeatProduction].Value, Source={StaticResource Loc}}"

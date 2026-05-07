@@ -17,6 +17,13 @@ namespace H.Avalonia.Views.ComponentViews.Dairy
             InitializeComponent();
         }
 
+        private void Card_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key is Key.Enter or Key.Space && sender is Border { Tag: string stage }
+                && DataContext is DairyComponentViewModel viewModel)
+                viewModel.SelectHerdStage(stage);
+        }
+
         /// <summary>
         /// Handles click event for the Calf herd stage card
         /// </summary>

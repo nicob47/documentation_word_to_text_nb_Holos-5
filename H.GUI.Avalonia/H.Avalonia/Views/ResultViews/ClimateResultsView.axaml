@@ -12,16 +12,20 @@
     </Design.DataContext>
     
     <Grid RowDefinitions="Auto, Auto, Auto, *">
-        <StackPanel Grid.Row="0" 
-                    Name="GoBackPanel"
-                    PointerPressed="GoBackPanel_OnPointerPressed"
-                    Margin="10, 10, 0, 20"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Left"
-                    Cursor="Hand">
-            <PathIcon Data="{StaticResource arrow_left_regular}"/>
-            <Label Content="{Binding [Label_Back].Value, Source={StaticResource Loc}}"/>
-        </StackPanel>
+        <Button Grid.Row="0"
+                Name="GoBackPanel"
+                Command="{Binding GoBackCommand}"
+                Margin="10, 10, 0, 20"
+                HorizontalAlignment="Left"
+                Cursor="Hand"
+                Background="Transparent"
+                BorderThickness="0"
+                AutomationProperties.Name="{Binding [Label_Back].Value, Source={StaticResource Loc}}">
+            <StackPanel Orientation="Horizontal">
+                <PathIcon Data="{StaticResource arrow_left_regular}" AutomationProperties.AccessibilityView="Raw"/>
+                <Label Content="{Binding [Label_Back].Value, Source={StaticResource Loc}}"/>
+            </StackPanel>
+        </Button>
         <progRing:ProgressRing Grid.Row="1"
                                Width="30"
                                Height="30"

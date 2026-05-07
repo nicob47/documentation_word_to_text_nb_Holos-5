@@ -97,6 +97,12 @@ public partial class PoultryLifecycleVisualizationView : UserControl, INotifyPro
     public bool IsTurkeyBreederSelected => SelectedStage == "TurkeyBreeder";
     public bool IsTurkeyMeatSelected => SelectedStage == "TurkeyMeat";
 
+    private void Card_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is Key.Enter or Key.Space && sender is Border { Tag: string stage })
+            SelectedStage = stage;
+    }
+
     private void Breeder_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Breeder";
     private void Hatchery_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Hatchery";
     private void Pullet_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Pullet";

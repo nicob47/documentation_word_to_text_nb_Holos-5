@@ -85,6 +85,12 @@ public partial class BeefLifecycleVisualizationView : UserControl, INotifyProper
     public bool IsBackgroundingSelected => SelectedStage == "Backgrounding";
     public bool IsFinishingSelected => SelectedStage == "Finishing";
 
+    private void Card_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is Key.Enter or Key.Space && sender is Border { Tag: string stage })
+            SelectedStage = stage;
+    }
+
     private void CowCalf_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "CowCalf";
     private void Backgrounding_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Backgrounding";
     private void Finishing_PointerPressed(object? sender, PointerPressedEventArgs e) => SelectedStage = "Finishing";
