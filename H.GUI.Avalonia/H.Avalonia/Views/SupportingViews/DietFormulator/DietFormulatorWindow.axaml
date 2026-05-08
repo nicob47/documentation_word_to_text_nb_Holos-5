@@ -79,9 +79,6 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="{Binding [Label_DietType].Value, Source={StaticResource Loc}}"
-                                                Binding="{Binding DietType, Converter={StaticResource EnumDescriptionConverter}}"
-                                                Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
