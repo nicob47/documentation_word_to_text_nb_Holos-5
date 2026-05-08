@@ -9,6 +9,8 @@ namespace H.Core.Services.Animals
 {
     public interface IDigestateService
     {
+        void Initialize(Farm farm, List<AnimalComponentEmissionsResults> animalComponentEmissionsResults);
+
         DateTime GetDateOfMaximumAvailableDigestate(Farm farm, DigestateState state, int year,
             List<DigestorDailyOutput> digestorDailyOutputs, bool subtractFieldAppliedAmounts);
         DigestateTank GetTank(Farm farm, DateTime targetDate, List<DigestorDailyOutput> dailyOutputs);
@@ -56,6 +58,16 @@ namespace H.Core.Services.Animals
         /// Equation 4.9.7-5
         /// </summary>
         double GetTotalCarbonForField(CropViewItem cropViewItem, int year, Farm farm, AnaerobicDigestionComponent component);
+
+        /// <summary>
+        /// Equations 4.9.7-1, 4.9.7-2, 4.9.7-5
+        ///
+        /// Per-hectare digestate carbon for a field, including local-application
+        /// inputs plus a share of the year-end remaining digestate carbon.
+        ///
+        /// (kg C ha^-1)
+        /// </summary>
+        double GetTotalDigestateCarbonInputsForField(Farm farm, int year, CropViewItem viewItem);
 
         List<AnimalComponentEmissionsResults> AnimalResults { get; set; }
     }

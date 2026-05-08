@@ -126,7 +126,9 @@ namespace H.Core.Models.LandManagement.Fields
         private double _managementFactor;
         private double _manureCarbonInput;
         private double _manureCarbonPerHectare;
+        private double _manureCarbonPerHectareRemaining;
         private double _ligninContent;
+        private bool _isRunInPeriodItem;
 
         private string _timePeriodCategoryString = string.Empty;
         private string _managementPeriodName = string.Empty;
@@ -987,6 +989,23 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get { return _manureCarbonPerHectare; }
             set { SetProperty(ref _manureCarbonPerHectare, value); }
+        }
+
+        /// <summary>
+        /// (kg C ha^-1)
+        ///
+        /// Total manure C from manure applications only
+        /// </summary>
+        public double ManureCarbonInputsFromManureOnly
+        {
+            get { return _manureCarbonPerHectareRemaining; }
+            set { SetProperty(ref _manureCarbonPerHectareRemaining, value); }
+        }
+
+        public bool IsRunInPeriodItem
+        {
+            get { return _isRunInPeriodItem; }
+            set { SetProperty(ref _isRunInPeriodItem, value); }
         }
 
         public double TillageFactor

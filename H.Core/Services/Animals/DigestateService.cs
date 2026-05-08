@@ -44,6 +44,11 @@ namespace H.Core.Services.Animals
 
         #region Public Methods
 
+        public void Initialize(Farm farm, List<AnimalComponentEmissionsResults> animalComponentEmissionsResults)
+        {
+            this.AnimalResults = animalComponentEmissionsResults ?? new List<AnimalComponentEmissionsResults>();
+        }
+
         public List<DigestorDailyOutput> GetDailyResults(Farm farm)
         {
             if (farm.AnaerobicDigestionComponents.Any() == false)
@@ -529,6 +534,36 @@ namespace H.Core.Services.Animals
             var result = totalCarbonRemaining * (cropViewItem.Area / farm.GetTotalAreaOfFarm(false, year));
 
             return result;
+        }
+
+        /// <summary>
+        /// Equations 4.9.7-1, 4.9.7-2, 4.9.7-5
+        ///
+        /// (kg C ha^-1)
+        /// </summary>
+        public double GetTotalDigestateCarbonInputsForField(Farm farm, int year, CropViewItem viewItem)
+        {
+            if (viewItem.CropType.IsNativeGrassland())
+            {
+                return 0;
+            }
+
+            var field = farm.GetFieldSystemComponent(viewItem.FieldSystemComponentGuid);
+            if (field == null)
+            {
+                return 0;
+            }
+
+            var inputsFromLocalManure = 0d;
+            if (field.HasLivestockDigestateApplicationsInYear(year))
+            {
+                inputsFromLocalManure = viewItem.GetTotalCarbonFromAppliedDigestate(ManureLocationSourceType.Livestock);
+            }
+
+            var component = farm.GetAnaerobicDigestionComponent();
+            var remaining = this.GetTotalCarbonRemainingForField(viewItem, viewItem.Year, farm, component);
+
+            return (inputsFromLocalManure + remaining) / field.FieldArea;
         }
 
         public double GetTotalCarbonForField(
