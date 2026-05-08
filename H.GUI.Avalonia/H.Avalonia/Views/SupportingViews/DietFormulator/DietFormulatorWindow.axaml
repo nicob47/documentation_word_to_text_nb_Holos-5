@@ -37,15 +37,15 @@
                     BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="1" CornerRadius="6"
                     Background="{StaticResource GcdsBgLightBrush}">
                 <Grid RowDefinitions="Auto,Auto,*">
-                    <!-- Heading + step pill on one line; description below to wrap freely -->
+                    <!-- Step pill + heading on one line; description below to wrap freely -->
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="10,8,10,2" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding [Label_Diets].Value, Source={StaticResource Loc}}"
-                                   FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}"
-                                   VerticalAlignment="Center"/>
                         <Border Classes="step-badge" VerticalAlignment="Center">
                             <TextBlock Text="{Binding [Label_DietFormulatorStep1].Value, Source={StaticResource Loc}}"
                                        Classes="step-badge-text"/>
                         </Border>
+                        <TextBlock Text="{Binding [Label_Diets].Value, Source={StaticResource Loc}}"
+                                   FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}"
+                                   VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Grid.Row="1"
                                Text="{Binding [Label_DietFormulatorStep1Description].Value, Source={StaticResource Loc}}"
@@ -92,15 +92,15 @@
                     BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="1" CornerRadius="6"
                     Background="{StaticResource GcdsBgLightBrush}">
                 <Grid RowDefinitions="Auto,Auto,Auto,*">
-                    <!-- Heading + step pill on one line; description below to wrap freely -->
+                    <!-- Step pill + heading on one line; description below to wrap freely -->
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="10,8,10,2" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding [Label_AvailableIngredients].Value, Source={StaticResource Loc}}"
-                                   FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}"
-                                   VerticalAlignment="Center"/>
                         <Border Classes="step-badge" VerticalAlignment="Center">
                             <TextBlock Text="{Binding [Label_DietFormulatorStep2].Value, Source={StaticResource Loc}}"
                                        Classes="step-badge-text"/>
                         </Border>
+                        <TextBlock Text="{Binding [Label_AvailableIngredients].Value, Source={StaticResource Loc}}"
+                                   FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}"
+                                   VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Grid.Row="1"
                                Text="{Binding [Label_DietFormulatorStep2Description].Value, Source={StaticResource Loc}}"
@@ -146,16 +146,16 @@
                     BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="1" CornerRadius="6"
                     Background="{StaticResource GcdsBgLightBrush}">
                 <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
-                    <!-- Header: heading + step pill + working diet name on one line; Step 3 description below -->
+                    <!-- Header: step pill + heading + working diet name on one line; Step 3 description below -->
                     <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="4" Margin="10,8">
                         <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding [Label_SelectedDietIngredients].Value, Source={StaticResource Loc}}"
-                                       FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}"
-                                       VerticalAlignment="Center"/>
                             <Border Classes="step-badge" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding [Label_DietFormulatorStep3].Value, Source={StaticResource Loc}}"
                                            Classes="step-badge-text"/>
                             </Border>
+                            <TextBlock Text="{Binding [Label_SelectedDietIngredients].Value, Source={StaticResource Loc}}"
+                                       FontWeight="SemiBold" FontSize="{StaticResource GcdsFontSizeBody}"
+                                       VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding WorkingDietName}"
                                        FontSize="{StaticResource GcdsFontSizeSmall}"
                                        Foreground="{StaticResource GcdsTextSecondaryBrush}"
