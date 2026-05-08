@@ -59,6 +59,16 @@ namespace H.Core.Services.Animals
         /// </summary>
         double GetTotalCarbonForField(CropViewItem cropViewItem, int year, Farm farm, AnaerobicDigestionComponent component);
 
+        /// <summary>
+        /// Equations 4.9.7-1, 4.9.7-2, 4.9.7-5
+        ///
+        /// Per-hectare digestate carbon for a field, including local-application
+        /// inputs plus a share of the year-end remaining digestate carbon.
+        ///
+        /// (kg C ha^-1)
+        /// </summary>
+        double GetTotalDigestateCarbonInputsForField(Farm farm, int year, CropViewItem viewItem);
+
         List<AnimalComponentEmissionsResults> AnimalResults { get; set; }
     }
 }

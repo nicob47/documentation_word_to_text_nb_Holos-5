@@ -536,6 +536,36 @@ namespace H.Core.Services.Animals
             return result;
         }
 
+        /// <summary>
+        /// Equations 4.9.7-1, 4.9.7-2, 4.9.7-5
+        ///
+        /// (kg C ha^-1)
+        /// </summary>
+        public double GetTotalDigestateCarbonInputsForField(Farm farm, int year, CropViewItem viewItem)
+        {
+            if (viewItem.CropType.IsNativeGrassland())
+            {
+                return 0;
+            }
+
+            var field = farm.GetFieldSystemComponent(viewItem.FieldSystemComponentGuid);
+            if (field == null)
+            {
+                return 0;
+            }
+
+            var inputsFromLocalManure = 0d;
+            if (field.HasLivestockDigestateApplicationsInYear(year))
+            {
+                inputsFromLocalManure = viewItem.GetTotalCarbonFromAppliedDigestate(ManureLocationSourceType.Livestock);
+            }
+
+            var component = farm.GetAnaerobicDigestionComponent();
+            var remaining = this.GetTotalCarbonRemainingForField(viewItem, viewItem.Year, farm, component);
+
+            return (inputsFromLocalManure + remaining) / field.FieldArea;
+        }
+
         public double GetTotalCarbonForField(
             CropViewItem cropViewItem,
             int year,
