@@ -28,7 +28,7 @@
 				  <Run Text=" "></Run>
 				  <Run Text="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"></Run>
 			  </TextBlock>
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.TopLayerThickness, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.TopLayerThickness, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_BulkDensity].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown AutomationProperties.Name="{Binding [Label_BulkDensity].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.BulkDensity, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_ProportionOfClayInSoil].Value, Source={StaticResource Loc}}"/>
@@ -39,14 +39,14 @@
 				  <Run Text=" "></Run>
 				  <Run Text="{Binding [Label_UnitPercentage].Value, Source={StaticResource Loc}}"></Run>
 				  </TextBlock>
-			  <NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSoilOrganicCarbon, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_UnitPercentage].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.ProportionOfSoilOrganicCarbon, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown AutomationProperties.Name="{Binding [Label_SoilPh].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.0}" Value="{Binding Data.SoilPh, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_SoilCEC].Value, Source={StaticResource Loc}}">
 				  <Run Text=" "></Run>
 				  <Run Text="{Binding [Label_UnitMiliEquivalentsPer100g].Value, Source={StaticResource Loc}}"></Run>
 				  </TextBlock>
-			  <NumericUpDown FormatString="{}{0:0}" Value="{Binding Data.SoilCec, Mode=TwoWay}" />
+			  <NumericUpDown AutomationProperties.Name="{Binding [Label_UnitMiliEquivalentsPer100g].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0}" Value="{Binding Data.SoilCec, Mode=TwoWay}" />
 			  <TextBlock Text="{Binding [Label_CarbonModellingEquilibrium].Value, Source={StaticResource Loc}}"/>
 			  <NumericUpDown AutomationProperties.Name="{Binding [Label_CarbonModellingEquilibrium].Value, Source={StaticResource Loc}}" FormatString="{}{0:0}" Value="{Binding Data.CarbonModellingEquilibriumYear, Mode=TwoWay}" />
 		  </StackPanel>

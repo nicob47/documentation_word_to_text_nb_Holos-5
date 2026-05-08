@@ -17,7 +17,7 @@
 
         <StackPanel Grid.Row="0">
             <!-- Title -->
-            <TextBox Classes="view-title" Text="{Binding Path=SelectedAnimalComponentDto.Name}"/>
+            <TextBox Classes="view-title" AutomationProperties.Name="{Binding [Label_Name].Value, Source={StaticResource Loc}}" Text="{Binding Path=SelectedAnimalComponentDto.Name}"/>
             <Border Classes="title-underline"/>
         </StackPanel>
 

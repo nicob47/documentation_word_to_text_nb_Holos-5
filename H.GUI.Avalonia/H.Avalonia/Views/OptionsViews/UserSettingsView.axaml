@@ -22,12 +22,12 @@
 					<Run Text="{Binding [Label_RunInPeriod].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Years].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.DefaultRunInPeriod, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_RunInPeriod].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.DefaultRunInPeriod, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_CarbonConcentration].Value, Source={StaticResource Loc}}"/>
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramPerKilogram].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="0.01" FormatString="{}{0:0.00}" Value="{Binding Data.CarbonConcentration, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_CarbonConcentration].Value, Source={StaticResource Loc}}"  Increment="0.01" FormatString="{}{0:0.00}" Value="{Binding Data.CarbonConcentration, Mode=TwoWay}" />
 				<TextBlock Text="{Binding [Label_EquilibriumCalculationStrategy].Value, Source={StaticResource Loc}}"/>
 				<ComboBox AutomationProperties.Name="{Binding [Label_EquilibriumCalculationStrategy].Value, Source={StaticResource Loc}}" ItemsSource="{Binding Data.EquilibriumCalculationStrategiesList}" SelectedItem="{Binding Data.EquilibriumCalculationStrategy}" HorizontalAlignment="Stretch" />
 				<Grid ColumnDefinitions="*, Auto">
@@ -35,17 +35,17 @@
 						<Run Text="{Binding [Label_UseCustomEquilibriumCarbonValue].Value, Source={StaticResource Loc}}" />
 						<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsCarbonPerHectare].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 					</TextBlock>
-					<CheckBox Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomEquilibriumCarbonInput, Mode=TwoWay}" />
+					<CheckBox AutomationProperties.Name="{Binding [Label_UseCustomEquilibriumCarbonValue].Value, Source={StaticResource Loc}}"  Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomEquilibriumCarbonInput, Mode=TwoWay}" />
 				</Grid>
-				<NumericUpDown Increment="0.1" FormatString="{}{0:0.0}"  Value="{Binding Data.CustomEquilibriumCarbonValue, FallbackValue=0.0, Mode=TwoWay}"
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_UseCustomEquilibriumCarbonValue].Value, Source={StaticResource Loc}}"  Increment="0.1" FormatString="{}{0:0.0}"  Value="{Binding Data.CustomEquilibriumCarbonValue, FallbackValue=0.0, Mode=TwoWay}"
 							  IsEnabled="{Binding Data.ShowCustomEquilibriumCarbonInput}" IsVisible="{Binding Data.ShowCustomEquilibriumCarbonInput}" />
 				<Grid ColumnDefinitions="*, Auto">
 				<TextBlock VerticalAlignment="Center" Grid.Column="0">
 					<Run Text="{Binding [Label_UseCustomRuninPeriodTillage].Value, Source={StaticResource Loc}}"/>
 				</TextBlock>
-				<CheckBox Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomRunInPeriodTillage, Mode=TwoWay}" />
+				<CheckBox AutomationProperties.Name="{Binding [Label_UseCustomRuninPeriodTillage].Value, Source={StaticResource Loc}}"  Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomRunInPeriodTillage, Mode=TwoWay}" />
 				</Grid>
-				<ComboBox ItemsSource="{Binding Data.RunInPeriodTillageList}" SelectedItem="{Binding Data.RunInPeriodTillageType}" HorizontalAlignment="Stretch"
+				<ComboBox AutomationProperties.Name="{Binding [Label_UseCustomRuninPeriodTillage].Value, Source={StaticResource Loc}}"  ItemsSource="{Binding Data.RunInPeriodTillageList}" SelectedItem="{Binding Data.RunInPeriodTillageType}" HorizontalAlignment="Stretch"
 						  IsEnabled="{Binding Data.ShowCustomRunInPeriodTillage}" IsVisible="{Binding Data.ShowCustomRunInPeriodTillage}" />
 			</StackPanel>
 			
@@ -55,51 +55,51 @@
 					<Run Text="{Binding [Label_ProductReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForAnnuals, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_ProductReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForAnnuals, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_StrawReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfStrawReturnedToSoilForAnnuals, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_StrawReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfStrawReturnedToSoilForAnnuals, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_RootsReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForAnnuals, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_RootsReturnedToSoilForAnnuals].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForAnnuals, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_ProductReturnedToSoilForFodderCorn].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForFodderCorn, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_ProductReturnedToSoilForFodderCorn].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForFodderCorn, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_RootsReturnedToSoilForFodderCorn].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForFodderCorn, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_RootsReturnedToSoilForFodderCorn].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForFodderCorn, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_ProductReturnedToSoilForPerennials].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForPerennials, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_ProductReturnedToSoilForPerennials].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForPerennials, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_RootsReturnedToSoilForPerennials].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForPerennials, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_RootsReturnedToSoilForPerennials].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfRootsReturnedToSoilForPerennials, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_ProductReturnedToSoilForRootCrops].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForRootCrops, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_ProductReturnedToSoilForRootCrops].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfProductReturnedToSoilForRootCrops, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_StrawReturnedToSoilForRootCrops].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfStrawReturnedToSoilForRootCrops, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_StrawReturnedToSoilForRootCrops].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.PercentageOfStrawReturnedToSoilForRootCrops, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_SupplementalFeedingLoss].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_Percentage].Value, Source={StaticResource Loc}}"/><Run Text=")"/></TextBlock>
-				<NumericUpDown Increment="5" FormatString="{}{0:0}" Value="{Binding Data.DefaultSupplementalFeedingLossPercentage, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_SupplementalFeedingLoss].Value, Source={StaticResource Loc}}"  Increment="5" FormatString="{}{0:0}" Value="{Binding Data.DefaultSupplementalFeedingLossPercentage, Mode=TwoWay}" />
 			</StackPanel>
 
 			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="4" Padding="40, 15" Text="{Binding [Label_N2O].Value, Source={StaticResource Loc}}" />
@@ -108,20 +108,20 @@
 					<Run Text="{Binding [Label_VolatilizationEmissionFactor].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsN2ONPerKilogramN].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.EmissionFactorForVolatilization, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_VolatilizationEmissionFactor].Value, Source={StaticResource Loc}}"  Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.EmissionFactorForVolatilization, Mode=TwoWay}" />
 				<TextBlock>
 					<Run Text="{Binding [Label_EmissionFactorForLeachingAndRunoff].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsN2ONPerKilogramN].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-				<NumericUpDown Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.EmissionFactorForLeachingAndRunoff, Mode=TwoWay}" />
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_EmissionFactorForLeachingAndRunoff].Value, Source={StaticResource Loc}}"  Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.EmissionFactorForLeachingAndRunoff, Mode=TwoWay}" />
 				<Grid ColumnDefinitions="*, Auto">
 				<TextBlock VerticalAlignment="Center" Grid.Column="0">
 					<Run Text="{Binding [Label_UseCustomN2OEmissionFactor].Value, Source={StaticResource Loc}}" />
 					<Run Text="("/><Run FontStyle="Italic" Text="{Binding [Label_KilogramsN2ONPerKilogramN].Value, Source={StaticResource Loc}}"/><Run Text=")"/>
 				</TextBlock>
-					<CheckBox Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomN2OEmissionFactor, Mode=TwoWay}" />
+					<CheckBox AutomationProperties.Name="{Binding [Label_UseCustomN2OEmissionFactor].Value, Source={StaticResource Loc}}"  Padding="1" Grid.Column="1" IsChecked="{Binding Data.ShowCustomN2OEmissionFactor, Mode=TwoWay}" />
 				</Grid>
-				<NumericUpDown IsEnabled="{Binding Data.ShowCustomN2OEmissionFactor}" IsVisible="{Binding Data.ShowCustomN2OEmissionFactor}" Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.CustomN2OEmissionFactor, Mode=TwoWay}"/>
+				<NumericUpDown AutomationProperties.Name="{Binding [Label_UseCustomN2OEmissionFactor].Value, Source={StaticResource Loc}}"  IsEnabled="{Binding Data.ShowCustomN2OEmissionFactor}" IsVisible="{Binding Data.ShowCustomN2OEmissionFactor}" Increment="0.0001" Minimum="0.0001" FormatString="{}{0:0.0000}" Value="{Binding Data.CustomN2OEmissionFactor, Mode=TwoWay}"/>
 			</StackPanel>
 
 			<TextBlock  Margin="0,10,0,0" Background="{StaticResource GcdsBorderDefaultBrush}" Foreground=""  Grid.Row="6" Padding="40, 15" Text="{Binding [Label_Irrigation].Value, Source={StaticResource Loc}}" />
@@ -129,7 +129,7 @@
 				<TextBlock VerticalAlignment="Center" Grid.Column="0">
 					<Run Text="{Binding [Label_PumpType].Value, Source={StaticResource Loc}}" />
 				</TextBlock>
-				<ComboBox  ItemsSource="{Binding Data.PumpTypeList}" SelectedItem="{Binding Data.DefaultPumpType}" HorizontalAlignment="Stretch" />
+				<ComboBox AutomationProperties.Name="{Binding [Label_PumpType].Value, Source={StaticResource Loc}}"   ItemsSource="{Binding Data.PumpTypeList}" SelectedItem="{Binding Data.DefaultPumpType}" HorizontalAlignment="Stretch" />
 			</StackPanel>
 		</Grid>
 			</ScrollViewer>

@@ -32,10 +32,11 @@
                                Classes="input-label" />
 
 						<NumericUpDown Name="YieldNumericUpDown" 
-                                       Grid.Row="0" 
-                                       Grid.Column="1" 
-                                       Minimum="0" 
-                                       Value="{Binding WetYield}"/>
+									   Grid.Row="0" 
+									   Grid.Column="1" 
+									   AutomationProperties.Name="{Binding [Label_YieldWetWeight].Value, Source={StaticResource Loc}}"
+									   Minimum="0" 
+									   Value="{Binding WetYield}"/>
 
 						<Label Grid.Row="0"
                                Grid.Column="2"
@@ -49,10 +50,11 @@
                                Classes="input-label" />
 
 						<NumericUpDown Name="IrrigationNumericUpDown" 
-                                       Grid.Row="1" 
-                                       Grid.Column="1" 
-                                       Minimum="0" 
-                                       Value="{Binding AmountOfIrrigation}"/>
+									   Grid.Row="1" 
+									   Grid.Column="1" 
+									   AutomationProperties.Name="{Binding [Label_AmountOfIrrigation].Value, Source={StaticResource Loc}}"
+									   Minimum="0" 
+									   Value="{Binding AmountOfIrrigation}"/>
 
 						<Label Grid.Row="1"
                                Grid.Column="2"

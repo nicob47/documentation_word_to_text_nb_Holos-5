@@ -28,7 +28,8 @@
 			</StackPanel>
 			
 			<ToggleSwitch Grid.Column="1" 
-			            Name="ShowAdvancedOptionsToggle"
+						Name="ShowAdvancedOptionsToggle"
+						AutomationProperties.Name="{Binding [Label_Advanced].Value, Source={StaticResource Loc}}"
 			            VerticalAlignment="Center"
 			            Margin="12,0,0,0"
 			            OffContent="{Binding [Label_Basic].Value, Source={StaticResource Loc}}"

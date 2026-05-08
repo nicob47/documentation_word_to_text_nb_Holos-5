@@ -45,6 +45,7 @@
                    Content="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
                    Classes="input-label"/>
             <NumericUpDown Grid.Row="0" Grid.Column="1"
+                          AutomationProperties.Name="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
                           Minimum="0"
                           Value="{Binding Path=SelectedFieldSystemComponentDto.FieldArea}"/>
             <Label Grid.Row="0" Grid.Column="2"
@@ -56,6 +57,7 @@
                    Content="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
                    Classes="input-label"/>
             <NumericUpDown Grid.Row="1" Grid.Column="1"
+                          AutomationProperties.Name="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"
                           Minimum="0"
                           FormatString="0"
                           ParsingNumberStyle="Integer"
@@ -66,6 +68,7 @@
                    Content="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
                    Classes="input-label"/>
             <NumericUpDown Grid.Row="2" Grid.Column="1"
+                          AutomationProperties.Name="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"
                           Minimum="0"
                           FormatString="0"
                           ParsingNumberStyle="Integer"

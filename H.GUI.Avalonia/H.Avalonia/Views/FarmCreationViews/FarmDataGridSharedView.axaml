@@ -9,7 +9,7 @@
 	<StackPanel>
 		<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 0 20">
 			<Grid Width="260" VerticalAlignment="Center">
-				<TextBox Text="{Binding SearchText}" Watermark="{Binding [Label_SearchForFarms].Value, Source={StaticResource Loc}}" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource GcdsTextSecondaryBrush}" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold" Padding="40,10,0,10" />
+				<TextBox Text="{Binding SearchText}" AutomationProperties.Name="{Binding [Label_SearchForFarms].Value, Source={StaticResource Loc}}" Watermark="{Binding [Label_SearchForFarms].Value, Source={StaticResource Loc}}" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource GcdsTextSecondaryBrush}" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold" Padding="40,10,0,10" />
 				<Image Source="avares://H.Avalonia/Assets/Images/Icons/search-icon.png" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" AutomationProperties.AccessibilityView="Raw"/>
 			</Grid>
 		</StackPanel>

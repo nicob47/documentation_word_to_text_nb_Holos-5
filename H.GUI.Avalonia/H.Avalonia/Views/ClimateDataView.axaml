@@ -63,7 +63,7 @@
             <DataGridTemplateColumn Width="5*">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <CheckBox Name="RowSelectionCheckbox"
+                        <CheckBox Name="RowSelectionCheckbox" AutomationProperties.Name="Select row"
                                   IsChecked="{Binding IsSelected}"
                                   Cursor="Hand"
                                   HorizontalAlignment="Center"/>
@@ -75,7 +75,7 @@
                                     HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                          <NumericUpDown Value="{Binding Latitude}"
+                          <NumericUpDown AutomationProperties.Name="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"  Value="{Binding Latitude}"
                                          Minimum="-90"
                                          Maximum="90"/>
                         </DataTemplate>
@@ -86,7 +86,7 @@
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <NumericUpDown Value="{Binding Longitude}"
+                            <NumericUpDown AutomationProperties.Name="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"  Value="{Binding Longitude}"
                                            Minimum="-180"
                                            Maximum="180"/>
                         </DataTemplate>
@@ -97,7 +97,7 @@
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <NumericUpDown Value="{Binding StartYear}"
+                            <NumericUpDown AutomationProperties.Name="{Binding [Label_StartYear].Value, Source={StaticResource Loc}}"  Value="{Binding StartYear}"
                                            Minimum="1970"
                                            Maximum="2050"/>
                         </DataTemplate>
@@ -108,7 +108,7 @@
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <NumericUpDown Value="{Binding EndYear}"
+                            <NumericUpDown AutomationProperties.Name="{Binding [Label_EndYear].Value, Source={StaticResource Loc}}"  Value="{Binding EndYear}"
                                            Minimum="1970"
                                            Maximum="2050"/>
                         </DataTemplate>
@@ -119,7 +119,7 @@
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding ExtractMonthlyData}"
+                            <CheckBox AutomationProperties.Name="{Binding [Label_CalculateMonthlyPPT].Value, Source={StaticResource Loc}}"  IsChecked="{Binding ExtractMonthlyData}"
                                       Cursor="Hand"
                                       HorizontalAlignment="Center"/>
                         </DataTemplate>
@@ -130,7 +130,7 @@
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <NumericUpDown Value="{Binding JulianStartDay}"
+                            <NumericUpDown AutomationProperties.Name="{Binding [Label_JulianStartDay].Value, Source={StaticResource Loc}}"  Value="{Binding JulianStartDay}"
                                            IsVisible="{Binding ExtractMonthlyData}"
                                            Minimum="0"
                                            Maximum="365"/>
@@ -142,7 +142,7 @@
                                         HeaderTemplate="{StaticResource HeaderTemplate}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                          <NumericUpDown Value="{Binding JulianEndDay}"
+                          <NumericUpDown AutomationProperties.Name="{Binding [Label_JulianEndDay].Value, Source={StaticResource Loc}}"  Value="{Binding JulianEndDay}"
                                          IsVisible="{Binding ExtractMonthlyData}"
                                          Minimum="0"
                                          Maximum="365"/>

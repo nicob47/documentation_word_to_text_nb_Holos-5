@@ -10,8 +10,8 @@
 		<TextBlock Text="{Binding [Label_CreateNewFarm].Value, Source={StaticResource Loc}}"
 		   HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Bold" FontSize="{StaticResource GcdsFontSizeH5}" Foreground="{StaticResource GcdsTextSecondaryBrush}" />
 		<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 20">
-			<TextBox Text="{Binding Path=FarmName}" Watermark="{Binding [Label_WatermarkYourFarmName].Value, Source={StaticResource Loc}}" Margin="0 15 0 0" Foreground="{StaticResource GcdsTextSecondaryBrush}" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
-			<TextBox Text="{Binding Path=FarmComments}"  Watermark="{Binding [Label_WatermarkComments].Value, Source={StaticResource Loc}}" Margin="0 15 0 0" Foreground="{StaticResource GcdsTextSecondaryBrush}"  BorderBrush="{StaticResource GcdsBorderLightBrush}" FontWeight="SemiBold" BorderThickness="2" AcceptsReturn="True" TextWrapping="Wrap"/>
+			<TextBox Text="{Binding Path=FarmName}" AutomationProperties.Name="{Binding [Label_WatermarkYourFarmName].Value, Source={StaticResource Loc}}" Watermark="{Binding [Label_WatermarkYourFarmName].Value, Source={StaticResource Loc}}" Margin="0 15 0 0" Foreground="{StaticResource GcdsTextSecondaryBrush}" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
+			<TextBox Text="{Binding Path=FarmComments}" AutomationProperties.Name="{Binding [Label_WatermarkComments].Value, Source={StaticResource Loc}}" Watermark="{Binding [Label_WatermarkComments].Value, Source={StaticResource Loc}}" Margin="0 15 0 0" Foreground="{StaticResource GcdsTextSecondaryBrush}"  BorderBrush="{StaticResource GcdsBorderLightBrush}" FontWeight="SemiBold" BorderThickness="2" AcceptsReturn="True" TextWrapping="Wrap"/>
 			<Button Content="{Binding [Button_CreateNewFarm].Value, Source={StaticResource Loc}}" Margin="0 15 0 0"
                     Command="{Binding Path=OnCreateNewFarmExecute}">
 			</Button>

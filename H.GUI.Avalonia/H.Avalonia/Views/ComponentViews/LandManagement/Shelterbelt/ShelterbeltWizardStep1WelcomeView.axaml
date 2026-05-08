@@ -27,6 +27,7 @@
                    VerticalAlignment="Center"
                    Classes="input-label"/>
             <TextBox Grid.Column="1" Grid.Row="0"
+                     AutomationProperties.Name="Shelterbelt Name"
                      Text="{Binding ShelterbeltName}"
                      Watermark="e.g. North field windbreak"
                      MinWidth="240"/>

@@ -112,7 +112,7 @@
                     <DataGridTemplateColumn Width="Auto" Header="{Binding [Label_NumberOfDays].Value, Source={StaticResource Loc}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <NumericUpDown Value="{Binding NumberOfDays}"
+                                <NumericUpDown AutomationProperties.Name="{Binding [Label_NumberOfDays].Value, Source={StaticResource Loc}}"  Value="{Binding NumberOfDays}"
                                                Minimum="1"
                                                Increment="1"
                                                FormatString="{}{0:0}"

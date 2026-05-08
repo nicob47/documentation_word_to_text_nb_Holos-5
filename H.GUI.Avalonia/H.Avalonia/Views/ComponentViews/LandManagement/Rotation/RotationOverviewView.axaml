@@ -59,6 +59,7 @@
                                Content="{Binding [Label_RotationStartYear].Value, Source={StaticResource Loc}}"
                                Classes="input-label"/>
                         <NumericUpDown x:Name="StartYearInputNumericUpDown"
+                                       AutomationProperties.Name="{Binding [Label_RotationStartYear].Value, Source={StaticResource Loc}}"
                                        Grid.Row="0" Grid.Column="1"
                                        Minimum="1900"
                                        Maximum="2200"
@@ -71,6 +72,7 @@
                                Content="{Binding [Label_RotationEndYear].Value, Source={StaticResource Loc}}"
                                Classes="input-label"/>
                         <NumericUpDown x:Name="EndYearInputNumericUpDown"
+                                       AutomationProperties.Name="{Binding [Label_RotationEndYear].Value, Source={StaticResource Loc}}"
                                        Grid.Row="1" Grid.Column="1"
                                        Minimum="1900"
                                        Maximum="2200"

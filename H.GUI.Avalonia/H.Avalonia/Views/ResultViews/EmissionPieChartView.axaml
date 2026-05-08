@@ -21,19 +21,19 @@
                         <TextBlock>
                             <Run Text="{Binding [Label_UnitsOfMeasurement].Value, Source={StaticResource Loc}}"/><Run Text=":"/>
                         </TextBlock>
-						<ComboBox SelectedItem="{Binding SelectedEmissionType}" ItemsSource="{Binding EmissionTypeOptions}"/>
+						<ComboBox AutomationProperties.Name="{Binding [Label_UnitsOfMeasurement].Value, Source={StaticResource Loc}}"  SelectedItem="{Binding SelectedEmissionType}" ItemsSource="{Binding EmissionTypeOptions}"/>
                     </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock>
                         <Run Text="{Binding [Label_ShowDetails].Value, Source={StaticResource Loc}}"/><Run Text=":"/>
                     </TextBlock>
-                    <ToggleSwitch IsChecked="{Binding ShowDetails}"/>
+                    <ToggleSwitch AutomationProperties.Name="{Binding [Label_ShowDetails].Value, Source={StaticResource Loc}}"  IsChecked="{Binding ShowDetails}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock>
                         <Run Text="{Binding [Label_Year].Value, Source={StaticResource Loc}}"/><Run Text=":"/>
                     </TextBlock>
-                    <ComboBox SelectedItem="{Binding SelectedYear}" ItemsSource="{Binding AvailableYears}"/>
+                    <ComboBox AutomationProperties.Name="{Binding [Label_Year].Value, Source={StaticResource Loc}}"  SelectedItem="{Binding SelectedYear}" ItemsSource="{Binding AvailableYears}"/>
                 </StackPanel>
             </StackPanel>
         </Border>

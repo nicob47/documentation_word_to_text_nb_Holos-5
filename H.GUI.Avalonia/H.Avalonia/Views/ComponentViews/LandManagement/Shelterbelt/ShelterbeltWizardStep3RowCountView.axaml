@@ -25,6 +25,7 @@
                    Classes="input-label"/>
 
             <NumericUpDown Grid.Column="1"
+                           AutomationProperties.Name="Number of rows"
                            Value="{Binding NumberOfRows}"
                            Minimum="1"
                            Maximum="10"

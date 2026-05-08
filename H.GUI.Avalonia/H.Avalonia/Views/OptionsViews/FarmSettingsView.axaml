@@ -33,12 +33,12 @@
 						<Run Text="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"/>
 					</TextBlock>
 
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.GrowingSeasonPrecipitation, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.GrowingSeasonPrecipitation, Mode=TwoWay}" />
 					<TextBlock Text="{Binding [Label_GrowingSeasonEvapotranspiration].Value, Source={StaticResource Loc}}"  >
 						<Run Text=" "/>
 						<Run Text="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"/>
 					</TextBlock>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.GrowingSeasonEvapotranspiration, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_UnitMm].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.GrowingSeasonEvapotranspiration, Mode=TwoWay}" />
 					<TextBlock Text="{Binding [Label_HolosOperationMode].Value, Source={StaticResource Loc}}" />
 					<Grid >
 						<!--<RadioButton IsChecked="{Binding ActiveFarm.IsBasicMode}" GroupName="OperationMode" Content="{Binding [Label_BasicMode].Value, Source={StaticResource Loc}}"></RadioButton>-->

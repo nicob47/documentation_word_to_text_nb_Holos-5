@@ -29,6 +29,7 @@
                    VerticalAlignment="Center"
                    Classes="input-label"/>
             <TextBox Grid.Row="0" Grid.Column="1"
+                     AutomationProperties.Name="Row name"
                      Text="{Binding RowName}"
                      Watermark="e.g. North side"
                      MinWidth="220"/>
@@ -40,6 +41,7 @@
                    Classes="input-label"
                    Margin="0,8,0,0"/>
             <NumericUpDown Grid.Row="1" Grid.Column="1"
+                           AutomationProperties.Name="Row length"
                            Value="{Binding RowLength}"
                            Minimum="1"
                            FormatString="N1"

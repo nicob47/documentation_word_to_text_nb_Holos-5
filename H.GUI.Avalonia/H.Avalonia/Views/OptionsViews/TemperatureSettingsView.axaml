@@ -34,7 +34,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.January, Mode=TwoWay}" Grid.Column="0"/>
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_January].Value, Source={StaticResource Loc}}" FormatString="{}{0:0.00}" Value="{Binding Data.January, Mode=TwoWay}" Grid.Column="0"/>
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -44,7 +44,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.February, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_February].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.February, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -54,7 +54,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.March, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_March].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.March, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -64,7 +64,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.April, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_April].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.April, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -74,7 +74,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.May, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_May].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.May, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -84,7 +84,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.June, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_June].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.June, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -94,7 +94,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.July, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_July].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.July, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -104,7 +104,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.August, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_August].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.August, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -114,7 +114,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.September, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_September].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.September, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -125,7 +125,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.October, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_October].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.October, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -135,7 +135,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.November, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_November].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.November, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 
@@ -145,7 +145,7 @@
 						<ColumnDefinition Width="140"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<NumericUpDown FormatString="{}{0:0.00}" Value="{Binding Data.December, Mode=TwoWay}" />
+					<NumericUpDown AutomationProperties.Name="{Binding [Label_December].Value, Source={StaticResource Loc}}"  FormatString="{}{0:0.00}" Value="{Binding Data.December, Mode=TwoWay}" />
 					<TextBlock VerticalAlignment="Center" Text=" (°C)" Grid.Column="1"/>
 				</Grid>
 

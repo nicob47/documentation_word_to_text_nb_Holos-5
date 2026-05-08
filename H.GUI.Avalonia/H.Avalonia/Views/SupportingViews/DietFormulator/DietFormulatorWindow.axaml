@@ -108,6 +108,7 @@
                     <!-- Toolbar: search box + Add to selected diet (one row, save vertical space) -->
                     <Grid Grid.Row="2" Margin="10,0,10,8" ColumnDefinitions="*,8,Auto">
                         <TextBox Grid.Column="0"
+                                 AutomationProperties.Name="{Binding [Label_SearchIngredientsWatermark].Value, Source={StaticResource Loc}}"
                                  Text="{Binding IngredientSearchText, Mode=TwoWay}"
                                  Watermark="{Binding [Label_SearchIngredientsWatermark].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"

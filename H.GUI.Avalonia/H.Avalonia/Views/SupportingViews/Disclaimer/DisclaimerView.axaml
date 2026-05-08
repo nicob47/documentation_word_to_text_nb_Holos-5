@@ -45,7 +45,7 @@
 			</StackPanel>
 			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 				<Label Content="{Binding [LabelLanguage].Value, Source={StaticResource Loc}}" VerticalAlignment="Center"/>
-				<ComboBox ItemsSource="{Binding LanguageCollection}"
+				<ComboBox AutomationProperties.Name="{Binding [LabelLanguage].Value, Source={StaticResource Loc}}"  ItemsSource="{Binding LanguageCollection}"
 						  SelectedItem="{Binding SelectedLanguage}"
 						  MinWidth="120"
 						  Margin="5,0,0,0"/>

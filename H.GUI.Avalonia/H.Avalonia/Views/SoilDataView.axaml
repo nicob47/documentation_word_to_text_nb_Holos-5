@@ -97,7 +97,7 @@
                                            FontWeight="Bold"
                                            Grid.Row="0"
                                            Grid.Column="0"/>
-                                    <NumericUpDown Value="{Binding Latitude}"
+                                    <NumericUpDown AutomationProperties.Name="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"  Value="{Binding Latitude}"
                                                    Maximum="90"
                                                    Minimum="-90"
                                                    Grid.Row="0"
@@ -109,7 +109,7 @@
                                            FontWeight="Bold"
                                            Grid.Row="1"
                                            Grid.Column="0"/>
-                                    <NumericUpDown Value="{Binding Longitude}"
+                                    <NumericUpDown AutomationProperties.Name="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"  Value="{Binding Longitude}"
                                                    Maximum="180"
                                                    Minimum="-180"
                                                    Margin="0,5,0,5"
@@ -135,32 +135,32 @@
                                 <TextBlock Text="{Binding [Text_SoilDataViewAddressSearchDisclaimer].Value, Source={StaticResource Loc}}" TextWrapping="Wrap" Classes="disclaimer"/>
 						        <!-- Standard Address Fields -->
 						        <Grid Margin="0,5,0,5" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" IsVisible="{Binding !IsComplexRuralAddressMode}">
-							        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+							        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutomationProperties.Name="{Binding [Label_SoilDataViewRoadName].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewRoadName].Value, Source={StaticResource Loc}}"
 									         Text="{Binding StreetAddress, Mode=TwoWay}" />
-							        <TextBox Grid.Row="1" Grid.Column="0"
+							        <TextBox Grid.Row="1" Grid.Column="0" AutomationProperties.Name="{Binding [Label_SoilDataViewMunicipality].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewMunicipality].Value, Source={StaticResource Loc}}"
 									         Text="{Binding Municipality, Mode=TwoWay}" Margin="0,5,5,0"/>
-							        <TextBox Grid.Row="1" Grid.Column="1"
+							        <TextBox Grid.Row="1" Grid.Column="1" AutomationProperties.Name="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}"
 									         Text="{Binding PostalCode, Mode=TwoWay}" Margin="5,5,0,0"/>
 						        </Grid>
 
 						        <!-- Rural Address Fields (Currently hidden to user as address mode toggle above is invisible to the user)-->
 						        <Grid Margin="0,0,0,5" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*" IsVisible="{Binding IsComplexRuralAddressMode}">
-							        <TextBox Grid.Row="0" Grid.Column="0"
+							        <TextBox Grid.Row="0" Grid.Column="0" AutomationProperties.Name="{Binding [Label_SoilDataViewCivicNumber].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewCivicNumber].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralCivicNumbering, Mode=TwoWay}" Margin="0,0,5,0"/>
-							        <TextBox Grid.Row="0" Grid.Column="1"
+							        <TextBox Grid.Row="0" Grid.Column="1" AutomationProperties.Name="{Binding [Label_SoilDataViewRoadName].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewRoadName].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralRoadName, Mode=TwoWay}" Margin="5,0,0,0"/>
-							        <TextBox Grid.Row="1" Grid.Column="0"
+							        <TextBox Grid.Row="1" Grid.Column="0" AutomationProperties.Name="{Binding [Label_SoilDataViewCounty].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewCounty].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralCounty, Mode=TwoWay}" Margin="0,5,5,0"/>
-							        <TextBox Grid.Row="1" Grid.Column="1"
+							        <TextBox Grid.Row="1" Grid.Column="1" AutomationProperties.Name="{Binding [Label_SoilDataViewMunicipality].Value, Source={StaticResource Loc}}"
 									         Watermark="{Binding [Label_SoilDataViewMunicipality].Value, Source={StaticResource Loc}}"
 									         Text="{Binding RuralMunicipality, Mode=TwoWay}" Margin="5,5,0,0"/>
-							        <TextBox Grid.Row="2" Grid.Column="0" Watermark="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}" Text="{Binding RuralPostalCode, Mode=TwoWay}" Margin="0,5,5,0"/>
+							        <TextBox AutomationProperties.Name="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}" Grid.Row="2" Grid.Column="0" Watermark="{Binding [Label_SoilDataViewPostalCode].Value, Source={StaticResource Loc}}" Text="{Binding RuralPostalCode, Mode=TwoWay}" Margin="0,5,5,0"/>
 
 						        </Grid>
 						        <Button Classes="generic-button"
@@ -239,7 +239,7 @@
 						<DataGridTemplateColumn Width="5*">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<CheckBox Name="RowSelectionCheckbox"
+									<CheckBox Name="RowSelectionCheckbox" AutomationProperties.Name="Select row"
 											  IsChecked="{Binding IsSelected}"
 											  Cursor="Hand"
 											  HorizontalAlignment="Center"/>
@@ -251,7 +251,7 @@
 												HeaderTemplate="{StaticResource HeaderTemplate}">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<NumericUpDown Value="{Binding Latitude}"
+									<NumericUpDown AutomationProperties.Name="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"  Value="{Binding Latitude}"
 												   Minimum="-90"
 												   Maximum="90"/>
 								</DataTemplate>
@@ -262,7 +262,7 @@
                                                 HeaderTemplate="{StaticResource HeaderTemplate}">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<NumericUpDown Value="{Binding Longitude}"
+									<NumericUpDown AutomationProperties.Name="{Binding [Label_Longitude].Value, Source={StaticResource Loc}}"  Value="{Binding Longitude}"
                                                    Minimum="-180"
                                                    Maximum="180"/>
 								</DataTemplate>

@@ -24,7 +24,8 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,20">
             <Grid Width="300" VerticalAlignment="Center">
                 <TextBox Text="{Binding SearchText}" 
-                         Watermark="{Binding [Label_SearchDietsWatermark].Value, Source={StaticResource Loc}}" 
+                         AutomationProperties.Name="{Binding [Label_SearchDietsWatermark].Value, Source={StaticResource Loc}}"
+                         Watermark="{Binding [Label_SearchDietsWatermark].Value, Source={StaticResource Loc}}"
                          VerticalContentAlignment="Center" 
                          VerticalAlignment="Center" 
                          Foreground="{StaticResource GcdsTextSecondaryBrush}" 

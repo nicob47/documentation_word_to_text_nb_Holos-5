@@ -38,6 +38,7 @@
                    Content="{Binding [Label_Fields].Value, Source={StaticResource Loc}}"
                    Classes="input-label"/>
             <NumericUpDown x:Name="NumberOfFieldsInputNumericUpDown"
+                           AutomationProperties.Name="{Binding [Label_Fields].Value, Source={StaticResource Loc}}"
                            Grid.Row="0" Grid.Column="1"
                            Minimum="1"
                            Maximum="20"
@@ -53,6 +54,7 @@
                    Content="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
                    Classes="input-label"/>
             <NumericUpDown x:Name="FieldAreaInputNumericUpDown"
+                           AutomationProperties.Name="{Binding [Label_FieldSize].Value, Source={StaticResource Loc}}"
                            Grid.Row="1" Grid.Column="1"
                            Minimum="0.1"
                            Value="{Binding Path=SelectedRotationComponentDto.FieldArea}"/>
@@ -72,7 +74,7 @@
             <!-- Radio Button Group -->
             <StackPanel Spacing="6" Margin="4,0,0,0">
                 <!-- No Shift Option -->
-                <RadioButton GroupName="ShiftDirection"
+                <RadioButton AutomationProperties.Name="{Binding [Label_RotationShiftDirection].Value, Source={StaticResource Loc}}"  GroupName="ShiftDirection"
                              IsChecked="{Binding ShiftDirection,
                                          Converter={StaticResource EnumToBoolConverter},
                                          ConverterParameter={x:Static enums:RotationShiftDirection.None}}">

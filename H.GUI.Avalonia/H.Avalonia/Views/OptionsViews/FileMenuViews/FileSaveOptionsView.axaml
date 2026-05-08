@@ -27,7 +27,7 @@
 					<ColumnDefinition Width="*"/> 
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<TextBox Grid.Column="0" Text="{Binding Path=NewFarmName}" Margin="0 0 5 0" Watermark="{Binding [Label_WatermarkNewFarmName].Value, Source={StaticResource Loc}}" VerticalContentAlignment="Center" Foreground="#696969" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
+				<TextBox Grid.Column="0" Text="{Binding Path=NewFarmName}" AutomationProperties.Name="{Binding [Label_WatermarkNewFarmName].Value, Source={StaticResource Loc}}" Margin="0 0 5 0" Watermark="{Binding [Label_WatermarkNewFarmName].Value, Source={StaticResource Loc}}" VerticalContentAlignment="Center" Foreground="#696969" BorderBrush="{StaticResource GcdsBorderLightBrush}" BorderThickness="2" FontWeight="SemiBold"/>
 				<Button Grid.Column="1" Command="{Binding Path=SaveAsCommand}" Margin="5 0 0 0" HorizontalAlignment="Center" Content="{Binding [Label_Save].Value, Source={StaticResource Loc}}"></Button>
 			</Grid>
 		</StackPanel>

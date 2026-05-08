@@ -24,7 +24,7 @@ x:Class="H.Avalonia.Views.ComponentViews.LandManagement.Rotation.RotationCompone
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0">
-			<TextBox Classes="view-title" Text="{Binding Path=SelectedRotationComponentDto.Name}"/>
+			<TextBox Classes="view-title" AutomationProperties.Name="{Binding [Label_Name].Value, Source={StaticResource Loc}}" Text="{Binding Path=SelectedRotationComponentDto.Name}"/>
 			<Border Classes="title-underline"/>
 		</StackPanel>
 
