@@ -37,6 +37,13 @@ public class DietFormulatorWindowViewModel : ViewModelBase
     private IFeedIngredient? _selectedIngredientInDiet;
     private bool _isSaveAsPromptVisible;
     private string _saveAsName = string.Empty;
+    private string _ingredientSearchText = string.Empty;
+    /// <summary>
+    /// Master list of every ingredient available for the current animal type.
+    /// <see cref="AvailableIngredients"/> is a filtered view of this; the search box
+    /// rebuilds the visible collection from this master list whenever the search text changes.
+    /// </summary>
+    private readonly List<IFeedIngredient> _allAvailableIngredients = new();
 
     public DietFormulatorWindowViewModel()
     {
@@ -145,6 +152,23 @@ public class DietFormulatorWindowViewModel : ViewModelBase
 
     public AnimalType AnimalType => _animalType;
 
+    /// <summary>
+    /// Free-text filter applied to <see cref="AvailableIngredients"/>. Each ingredient's
+    /// localized display name (<see cref="IFeedIngredient.IngredientTypeString"/>) is
+    /// case-insensitively matched against this string. Empty/whitespace shows the full list.
+    /// </summary>
+    public string IngredientSearchText
+    {
+        get => _ingredientSearchText;
+        set
+        {
+            if (SetProperty(ref _ingredientSearchText, value ?? string.Empty))
+            {
+                ApplyIngredientFilter();
+            }
+        }
+    }
+
     /// <summary>Commit edits and close. Sets <see cref="SavedDiet"/> for the launcher to consume.</summary>
     public ICommand SaveCommand { get; }
 
@@ -251,7 +275,10 @@ public class DietFormulatorWindowViewModel : ViewModelBase
                 MyDiets.Add(diet);
         }
 
-        AvailableIngredients.Clear();
+        // Build the master ingredient list once per modal open. The visible collection
+        // (AvailableIngredients) is rebuilt by ApplyIngredientFilter() so the search box
+        // can re-filter without re-querying the provider.
+        _allAvailableIngredients.Clear();
         IList<IFeedIngredient>? ingredients = null;
         if (_animalType.IsBeefCattleType()) ingredients = _feedIngredientProvider.GetBeefFeedIngredients();
         else if (_animalType.IsDairyCattleType()) ingredients = _feedIngredientProvider.GetDairyFeedIngredients();
@@ -259,11 +286,33 @@ public class DietFormulatorWindowViewModel : ViewModelBase
 
         if (ingredients != null)
         {
-            foreach (var ingredient in ingredients)
-                AvailableIngredients.Add(ingredient);
+            _allAvailableIngredients.AddRange(ingredients);
         }
+        ApplyIngredientFilter();
 
         SelectedDiet = MyDiets.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Repopulates <see cref="AvailableIngredients"/> from <see cref="_allAvailableIngredients"/>,
+    /// filtered by <see cref="IngredientSearchText"/>. Case-insensitive substring match against the
+    /// ingredient's localized display name. Called from <see cref="Load"/> and from the
+    /// <see cref="IngredientSearchText"/> setter.
+    /// </summary>
+    private void ApplyIngredientFilter()
+    {
+        AvailableIngredients.Clear();
+        var search = (_ingredientSearchText ?? string.Empty).Trim();
+        IEnumerable<IFeedIngredient> filtered = _allAvailableIngredients;
+        if (search.Length > 0)
+        {
+            filtered = _allAvailableIngredients.Where(i =>
+                (i.IngredientTypeString ?? string.Empty).Contains(search, StringComparison.OrdinalIgnoreCase));
+        }
+        foreach (var ingredient in filtered)
+        {
+            AvailableIngredients.Add(ingredient);
+        }
     }
 
     /// <summary>

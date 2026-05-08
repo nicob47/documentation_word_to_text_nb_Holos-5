@@ -1572,6 +1572,10 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <value>+ Add to Diet</value>
     <comment>GUI - Diet Formulator: button to add an ingredient from the library to the selected diet</comment>
   </data>
+  <data name="Label_SearchIngredientsWatermark" xml:space="preserve">
+    <value>Search ingredients…</value>
+    <comment>GUI - Diet Formulator: watermark/placeholder for the ingredient search TextBox in Step 2</comment>
+  </data>
   <data name="Label_RemoveIngredientFromDiet" xml:space="preserve">
     <value>− Remove from Diet</value>
     <comment>GUI - Diet Formulator: button to remove an ingredient from the selected diet</comment>
