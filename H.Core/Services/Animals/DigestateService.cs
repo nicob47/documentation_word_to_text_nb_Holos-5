@@ -44,6 +44,11 @@ namespace H.Core.Services.Animals
 
         #region Public Methods
 
+        public void Initialize(Farm farm, List<AnimalComponentEmissionsResults> animalComponentEmissionsResults)
+        {
+            this.AnimalResults = animalComponentEmissionsResults ?? new List<AnimalComponentEmissionsResults>();
+        }
+
         public List<DigestorDailyOutput> GetDailyResults(Farm farm)
         {
             if (farm.AnaerobicDigestionComponents.Any() == false)
