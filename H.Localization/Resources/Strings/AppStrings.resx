@@ -1609,7 +1609,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>GUI - Diet Formulator: placeholder text in the Save As Custom name input</comment>
   </data>
   <data name="Label_DietFormulatorStep1" xml:space="preserve">
-    <value>Step 1:</value>
+    <value>Step 1</value>
     <comment>GUI - Diet Formulator: step header above the diets list</comment>
   </data>
   <data name="Label_DietFormulatorStep1Description" xml:space="preserve">
@@ -1617,7 +1617,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>GUI - Diet Formulator: instructional text for step 1</comment>
   </data>
   <data name="Label_DietFormulatorStep2" xml:space="preserve">
-    <value>Step 2:</value>
+    <value>Step 2</value>
     <comment>GUI - Diet Formulator: step header above the available ingredients</comment>
   </data>
   <data name="Label_DietFormulatorStep2Description" xml:space="preserve">
@@ -1625,7 +1625,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>GUI - Diet Formulator: instructional text for step 2</comment>
   </data>
   <data name="Label_DietFormulatorStep3" xml:space="preserve">
-    <value>Step 3:</value>
+    <value>Step 3</value>
     <comment>GUI - Diet Formulator: step header above the selected diet ingredients</comment>
   </data>
   <data name="Label_DietFormulatorStep3GuidanceUnder" xml:space="preserve">
@@ -2097,7 +2097,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>GUI (H.Core) - field/control label</comment>
   </data>
   <data name="Label_Step2" xml:space="preserve">
-    <value>Step 2:</value>
+    <value>Step 2</value>
     <comment>GUI (H.Core) - field/control label</comment>
   </data>
   <data name="Label_Step2Text" xml:space="preserve">
@@ -2105,7 +2105,7 @@ If you are not satisfied with our response to your privacy concern, you may wish
     <comment>GUI (H.Core) - field/control label</comment>
   </data>
   <data name="Label_Step3" xml:space="preserve">
-    <value>Step 3:</value>
+    <value>Step 3</value>
     <comment>GUI (H.Core) - field/control label</comment>
   </data>
   <data name="Label_Step3Text" xml:space="preserve">
