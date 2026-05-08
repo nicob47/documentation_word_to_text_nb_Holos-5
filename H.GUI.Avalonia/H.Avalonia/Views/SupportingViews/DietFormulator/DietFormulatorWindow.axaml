@@ -112,7 +112,24 @@
                                  Watermark="{Binding [Label_SearchIngredientsWatermark].Value, Source={StaticResource Loc}}"
                                  FontSize="{StaticResource GcdsFontSizeSmall}"
                                  Padding="8,4"
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center">
+                            <!-- Inline clear button: only shown when there's text to clear -->
+                            <TextBox.InnerRightContent>
+                                <Button Command="{Binding ClearIngredientSearchCommand}"
+                                        IsVisible="{Binding IngredientSearchText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="6,0"
+                                        Margin="0,0,4,0"
+                                        Cursor="Hand"
+                                        ToolTip.Tip="Clear search">
+                                    <TextBlock Text="✕"
+                                               FontSize="{StaticResource GcdsFontSizeSmall}"
+                                               Foreground="{StaticResource GcdsTextSecondaryBrush}"
+                                               VerticalAlignment="Center"/>
+                                </Button>
+                            </TextBox.InnerRightContent>
+                        </TextBox>
                         <Button Grid.Column="2"
                                 Content="{Binding [Label_AddIngredientToDiet].Value, Source={StaticResource Loc}}"
                                 Command="{Binding AddIngredientCommand}"

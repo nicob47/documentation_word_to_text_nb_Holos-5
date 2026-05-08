@@ -62,6 +62,7 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         BeginSaveAsCustomCommand = new DelegateCommand(OnBeginSaveAsCustomExecute, CanBeginSaveAsCustom);
         ConfirmSaveAsCustomCommand = new DelegateCommand(OnConfirmSaveAsCustomExecute, CanConfirmSaveAsCustom);
         CancelSaveAsCustomCommand = new DelegateCommand(OnCancelSaveAsCustomExecute);
+        ClearIngredientSearchCommand = new DelegateCommand(() => IngredientSearchText = string.Empty);
     }
 
     public DietFormulatorWindowViewModel(
@@ -87,6 +88,7 @@ public class DietFormulatorWindowViewModel : ViewModelBase
         BeginSaveAsCustomCommand = new DelegateCommand(OnBeginSaveAsCustomExecute, CanBeginSaveAsCustom);
         ConfirmSaveAsCustomCommand = new DelegateCommand(OnConfirmSaveAsCustomExecute, CanConfirmSaveAsCustom);
         CancelSaveAsCustomCommand = new DelegateCommand(OnCancelSaveAsCustomExecute);
+        ClearIngredientSearchCommand = new DelegateCommand(() => IngredientSearchText = string.Empty);
 
         Load();
     }
@@ -184,6 +186,12 @@ public class DietFormulatorWindowViewModel : ViewModelBase
     public ICommand ConfirmSaveAsCustomCommand { get; }
     /// <summary>Hides the inline name prompt and discards the typed name.</summary>
     public ICommand CancelSaveAsCustomCommand { get; }
+
+    /// <summary>
+    /// Resets the ingredient search to an empty string, restoring the full ingredient
+    /// list. Bound to the inline ✕ button rendered inside the search TextBox.
+    /// </summary>
+    public ICommand ClearIngredientSearchCommand { get; }
 
     /// <summary>Whether the inline "Save As Custom" name prompt is currently visible.</summary>
     public bool IsSaveAsPromptVisible
