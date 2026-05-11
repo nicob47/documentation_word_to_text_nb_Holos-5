@@ -40,7 +40,15 @@ namespace H.Core
         {
             containerRegistry.RegisterSingleton<IClimateParameterCalculator, ClimateParameterCalculator>();
             containerRegistry.RegisterSingleton<ITillageFactorCalculator, TillageFactorCalculator>();
-            containerRegistry.RegisterSingleton<IICBMSoilCarbonCalculator, ICBMSoilCarbonCalculator>();            
+            containerRegistry.RegisterSingleton<IICBMSoilCarbonCalculator, ICBMSoilCarbonCalculator>();
+
+            // Carbon input calculators + the orchestrating CarbonService. Registered here so non-GUI
+            // consumers (CLI, tests) get the same instances as the Avalonia app. Each class still
+            // news up its own dependencies in its parameterless constructor; converting to
+            // constructor injection is a follow-on cleanup.
+            containerRegistry.RegisterSingleton<IICBMCarbonInputCalculator, ICBMCarbonInputCalculator>();
+            containerRegistry.RegisterSingleton<IIPCCTier2CarbonInputCalculator, IPCCTier2CarbonInputCalculator>();
+            containerRegistry.RegisterSingleton<ICarbonService, CarbonService>();
 
             containerRegistry.RegisterSingleton<ICustomFileClimateDataProvider, CustomFileClimateDataProvider>();
             containerRegistry.RegisterSingleton<IDietProvider, DietProvider>();

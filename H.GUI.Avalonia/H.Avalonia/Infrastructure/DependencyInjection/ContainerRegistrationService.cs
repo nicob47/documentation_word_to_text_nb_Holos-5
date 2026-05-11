@@ -47,6 +47,7 @@ using H.Avalonia.Views.SupportingViews.MeasurementProvince;
 using H.Avalonia.Views.SupportingViews.RegionSelection;
 using H.Avalonia.Views.SupportingViews.Start;
 using H.Core;
+using H.Core.Calculators.Carbon;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
@@ -397,6 +398,13 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterSingleton<IDietFormulatorWindowService, DietFormulatorWindowService>();
             containerRegistry.RegisterSingleton<IDefaultGeocoderService, NominatimGeocoderService>();
             containerRegistry.RegisterSingleton<ICropColorService, CropColorService>();
+
+            // Carbon input calculators + orchestrating CarbonService (also registered in CoreModule
+            // for non-GUI consumers; duplicated here for parity with the rest of the GUI service
+            // wiring).
+            containerRegistry.RegisterSingleton<IICBMCarbonInputCalculator, ICBMCarbonInputCalculator>();
+            containerRegistry.RegisterSingleton<IIPCCTier2CarbonInputCalculator, IPCCTier2CarbonInputCalculator>();
+            containerRegistry.RegisterSingleton<ICarbonService, CarbonService>();
 
             // Unit conversion
             containerRegistry.RegisterSingleton<IUnitsOfMeasurementCalculator, UnitsOfMeasurementCalculator>();
