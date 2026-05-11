@@ -1,4 +1,5 @@
-﻿using H.Core.Models.LandManagement.Fields;
+﻿using H.Core.Enumerations;
+using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Models
 {
@@ -50,6 +51,15 @@ namespace H.Core.Models
         public bool HasGrazingAnimalsInYear(int year)
         {
             return this.GetYearsWithGrazingAnimals().Contains(year);
+        }
+
+        public bool IsNonSwathingGrazingScenario(CropViewItem viewItem)
+        {
+            return viewItem.TotalCarbonLossesByGrazingAnimals > 0 &&
+                   this.CropHasGrazingAnimals(viewItem) &&
+                   this.YieldAssignmentMethod != YieldAssignmentMethod.Custom &&
+                   viewItem.HarvestMethod != HarvestMethods.StubbleGrazing &&
+                   viewItem.HarvestMethod != HarvestMethods.Swathing;
         }
 
         #endregion

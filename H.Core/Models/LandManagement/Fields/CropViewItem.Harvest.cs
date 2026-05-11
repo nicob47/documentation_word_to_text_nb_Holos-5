@@ -31,5 +31,19 @@ namespace H.Core.Models.LandManagement.Fields
         }
 
         #endregion
+
+        #region Public Methods
+
+        public List<HarvestViewItem> GetHayHarvestsByYear(int year)
+        {
+            return this.HarvestViewItems.Where(x => x.Start.Year.Equals(year)).ToList();
+        }
+
+        public List<HarvestViewItem> GetHayHarvests()
+        {
+            return this.GetHayHarvestsByYear(this.Year);
+        }
+
+        #endregion
     }
 }
