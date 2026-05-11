@@ -7,6 +7,7 @@ namespace H.Core.Models.LandManagement.Fields
         #region Fields
 
         private double _totalCarbonLossFromBaleExports;
+        private double _totalDryMatterLostFromBaleExports;
         private EstimatesOfProductionResultsViewItem _estimatesOfProductionResultsViewItem = null!;
 
         #endregion
@@ -22,6 +23,16 @@ namespace H.Core.Models.LandManagement.Fields
         {
             get => _totalCarbonLossFromBaleExports;
             set => SetProperty(ref _totalCarbonLossFromBaleExports, value);
+        }
+
+        /// <summary>
+        /// Total dry matter (kg DM) lost from a field due to bale exports, after subtracting amounts
+        /// re-imported elsewhere on the farm as supplemental hay.
+        /// </summary>
+        public double TotalDryMatterLostFromBaleExports
+        {
+            get => _totalDryMatterLostFromBaleExports;
+            set => SetProperty(ref _totalDryMatterLostFromBaleExports, value);
         }
 
         public EstimatesOfProductionResultsViewItem EstimatesOfProductionResultsViewItem

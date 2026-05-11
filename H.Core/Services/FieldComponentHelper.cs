@@ -158,6 +158,53 @@ namespace H.Core.Services
             }
         }
 
+        public CropViewItem? GetMainCropForYear(IEnumerable<CropViewItem> viewItems, int year)
+        {
+            var viewItemsForYear = viewItems.GetByYear(year);
+            if (viewItemsForYear.Count == 0)
+            {
+                return null;
+            }
+
+            if (viewItemsForYear.Count == 1)
+            {
+                return viewItemsForYear[0];
+            }
+
+            // Old farms won't have IsSecondaryCrop set, so fall back to the first item.
+            return viewItemsForYear.FirstOrDefault(x => !x.IsSecondaryCrop) ?? viewItemsForYear[0];
+        }
+
+        public AdjoiningYears GetAdjoiningYears(IEnumerable<CropViewItem> viewItems, int year)
+        {
+            var viewItemsList = viewItems as IList<CropViewItem> ?? viewItems.ToList();
+            var viewItemsForYear = viewItemsList.GetItemsByYear(year);
+
+            var mainCropForCurrentYear = this.GetMainCropForYear(viewItemsForYear, year);
+
+            if (mainCropForCurrentYear != null && mainCropForCurrentYear.CropType.IsPerennial())
+            {
+                // Adjoining items must belong to the same perennial stand.
+                var perennialItemsInStand = viewItemsList.Where(x =>
+                    x.CropType.IsPerennial() &&
+                    x.PerennialStandGroupId.Equals(mainCropForCurrentYear.PerennialStandGroupId));
+
+                return new AdjoiningYears
+                {
+                    PreviousYearViewItem = perennialItemsInStand.SingleOrDefault(x => x.Year == year - 1),
+                    CurrentYearViewItem = mainCropForCurrentYear,
+                    NextYearViewItem = perennialItemsInStand.SingleOrDefault(x => x.Year == year + 1),
+                };
+            }
+
+            return new AdjoiningYears
+            {
+                PreviousYearViewItem = null,
+                CurrentYearViewItem = mainCropForCurrentYear,
+                NextYearViewItem = null,
+            };
+        }
+
         #endregion
     }
 }

@@ -317,6 +317,22 @@ namespace H.Core.Models.LandManagement.Fields
             return this.CropViewItems.Where(x => x.PerennialStandGroupId == groupGuid).OrderBy(x => x.YearInPerennialStand).ToList();
         }
 
+        public bool HasHayHarvestInYear(int year)
+        {
+            return this.GetHarvestViewItemsInYear(year).Any();
+        }
+
+        public List<HarvestViewItem> GetHarvestViewItemsInYear(int year)
+        {
+            var result = new List<HarvestViewItem>();
+            foreach (var cropViewItem in this.CropViewItems)
+            {
+                result.AddRange(cropViewItem.HarvestViewItems.Where(x => x.Start.Year.Equals(year)));
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Since this component supports multi-year and single year modes (ICBM vs non-ICBM) this method returns the correct view (the most recent item) item when farm is in single-year mode.
         /// </summary>

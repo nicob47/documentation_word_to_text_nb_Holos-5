@@ -2,6 +2,7 @@
 using H.Core.Enumerations;
 using H.Core.Models;
 using H.Core.Models.Animals;
+using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Services.Animals
 {
@@ -143,6 +144,51 @@ namespace H.Core.Services.Animals
 
             // Dairy
             return _dairyCattleResultsService.GetResultsForManagementPeriod(animalGroup, managementPeriod, animalComponent, farm);
+        }
+
+        public List<GroupEmissionsByMonth> GetGroupEmissionsFromGrazingAnimals(
+            List<AnimalComponentEmissionsResults> results,
+            GrazingViewItem grazingViewItem)
+        {
+            var result = new List<GroupEmissionsByMonth>();
+
+            var componentResults = results.SingleOrDefault(x => x.Component.Guid == grazingViewItem.AnimalComponentGuid);
+            if (componentResults == null)
+            {
+                return result;
+            }
+
+            var groupEmissionResults = componentResults.EmissionResultsForAllAnimalGroupsInComponent
+                .SingleOrDefault(x => x.AnimalGroup.Guid == grazingViewItem.AnimalGroupGuid);
+            if (groupEmissionResults == null)
+            {
+                return result;
+            }
+
+            foreach (var groupEmissionsByMonth in groupEmissionResults.GroupEmissionsByMonths)
+            {
+                var managementPeriod = groupEmissionsByMonth.MonthsAndDaysData.ManagementPeriod;
+                if (!managementPeriod.HousingDetails.HousingType.IsPasture())
+                {
+                    continue;
+                }
+
+                if (managementPeriod.Start >= grazingViewItem.Start && managementPeriod.End <= grazingViewItem.End)
+                {
+                    result.Add(groupEmissionsByMonth);
+                }
+            }
+
+            return result;
+        }
+
+        public List<ManagementPeriod> GetGrazingManagementPeriods(
+            AnimalGroup animalGroup,
+            FieldSystemComponent fieldSystemComponent)
+        {
+            return animalGroup.ManagementPeriods
+                .Where(x => fieldSystemComponent.IsGrazingManagementPeriodFromPasture(x))
+                .ToList();
         }
     }
 }

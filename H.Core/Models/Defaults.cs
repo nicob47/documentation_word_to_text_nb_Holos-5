@@ -18,6 +18,7 @@ namespace H.Core.Models
         private double _carbonConcentration;
         private TimeFrame _timeFrame;
         private CarbonModellingStrategies _carbonModellingStrategy;
+        private ResidueInputCalculationMethod _residueInputCalculationMethod;
 
         private double _latitude;
         private double _longitude;
@@ -303,6 +304,16 @@ namespace H.Core.Models
             {
                 return this.CarbonModellingStrategy == CarbonModellingStrategies.ICBM;
             }
+        }
+
+        /// <summary>
+        /// CLI override for the residue-input calculation method (ICBM, IPCC Tier 2, or
+        /// fall through to <see cref="CarbonModellingStrategy"/>).
+        /// </summary>
+        public ResidueInputCalculationMethod ResidueInputCalculationMethod
+        {
+            get => _residueInputCalculationMethod;
+            set => SetProperty(ref _residueInputCalculationMethod, value);
         }
 
         /// <summary>
