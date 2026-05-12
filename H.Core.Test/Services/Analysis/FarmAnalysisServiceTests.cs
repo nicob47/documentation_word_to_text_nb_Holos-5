@@ -232,6 +232,32 @@ public class FarmAnalysisServiceTests
     }
 
     [TestMethod]
+    public void RunAnalysis_MapsAnimalDrivenNitrogenAndN2OToDto()
+    {
+        // Phase 6.4: animal-driven N (manure applications + grazing deposits) and the
+        // resulting N₂O flow through CropViewItem after FieldResultsService runs. Confirm
+        // FarmAnalysisService surfaces those values in the DTO so the GUI can show them.
+        var crop = new CropViewItem
+        {
+            FieldName = "Pasture",
+            Year = 2024,
+            AmountOfNitrogenAppliedFromManure = 142.5,    // kg N — applications + grazing
+            TotalDirectNitrousOxidePerHectare = 1.83,     // kg N₂O ha⁻¹
+            TotalIndirectNitrousOxidePerHectare = 0.47,   // kg N₂O ha⁻¹
+        };
+        _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
+            .Returns(new List<CropViewItem> { crop });
+
+        var result = _sut.RunAnalysis(new Farm());
+
+        var row = result.YearResults.Single();
+        Assert.AreEqual(142.5, row.NitrogenAppliedFromManure);
+        Assert.AreEqual(1.83, row.DirectN2OPerHectare);
+        Assert.AreEqual(0.47, row.IndirectN2OPerHectare);
+        Assert.AreEqual(2.30, row.TotalN2OPerHectare, 1e-9);
+    }
+
+    [TestMethod]
     public void RunAnalysis_FarmWithEmptyShelterbeltComponent_StillProducesEmptyShelterbeltResults()
     {
         // A shelterbelt component with no rows / no trees → BuildTrannums populates nothing →

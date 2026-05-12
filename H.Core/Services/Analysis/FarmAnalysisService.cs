@@ -118,5 +118,13 @@ public class FarmAnalysisService : IFarmAnalysisService
         TotalCarbonInputs = viewItem.TotalCarbonInputs,
         SoilCarbon = viewItem.SoilCarbon,
         ChangeInSoilCarbon = viewItem.ChangeInCarbon,
+
+        // N₂O coverage (Phase 6.4): manure/digestate/grazing N flows through
+        // FieldResultsService.CalculateNitrogenAtInterval into TotalDirect/IndirectNitrousOxide
+        // per hectare. AmountOfNitrogenAppliedFromManure is the total field N from manure +
+        // digestate + grazing-deposited manure.
+        NitrogenAppliedFromManure = viewItem.AmountOfNitrogenAppliedFromManure,
+        DirectN2OPerHectare = viewItem.TotalDirectNitrousOxidePerHectare,
+        IndirectN2OPerHectare = viewItem.TotalIndirectNitrousOxidePerHectare,
     };
 }

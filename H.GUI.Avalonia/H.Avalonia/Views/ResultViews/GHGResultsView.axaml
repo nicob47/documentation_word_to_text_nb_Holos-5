@@ -112,6 +112,10 @@
                             <DataGridTextColumn Header="Total C inputs (kg/ha)" Binding="{Binding TotalCarbonInputs, StringFormat='{}{0:N1}'}" Width="150"/>
                             <DataGridTextColumn Header="Soil C (Mg/ha)" Binding="{Binding SoilCarbon, StringFormat='{}{0:N2}'}" Width="120"/>
                             <DataGridTextColumn Header="Δ Soil C (Mg/ha/yr)" Binding="{Binding ChangeInSoilCarbon, StringFormat='{}{0:N3}'}" Width="140"/>
+                            <DataGridTextColumn Header="Manure N (kg)" Binding="{Binding NitrogenAppliedFromManure, StringFormat='{}{0:N1}'}" Width="120"/>
+                            <DataGridTextColumn Header="Direct N₂O (kg/ha)" Binding="{Binding DirectN2OPerHectare, StringFormat='{}{0:N3}'}" Width="140"/>
+                            <DataGridTextColumn Header="Indirect N₂O (kg/ha)" Binding="{Binding IndirectN2OPerHectare, StringFormat='{}{0:N3}'}" Width="150"/>
+                            <DataGridTextColumn Header="Total N₂O (kg/ha)" Binding="{Binding TotalN2OPerHectare, StringFormat='{}{0:N3}'}" Width="140"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
