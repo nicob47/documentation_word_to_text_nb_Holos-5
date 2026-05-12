@@ -3377,6 +3377,42 @@ Hassan Afzaal</value>
   <data name="Label_ShelterbeltNameWatermark" xml:space="preserve">
     <value>p. ex. Brise-vent côté nord</value>
   </data>
+  <data name="Text_ShelterbeltWizardStep2Instruction" xml:space="preserve">
+    <value>Sélectionnez la zone de rusticité pour l'emplacement de cette haie brise-vent. Holos l'utilise pour déterminer quelles espèces sont viables et pour rechercher les données climatiques.</value>
+  </data>
+  <data name="Text_ShelterbeltWizardStep2EcodistrictHint" xml:space="preserve">
+    <value>L'identifiant d'éco-district est facultatif. Laissez-le à 0 si vous ne le connaissez pas — Holos utilisera les valeurs par défaut pour la zone de rusticité sélectionnée.</value>
+  </data>
+  <data name="Label_HardinessZoneField" xml:space="preserve">
+    <value>Zone de rusticité</value>
+  </data>
+  <data name="Label_EcodistrictId" xml:space="preserve">
+    <value>Identifiant d'éco-district</value>
+  </data>
+  <data name="Text_ShelterbeltWizardStep3Instruction" xml:space="preserve">
+    <value>Combien de rangées d'arbres cette haie brise-vent comporte-t-elle ? Les étapes 4 et 5 se répéteront une fois pour chaque rangée.</value>
+  </data>
+  <data name="Text_ShelterbeltWizardStep3RowRangeHint" xml:space="preserve">
+    <value>(1 – 10)</value>
+  </data>
+  <data name="Text_ShelterbeltWizardStep3DetailHint" xml:space="preserve">
+    <value>Après avoir cliqué sur Suivant, Holos vous demandera le nom et la longueur de chaque rangée (étape 4), puis les détails des espèces et des groupes d'arbres pour chaque rangée (étape 5).</value>
+  </data>
+  <data name="Label_NumberOfRowsField" xml:space="preserve">
+    <value>Nombre de rangées</value>
+  </data>
+  <data name="Text_ShelterbeltWizardStep4Instruction" xml:space="preserve">
+    <value>Entrez un nom et la longueur totale de cette rangée d'arbres.</value>
+  </data>
+  <data name="Label_RowNameField" xml:space="preserve">
+    <value>Nom de la rangée</value>
+  </data>
+  <data name="Label_RowLengthField" xml:space="preserve">
+    <value>Longueur de la rangée</value>
+  </data>
+  <data name="Label_RowNameWatermark" xml:space="preserve">
+    <value>p. ex. Côté nord</value>
+  </data>
   <data name="Label_NumberOfRows" xml:space="preserve">
     <value>Nombre de rangées</value>
   </data>

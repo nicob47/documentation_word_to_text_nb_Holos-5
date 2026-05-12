@@ -7,7 +7,7 @@
 
     <StackPanel Spacing="20" Margin="0,8,0,8">
 
-        <TextBlock Text="How many rows of trees does this shelterbelt have? Steps 4 and 5 will repeat once for each row."
+        <TextBlock Text="{Binding [Text_ShelterbeltWizardStep3Instruction].Value, Source={StaticResource Loc}}"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontSize="14"
                    TextWrapping="Wrap"/>
@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0"
-                   Content="Number of rows"
+                   Content="{Binding [Label_NumberOfRowsField].Value, Source={StaticResource Loc}}"
                    VerticalAlignment="Center"
                    Classes="input-label"/>
 
@@ -34,14 +34,14 @@
                            MinWidth="100"/>
 
             <TextBlock Grid.Column="2"
-                       Text="(1 – 10)"
+                       Text="{Binding [Text_ShelterbeltWizardStep3RowRangeHint].Value, Source={StaticResource Loc}}"
                        VerticalAlignment="Center"
                        Margin="8,0,0,0"
                        FontSize="12"
                        Foreground="{StaticResource GcdsTextSecondaryBrush}"/>
         </Grid>
 
-        <TextBlock Text="After you click Next, Holos will ask you for the name and length of each row (Step 4), then the species and tree group details for each row (Step 5)."
+        <TextBlock Text="{Binding [Text_ShelterbeltWizardStep3DetailHint].Value, Source={StaticResource Loc}}"
                    FontSize="12"
                    FontStyle="Italic"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"

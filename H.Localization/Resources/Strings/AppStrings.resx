@@ -4424,6 +4424,54 @@ Hassan Afzaal</value>
     <value>e.g. North field windbreak</value>
     <comment>GUI - Shelterbelt wizard step 1: name text box watermark</comment>
   </data>
+  <data name="Text_ShelterbeltWizardStep2Instruction" xml:space="preserve">
+    <value>Select the hardiness zone for this shelterbelt's location. Holos uses this to determine which species are viable and to look up climate data.</value>
+    <comment>GUI - Shelterbelt wizard step 2: instructional text</comment>
+  </data>
+  <data name="Text_ShelterbeltWizardStep2EcodistrictHint" xml:space="preserve">
+    <value>The eco-district ID is optional. Leave it as 0 if you do not know it — Holos will use default values for the selected hardiness zone.</value>
+    <comment>GUI - Shelterbelt wizard step 2: eco-district hint text</comment>
+  </data>
+  <data name="Label_HardinessZoneField" xml:space="preserve">
+    <value>Hardiness Zone</value>
+    <comment>GUI - Shelterbelt wizard step 2: hardiness zone label</comment>
+  </data>
+  <data name="Label_EcodistrictId" xml:space="preserve">
+    <value>Eco-district ID</value>
+    <comment>GUI - Shelterbelt wizard step 2: eco-district ID label</comment>
+  </data>
+  <data name="Text_ShelterbeltWizardStep3Instruction" xml:space="preserve">
+    <value>How many rows of trees does this shelterbelt have? Steps 4 and 5 will repeat once for each row.</value>
+    <comment>GUI - Shelterbelt wizard step 3: instructional text</comment>
+  </data>
+  <data name="Text_ShelterbeltWizardStep3RowRangeHint" xml:space="preserve">
+    <value>(1 – 10)</value>
+    <comment>GUI - Shelterbelt wizard step 3: row count range hint</comment>
+  </data>
+  <data name="Text_ShelterbeltWizardStep3DetailHint" xml:space="preserve">
+    <value>After you click Next, Holos will ask you for the name and length of each row (Step 4), then the species and tree group details for each row (Step 5).</value>
+    <comment>GUI - Shelterbelt wizard step 3: detail hint text</comment>
+  </data>
+  <data name="Label_NumberOfRowsField" xml:space="preserve">
+    <value>Number of rows</value>
+    <comment>GUI - Shelterbelt wizard step 3: number of rows label</comment>
+  </data>
+  <data name="Text_ShelterbeltWizardStep4Instruction" xml:space="preserve">
+    <value>Enter a name and the total length for this row of trees.</value>
+    <comment>GUI - Shelterbelt wizard step 4: instructional text</comment>
+  </data>
+  <data name="Label_RowNameField" xml:space="preserve">
+    <value>Row name</value>
+    <comment>GUI - Shelterbelt wizard step 4: row name label</comment>
+  </data>
+  <data name="Label_RowLengthField" xml:space="preserve">
+    <value>Row length</value>
+    <comment>GUI - Shelterbelt wizard step 4: row length label</comment>
+  </data>
+  <data name="Label_RowNameWatermark" xml:space="preserve">
+    <value>e.g. North side</value>
+    <comment>GUI - Shelterbelt wizard step 4: row name watermark</comment>
+  </data>
   <data name="Label_NumberOfRows" xml:space="preserve">
     <value>Number of Rows</value>
     <comment>GUI - Shelterbelt wizard step 3: row count input label</comment>

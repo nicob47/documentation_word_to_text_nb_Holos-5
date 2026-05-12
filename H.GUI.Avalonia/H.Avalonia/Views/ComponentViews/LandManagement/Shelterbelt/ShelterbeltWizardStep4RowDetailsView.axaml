@@ -7,7 +7,7 @@
 
     <StackPanel Spacing="16" Margin="0,8,0,8">
 
-        <TextBlock Text="Enter a name and the total length for this row of trees."
+        <TextBlock Text="{Binding [Text_ShelterbeltWizardStep4Instruction].Value, Source={StaticResource Loc}}"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontSize="14"
                    TextWrapping="Wrap"/>
@@ -25,18 +25,18 @@
 
             <!-- Row name -->
             <Label Grid.Row="0" Grid.Column="0"
-                   Content="Row name"
+                   Content="{Binding [Label_RowNameField].Value, Source={StaticResource Loc}}"
                    VerticalAlignment="Center"
                    Classes="input-label"/>
             <TextBox Grid.Row="0" Grid.Column="1"
                      AutomationProperties.Name="{Binding [Label_RowName].Value, Source={StaticResource Loc}}"
                      Text="{Binding RowName}"
-                     Watermark="e.g. North side"
+                     Watermark="{Binding [Label_RowNameWatermark].Value, Source={StaticResource Loc}}"
                      MinWidth="220"/>
 
             <!-- Row length -->
             <Label Grid.Row="1" Grid.Column="0"
-                   Content="Row length"
+                   Content="{Binding [Label_RowLengthField].Value, Source={StaticResource Loc}}"
                    VerticalAlignment="Center"
                    Classes="input-label"
                    Margin="0,8,0,0"/>

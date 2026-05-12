@@ -7,7 +7,7 @@
 
     <StackPanel Spacing="16" Margin="0,8,0,8">
 
-        <TextBlock Text="Select the hardiness zone for this shelterbelt's location. Holos uses this to determine which species are viable and to look up climate data."
+        <TextBlock Text="{Binding [Text_ShelterbeltWizardStep2Instruction].Value, Source={StaticResource Loc}}"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontSize="14"
                    TextWrapping="Wrap"/>
@@ -24,7 +24,7 @@
 
             <!-- Hardiness Zone -->
             <Label Grid.Row="0" Grid.Column="0"
-                   Content="Hardiness Zone"
+                   Content="{Binding [Label_HardinessZoneField].Value, Source={StaticResource Loc}}"
                    VerticalAlignment="Center"
                    Classes="input-label"/>
             <ComboBox Grid.Row="0" Grid.Column="1"
@@ -35,7 +35,7 @@
 
             <!-- Eco-district ID -->
             <Label Grid.Row="1" Grid.Column="0"
-                   Content="Eco-district ID"
+                   Content="{Binding [Label_EcodistrictId].Value, Source={StaticResource Loc}}"
                    VerticalAlignment="Center"
                    Classes="input-label"
                    Margin="0,8,0,0"/>
@@ -49,7 +49,7 @@
                            MinWidth="120"/>
         </Grid>
 
-        <TextBlock Text="The eco-district ID is optional. Leave it as 0 if you do not know it — Holos will use default values for the selected hardiness zone."
+        <TextBlock Text="{Binding [Text_ShelterbeltWizardStep2EcodistrictHint].Value, Source={StaticResource Loc}}"
                    FontSize="12"
                    FontStyle="Italic"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
