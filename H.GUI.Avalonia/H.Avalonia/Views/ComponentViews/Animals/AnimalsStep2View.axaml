@@ -72,7 +72,7 @@
                 </Button>
             </StackPanel>
 
-            <DataGrid ItemsSource="{Binding SelectedGroupManagementPeriods}"
+            <DataGrid ItemsSource="{Binding SelectedGroupManagementPeriods}" AutomationProperties.ItemType="{Binding [Label_ManagementPeriod].Value, Source={StaticResource Loc}}"
                       SelectedItem="{Binding SelectedManagementPractice}"
                       AutoGenerateColumns="False"
                       IsVisible="{Binding HasManagementPeriods}"

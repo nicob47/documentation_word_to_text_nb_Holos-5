@@ -228,7 +228,7 @@
 
 				</StackPanel>
 
-				<DataGrid Name="SoilDataGrid"
+				<DataGrid Name="SoilDataGrid" AutomationProperties.ItemType="{Binding [Label_SoilResult].Value, Source={StaticResource Loc}}"
                         Grid.Row="2"
                         ItemsSource="{Binding StoragePlaceholder.SoilViewItems, Mode=TwoWay}"
                         CanUserSortColumns="False"
@@ -236,10 +236,10 @@
                         Margin="20, 10"
                         CanUserReorderColumns="True">
 					<DataGrid.Columns>
-						<DataGridTemplateColumn Width="5*">
+						<DataGridTemplateColumn Width="5*" Header="{Binding [Label_SelectAllRows].Value, Source={StaticResource Loc}}">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<CheckBox Name="RowSelectionCheckbox" AutomationProperties.Name="Select row"
+									<CheckBox Name="RowSelectionCheckbox" AutomationProperties.Name="{Binding [Label_SelectRow].Value, Source={StaticResource Loc}}"
 											  IsChecked="{Binding IsSelected}"
 											  Cursor="Hand"
 											  HorizontalAlignment="Center"/>
@@ -268,7 +268,7 @@
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
-						<DataGridTemplateColumn Width="5*">
+						<DataGridTemplateColumn Width="5*" Header="{Binding [Label_Delete].Value, Source={StaticResource Loc}}">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<!-- Also works

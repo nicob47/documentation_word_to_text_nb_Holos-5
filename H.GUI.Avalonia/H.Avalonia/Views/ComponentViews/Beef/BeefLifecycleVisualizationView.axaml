@@ -54,7 +54,7 @@
                 TabIndex="0"
                 Tag="CowCalf"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Cow-Calf"
+                AutomationProperties.Name="{Binding [Label_BeefCowCalf].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="CowCalf_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -101,7 +101,7 @@
                 TabIndex="1"
                 Tag="Backgrounding"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Backgrounding"
+                AutomationProperties.Name="{Binding [Label_BeefBackgrounding].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Backgrounding_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -148,7 +148,7 @@
                 TabIndex="2"
                 Tag="Finishing"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Finishing (Feedlot)"
+                AutomationProperties.Name="{Binding [Label_BeefFinishing].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Finishing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -243,7 +243,7 @@
                 TabIndex="3"
                 Tag="CowCalfSystem"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Cow-Calf System"
+                AutomationProperties.Name="{Binding [Label_BeefCowCalfSystem].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="CowCalfSystem_PointerPressed">
           <TextBlock Text="Cow-Calf"
@@ -268,7 +268,7 @@
                 TabIndex="4"
                 Tag="BackgroundingSystem"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Backgrounding System"
+                AutomationProperties.Name="{Binding [Label_BeefBackgroundingSystem].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="BackgroundingSystem_PointerPressed">
           <TextBlock Text="Backgrounding"
@@ -293,7 +293,7 @@
                 TabIndex="5"
                 Tag="FinishingSystem"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Finishing System"
+                AutomationProperties.Name="{Binding [Label_BeefFinishingSystem].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FinishingSystem_PointerPressed">
           <TextBlock Text="Finishing (Feedlot)"
@@ -318,7 +318,7 @@
                 TabIndex="6"
                 Tag="FullCycle"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Full Production Cycle"
+                AutomationProperties.Name="{Binding [Label_BeefFullProductionCycle].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FullCycle_PointerPressed">
           <TextBlock Text="Full Production Cycle"

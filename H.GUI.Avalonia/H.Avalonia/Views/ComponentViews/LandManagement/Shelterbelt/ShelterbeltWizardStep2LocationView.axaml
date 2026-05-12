@@ -28,7 +28,7 @@
                    VerticalAlignment="Center"
                    Classes="input-label"/>
             <ComboBox Grid.Row="0" Grid.Column="1"
-                      AutomationProperties.Name="Hardiness Zone"
+                      AutomationProperties.Name="{Binding [Label_HardinessZone].Value, Source={StaticResource Loc}}"
                       ItemsSource="{Binding HardinessZones}"
                       SelectedItem="{Binding SelectedHardinessZone}"
                       MinWidth="200"/>
@@ -40,7 +40,7 @@
                    Classes="input-label"
                    Margin="0,8,0,0"/>
             <NumericUpDown Grid.Row="1" Grid.Column="1"
-                           AutomationProperties.Name="Eco-district ID"
+                           AutomationProperties.Name="{Binding [Label_Ecodistrict].Value, Source={StaticResource Loc}}"
                            Value="{Binding EcoDistrictId}"
                            Minimum="0"
                            FormatString="0"

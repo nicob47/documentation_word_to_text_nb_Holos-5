@@ -81,6 +81,7 @@
 		</StackPanel>
 
         <DataGrid Grid.Row="3"
+                  AutomationProperties.ItemType="{Binding [Label_SoilResult].Value, Source={StaticResource Loc}}"
                   ItemsSource="{Binding SingleSoilResultsViewItems}"
                   Margin="20,0,20,20"
                   IsReadOnly="True"
@@ -115,6 +116,7 @@
         </DataGrid>
         
         <DataGrid Grid.Row="3"
+                  AutomationProperties.ItemType="{Binding [Label_SoilResult].Value, Source={StaticResource Loc}}"
                   ItemsSource="{Binding SoilResultsViewItems}"
                   Margin="20,0,20,20"
                   IsReadOnly="True"

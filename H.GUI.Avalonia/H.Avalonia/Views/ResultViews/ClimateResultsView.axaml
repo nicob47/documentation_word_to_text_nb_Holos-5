@@ -42,10 +42,10 @@
                 HorizontalAlignment="Right"
                 Margin="20, 10"/>
         <DataGrid Grid.Row="3"
+                  AutomationProperties.ItemType="{Binding [Label_ClimateResult].Value, Source={StaticResource Loc}}"
                   ItemsSource="{Binding ClimateResultsViewItems}"
                   Margin="20,0,20,20"
-                  IsReadOnly="True"
-                  ColumnHeaderTheme="">
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{Binding [Label_Latitude].Value, Source={StaticResource Loc}}"
                                     Binding="{Binding Latitude}"

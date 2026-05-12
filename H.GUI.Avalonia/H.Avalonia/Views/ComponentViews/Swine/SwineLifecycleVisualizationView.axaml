@@ -58,7 +58,7 @@
                 TabIndex="0"
                 Tag="Breeding"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Breeding"
+                AutomationProperties.Name="{Binding [Label_SwineBreeding].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Breeding_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -105,7 +105,7 @@
                 TabIndex="1"
                 Tag="Farrowing"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Farrowing"
+                AutomationProperties.Name="{Binding [Label_SwineFarrowing].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Farrowing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -152,7 +152,7 @@
                 TabIndex="2"
                 Tag="Nursery"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Nursery"
+                AutomationProperties.Name="{Binding [Label_SwineNursery].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Nursery_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -193,7 +193,7 @@
                 TabIndex="3"
                 Tag="Growing"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Growing"
+                AutomationProperties.Name="{Binding [Label_SwineGrowing].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Growing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -234,7 +234,7 @@
                 TabIndex="4"
                 Tag="Finishing"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Finishing"
+                AutomationProperties.Name="{Binding [Label_SwineFinishing].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="Finishing_PointerPressed">
           <StackPanel VerticalAlignment="Center">
@@ -296,7 +296,7 @@
                 TabIndex="5"
                 Tag="FarrowToFinish"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Farrow-to-Finish"
+                AutomationProperties.Name="{Binding [Label_SwineFarrowToFinish].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FarrowToFinish_PointerPressed">
           <TextBlock Text="Farrow-to-Finish"
@@ -321,7 +321,7 @@
                 TabIndex="6"
                 Tag="FarrowToWean"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Farrow-to-Wean"
+                AutomationProperties.Name="{Binding [Label_SwineFarrowToWean].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="FarrowToWean_PointerPressed">
           <TextBlock Text="Farrow-to-Wean"
@@ -346,7 +346,7 @@
                 TabIndex="8"
                 Tag="IsoWean"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Iso-Wean"
+                AutomationProperties.Name="{Binding [Label_SwineIsoWean].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="IsoWean_PointerPressed">
           <TextBlock Text="Iso-Wean"
@@ -371,7 +371,7 @@
                 TabIndex="7"
                 Tag="GrowerToFinish"
                 AutomationProperties.ControlTypeOverride="Button"
-                AutomationProperties.Name="Grower-to-Finish"
+                AutomationProperties.Name="{Binding [Label_SwineGrowerToFinish].Value, Source={StaticResource Loc}}"
                 KeyDown="Card_KeyDown"
                 PointerPressed="GrowerToFinish_PointerPressed">
           <TextBlock Text="Grower-to-Finish"

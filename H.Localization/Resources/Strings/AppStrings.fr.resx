@@ -3368,4 +3368,109 @@ Hassan Afzaal</value>
   <data name="Label_CropDefaults" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
+  <data name="Label_ShelterbeltName" xml:space="preserve">
+    <value>Nom de la haie brise-vent</value>
+  </data>
+  <data name="Label_NumberOfRows" xml:space="preserve">
+    <value>Nombre de rangées</value>
+  </data>
+  <data name="Label_RowName" xml:space="preserve">
+    <value>Nom de la rangée</value>
+  </data>
+  <data name="Label_RowLength" xml:space="preserve">
+    <value>Longueur de la rangée</value>
+  </data>
+  <data name="Label_TreesPlanted" xml:space="preserve">
+    <value>Arbres plantés</value>
+  </data>
+  <data name="Label_TreesAlive" xml:space="preserve">
+    <value>Arbres vivants</value>
+  </data>
+  <data name="Label_TreeSpacing" xml:space="preserve">
+    <value>Espacement des arbres</value>
+  </data>
+  <data name="Label_YearPlanted" xml:space="preserve">
+    <value>Année de plantation</value>
+  </data>
+  <data name="Label_Circumference" xml:space="preserve">
+    <value>Circonférence</value>
+  </data>
+  <data name="Label_SelectRow" xml:space="preserve">
+    <value>Sélectionner la rangée</value>
+  </data>
+  <data name="Label_BeddingComposition" xml:space="preserve">
+    <value>Composition de la litière</value>
+  </data>
+  <data name="Label_ManureComposition" xml:space="preserve">
+    <value>Composition du fumier</value>
+  </data>
+  <data name="Label_ClimateResult" xml:space="preserve">
+    <value>Résultat climatique</value>
+  </data>
+  <data name="Label_SoilResult" xml:space="preserve">
+    <value>Résultat pédologique</value>
+  </data>
+  <data name="Label_FeedIngredient" xml:space="preserve">
+    <value>Ingrédient alimentaire</value>
+  </data>
+  <data name="Label_DietIngredient" xml:space="preserve">
+    <value>Ingrédient de la ration</value>
+  </data>
+  <data name="Label_CoverCropType" xml:space="preserve">
+    <value>Type de culture de couverture</value>
+  </data>
+  <data name="Label_TerminationType" xml:space="preserve">
+    <value>Type de destruction</value>
+  </data>
+  <data name="Label_SwineBreeding" xml:space="preserve">
+    <value>Reproduction</value>
+  </data>
+  <data name="Label_SwineFarrowing" xml:space="preserve">
+    <value>Mise bas</value>
+  </data>
+  <data name="Label_SwineNursery" xml:space="preserve">
+    <value>Pouponnière</value>
+  </data>
+  <data name="Label_SwineGrowing" xml:space="preserve">
+    <value>Croissance</value>
+  </data>
+  <data name="Label_SwineFinishing" xml:space="preserve">
+    <value>Finition</value>
+  </data>
+  <data name="Label_SwineFarrowToFinish" xml:space="preserve">
+    <value>Naisseur-engraisseur</value>
+  </data>
+  <data name="Label_SwineFarrowToWean" xml:space="preserve">
+    <value>Naisseur-sevreur</value>
+  </data>
+  <data name="Label_SwineIsoWean" xml:space="preserve">
+    <value>Sevrage en isolement</value>
+  </data>
+  <data name="Label_SwineGrowerToFinish" xml:space="preserve">
+    <value>Croissance-finition</value>
+  </data>
+  <data name="Label_BeefCowCalf" xml:space="preserve">
+    <value>Vache-veau</value>
+  </data>
+  <data name="Label_BeefBackgrounding" xml:space="preserve">
+    <value>Sevrage-croissance</value>
+  </data>
+  <data name="Label_BeefFinishing" xml:space="preserve">
+    <value>Finition (parc d'engraissement)</value>
+  </data>
+  <data name="Label_BeefCowCalfSystem" xml:space="preserve">
+    <value>Système vache-veau</value>
+  </data>
+  <data name="Label_BeefBackgroundingSystem" xml:space="preserve">
+    <value>Système sevrage-croissance</value>
+  </data>
+  <data name="Label_BeefFinishingSystem" xml:space="preserve">
+    <value>Système de finition</value>
+  </data>
+  <data name="Label_BeefFullProductionCycle" xml:space="preserve">
+    <value>Cycle de production complet</value>
+  </data>
+  <data name="Label_ManagementPeriod" xml:space="preserve">
+    <value>Période de gestion</value>
+  </data>
 </root>

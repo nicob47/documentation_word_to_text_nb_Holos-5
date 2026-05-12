@@ -69,7 +69,7 @@
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 			<TextBlock Grid.Row="0"
-					   FontFamily="{StaticResource GcdsHeadingFont}"
+				   FontFamily="{StaticResource GcdsHeadingFont}"
 					   FontSize="{StaticResource GcdsFontSizeH6}"
 					   FontWeight="Bold"
 					   Foreground="{StaticResource GcdsTextPrimaryBrush}"

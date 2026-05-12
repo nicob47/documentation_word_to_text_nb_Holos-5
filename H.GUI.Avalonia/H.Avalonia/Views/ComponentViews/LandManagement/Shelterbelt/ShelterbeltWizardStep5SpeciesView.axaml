@@ -91,24 +91,24 @@
 
                                     <!-- Trees planted -->
                                     <Label Grid.Row="0" Grid.Column="0" Content="Trees planted" Classes="input-label" VerticalAlignment="Center"/>
-                                    <NumericUpDown Grid.Row="0" Grid.Column="1" AutomationProperties.Name="Trees planted" Value="{Binding PlantedCount}" Minimum="1" FormatString="N0" MinWidth="100"/>
+                                    <NumericUpDown Grid.Row="0" Grid.Column="1" AutomationProperties.Name="{Binding [Label_TreesPlanted].Value, Source={StaticResource Loc}}" Value="{Binding PlantedCount}" Minimum="1" FormatString="N0" MinWidth="100"/>
 
                                     <!-- Trees alive -->
                                     <Label Grid.Row="1" Grid.Column="0" Content="Trees alive" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
-                                    <NumericUpDown Grid.Row="1" Grid.Column="1" AutomationProperties.Name="Trees alive" Value="{Binding LiveCount}" Minimum="0" FormatString="N0" MinWidth="100" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="1" Grid.Column="1" AutomationProperties.Name="{Binding [Label_TreesAlive].Value, Source={StaticResource Loc}}" Value="{Binding LiveCount}" Minimum="0" FormatString="N0" MinWidth="100" Margin="0,4,0,0"/>
 
                                     <!-- Spacing -->
                                     <Label Grid.Row="2" Grid.Column="0" Content="Tree spacing" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
-                                    <NumericUpDown Grid.Row="2" Grid.Column="1" AutomationProperties.Name="Tree spacing" Value="{Binding Spacing}" Minimum="0" FormatString="N2" MinWidth="100" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="2" Grid.Column="1" AutomationProperties.Name="{Binding [Label_TreeSpacing].Value, Source={StaticResource Loc}}" Value="{Binding Spacing}" Minimum="0" FormatString="N2" MinWidth="100" Margin="0,4,0,0"/>
                                     <Label Grid.Row="2" Grid.Column="2" Content="m" Classes="unit-label" VerticalAlignment="Center" Margin="8,4,0,0"/>
 
                                     <!-- Year planted -->
                                     <Label Grid.Row="3" Grid.Column="0" Content="Year planted" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
-                                    <NumericUpDown Grid.Row="3" Grid.Column="1" AutomationProperties.Name="Year planted" Value="{Binding PlantYear}" Minimum="1900" Maximum="2100" FormatString="0" ParsingNumberStyle="Integer" MinWidth="100" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="3" Grid.Column="1" AutomationProperties.Name="{Binding [Label_YearPlanted].Value, Source={StaticResource Loc}}" Value="{Binding PlantYear}" Minimum="1900" Maximum="2100" FormatString="0" ParsingNumberStyle="Integer" MinWidth="100" Margin="0,4,0,0"/>
 
                                     <!-- Circumference -->
                                     <Label Grid.Row="4" Grid.Column="0" Content="Circumference" Classes="input-label" VerticalAlignment="Center" Margin="0,4,0,0"/>
-                                    <NumericUpDown Grid.Row="4" Grid.Column="1" AutomationProperties.Name="Circumference" Value="{Binding Circumference}" Minimum="0" FormatString="N1" MinWidth="100" Margin="0,4,0,0"/>
+                                    <NumericUpDown Grid.Row="4" Grid.Column="1" AutomationProperties.Name="{Binding [Label_Circumference].Value, Source={StaticResource Loc}}" Value="{Binding Circumference}" Minimum="0" FormatString="N1" MinWidth="100" Margin="0,4,0,0"/>
                                     <Label Grid.Row="4" Grid.Column="2" Content="cm" Classes="unit-label" VerticalAlignment="Center" Margin="8,4,0,0"/>
                                 </Grid>
                             </StackPanel>

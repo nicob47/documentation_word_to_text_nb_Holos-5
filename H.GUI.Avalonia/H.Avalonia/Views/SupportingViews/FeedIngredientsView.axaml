@@ -15,8 +15,8 @@
     <StackPanel Margin="20">
         
         <!-- Header -->
-        <TextBlock Text="{Binding [Label_FeedIngredients].Value, Source={StaticResource Loc}}" 
-                   FontSize="{StaticResource GcdsFontSizeH4}" 
+        <TextBlock Text="{Binding [Label_FeedIngredients].Value, Source={StaticResource Loc}}"
+                   FontSize="{StaticResource GcdsFontSizeH4}"
                    FontWeight="Bold" 
                    Margin="0,0,0,20"
                    HorizontalAlignment="Center" />
@@ -62,7 +62,7 @@
         </StackPanel>
 
         <!-- Feed Ingredients Data Grid -->
-        <DataGrid SelectedItem="{Binding SelectedIngredient}" 
+        <DataGrid SelectedItem="{Binding SelectedIngredient}" AutomationProperties.ItemType="{Binding [Label_FeedIngredient].Value, Source={StaticResource Loc}}" 
                   ItemsSource="{Binding Ingredients}"  
                   AutoGenerateColumns="False" 
                   Margin="0,20,0,0" 

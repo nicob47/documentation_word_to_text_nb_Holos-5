@@ -12,7 +12,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock Text="{Binding [Message_DefaultBeddingComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" Grid.Row="0"/>
 
-		<DataGrid ItemsSource="{Binding Path=BeddingCompositionDTOs}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
+		<DataGrid ItemsSource="{Binding Path=BeddingCompositionDTOs}" AutomationProperties.ItemType="{Binding [Label_BeddingComposition].Value, Source={StaticResource Loc}}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="{Binding [Label_ComponentCategory].Value, Source={StaticResource Loc}}" Binding="{Binding Path=ComponentCategoryString}"/>
 				<DataGridTextColumn Header="{Binding [Label_BeddingTypeColumn].Value, Source={StaticResource Loc}}" Binding="{Binding Path=BeddingMaterialString}"/>

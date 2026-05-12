@@ -70,7 +70,7 @@
                                                 Classes.selected="{Binding IsSelected}">
                                             <StackPanel Spacing="8">
                                                 <!-- Group Type ComboBox (Animal Type Selection) -->
-                                                <ComboBox ItemsSource="{Binding Path=ValidAnimalTypes}"
+                                                <ComboBox AutomationProperties.Name="{Binding [Label_AnimalType].Value, Source={StaticResource Loc}}" ItemsSource="{Binding Path=ValidAnimalTypes}"
                                                           SelectedItem="{Binding Path=GroupType}"
                                                           MinWidth="120"
                                                           HorizontalAlignment="Center"

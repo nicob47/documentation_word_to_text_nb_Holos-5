@@ -15,7 +15,7 @@
 		</StackPanel>
 
 		
-		<DataGrid SelectedItem="{Binding Path=SelectedFarm}" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" Margin="0 20 0 0" Padding="20" GridLinesVisibility="All" IsReadOnly="True" Height="250" BorderThickness="2"  BorderBrush="{StaticResource GcdsBorderLightBrush}" CornerRadius="10" Background="{StaticResource GcdsBgLightBrush}">
+		<DataGrid SelectedItem="{Binding Path=SelectedFarm}" AutomationProperties.ItemType="{Binding [Label_Farm].Value, Source={StaticResource Loc}}" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" Margin="0 20 0 0" Padding="20" GridLinesVisibility="All" IsReadOnly="True" Height="250" BorderThickness="2"  BorderBrush="{StaticResource GcdsBorderLightBrush}" CornerRadius="10" Background="{StaticResource GcdsBgLightBrush}">
 			<DataGrid.Styles>
 				<Style Selector="DataGridColumnHeader">
 					<Setter Property="FontWeight" Value="Bold" />

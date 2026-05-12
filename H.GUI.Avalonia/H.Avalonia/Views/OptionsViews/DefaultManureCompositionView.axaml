@@ -12,7 +12,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock Text="{Binding [Message_DefaultManureComposition].Value, Source={StaticResource Loc}}" Padding="40, 15" Margin="0 0 0 20" Background="{StaticResource GcdsBgPrimaryBrush}" Foreground="White" Grid.Row="0"/>
 		<!-- Hardcoded sizing to fix row display issue, couldn't get auto sizing to work for now -->
-		<DataGrid ItemsSource="{Binding Path=DefaultManureDTOs}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
+		<DataGrid ItemsSource="{Binding Path=DefaultManureDTOs}" AutomationProperties.ItemType="{Binding [Label_ManureComposition].Value, Source={StaticResource Loc}}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="{Binding [Label_ManureType].Value, Source={StaticResource Loc}}" Binding="{Binding Path=AnimalType}"/>
 				<DataGridTextColumn Header="{Binding [Label_ManureHandlingSystemColumn].Value, Source={StaticResource Loc}}" Binding="{Binding Path=ManureStateTypeString}"/>

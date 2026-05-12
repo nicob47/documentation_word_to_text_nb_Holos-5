@@ -28,6 +28,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Cover Crop Type" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
                 <ComboBox Grid.Column="1"
+                          AutomationProperties.Name="{Binding [Label_CoverCropType].Value, Source={StaticResource Loc}}"
                           ItemsSource="{Binding ValidCropTypes}"
                           SelectedItem="{Binding CropType}"
                           HorizontalAlignment="Stretch">
@@ -47,6 +48,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Termination Type" Classes="input-label" VerticalAlignment="Center" Margin="0,0,12,0"/>
                 <ComboBox Grid.Column="1"
+                          AutomationProperties.Name="{Binding [Label_TerminationType].Value, Source={StaticResource Loc}}"
                           ItemsSource="{Binding DataContext.CoverCropTerminationTypes, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=3}}"
                           SelectedItem="{Binding CoverCropTerminationType}"
                           HorizontalAlignment="Stretch">

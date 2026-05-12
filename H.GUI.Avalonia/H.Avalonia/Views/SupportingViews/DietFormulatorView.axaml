@@ -14,8 +14,8 @@
     <StackPanel Margin="20">
         
         <!-- Header -->
-        <TextBlock Text="{Binding [Label_DietFormulator].Value, Source={StaticResource Loc}}" 
-                   FontSize="{StaticResource GcdsFontSizeH4}" 
+        <TextBlock Text="{Binding [Label_DietFormulator].Value, Source={StaticResource Loc}}"
+                   FontSize="{StaticResource GcdsFontSizeH4}"
                    FontWeight="Bold" 
                    Margin="0,0,0,20"
                    HorizontalAlignment="Center" />
@@ -44,7 +44,7 @@
         </StackPanel>
 
         <!-- Diet Data Grid -->
-        <DataGrid SelectedItem="{Binding SelectedDiet}" 
+        <DataGrid SelectedItem="{Binding SelectedDiet}" AutomationProperties.ItemType="{Binding [Label_Diet].Value, Source={StaticResource Loc}}" 
                   ItemsSource="{Binding Diets}"  
                   AutoGenerateColumns="False" 
                   Margin="0,20,0,0" 

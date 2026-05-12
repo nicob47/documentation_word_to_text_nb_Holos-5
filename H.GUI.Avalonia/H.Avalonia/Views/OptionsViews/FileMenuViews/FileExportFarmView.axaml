@@ -19,7 +19,7 @@
 		</TextBlock>
 
 		<Border BorderThickness="2" Margin="0 20 0 0" BorderBrush="{StaticResource GcdsBorderLightBrush}" CornerRadius="10" >
-		<DataGrid Name="FarmsDataGrid" SelectionChanged="FarmsDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedFarm}" SelectionMode="Extended" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" Margin="0 0 0 0" Padding="20" GridLinesVisibility="All" Background="#f5f5f5" IsReadOnly="True" Height="250" >
+		<DataGrid Name="FarmsDataGrid" SelectionChanged="FarmsDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedFarm}" AutomationProperties.ItemType="{Binding [Label_Farm].Value, Source={StaticResource Loc}}" SelectionMode="Extended" ItemsSource="{Binding Farms}"  AutoGenerateColumns="False" Margin="0 0 0 0" Padding="20" GridLinesVisibility="All" Background="#f5f5f5" IsReadOnly="True" Height="250" >
 			<DataGrid.Styles>
 				<Style Selector="DataGridColumnHeader">
 					<Setter Property="FontWeight" Value="Bold" />

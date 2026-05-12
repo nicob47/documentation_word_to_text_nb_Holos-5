@@ -54,6 +54,7 @@
                                TextWrapping="Wrap"
                                Margin="10,0,10,8"/>
                     <DataGrid Grid.Row="2"
+                              AutomationProperties.ItemType="{Binding [Label_Diet].Value, Source={StaticResource Loc}}"
                               ItemsSource="{Binding MyDiets}"
                               SelectedItem="{Binding SelectedDiet}"
                               AutoGenerateColumns="False"
@@ -138,6 +139,7 @@
                                 FontSize="{StaticResource GcdsFontSizeSmall}"/>
                     </Grid>
                     <DataGrid Grid.Row="3"
+                              AutomationProperties.ItemType="{Binding [Label_FeedIngredient].Value, Source={StaticResource Loc}}"
                               ItemsSource="{Binding AvailableIngredients}"
                               SelectedItem="{Binding SelectedAvailableIngredient}"
                               AutoGenerateColumns="False"
@@ -198,6 +200,7 @@
                     </StackPanel>
                     <!-- Editable ingredients grid: only the PercentageInDiet column is editable -->
                     <DataGrid Grid.Row="2"
+                              AutomationProperties.ItemType="{Binding [Label_DietIngredient].Value, Source={StaticResource Loc}}"
                               ItemsSource="{Binding SelectedDietIngredients}"
                               SelectedItem="{Binding SelectedIngredientInDiet}"
                               AutoGenerateColumns="False"

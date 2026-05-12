@@ -4412,4 +4412,144 @@ Hassan Afzaal</value>
   <data name="Label_CropDefaults" xml:space="preserve">
     <value>Crop Defaults</value>
   </data>
+  <data name="Label_ShelterbeltName" xml:space="preserve">
+    <value>Shelterbelt Name</value>
+    <comment>GUI - Shelterbelt wizard step 1: name text box label</comment>
+  </data>
+  <data name="Label_NumberOfRows" xml:space="preserve">
+    <value>Number of Rows</value>
+    <comment>GUI - Shelterbelt wizard step 3: row count input label</comment>
+  </data>
+  <data name="Label_RowName" xml:space="preserve">
+    <value>Row Name</value>
+    <comment>GUI - Shelterbelt wizard step 4: row name text box label</comment>
+  </data>
+  <data name="Label_RowLength" xml:space="preserve">
+    <value>Row Length</value>
+    <comment>GUI - Shelterbelt wizard step 4: row length input label</comment>
+  </data>
+  <data name="Label_TreesPlanted" xml:space="preserve">
+    <value>Trees Planted</value>
+    <comment>GUI - Shelterbelt wizard step 5: trees planted input label</comment>
+  </data>
+  <data name="Label_TreesAlive" xml:space="preserve">
+    <value>Trees Alive</value>
+    <comment>GUI - Shelterbelt wizard step 5: trees alive input label</comment>
+  </data>
+  <data name="Label_TreeSpacing" xml:space="preserve">
+    <value>Tree Spacing</value>
+    <comment>GUI - Shelterbelt wizard step 5: tree spacing input label</comment>
+  </data>
+  <data name="Label_YearPlanted" xml:space="preserve">
+    <value>Year Planted</value>
+    <comment>GUI - Shelterbelt wizard step 5: year planted input label</comment>
+  </data>
+  <data name="Label_Circumference" xml:space="preserve">
+    <value>Circumference</value>
+    <comment>GUI - Shelterbelt wizard step 5: circumference input label</comment>
+  </data>
+  <data name="Label_SelectRow" xml:space="preserve">
+    <value>Select Row</value>
+    <comment>GUI - DataGrid row selection checkbox accessible name</comment>
+  </data>
+  <data name="Label_BeddingComposition" xml:space="preserve">
+    <value>Bedding Composition</value>
+    <comment>GUI - Accessible row type label for bedding composition data grid</comment>
+  </data>
+  <data name="Label_ManureComposition" xml:space="preserve">
+    <value>Manure Composition</value>
+    <comment>GUI - Accessible row type label for manure composition data grid</comment>
+  </data>
+  <data name="Label_ClimateResult" xml:space="preserve">
+    <value>Climate Result</value>
+    <comment>GUI - Accessible row type label for climate results data grid</comment>
+  </data>
+  <data name="Label_SoilResult" xml:space="preserve">
+    <value>Soil Result</value>
+    <comment>GUI - Accessible row type label for soil results data grid</comment>
+  </data>
+  <data name="Label_FeedIngredient" xml:space="preserve">
+    <value>Feed Ingredient</value>
+    <comment>GUI - Accessible row type label for feed ingredient data grid</comment>
+  </data>
+  <data name="Label_DietIngredient" xml:space="preserve">
+    <value>Diet Ingredient</value>
+    <comment>GUI - Accessible row type label for diet ingredient data grid</comment>
+  </data>
+  <data name="Label_CoverCropType" xml:space="preserve">
+    <value>Cover Crop Type</value>
+    <comment>GUI - Cover crop editor: cover crop type combo box label</comment>
+  </data>
+  <data name="Label_TerminationType" xml:space="preserve">
+    <value>Termination Type</value>
+    <comment>GUI - Cover crop editor: termination type combo box label</comment>
+  </data>
+  <data name="Label_SwineBreeding" xml:space="preserve">
+    <value>Breeding</value>
+    <comment>GUI - Swine lifecycle: Breeding stage</comment>
+  </data>
+  <data name="Label_SwineFarrowing" xml:space="preserve">
+    <value>Farrowing</value>
+    <comment>GUI - Swine lifecycle: Farrowing stage</comment>
+  </data>
+  <data name="Label_SwineNursery" xml:space="preserve">
+    <value>Nursery</value>
+    <comment>GUI - Swine lifecycle: Nursery stage</comment>
+  </data>
+  <data name="Label_SwineGrowing" xml:space="preserve">
+    <value>Growing</value>
+    <comment>GUI - Swine lifecycle: Growing stage</comment>
+  </data>
+  <data name="Label_SwineFinishing" xml:space="preserve">
+    <value>Finishing</value>
+    <comment>GUI - Swine lifecycle: Finishing stage</comment>
+  </data>
+  <data name="Label_SwineFarrowToFinish" xml:space="preserve">
+    <value>Farrow-to-Finish</value>
+    <comment>GUI - Swine lifecycle: Farrow-to-Finish system</comment>
+  </data>
+  <data name="Label_SwineFarrowToWean" xml:space="preserve">
+    <value>Farrow-to-Wean</value>
+    <comment>GUI - Swine lifecycle: Farrow-to-Wean system</comment>
+  </data>
+  <data name="Label_SwineIsoWean" xml:space="preserve">
+    <value>Iso-Wean</value>
+    <comment>GUI - Swine lifecycle: Iso-Wean system</comment>
+  </data>
+  <data name="Label_SwineGrowerToFinish" xml:space="preserve">
+    <value>Grower-to-Finish</value>
+    <comment>GUI - Swine lifecycle: Grower-to-Finish system</comment>
+  </data>
+  <data name="Label_BeefCowCalf" xml:space="preserve">
+    <value>Cow-Calf</value>
+    <comment>GUI - Beef lifecycle: Cow-Calf stage</comment>
+  </data>
+  <data name="Label_BeefBackgrounding" xml:space="preserve">
+    <value>Backgrounding</value>
+    <comment>GUI - Beef lifecycle: Backgrounding stage</comment>
+  </data>
+  <data name="Label_BeefFinishing" xml:space="preserve">
+    <value>Finishing (Feedlot)</value>
+    <comment>GUI - Beef lifecycle: Finishing (Feedlot) stage</comment>
+  </data>
+  <data name="Label_BeefCowCalfSystem" xml:space="preserve">
+    <value>Cow-Calf System</value>
+    <comment>GUI - Beef lifecycle: Cow-Calf System</comment>
+  </data>
+  <data name="Label_BeefBackgroundingSystem" xml:space="preserve">
+    <value>Backgrounding System</value>
+    <comment>GUI - Beef lifecycle: Backgrounding System</comment>
+  </data>
+  <data name="Label_BeefFinishingSystem" xml:space="preserve">
+    <value>Finishing System</value>
+    <comment>GUI - Beef lifecycle: Finishing System</comment>
+  </data>
+  <data name="Label_BeefFullProductionCycle" xml:space="preserve">
+    <value>Full Production Cycle</value>
+    <comment>GUI - Beef lifecycle: Full Production Cycle</comment>
+  </data>
+  <data name="Label_ManagementPeriod" xml:space="preserve">
+    <value>Management Period</value>
+    <comment>GUI - Accessible row type label for management period data grid</comment>
+  </data>
 </root>
