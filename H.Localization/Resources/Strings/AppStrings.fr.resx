@@ -3371,6 +3371,12 @@ Hassan Afzaal</value>
   <data name="Label_ShelterbeltName" xml:space="preserve">
     <value>Nom de la haie brise-vent</value>
   </data>
+  <data name="Text_ShelterbeltWizardStep1Instruction" xml:space="preserve">
+    <value>Donnez un nom à votre haie brise-vent pour commencer.</value>
+  </data>
+  <data name="Label_ShelterbeltNameWatermark" xml:space="preserve">
+    <value>p. ex. Brise-vent côté nord</value>
+  </data>
   <data name="Label_NumberOfRows" xml:space="preserve">
     <value>Nombre de rangées</value>
   </data>

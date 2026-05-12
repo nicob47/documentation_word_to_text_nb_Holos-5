@@ -4416,6 +4416,14 @@ Hassan Afzaal</value>
     <value>Shelterbelt Name</value>
     <comment>GUI - Shelterbelt wizard step 1: name text box label</comment>
   </data>
+  <data name="Text_ShelterbeltWizardStep1Instruction" xml:space="preserve">
+    <value>Give your shelterbelt a name to get started.</value>
+    <comment>GUI - Shelterbelt wizard step 1: instructional text</comment>
+  </data>
+  <data name="Label_ShelterbeltNameWatermark" xml:space="preserve">
+    <value>e.g. North field windbreak</value>
+    <comment>GUI - Shelterbelt wizard step 1: name text box watermark</comment>
+  </data>
   <data name="Label_NumberOfRows" xml:space="preserve">
     <value>Number of Rows</value>
     <comment>GUI - Shelterbelt wizard step 3: row count input label</comment>

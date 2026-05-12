@@ -8,7 +8,7 @@
 
     <StackPanel Spacing="16" Margin="0,8,0,8">
 
-        <TextBlock Text="Give your shelterbelt a name to get started."
+        <TextBlock Text="{Binding [Text_ShelterbeltWizardStep1Instruction].Value, Source={StaticResource Loc}}"
                    Foreground="{StaticResource GcdsTextSecondaryBrush}"
                    FontSize="14"
                    TextWrapping="Wrap"/>
@@ -23,13 +23,13 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0"
-                   Content="Shelterbelt Name"
+                   Content="{Binding [Label_ShelterbeltName].Value, Source={StaticResource Loc}}"
                    VerticalAlignment="Center"
                    Classes="input-label"/>
             <TextBox Grid.Column="1" Grid.Row="0"
                      AutomationProperties.Name="{Binding [Label_ShelterbeltName].Value, Source={StaticResource Loc}}"
                      Text="{Binding ShelterbeltName}"
-                     Watermark="e.g. North field windbreak"
+                     Watermark="{Binding [Label_ShelterbeltNameWatermark].Value, Source={StaticResource Loc}}"
                      MinWidth="240"/>
         </Grid>
 
