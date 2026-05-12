@@ -1,5 +1,7 @@
+using H.Core.Calculators.Shelterbelt;
 using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
+using H.Core.Models.LandManagement.Shelterbelt;
 using H.Core.Models.Results;
 using H.Core.Services.Animals;
 using H.Core.Services.LandManagement;
@@ -12,14 +14,20 @@ public class FarmAnalysisService : IFarmAnalysisService
 {
     private readonly IFieldResultsService _fieldResultsService;
     private readonly IAnimalService _animalService;
+    private readonly ShelterbeltCalculator _shelterbeltCalculator;
 
-    public FarmAnalysisService(IFieldResultsService fieldResultsService, IAnimalService animalService)
+    public FarmAnalysisService(
+        IFieldResultsService fieldResultsService,
+        IAnimalService animalService,
+        ShelterbeltCalculator shelterbeltCalculator)
     {
         ArgumentNullException.ThrowIfNull(fieldResultsService);
         ArgumentNullException.ThrowIfNull(animalService);
+        ArgumentNullException.ThrowIfNull(shelterbeltCalculator);
 
         _fieldResultsService = fieldResultsService;
         _animalService = animalService;
+        _shelterbeltCalculator = shelterbeltCalculator;
     }
 
     public FarmAnalysisResults RunAnalysis(Farm farm)
@@ -32,6 +40,8 @@ public class FarmAnalysisService : IFarmAnalysisService
 
         var detailViewItems = _fieldResultsService.CalculateFinalResults(farm);
 
+        var shelterbeltResults = CalculateShelterbeltResults(farm);
+
         return new FarmAnalysisResults
         {
             FarmName = farm.Name ?? string.Empty,
@@ -42,8 +52,47 @@ public class FarmAnalysisService : IFarmAnalysisService
                 .ThenBy(v => v.Year)
                 .Select(ToYearResult)
                 .ToList(),
+            ShelterbeltYearResults = shelterbeltResults,
         };
     }
+
+    private IReadOnlyList<ShelterbeltYearResult> CalculateShelterbeltResults(Farm farm)
+    {
+        var shelterbelts = farm.Components.OfType<ShelterbeltComponent>().ToList();
+        if (shelterbelts.Count == 0)
+        {
+            return Array.Empty<ShelterbeltYearResult>();
+        }
+
+        // Each component needs its yearly Trannum data built up before the cross-component
+        // aggregation. The calculator does both halves but exposes them as separate calls so the
+        // GUI's "edit shelterbelt" flow can recompute one component without re-running the entire
+        // farm — mirroring that split here keeps both code paths consistent.
+        foreach (var component in shelterbelts)
+        {
+            _shelterbeltCalculator.CalculateInitialResults(component);
+        }
+
+        var trannumResults = _shelterbeltCalculator.TotalResultsForEachYear(shelterbelts);
+
+        return trannumResults
+            .OrderBy(r => r.ShelterbeltComponent.Name)
+            .ThenBy(r => r.Year)
+            .Select(ToShelterbeltYearResult)
+            .ToList();
+    }
+
+    private static ShelterbeltYearResult ToShelterbeltYearResult(TrannumResultViewItem trannum) => new()
+    {
+        Year = trannum.Year,
+        ShelterbeltName = trannum.ShelterbeltComponent.Name ?? string.Empty,
+        TotalLivingBiomassCarbon = trannum.TotalLivingBiomassCarbon,
+        TotalLivingBiomassCarbonChange = trannum.TotalLivingBiomassCarbonChange,
+        TotalDeadOrganicMatterCarbon = trannum.TotalDeadOrganicMatterCarbon,
+        TotalDeadOrganicMatterChange = trannum.TotalDeadOrganicMatterChange,
+        TotalEcosystemCarbon = trannum.TotalEcosystemCarbon,
+        TotalEcosystemCarbonChange = trannum.TotalEcosystemCarbonChange,
+    };
 
     private static FieldAnalysisYearResult ToYearResult(CropViewItem viewItem) => new()
     {

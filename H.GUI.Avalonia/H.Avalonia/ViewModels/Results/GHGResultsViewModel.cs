@@ -25,9 +25,11 @@ public class GHGResultsViewModel : ResultsViewModelBase
     private readonly IFarmAnalysisService _farmAnalysisService;
 
     private ObservableCollection<FieldAnalysisYearResult> _yearResults = new();
+    private ObservableCollection<ShelterbeltYearResult> _shelterbeltYearResults = new();
     private string _farmName = string.Empty;
     private string _carbonModellingStrategy = string.Empty;
     private bool _hasResults;
+    private bool _hasShelterbeltResults;
     private string? _lastErrorMessage;
     private CarbonModellingStrategies _selectedStrategy;
     private bool _suppressStrategyReanalysis;
@@ -65,6 +67,23 @@ public class GHGResultsViewModel : ResultsViewModelBase
     {
         get => _yearResults;
         set => SetProperty(ref _yearResults, value);
+    }
+
+    /// <summary>
+    /// Per-shelterbelt, per-year results. Empty when the active farm has no shelterbelt
+    /// components — the view hides the shelterbelt section in that case (via
+    /// <see cref="HasShelterbeltResults"/>).
+    /// </summary>
+    public ObservableCollection<ShelterbeltYearResult> ShelterbeltYearResults
+    {
+        get => _shelterbeltYearResults;
+        set => SetProperty(ref _shelterbeltYearResults, value);
+    }
+
+    public bool HasShelterbeltResults
+    {
+        get => _hasShelterbeltResults;
+        set => SetProperty(ref _hasShelterbeltResults, value);
     }
 
     public string FarmName
@@ -153,6 +172,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
         {
             _logger.LogWarning("GHGResultsViewModel.RunAnalysis: no active farm; skipping.");
             this.HasResults = false;
+            this.HasShelterbeltResults = false;
             this.LastErrorMessage = null;
             return;
         }
@@ -177,18 +197,21 @@ public class GHGResultsViewModel : ResultsViewModelBase
             this.FarmName = results.FarmName;
             this.CarbonModellingStrategy = results.CarbonModellingStrategy;
             this.YearResults = new ObservableCollection<FieldAnalysisYearResult>(results.YearResults);
-            this.HasResults = !results.IsEmpty;
+            this.ShelterbeltYearResults = new ObservableCollection<ShelterbeltYearResult>(results.ShelterbeltYearResults);
+            this.HasResults = results.YearResults.Count > 0;
+            this.HasShelterbeltResults = results.ShelterbeltYearResults.Count > 0;
             this.LastErrorMessage = null;
 
             _logger.LogInformation(
-                "GHG analysis complete for {FarmName}: {RowCount} per-field year results ({Strategy}).",
-                results.FarmName, results.YearResults.Count, results.CarbonModellingStrategy);
+                "GHG analysis complete for {FarmName}: {FieldRows} field-year results + {ShelterbeltRows} shelterbelt-year results ({Strategy}).",
+                results.FarmName, results.YearResults.Count, results.ShelterbeltYearResults.Count, results.CarbonModellingStrategy);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "GHG analysis failed for active farm.");
             this.LastErrorMessage = ex.Message;
             this.HasResults = false;
+            this.HasShelterbeltResults = false;
         }
         finally
         {

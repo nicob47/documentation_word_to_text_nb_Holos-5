@@ -71,42 +71,80 @@
             <TextBlock Text="Running carbon analysis..." FontStyle="Italic" Foreground="#744210"/>
         </Border>
 
-        <!-- Results grid (empty placeholder when HasResults is false) -->
-        <Grid Grid.Row="3">
+        <!-- Results grids (scrollable so field + shelterbelt sections stack without clipping) -->
+        <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Grid>
 
-            <TextBlock Text="No results yet. Click Recalculate, or add a field with crop view items to the active farm and try again."
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Foreground="#6c757d"
-                       FontStyle="Italic"
-                       TextWrapping="Wrap"
-                       MaxWidth="500"
-                       Margin="20"
-                       TextAlignment="Center"
-                       IsVisible="{Binding !HasResults}"/>
+                <TextBlock Text="No results yet. Click Recalculate, or add a field with crop view items to the active farm and try again."
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="#6c757d"
+                           FontStyle="Italic"
+                           TextWrapping="Wrap"
+                           MaxWidth="500"
+                           Margin="20"
+                           TextAlignment="Center"
+                           IsVisible="{Binding !HasResults}"/>
 
-            <DataGrid ItemsSource="{Binding YearResults}"
-                      IsVisible="{Binding HasResults}"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      CanUserResizeColumns="True"
-                      CanUserSortColumns="True"
-                      GridLinesVisibility="Horizontal"
-                      Margin="20">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="80"/>
-                    <DataGridTextColumn Header="Field" Binding="{Binding FieldName}" Width="*"/>
-                    <DataGridTextColumn Header="Crop" Binding="{Binding CropType}" Width="*"/>
-                    <DataGridTextColumn Header="Area (ha)" Binding="{Binding Area, StringFormat='{}{0:N2}'}" Width="100"/>
-                    <DataGridTextColumn Header="Above-Ground C (kg/ha)" Binding="{Binding AboveGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
-                    <DataGridTextColumn Header="Below-Ground C (kg/ha)" Binding="{Binding BelowGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
-                    <DataGridTextColumn Header="Manure C (kg/ha)" Binding="{Binding ManureCarbonInput, StringFormat='{}{0:N1}'}" Width="130"/>
-                    <DataGridTextColumn Header="Total C inputs (kg/ha)" Binding="{Binding TotalCarbonInputs, StringFormat='{}{0:N1}'}" Width="150"/>
-                    <DataGridTextColumn Header="Soil C (Mg/ha)" Binding="{Binding SoilCarbon, StringFormat='{}{0:N2}'}" Width="120"/>
-                    <DataGridTextColumn Header="Δ Soil C (Mg/ha/yr)" Binding="{Binding ChangeInSoilCarbon, StringFormat='{}{0:N3}'}" Width="140"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <StackPanel IsVisible="{Binding HasResults}" Margin="20">
 
-        </Grid>
+                    <!-- Field-level per-year carbon results -->
+                    <TextBlock Text="Field carbon results (per field × year)"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="#2c3e50"
+                               Margin="0,0,0,8"/>
+                    <DataGrid ItemsSource="{Binding YearResults}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              CanUserSortColumns="True"
+                              GridLinesVisibility="Horizontal"
+                              MaxHeight="400">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="80"/>
+                            <DataGridTextColumn Header="Field" Binding="{Binding FieldName}" Width="*"/>
+                            <DataGridTextColumn Header="Crop" Binding="{Binding CropType}" Width="*"/>
+                            <DataGridTextColumn Header="Area (ha)" Binding="{Binding Area, StringFormat='{}{0:N2}'}" Width="100"/>
+                            <DataGridTextColumn Header="Above-Ground C (kg/ha)" Binding="{Binding AboveGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
+                            <DataGridTextColumn Header="Below-Ground C (kg/ha)" Binding="{Binding BelowGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
+                            <DataGridTextColumn Header="Manure C (kg/ha)" Binding="{Binding ManureCarbonInput, StringFormat='{}{0:N1}'}" Width="130"/>
+                            <DataGridTextColumn Header="Total C inputs (kg/ha)" Binding="{Binding TotalCarbonInputs, StringFormat='{}{0:N1}'}" Width="150"/>
+                            <DataGridTextColumn Header="Soil C (Mg/ha)" Binding="{Binding SoilCarbon, StringFormat='{}{0:N2}'}" Width="120"/>
+                            <DataGridTextColumn Header="Δ Soil C (Mg/ha/yr)" Binding="{Binding ChangeInSoilCarbon, StringFormat='{}{0:N3}'}" Width="140"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Shelterbelt section, only visible when the farm has shelterbelt components -->
+                    <StackPanel IsVisible="{Binding HasShelterbeltResults}" Margin="0,24,0,0">
+                        <TextBlock Text="Shelterbelt carbon results (per shelterbelt × year)"
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="#2c3e50"
+                                   Margin="0,0,0,8"/>
+                        <DataGrid ItemsSource="{Binding ShelterbeltYearResults}"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  CanUserResizeColumns="True"
+                                  CanUserSortColumns="True"
+                                  GridLinesVisibility="Horizontal"
+                                  MaxHeight="400">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="80"/>
+                                <DataGridTextColumn Header="Shelterbelt" Binding="{Binding ShelterbeltName}" Width="*"/>
+                                <DataGridTextColumn Header="Living Biomass C (Mg/km)" Binding="{Binding TotalLivingBiomassCarbon, StringFormat='{}{0:N2}'}" Width="170"/>
+                                <DataGridTextColumn Header="Δ Living Biomass C" Binding="{Binding TotalLivingBiomassCarbonChange, StringFormat='{}{0:N3}'}" Width="150"/>
+                                <DataGridTextColumn Header="DOM C (Mg/km)" Binding="{Binding TotalDeadOrganicMatterCarbon, StringFormat='{}{0:N2}'}" Width="130"/>
+                                <DataGridTextColumn Header="Δ DOM C" Binding="{Binding TotalDeadOrganicMatterChange, StringFormat='{}{0:N3}'}" Width="110"/>
+                                <DataGridTextColumn Header="Total Ecosystem C (Mg/km)" Binding="{Binding TotalEcosystemCarbon, StringFormat='{}{0:N2}'}" Width="180"/>
+                                <DataGridTextColumn Header="Δ Total Ecosystem C" Binding="{Binding TotalEcosystemCarbonChange, StringFormat='{}{0:N3}'}" Width="160"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

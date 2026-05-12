@@ -27,7 +27,16 @@ public class FarmAnalysisResults
         new List<FieldAnalysisYearResult>();
 
     /// <summary>
-    /// True when no fields produced any year results (empty farm or empty stage state).
+    /// Per-shelterbelt, per-year carbon results. Empty when the farm has no shelterbelt
+    /// components. Computed independently of <see cref="YearResults"/> via
+    /// <c>ShelterbeltCalculator</c> — shelterbelts have their own allometric model and don't
+    /// feed into the field-level ICBM / Tier 2 calculations.
     /// </summary>
-    public bool IsEmpty => YearResults.Count == 0;
+    public IReadOnlyList<ShelterbeltYearResult> ShelterbeltYearResults { get; init; } =
+        new List<ShelterbeltYearResult>();
+
+    /// <summary>
+    /// True when neither fields nor shelterbelts produced any year results.
+    /// </summary>
+    public bool IsEmpty => YearResults.Count == 0 && ShelterbeltYearResults.Count == 0;
 }

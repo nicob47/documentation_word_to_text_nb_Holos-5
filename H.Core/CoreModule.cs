@@ -3,6 +3,7 @@
 using H.Core.Calculators.Carbon;
 using H.Core.Calculators.Climate;
 using H.Core.Calculators.Nitrogen;
+using H.Core.Calculators.Shelterbelt;
 using H.Core.Calculators.Tillage;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Providers;
@@ -60,6 +61,7 @@ namespace H.Core
             containerRegistry.RegisterSingleton<ICBMSoilCarbonCalculator>();
             containerRegistry.RegisterSingleton<IPCCTier2SoilCarbonCalculator>();
             containerRegistry.RegisterSingleton<IFieldResultsService, FieldResultsService>();
+            containerRegistry.RegisterSingleton<ShelterbeltCalculator>();
             containerRegistry.RegisterSingleton<IFarmAnalysisService, FarmAnalysisService>();
 
             containerRegistry.RegisterSingleton<ICustomFileClimateDataProvider, CustomFileClimateDataProvider>();
