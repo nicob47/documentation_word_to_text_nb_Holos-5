@@ -246,6 +246,17 @@ public class MyComponentsViewModel : ViewModelBase
         this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
     }
 
+    /// <summary>
+    /// Phase 5 vertical slice: navigates straight to the GHG / carbon results view, which kicks
+    /// off the ICBM analysis on the active farm via IFarmAnalysisService. Separate from
+    /// OnResultsButtonClicked so the existing placeholder summary view stays reachable.
+    /// </summary>
+    public void OnRunGhgAnalysisButtonClicked()
+    {
+        this.RegionManager?.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
+        this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(GHGResultsView));
+    }
+
     public void OnRemoveComponentExecute()
     {
         if (this.SelectedComponent is not null)

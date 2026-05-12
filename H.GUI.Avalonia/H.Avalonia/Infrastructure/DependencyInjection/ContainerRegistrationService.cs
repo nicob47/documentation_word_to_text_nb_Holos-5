@@ -48,6 +48,7 @@ using H.Avalonia.Views.SupportingViews.RegionSelection;
 using H.Avalonia.Views.SupportingViews.Start;
 using H.Core;
 using H.Core.Calculators.Carbon;
+using H.Core.Calculators.Nitrogen;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
@@ -66,12 +67,14 @@ using H.Core.Providers.Climate;
 using H.Core.Providers.Energy;
 using H.Core.Providers.Feed;
 using H.Core.Services;
+using H.Core.Services.Analysis;
 using H.Core.Services.Animals;
 using H.Core.Services.Climate;
 using H.Core.Services.Countries;
 using H.Core.Services.DietService;
 using H.Core.Services.Initialization;
 using H.Core.Services.Animals.Dairy;
+using H.Core.Services.LandManagement;
 using H.Core.Services.LandManagement.Fields;
 using H.Core.Services.Provinces;
 using H.Core.Services.StorageService;
@@ -246,6 +249,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
 
             
             containerRegistry.RegisterForNavigation<ResultsSummaryView, ResultsSummaryViewModel>();
+            containerRegistry.RegisterForNavigation<GHGResultsView, GHGResultsViewModel>();
             containerRegistry.RegisterForNavigation<MultiYearCarbonModellingView, MultiYearCarbonModellingViewModel>();
             containerRegistry.RegisterForNavigation<EstimatesOfProductionView, EstimatesOfProductionViewModel>();
             containerRegistry.RegisterForNavigation<FeedEstimateReportView, FeedEstimateReportViewModel>();
@@ -405,6 +409,15 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterSingleton<IICBMCarbonInputCalculator, ICBMCarbonInputCalculator>();
             containerRegistry.RegisterSingleton<IIPCCTier2CarbonInputCalculator, IPCCTier2CarbonInputCalculator>();
             containerRegistry.RegisterSingleton<ICarbonService, CarbonService>();
+
+            // Phase 5: soil/N calculator stack + FieldResultsService + FarmAnalysisService.
+            // Concrete soil/N calculators are also registered so FieldResultsService's
+            // constructor-injected dependencies resolve.
+            containerRegistry.RegisterSingleton<N2OEmissionFactorCalculator>();
+            containerRegistry.RegisterSingleton<ICBMSoilCarbonCalculator>();
+            containerRegistry.RegisterSingleton<IPCCTier2SoilCarbonCalculator>();
+            containerRegistry.RegisterSingleton<IFieldResultsService, FieldResultsService>();
+            containerRegistry.RegisterSingleton<IFarmAnalysisService, FarmAnalysisService>();
 
             // Unit conversion
             containerRegistry.RegisterSingleton<IUnitsOfMeasurementCalculator, UnitsOfMeasurementCalculator>();

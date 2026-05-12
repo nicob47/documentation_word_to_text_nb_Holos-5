@@ -2,7 +2,97 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
              x:Class="H.Avalonia.Views.ResultViews.GHGResultsView">
-  Welcome to Avalonia!
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+        <!-- Header: farm name + carbon strategy + Recalculate button -->
+        <Border Grid.Row="0"
+                Background="#f8f9fa"
+                BorderBrush="#dee2e6"
+                BorderThickness="0,0,0,1"
+                Padding="20,16">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <TextBlock Text="GHG &amp; Carbon Results"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#1f497a"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                        <TextBlock Text="Farm: " FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="{Binding FarmName}" FontSize="13" Margin="0,0,16,0"/>
+                        <TextBlock Text="Model: " FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="{Binding CarbonModellingStrategy}" FontSize="13"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Grid.Column="1"
+                        Content="Recalculate"
+                        Command="{Binding RecalculateCommand}"
+                        Classes="responsive-button"
+                        IsEnabled="{Binding !IsProcessingData}"
+                        Padding="16,8"
+                        VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Error banner (visible only when LastErrorMessage is set) -->
+        <Border Grid.Row="1"
+                Background="#fff5f5"
+                BorderBrush="#fed7d7"
+                BorderThickness="0,0,0,1"
+                Padding="20,12"
+                IsVisible="{Binding LastErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Analysis error: " FontWeight="SemiBold" Foreground="#c53030"/>
+                <TextBlock Text="{Binding LastErrorMessage}" Foreground="#c53030" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Processing indicator -->
+        <Border Grid.Row="2"
+                Background="#fffaf0"
+                Padding="20,8"
+                IsVisible="{Binding IsProcessingData}">
+            <TextBlock Text="Running carbon analysis..." FontStyle="Italic" Foreground="#744210"/>
+        </Border>
+
+        <!-- Results grid (empty placeholder when HasResults is false) -->
+        <Grid Grid.Row="3">
+
+            <TextBlock Text="No results yet. Click Recalculate, or add a field with crop view items to the active farm and try again."
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#6c757d"
+                       FontStyle="Italic"
+                       TextWrapping="Wrap"
+                       MaxWidth="500"
+                       Margin="20"
+                       TextAlignment="Center"
+                       IsVisible="{Binding !HasResults}"/>
+
+            <DataGrid ItemsSource="{Binding YearResults}"
+                      IsVisible="{Binding HasResults}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserResizeColumns="True"
+                      CanUserSortColumns="True"
+                      GridLinesVisibility="Horizontal"
+                      Margin="20">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="80"/>
+                    <DataGridTextColumn Header="Field" Binding="{Binding FieldName}" Width="*"/>
+                    <DataGridTextColumn Header="Crop" Binding="{Binding CropType}" Width="*"/>
+                    <DataGridTextColumn Header="Area (ha)" Binding="{Binding Area, StringFormat='{}{0:N2}'}" Width="100"/>
+                    <DataGridTextColumn Header="Above-Ground C (kg/ha)" Binding="{Binding AboveGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
+                    <DataGridTextColumn Header="Below-Ground C (kg/ha)" Binding="{Binding BelowGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
+                    <DataGridTextColumn Header="Manure C (kg/ha)" Binding="{Binding ManureCarbonInput, StringFormat='{}{0:N1}'}" Width="130"/>
+                    <DataGridTextColumn Header="Total C inputs (kg/ha)" Binding="{Binding TotalCarbonInputs, StringFormat='{}{0:N1}'}" Width="150"/>
+                    <DataGridTextColumn Header="Soil C (Mg/ha)" Binding="{Binding SoilCarbon, StringFormat='{}{0:N2}'}" Width="120"/>
+                    <DataGridTextColumn Header="Δ Soil C (Mg/ha/yr)" Binding="{Binding ChangeInSoilCarbon, StringFormat='{}{0:N3}'}" Width="140"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
 </UserControl>

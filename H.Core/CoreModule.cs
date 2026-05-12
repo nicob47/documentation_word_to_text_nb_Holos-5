@@ -2,6 +2,7 @@
 
 using H.Core.Calculators.Carbon;
 using H.Core.Calculators.Climate;
+using H.Core.Calculators.Nitrogen;
 using H.Core.Calculators.Tillage;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Providers;
@@ -9,7 +10,9 @@ using H.Core.Providers.Carbon;
 using H.Core.Providers.Climate;
 using H.Core.Providers.Feed;
 using H.Core.Providers.Soil;
+using H.Core.Services.Analysis;
 using H.Core.Services.DietService;
+using H.Core.Services.LandManagement;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -49,6 +52,15 @@ namespace H.Core
             containerRegistry.RegisterSingleton<IICBMCarbonInputCalculator, ICBMCarbonInputCalculator>();
             containerRegistry.RegisterSingleton<IIPCCTier2CarbonInputCalculator, IPCCTier2CarbonInputCalculator>();
             containerRegistry.RegisterSingleton<ICarbonService, CarbonService>();
+
+            // Phase 5: GUI vertical slice — register the soil/N calculator stack as concrete
+            // singletons so FieldResultsService can be resolved via constructor injection, then
+            // expose IFieldResultsService and the new IFarmAnalysisService façade.
+            containerRegistry.RegisterSingleton<N2OEmissionFactorCalculator>();
+            containerRegistry.RegisterSingleton<ICBMSoilCarbonCalculator>();
+            containerRegistry.RegisterSingleton<IPCCTier2SoilCarbonCalculator>();
+            containerRegistry.RegisterSingleton<IFieldResultsService, FieldResultsService>();
+            containerRegistry.RegisterSingleton<IFarmAnalysisService, FarmAnalysisService>();
 
             containerRegistry.RegisterSingleton<ICustomFileClimateDataProvider, CustomFileClimateDataProvider>();
             containerRegistry.RegisterSingleton<IDietProvider, DietProvider>();

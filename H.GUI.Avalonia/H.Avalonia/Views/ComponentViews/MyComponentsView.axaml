@@ -140,6 +140,11 @@
                             Command="{Binding Path=OnResultsButtonClicked}"
                             Classes="responsive-button"
                             Margin="5"/>
+                    <Button Content="Run GHG Analysis"
+                            Name="RunGhgAnalysisButton"
+                            Command="{Binding Path=OnRunGhgAnalysisButtonClicked}"
+                            Classes="responsive-button"
+                            Margin="5"/>
                 </WrapPanel>
             </Border>
         </Border>
