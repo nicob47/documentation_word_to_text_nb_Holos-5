@@ -1,4 +1,5 @@
 using H.Avalonia.ViewModels.Results;
+using H.Core.Enumerations;
 using H.Core.Models;
 using H.Core.Models.Results;
 using H.Core.Services.Analysis;
@@ -164,6 +165,67 @@ namespace H.Avalonia.Test.ViewModels.Results
 
             Assert.IsFalse(_viewModel.HasResults);
             Assert.AreEqual("calculator misconfigured", _viewModel.LastErrorMessage);
+        }
+
+        #endregion
+
+        #region SelectedStrategy Tests
+
+        [TestMethod]
+        public void RecalculateCommand_SyncsSelectedStrategyToActiveFarmDefaults()
+        {
+            var farm = new Farm { Name = "Test Farm" };
+            farm.Defaults.CarbonModellingStrategy = CarbonModellingStrategies.IPCCTier2;
+            _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
+
+            _mockAnalysisService.Setup(s => s.RunAnalysis(farm))
+                .Returns(new FarmAnalysisResults());
+
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+
+            _viewModel.RecalculateCommand.Execute();
+
+            Assert.AreEqual(CarbonModellingStrategies.IPCCTier2, _viewModel.SelectedStrategy);
+            // The sync should not have triggered an extra analysis on top of the one we requested.
+            _mockAnalysisService.Verify(s => s.RunAnalysis(farm), Times.Once);
+        }
+
+        [TestMethod]
+        public void SelectedStrategy_SetterWritesBackToFarmDefaultsAndReanalyzes()
+        {
+            var farm = new Farm { Name = "Test Farm" };
+            farm.Defaults.CarbonModellingStrategy = CarbonModellingStrategies.ICBM;
+            _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
+            _mockAnalysisService.Setup(s => s.RunAnalysis(farm)).Returns(new FarmAnalysisResults());
+
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+
+            // Prime the view model so SelectedStrategy reflects the farm's current value (ICBM).
+            _viewModel.RecalculateCommand.Execute();
+            _mockAnalysisService.Invocations.Clear();
+
+            _viewModel.SelectedStrategy = CarbonModellingStrategies.IPCCTier2;
+
+            Assert.AreEqual(CarbonModellingStrategies.IPCCTier2, farm.Defaults.CarbonModellingStrategy);
+            _mockAnalysisService.Verify(s => s.RunAnalysis(farm), Times.Once);
+        }
+
+        [TestMethod]
+        public void AvailableCarbonStrategies_ContainsIcbmAndTier2()
+        {
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+
+            CollectionAssert.Contains(_viewModel.AvailableCarbonStrategies.ToArray(), CarbonModellingStrategies.ICBM);
+            CollectionAssert.Contains(_viewModel.AvailableCarbonStrategies.ToArray(), CarbonModellingStrategies.IPCCTier2);
         }
 
         #endregion

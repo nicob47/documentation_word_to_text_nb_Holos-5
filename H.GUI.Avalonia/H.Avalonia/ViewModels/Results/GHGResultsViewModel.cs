@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using H.Core.Enumerations;
 using H.Core.Models.Results;
 using H.Core.Services.Analysis;
 using H.Core.Services.StorageService;
@@ -27,6 +29,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
     private string _carbonModellingStrategy = string.Empty;
     private bool _hasResults;
     private string? _lastErrorMessage;
+    private CarbonModellingStrategies _selectedStrategy;
+    private bool _suppressStrategyReanalysis;
 
     #endregion
 
@@ -97,6 +101,30 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
     public DelegateCommand RecalculateCommand { get; }
 
+    /// <summary>
+    /// Available carbon-modelling strategies for the ComboBox in the results view. Static — the
+    /// enum has exactly two values (IPCC Tier 2 and ICBM).
+    /// </summary>
+    public IReadOnlyList<CarbonModellingStrategies> AvailableCarbonStrategies { get; } =
+        new[] { CarbonModellingStrategies.ICBM, CarbonModellingStrategies.IPCCTier2 };
+
+    /// <summary>
+    /// The strategy that will be used the next time analysis runs. Setting this property writes
+    /// the value back to the active farm's Defaults and triggers a re-run, so the user sees the
+    /// effect of switching strategies without having to click Recalculate.
+    /// </summary>
+    public CarbonModellingStrategies SelectedStrategy
+    {
+        get => _selectedStrategy;
+        set
+        {
+            if (SetProperty(ref _selectedStrategy, value) && !_suppressStrategyReanalysis)
+            {
+                ApplyStrategyAndReanalyze(value);
+            }
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -129,6 +157,18 @@ public class GHGResultsViewModel : ResultsViewModelBase
             return;
         }
 
+        // Sync the strategy ComboBox with the active farm. Suppressed so the resulting
+        // property-changed notification doesn't recursively kick off another analysis run.
+        _suppressStrategyReanalysis = true;
+        try
+        {
+            SelectedStrategy = farm.Defaults.CarbonModellingStrategy;
+        }
+        finally
+        {
+            _suppressStrategyReanalysis = false;
+        }
+
         IsProcessingData = true;
         try
         {
@@ -154,6 +194,26 @@ public class GHGResultsViewModel : ResultsViewModelBase
         {
             IsProcessingData = false;
         }
+    }
+
+    private void ApplyStrategyAndReanalyze(CarbonModellingStrategies newStrategy)
+    {
+        var farm = base.ActiveFarm;
+        if (farm == null)
+        {
+            return;
+        }
+
+        if (farm.Defaults.CarbonModellingStrategy != newStrategy)
+        {
+            _logger.LogInformation(
+                "Switching carbon-modelling strategy for {FarmName} from {OldStrategy} to {NewStrategy}.",
+                farm.Name, farm.Defaults.CarbonModellingStrategy, newStrategy);
+
+            farm.Defaults.CarbonModellingStrategy = newStrategy;
+        }
+
+        this.RunAnalysis();
     }
 
     #endregion

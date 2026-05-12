@@ -26,13 +26,27 @@
                         <TextBlock Text="{Binding CarbonModellingStrategy}" FontSize="13"/>
                     </StackPanel>
                 </StackPanel>
-                <Button Grid.Column="1"
-                        Content="Recalculate"
-                        Command="{Binding RecalculateCommand}"
-                        Classes="responsive-button"
-                        IsEnabled="{Binding !IsProcessingData}"
-                        Padding="16,8"
-                        VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="Strategy:"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+                    <ComboBox ItemsSource="{Binding AvailableCarbonStrategies}"
+                              SelectedItem="{Binding SelectedStrategy, Mode=TwoWay}"
+                              MinWidth="140"
+                              IsEnabled="{Binding !IsProcessingData}"
+                              VerticalAlignment="Center"
+                              Margin="0,0,12,0"/>
+                    <Button Content="Recalculate"
+                            Command="{Binding RecalculateCommand}"
+                            Classes="responsive-button"
+                            IsEnabled="{Binding !IsProcessingData}"
+                            Padding="16,8"
+                            VerticalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </Border>
 
