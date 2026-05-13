@@ -107,9 +107,15 @@
                             Padding="8"
                             Margin="0,0,0,24"
                             Background="White">
+                        <!-- LegendPosition="Hidden" works around a LiveChartsCore 2.0.0-rc1
+                             IndexOutOfRangeException in SKDefaultLegend.Draw that fires when
+                             rendering the default legend. With one field the legend conveys no
+                             information; the line itself is labelled by the chart's tooltip on
+                             hover. Re-enable once the library ships a stable release without
+                             the legend bug. -->
                         <lvcore:CartesianChart Series="{Binding SoilCarbonTrendSeries}"
                                                XAxes="{Binding SoilCarbonTrendXAxes}"
-                                               LegendPosition="Right"
+                                               LegendPosition="Hidden"
                                                Height="280"/>
                     </Border>
 

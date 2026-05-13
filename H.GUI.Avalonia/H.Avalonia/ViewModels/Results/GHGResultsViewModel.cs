@@ -327,8 +327,25 @@ public class GHGResultsViewModel : ResultsViewModelBase
     /// Build one line series per field over the union of all years present in the results. The
     /// chart is shown when there are at least two distinct years (a single-year run would just
     /// be a single point per field, which is what the DataGrid already conveys).
+    /// Wrapped in a try/catch — LiveChartsCore 2.0.0-rc1 has had IndexOutOfRange crashes in its
+    /// renderer (notably SKDefaultLegend.Draw) for edge-case inputs; if we hit one we degrade to
+    /// "no chart" rather than tearing down the whole window.
     /// </summary>
     private void BuildSoilCarbonTrendChart(IReadOnlyList<FieldAnalysisYearResult> yearResults)
+    {
+        try
+        {
+            BuildSoilCarbonTrendChartCore(yearResults);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Soil-C trend chart build failed; hiding chart for this run.");
+            this.SoilCarbonTrendSeries = Array.Empty<ISeries>();
+            this.SoilCarbonTrendXAxes = Array.Empty<Axis>();
+        }
+    }
+
+    private void BuildSoilCarbonTrendChartCore(IReadOnlyList<FieldAnalysisYearResult> yearResults)
     {
         if (yearResults.Count == 0)
         {
@@ -344,7 +361,14 @@ public class GHGResultsViewModel : ResultsViewModelBase
             .OrderBy(g => g.Key)
             .Select(group =>
             {
-                var byYear = group.ToDictionary(r => r.Year, r => r.SoilCarbon);
+                // Use a grouped lookup rather than ToDictionary so duplicate (field, year) rows
+                // (e.g. a main crop + a cover crop in the same year that didn't get merged by
+                // CombineCarbonInputs) don't blow up with ArgumentException — take the average
+                // for the year instead. The DataGrid still shows the raw rows; this is only the
+                // trend-chart smoothing.
+                var byYear = group
+                    .GroupBy(r => r.Year)
+                    .ToDictionary(g => g.Key, g => g.Average(r => r.SoilCarbon));
                 var values = sortedYears
                     .Select(year => byYear.TryGetValue(year, out var v) ? (double?)v : null)
                     .ToArray();
