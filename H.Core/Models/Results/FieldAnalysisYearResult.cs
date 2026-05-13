@@ -28,10 +28,10 @@ public class FieldAnalysisYearResult
     /// <summary>(kg C ha⁻¹) — total carbon inputs feeding the soil-pool calculation.</summary>
     public double TotalCarbonInputs { get; init; }
 
-    /// <summary>(Mg C ha⁻¹) — soil organic carbon stock at end of the interval.</summary>
+    /// <summary>(kg C ha⁻¹) — soil organic carbon stock at end of the interval.</summary>
     public double SoilCarbon { get; init; }
 
-    /// <summary>(Mg C ha⁻¹ yr⁻¹) — change in soil organic carbon since the previous interval.</summary>
+    /// <summary>(kg C ha⁻¹ yr⁻¹) — change in soil organic carbon since the previous interval.</summary>
     public double ChangeInSoilCarbon { get; init; }
 
     /// <summary>(kg N) — total N applied from manure and digestate, including from grazing animals.</summary>

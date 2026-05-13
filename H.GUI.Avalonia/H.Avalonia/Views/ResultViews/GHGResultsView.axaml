@@ -96,7 +96,7 @@
                 <StackPanel IsVisible="{Binding HasResults}" Margin="20">
 
                     <!-- Soil carbon trend: one line series per field across years -->
-                    <TextBlock Text="Soil organic carbon trend (Mg C ha⁻¹)"
+                    <TextBlock Text="Soil organic carbon trend (kg C ha⁻¹)"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Foreground="#2c3e50"
@@ -141,8 +141,8 @@
                             <DataGridTextColumn Header="Below-Ground C (kg/ha)" Binding="{Binding BelowGroundCarbonInput, StringFormat='{}{0:N1}'}" Width="160"/>
                             <DataGridTextColumn Header="Manure C (kg/ha)" Binding="{Binding ManureCarbonInput, StringFormat='{}{0:N1}'}" Width="130"/>
                             <DataGridTextColumn Header="Total C inputs (kg/ha)" Binding="{Binding TotalCarbonInputs, StringFormat='{}{0:N1}'}" Width="150"/>
-                            <DataGridTextColumn Header="Soil C (Mg/ha)" Binding="{Binding SoilCarbon, StringFormat='{}{0:N2}'}" Width="120"/>
-                            <DataGridTextColumn Header="Δ Soil C (Mg/ha/yr)" Binding="{Binding ChangeInSoilCarbon, StringFormat='{}{0:N3}'}" Width="140"/>
+                            <DataGridTextColumn Header="Soil C (kg/ha)" Binding="{Binding SoilCarbon, StringFormat='{}{0:N2}'}" Width="120"/>
+                            <DataGridTextColumn Header="Δ Soil C (kg/ha/yr)" Binding="{Binding ChangeInSoilCarbon, StringFormat='{}{0:N3}'}" Width="140"/>
                             <DataGridTextColumn Header="Manure N (kg)" Binding="{Binding NitrogenAppliedFromManure, StringFormat='{}{0:N1}'}" Width="120"/>
                             <DataGridTextColumn Header="Direct N₂O (kg/ha)" Binding="{Binding DirectN2OPerHectare, StringFormat='{}{0:N3}'}" Width="140"/>
                             <DataGridTextColumn Header="Indirect N₂O (kg/ha)" Binding="{Binding IndirectN2OPerHectare, StringFormat='{}{0:N3}'}" Width="150"/>

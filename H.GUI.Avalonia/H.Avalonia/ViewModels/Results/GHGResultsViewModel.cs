@@ -444,7 +444,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
             "AboveGroundCarbonInput_kg_per_ha", "BelowGroundCarbonInput_kg_per_ha",
             "ManureCarbonInput_kg_per_ha", "DigestateCarbonInput_kg_per_ha",
             "TotalCarbonInputs_kg_per_ha",
-            "SoilCarbon_Mg_per_ha", "ChangeInSoilCarbon_Mg_per_ha_per_yr",
+            "SoilCarbon_kg_per_ha", "ChangeInSoilCarbon_kg_per_ha_per_yr",
             "NitrogenAppliedFromManure_kg", "DirectN2O_kg_per_ha",
             "IndirectN2O_kg_per_ha", "TotalN2O_kg_per_ha",
         }));
