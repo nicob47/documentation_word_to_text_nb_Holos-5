@@ -111,7 +111,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
         public void RegisterAllTypes(IContainerRegistry containerRegistry)
         {
             _logger.LogInformation("Starting dependency injection container registration process");
-            
+
             RegisterStorage(containerRegistry);
             RegisterViews(containerRegistry);
             RegisterProviders(containerRegistry);
@@ -122,8 +122,42 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             RegisterCaching(containerRegistry);
             RegisterTransferServices(containerRegistry);
             RegisterDialogs(containerRegistry);
-            
+
+            PreWarmHeavyServices();
+
             _logger.LogInformation("Completed dependency injection container registration process");
+        }
+
+        /// <summary>
+        /// Eagerly resolves singleton services whose constructors do non-trivial work (file I/O,
+        /// large CSV parsing) so the user doesn't pay that cost on the first interaction. Runs on
+        /// a background thread so the app's main window can finish opening — by the time the user
+        /// clicks 'Results', the SmallAreaYieldProvider's >1M-row file should already be parsed.
+        /// </summary>
+        private void PreWarmHeavyServices()
+        {
+            _logger.LogDebug("Scheduling background pre-warm of IFieldResultsService");
+
+            // Fire and forget — if pre-warm fails (e.g. the resource file is missing) we log it
+            // and the first user click takes the cost itself rather than crashing startup.
+            _ = System.Threading.Tasks.Task.Run(() =>
+            {
+                try
+                {
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
+                    _ = _containerProvider.Resolve<IFieldResultsService>();
+                    sw.Stop();
+                    _logger.LogInformation(
+                        "Pre-warmed IFieldResultsService (incl. SmallAreaYieldProvider CSV load) in {Elapsed}ms",
+                        sw.ElapsedMilliseconds);
+                }
+                catch (System.Exception ex)
+                {
+                    _logger.LogWarning(ex,
+                        "Failed to pre-warm IFieldResultsService during startup. First 'Results' " +
+                        "click will pay the cost instead.");
+                }
+            });
         }
 
         #region Storage Registration

@@ -525,10 +525,13 @@ namespace H.Core.Services.LandManagement
 
                 for (int i = 0; i < viewItemsForField.Count; i++)
                 {
-                    var currentYearResults = viewItemsForField.ElementAt(i);
+                    // List<T> indexer is O(1); the previous ElementAt(int) here dispatched through
+                    // the IEnumerable<T> extension every iteration. Minor on its own, but the loop
+                    // runs per (field × year).
+                    var currentYearResults = viewItemsForField[i];
 
                     // Get previous year results, if there is no previous year (i.e. t = 0), then use equilibrium (or custom measured) values for the pools
-                    var previousYearResults = i == 0 ? equilibriumYearResults : viewItemsForField.ElementAt(i - 1);
+                    var previousYearResults = i == 0 ? equilibriumYearResults : viewItemsForField[i - 1];
 
                     // Carbon must be calculated before nitrogen
                     this.CalculateCarbonAtInterval(

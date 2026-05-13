@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using H.Core.Calculators.Shelterbelt;
 using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
@@ -34,15 +35,25 @@ public class FarmAnalysisService : IFarmAnalysisService
     {
         ArgumentNullException.ThrowIfNull(farm);
 
+        var totalSw = Stopwatch.StartNew();
+        long animalMs, fieldMs, shelterbeltMs, mapMs;
+
         // The field results service expects animal emissions to be populated before calculating
         // soil carbon results, because grazing / manure inputs feed the residue C/N calculations.
+        var sw = Stopwatch.StartNew();
         _fieldResultsService.AnimalResults = _animalService.GetAnimalResults(farm);
+        animalMs = sw.ElapsedMilliseconds;
 
+        sw.Restart();
         var detailViewItems = _fieldResultsService.CalculateFinalResults(farm);
+        fieldMs = sw.ElapsedMilliseconds;
 
+        sw.Restart();
         var shelterbeltResults = CalculateShelterbeltResults(farm);
+        shelterbeltMs = sw.ElapsedMilliseconds;
 
-        return new FarmAnalysisResults
+        sw.Restart();
+        var result = new FarmAnalysisResults
         {
             FarmName = farm.Name ?? string.Empty,
             Province = farm.Province.GetDescription() ?? string.Empty,
@@ -54,6 +65,20 @@ public class FarmAnalysisService : IFarmAnalysisService
                 .ToList(),
             ShelterbeltYearResults = shelterbeltResults,
         };
+        mapMs = sw.ElapsedMilliseconds;
+        totalSw.Stop();
+
+        // Emit a structured trace so the user can see where the time goes without needing a full
+        // profiler attached. The 'GHGAnalysis' tag makes it greppable in Visual Studio's
+        // Output > Debug pane (where Trace.* lands) and the Trace listener wired up by
+        // FieldResultsService.HTraceListener.
+        Trace.WriteLine(
+            $"[GHGAnalysis] Farm='{farm.Name}' total={totalSw.ElapsedMilliseconds}ms " +
+            $"animal={animalMs}ms field={fieldMs}ms shelterbelt={shelterbeltMs}ms map={mapMs}ms " +
+            $"rows={result.YearResults.Count} shelterbeltRows={result.ShelterbeltYearResults.Count} " +
+            $"strategy={farm.Defaults.CarbonModellingStrategy}");
+
+        return result;
     }
 
     private IReadOnlyList<ShelterbeltYearResult> CalculateShelterbeltResults(Farm farm)

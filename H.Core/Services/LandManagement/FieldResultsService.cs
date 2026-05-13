@@ -191,20 +191,23 @@ namespace H.Core.Services.LandManagement
         {
             if (farm.ClimateData.DailyClimateData.Any())
             {
-                var climateDataGroupedByYear = farm.ClimateData.DailyClimateData.GroupBy(userClimateData => userClimateData.Year);
-                var climateDataForYear = climateDataGroupedByYear.SingleOrDefault(groupingByYear => groupingByYear.Key == viewItem.Year);
+                // Filter + sort once instead of GroupBy-ing the entire daily collection (often
+                // 30+ years × 365 entries) and then sorting it three separate times for precip /
+                // temp / ET. With many fields × years, the old pattern dominated the analysis.
+                var orderedForYear = farm.ClimateData.DailyClimateData
+                    .Where(d => d.Year == viewItem.Year)
+                    .OrderBy(d => d.JulianDay)
+                    .ToList();
+
                 var climateParameter = 0d;
 
-                if (climateDataForYear != null)
+                if (orderedForYear.Count > 0)
                 {
-                    // Use daily climate data
-                    var precipitationList = climateDataForYear.OrderBy(climateData => climateData.JulianDay).Select(climateData => climateData.MeanDailyPrecipitation).ToList();
-
-                    // Add irrigation amounts to daily precipitations
+                    // Use daily climate data — three projections share the same already-sorted list.
+                    var precipitationList = orderedForYear.Select(d => d.MeanDailyPrecipitation).ToList();
                     var totalPrecipitationList = _irrigationService.AddIrrigationToDailyPrecipitations(precipitationList, farm, viewItem);
-
-                    var temperatureList = climateDataForYear.OrderBy(climateData => climateData.JulianDay).Select(climateData => climateData.MeanDailyAirTemperature).ToList();
-                    var evapotranspirationList = climateDataForYear.OrderBy(climateData => climateData.JulianDay).Select(climateData => climateData.MeanDailyPET).ToList();
+                    var temperatureList = orderedForYear.Select(d => d.MeanDailyAirTemperature).ToList();
+                    var evapotranspirationList = orderedForYear.Select(d => d.MeanDailyPET).ToList();
 
                     climateParameter = _climateParameterCalculator.CalculateClimateParameterForYear(
                         farm: farm,
