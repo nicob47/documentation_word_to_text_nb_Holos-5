@@ -15,6 +15,7 @@ using H.Core.Services.StorageService;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Prism.Commands;
 using Prism.Regions;
 
@@ -49,9 +50,15 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
     #region Constructors
 
+    /// <summary>
+    /// Design-time / fallback constructor. Avalonia's XAML previewer and Prism's container can
+    /// reach this when the full DI ctor's dependencies don't resolve — using <see cref="NullLogger"/>
+    /// instead of null! prevents an NRE at <see cref="RunAnalysis"/> time and surfaces the
+    /// configuration problem as a clean log line rather than a crash.
+    /// </summary>
     public GHGResultsViewModel()
     {
-        _logger = null!;
+        _logger = NullLogger.Instance;
         _farmAnalysisService = null!;
         _notificationManager = null;
         RecalculateCommand = new DelegateCommand(RunAnalysis);
@@ -218,6 +225,21 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
     private void RunAnalysis()
     {
+        if (_farmAnalysisService is null)
+        {
+            // Reached only via the design-time / fallback parameterless constructor (see ctor
+            // docs). Without an analysis service we have nothing to compute — bail rather than
+            // NRE so the XAML previewer / a misconfigured container still renders the empty view.
+            _logger.LogWarning(
+                "GHGResultsViewModel.RunAnalysis called without an IFarmAnalysisService; " +
+                "the view model was constructed via the parameterless ctor. Check that " +
+                "IFarmAnalysisService and its transitive dependencies are registered in DI.");
+            this.HasResults = false;
+            this.HasShelterbeltResults = false;
+            this.LastErrorMessage = null;
+            return;
+        }
+
         var farm = base.ActiveFarm;
         if (farm == null)
         {

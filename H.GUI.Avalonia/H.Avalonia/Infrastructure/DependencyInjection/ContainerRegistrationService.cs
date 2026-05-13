@@ -417,6 +417,10 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterSingleton<N2OEmissionFactorCalculator>();
             containerRegistry.RegisterSingleton<ICBMSoilCarbonCalculator>();
             containerRegistry.RegisterSingleton<IPCCTier2SoilCarbonCalculator>();
+            // IAnimalService is a transitive dep of IFarmAnalysisService — without this
+            // registration, Prism silently falls back to GHGResultsViewModel's parameterless
+            // constructor, leaving _logger / _farmAnalysisService null and NRE'ing on first navigate.
+            containerRegistry.RegisterSingleton<IAnimalService, AnimalResultsService>();
             containerRegistry.RegisterSingleton<IFieldResultsService, FieldResultsService>();
             containerRegistry.RegisterSingleton<ShelterbeltCalculator>();
             containerRegistry.RegisterSingleton<IFarmAnalysisService, FarmAnalysisService>();
