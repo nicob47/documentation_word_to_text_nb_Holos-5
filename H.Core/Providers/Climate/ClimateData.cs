@@ -91,7 +91,13 @@ namespace H.Core.Providers.Climate
                 }
                 else
                 {
-                    _dailyClimateByYear.Add(addedItem.Year, new List<DailyClimateData>());
+                    // v5 regression fix: the initial list had to be seeded with addedItem.
+                    // Without it, the very first day of every year was silently dropped, and
+                    // since downstream callers (GetTotalPrecipitationForYear, etc.) gate on
+                    // dailyDataForYear.Count == 365, the cache was effectively never hit —
+                    // all those methods always fell back to SLC monthly normals. v4's
+                    // ClimateData.cs:99 has `{ addedItem }` here.
+                    _dailyClimateByYear.Add(addedItem.Year, new List<DailyClimateData> { addedItem });
                 }
             }
         }
@@ -393,6 +399,25 @@ namespace H.Core.Providers.Climate
             {
                 return this.GetAverageTemperatureForMonthAndYear(dateTime.Year, (Months)dateTime.Month);
             }
+        }
+
+        /// <summary>
+        /// Returns the daily climate entries for the given year, sorted by <see cref="DailyClimateData.JulianDay"/>.
+        /// Backed by the <c>_dailyClimateByYear</c> dictionary that <see cref="DailyClimateData_CollectionChanged"/>
+        /// maintains, so this is an O(1) lookup + O(n log n) sort over a single year — much cheaper than
+        /// <c>DailyClimateData.Where(d =&gt; d.Year == year)</c> over the full multi-year collection.
+        ///
+        /// Returns an empty list when no daily data exists for the year (callers fall back to monthly normals).
+        /// Returns a defensive copy so callers can't mutate the cache.
+        /// </summary>
+        public IReadOnlyList<DailyClimateData> GetDailyClimateDataForYearSortedByJulianDay(int year)
+        {
+            if (!_dailyClimateByYear.TryGetValue(year, out var rawList) || rawList.Count == 0)
+            {
+                return Array.Empty<DailyClimateData>();
+            }
+
+            return rawList.OrderBy(d => d.JulianDay).ToList();
         }
 
         public double GetMeanPrecipitationForDay(DateTime dateTime)

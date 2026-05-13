@@ -191,13 +191,10 @@ namespace H.Core.Services.LandManagement
         {
             if (farm.ClimateData.DailyClimateData.Any())
             {
-                // Filter + sort once instead of GroupBy-ing the entire daily collection (often
-                // 30+ years × 365 entries) and then sorting it three separate times for precip /
-                // temp / ET. With many fields × years, the old pattern dominated the analysis.
-                var orderedForYear = farm.ClimateData.DailyClimateData
-                    .Where(d => d.Year == viewItem.Year)
-                    .OrderBy(d => d.JulianDay)
-                    .ToList();
+                // O(1) dictionary lookup into the per-year cache maintained on ClimateData,
+                // plus a single OrderBy over just that one year's entries (~365). Replaces the
+                // earlier per-call Where over the full multi-year collection.
+                var orderedForYear = farm.ClimateData.GetDailyClimateDataForYearSortedByJulianDay(viewItem.Year);
 
                 var climateParameter = 0d;
 
