@@ -33,4 +33,19 @@ public class FieldAnalysisYearResult
 
     /// <summary>(Mg C ha⁻¹ yr⁻¹) — change in soil organic carbon since the previous interval.</summary>
     public double ChangeInSoilCarbon { get; init; }
+
+    /// <summary>(kg N) — total N applied from manure and digestate, including from grazing animals.</summary>
+    public double NitrogenAppliedFromManure { get; init; }
+
+    /// <summary>
+    /// (kg N₂O ha⁻¹) — direct N₂O emissions per hectare. Includes contributions from synthetic
+    /// fertilizer, crop residues, mineralized N, and organic N (manure + digestate).
+    /// </summary>
+    public double DirectN2OPerHectare { get; init; }
+
+    /// <summary>(kg N₂O ha⁻¹) — indirect N₂O emissions per hectare (leaching + volatilization).</summary>
+    public double IndirectN2OPerHectare { get; init; }
+
+    /// <summary>(kg N₂O ha⁻¹) — direct + indirect.</summary>
+    public double TotalN2OPerHectare => DirectN2OPerHectare + IndirectN2OPerHectare;
 }

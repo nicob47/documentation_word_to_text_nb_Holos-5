@@ -49,6 +49,7 @@ using H.Avalonia.Views.SupportingViews.Start;
 using H.Core;
 using H.Core.Calculators.Carbon;
 using H.Core.Calculators.Nitrogen;
+using H.Core.Calculators.Shelterbelt;
 using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Factories;
 using H.Core.Factories.Animals;
@@ -417,6 +418,7 @@ namespace H.Avalonia.Infrastructure.DependencyInjection
             containerRegistry.RegisterSingleton<ICBMSoilCarbonCalculator>();
             containerRegistry.RegisterSingleton<IPCCTier2SoilCarbonCalculator>();
             containerRegistry.RegisterSingleton<IFieldResultsService, FieldResultsService>();
+            containerRegistry.RegisterSingleton<ShelterbeltCalculator>();
             containerRegistry.RegisterSingleton<IFarmAnalysisService, FarmAnalysisService>();
 
             // Unit conversion

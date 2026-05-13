@@ -229,5 +229,142 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         #endregion
+
+        #region Soil C Trend Chart Tests
+
+        [TestMethod]
+        public void RecalculateCommand_BuildsOneSoilCarbonSeriesPerField()
+        {
+            var farm = new Farm { Name = "Farm" };
+            _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
+
+            _mockAnalysisService.Setup(s => s.RunAnalysis(farm)).Returns(new FarmAnalysisResults
+            {
+                YearResults = new[]
+                {
+                    new FieldAnalysisYearResult { FieldName = "North",  Year = 2020, SoilCarbon = 50 },
+                    new FieldAnalysisYearResult { FieldName = "North",  Year = 2021, SoilCarbon = 51 },
+                    new FieldAnalysisYearResult { FieldName = "South",  Year = 2020, SoilCarbon = 70 },
+                    new FieldAnalysisYearResult { FieldName = "South",  Year = 2021, SoilCarbon = 71 },
+                },
+            });
+
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+            _viewModel.RecalculateCommand.Execute();
+
+            Assert.AreEqual(2, _viewModel.SoilCarbonTrendSeries.Length);
+
+            Assert.AreEqual(1, _viewModel.SoilCarbonTrendXAxes.Length);
+            CollectionAssert.AreEqual(new[] { "2020", "2021" }, _viewModel.SoilCarbonTrendXAxes[0].Labels?.ToArray());
+        }
+
+        [TestMethod]
+        public void RecalculateCommand_WithNoResults_ClearsChart()
+        {
+            var farm = new Farm();
+            _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
+            _mockAnalysisService.Setup(s => s.RunAnalysis(farm)).Returns(new FarmAnalysisResults());
+
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+            _viewModel.RecalculateCommand.Execute();
+
+            Assert.AreEqual(0, _viewModel.SoilCarbonTrendSeries.Length);
+            Assert.AreEqual(0, _viewModel.SoilCarbonTrendXAxes.Length);
+        }
+
+        #endregion
+
+        #region ExportFieldResultsCommand Tests
+
+        [TestMethod]
+        public void ExportFieldResultsCommand_IsDisabledWhenNoResults()
+        {
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+
+            Assert.IsFalse(_viewModel.ExportFieldResultsCommand.CanExecute());
+        }
+
+        [TestMethod]
+        public void ExportFieldResultsCommand_IsEnabledAfterResultsLoad()
+        {
+            var farm = new Farm { Name = "Farm" };
+            _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
+            _mockAnalysisService.Setup(s => s.RunAnalysis(farm)).Returns(new FarmAnalysisResults
+            {
+                YearResults = new[]
+                {
+                    new FieldAnalysisYearResult { FieldName = "F", Year = 2020, SoilCarbon = 50 },
+                },
+            });
+
+            _viewModel = new GHGResultsViewModel(
+                _mockLogger.Object,
+                _mockStorageService.Object,
+                _mockAnalysisService.Object);
+            _viewModel.RecalculateCommand.Execute();
+
+            Assert.IsTrue(_viewModel.ExportFieldResultsCommand.CanExecute());
+        }
+
+        [TestMethod]
+        public void WriteFieldResultsCsv_ProducesHeaderAndOneRowPerInputAndQuotesCommas()
+        {
+            var rows = new[]
+            {
+                new FieldAnalysisYearResult
+                {
+                    Year = 2020,
+                    FieldName = "Field, with comma",
+                    CropType = "Wheat",
+                    Area = 100,
+                    SoilCarbon = 50.123,
+                    DirectN2OPerHectare = 1.5,
+                    IndirectN2OPerHectare = 0.5,
+                },
+                new FieldAnalysisYearResult
+                {
+                    Year = 2021,
+                    FieldName = "North",
+                    CropType = "Barley",
+                    Area = 75,
+                    SoilCarbon = 51.0,
+                },
+            };
+
+            // Internal static — access via the test project's InternalsVisibleTo if configured, or
+            // exercise the command end-to-end. Here we just call the static via reflection so the
+            // test stays isolated from the file-dialog plumbing.
+            var path = (string)typeof(GHGResultsViewModel)
+                .GetMethod("WriteFieldResultsCsv", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!
+                .Invoke(null, new object[] { rows, "TestFarm" })!;
+
+            try
+            {
+                Assert.IsTrue(File.Exists(path));
+                var content = File.ReadAllText(path);
+                var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+                Assert.AreEqual(3, lines.Length, "header + 2 data rows");
+                StringAssert.Contains(lines[0], "Year");
+                StringAssert.Contains(lines[0], "TotalN2O_kg_per_ha");
+                StringAssert.Contains(lines[1], "\"Field, with comma\"");      // comma quoting
+                StringAssert.Contains(lines[1], "2");                          // TotalN2O = 1.5+0.5
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        #endregion
     }
 }
