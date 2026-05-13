@@ -61,7 +61,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
         _logger = NullLogger.Instance;
         _farmAnalysisService = null!;
         _notificationManager = null;
-        RecalculateCommand = new DelegateCommand(RunAnalysis);
+        RecalculateCommand = new DelegateCommand(() => _ = RunAnalysisAsync());
         ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToCsv, () => this.HasResults);
     }
 
@@ -81,7 +81,10 @@ public class GHGResultsViewModel : ResultsViewModelBase
         _notificationManager = notificationManager;
         StorageService = storageService;
 
-        RecalculateCommand = new DelegateCommand(RunAnalysis);
+        // DelegateCommand doesn't natively support async, so the actions wrap a fire-and-forget
+        // call to the async pipeline. RunAnalysisAsync catches its own exceptions and surfaces
+        // them through LastErrorMessage, so swallowing the returned Task here is safe.
+        RecalculateCommand = new DelegateCommand(() => _ = RunAnalysisAsync());
         ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToCsv, () => this.HasResults);
         this.PropertyChanged += (_, e) =>
         {
@@ -211,7 +214,11 @@ public class GHGResultsViewModel : ResultsViewModelBase
         base.OnNavigatedTo(navigationContext);
 
         this.InitializeViewModel();
-        this.RunAnalysis();
+        // Fire-and-forget: OnNavigatedTo is a sync Prism callback so we don't await here. The
+        // async method catches its own exceptions. Awaiting via Task.Run lets the UI thread
+        // repaint (showing the "Running carbon analysis..." banner + spinner) before the heavy
+        // work starts.
+        _ = this.RunAnalysisAsync();
     }
 
     public override void InitializeViewModel()
@@ -223,7 +230,14 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
     #region Private Methods
 
-    private void RunAnalysis()
+    /// <summary>
+    /// Runs the analysis pipeline off the UI thread so the view can keep painting the
+    /// "Running carbon analysis..." banner while ICBM / IPCC Tier 2 / shelterbelt math is in
+    /// flight. Re-entrant calls (e.g. user clicks Recalculate twice fast) are dropped — the
+    /// IsProcessingData flag gates them. Exposed as public so tests can await it directly
+    /// rather than racing the fire-and-forget pattern that the GUI command actions use.
+    /// </summary>
+    public async Task RunAnalysisAsync()
     {
         if (_farmAnalysisService is null)
         {
@@ -231,7 +245,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
             // docs). Without an analysis service we have nothing to compute — bail rather than
             // NRE so the XAML previewer / a misconfigured container still renders the empty view.
             _logger.LogWarning(
-                "GHGResultsViewModel.RunAnalysis called without an IFarmAnalysisService; " +
+                "GHGResultsViewModel.RunAnalysisAsync called without an IFarmAnalysisService; " +
                 "the view model was constructed via the parameterless ctor. Check that " +
                 "IFarmAnalysisService and its transitive dependencies are registered in DI.");
             this.HasResults = false;
@@ -243,10 +257,19 @@ public class GHGResultsViewModel : ResultsViewModelBase
         var farm = base.ActiveFarm;
         if (farm == null)
         {
-            _logger.LogWarning("GHGResultsViewModel.RunAnalysis: no active farm; skipping.");
+            _logger.LogWarning("GHGResultsViewModel.RunAnalysisAsync: no active farm; skipping.");
             this.HasResults = false;
             this.HasShelterbeltResults = false;
             this.LastErrorMessage = null;
+            return;
+        }
+
+        if (IsProcessingData)
+        {
+            // Re-entry guard: a previous analysis is still running (Recalculate clicked twice,
+            // or strategy changed mid-run). Drop the duplicate — once the in-flight call
+            // finishes, the user can click Recalculate again.
+            _logger.LogDebug("GHGResultsViewModel.RunAnalysisAsync: previous run still in progress; skipping.");
             return;
         }
 
@@ -265,7 +288,13 @@ public class GHGResultsViewModel : ResultsViewModelBase
         IsProcessingData = true;
         try
         {
-            var results = _farmAnalysisService.RunAnalysis(farm);
+            // Offload the heavy carbon/N pipeline to a background thread. The await yields
+            // control back to the UI thread, which gets to paint the processing banner and
+            // disable the Recalculate / Strategy controls (both gated on !IsProcessingData)
+            // before the pipeline starts churning. When Task.Run completes, the continuation
+            // resumes on the captured sync context — Avalonia's UI thread — so the view-model
+            // property updates and ObservableCollection construction below are safe.
+            var results = await Task.Run(() => _farmAnalysisService.RunAnalysis(farm));
 
             this.FarmName = results.FarmName;
             this.CarbonModellingStrategy = results.CarbonModellingStrategy;
@@ -469,7 +498,9 @@ public class GHGResultsViewModel : ResultsViewModelBase
             farm.Defaults.CarbonModellingStrategy = newStrategy;
         }
 
-        this.RunAnalysis();
+        // Fire-and-forget — same pattern as OnNavigatedTo. The ComboBox setter is sync; the
+        // async analysis runs on a background thread and the UI updates when it finishes.
+        _ = this.RunAnalysisAsync();
     }
 
     #endregion

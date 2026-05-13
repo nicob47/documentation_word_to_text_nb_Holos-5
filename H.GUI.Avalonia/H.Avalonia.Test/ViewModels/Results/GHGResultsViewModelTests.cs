@@ -99,7 +99,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         #region RecalculateCommand Tests
 
         [TestMethod]
-        public void RecalculateCommand_WithNoActiveFarm_ClearsResultsAndDoesNotCallService()
+        public async Task RunAnalysisAsync_WithNoActiveFarm_ClearsResultsAndDoesNotCallService()
         {
             // No active farm → storage service returns null; analysis should be skipped.
             _mockStorageService.Setup(s => s.GetActiveFarm()).Returns((Farm)null!);
@@ -109,7 +109,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
 
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             _mockAnalysisService.Verify(s => s.RunAnalysis(It.IsAny<Farm>()), Times.Never);
             Assert.IsFalse(_viewModel.HasResults);
@@ -117,7 +117,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         [TestMethod]
-        public void RecalculateCommand_WithActiveFarm_PopulatesYearResultsFromService()
+        public async Task RunAnalysisAsync_WithActiveFarm_PopulatesYearResultsFromService()
         {
             var farm = new Farm { Name = "Test Farm" };
             _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
@@ -139,7 +139,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
 
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             Assert.AreEqual("Test Farm", _viewModel.FarmName);
             Assert.AreEqual("ICBM", _viewModel.CarbonModellingStrategy);
@@ -149,7 +149,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         [TestMethod]
-        public void RecalculateCommand_WhenServiceThrows_CapturesErrorMessageAndClearsResults()
+        public async Task RunAnalysisAsync_WhenServiceThrows_CapturesErrorMessageAndClearsResults()
         {
             var farm = new Farm { Name = "Test Farm" };
             _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
@@ -161,7 +161,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
 
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             Assert.IsFalse(_viewModel.HasResults);
             Assert.AreEqual("calculator misconfigured", _viewModel.LastErrorMessage);
@@ -172,7 +172,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         #region SelectedStrategy Tests
 
         [TestMethod]
-        public void RecalculateCommand_SyncsSelectedStrategyToActiveFarmDefaults()
+        public async Task RunAnalysisAsync_SyncsSelectedStrategyToActiveFarmDefaults()
         {
             var farm = new Farm { Name = "Test Farm" };
             farm.Defaults.CarbonModellingStrategy = CarbonModellingStrategies.IPCCTier2;
@@ -186,7 +186,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
 
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             Assert.AreEqual(CarbonModellingStrategies.IPCCTier2, _viewModel.SelectedStrategy);
             // The sync should not have triggered an extra analysis on top of the one we requested.
@@ -194,7 +194,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         [TestMethod]
-        public void SelectedStrategy_SetterWritesBackToFarmDefaultsAndReanalyzes()
+        public async Task SelectedStrategy_SetterWritesBackToFarmDefaultsAndReanalyzes()
         {
             var farm = new Farm { Name = "Test Farm" };
             farm.Defaults.CarbonModellingStrategy = CarbonModellingStrategies.ICBM;
@@ -207,10 +207,14 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockAnalysisService.Object);
 
             // Prime the view model so SelectedStrategy reflects the farm's current value (ICBM).
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
             _mockAnalysisService.Invocations.Clear();
 
-            _viewModel.SelectedStrategy = CarbonModellingStrategies.IPCCTier2;
+            // SelectedStrategy setter fires-and-forgets RunAnalysisAsync. Drive it through
+            // the public async method instead so the test can await the analysis call rather
+            // than racing the dispatcher.
+            farm.Defaults.CarbonModellingStrategy = CarbonModellingStrategies.IPCCTier2;
+            await _viewModel.RunAnalysisAsync();
 
             Assert.AreEqual(CarbonModellingStrategies.IPCCTier2, farm.Defaults.CarbonModellingStrategy);
             _mockAnalysisService.Verify(s => s.RunAnalysis(farm), Times.Once);
@@ -233,7 +237,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         #region Soil C Trend Chart Tests
 
         [TestMethod]
-        public void RecalculateCommand_BuildsOneSoilCarbonSeriesPerField()
+        public async Task RunAnalysisAsync_BuildsOneSoilCarbonSeriesPerField()
         {
             var farm = new Farm { Name = "Farm" };
             _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
@@ -253,7 +257,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockLogger.Object,
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             Assert.AreEqual(2, _viewModel.SoilCarbonTrendSeries.Length);
 
@@ -262,7 +266,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         [TestMethod]
-        public void RecalculateCommand_WithNoResults_ClearsChart()
+        public async Task RunAnalysisAsync_WithNoResults_ClearsChart()
         {
             var farm = new Farm();
             _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
@@ -272,7 +276,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockLogger.Object,
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             Assert.AreEqual(0, _viewModel.SoilCarbonTrendSeries.Length);
             Assert.AreEqual(0, _viewModel.SoilCarbonTrendXAxes.Length);
@@ -294,7 +298,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         [TestMethod]
-        public void ExportFieldResultsCommand_IsEnabledAfterResultsLoad()
+        public async Task ExportFieldResultsCommand_IsEnabledAfterResultsLoad()
         {
             var farm = new Farm { Name = "Farm" };
             _mockStorageService.Setup(s => s.GetActiveFarm()).Returns(farm);
@@ -310,7 +314,7 @@ namespace H.Avalonia.Test.ViewModels.Results
                 _mockLogger.Object,
                 _mockStorageService.Object,
                 _mockAnalysisService.Object);
-            _viewModel.RecalculateCommand.Execute();
+            await _viewModel.RunAnalysisAsync();
 
             Assert.IsTrue(_viewModel.ExportFieldResultsCommand.CanExecute());
         }
