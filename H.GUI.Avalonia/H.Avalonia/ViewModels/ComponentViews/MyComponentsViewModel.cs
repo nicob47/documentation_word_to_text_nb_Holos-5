@@ -240,18 +240,13 @@ public class MyComponentsViewModel : ViewModelBase
         }
     }
 
-    public void OnResultsButtonClicked()
-    {
-        this.RegionManager?.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
-        this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(ResultsSummaryView));
-    }
-
     /// <summary>
-    /// Phase 5 vertical slice: navigates straight to the GHG / carbon results view, which kicks
-    /// off the ICBM analysis on the active farm via IFarmAnalysisService. Separate from
-    /// OnResultsButtonClicked so the existing placeholder summary view stays reachable.
+    /// Navigates to the GHG / carbon results page. Triggers the ICBM (or IPCC Tier 2) analysis
+    /// on the active farm via IFarmAnalysisService and shows per-field, per-year carbon + N₂O
+    /// results plus a soil-C trend chart. The Results-sidebar's Basic/Advanced toggle can then
+    /// jump to other views (placeholder summary, pie chart, etc.).
     /// </summary>
-    public void OnRunGhgAnalysisButtonClicked()
+    public void OnResultsButtonClicked()
     {
         this.RegionManager?.RequestNavigate(UiRegions.SidebarRegion, nameof(ResultsSidebarView));
         this.RegionManager?.RequestNavigate(UiRegions.ContentRegion, nameof(GHGResultsView));
