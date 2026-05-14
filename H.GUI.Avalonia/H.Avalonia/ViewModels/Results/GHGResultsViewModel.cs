@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls.Notifications;
+using ClosedXML.Excel;
 using H.Avalonia.Services;
 using H.Core.Enumerations;
 using H.Core.Models.Results;
@@ -61,8 +61,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
         _logger = NullLogger.Instance;
         _farmAnalysisService = null!;
         _notificationManager = null;
-        RecalculateCommand = new DelegateCommand(() => _ = RunAnalysisAsync());
-        ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToCsv, () => this.HasResults);
+        RecalculateCommand = new DelegateCommand(() => { InvalidateFieldStageState(); _ = RunAnalysisAsync(); });
+        ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToExcel, () => this.HasResults);
     }
 
     /// <summary>
@@ -93,8 +93,12 @@ public class GHGResultsViewModel : ResultsViewModelBase
         // DelegateCommand doesn't natively support async, so the actions wrap a fire-and-forget
         // call to the async pipeline. RunAnalysisAsync catches its own exceptions and surfaces
         // them through LastErrorMessage, so swallowing the returned Task here is safe.
-        RecalculateCommand = new DelegateCommand(() => _ = RunAnalysisAsync());
-        ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToCsv, () => this.HasResults);
+        // Recalculate explicitly invalidates the field stage state so any edits the user made in
+        // the field component editor are picked up; strategy switches don't, because the strategy
+        // doesn't affect detail-item inputs and rebuilding the stage state on every combo-box
+        // tick is the dominant cost on large farms.
+        RecalculateCommand = new DelegateCommand(() => { InvalidateFieldStageState(); _ = RunAnalysisAsync(); });
+        ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToExcel, () => this.HasResults);
 
         // Keep the Export button's enabled state in sync with whether we actually have data.
         // Without this the button would stay stuck in its initial CanExecute state until the
@@ -263,6 +267,9 @@ public class GHGResultsViewModel : ResultsViewModelBase
         // async method catches its own exceptions. Awaiting via Task.Run lets the UI thread
         // repaint (showing the "Running carbon analysis..." banner + spinner) before the heavy
         // work starts.
+        // Invalidate the field stage state on nav-in so any edits the user just made in the
+        // field component editor are reflected on this fresh visit to the results page.
+        InvalidateFieldStageState();
         _ = this.RunAnalysisAsync();
     }
 
@@ -478,11 +485,30 @@ public class GHGResultsViewModel : ResultsViewModelBase
     }
 
     /// <summary>
+    /// Marks the active farm's field stage state as out-of-date so the next analysis run rebuilds
+    /// its detail view items from the current field components. Cheap no-op when there is no
+    /// active farm or no stage state yet. Called only on explicit user intents (Recalculate, fresh
+    /// navigation into the results page) — strategy combo-box changes deliberately skip this so
+    /// they don't trigger an expensive stage-state rebuild that wouldn't change the inputs anyway.
+    /// </summary>
+    private void InvalidateFieldStageState()
+    {
+        var farm = base.ActiveFarm;
+        var stageState = farm?.StageStates
+            .OfType<H.Core.Models.LandManagement.Fields.FieldSystemDetailsStageState>()
+            .SingleOrDefault();
+        if (stageState != null)
+        {
+            stageState.IsInitialized = false;
+        }
+    }
+
+    /// <summary>
     /// Command action behind <see cref="ExportFieldResultsCommand"/>. Delegates the actual file
-    /// write to <see cref="WriteFieldResultsCsv"/> and reports success or failure via toast +
+    /// write to <see cref="WriteFieldResultsXlsx"/> and reports success or failure via toast +
     /// <see cref="LastErrorMessage"/>. No-ops when there are no rows to export.
     /// </summary>
-    private void ExportFieldResultsToCsv()
+    private void ExportFieldResultsToExcel()
     {
         // Defensive no-op. CanExecute already prevents the button from firing when there are no
         // rows, but this also covers programmatic invocation from tests / future callers.
@@ -494,7 +520,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
         try
         {
             // Do the actual file write. Returns the full path so we can show it in the toast.
-            var path = WriteFieldResultsCsv(this.YearResults, this.FarmName);
+            var path = WriteFieldResultsXlsx(this.YearResults, this.FarmName);
             _logger.LogInformation("Exported {Count} field-year rows to {Path}.", this.YearResults.Count, path);
             _notificationManager?.ShowToast(
                 title: "Results exported",
@@ -505,7 +531,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
         {
             // Mirror the analysis pipeline's error-handling pattern: log, surface the message in
             // LastErrorMessage for the inline banner, and pop a toast for immediate visibility.
-            _logger.LogError(ex, "Failed to export field results to CSV.");
+            _logger.LogError(ex, "Failed to export field results to Excel.");
             this.LastErrorMessage = $"Export failed: {ex.Message}";
             _notificationManager?.ShowToast(
                 title: "Export failed",
@@ -515,10 +541,13 @@ public class GHGResultsViewModel : ResultsViewModelBase
     }
 
     /// <summary>
-    /// Writes the field-year rows to a timestamped CSV under <c>{Documents}/Holos5/Exports/</c>
-    /// and returns the path. Public+static so a future test or CLI export can reuse it.
+    /// Writes the field-year rows to a styled, timestamped <c>.xlsx</c> file under
+    /// <c>{Documents}/Holos5/Exports/</c> and returns the path. Uses ClosedXML so we get a real
+    /// Excel workbook with a coloured header row, banded data rows, frozen header, number
+    /// formatting, and auto-sized columns \u2014 i.e. something the user can hand to a stakeholder
+    /// without further massage. Internal+static so tests can exercise the writer directly.
     /// </summary>
-    internal static string WriteFieldResultsCsv(
+    internal static string WriteFieldResultsXlsx(
         IEnumerable<FieldAnalysisYearResult> rows,
         string farmName)
     {
@@ -530,75 +559,128 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
         // 2. Build a safe, timestamped filename so concurrent / repeated exports don't collide.
         var safeFarmName = string.IsNullOrWhiteSpace(farmName) ? "Farm" : SanitizeForFilename(farmName);
-        var filename = $"{safeFarmName}_GHG_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+        var filename = $"{safeFarmName}_GHG_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
         var path = Path.Combine(directory, filename);
 
-        // 3. Emit the header row. Column order here drives the order in the file.
-        var csv = new StringBuilder();
-        csv.AppendLine(string.Join(",", new[]
+        // 3. Define the column schema in one place so header text, value extraction, and number
+        //    format stay aligned. Each tuple: (header, value selector, Excel number format).
+        //    "0.###" gives up to 3 decimals without trailing zeros; "0" is whole numbers for Year.
+        var columns = new (string Header, Func<FieldAnalysisYearResult, object?> Value, string Format)[]
         {
-            "Year", "Field", "Crop", "Area_ha",
-            "AboveGroundCarbonInput_kg_per_ha", "BelowGroundCarbonInput_kg_per_ha",
-            "ManureCarbonInput_kg_per_ha", "DigestateCarbonInput_kg_per_ha",
-            "TotalCarbonInputs_kg_per_ha",
-            "SoilCarbon_kg_per_ha", "ChangeInSoilCarbon_kg_per_ha_per_yr",
-            "NitrogenAppliedFromManure_kg", "DirectN2O_kg_per_ha",
-            "IndirectN2O_kg_per_ha", "TotalN2O_kg_per_ha",
-        }));
+            ("Year",                              r => r.Year,                       "0"),
+            ("Field",                             r => r.FieldName,                  string.Empty),
+            ("Crop",                              r => r.CropType,                   string.Empty),
+            ("Area (ha)",                         r => r.Area,                       "0.##"),
+            ("Above-ground C input (kg C/ha)",    r => r.AboveGroundCarbonInput,     "0.###"),
+            ("Below-ground C input (kg C/ha)",    r => r.BelowGroundCarbonInput,     "0.###"),
+            ("Manure C input (kg C/ha)",          r => r.ManureCarbonInput,          "0.###"),
+            ("Digestate C input (kg C/ha)",       r => r.DigestateCarbonInput,       "0.###"),
+            ("Total C inputs (kg C/ha)",          r => r.TotalCarbonInputs,          "0.###"),
+            ("Soil C (kg C/ha)",                  r => r.SoilCarbon,                 "0.###"),
+            ("\u0394 Soil C (kg C/ha/yr)",        r => r.ChangeInSoilCarbon,         "0.###"),
+            ("N from manure (kg N)",              r => r.NitrogenAppliedFromManure,  "0.###"),
+            ("Direct N\u2082O (kg N\u2082O/ha)",  r => r.DirectN2OPerHectare,        "0.###"),
+            ("Indirect N\u2082O (kg N\u2082O/ha)", r => r.IndirectN2OPerHectare,     "0.###"),
+            ("Total N\u2082O (kg N\u2082O/ha)",   r => r.TotalN2OPerHectare,         "0.###"),
+        };
 
-        // 4. Format each data row. InvariantCulture keeps the decimal separator as '.' so the
-        //    CSV is portable across French / English Windows locales (and re-importable into Excel
-        //    / R / Python without locale-specific parsing tricks).
-        var inv = CultureInfo.InvariantCulture;
-        foreach (var row in rows)
+        // 4. Build the workbook in-memory, then save once at the end. ClosedXML's `using` disposes
+        //    the underlying OpenXML package, which is what actually flushes bytes to disk.
+        using (var workbook = new XLWorkbook())
         {
-            csv.AppendLine(string.Join(",", new[]
+            var sheet = workbook.Worksheets.Add("GHG Results");
+
+            // 4a. Title row: farm name + export timestamp, merged across all columns. Gives the
+            //     reader instant context if the file is renamed or shared without its filename.
+            var titleRange = sheet.Range(1, 1, 1, columns.Length).Merge();
+            titleRange.Value = string.IsNullOrWhiteSpace(farmName)
+                ? $"GHG Results \u2014 exported {DateTime.Now:yyyy-MM-dd HH:mm}"
+                : $"{farmName} \u2014 GHG Results \u2014 exported {DateTime.Now:yyyy-MM-dd HH:mm}";
+            titleRange.Style.Font.Bold = true;
+            titleRange.Style.Font.FontSize = 14;
+            titleRange.Style.Font.FontColor = XLColor.White;
+            titleRange.Style.Fill.BackgroundColor = XLColor.FromHtml("#0E5C2F"); // deep AAFC-ish green
+            titleRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+            sheet.Row(1).Height = 22;
+
+            // 4b. Header row (row 2): white text on a lighter green band, bold and centred.
+            for (var c = 0; c < columns.Length; c++)
             {
-                row.Year.ToString(inv),
-                EscapeCsv(row.FieldName),
-                EscapeCsv(row.CropType),
-                row.Area.ToString("G", inv),
-                row.AboveGroundCarbonInput.ToString("G", inv),
-                row.BelowGroundCarbonInput.ToString("G", inv),
-                row.ManureCarbonInput.ToString("G", inv),
-                row.DigestateCarbonInput.ToString("G", inv),
-                row.TotalCarbonInputs.ToString("G", inv),
-                row.SoilCarbon.ToString("G", inv),
-                row.ChangeInSoilCarbon.ToString("G", inv),
-                row.NitrogenAppliedFromManure.ToString("G", inv),
-                row.DirectN2OPerHectare.ToString("G", inv),
-                row.IndirectN2OPerHectare.ToString("G", inv),
-                row.TotalN2OPerHectare.ToString("G", inv),
-            }));
+                var cell = sheet.Cell(2, c + 1);
+                cell.Value = columns[c].Header;
+                cell.Style.Font.Bold = true;
+                cell.Style.Font.FontColor = XLColor.White;
+                cell.Style.Fill.BackgroundColor = XLColor.FromHtml("#2E7D32");
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                cell.Style.Alignment.WrapText = true;
+                cell.Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+                cell.Style.Border.BottomBorderColor = XLColor.FromHtml("#0E5C2F");
+            }
+            sheet.Row(2).Height = 32;
+
+            // 4c. Data rows. Banded fill alternates light green / white so long tables stay
+            //     readable. Numeric cells get a format string; text cells stay default.
+            var rowIndex = 3;
+            foreach (var row in rows)
+            {
+                for (var c = 0; c < columns.Length; c++)
+                {
+                    var cell = sheet.Cell(rowIndex, c + 1);
+                    var value = columns[c].Value(row);
+
+                    // ClosedXML's `Value` setter is type-aware: doubles become numeric cells,
+                    // strings become text cells. Null becomes blank. NaN / +Inf / -Inf are not
+                    // representable in the OOXML number-cell schema — ClosedXML throws
+                    // ArgumentException("Value can't be NaN or infinity") if we hand it one.
+                    // Coerce those to a blank cell so the export still succeeds when the analysis
+                    // produced non-finite values (e.g. divide-by-zero in N₂O-per-hectare for a
+                    // zero-area row).
+                    if (value is null) { cell.Clear(); }
+                    else if (value is double d)
+                    {
+                        if (double.IsNaN(d) || double.IsInfinity(d)) { cell.Clear(); }
+                        else { cell.Value = d; }
+                    }
+                    else if (value is int i) { cell.Value = i; }
+                    else { cell.Value = value.ToString(); }
+
+                    if (!string.IsNullOrEmpty(columns[c].Format))
+                    {
+                        cell.Style.NumberFormat.Format = columns[c].Format;
+                    }
+                }
+
+                // Zebra striping on every other data row.
+                if ((rowIndex & 1) == 1)
+                {
+                    sheet.Range(rowIndex, 1, rowIndex, columns.Length)
+                        .Style.Fill.BackgroundColor = XLColor.FromHtml("#F1F8F4");
+                }
+
+                rowIndex++;
+            }
+
+            // 4d. Final layout polish: freeze the title + header so scrolling keeps them in view,
+            //     auto-size columns to fit content, add a thin outer border, and turn on filters.
+            sheet.SheetView.FreezeRows(2);
+            sheet.Columns().AdjustToContents();
+            // Cap super-wide auto-fit columns so a single long crop name doesn't blow out the layout.
+            foreach (var col in sheet.ColumnsUsed())
+            {
+                if (col.Width > 32) { col.Width = 32; }
+            }
+
+            var dataRange = sheet.Range(2, 1, rowIndex - 1, columns.Length);
+            dataRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            dataRange.Style.Border.OutsideBorderColor = XLColor.FromHtml("#0E5C2F");
+            dataRange.SetAutoFilter();
+
+            // 5. Persist the workbook. ClosedXML writes a real OOXML .xlsx \u2014 Excel, LibreOffice,
+            //    Google Sheets, and pandas can all open it without conversion.
+            workbook.SaveAs(path);
         }
 
-        // 5. Persist as UTF-8 (with no BOM) so Excel on Windows still opens it correctly and
-        //    accents in farm / field names survive the round-trip.
-        File.WriteAllText(path, csv.ToString(), Encoding.UTF8);
         return path;
-    }
-
-    /// <summary>
-    /// RFC 4180 CSV field escaping: wraps the value in double quotes when it contains a comma,
-    /// quote, or line break, and doubles any embedded quotes. Returns the input unchanged when
-    /// no escaping is needed.
-    /// </summary>
-    private static string EscapeCsv(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return string.Empty;
-        }
-
-        // Quote when the value contains commas, quotes, or line breaks (RFC 4180). Doubling a
-        // quote inside a quoted field is how CSV escapes embedded quotes.
-        var needsQuoting = value.IndexOfAny(new[] { ',', '"', '\r', '\n' }) >= 0;
-        if (!needsQuoting)
-        {
-            return value;
-        }
-
-        return $"\"{value.Replace("\"", "\"\"")}\"";
     }
 
     /// <summary>

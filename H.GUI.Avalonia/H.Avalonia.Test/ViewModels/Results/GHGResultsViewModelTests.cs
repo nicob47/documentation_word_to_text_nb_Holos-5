@@ -320,7 +320,7 @@ namespace H.Avalonia.Test.ViewModels.Results
         }
 
         [TestMethod]
-        public void WriteFieldResultsCsv_ProducesHeaderAndOneRowPerInputAndQuotesCommas()
+        public void WriteFieldResultsXlsx_ProducesStyledHeaderAndOneRowPerInput()
         {
             var rows = new[]
             {
@@ -344,24 +344,28 @@ namespace H.Avalonia.Test.ViewModels.Results
                 },
             };
 
-            // Internal static — access via the test project's InternalsVisibleTo if configured, or
-            // exercise the command end-to-end. Here we just call the static via reflection so the
-            // test stays isolated from the file-dialog plumbing.
+            // Internal static — access via reflection so the test stays isolated from the file
+            // dialog plumbing and from any DI wiring the production command path adds later.
             var path = (string)typeof(GHGResultsViewModel)
-                .GetMethod("WriteFieldResultsCsv", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!
+                .GetMethod("WriteFieldResultsXlsx", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!
                 .Invoke(null, new object[] { rows, "TestFarm" })!;
 
             try
             {
                 Assert.IsTrue(File.Exists(path));
-                var content = File.ReadAllText(path);
-                var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                Assert.IsTrue(path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase));
 
-                Assert.AreEqual(3, lines.Length, "header + 2 data rows");
-                StringAssert.Contains(lines[0], "Year");
-                StringAssert.Contains(lines[0], "TotalN2O_kg_per_ha");
-                StringAssert.Contains(lines[1], "\"Field, with comma\"");      // comma quoting
-                StringAssert.Contains(lines[1], "2");                          // TotalN2O = 1.5+0.5
+                // Round-trip through ClosedXML to verify the styled workbook is well-formed and
+                // contains the expected rows. Row 1 = title banner, row 2 = headers, rows 3+ = data.
+                using var wb = new ClosedXML.Excel.XLWorkbook(path);
+                var sheet = wb.Worksheets.First();
+
+                StringAssert.Contains(sheet.Cell(1, 1).GetString(), "TestFarm");
+                Assert.AreEqual("Year", sheet.Cell(2, 1).GetString());
+                Assert.AreEqual("Field, with comma", sheet.Cell(3, 2).GetString());
+                Assert.AreEqual(2020d, sheet.Cell(3, 1).GetDouble());
+                Assert.AreEqual(2d, sheet.Cell(3, 15).GetDouble(), 1e-9); // TotalN2O = 1.5 + 0.5
+                Assert.AreEqual("North", sheet.Cell(4, 2).GetString());
             }
             finally
             {

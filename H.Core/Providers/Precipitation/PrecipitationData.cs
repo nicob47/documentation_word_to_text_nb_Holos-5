@@ -84,8 +84,19 @@ namespace H.Core.Providers.Precipitation
                    this.December;
         }
 
+        // See EvapotranspirationData.GetAveragedYearlyValues for rationale: per-year crop loops
+        // request this list 30+ times with identical monthly inputs; we cache it by signature.
+        private List<double>? _cachedYearlyAverages;
+        private (double, double, double, double, double, double, double, double, double, double, double, double) _cachedSignature;
+
         public List<double> GetAveragedYearlyValues()
         {
+            var signature = (January, February, March, April, May, June, July, August, September, October, November, December);
+            if (_cachedYearlyAverages != null && _cachedSignature.Equals(signature))
+            {
+                return _cachedYearlyAverages;
+            }
+
             var list = new List<double>
             {
                 this.January,
@@ -129,6 +140,8 @@ namespace H.Core.Providers.Precipitation
                 }
             }
 
+            _cachedYearlyAverages = yearlyAverages;
+            _cachedSignature = signature;
             return yearlyAverages;
         }
 

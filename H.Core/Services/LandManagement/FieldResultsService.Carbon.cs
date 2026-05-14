@@ -71,58 +71,68 @@ namespace H.Core.Services.LandManagement
             Farm farm,
             FieldSystemComponent fieldSystemComponent)
         {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            long yieldsMs, updateReturnsMs, mainLoopMs, secondaryLoopMs;
+            long inputsMs = 0, climateMs = 0, tillageMs = 0, managementMs = 0, adjoiningMs = 0;
+
             // Yields must be assigned to all items before we can loop over each year and calculate plant carbon in agricultural product (C_p)
             this.AssignYieldToAllYears(
                 cropViewItems: viewItems,
                 farm: farm, fieldSystemComponent: fieldSystemComponent);
+            yieldsMs = sw.ElapsedMilliseconds; sw.Restart();
 
             // After yields have been set, we must consider perennial years in which there is 0 for the yield input (from user or by default yield provider)
             this.UpdatePercentageReturnsForPerennials(
                 viewItems: viewItems);
+            updateReturnsMs = sw.ElapsedMilliseconds; sw.Restart();
 
             var mainCrops = viewItems.OrderBy(x => x.Year).Where(x => x.IsSecondaryCrop == false).ToList();
             var distinctYears = mainCrops.Select(x => x.Year).Distinct().OrderBy(x => x).ToList();
 
             // Consider the main crops for each year in the sequence
+            var innerSw = new System.Diagnostics.Stopwatch();
             foreach (var year in distinctYears)
             {
-                // Get the previous, current, and next year view items for the year being considered
+                innerSw.Restart();
                 var adjoiningYears = this.GetAdjoiningYears(mainCrops, year, fieldSystemComponent);
+                adjoiningMs += innerSw.ElapsedMilliseconds;
 
                 var previousYearViewItem = adjoiningYears.PreviousYearViewItem;
                 var currentYearViewItem = adjoiningYears.CurrentYearViewItem;
                 var nextYearViewItem = adjoiningYears.NextYearViewItem;
 
-                /*
-                 * Assign carbon inputs based on selected strategy
-                 */
-
+                innerSw.Restart();
                 if (farm.Defaults.CarbonModellingStrategy == CarbonModellingStrategies.IPCCTier2 &&
                     _tier2SoilCarbonCalculator.CanCalculateInputsForCrop(currentYearViewItem))
                 {
-                    // If IPCC Tier 2 is the selected strategy and we can calculate inputs for the specified crop, then use the IPCC methodology for calculating inputs
                     _tier2SoilCarbonCalculator.CalculateInputs(
                         viewItem: currentYearViewItem, farm: farm);
                 }
                 else
                 {
-                    // Use ICBM approach to assign inputs if the Tier 2 approach cannot be used
-
-                    // Some crop types (currently only perennials, need access to the previous year's crop and also next year's crop in order to calculate inputs in some scenarios)
                     _icbmSoilCarbonCalculator.SetCarbonInputs(
                         previousYearViewItem: previousYearViewItem,
                         currentYearViewItem: currentYearViewItem,
                         nextYearViewItem: nextYearViewItem,
                         farm: farm);
                 }
+                inputsMs += innerSw.ElapsedMilliseconds;
 
-                // Although climate/management factors are not used in the Tier 2 carbon modelling, they are used in the N budget and so must be calculated when user specifies Tier 2 or ICBM modelling
+                innerSw.Restart();
                 currentYearViewItem.ClimateParameter = this.CalculateClimateParameter(currentYearViewItem, farm);
+                climateMs += innerSw.ElapsedMilliseconds;
+
+                innerSw.Restart();
                 currentYearViewItem.TillageFactor = this.CalculateTillageFactor(currentYearViewItem, farm);
+                tillageMs += innerSw.ElapsedMilliseconds;
+
+                innerSw.Restart();
                 currentYearViewItem.ManagementFactor =
                     this.CalculateManagementFactor(currentYearViewItem.ClimateParameter,
                         currentYearViewItem.TillageFactor);
+                managementMs += innerSw.ElapsedMilliseconds;
             }
+            mainLoopMs = sw.ElapsedMilliseconds; sw.Restart();
 
             // Consider the secondary crops
             var secondaryCrops = viewItems.OrderBy(x => x.Year).Where(x => x.IsSecondaryCrop).ToList();
@@ -131,14 +141,11 @@ namespace H.Core.Services.LandManagement
                 if (farm.Defaults.CarbonModellingStrategy == CarbonModellingStrategies.IPCCTier2 &&
                     _tier2SoilCarbonCalculator.CanCalculateInputsForCrop(secondaryCrop))
                 {
-                    // If IPCC Tier 2 is the selected strategy and we can calculate inputs for the specified crop, then use the IPCC methodology for calculating inputs
                     _tier2SoilCarbonCalculator.CalculateInputs(
                         viewItem: secondaryCrop, farm: farm);
                 }
                 else
                 {
-                    // Use ICBM approach to assign inputs
-
                     _icbmSoilCarbonCalculator.SetCarbonInputs(
                         previousYearViewItem: null,
                         currentYearViewItem: secondaryCrop,
@@ -146,6 +153,12 @@ namespace H.Core.Services.LandManagement
                         farm: farm);
                 }
             }
+            secondaryLoopMs = sw.ElapsedMilliseconds;
+
+            System.Diagnostics.Trace.WriteLine(
+                $"[GHGAnalysis.AssignC] yields={yieldsMs}ms updateReturns={updateReturnsMs}ms " +
+                $"main={mainLoopMs}ms (adjoin={adjoiningMs}ms inputs={inputsMs}ms climate={climateMs}ms tillage={tillageMs}ms mgmt={managementMs}ms) " +
+                $"secondary={secondaryLoopMs}ms mainYears={distinctYears.Count} secondaryItems={secondaryCrops.Count}");
         }
 
         /// <summary>

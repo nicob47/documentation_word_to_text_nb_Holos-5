@@ -45,18 +45,46 @@ namespace H.Core.Calculators.Climate
             List<double> precipitations,
             List<double> temperatures)
         {
-            var dailyResults = this.CalculateDailyClimateParameters(
-                farm: farm,
-                cropViewItem: cropViewItem,
-                dailyEvapotranspiration: evapotranspirations,
-                dailyPrecipitation: precipitations,
-                dailyTemperature: temperatures);
+            // Use the lightweight scalar overload — annual aggregation only needs the per-day
+            // climate parameter, not the full ClimateParameterDailyResult bag of intermediate
+            // fields. Avoids 365 result-object allocations per crop-year (×30 years × N fields).
+            var soilData = farm.GetPreferredSoilData(cropViewItem);
+            var defaults = farm.Defaults;
+            var yield = cropViewItem.Yield;
+            var isPerennial = cropViewItem.CropType.IsPerennial();
+            var ripeningDay = isPerennial ? defaults.RipeningDayForPerennnials : defaults.RipeningDay;
+            var variance = isPerennial ? defaults.VarianceForPerennials : defaults.Variance;
+            var emergenceDay = isPerennial ? defaults.EmergenceDayForPerennials : defaults.EmergenceDay;
 
-            // Adjust precip values so that the irrigation is included
+            var dailyValues = this.CalculateDailyClimateParameters(
+                emergenceDay,
+                ripeningDay,
+                yield,
+                soilData.ProportionOfClayInSoil,
+                soilData.ProportionOfSandInSoil,
+                soilData.TopLayerThickness,
+                soilData.ProportionOfSoilOrganicCarbon,
+                variance,
+                defaults.Alfa,
+                defaults.DecompositionMinimumTemperature,
+                defaults.DecompositionMaximumTemperature,
+                defaults.MoistureResponseFunctionAtWiltingPoint,
+                defaults.MoistureResponseFunctionAtSaturation,
+                evapotranspirations,
+                precipitations,
+                temperatures);
 
-            var climateParameter = dailyResults.Average(dailyResult => dailyResult.ClimateParameter);
+            if (dailyValues.Count == 0)
+            {
+                return 0d;
+            }
 
-            return climateParameter;
+            double sum = 0;
+            for (var i = 0; i < dailyValues.Count; i++)
+            {
+                sum += dailyValues[i];
+            }
+            return sum / dailyValues.Count;
         }
 
         /// <summary>
@@ -127,15 +155,16 @@ namespace H.Core.Calculators.Climate
             double soilTemperaturePrevious = 0;
             double waterTemperaturePrevious = 0;
 
-            var dailyClimateParameterList = new List<double>();
-            var julianDays = this.GetJulianDays().ToList();
+            var dayCountInYear = (int)CoreConstants.DaysInYear;
+            var dailyClimateParameterList = new List<double>(dayCountInYear);
+            var dayCount = Math.Min(dayCountInYear, Math.Min(temperatures.Count, Math.Min(precipitations.Count, evapotranspirations.Count)));
 
-            for (var index = 0; index < julianDays.Count(); index++)
+            for (var index = 0; index < dayCount; index++)
             {
-                var julianDay = julianDays.ElementAt(index);
-                var temperature = temperatures.ElementAt(index);
-                var precipitation = precipitations.ElementAt(index);
-                var evapotranspiration = evapotranspirations.ElementAt(index);
+                var julianDay = index + 1;
+                var temperature = temperatures[index];
+                var precipitation = precipitations[index];
+                var evapotranspiration = evapotranspirations[index];
 
                 var dailyClimateParameter = this.CalculateDailyClimateParameter(emergenceDay,
                                                                                 ripeningDay,
@@ -184,15 +213,16 @@ namespace H.Core.Calculators.Climate
             double soilTemperaturePrevious = 0;
             double waterTemperaturePrevious = 0;
 
-            var dailyClimateParameterList = new List<ClimateParameterDailyResult>();
-            var julianDays = this.GetJulianDays().ToList();
+            var dayCountInYear = (int)CoreConstants.DaysInYear;
+            var dailyClimateParameterList = new List<ClimateParameterDailyResult>(dayCountInYear);
+            var dayCount = Math.Min(dayCountInYear, Math.Min(temperatures.Count, Math.Min(precipitations.Count, evapotranspirations.Count)));
 
-            for (var index = 0; index < temperatures.Count() && index < julianDays.Count(); index++)
+            for (var index = 0; index < dayCount; index++)
             {
-                var julianDay = julianDays.ElementAt(index);
-                var temperature = temperatures.ElementAt(index);
-                var precipitation = precipitations.ElementAt(index);
-                var evapotranspiration = evapotranspirations.ElementAt(index);
+                var julianDay = index + 1;
+                var temperature = temperatures[index];
+                var precipitation = precipitations[index];
+                var evapotranspiration = evapotranspirations[index];
 
                 var dailyClimateParameter = this.CalculateDailyClimateParameter(emergenceDay,
                                                                                 ripeningDay,

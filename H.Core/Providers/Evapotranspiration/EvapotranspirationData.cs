@@ -67,8 +67,21 @@ namespace H.Core.Providers.Evapotranspiration
             return data.Sum();
         }
 
+        // Cache the expanded 365-entry list and the monthly-values signature used to build it.
+        // Climate-parameter calculations call this method once per crop-year, and prior to caching
+        // every call rebuilt the identical list (~1ms each). Recompute only when one of the
+        // monthly inputs has changed since the last call.
+        private List<double>? _cachedYearlyAverages;
+        private (double, double, double, double, double, double, double, double, double, double, double, double) _cachedSignature;
+
         public List<double> GetAveragedYearlyValues()
         {
+            var signature = (January, February, March, April, May, June, July, August, September, October, November, December);
+            if (_cachedYearlyAverages != null && _cachedSignature.Equals(signature))
+            {
+                return _cachedYearlyAverages;
+            }
+
             var list = new List<double>
             {
                 this.January,
@@ -112,6 +125,8 @@ namespace H.Core.Providers.Evapotranspiration
                 }
             }
 
+            _cachedYearlyAverages = yearlyAverages;
+            _cachedSignature = signature;
             return yearlyAverages;
         }
 

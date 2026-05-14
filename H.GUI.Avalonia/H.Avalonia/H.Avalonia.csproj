@@ -83,6 +83,7 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.2" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.2" />
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.2" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc1" />
     <PackageReference Include="Mapsui.Avalonia" Version="4.0.0" />

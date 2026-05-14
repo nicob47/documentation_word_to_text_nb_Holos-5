@@ -104,8 +104,19 @@ namespace H.Core.Providers.Temperature
                 $"{nameof(this.PolygonId)}: {this.PolygonId}, {nameof(this.January)}: {this.January}, {nameof(this.February)}: {this.February}, {nameof(this.March)}: {this.March}, {nameof(this.April)}: {this.April}, {nameof(this.May)}: {this.May}, {nameof(this.June)}: {this.June}, {nameof(this.July)}: {this.July}, {nameof(this.August)}: {this.August}, {nameof(this.September)}: {this.September}, {nameof(this.October)}: {this.October}, {nameof(this.November)}: {this.November}, {nameof(this.December)}: {this.December}";
         }
 
+        // See EvapotranspirationData.GetAveragedYearlyValues for rationale: per-year crop loops
+        // request this list 30+ times with identical monthly inputs; we cache it by signature.
+        private List<double>? _cachedYearlyAverages;
+        private (double, double, double, double, double, double, double, double, double, double, double, double) _cachedSignature;
+
         public List<double> GetAveragedYearlyValues()
         {
+            var signature = (January, February, March, April, May, June, July, August, September, October, November, December);
+            if (_cachedYearlyAverages != null && _cachedSignature.Equals(signature))
+            {
+                return _cachedYearlyAverages;
+            }
+
             var list = new List<double>
             {
                 this.January,
@@ -149,6 +160,8 @@ namespace H.Core.Providers.Temperature
                 }
             }
 
+            _cachedYearlyAverages = yearlyAverages;
+            _cachedSignature = signature;
             return yearlyAverages;
         }
 

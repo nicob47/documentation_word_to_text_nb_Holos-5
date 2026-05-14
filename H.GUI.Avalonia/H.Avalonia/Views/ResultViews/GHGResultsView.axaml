@@ -48,7 +48,7 @@
                             Padding="16,8"
                             Margin="0,0,8,0"
                             VerticalAlignment="Center"/>
-                    <Button Content="Export CSV"
+                    <Button Content="Export to Excel"
                             Command="{Binding ExportFieldResultsCommand}"
                             Classes="responsive-button"
                             Padding="16,8"
