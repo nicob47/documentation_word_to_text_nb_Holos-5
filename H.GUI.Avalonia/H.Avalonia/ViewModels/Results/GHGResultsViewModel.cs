@@ -65,6 +65,13 @@ public class GHGResultsViewModel : ResultsViewModelBase
         ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToCsv, () => this.HasResults);
     }
 
+    /// <summary>
+    /// Production constructor used by the DI container. Wires up the logger, storage service
+    /// (needed by <see cref="ResultsViewModelBase"/> to resolve the active farm), the analysis
+    /// service that produces ICBM / IPCC Tier 2 / shelterbelt results, and an optional toast
+    /// notification manager for export feedback. Also subscribes to <see cref="HasResults"/> so
+    /// the Export button's <c>CanExecute</c> stays in sync with the data state.
+    /// </summary>
     public GHGResultsViewModel(
         ILogger logger,
         IStorageService storageService,
@@ -76,6 +83,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
         ArgumentNullException.ThrowIfNull(storageService);
         ArgumentNullException.ThrowIfNull(farmAnalysisService);
 
+        // Capture dependencies. StorageService lives on the base class because every results
+        // view-model needs to resolve the active farm the same way.
         _logger = logger;
         _farmAnalysisService = farmAnalysisService;
         _notificationManager = notificationManager;
@@ -86,6 +95,10 @@ public class GHGResultsViewModel : ResultsViewModelBase
         // them through LastErrorMessage, so swallowing the returned Task here is safe.
         RecalculateCommand = new DelegateCommand(() => _ = RunAnalysisAsync());
         ExportFieldResultsCommand = new DelegateCommand(ExportFieldResultsToCsv, () => this.HasResults);
+
+        // Keep the Export button's enabled state in sync with whether we actually have data.
+        // Without this the button would stay stuck in its initial CanExecute state until the
+        // user interacted with it.
         this.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(HasResults))
@@ -99,6 +112,11 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
     #region Properties
 
+    /// <summary>
+    /// Flat list of per-field, per-year carbon / nitrogen results bound to the main DataGrid.
+    /// Replaced wholesale (rather than mutated in place) on each analysis run so the grid sees
+    /// a single change notification and avoids flicker.
+    /// </summary>
     public ObservableCollection<FieldAnalysisYearResult> YearResults
     {
         get => _yearResults;
@@ -116,6 +134,10 @@ public class GHGResultsViewModel : ResultsViewModelBase
         set => SetProperty(ref _shelterbeltYearResults, value);
     }
 
+    /// <summary>
+    /// True when the last analysis produced shelterbelt rows. The view binds the visibility of
+    /// the shelterbelt section to this so farms without shelterbelts don't show an empty grid.
+    /// </summary>
     public bool HasShelterbeltResults
     {
         get => _hasShelterbeltResults;
@@ -133,18 +155,27 @@ public class GHGResultsViewModel : ResultsViewModelBase
         set => SetProperty(ref _soilCarbonTrendSeries, value);
     }
 
+    /// <summary>
+    /// Single-axis array (LiveCharts expects an array even for one axis) whose labels are the
+    /// sorted, distinct years across the analysis result set.
+    /// </summary>
     public Axis[] SoilCarbonTrendXAxes
     {
         get => _soilCarbonTrendXAxes;
         set => SetProperty(ref _soilCarbonTrendXAxes, value);
     }
 
+    /// <summary>Display name of the farm the last analysis ran against — shown in the page header.</summary>
     public string FarmName
     {
         get => _farmName;
         set => SetProperty(ref _farmName, value);
     }
 
+    /// <summary>
+    /// Friendly name of the strategy actually used by the last run (e.g. "ICBM"). Distinct from
+    /// <see cref="SelectedStrategy"/> which is the enum value driving the next run.
+    /// </summary>
     public string CarbonModellingStrategy
     {
         get => _carbonModellingStrategy;
@@ -171,6 +202,10 @@ public class GHGResultsViewModel : ResultsViewModelBase
         set => SetProperty(ref _lastErrorMessage, value);
     }
 
+    /// <summary>
+    /// Re-runs the analysis pipeline against the active farm. Bound to the Recalculate button;
+    /// safe to invoke repeatedly because <see cref="RunAnalysisAsync"/> drops re-entrant calls.
+    /// </summary>
     public DelegateCommand RecalculateCommand { get; }
 
     /// <summary>
@@ -209,11 +244,21 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
     #region Public Methods
 
+    /// <summary>
+    /// Prism navigation hook invoked when the GHG results page becomes active. Triggers a fresh
+    /// analysis run for the currently active farm. Sync by contract — the async work is
+    /// fire-and-forget so the UI thread can paint the loading state immediately.
+    /// </summary>
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
+        // Let the base class do its standard navigation bookkeeping first (active farm wiring,
+        // PropertyChanged plumbing, etc.) before we kick off any work that depends on it.
         base.OnNavigatedTo(navigationContext);
 
+        // Run any view-model-specific init hooks. Currently a pass-through but kept explicit so
+        // future subclass logic always runs at the right point in the navigation lifecycle.
         this.InitializeViewModel();
+
         // Fire-and-forget: OnNavigatedTo is a sync Prism callback so we don't await here. The
         // async method catches its own exceptions. Awaiting via Task.Run lets the UI thread
         // repaint (showing the "Running carbon analysis..." banner + spinner) before the heavy
@@ -221,6 +266,10 @@ public class GHGResultsViewModel : ResultsViewModelBase
         _ = this.RunAnalysisAsync();
     }
 
+    /// <summary>
+    /// Hook for one-time view-model initialization. Currently defers entirely to the base —
+    /// kept as an override so future setup specific to the GHG view can slot in here.
+    /// </summary>
     public override void InitializeViewModel()
     {
         base.InitializeViewModel();
@@ -239,6 +288,9 @@ public class GHGResultsViewModel : ResultsViewModelBase
     /// </summary>
     public async Task RunAnalysisAsync()
     {
+        // ---------------------------------------------------------------------------------
+        // 1. Guard clauses: bail out early when there's nothing meaningful to compute.
+        // ---------------------------------------------------------------------------------
         if (_farmAnalysisService is null)
         {
             // Reached only via the design-time / fallback parameterless constructor (see ctor
@@ -254,6 +306,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
             return;
         }
 
+        // No farm selected yet (e.g. fresh launch, before farm creation). Clear any stale state
+        // so the empty placeholder shows in the view.
         var farm = base.ActiveFarm;
         if (farm == null)
         {
@@ -273,8 +327,11 @@ public class GHGResultsViewModel : ResultsViewModelBase
             return;
         }
 
-        // Sync the strategy ComboBox with the active farm. Suppressed so the resulting
-        // property-changed notification doesn't recursively kick off another analysis run.
+        // ---------------------------------------------------------------------------------
+        // 2. Sync the strategy ComboBox to the farm's currently-persisted strategy.
+        //    Suppressed so the resulting property-changed notification doesn't recursively kick
+        //    off another analysis run via ApplyStrategyAndReanalyze.
+        // ---------------------------------------------------------------------------------
         _suppressStrategyReanalysis = true;
         try
         {
@@ -285,6 +342,11 @@ public class GHGResultsViewModel : ResultsViewModelBase
             _suppressStrategyReanalysis = false;
         }
 
+        // ---------------------------------------------------------------------------------
+        // 3. Run the actual analysis pipeline off the UI thread and project the results onto
+        //    bindable view-model state. IsProcessingData drives the spinner + button enabled
+        //    state; the finally block guarantees we always clear it.
+        // ---------------------------------------------------------------------------------
         IsProcessingData = true;
         try
         {
@@ -296,6 +358,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
             // property updates and ObservableCollection construction below are safe.
             var results = await Task.Run(() => _farmAnalysisService.RunAnalysis(farm));
 
+            // Project the immutable result snapshot onto the observable view-model surface.
+            // Each assignment fires a PropertyChanged event that the view picks up.
             this.FarmName = results.FarmName;
             this.CarbonModellingStrategy = results.CarbonModellingStrategy;
             this.YearResults = new ObservableCollection<FieldAnalysisYearResult>(results.YearResults);
@@ -304,6 +368,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
             this.HasShelterbeltResults = results.ShelterbeltYearResults.Count > 0;
             this.LastErrorMessage = null;
 
+            // Build the soil-C trend chart from the same rows. Kept as a separate call so chart
+            // failures don't poison the rest of the results UI.
             BuildSoilCarbonTrendChart(results.YearResults);
 
             _logger.LogInformation(
@@ -312,6 +378,9 @@ public class GHGResultsViewModel : ResultsViewModelBase
         }
         catch (Exception ex)
         {
+            // Surface failures through LastErrorMessage so the view's error banner picks them up
+            // rather than crashing the page. The carbon pipeline has many ways to throw on
+            // misconfigured data and we never want to take down the whole results window.
             _logger.LogError(ex, "GHG analysis failed for active farm.");
             this.LastErrorMessage = ex.Message;
             this.HasResults = false;
@@ -345,8 +414,14 @@ public class GHGResultsViewModel : ResultsViewModelBase
         }
     }
 
+    /// <summary>
+    /// Core chart-building routine. Groups rows by field, averages duplicate (field, year)
+    /// entries, and projects each field onto the common sorted-years axis with nulls for missing
+    /// slots so LiveCharts renders gaps instead of fake zeros.
+    /// </summary>
     private void BuildSoilCarbonTrendChartCore(IReadOnlyList<FieldAnalysisYearResult> yearResults)
     {
+        // Nothing to chart — reset to empty so the view hides any previous chart.
         if (yearResults.Count == 0)
         {
             this.SoilCarbonTrendSeries = Array.Empty<ISeries>();
@@ -354,8 +429,11 @@ public class GHGResultsViewModel : ResultsViewModelBase
             return;
         }
 
+        // Build the shared x-axis: all distinct years across all fields, sorted ascending. Every
+        // field's series is projected onto this same axis so the lines line up visually.
         var sortedYears = yearResults.Select(r => r.Year).Distinct().OrderBy(y => y).ToList();
 
+        // One LineSeries per field, ordered alphabetically so the legend is stable across runs.
         var seriesByField = yearResults
             .GroupBy(r => r.FieldName)
             .OrderBy(g => g.Key)
@@ -369,6 +447,9 @@ public class GHGResultsViewModel : ResultsViewModelBase
                 var byYear = group
                     .GroupBy(r => r.Year)
                     .ToDictionary(g => g.Key, g => g.Average(r => r.SoilCarbon));
+
+                // Project this field onto the full year axis: null where the field has no data
+                // for that year so LiveCharts draws a gap instead of dropping the line to 0.
                 var values = sortedYears
                     .Select(year => byYear.TryGetValue(year, out var v) ? (double?)v : null)
                     .ToArray();
@@ -382,6 +463,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
             })
             .ToArray();
 
+        // Publish the assembled series + axis to the view. Single assignment of each so the
+        // chart re-renders once rather than flickering through partial states.
         this.SoilCarbonTrendSeries = seriesByField;
         this.SoilCarbonTrendXAxes = new[]
         {
@@ -394,8 +477,15 @@ public class GHGResultsViewModel : ResultsViewModelBase
         };
     }
 
+    /// <summary>
+    /// Command action behind <see cref="ExportFieldResultsCommand"/>. Delegates the actual file
+    /// write to <see cref="WriteFieldResultsCsv"/> and reports success or failure via toast +
+    /// <see cref="LastErrorMessage"/>. No-ops when there are no rows to export.
+    /// </summary>
     private void ExportFieldResultsToCsv()
     {
+        // Defensive no-op. CanExecute already prevents the button from firing when there are no
+        // rows, but this also covers programmatic invocation from tests / future callers.
         if (this.YearResults.Count == 0)
         {
             return;
@@ -403,6 +493,7 @@ public class GHGResultsViewModel : ResultsViewModelBase
 
         try
         {
+            // Do the actual file write. Returns the full path so we can show it in the toast.
             var path = WriteFieldResultsCsv(this.YearResults, this.FarmName);
             _logger.LogInformation("Exported {Count} field-year rows to {Path}.", this.YearResults.Count, path);
             _notificationManager?.ShowToast(
@@ -412,6 +503,8 @@ public class GHGResultsViewModel : ResultsViewModelBase
         }
         catch (Exception ex)
         {
+            // Mirror the analysis pipeline's error-handling pattern: log, surface the message in
+            // LastErrorMessage for the inline banner, and pop a toast for immediate visibility.
             _logger.LogError(ex, "Failed to export field results to CSV.");
             this.LastErrorMessage = $"Export failed: {ex.Message}";
             _notificationManager?.ShowToast(
@@ -429,14 +522,18 @@ public class GHGResultsViewModel : ResultsViewModelBase
         IEnumerable<FieldAnalysisYearResult> rows,
         string farmName)
     {
+        // 1. Resolve and ensure the target export folder exists. We use MyDocuments so the file
+        //    is easy for the user to find regardless of where the app was installed.
         var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         var directory = Path.Combine(documents, "Holos5", "Exports");
         Directory.CreateDirectory(directory);
 
+        // 2. Build a safe, timestamped filename so concurrent / repeated exports don't collide.
         var safeFarmName = string.IsNullOrWhiteSpace(farmName) ? "Farm" : SanitizeForFilename(farmName);
         var filename = $"{safeFarmName}_GHG_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
         var path = Path.Combine(directory, filename);
 
+        // 3. Emit the header row. Column order here drives the order in the file.
         var csv = new StringBuilder();
         csv.AppendLine(string.Join(",", new[]
         {
@@ -449,6 +546,9 @@ public class GHGResultsViewModel : ResultsViewModelBase
             "IndirectN2O_kg_per_ha", "TotalN2O_kg_per_ha",
         }));
 
+        // 4. Format each data row. InvariantCulture keeps the decimal separator as '.' so the
+        //    CSV is portable across French / English Windows locales (and re-importable into Excel
+        //    / R / Python without locale-specific parsing tricks).
         var inv = CultureInfo.InvariantCulture;
         foreach (var row in rows)
         {
@@ -472,10 +572,17 @@ public class GHGResultsViewModel : ResultsViewModelBase
             }));
         }
 
+        // 5. Persist as UTF-8 (with no BOM) so Excel on Windows still opens it correctly and
+        //    accents in farm / field names survive the round-trip.
         File.WriteAllText(path, csv.ToString(), Encoding.UTF8);
         return path;
     }
 
+    /// <summary>
+    /// RFC 4180 CSV field escaping: wraps the value in double quotes when it contains a comma,
+    /// quote, or line break, and doubles any embedded quotes. Returns the input unchanged when
+    /// no escaping is needed.
+    /// </summary>
     private static string EscapeCsv(string value)
     {
         if (string.IsNullOrEmpty(value))
@@ -494,8 +601,14 @@ public class GHGResultsViewModel : ResultsViewModelBase
         return $"\"{value.Replace("\"", "\"\"")}\"";
     }
 
+    /// <summary>
+    /// Replaces any character that is illegal in a Windows filename with an underscore so the
+    /// farm name can be safely embedded in the export filename.
+    /// </summary>
     private static string SanitizeForFilename(string value)
     {
+        // Path.GetInvalidFileNameChars() is platform-specific but covers anything the OS would
+        // reject. Anything matching gets swapped for an underscore so the resulting name is safe.
         var invalid = Path.GetInvalidFileNameChars();
         var sb = new StringBuilder(value.Length);
         foreach (var ch in value)
@@ -505,14 +618,23 @@ public class GHGResultsViewModel : ResultsViewModelBase
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Persists the new <see cref="CarbonModellingStrategies"/> selection onto the active farm
+    /// and kicks off a fresh analysis run so the grid reflects the change immediately. Invoked
+    /// from the <see cref="SelectedStrategy"/> setter unless re-analysis has been suppressed
+    /// (e.g. while we're syncing the ComboBox to the farm's current value).
+    /// </summary>
     private void ApplyStrategyAndReanalyze(CarbonModellingStrategies newStrategy)
     {
+        // No farm → nothing to persist or re-run. Mirrors the guard in RunAnalysisAsync.
         var farm = base.ActiveFarm;
         if (farm == null)
         {
             return;
         }
 
+        // Only mutate + log when the strategy actually changed. Avoids spurious log noise and
+        // keeps the farm's dirty state accurate.
         if (farm.Defaults.CarbonModellingStrategy != newStrategy)
         {
             _logger.LogInformation(
