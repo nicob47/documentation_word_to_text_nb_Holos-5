@@ -440,3 +440,8 @@ H.CLI/sync.ffs_db
 # Local utility scripts
 /kill-dotnet.ps1
 /H.Content/Documentation/Design/Shelterbelt
+/perf_output.txt
+/perf_output2.txt
+/perf_output3.txt
+/perf_output4.txt
+/perf_output5.txt
