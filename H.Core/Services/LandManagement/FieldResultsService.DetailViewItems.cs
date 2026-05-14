@@ -113,6 +113,12 @@ namespace H.Core.Services.LandManagement
 
             // Clear existing items because we want to reset values for view items.
             stageState.ClearState();
+
+            // Clear the per-farm climate-parameter memo so any user edits to climate / soil /
+            // defaults / view items are picked up on the next analysis pass. The cache only
+            // exists to amortize repeated lookups within a single InitializeStageState run.
+            _climateParameterCache.Clear();
+
             var clearMs = sw.ElapsedMilliseconds; sw.Restart();
 
             // Initialize the stage state (create view items that will be needed to create result view items)

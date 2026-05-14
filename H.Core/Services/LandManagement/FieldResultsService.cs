@@ -59,6 +59,40 @@ namespace H.Core.Services.LandManagement
         private readonly Table_7_Relative_Biomass_Information_Provider _relativeBiomassInformationProvider = new Table_7_Relative_Biomass_Information_Provider();
         private readonly CropEconomicsProvider _economicsProvider = new CropEconomicsProvider();
 
+        // Memoization cache for CalculateClimateParameter(viewItem, farm).
+        //
+        // Why this is safe to cache:
+        //   CalculateClimateParameter is a pure function of (viewItem.Year, viewItem.Yield,
+        //   viewItem.CropType.IsPerennial(), viewItem.IrrigationType, viewItem.AmountOfIrrigation,
+        //   farm.GetPreferredSoilData(viewItem), farm.Defaults, farm.ClimateData). The inner
+        //   365-day loop resets soilTemperaturePrevious/waterTemperaturePrevious to 0 each call,
+        //   so there is no cross-year state — two calls with identical inputs always produce the
+        //   same scalar. Downstream "previous year" references in the carbon calculators read
+        //   CropViewItem.ClimateParameter, which we still assign per year, so caching does not
+        //   change any inter-year linkage.
+        //
+        // Lifecycle:
+        //   The cache is cleared at the start of every InitializeStageState(farm) call. The
+        //   stage state is already invalidated on Recalculate / navigation, so user edits cannot
+        //   silently reuse a stale climate value.
+        //
+        // Why reference identity is sufficient for SoilData / Defaults / ClimateData:
+        //   These are large composite objects shared across all view items in a single analysis
+        //   run. Within one InitializeStageState pass the user cannot mutate them. Identity
+        //   comparison avoids both the cost and the bug surface of a deep equality check.
+        private readonly Dictionary<ClimateParameterCacheKey, double> _climateParameterCache
+            = new Dictionary<ClimateParameterCacheKey, double>();
+
+        private readonly record struct ClimateParameterCacheKey(
+            int Year,
+            double Yield,
+            bool IsPerennial,
+            Enumerations.IrrigationType IrrigationType,
+            double AmountOfIrrigation,
+            Providers.Soil.SoilData SoilData,
+            Models.Defaults Defaults,
+            Providers.Climate.ClimateData ClimateData);
+
         #endregion
 
         #region Constructors
@@ -207,6 +241,38 @@ namespace H.Core.Services.LandManagement
         /// for climate data.
         /// </summary>
         public double CalculateClimateParameter(CropViewItem viewItem, Farm farm)
+        {
+            // Memoization: the 365-day climate-parameter loop dominates AssignCarbonInputs
+            // (~60-237ms per field in profiling). Within a single InitializeStageState pass
+            // the inputs that drive this calculation rarely change across the 30 view items
+            // for a field, so most calls are cache hits after the first year of each crop
+            // configuration. See _climateParameterCache for the safety rationale.
+            var soilDataForKey = farm.GetPreferredSoilData(viewItem);
+            var key = new ClimateParameterCacheKey(
+                Year: viewItem.Year,
+                Yield: viewItem.Yield,
+                IsPerennial: viewItem.CropType.IsPerennial(),
+                IrrigationType: viewItem.IrrigationType,
+                AmountOfIrrigation: viewItem.AmountOfIrrigation,
+                SoilData: soilDataForKey,
+                Defaults: farm.Defaults,
+                ClimateData: farm.ClimateData);
+
+            if (_climateParameterCache.TryGetValue(key, out var cached))
+            {
+                return cached;
+            }
+
+            var computed = this.CalculateClimateParameterCore(viewItem, farm);
+            _climateParameterCache[key] = computed;
+            return computed;
+        }
+
+        /// <summary>
+        /// Original climate-parameter computation. Split out from <see cref="CalculateClimateParameter"/>
+        /// so the cache wrapper above stays small and the underlying math is unchanged.
+        /// </summary>
+        private double CalculateClimateParameterCore(CropViewItem viewItem, Farm farm)
         {
             if (farm.ClimateData.DailyClimateData.Any())
             {
