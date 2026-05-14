@@ -19,6 +19,14 @@ namespace H.Core.Providers.Soil
         private readonly SoilFunctionalCategoryStringConverter _soilFunctionalCategoryStringConverter;
         private readonly SoilTextureStringConverter _soilTextureStringConverter;
 
+        // Suppress repeated Trace lines for ecodistrict ids that aren't in the defaults
+        // table (e.g. id 705 hit thousands of times during a single analysis). Behaviour
+        // is unchanged - we still fall back to the same default - this only collapses the
+        // log volume to one entry per unique missing id.
+        private static readonly HashSet<int> _warnedEcozoneMisses = new HashSet<int>();
+        private static readonly HashSet<(int, Province)> _warnedFTopoMisses = new HashSet<(int, Province)>();
+        private static readonly object _warnedLock = new object();
+
         #endregion
 
         #region Constructors
@@ -58,7 +66,16 @@ namespace H.Core.Providers.Soil
 
             else
             {
-                Trace.TraceError( $"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetEcozone)} unable to get ecozone for ecodistrict: {ecodistrictId}. Returning default value of {Ecozone.AtlanticMaritimes.GetDescription()}.");
+                bool shouldWarn;
+                lock (_warnedLock)
+                {
+                    shouldWarn = _warnedEcozoneMisses.Add(ecodistrictId);
+                }
+
+                if (shouldWarn)
+                {
+                    Trace.TraceError($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetEcozone)} unable to get ecozone for ecodistrict: {ecodistrictId}. Returning default value of {Ecozone.AtlanticMaritimes.GetDescription()}. (Subsequent occurrences of this ecodistrict will be suppressed.)");
+                }
 
                 return Ecozone.AtlanticMaritimes;
             }
@@ -77,7 +94,16 @@ namespace H.Core.Providers.Soil
             }
             else
             {
-                Trace.TraceError($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetEcozone)} unable to get FTopo value for ecodistrict: {ecodistrictId}. Returning default value of {defaultValue}.");
+                bool shouldWarn;
+                lock (_warnedLock)
+                {
+                    shouldWarn = _warnedFTopoMisses.Add((ecodistrictId, province));
+                }
+
+                if (shouldWarn)
+                {
+                    Trace.TraceError($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetFractionOfLandOccupiedByPortionsOfLandscape)} unable to get FTopo value for ecodistrict: {ecodistrictId}, province: {province}. Returning default value of {defaultValue}. (Subsequent occurrences of this key will be suppressed.)");
+                }
 
                 return defaultValue;
             }

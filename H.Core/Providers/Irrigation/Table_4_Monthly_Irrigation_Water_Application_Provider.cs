@@ -13,6 +13,14 @@ namespace H.Core.Providers.Irrigation
     {
         #region Fields
         private readonly ProvinceStringConverter _provinceStringConverter;
+
+        // Track provinces we've already warned about so a single unknown province
+        // (e.g. an Irish "Laois" pulled in from non-Canadian data) doesn't flood the
+        // Trace output with the same line for every (month, province) call in the
+        // analysis hot path. Behaviour is unchanged - we still return null - this
+        // only collapses the log volume.
+        private static readonly HashSet<Province> _warnedProvinces = new HashSet<Province>();
+        private static readonly object _warnedProvincesLock = new object();
         #endregion
 
         #region Constructors
@@ -67,9 +75,18 @@ namespace H.Core.Providers.Irrigation
 
             if (irrigationWaterApplicationData != null)
             {
-                Trace.TraceError($"{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider)}.{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider.GetMonthlyAverageIrrigationDataInstance)}" +
-                                 $" unable to find Province: {province} in the available province data." +
-                                 $" Returning null.");
+                bool shouldWarn = false;
+                lock (_warnedProvincesLock)
+                {
+                    shouldWarn = _warnedProvinces.Add(province);
+                }
+
+                if (shouldWarn)
+                {
+                    Trace.TraceError($"{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider)}.{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider.GetMonthlyAverageIrrigationDataInstance)}" +
+                                     $" unable to find Province: {province} in the available province data." +
+                                     $" Returning null. (Subsequent occurrences of this province will be suppressed.)");
+                }
 
                 return null;
             }

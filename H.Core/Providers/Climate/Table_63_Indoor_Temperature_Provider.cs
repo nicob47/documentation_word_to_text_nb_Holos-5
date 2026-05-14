@@ -13,6 +13,11 @@ namespace H.Core.Providers.Climate
         private readonly ProvinceStringConverter _provincesConverter = new ProvinceStringConverter();
         private readonly List<IndoorTemperatureData> _data;
 
+        // Suppress repeated Trace lines for an unknown province. Behaviour unchanged
+        // (still returns an empty IndoorTemperatureData); only the log volume drops.
+        private static readonly HashSet<Province> _warnedProvinces = new HashSet<Province>();
+        private static readonly object _warnedProvincesLock = new object();
+
         #endregion
 
         #region Constructors
@@ -42,8 +47,17 @@ namespace H.Core.Providers.Climate
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_63_Indoor_Temperature_Provider)}.{nameof(Table_63_Indoor_Temperature_Provider.GetIndoorTemperature)}" +
-                                 $" unknown province: '{province.GetDescription()}', returning 0");
+                bool shouldWarn;
+                lock (_warnedProvincesLock)
+                {
+                    shouldWarn = _warnedProvinces.Add(province);
+                }
+
+                if (shouldWarn)
+                {
+                    Trace.TraceError($"{nameof(Table_63_Indoor_Temperature_Provider)}.{nameof(Table_63_Indoor_Temperature_Provider.GetIndoorTemperature)}" +
+                                     $" unknown province: '{province.GetDescription()}', returning 0. (Subsequent occurrences of this province will be suppressed.)");
+                }
 
                 return new IndoorTemperatureData();
             }

@@ -111,8 +111,22 @@ namespace H.Core.Services.LandManagement
 
             foreach (var year in distinctYears)
             {
-                var mainCrop = viewItems.Single(x => x.Year == year && x.IsSecondaryCrop == false);
-                var secondaryCrop = viewItems.SingleOrDefault(x => x.Year == year && x.IsSecondaryCrop == true);
+                // Find the main crop for the year. Be defensive: some legacy / partially-
+                // initialised view-item sets do not have IsSecondaryCrop set correctly,
+                // which would cause .Single() to throw on data that other code in this
+                // service (e.g. GetMainCropForYear) handles gracefully. Fall back to the
+                // first item for the year when there is no explicit main crop, and skip
+                // the year entirely when there are no items at all (defensive against
+                // bad data feeding this method - the distinctYears guarantees there
+                // SHOULD be at least one).
+                var mainCrop = viewItems.FirstOrDefault(x => x.Year == year && x.IsSecondaryCrop == false)
+                               ?? viewItems.FirstOrDefault(x => x.Year == year);
+                if (mainCrop == null)
+                {
+                    continue;
+                }
+
+                var secondaryCrop = viewItems.FirstOrDefault(x => x.Year == year && x.IsSecondaryCrop == true && !ReferenceEquals(x, mainCrop));
 
                 if (secondaryCrop is null)
                 {
