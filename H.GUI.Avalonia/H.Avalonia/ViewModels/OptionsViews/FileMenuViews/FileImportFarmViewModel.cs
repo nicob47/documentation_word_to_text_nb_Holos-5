@@ -19,8 +19,22 @@ using NLog;
 namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
 {
     /// <summary>
-    /// ViewModel for importing farm data from exported JSON files.
-    /// Handles farm selection, validation, and importing multiple farms into the application.
+    /// ViewModel for the "Import Farm" flow — lets the user pick one or more v4-shape
+    /// <c>.json</c> export files (or directories of them) and load the contained farms into
+    /// the current v5 application state.
+    ///
+    /// <para><b>Pipeline:</b></para>
+    /// <list type="number">
+    ///   <item>User selects a file / directory in the view.</item>
+    ///   <item><see cref="GetFarmsFromExportFileAsync"/> reads the JSON off the UI thread via <see cref="Task.Run"/>, deserializes it through Newtonsoft.Json with <c>TypeNameHandling.Auto</c> (matching the v4 serializer), and lands a <see cref="ObservableCollection{Farm}"/> the user can pick from.</item>
+    ///   <item><see cref="NormalizeProvinceOnImport"/> runs on every deserialized farm to reset any non-Canadian <c>Province</c> values (Guard B — protects against v4-era Ireland-mode imports producing NaN-filled charts downstream).</item>
+    ///   <item>On confirm, <see cref="OnImport"/> calls <see cref="IStorageService.AddFarm"/> for each selected farm.</item>
+    /// </list>
+    ///
+    /// <para><b>v4 schema migration:</b></para>
+    /// Schema fixes (renamed properties, added defaults, etc.) are <i>not</i> applied here —
+    /// they go through <see cref="H.Core.Migrations.JsonMigrationPipeline.MigrateFarmExport"/>
+    /// at a lower layer. This class is just the GUI binding surface plus the province guard.
     /// </summary>
     public class FileImportFarmViewModel : ViewModelBase
     {

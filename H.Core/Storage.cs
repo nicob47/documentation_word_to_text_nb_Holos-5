@@ -11,6 +11,30 @@ using NLog;
 
 namespace H.Core
 {
+    /// <summary>
+    /// On-disk persistence layer for the entire <see cref="ApplicationData"/> aggregate (farms,
+    /// settings, defaults, climate cache). Responsible for reading <c>json-data.json</c> from
+    /// the user data folder at startup, writing it back on save / app exit, and managing the
+    /// rolling backup + log-file retention policies.
+    ///
+    /// <para><b>Backup model:</b></para>
+    /// Each save also writes a timestamped <c>holos-backup-YYYY-MM-DD_hh_mm_ss_tt.json</c>
+    /// alongside the primary file. The directory keeps at most <see cref="MaxNumberOfBackups"/>
+    /// — older backups are pruned. If the primary file is missing or corrupt on load, the
+    /// most recent backup is restored automatically and <see cref="WasBackupRestored"/> flips
+    /// to true so the GUI can surface a notification.
+    ///
+    /// <para><b>Crash file:</b></para>
+    /// If the save path itself throws, the in-memory data is dumped to
+    /// <c>holos-crash-{timestamp}.json</c> so the user doesn't lose work. The crash file is
+    /// loaded on next startup when the primary file load fails — same path as the backup
+    /// restore.
+    ///
+    /// <para><b>Async save:</b></para>
+    /// <see cref="SaveTask"/> exposes the in-flight save so the GUI can await it before
+    /// shutdown. The <see cref="_asyncSaveSemaphore"/> guarantees only one save runs at a
+    /// time — overlapping saves would race on the same file handle.
+    /// </summary>
     public class Storage : BindableBase, IStorage
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every

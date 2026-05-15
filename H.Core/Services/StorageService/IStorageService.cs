@@ -2,6 +2,19 @@
 
 namespace H.Core.Services.StorageService;
 
+/// <summary>
+/// Higher-level wrapper over <see cref="IStorage"/> that the GUI and most services consume.
+/// Adds the concept of an "active farm" (the one the user is currently viewing / editing)
+/// plus add-farm helpers, so callers don't have to walk <see cref="ApplicationData.Farms"/>
+/// themselves.
+///
+/// <para><b>Why this exists separately from <see cref="IStorage"/>:</b></para>
+/// <see cref="IStorage"/> is the file-system / serialization boundary — testing it requires
+/// real file I/O or a heavyweight mock. <see cref="IStorageService"/> is the in-memory
+/// abstraction: tests can swap the whole service for a Moq with a couple of <c>Setup</c>
+/// calls, which is what the existing test suite does.
+/// </para>
+/// </summary>
 public interface IStorageService
 {
     #region Properties

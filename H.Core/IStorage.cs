@@ -2,11 +2,34 @@
 
 namespace H.Core;
 
+/// <summary>
+/// Low-level on-disk persistence contract. Defines the load / save lifecycle and exposes
+/// the in-memory <see cref="Models.ApplicationData"/> aggregate that everything else
+/// reads from. <see cref="Storage"/> is the production implementation; tests substitute a
+/// mock that bypasses the file system.
+///
+/// <para><b>Two-tier abstraction:</b></para>
+/// Most callers go through <see cref="Services.StorageService.IStorageService"/> instead of
+/// this interface — that higher-level service wraps active-farm tracking, farm-add semantics,
+/// and DI-friendly access. <see cref="IStorage"/> is purely the file-system / serialization
+/// boundary.
+/// </summary>
 public interface IStorage
 {
     #region Properties
 
+    /// <summary>
+    /// The root aggregate the rest of the application reads. Populated by <see cref="Load"/>
+    /// at startup; mutated freely throughout the session; written back by <see cref="Save"/> /
+    /// <see cref="SaveAsync"/> on demand or at shutdown.
+    /// </summary>
     public ApplicationData ApplicationData { get; set; }
+
+    /// <summary>
+    /// In-flight save task — callers (notably <c>App.OnExit</c>) await this before tearing
+    /// down so we don't kill a save mid-write. Defaults to <see cref="Task.CompletedTask"/>
+    /// when no save is running.
+    /// </summary>
     public Task SaveTask { get; set; }
 
     #endregion

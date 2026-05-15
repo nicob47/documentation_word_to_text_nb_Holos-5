@@ -24,6 +24,23 @@ using NLog;
 
 namespace H.Core.Services
 {
+    /// <summary>
+    /// Legacy v4-era farm orchestration service. Predates the
+    /// <see cref="H.Core.Services.Analysis.FarmAnalysisService"/> façade that the Avalonia GUI
+    /// now uses — this class wired the carbon / N / animal / economics / AD pipelines together
+    /// the v4 way (one big composite service injected via Prism).
+    ///
+    /// <para><b>Current role:</b></para>
+    /// Kept in v5 because the CLI and a number of bulk-import / reporting paths still depend
+    /// on it. The Avalonia GUI runs through the slimmer
+    /// <see cref="H.Core.Services.Analysis.FarmAnalysisService"/> instead. Both ultimately
+    /// drive the same <see cref="IFieldResultsService"/> + animal-pipeline stack.
+    ///
+    /// <para>
+    /// New GUI features should depend on <see cref="H.Core.Services.Analysis.IFarmAnalysisService"/>
+    /// rather than this type — the DTO façade is the testable seam.
+    /// </para>
+    /// </summary>
     public class FarmResultsService : IFarmResultsService
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
