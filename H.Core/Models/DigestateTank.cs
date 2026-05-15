@@ -3,12 +3,27 @@
 namespace H.Core.Models
 {
     /// <summary>
-    /// A storage tank for digestate resulting from anaerobic digestion
+    /// One "tank" of digestate — a running balance of stored raw / solid / liquid digestate
+    /// plus the available N for land application. Populated by
+    /// <see cref="H.Core.Services.Animals.DigestateService"/> from the underlying AD calculator's
+    /// daily outputs.
+    ///
+    /// <para><b>Three digestate states:</b></para>
+    /// <list type="bullet">
+    ///   <item><b>Raw</b> — digester effluent before any solid-liquid separation.</item>
+    ///   <item><b>Solid</b> — solids fraction after separation; lower N, higher C content.</item>
+    ///   <item><b>Liquid</b> — liquid fraction after separation; higher N, lower dry-matter.</item>
+    /// </list>
+    /// Each tank tracks both the gross produced amount (before field applications drew anything
+    /// down) and the net available amount (after drawdown). The two are kept distinct so audit
+    /// / export views can see the gross production while the field-application paths read net
+    /// availability.
     /// </summary>
     public class DigestateTank : StorageTankBase
     {
         #region Fields
 
+        /// <summary>Raw / Solid / Liquid — see class doc.</summary>
         private DigestateState _digestateState;
 
         // Amount of digestate available after all field applications

@@ -7,10 +7,27 @@ using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Default <see cref="IDigestateService"/> implementation. Delegates the actual AD math to
+    /// <see cref="ADCalculator"/> (which produces per-day digester outputs from the farm's
+    /// substrate inputs) and aggregates the daily outputs into the per-year, per-state
+    /// totals callers need.
+    ///
+    /// <para><b>Drawdown semantics:</b></para>
+    /// <see cref="SubtractAmountsFromLandApplications"/> defaults to <c>true</c> — the
+    /// "remaining at end of year" queries subtract amounts already applied to fields. Set to
+    /// <c>false</c> when calling from contexts that need the gross amount produced (export
+    /// view, audit reports). <see cref="SubtractAmountsFromImportedDigestateLandApplications"/>
+    /// is the imported-digestate equivalent.
+    /// </summary>
     public class DigestateService : IDigestateService
     {
         #region Fields
 
+        /// <summary>
+        /// On-farm digester output vs imported digestate. Most farms with AD components use
+        /// on-farm; imported is for farms that buy digestate from a regional facility.
+        /// </summary>
         private readonly List<ManureLocationSourceType> _validDigestateLocationSourceTypes = new List<ManureLocationSourceType>()
         {
             ManureLocationSourceType.NotSelected,
@@ -22,16 +39,34 @@ namespace H.Core.Services.Animals
 
         #region Properties
 
+        /// <summary>
+        /// Precomputed per-component animal results used as substrate input for the AD daily
+        /// output run. Populated via <see cref="Initialize"/>; left at empty if not primed
+        /// (lookups then short-circuit to zero).
+        /// </summary>
         public List<AnimalComponentEmissionsResults> AnimalResults { get; set; }
 
+        /// <summary>The actual AD-process calculator that consumes substrate inputs and produces daily digester outputs (gas, liquid, solid).</summary>
         public IADCalculator ADCalculator { get; set; }
+
+        /// <summary>
+        /// When <c>true</c> (default), "remaining at end of year" totals subtract amounts
+        /// already applied to fields. Set <c>false</c> to see the gross stored amount.
+        /// </summary>
         public bool SubtractAmountsFromLandApplications { get; set; }
+
+        /// <summary>Same as <see cref="SubtractAmountsFromLandApplications"/> but for imported digestate.</summary>
         public bool SubtractAmountsFromImportedDigestateLandApplications { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Default ctor — wires up a fresh <see cref="ADCalculator"/> and an empty
+        /// <see cref="AnimalResults"/> list. Callers re-prime the service for each farm via
+        /// <see cref="Initialize"/>.
+        /// </summary>
         public DigestateService()
         {
             this.ADCalculator = new ADCalculator();
@@ -44,11 +79,21 @@ namespace H.Core.Services.Animals
 
         #region Public Methods
 
+        /// <summary>
+        /// Stash the precomputed animal-component results so the AD calculator can read them
+        /// as substrate inputs. Null-safe — replaces null with an empty list rather than
+        /// throwing.
+        /// </summary>
         public void Initialize(Farm farm, List<AnimalComponentEmissionsResults> animalComponentEmissionsResults)
         {
             this.AnimalResults = animalComponentEmissionsResults ?? new List<AnimalComponentEmissionsResults>();
         }
 
+        /// <summary>
+        /// Run the AD calculator and return the per-day digester output rows. Empty when the
+        /// farm has no <see cref="AnaerobicDigestionComponent"/> — short-circuits before
+        /// touching the calculator at all.
+        /// </summary>
         public List<DigestorDailyOutput> GetDailyResults(Farm farm)
         {
             if (farm.AnaerobicDigestionComponents.Any() == false)

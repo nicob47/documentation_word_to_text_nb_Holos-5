@@ -4,7 +4,16 @@ using H.Core.Enumerations;
 namespace H.Core.Models
 {
     /// <summary>
-    /// A storage tank for a particular type of manure (beef, dairy, etc.)
+    /// One "tank" of manure — a running balance of stored volume, N, C, and TAN for a single
+    /// (<see cref="AnimalType"/>, year, <see cref="ManureStateType"/>) bucket. Created by
+    /// <see cref="H.Core.Services.Animals.ManureService.Initialize"/> from per-day animal-
+    /// emission rows; drawn down by field applications, grazing deposits, and exports during
+    /// the analysis pass.
+    ///
+    /// <para><b>Daily-emission cache:</b></para>
+    /// <see cref="_dailyResults"/> keeps the per-year list of <c>GroupEmissionsByDay</c> rows
+    /// that fed this tank's totals, so downstream code that needs day-level detail (e.g.
+    /// monthly spreading patterns) can read it without recomputing.
     /// </summary>
     public class ManureTank : StorageTankBase
     {

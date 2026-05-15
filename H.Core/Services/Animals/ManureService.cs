@@ -9,13 +9,33 @@ using H.Infrastructure;
 namespace H.Core.Services.Animals
 {
     /// <summary>
-    /// Keep manure calculations separate from <see cref="FarmResultsService"/>
+    /// Default <see cref="IManureService"/> implementation. Holds the per-(animal type, year,
+    /// state) "tanks" that track manure creation, storage drawdown, application, and
+    /// import/export over the analysis period.
+    ///
+    /// <para><b>Tank model:</b></para>
+    /// Each <see cref="ManureTank"/> represents one (animal type, year, manure state) bucket.
+    /// Animal components add to the tank during creation; field applications, grazing
+    /// deposits, and export view items draw from it. The tank's running balance is what every
+    /// "remaining for application" / "available for export" query reads.
+    ///
+    /// <para><b>Why this isn't a static helper:</b></para>
+    /// The tanks are farm-and-analysis-pass-scoped state — they depend on which animal
+    /// components produced what in which year. Different farms or different analysis runs need
+    /// fresh tanks, so the service is created per pass and primed via
+    /// <see cref="IManureService.Initialize"/>.
     /// </summary>
     public class ManureService : IManureService
     {
         #region Fields
 
+        /// <summary>Lookup for default handling-system / storage-stage emission factors per animal type.</summary>
         private readonly ManureHandlingSystemProvider _manureHandlingSystemProvider = new ManureHandlingSystemProvider();
+
+        /// <summary>
+        /// All per-(animalType, year, state) tanks built during <see cref="IManureService.Initialize"/>.
+        /// Lookup methods walk this list rather than persisting tanks across analysis runs.
+        /// </summary>
         private readonly List<ManureTank> _manureTanks;
         private readonly List<AnimalType> _validManureTypes = new List<AnimalType>()
         {

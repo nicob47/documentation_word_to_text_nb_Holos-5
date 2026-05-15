@@ -6,8 +6,34 @@ using H.Core.Providers.Animals;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Single source of truth for manure C, N, and TAN (total ammoniacal nitrogen) accounting
+    /// across the farm. Tracks how manure flows through the system:
+    /// <list type="number">
+    ///   <item><b>Creation</b> — each animal component produces manure (volume / N / C / TAN per year).</item>
+    ///   <item><b>Storage</b> — accumulated in per-(animalType, year, manureStateType) "tanks".</item>
+    ///   <item><b>Use</b> — drawn down by field applications, imports/exports, and grazing deposits.</item>
+    /// </list>
+    ///
+    /// <para><b>Where the carbon pipeline uses it:</b></para>
+    /// <see cref="H.Core.Calculators.Nitrogen.N2OEmissionFactorCalculator"/> calls into this
+    /// service for per-field manure N totals (direct + indirect N₂O) and per-field manure C
+    /// totals (feeds the ICBM young-manure pool / Tier 2 active pool).
+    ///
+    /// <para><b>Lifecycle:</b></para>
+    /// Must be <see cref="Initialize"/>-d with the farm + the precomputed animal results
+    /// before any of the per-tank lookup methods will return real values. The orchestrator in
+    /// <c>FieldResultsService.CalculateFinalResultsForField</c> handles this priming for both
+    /// strategies.
+    /// </summary>
     public interface IManureService
     {
+        /// <summary>
+        /// Prime the service with the farm context and the precomputed per-component animal
+        /// results. Builds the per-(animalType, year, state) tanks that subsequent lookup
+        /// methods read. Call this once per analysis pass; calling repeatedly with stale data
+        /// will produce stale totals.
+        /// </summary>
         void Initialize(Farm farm, List<AnimalComponentEmissionsResults> animalComponentEmissionsResults);
         ManureTank GetTank(AnimalType animalType, int year, Farm farm, ManureStateType manureStateType);
         List<AnimalType> GetValidManureTypes();

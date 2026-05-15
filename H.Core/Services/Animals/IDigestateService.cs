@@ -7,8 +7,31 @@ using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Source of truth for digestate C and N flows on farms that have an
+    /// <see cref="AnaerobicDigestionComponent"/>. Digestate is the nitrogen-rich liquid /
+    /// solid output produced when manure and other organic substrates run through an
+    /// anaerobic digester. Once produced it behaves like manure — gets stored, applied to
+    /// fields, exported — but with different emission-factor curves (more alkaline, higher
+    /// NH₃ loss).
+    ///
+    /// <para><b>Parallel to <see cref="IManureService"/>:</b></para>
+    /// Both services follow the same lifecycle pattern (<see cref="Initialize"/> with farm
+    /// context + precomputed animal results, then per-application / per-field lookups). The
+    /// soil-carbon and nitrogen calculators call both during the final pass so digestate
+    /// contributions show up alongside manure contributions in the year-end totals.
+    ///
+    /// <para>
+    /// Most farms have no AD component, in which case every lookup short-circuits to 0 and
+    /// this service is effectively a no-op.
+    /// </para>
+    /// </summary>
     public interface IDigestateService
     {
+        /// <summary>
+        /// Prime the service with the farm and precomputed animal results. The AD calculator
+        /// reads animal manure production as the substrate input for its daily-output run.
+        /// </summary>
         void Initialize(Farm farm, List<AnimalComponentEmissionsResults> animalComponentEmissionsResults);
 
         DateTime GetDateOfMaximumAvailableDigestate(Farm farm, DigestateState state, int year,
