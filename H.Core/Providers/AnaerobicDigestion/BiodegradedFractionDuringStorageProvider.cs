@@ -4,7 +4,19 @@ using NLog;
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
-    // Provider that calculates the Biodegraded fraction during storage.
+    /// <summary>
+    /// Default values for the fraction of volatile solids that biodegrades during digestate
+    /// storage (post-digester, pre-field-application). Drives the storage-stage CH₄ loss
+    /// estimate — biodegradation during storage represents methane that's vented to atmosphere
+    /// before the digestate gets applied to a field, and it directly reduces the C input the
+    /// field-level soil-carbon pipeline receives.
+    ///
+    /// <para>
+    /// Consumed by <see cref="H.Core.Calculators.Infrastructure.ADCalculator"/> alongside
+    /// <see cref="EmissionFactorsForDigestateStorageProvider"/> when building the per-day
+    /// storage-stage emission rows.
+    /// </para>
+    /// </summary>
     public class BiodegradedFractionDuringStorageProvider
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every

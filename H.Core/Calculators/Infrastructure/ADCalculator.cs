@@ -8,6 +8,30 @@ using SubstrateFlowInformation = H.Core.Models.Infrastructure.SubstrateFlowInfor
 
 namespace H.Core.Calculators.Infrastructure
 {
+    /// <summary>
+    /// Default <see cref="IADCalculator"/> implementation. Models an on-farm anaerobic digester
+    /// processing manure (fresh + stored) plus optional farm-residue / crop-residue substrate
+    /// streams. The per-day output captures:
+    /// <list type="bullet">
+    ///   <item>Substrate flows into the digester (manure / crop residue / farm residue) — see <see cref="GetFreshManureFlowRate"/> and siblings.</item>
+    ///   <item>Biogas + methane production via Table 46 coefficients (manure / crop-residue / farm-residue variants).</item>
+    ///   <item>Digestate composition: total + raw + solid + liquid fractions, with the solid/liquid split via Table 47 coefficients.</item>
+    ///   <item>Storage-stage CH₄ / N₂O / NH₃ losses via the digestate-storage emission-factor providers + Table 45 reduction factors.</item>
+    /// </list>
+    ///
+    /// <para><b>Partial layout:</b></para>
+    /// The class is split into <c>ADCalculator.cs</c> (substrate flows + main daily-result
+    /// build) and <c>ADCalculator.FieldApplications.cs</c> (digestate-to-field application
+    /// math — converts the per-day storage tank state into the per-(field, application) N + C
+    /// inputs that the soil-pipeline reads via <see cref="H.Core.Services.Animals.DigestateService"/>).
+    ///
+    /// <para><b>Provider dependencies:</b></para>
+    /// <list type="bullet">
+    ///   <item>Table 45 — manure-property adjustment factors (e.g. TAN partitioning between solid + liquid).</item>
+    ///   <item>Table 46 — biogas / methane production parameters per substrate type.</item>
+    ///   <item>Table 47 — solid-liquid separation coefficients (what fraction of N, C, VS ends up in each fraction).</item>
+    /// </list>
+    /// </summary>
     public partial class ADCalculator : IADCalculator
     {
         #region Fields

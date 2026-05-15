@@ -10,9 +10,19 @@ using NLog;
 namespace H.Core.Providers.AnaerobicDigestion
 {
     /// <summary>
-    /// Table 46
+    /// Table 46 — biogas + methane production parameters per substrate type. Holds three
+    /// data files behind one provider:
+    /// <list type="bullet">
+    ///   <item><b>Manure variant</b> — biogas / methane yields by animal type and manure state.</item>
+    ///   <item><b>Crop-residue variant</b> — biogas / methane yields by crop type for residues fed directly into the digester.</item>
+    ///   <item><b>Farm-residue variant</b> — biogas / methane yields for non-crop farm residues (food waste, silage effluent, etc.).</item>
+    /// </list>
     ///
-    /// Parameters used for the calculation of biogas and methane production using an anaerobic digestion system
+    /// <para>
+    /// <see cref="H.Core.Calculators.Infrastructure.ADCalculator"/> looks these up per
+    /// substrate stream to compute the daily methane production used for biogas /
+    /// CO₂-equivalent reporting.
+    /// </para>
     /// </summary>
     public class Table_46_Biogas_Methane_Production_Parameters_Provider
     {

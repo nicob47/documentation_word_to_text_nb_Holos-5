@@ -5,10 +5,17 @@ using NLog;
 namespace H.Core.Providers.AnaerobicDigestion
 {
     /// <summary>
-    /// Table 47
+    /// Table 47 — solid-liquid separation coefficients for digestate. After raw digestate is
+    /// produced, on-farm separators (screw press, decanter centrifuge, etc.) split it into a
+    /// solid fraction and a liquid fraction. Each property (dry matter, total N, TAN, total
+    /// C, etc.) partitions differently — this table provides the default fraction that ends
+    /// up in the <i>solid</i> fraction; the remainder goes to the liquid fraction.
     ///
-    /// Default values for separation coefficients (fraction in solid fraction) for solid-liquid separation of digestate
-    /// <para>Source: Guilayn et al. (2019)</para>
+    /// <para>
+    /// <see cref="H.Core.Calculators.Infrastructure.ADCalculator"/> uses these coefficients to
+    /// split the raw-digestate daily totals into the separate raw / solid / liquid tanks that
+    /// <see cref="H.Core.Models.DigestateTank"/> tracks. Source: Guilayn et al. (2019).
+    /// </para>
     /// </summary>
     public class Table_47_Solid_Liquid_Separation_Coefficients_Provider
     {

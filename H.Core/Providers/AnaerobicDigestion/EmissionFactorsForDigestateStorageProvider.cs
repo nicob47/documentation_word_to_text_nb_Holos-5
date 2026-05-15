@@ -8,6 +8,23 @@ using NLog;
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
+    /// <summary>
+    /// Per-(digestate state, emission type) lookup for storage-stage emission factors. Tells
+    /// the AD calculator how much CH₄ / N₂O / NH₃ leaves the digestate storage tank per kg
+    /// of stored substrate.
+    ///
+    /// <para><b>Lookup key:</b></para>
+    /// <list type="bullet">
+    ///   <item><see cref="DigestateState"/> — raw vs solid vs liquid (each has different surface area + dry matter, so different emission profiles).</item>
+    ///   <item><see cref="EmissionType"/> — CH₄, N₂O, or NH₃.</item>
+    /// </list>
+    ///
+    /// <para>
+    /// Pairs with <see cref="BiodegradedFractionDuringStorageProvider"/>: the biodegraded
+    /// fraction drives substrate loss, this provider scales the emissions that result from
+    /// that loss.
+    /// </para>
+    /// </summary>
     public class EmissionFactorsForDigestateStorageProvider
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every

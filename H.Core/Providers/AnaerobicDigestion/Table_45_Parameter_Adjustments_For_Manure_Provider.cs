@@ -5,10 +5,11 @@ using NLog;
 namespace H.Core.Providers.AnaerobicDigestion
 {
     /// <summary>
-    /// Table 45
-    ///
-    /// Parameter adjustments for dried or stockpiled manure entering the anaerobic digester
-    /// <para>Source: Gopalan et al. (2013)</para>
+    /// Table 45 — reduction-factor lookups applied to fresh-manure substrate properties (VS,
+    /// TAN, total N, etc.) when the manure has been dried or stockpiled before entering the
+    /// digester. Drier manure has different methane potential than fresh; this table is what
+    /// <see cref="H.Core.Calculators.Infrastructure.ADCalculator"/> uses to adjust accordingly.
+    /// Source: Gopalan et al. (2013).
     /// </summary>
     public class Table_45_Parameter_Adjustments_For_Manure_Provider
     {
