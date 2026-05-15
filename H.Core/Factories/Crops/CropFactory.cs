@@ -8,7 +8,20 @@ using Prism.Ioc;
 namespace H.Core.Factories.Crops;
 
 /// <summary>
-/// A class used to create new <see cref="CropDto"/> and <see cref="CropViewItem"/> instances. The class will provide basic initialization of a new instance before returning the result to the caller.
+/// Default <see cref="ICropFactory"/> implementation. Holds three DI-resolved
+/// <see cref="IModelMapper{TSource, TDest}"/> instances that handle the actual property
+/// copies between CropViewItem ↔ CropDto + DTO ↔ DTO clones, and an
+/// <see cref="ICropInitializationService"/> reference that seeds new crops with sensible
+/// per-province / per-crop defaults (lignin content, biomass coefficients, etc.) before they
+/// reach the user.
+///
+/// <para><b>Three mapper roles:</b></para>
+/// <list type="bullet">
+///   <item><c>CropViewItemToCropDtoMapper</c> — domain → DTO when opening the editor for an existing crop.</item>
+///   <item><c>CropDtoToCropViewItemMapper</c> — DTO → domain on save.</item>
+///   <item><c>CropDtoToCropDtoMapper</c> — clone-a-DTO, used when the editor needs to keep an isolated copy (e.g. "Save As" workflows).</item>
+/// </list>
+/// All three are resolved by named key out of the container in the constructor.
 /// </summary>
 public class CropFactory : ICropFactory
 {

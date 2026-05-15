@@ -6,7 +6,26 @@ using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Services.LandManagement.Fields;
 
-public interface IFieldComponentService 
+/// <summary>
+/// Service layer between the field-editor ViewModel and the underlying field / crop domain
+/// objects. Holds the DTO ↔ domain-object conversion logic, the crop-year sequencing
+/// invariants (years must be consecutive), and the initialization defaults that newly-added
+/// crops / fields need so they don't reach the carbon pipeline half-populated.
+///
+/// <para><b>Why a DTO bridge:</b></para>
+/// The Avalonia views bind to <see cref="IFieldComponentDto"/> / <see cref="ICropDto"/>
+/// rather than to <see cref="FieldSystemComponent"/> / <see cref="CropViewItem"/> directly.
+/// The DTOs carry UI-only state (selection flags, ComboBox source collections, formatted
+/// strings) and absorb mid-edit changes without mutating the canonical domain object. This
+/// service performs the explicit transfer in both directions — only on save.
+///
+/// <para><b>Where this fits in the carbon flow:</b></para>
+/// <see cref="AddCropDtoToSystem"/> is the entry point where a fresh <see cref="CropDto"/>
+/// becomes a <see cref="CropViewItem"/> with <c>IsSecondaryCrop = false</c> on the field's
+/// main-crop collection. The carbon pipeline later reads that collection via
+/// <c>FieldResultsService.PreProcessViewItems</c>.
+/// </summary>
+public interface IFieldComponentService
 {
     /// <summary>
     /// When adding a new crop to the field, the year must be the next in order so that all years of the field history are consecutive.

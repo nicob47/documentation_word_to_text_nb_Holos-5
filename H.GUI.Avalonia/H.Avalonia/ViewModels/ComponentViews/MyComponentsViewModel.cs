@@ -16,6 +16,23 @@ using Prism.Regions;
 
 namespace H.Avalonia.ViewModels.ComponentViews;
 
+/// <summary>
+/// ViewModel for the "My Components" screen — the dashboard that lists every component on the
+/// active farm (fields, animal herds, shelterbelts, AD systems) and lets the user add new
+/// ones, remove existing ones, or jump into a component's editor. This is the screen the
+/// user lands on after creating / opening a farm.
+///
+/// <para><b>Two roles:</b></para>
+/// <list type="number">
+///   <item><b>Component catalogue</b> — left-hand list of "add new" tiles grouped by category (cropland, beef, dairy, etc.). Clicking one creates a new component and navigates into its editor.</item>
+///   <item><b>Active-farm view</b> — right-hand list of components already on the farm. Each row routes to its component-specific editor; the "Results" button at the bottom navigates to <see cref="H.Avalonia.Views.ResultViews.GHGResultsView"/>.</item>
+/// </list>
+///
+/// <para><b>Two constructors:</b></para>
+/// <see cref="MyComponentsViewModel()"/> (parameterless) is the design-time / fallback path
+/// for the XAML previewer; the DI constructor is the one Prism uses at runtime. The
+/// parameterless ctor must populate collections so XAML bindings don't crash on null.
+/// </summary>
 public class MyComponentsViewModel : ViewModelBase
 {
     #region Fields

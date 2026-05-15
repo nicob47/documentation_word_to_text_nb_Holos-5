@@ -25,7 +25,30 @@ using Prism.Regions;
 namespace H.Avalonia.ViewModels.ComponentViews.LandManagement.Field;
 
 /// <summary>
-/// The view model that is used with a <see cref="FieldComponentView"/>.
+/// ViewModel for the multi-step field component editor (<see cref="FieldComponentView"/>).
+/// This is where the user authors a single field: name + area + soil polygon (step 1), the
+/// crops grown across years (step 2), and the per-crop details — manure / fertilizer /
+/// harvests / grazing (step 3).
+///
+/// <para><b>Domain ↔ DTO bridge:</b></para>
+/// The screen binds to <see cref="IFieldComponentDto"/> + <see cref="ICropDto"/> rather than
+/// to the underlying <see cref="FieldSystemComponent"/> / <see cref="CropViewItem"/> domain
+/// objects directly. The DTOs carry presentation-only state (selection flags, formatted
+/// strings, UI-only collections) and isolate edits so the domain object isn't mutated until
+/// the user explicitly saves. <see cref="IFieldComponentService"/> handles the conversion
+/// in both directions.
+///
+/// <para><b>UI-state persistence:</b></para>
+/// The "which crop is selected, which step the user was on" state is persisted via
+/// <c>FieldComponentService.SaveUIState</c> / <c>GetUIState</c> so navigating away and
+/// returning lands the user back where they were. This is why several methods log
+/// "[FieldComponentViewModel.SaveCurrentUIState] Saved UI state for ..." messages.
+///
+/// <para><b>Where this fits in the carbon flow:</b></para>
+/// Step 2 calls <see cref="IFieldComponentService.AddCropDtoToSystem"/>, which is where
+/// fresh <see cref="CropViewItem"/>s land in <c>fieldSystemComponent.CropViewItems</c> with
+/// <c>IsSecondaryCrop = false</c>. The carbon pipeline reads those items downstream via
+/// <c>FieldResultsService.InitializeStageState</c>. See <c>Carbon_Model_Flow.md</c>.
 /// </summary>
 public class FieldComponentViewModel : ViewModelBase
 {
