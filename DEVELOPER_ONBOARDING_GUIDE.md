@@ -124,24 +124,26 @@ After cloning, you'll see this project structure:
 
 ```
 Holos-5/
-  H.Avalonia/                    # Main Avalonia UI project
-  H.Core/                        # Core business logic and calculations
-  H.Infrastructure/              # Infrastructure services and utilities  
-  H.CLI/                         # Command-line interface project
-  H.Content/                     # Content and embedded resources
-  H.Integration/                 # Integration testing
-  H.GUI.Avalonia/                # GUI-specific projects
-    H.Avalonia/                  # Main UI application
-    H.Avalonia.Core/             # UI core components
-    H.Avalonia.Infrastructure/   # UI infrastructure
-    H.Avalonia.Test/             # UI unit tests
-  H.Core.Test/                   # Core business logic tests
-  H.Infrastructure.Test/         # Infrastructure tests
-  H.CLI.Test/                    # CLI tests
-  Holos.sln                      # Main solution file
-  ARCHITECTURE.md                # Application architecture guide
-  CODING_STYLE_GUIDE.md          # Coding standards and conventions
-  README.md                      # Project overview (when available)
+  H.Core/                        # Core business logic and calculations (carbon/N/animal math).
+  H.Core.Test/                   # MSTest unit tests for H.Core.
+  H.CLI/                         # Command-line bulk-analysis tool.
+  H.CLI.Test/                    # MSTest tests for H.CLI.
+  H.GUI.Avalonia/
+    H.Avalonia/                  # Avalonia GUI (main entry point).
+    H.Avalonia.Test/             # MSTest tests for the GUI VMs.
+  H.Infrastructure/              # Shared helpers (KML parsing, network, units).
+  H.Infrastructure.Test/         # Infrastructure tests.
+  H.Localization/                # Translated resource strings (English + French).
+  H.Integration/                 # Integration tests that touch real data files.
+  H.Content/                     # CSVs, training material, and the Developer Guide docs.
+  H.Economic.Data/               # Economics templates + helper docs.
+  Holos.sln                      # Main solution file.
+  ARCHITECTURE.md                # Application architecture guide.
+  CODING_STYLE_GUIDE.md          # Coding standards and conventions.
+  README.md                      # Project overview.
+  H.Content/Documentation/Developer Guide/
+    Developer_Guide_EN.md        # Quick-start developer reference.
+    Carbon_Model_Flow.md         # End-to-end carbon-pipeline diagram + file index.
 ```
 
 ---
@@ -223,7 +225,7 @@ dotnet build H.GUI.Avalonia/H.Avalonia/H.Avalonia.csproj
 A successful build should:
 - Show "Build succeeded" in the output window
 - Have no compilation errors
-- Generate output assemblies in `bin/Debug/net9.0-windows/`
+- Generate output assemblies in `bin/Debug/net9.0/` (the projects target `net9.0`, not `net9.0-windows`).
 
 ---
 
@@ -321,9 +323,18 @@ dotnet test --collect:"XPlat Code Coverage"
 4. Use the Immediate Window for expression evaluation
 
 **Logging:**
-- Application uses NLog for comprehensive logging
-- Log files are written to the application directory
-- Use different log levels: Trace, Debug, Info, Warn, Error
+- Every class in the codebase logs through **NLog** with a single unified format:
+  `HH:mm:ss.ffff [LEVEL] [Class.Method] message`. NLog config lives at
+  `H.GUI.Avalonia/H.Avalonia/NLog.config`.
+- Use `ILogger` (injected via DI) when the class is constructed by the container; use a
+  static `private static readonly Logger _log = LogManager.GetCurrentClassLogger();` field
+  when it isn't (providers, helpers, partial classes). Both route through the same NLog
+  pipeline.
+- **Do not use `System.Diagnostics.Trace.*`** — the codebase migrated off Trace in favour of
+  NLog so the Output window doesn't show two competing log formats. Full rationale in the
+  "Logging" section of `CODING_STYLE_GUIDE.md`.
+- Logs land in three places at once: console (Debug+), VS Output > Debug pane (Debug+, only
+  when a debugger is attached), and `logs/app-<YYYY-MM-DD>.log` under the run directory (Info+).
 
 ---
 
@@ -333,9 +344,9 @@ dotnet test --collect:"XPlat Code Coverage"
 
 **Build Errors:**
 
-1. **"The target framework 'net9.0-windows' is not supported"**
-   - Solution: Ensure .NET 9 SDK is properly installed
-   - Verify with: `dotnet --list-sdks`
+1. **"The target framework 'net9.0' is not supported"**
+   - Solution: Ensure the .NET 9 SDK is properly installed (not just the runtime).
+   - Verify with: `dotnet --list-sdks` — you should see `9.0.x`.
 
 2. **NuGet package restore failures**
    - Solution: Clear NuGet cache
@@ -372,9 +383,11 @@ dotnet test --collect:"XPlat Code Coverage"
 ### Getting Help
 
 1. **Internal Documentation**
-   - Review `ARCHITECTURE.md` for application structure
-   - Check `CODING_STYLE_GUIDE.md` for coding standards
-   - Examine existing code for patterns and examples
+   - `ARCHITECTURE.md` — overall application structure and bootstrap flow.
+   - `CODING_STYLE_GUIDE.md` — coding standards, the Avalonia binding pitfall, the logging pattern.
+   - `H.Content/Documentation/Developer Guide/Developer_Guide_EN.md` — quick-start reference for VS / VS Code / Rider, dotnet CLI commands, solution layout.
+   - `H.Content/Documentation/Developer Guide/Carbon_Model_Flow.md` — end-to-end Mermaid diagram of the carbon analysis pipeline plus a class-by-class file index. Start here before touching the carbon or nitrogen calculators.
+   - Examine existing code for patterns and examples — the ~60 files most central to the carbon pipeline have detailed class-level docstrings naming their role and collaborators.
 
 2. **External Resources**
    - [Avalonia Documentation](https://docs.avaloniaui.net/)
@@ -404,8 +417,10 @@ dotnet test --collect:"XPlat Code Coverage"
 
 ### Documentation Links
 
-- **Project Architecture**: `ARCHITECTURE.md`
-- **Coding Standards**: `CODING_STYLE_GUIDE.md`
+- **Project Architecture**: [`ARCHITECTURE.md`](ARCHITECTURE.md)
+- **Coding Standards**: [`CODING_STYLE_GUIDE.md`](CODING_STYLE_GUIDE.md)
+- **Developer Quick-Start (VS / VS Code / Rider)**: [`Developer_Guide_EN.md`](H.Content/Documentation/Developer%20Guide/Developer_Guide_EN.md)
+- **Carbon Pipeline Flowchart**: [`Carbon_Model_Flow.md`](H.Content/Documentation/Developer%20Guide/Carbon_Model_Flow.md)
 - **Avalonia UI**: https://docs.avaloniaui.net/
 - **Prism Framework**: https://prismlibrary.com/docs/
 - **.NET 9**: https://docs.microsoft.com/dotnet/
@@ -418,11 +433,13 @@ dotnet test --collect:"XPlat Code Coverage"
 
 After completing this setup:
 
-1. **Read the Architecture Guide** - Understand the application structure by reviewing `ARCHITECTURE.md`
-2. **Study the Coding Standards** - Familiarize yourself with `CODING_STYLE_GUIDE.md`
-3. **Explore the Codebase** - Start with the `App.axaml.cs` bootloader to understand initialization
-4. **Run the Application** - Get familiar with the UI and basic functionality
-5. **Set Up Your First Development Task** - Choose a small feature or bug fix to start with
-6. **Join the Development Process** - Participate in code reviews and team discussions
+1. **Read the Architecture Guide** — understand the application structure by reviewing [`ARCHITECTURE.md`](ARCHITECTURE.md).
+2. **Skim the Developer Guide** — [`H.Content/Documentation/Developer Guide/Developer_Guide_EN.md`](H.Content/Documentation/Developer%20Guide/Developer_Guide_EN.md) covers the day-to-day workflow (build / run / test / debug for each supported IDE) and the localization + logging patterns.
+3. **Trace the Carbon Pipeline** — open [`H.Content/Documentation/Developer Guide/Carbon_Model_Flow.md`](H.Content/Documentation/Developer%20Guide/Carbon_Model_Flow.md). The Mermaid flowchart shows every step from "user authors a wheat field" through to "GHG results chart renders", and the file index at the bottom maps each step to its implementation. Essential context before touching carbon or nitrogen code.
+4. **Study the Coding Standards** — [`CODING_STYLE_GUIDE.md`](CODING_STYLE_GUIDE.md). Pay attention to the Avalonia `StringFormat` pitfall and the logging pattern (ILogger / NLog Logger, never `Trace.*`).
+5. **Explore the Codebase** — start with `App.axaml.cs` (bootloader) to understand DI registration. The ~60 files central to the carbon pipeline have detailed class-level docstrings naming their role and collaborators.
+6. **Run the Application** — get familiar with the UI and basic functionality.
+7. **Set Up Your First Development Task** — choose a small feature or bug fix to start with.
+8. **Join the Development Process** — participate in code reviews and team discussions.
 
 Welcome to the Holos development team!

@@ -87,7 +87,7 @@ Install these from the VS Code marketplace:
 After installation:
 
 1. **File → Open Folder** → select the repository root.
-2. C# Dev Kit will offer to load the `H.sln` solution. Accept.
+2. C# Dev Kit will offer to load the `Holos.sln` solution. Accept.
 3. Wait for the Roslyn / OmniSharp language server to finish indexing (status bar bottom-left).
 
 ### Build, run, and test from VS Code
@@ -96,7 +96,7 @@ Open the integrated terminal (`` Ctrl+` ``) and use the .NET CLI directly:
 
 ```bash
 # Restore + build the whole solution
-dotnet build H.sln
+dotnet build Holos.sln
 
 # Run the GUI
 dotnet run --project H.GUI.Avalonia/H.Avalonia/H.Avalonia.csproj
@@ -196,7 +196,7 @@ the workspace will hit.
 
 ## Option 3: JetBrains Rider
 
-Rider works out of the box with `H.sln` — no special configuration. The bundled Avalonia
+Rider works out of the box with `Holos.sln` — no special configuration. The bundled Avalonia
 plugin gives previewer + completion equivalent to Visual Studio. Set `H.Avalonia` as the
 startup project (right-click → **Properties** → set the run configuration) and press the
 green play button.
