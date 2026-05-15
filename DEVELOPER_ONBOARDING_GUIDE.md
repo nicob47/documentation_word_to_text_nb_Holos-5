@@ -76,17 +76,138 @@ After Visual Studio installation, install these extensions:
 - **Avalonia for Visual Studio** - For XAML editing support
 - **NLog Language Service** - For NLog configuration support
 
-### 3. Alternative: Visual Studio Code Setup
+### 3. Install Visual Studio Code
 
-If you prefer VS Code:
+VS Code is fully supported for editing, building, running, and debugging Holos. Day-to-day
+development (C# editing, debugging, running the GUI, running tests, git workflows) all
+work well. The Avalonia previewer is more limited than in Visual Studio; for complex XAML
+layout work some contributors switch to VS for the design surface, but everything else
+runs equally well in either IDE.
 
-1. Install [Visual Studio Code](https://code.visualstudio.com/)
-2. Install these essential extensions:
-   - **C# Dev Kit**
-   - **.NET Install Tool**
-   - **Avalonia for Visual Studio Code**
-   - **NuGet Gallery**
-   - **GitLens**
+**Install VS Code:**
+
+1. Download from https://code.visualstudio.com/ and run the installer.
+2. Accept the defaults (the "Add to PATH" option matters for the dotnet CLI workflow below).
+
+**Install the required extensions** from the VS Code marketplace
+(`Ctrl+Shift+X` to open the Extensions panel):
+
+| Extension | Publisher | What it provides |
+|---|---|---|
+| **C# Dev Kit** | Microsoft | Solution Explorer, project/file scaffolding, integrated test runner, debugger. Pulls in the C# language extension automatically. |
+| **C#** | Microsoft | Roslyn-based language server — IntelliSense, refactoring, hover docs, code lenses. Installed automatically with C# Dev Kit. |
+| **.NET Install Tool** | Microsoft | Manages multiple .NET SDK versions side by side. |
+| **Avalonia for VSCode** | AvaloniaTeam | Syntax highlighting + completion for `.axaml`. Note: the live previewer is more limited than the Visual Studio version. |
+| **NuGet Gallery** (optional) | patcx | Convenient GUI for browsing / adding NuGet packages without dropping to the CLI. |
+| **GitLens** (optional) | GitKraken | Inline git blame, history, and branch tools. |
+
+**Open the solution:**
+
+1. **File → Open Folder** → select the cloned `Holos-5` repository root (not a sub-folder).
+2. C# Dev Kit will detect `Holos.sln` and prompt to load it. Accept.
+3. Wait for the Roslyn language server to finish indexing — the status bar at the bottom
+   shows progress. Indexing the full solution takes 30–90 seconds on first open.
+4. The **Solution Explorer** appears under the .NET icon in the Activity Bar on the left
+   edge. Use it the same way you would Visual Studio's Solution Explorer.
+
+**Build, run, and test from the integrated terminal** (`` Ctrl+` `` to open):
+
+```bash
+# Restore + build the whole solution
+dotnet build Holos.sln
+
+# Run the GUI
+dotnet run --project H.GUI.Avalonia/H.Avalonia/H.Avalonia.csproj
+
+# Run the CLI
+dotnet run --project H.CLI/H.CLI.csproj
+
+# Run all unit tests for a project
+dotnet test H.Core.Test/H.Core.Test.csproj
+dotnet test H.GUI.Avalonia/H.Avalonia.Test/H.Avalonia.Test.csproj
+
+# Run a single test class
+dotnet test H.Core.Test/H.Core.Test.csproj --filter "FullyQualifiedName~FarmAnalysisServiceTests"
+```
+
+The **Run and Debug** view (`Ctrl+Shift+D`) shows discovered tests once C# Dev Kit
+finishes indexing — click the gutter "play" icon next to any `[TestMethod]` to run it
+under the debugger.
+
+**Configure F5 debugging:**
+
+Create `.vscode/launch.json` at the repo root with the GUI + CLI run configurations:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch H.Avalonia (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-avalonia",
+      "program": "${workspaceFolder}/H.GUI.Avalonia/H.Avalonia/bin/Debug/net9.0/H.Avalonia.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/H.GUI.Avalonia/H.Avalonia",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch H.CLI (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-cli",
+      "program": "${workspaceFolder}/H.CLI/bin/Debug/net9.0/H.CLI.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/H.CLI",
+      "console": "integratedTerminal"
+    }
+  ]
+}
+```
+
+And `.vscode/tasks.json` to back the `preLaunchTask` references above:
+
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-avalonia",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/H.GUI.Avalonia/H.Avalonia/H.Avalonia.csproj"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-cli",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/H.CLI/H.CLI.csproj"],
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
+```
+
+Neither file is checked in (the `.vscode/` directory is developer-local). Once saved,
+**Run → Start Debugging** (`F5`) builds and launches the GUI under the debugger;
+breakpoints set in any C# file in the workspace will hit.
+
+**XAML caveat:** the VS Code Avalonia extension provides syntax highlighting and
+auto-complete inside `.axaml` files but does not ship a full live previewer comparable to
+Visual Studio. If you're doing heavy XAML layout work, open the affected `.axaml` in
+Visual Studio for the live designer, then switch back to VS Code for the C# / view-model
+edits. For day-to-day work (changing a binding, adjusting a margin, tweaking a converter)
+the VS Code experience is fine.
+
+**Logs:** Avalonia + NLog output appears in the **Debug Console** when launched via F5,
+or in the integrated terminal when launched via `dotnet run`. NLog also writes
+`logs/app-<YYYY-MM-DD>.log` in the run directory. Configuration lives in
+`H.GUI.Avalonia/H.Avalonia/NLog.config`.
 
 ### 4. Install Git
 
@@ -194,8 +315,8 @@ dotnet restore
 ### 3. Verify Project References
 
 Ensure all project references are properly loaded:
-- **H.Avalonia** references: H.Core, H.Infrastructure, H.Content, H.Avalonia.Core, H.Avalonia.Infrastructure
-- All test projects should reference their corresponding main projects
+- **H.Avalonia** references: H.Core, H.Infrastructure, H.Content, H.Localization
+- All test projects should reference their corresponding main projects.
 
 ---
 
@@ -214,7 +335,15 @@ Ensure all project references are properly loaded:
 - Build → Build Solution (Ctrl+Shift+B)
 - Or right-click solution → Build Solution
 
-**Command Line:**
+**Visual Studio Code:**
+- C# Dev Kit registers a default `build` task. Run it via **Terminal → Run Build Task...**
+  (`Ctrl+Shift+B`) and pick the .NET solution build entry.
+- Or trigger the build from the Solution Explorer (.NET icon in the Activity Bar) — right-click
+  the solution and choose **Build**.
+- The integrated terminal (`` Ctrl+` ``) also runs the same `dotnet build` commands listed
+  below — useful when you want to scope a build to a single project.
+
+**Command Line (works equally well from any IDE's integrated terminal):**
 ```bash
 # Build the entire solution
 dotnet build
@@ -240,16 +369,32 @@ A successful build should:
 ### 1. Set Startup Project
 
 **Visual Studio:**
-1. Right-click on **H.Avalonia** project in Solution Explorer
-2. Select "Set as StartUp Project"
+1. Right-click on **H.Avalonia** project in Solution Explorer.
+2. Select "Set as StartUp Project".
+
+**Visual Studio Code:**
+- VS Code doesn't use a sticky "startup project". Instead, the active run target is whichever
+  configuration is currently selected in the **Run and Debug** dropdown (`Ctrl+Shift+D`).
+  After you create `.vscode/launch.json` (template in the VS Code install section above),
+  select `Launch H.Avalonia (Debug)` from that dropdown.
 
 ### 2. Run the Application
 
 **Visual Studio:**
-- Press **F5** (Debug mode) or **Ctrl+F5** (Release mode)
-- Or click the "Start" button in the toolbar
+- Press **F5** (Debug mode) or **Ctrl+F5** (Release mode).
+- Or click the "Start" button in the toolbar.
 
-**Command Line:**
+**Visual Studio Code:**
+- Press **F5** with `Launch H.Avalonia (Debug)` selected in the Run and Debug view. VS Code
+  runs the `build-avalonia` pre-launch task from `tasks.json`, then attaches the debugger to
+  the freshly-built assembly. Output (Avalonia logs, NLog lines) lands in the Debug Console.
+- For a no-debug run, use **Ctrl+F5** in the Run and Debug view, or just use the command
+  line:
+  ```bash
+  dotnet run --project H.GUI.Avalonia/H.Avalonia/H.Avalonia.csproj
+  ```
+
+**Command Line (any IDE, or no IDE):**
 ```bash
 # Run from the main GUI project directory
 cd H.GUI.Avalonia/H.Avalonia
@@ -303,13 +448,24 @@ Follow the established conventions documented in `CODING_STYLE_GUIDE.md`:
 
 ### 3. Testing
 
-**Run Unit Tests:**
-```bash
-# Run all tests
-dotnet test
+**Visual Studio:**
+- **Test → Test Explorer** discovers both `H.Core.Test` and `H.Avalonia.Test` automatically.
+- Run a single test by right-clicking it; debug a single test by right-clicking → **Debug**.
 
-# Run tests for specific project
+**Visual Studio Code:**
+- The **Testing** view (flask icon in the Activity Bar) shows the discovered test tree once
+  C# Dev Kit finishes indexing.
+- Click the inline gutter "play" icon next to any `[TestMethod]` to run just that test.
+- Click the "play with bug" icon to run it under the debugger — breakpoints in test code or
+  in the code under test will hit.
+
+**Command Line (any IDE):**
+```bash
+# Run all tests in a project
 dotnet test H.Core.Test/H.Core.Test.csproj
+
+# Run a single test class
+dotnet test H.Core.Test/H.Core.Test.csproj --filter "FullyQualifiedName~FarmAnalysisServiceTests"
 
 # Run tests with coverage
 dotnet test --collect:"XPlat Code Coverage"
@@ -322,11 +478,25 @@ dotnet test --collect:"XPlat Code Coverage"
 
 ### 4. Debugging
 
-**Visual Studio Debugging:**
-1. Set breakpoints by clicking in the left margin
-2. Press F5 to start debugging
-3. Use F10 (Step Over) and F11 (Step Into) for stepping
-4. Use the Immediate Window for expression evaluation
+**Visual Studio:**
+1. Set breakpoints by clicking in the left margin.
+2. Press **F5** to start debugging.
+3. Use **F10** (Step Over) and **F11** (Step Into) for stepping.
+4. Use the **Immediate Window** for expression evaluation.
+5. NLog output appears in **Debug → Windows → Output**, "Debug" pane.
+
+**Visual Studio Code:**
+1. Set breakpoints by clicking in the gutter next to the line numbers.
+2. Open the **Run and Debug** view (`Ctrl+Shift+D`), pick `Launch H.Avalonia (Debug)` (or
+   `Launch H.CLI (Debug)`) from the dropdown, and press **F5**. The pre-launch task in
+   `tasks.json` rebuilds the project before attach.
+3. Stepping shortcuts mirror Visual Studio: **F10** (Step Over), **F11** (Step Into),
+   **Shift+F11** (Step Out).
+4. The **Debug Console** at the bottom shows NLog output + the live `dotnet` process
+   stderr/stdout. It also accepts C# expressions evaluated against the current stack frame —
+   the VS Code equivalent of Visual Studio's Immediate Window.
+5. Variable inspection and the call stack live in the Run and Debug sidebar on the left
+   while paused at a breakpoint.
 
 **Logging:**
 - Every class in the codebase logs through **NLog** with a single unified format:
@@ -362,8 +532,16 @@ dotnet test --collect:"XPlat Code Coverage"
    ```
 
 3. **Avalonia designer not working**
-   - Solution: Install "Avalonia for Visual Studio" extension
-   - Restart Visual Studio after installation
+   - In Visual Studio: install the "Avalonia for Visual Studio" extension and restart.
+   - In VS Code: the "Avalonia for VSCode" extension provides syntax highlighting + completion
+     but does not include a full live previewer. This is expected — open the affected
+     `.axaml` in Visual Studio if you need the live design surface.
+
+4. **VS Code Solution Explorer is empty / tests aren't discovered**
+   - Wait for the Roslyn / C# Dev Kit indexer to finish — first-open indexing on the full
+     solution takes 30–90 seconds. The status bar at the bottom shows progress.
+   - If indexing finishes and the Solution Explorer is still empty, run
+     `> .NET: Reload Projects` from the Command Palette (`Ctrl+Shift+P`).
 
 **Runtime Errors:**
 
