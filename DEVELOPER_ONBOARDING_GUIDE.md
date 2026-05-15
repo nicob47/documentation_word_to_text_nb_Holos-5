@@ -50,7 +50,13 @@ The Holos application targets .NET 9, so you'll need the latest .NET 9 SDK.
    ```
    You should see version 9.0.x or higher.
 
-### 2. Install Visual Studio 2022 (Recommended)
+### 2. Install Visual Studio 2022
+
+Any of three IDEs are sufficient for working on Holos — Visual Studio 2022, Visual Studio
+Code, or JetBrains Rider. Pick whichever matches your workflow. Visual Studio 2022 is
+covered here because it is the most common choice for new .NET contributors and provides
+the fullest Avalonia previewer experience; see `H.Content/Documentation/Developer Guide/Developer_Guide_EN.md`
+for VS Code and Rider setup steps.
 
 **Visual Studio 2022 Community/Professional/Enterprise:**
 
@@ -63,7 +69,7 @@ The Holos application targets .NET 9, so you'll need the latest .NET 9 SDK.
    - **.NET 9.0 Runtime (Long Term Support)**
    - **NuGet package manager**
    - **Git for Windows** (if not already installed)
-   - **GitHub Extension for Visual Studio** (optional but helpful)
+   - **GitHub Extension for Visual Studio** — optional; the built-in Git tooling in Visual Studio is sufficient on its own.
 
 **Required Extensions:**
 After Visual Studio installation, install these extensions:
@@ -403,15 +409,22 @@ dotnet test --collect:"XPlat Code Coverage"
 
 ## Additional Resources
 
-### Recommended Tools
+### Optional Tools
 
-**Development Productivity:**
-- **ReSharper** - Code analysis and refactoring
-- **Visual Studio IntelliCode** - AI-assisted coding
+The Holos project does not require or officially endorse any third-party productivity
+tools. The tools below are simply examples that some contributors have found useful — none
+of them are needed to build, run, or test the application, and using them is entirely a
+personal choice. The supported build path is `dotnet build` / `dotnet test` from any of
+the three IDEs covered above.
 
+**Examples some contributors use:**
+- **JetBrains ReSharper / Rider** — third-party code analysis and refactoring tooling.
+- **Visual Studio IntelliCode** — Microsoft's AI-assisted code completion.
+- **GitHub Desktop** — graphical Git interface; built-in Git in any of the three supported IDEs is also sufficient.
 
-**Version Control:**
-- **GitHub Desktop** - User-friendly Git interface
+If you choose to use any of these, treat their suggestions (renames, refactorings,
+formatting changes) as advisory only — the project's authoritative style is what's in
+[`CODING_STYLE_GUIDE.md`](CODING_STYLE_GUIDE.md).
 
 
 

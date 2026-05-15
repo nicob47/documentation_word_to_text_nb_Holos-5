@@ -33,11 +33,13 @@ When you add a new user-visible string:
 - **Windows 10/11 (x64)** for the supported GUI build. Linux + macOS builds work for the
   core libraries (Avalonia is cross-platform) but are not part of the official release matrix.
 
-Any one of three IDEs is sufficient — pick whichever matches your workflow.
+Any one of three IDEs is sufficient — pick whichever matches your workflow. The project
+does not officially endorse any particular IDE; all three are equally supported as long as
+they target .NET 9 SDK.
 
 ---
 
-## Option 1: Visual Studio 2022 (recommended for most contributors)
+## Option 1: Visual Studio 2022
 
 ### Installation
 

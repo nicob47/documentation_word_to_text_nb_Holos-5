@@ -44,9 +44,9 @@ The `App` class is the **entry point and orchestrator** of the entire applicatio
 - Sets up the application lifetime management
 
 #### **Dependency Registration**
-- Configures comprehensive logging with NLog
+- Configures unified logging through NLog. Every class in the codebase logs through the same pipeline — `ILogger` injected via DI for classes the container constructs, or a static `NLog.Logger` field via `LogManager.GetCurrentClassLogger()` for classes it doesn't (providers, helpers, partial classes). See `NLog.config` at `H.GUI.Avalonia/H.Avalonia/NLog.config`.
 - Registers hundreds of services, views, factories, and providers
-- Sets up AutoMapper configurations for data transfer objects
+- Wires up the project's custom `PropertyMapper` and the per-type `IModelMapper<,>` implementations under `H.Core/Mappers/`. The codebase deliberately does **not** use AutoMapper — the mapping layer is a small reflection-driven copy-by-name engine that produces compiled delegates for hot paths.
 - Configures caching and transfer services
 
 #### **Application Shell Creation**
@@ -101,14 +101,22 @@ This bootloader class is not just initialization code - it's the **architectural
 
 ---
 
-## Document Structure
+## Related Documentation
 
-This guide will be expanded with additional sections covering:
-- Detailed service architecture
-- MVVM implementation patterns
-- Data layer and storage systems
-- UI composition and navigation
-- Testing strategies
-- Performance considerations
+This guide focuses on the application bootstrap and the overall architectural shape. Deeper
+material lives in adjacent files:
 
-Each section builds upon the foundation established by understanding the application bootloader process.
+- **[`H.Content/Documentation/Developer Guide/Carbon_Model_Flow.md`](H.Content/Documentation/Developer%20Guide/Carbon_Model_Flow.md)** — end-to-end Mermaid diagram of the carbon analysis pipeline (View → Analysis → Results), with a class-by-class file index. Essential reading before touching the carbon or nitrogen calculators; the ordering invariants (carbon before nitrogen, animal results primed between stage-state build and final pass) are not obvious from the call sites alone.
+- **[`H.Content/Documentation/Developer Guide/Developer_Guide_EN.md`](H.Content/Documentation/Developer%20Guide/Developer_Guide_EN.md)** — IDE setup for Visual Studio / VS Code / Rider, dotnet CLI commands, solution layout, logging + localization workflow.
+- **[`CODING_STYLE_GUIDE.md`](CODING_STYLE_GUIDE.md)** — naming conventions, region organization, the Avalonia `StringFormat` pitfall, and the unified logging pattern.
+- **[`DEVELOPER_ONBOARDING_GUIDE.md`](DEVELOPER_ONBOARDING_GUIDE.md)** — full first-time setup including SDK install, repository clone, and the typical troubleshooting list.
+
+In-code documentation: the ~60 files most central to the carbon pipeline carry detailed
+class-level XML docstrings naming their role, collaborators, and ordering invariants. Pull
+up any of `FarmAnalysisService`, `FieldResultsService`, `ICBMSoilCarbonCalculator`,
+`IPCCTier2SoilCarbonCalculator`, `N2OEmissionFactorCalculator`, `AnimalResultsService`,
+`ManureService`, or the Table_* providers and the class header should orient you within a
+few seconds.
+
+Each layer builds upon the foundation established by understanding the application
+bootloader process documented above.
