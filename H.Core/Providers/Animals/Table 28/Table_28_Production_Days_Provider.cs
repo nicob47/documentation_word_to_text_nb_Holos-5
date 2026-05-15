@@ -4,11 +4,16 @@ using H.Core.Enumerations;
 using H.Core.Models;
 using H.Infrastructure;
 using CsvResourceNames = H.Content.CsvResourceNames;
+using NLog;
 
 namespace H.Core.Providers.Animals.Table_28
 {
     public class Table_28_Production_Days_Provider : ProviderBase, ITable_28_Production_Days_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly List<ProductionDaysData> _data;
@@ -70,7 +75,7 @@ namespace H.Core.Providers.Animals.Table_28
 
             if (result == null)
             {
-                Trace.TraceError($"{nameof(Table_28_Production_Days_Provider)}.{nameof(GetData)}:" + $" no data found for animal type: '{animalType}, production stage: {productionStage}, component type: {componentType}'");
+                _log.Error($"{nameof(Table_28_Production_Days_Provider)}.{nameof(GetData)}:" + $" no data found for animal type: '{animalType}, production stage: {productionStage}, component type: {componentType}'");
 
                 return new ProductionDaysData();
             }

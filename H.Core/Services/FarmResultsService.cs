@@ -20,11 +20,16 @@ using H.Core.Providers.Temperature;
 using H.Core.Services.Animals;
 using H.Core.Services.LandManagement;
 using Prism.Events;
+using NLog;
 
 namespace H.Core.Services
 {
     public class FarmResultsService : IFarmResultsService
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly  IInitializationService _initializationService;
@@ -126,11 +131,11 @@ namespace H.Core.Services
                 return farmResults;
             }
 
-            Trace.TraceInformation($"{nameof(FarmResultsService)}.{nameof(CalculateFarmEmissionResults)}: calculating results for farm: '{farm.Name}'");
+            _log.Info($"{nameof(FarmResultsService)}.{nameof(CalculateFarmEmissionResults)}: calculating results for farm: '{farm.Name}'");
 
             if (farm.Components.Any() == false)
             {
-                Trace.TraceInformation($"{nameof(FarmResultsService)}.{nameof(CalculateFarmEmissionResults)}: no components for farm: '{farm.Name}' found.");
+                _log.Info($"{nameof(FarmResultsService)}.{nameof(CalculateFarmEmissionResults)}: no components for farm: '{farm.Name}' found.");
             }
 
             _initializationService.CheckInitialization(farm);
@@ -156,7 +161,7 @@ namespace H.Core.Services
 
             _eventAggregator.GetEvent<FarmResultsCalculatedEvent>().Publish(new FarmResultsCalculatedEventArgs() { FarmEmissionResults = farmResults });
 
-            Trace.TraceInformation($"{nameof(FarmResultsService)}.{nameof(CalculateFarmEmissionResults)}: results for farm: '{farm.Name}' calculated. {farmResults.ToString()}");
+            _log.Info($"{nameof(FarmResultsService)}.{nameof(CalculateFarmEmissionResults)}: results for farm: '{farm.Name}' calculated. {farmResults.ToString()}");
 
             return farmResults;
         }

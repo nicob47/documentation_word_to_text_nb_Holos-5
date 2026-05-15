@@ -7,11 +7,16 @@ using H.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
+using NLog;
 
 namespace H.Core
 {
     public class Storage : BindableBase, IStorage
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private ApplicationData _applicationData = null!;
@@ -49,7 +54,7 @@ namespace H.Core
 
         public Storage()
         {
-            Trace.TraceInformation($"{nameof(Storage)}: Checking log files.");
+            _log.Info($"{nameof(Storage)}: Checking log files.");
         }
 
         #endregion
@@ -214,7 +219,7 @@ namespace H.Core
                     serializer.TypeNameHandling = TypeNameHandling.Auto;
 
                     serializer.Serialize(fileStream, this.ApplicationData, typeof(ApplicationData));
-                    Trace.TraceInformation($"{nameof(Storage)}.{nameof(SaveInternalAsync)}: data serialization completed.");
+                    _log.Info($"{nameof(Storage)}.{nameof(SaveInternalAsync)}: data serialization completed.");
                     HasSaveCompleted = true;
                 }
             });
@@ -271,12 +276,12 @@ namespace H.Core
                 this.ApplicationData = ReadDataFile(pathToStorageFile);
 
                 IsDataLoaded = true;
-                Trace.TraceInformation("Data loaded successfully.");
+                _log.Info("Data loaded successfully.");
                 BackupDataAfterSuccessfulLoad(pathToStorageFile);
             }
             catch (FileNotFoundException)
             {
-                Trace.TraceInformation("No storage file found. Building new storage object.");
+                _log.Info("No storage file found. Building new storage object.");
 
                 this.ApplicationData = new ApplicationData();
             }
@@ -299,18 +304,18 @@ namespace H.Core
         /// <param name="pathToStorageFile">The path where the backup file must be stored.</param>
         private void BackupDataAfterSuccessfulLoad(string pathToStorageFile)
         {
-            Trace.TraceInformation("Creating backup of currently loaded data.");
+            _log.Info("Creating backup of currently loaded data.");
             var backupFilePath = CreateFileLocationPath(_dataBackupFileName, isBackupPath: true);
             
             
             if (_backupFilesInDirectory.Length == MaxNumberOfBackups)
             {
-                Trace.TraceInformation($"Backup folder contains {_backupFilesInDirectory.Length} backups");
+                _log.Info($"Backup folder contains {_backupFilesInDirectory.Length} backups");
                 _backupFilesInDirectory.Last().Delete();
-                Trace.TraceInformation($"Deleted oldest backup file: {_backupFilesInDirectory.Last().Name}");
+                _log.Info($"Deleted oldest backup file: {_backupFilesInDirectory.Last().Name}");
             }
             File.Copy(pathToStorageFile, backupFilePath);
-            Trace.TraceInformation($"Backup created successfully.");
+            _log.Info($"Backup created successfully.");
         }
 
         /// <summary>
@@ -357,18 +362,18 @@ namespace H.Core
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    Trace.TraceInformation("No further backups available in the backup directory. Building new storage object.");
+                    _log.Info("No further backups available in the backup directory. Building new storage object.");
                     break;
                 }
                 catch (FileNotFoundException)
                 {
                     
-                    Trace.TraceInformation($"Could not find backup file. Path to the file is : {pathToBackupFile}.");
+                    _log.Info($"Could not find backup file. Path to the file is : {pathToBackupFile}.");
                 }
                 catch (Exception)
                 {
                     File.Delete(pathToStorageFile);
-                    Trace.TraceInformation($"Could not read current backup file located at : {pathToBackupFile}. Deleting copied json-data.json file and trying to read another backup.");
+                    _log.Info($"Could not read current backup file located at : {pathToBackupFile}. Deleting copied json-data.json file and trying to read another backup.");
                 }
 
                 backupNumber++;
@@ -492,10 +497,10 @@ namespace H.Core
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{e.Message}");
+                _log.Error($"{e.Message}");
                 if (e.InnerException != null)
                 {
-                    Trace.TraceError($"{e.InnerException.ToString()}");
+                    _log.Error($"{e.InnerException.ToString()}");
                 }
                 return Enumerable.Empty<Farm>();
             }
@@ -528,10 +533,10 @@ namespace H.Core
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{e.Message}");
+                _log.Error($"{e.Message}");
                 if (e.InnerException != null)
                 {
-                    Trace.TraceError($"{e.InnerException.ToString()}");
+                    _log.Error($"{e.InnerException.ToString()}");
                 }
                 return Enumerable.Empty<Farm>();
             }

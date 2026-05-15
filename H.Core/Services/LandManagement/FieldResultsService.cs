@@ -18,12 +18,16 @@ using H.Core.Providers.Nitrogen;
 using H.Core.Providers.Plants;
 using H.Core.Providers.Soil;
 using H.Core.Services.Animals;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Services.LandManagement
 {
     public partial class FieldResultsService : IFieldResultsService
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private const int DefaultNumberOfDecimalPlaces = 3;
@@ -128,9 +132,6 @@ namespace H.Core.Services.LandManagement
             {
                 throw new ArgumentNullException(nameof(n2OEmissionFactorCalculator));
             }
-
-            HTraceListener.AddTraceListener();
-
             _smallAreaYieldProvider.Initialize();
 
             this.AnimalResults = new List<AnimalComponentEmissionsResults>();
@@ -229,7 +230,7 @@ namespace H.Core.Services.LandManagement
             }
 
             totalSw.Stop();
-            System.Diagnostics.Trace.WriteLine(
+            _log.Info(
                 $"[GHGAnalysis.Field] total={totalSw.ElapsedMilliseconds}ms group={groupMs}ms combine={combineMs}ms " +
                 $"merge={mergeMs}ms fieldCalc={fieldCalcMs}ms avgSoc={avgSocMs}ms fields={fieldCount} rows={result.Count}");
 
@@ -321,7 +322,7 @@ namespace H.Core.Services.LandManagement
                 var totalPrecipitationList = _irrigationService.AddIrrigationToDailyPrecipitations(farm.ClimateData.PrecipitationData.GetAveragedYearlyValues(), farm, viewItem);
 
                 // Use SLC normals when there is no custom user climate data
-                Trace.TraceWarning($"{nameof(FieldResultsService)}: No custom daily climate data exists for this farm. Defaulting to SLC climate normals (and averaged daily values)");
+                _log.Warn($"{nameof(FieldResultsService)}: No custom daily climate data exists for this farm. Defaulting to SLC climate normals (and averaged daily values)");
 
                 var result = _climateParameterCalculator.CalculateClimateParameterForYear(
                     farm: farm,

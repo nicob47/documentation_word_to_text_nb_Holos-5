@@ -1,17 +1,20 @@
 ﻿using System.Diagnostics;
 using H.Content;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Shelterbelt
 {
     public static class ShelterbeltEcodistrictToClusterLookupProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Constructors
 
          static ShelterbeltEcodistrictToClusterLookupProvider()
         {
-            HTraceListener.AddTraceListener();
             var cultureInfo = InfrastructureConstants.EnglishCultureInfo;
             var filename = CsvResourceNames.LookupEcodistrictClusters;
             var fileLines = CsvResourceReader.GetFileLines(filename)!;
@@ -42,7 +45,7 @@ namespace H.Core.Providers.Shelterbelt
             if (clusterData == null)
             {
                 var defaultValue = new EcodistrictToClusterData();
-                Trace.TraceError($"{nameof(ShelterbeltEcodistrictToClusterLookupProvider)}.{nameof(GetClusterData)}" +
+                _log.Error($"{nameof(ShelterbeltEcodistrictToClusterLookupProvider)}.{nameof(GetClusterData)}" +
                     $" unable to get data for the ecodistrict id: {ecodistrictId}." +
                     $" Returning default value of {defaultValue}.");
                 return defaultValue;

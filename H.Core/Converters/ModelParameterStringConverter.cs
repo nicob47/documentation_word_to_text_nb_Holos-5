@@ -1,10 +1,15 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class ModelParameterStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public ModelParameters Convert(string input)
         {
             switch(this.GetLowerCase(input))
@@ -52,7 +57,7 @@ namespace H.Core.Converters
                     return ModelParameters.MaximumAvgTemperature;
     
                 default:
-                    Trace.TraceError($"{nameof(ModelParameterStringConverter)}.{nameof(ModelParameterStringConverter.Convert)}: unknown model parameter: {input}");
+                    _log.Error($"{nameof(ModelParameterStringConverter)}.{nameof(ModelParameterStringConverter.Convert)}: unknown model parameter: {input}");
                     return ModelParameters.TillageModifier;
             }
         }

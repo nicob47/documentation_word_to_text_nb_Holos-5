@@ -8,11 +8,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls.Notifications;
 using H.Avalonia.Services;
+using H.Core.Enumerations;
 using H.Core.Services.StorageService;
 using H.Infrastructure;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Regions;
+using NLog;
 
 namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
 {
@@ -22,6 +24,10 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
     /// </summary>
     public class FileImportFarmViewModel : ViewModelBase
     {
+        // NLog logger. Routes through the same NLog pipeline as ILogger so every
+        // log line in the app uses the unified format from NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         private bool _showGrid;
         private bool _isFarmImported;
@@ -132,7 +138,7 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             }
             catch (Exception ex)
             {
-                Trace.TraceError($"Error importing farms: {ex.Message}");
+                _log.Error($"Error importing farms: {ex.Message}");
                 NotificationManager?.ShowToast(H.Core.Properties.Resources.ErrorError, ex.Message, NotificationType.Error);
             }
         }
@@ -165,14 +171,29 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
                     };
                     return serializer.Deserialize<List<H.Core.Models.Farm>>(jsonReader);
                 });
-                return farms ?? Enumerable.Empty<H.Core.Models.Farm>();
+
+                // Guard B: when a v4 .json is imported into v5, the file may carry a
+                // non-Canadian province (e.g. one of the 26 Irish counties from v4's Ireland
+                // mode). Holos v5 only supports the 13 Canadian provinces/territories, so
+                // remap any non-Canadian Farm.Province (and the soil-polygon province) back
+                // to Province.SelectProvince. This forces the user to pick a Canadian
+                // province in the soil settings before they can run the analysis — better
+                // than silently producing a NaN-filled chart downstream. See
+                // CanadianProvinces.IsCanadian / FarmAnalysisService Guard A for the
+                // runtime check that catches anything we miss here.
+                var normalized = farms ?? Enumerable.Empty<H.Core.Models.Farm>();
+                foreach (var farm in normalized)
+                {
+                    NormalizeProvinceOnImport(farm, filePath);
+                }
+                return normalized;
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{e.Message}");
+                _log.Error($"{e.Message}");
                 if (e.InnerException != null)
                 {
-                    Trace.TraceError($"{e.InnerException.ToString()}");
+                    _log.Error($"{e.InnerException.ToString()}");
                 }
                 return Enumerable.Empty<H.Core.Models.Farm>();
             }
@@ -210,6 +231,41 @@ namespace H.Avalonia.ViewModels.OptionsViews.FileMenuViews
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Inspect <paramref name="farm"/> after deserialization and reset
+        /// <see cref="H.Core.Models.Farm.Province"/> (plus the soil polygon's province if
+        /// available) to <see cref="Province.SelectProvince"/> when the imported value
+        /// isn't one of the supported Canadian provinces or territories. The user is then
+        /// forced through the soil-data picker before the analysis pipeline will accept
+        /// the farm. Logs each remap so we can grep for affected imports.
+        /// </summary>
+        private static void NormalizeProvinceOnImport(H.Core.Models.Farm farm, string filePath)
+        {
+            if (farm is null)
+            {
+                return;
+            }
+
+            if (!CanadianProvinces.IsCanadian(farm.Province))
+            {
+                _log.Warn(
+                    $"{nameof(FileImportFarmViewModel)}.{nameof(NormalizeProvinceOnImport)} " +
+                    $"farm='{farm.Name}' file='{filePath}' had non-Canadian Farm.Province='{farm.Province}'; " +
+                    $"resetting to {nameof(Province.SelectProvince)}. User must re-select a Canadian province before analysis.");
+                farm.Province = Province.SelectProvince;
+            }
+
+            var defaultSoil = farm.GeographicData?.DefaultSoilData;
+            if (defaultSoil is not null && !CanadianProvinces.IsCanadian(defaultSoil.Province))
+            {
+                _log.Warn(
+                    $"{nameof(FileImportFarmViewModel)}.{nameof(NormalizeProvinceOnImport)} " +
+                    $"farm='{farm.Name}' file='{filePath}' had non-Canadian DefaultSoilData.Province='{defaultSoil.Province}'; " +
+                    $"resetting to {nameof(Province.SelectProvince)}.");
+                defaultSoil.Province = Province.SelectProvince;
+            }
         }
 
         #endregion

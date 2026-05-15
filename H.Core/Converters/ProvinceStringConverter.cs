@@ -1,11 +1,16 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class ProvinceStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public Province Convert(string input)
         {
             switch (this.GetLettersAsLowerCase(input))
@@ -85,7 +90,7 @@ namespace H.Core.Converters
                     return Province.Nunavut;
                 default:
                 {
-                    Trace.TraceError($"{nameof(ProvinceStringConverter)}.{nameof(ProvinceStringConverter.Convert)}: unknown input '{input}'. Returning default value of {Province.Alberta.GetDescription()}");
+                    _log.Error($"{nameof(ProvinceStringConverter)}.{nameof(ProvinceStringConverter.Convert)}: unknown input '{input}'. Returning default value of {Province.Alberta.GetDescription()}");
 
                     return Province.Alberta;
                 }                    

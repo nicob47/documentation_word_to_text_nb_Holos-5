@@ -1,10 +1,15 @@
 ﻿using H.Core.Enumerations;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Converters
 {
     class FarmResidueTypeStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public FarmResidueType Convert(string input)
         {
             switch (this.GetLettersAsLowerCase(input))
@@ -53,7 +58,7 @@ namespace H.Core.Converters
 
                 default:
                 {
-                        Trace.TraceError($"{nameof(FarmResidueTypeStringConverter)}.{nameof(FarmResidueTypeStringConverter.Convert)} unknown residue type {input}. Returning {FarmResidueType.BarleyStraw}");
+                        _log.Error($"{nameof(FarmResidueTypeStringConverter)}.{nameof(FarmResidueTypeStringConverter.Convert)} unknown residue type {input}. Returning {FarmResidueType.BarleyStraw}");
                         return FarmResidueType.BarleyStraw;
                 }
             }

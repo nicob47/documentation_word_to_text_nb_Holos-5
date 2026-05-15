@@ -1,6 +1,6 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -9,10 +9,13 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class DefaultManureStorageFractionProvider_Table_zz
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         private List<DefaultManureStorageFractionData> Data { get; set; } = new List<DefaultManureStorageFractionData>();
         public DefaultManureStorageFractionProvider_Table_zz()
         {
-            HTraceListener.AddTraceListener(); 
             #region Compost
             this.Data.Add(new DefaultManureStorageFractionData()
             {
@@ -42,7 +45,7 @@ namespace H.Core.Providers.Animals
             if (dataByManureStorageType == null)
             {
                 var defaultValue = new DefaultManureStorageFractionData();
-                Trace.TraceError($"{nameof(DefaultManureStorageFractionProvider_Table_zz)}.{nameof(DefaultManureStorageFractionProvider_Table_zz.GetDataByManureStorageType)}" +
+                _log.Error($"{nameof(DefaultManureStorageFractionProvider_Table_zz)}.{nameof(DefaultManureStorageFractionProvider_Table_zz.GetDataByManureStorageType)}" +
                     $" unable to get data for manure state type: {manureStateType}." +
                     $" Returning default value of {defaultValue}.");
                 return defaultValue;

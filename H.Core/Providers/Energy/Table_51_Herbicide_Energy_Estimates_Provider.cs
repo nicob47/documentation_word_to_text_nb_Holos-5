@@ -3,6 +3,7 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 namespace H.Core.Providers.Energy
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Energy
     /// </summary>
     public class Table_51_Herbicide_Energy_Estimates_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
 
         #region Fields
         private readonly ProvinceStringConverter _provinceStringConverter;
@@ -77,7 +82,7 @@ namespace H.Core.Providers.Energy
             // If we found an instance that contained our province, tillage and soil then the specified crop type was wrong
             if (data != null)
             {
-                Trace.TraceError($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(Table_51_Herbicide_Energy_Estimates_Provider.GetHerbicideEnergyDataInstance)}" +
+                _log.Error($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(Table_51_Herbicide_Energy_Estimates_Provider.GetHerbicideEnergyDataInstance)}" +
                                  $" unable to find Crop: {cropType} in the available crop type data. Returning empty instance of {nameof(Table_51_Herbicide_Energy_Estimates_Data)}");
                 return new Table_51_Herbicide_Energy_Estimates_Data();
             }
@@ -87,14 +92,14 @@ namespace H.Core.Providers.Energy
             // If we found an instance that contained the province, tillage and crop then the specified soil category was wrong
             if (data != null)
             {
-                Trace.TraceError($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(Table_51_Herbicide_Energy_Estimates_Provider.GetHerbicideEnergyDataInstance)}" +
+                _log.Error($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(Table_51_Herbicide_Energy_Estimates_Provider.GetHerbicideEnergyDataInstance)}" +
                                  $" unable to find Soil Category: {soilLookupType} in the available soil data. Returning {nameof(Table_51_Herbicide_Energy_Estimates_Data)}");
             }
 
             // The specified province type was wrong
             else
             {
-                Trace.TraceError($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(Table_51_Herbicide_Energy_Estimates_Provider.GetHerbicideEnergyDataInstance)}" +
+                _log.Error($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(Table_51_Herbicide_Energy_Estimates_Provider.GetHerbicideEnergyDataInstance)}" +
                                  $" unable to find Province: {provinceName} in the available province data. Returning {nameof(Table_51_Herbicide_Energy_Estimates_Data)}");
             }
 
@@ -126,7 +131,7 @@ namespace H.Core.Providers.Energy
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(ReadFile)}" +
+                    _log.Info($"{nameof(Table_51_Herbicide_Energy_Estimates_Provider)}.{nameof(ReadFile)}" +
                                 $" - File: {nameof(CsvResourceNames.HerbicideEnergyEstimates)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

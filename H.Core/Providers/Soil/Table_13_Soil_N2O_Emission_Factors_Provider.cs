@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Core.Models.LandManagement.Fields;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Providers.Soil
 {
@@ -11,6 +11,10 @@ namespace H.Core.Providers.Soil
     /// </summary>
     public class Table_13_Soil_N2O_Emission_Factors_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Inner Classes
 
         public enum NitrogenSourceTypes
@@ -30,7 +34,6 @@ namespace H.Core.Providers.Soil
 
         public Table_13_Soil_N2O_Emission_Factors_Provider()
         {
-            HTraceListener.AddTraceListener();
         }
 
         #endregion
@@ -63,7 +66,7 @@ namespace H.Core.Providers.Soil
                     {
                         const double defaultValue = 1;
 
-                        Trace.TraceError($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetFactorForSoilTexture)}: unknown value for {nameof(nitrogenSourceType)}: {nitrogenSourceType}. Returning {defaultValue}");
+                        _log.Error($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetFactorForSoilTexture)}: unknown value for {nameof(nitrogenSourceType)}: {nitrogenSourceType}. Returning {defaultValue}");
                         return 1;
                     }
             }
@@ -114,7 +117,7 @@ namespace H.Core.Providers.Soil
 
             const double defaultValue = 1;
 
-            Trace.TraceError($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetFactorForSoilTexture)}: unknown value for {nameof(soilTexture)}: {soilTexture}, and {nameof(region)}: {region}. Returning {defaultValue}");
+            _log.Error($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetFactorForSoilTexture)}: unknown value for {nameof(soilTexture)}: {soilTexture}, and {nameof(region)}: {region}. Returning {defaultValue}");
 
             return defaultValue;
         }
@@ -173,7 +176,7 @@ namespace H.Core.Providers.Soil
 
             const double defaultValue = 1;
 
-            Trace.TraceError($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetFactorForTillagePractice)}: unknown {nameof(region)}: {region}. Returning {defaultValue}");
+            _log.Error($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetFactorForTillagePractice)}: unknown {nameof(region)}: {region}. Returning {defaultValue}");
 
             return defaultValue;
         }
@@ -202,7 +205,7 @@ namespace H.Core.Providers.Soil
                     return defaultValue;
 
                 default:
-                    Trace.TraceError($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetReductionFactorBasedOnApplicationMethod)} " +
+                    _log.Error($"{nameof(Table_13_Soil_N2O_Emission_Factors_Provider)}.{nameof(GetReductionFactorBasedOnApplicationMethod)} " +
                                      $":unknown Soil Reduction Factor: {nameof(soilReductionFactors)}, returning {defaultValue}");
                     return defaultValue;
             }

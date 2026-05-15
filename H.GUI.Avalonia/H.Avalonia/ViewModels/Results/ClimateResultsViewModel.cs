@@ -15,6 +15,11 @@ using H.Avalonia.Services;
 using H.Core.Services.Climate;
 using H.Core.Services.StorageService;
 using Microsoft.Extensions.Logging;
+// NLog also defines an ILogger that collides with Microsoft.Extensions.Logging.ILogger
+// (the type this VM injects). Import only the concrete Logger class + LogManager we use
+// for the static _log field; ILogger refs in the file keep resolving to the M.E.L. one.
+using Logger = NLog.Logger;
+using LogManager = NLog.LogManager;
 
 namespace H.Avalonia.ViewModels.Results
 {
@@ -23,6 +28,10 @@ namespace H.Avalonia.ViewModels.Results
     /// </summary>
     public class ClimateResultsViewModel : ResultsViewModelBase
     {
+        // NLog logger. Routes through the same NLog pipeline as ILogger so every
+        // log line in the app uses the unified format from NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private IRegionNavigationJournal? _navigationJournal;
@@ -136,7 +145,7 @@ namespace H.Avalonia.ViewModels.Results
             }
             catch (TaskCanceledException e)
             {
-                Trace.TraceInformation($@"{e.Message} and TaskCanceledException thrown in method 
+                _log.Info($@"{e.Message} and TaskCanceledException thrown in method 
                                             {nameof(AddViewItemsAsync)} in class {nameof(ClimateResultsViewModel)}");
                 _cancellationTokenSource.Dispose();
             }

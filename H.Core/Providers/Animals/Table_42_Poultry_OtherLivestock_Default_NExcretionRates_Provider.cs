@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -8,6 +9,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_42_Poultry_OtherLivestock_Default_NExcretionRates_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Public Methods
         public double GetNitrogenExcretionRateValue(AnimalType animalType)
         {
@@ -149,7 +154,7 @@ namespace H.Core.Providers.Animals
                 };
             }
 
-            Trace.TraceError($"{nameof(Table_42_Poultry_OtherLivestock_Default_NExcretionRates_Provider)}.{nameof(this.GetNExcretionRateByAnimalType)}" +
+            _log.Error($"{nameof(Table_42_Poultry_OtherLivestock_Default_NExcretionRates_Provider)}.{nameof(this.GetNExcretionRateByAnimalType)}" +
                              $" unable to get data for animal type: {animalType}." +
                              $" Returning default value of 0.");
 

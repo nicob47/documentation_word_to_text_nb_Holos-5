@@ -3,6 +3,7 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 
 namespace H.Core.Providers.Soil
@@ -12,6 +13,10 @@ namespace H.Core.Providers.Soil
     /// </summary>
     public class Table_8_Globally_Calibrated_Model_Parameters_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         private readonly ModelParameterStringConverter _modelParameterStringConverter;
         private readonly TillageTypeStringConverter _tillageTypeStringConverter;
@@ -60,12 +65,12 @@ namespace H.Core.Providers.Soil
 
             if (data != null)
             {
-                Trace.TraceError($"{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider)}.{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider.GetGloballyCalibratedModelParametersInstance)}" +
+                _log.Error($"{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider)}.{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider.GetGloballyCalibratedModelParametersInstance)}" +
                     $"could not find Tillage Type: {tillageType} in the specified data. Returning null");
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider)}.{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider.GetGloballyCalibratedModelParametersInstance)}" +
+                _log.Error($"{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider)}.{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider.GetGloballyCalibratedModelParametersInstance)}" +
                     $" could not find Model Parameter: {parameter} in the specified data. Returning null");
             }
 
@@ -91,7 +96,7 @@ namespace H.Core.Providers.Soil
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider)}.{nameof(ReadFile)}" +
+                    _log.Info($"{nameof(Table_8_Globally_Calibrated_Model_Parameters_Provider)}.{nameof(ReadFile)}" +
                                      $" : {nameof(CsvResourceNames.CalibratedModelParameters)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

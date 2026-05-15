@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -9,6 +9,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class NitrogenConcentrationLiquidManureProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly List<NitrogenConcentrationOfLiquidManureTableData> _data;
@@ -19,8 +23,6 @@ namespace H.Core.Providers.Animals
 
         public NitrogenConcentrationLiquidManureProvider()
         {
-            HTraceListener.AddTraceListener();
-
             _data = new List<NitrogenConcentrationOfLiquidManureTableData>();
 
             _data.Add(new NitrogenConcentrationOfLiquidManureTableData()
@@ -63,7 +65,7 @@ namespace H.Core.Providers.Animals
 
             var defaultData = _data.First(data => data.AnimalType == AnimalType.Swine);
 
-            Trace.TraceError($"{nameof(NitrogenConcentrationLiquidManureProvider)}.{nameof(GetData)}: unknow animal type '{animalType}'. Returning default of {defaultData}");
+            _log.Error($"{nameof(NitrogenConcentrationLiquidManureProvider)}.{nameof(GetData)}: unknow animal type '{animalType}'. Returning default of {defaultData}");
 
             return defaultData;
         }

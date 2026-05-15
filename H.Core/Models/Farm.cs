@@ -8,7 +8,6 @@ using H.Core.Providers.Animals;
 using H.Core.Providers.Climate;
 using H.Core.Providers.Feed;
 using H.Core.Providers.Soil;
-using H.Core.Tools;
 using H.Core.Models.Infrastructure;
 using H.Infrastructure;
 using System.Collections.ObjectModel;
@@ -17,6 +16,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using H.Core.Models.Animals;
 using H.Core.Converters;
+using NLog;
 
 #endregion
 
@@ -24,6 +24,10 @@ namespace H.Core.Models
 {
     public partial class Farm : ModelBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         public enum ChosenClimateAcquisition
@@ -97,8 +101,6 @@ namespace H.Core.Models
 
         public Farm()
         {
-            HTraceListener.AddTraceListener();
-
             this.Defaults = new Defaults();
             this.Diets = new ObservableCollection<Diet>();
             this.DefaultManureCompositionData = new ObservableCollection<DefaultManureCompositionData>();
@@ -837,7 +839,7 @@ namespace H.Core.Models
             }
             else
             {
-                Trace.TraceError($"{nameof(Farm)}.{nameof(GetBeddingMaterialComposition)}: unable to return bedding material data for {animalType.GetDescription()}, and {beddingMaterialType.GetHashCode()}. Returning default value of 1.");
+                _log.Error($"{nameof(Farm)}.{nameof(GetBeddingMaterialComposition)}: unable to return bedding material data for {animalType.GetDescription()}, and {beddingMaterialType.GetHashCode()}. Returning default value of 1.");
 
                 return new Table_30_Default_Bedding_Material_Composition_Data();
             }

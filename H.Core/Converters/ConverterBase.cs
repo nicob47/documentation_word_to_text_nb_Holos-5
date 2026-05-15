@@ -1,12 +1,9 @@
-﻿using H.Core.Tools;
-
-namespace H.Core.Converters
+﻿namespace H.Core.Converters
 {
 	public abstract class ConverterBase
 	{
 		public ConverterBase()
 		{
-			HTraceListener.AddTraceListener();
 		}
 
 		// Does not deal with removing accents since we will be parsing from the english values of the csv

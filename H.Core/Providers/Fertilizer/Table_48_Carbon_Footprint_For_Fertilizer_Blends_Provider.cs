@@ -4,6 +4,7 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Core.Mappers;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Fertilizer
 {
@@ -12,6 +13,10 @@ namespace H.Core.Providers.Fertilizer
     /// </summary>
     public class Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider : ProviderBase, IProvider<Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data>
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly FertilizerBlendConverter _converter = new FertilizerBlendConverter();
@@ -54,7 +59,7 @@ namespace H.Core.Providers.Fertilizer
             }
             else
             {
-                Trace.Write($"{nameof(Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider)}.{nameof(GetData)}" +
+                _log.Info($"{nameof(Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider)}.{nameof(GetData)}" +
                             $" - Unknown fertilizer blend type: {blend}");
 
                 return new Table_48_Carbon_Footprint_For_Fertilizer_Blends_Data();
@@ -75,7 +80,7 @@ namespace H.Core.Providers.Fertilizer
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider)}.{nameof(BuildCache)}" +
+                    _log.Info($"{nameof(Table_48_Carbon_Footprint_For_Fertilizer_Blends_Provider)}.{nameof(BuildCache)}" +
                                 $" - File: {nameof(CsvResourceNames.FertilizerBlends)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

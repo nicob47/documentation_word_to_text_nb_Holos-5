@@ -2,11 +2,16 @@
 using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Economics
 {
     public class CropEconomicData : ModelBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private double _expectedMarketPrice;
@@ -362,7 +367,7 @@ namespace H.Core.Providers.Economics
                             break;
 
                         default:
-                            Trace.TraceError($"{nameof(CropEconomicData)}.{nameof(SetUserDefinedFixedCostPerUnit)}: '{this.SoilFunctionalCategory}' not handled for {this.Province}. Setting TotalFixed cost to 0.");
+                            _log.Error($"{nameof(CropEconomicData)}.{nameof(SetUserDefinedFixedCostPerUnit)}: '{this.SoilFunctionalCategory}' not handled for {this.Province}. Setting TotalFixed cost to 0.");
                             break;
                     }
 
@@ -386,7 +391,7 @@ namespace H.Core.Providers.Economics
                             break;
 
                         default:
-                            Trace.TraceError($"{nameof(CropEconomicData)}.{nameof(SetUserDefinedFixedCostPerUnit)}: '{this.SoilFunctionalCategory}' not handled for {this.Province}. Setting TotalFixed cost to 0.");
+                            _log.Error($"{nameof(CropEconomicData)}.{nameof(SetUserDefinedFixedCostPerUnit)}: '{this.SoilFunctionalCategory}' not handled for {this.Province}. Setting TotalFixed cost to 0.");
                             break;
                     }
 
@@ -394,7 +399,7 @@ namespace H.Core.Providers.Economics
 
                 //TODO: is there something else we can do to calculate FixedCosts for other provinces?
                 default:
-                    Trace.TraceError($"{nameof(CropEconomicData)}.{nameof(SetUserDefinedFixedCostPerUnit)}: cannot provide TotalFixedCostPerUnit for {this.Province}. Defaulting to 0");
+                    _log.Error($"{nameof(CropEconomicData)}.{nameof(SetUserDefinedFixedCostPerUnit)}: cannot provide TotalFixedCostPerUnit for {this.Province}. Defaulting to 0");
                     this.TotalFixedCostPerUnit = 0;
                     break;
             }

@@ -1,11 +1,16 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class FertilizerBlendConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public FertilizerBlends Convert(string input)
         {
             var cleaned = base.GetLettersAsLowerCase(input);
@@ -69,7 +74,7 @@ namespace H.Core.Converters
 
                 default:
                 {
-                    Trace.TraceError($"{nameof(FertilizerBlendConverter)}.{nameof(FertilizerBlendConverter.Convert)}: unknown input '{cleaned}'. Returning default value of {FertilizerBlends.Urea.GetDescription()}");
+                    _log.Error($"{nameof(FertilizerBlendConverter)}.{nameof(FertilizerBlendConverter.Convert)}: unknown input '{cleaned}'. Returning default value of {FertilizerBlends.Urea.GetDescription()}");
 
                     return FertilizerBlends.Urea;
                 }

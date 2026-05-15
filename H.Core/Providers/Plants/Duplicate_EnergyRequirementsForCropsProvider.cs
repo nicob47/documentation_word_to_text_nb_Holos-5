@@ -1,8 +1,9 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Plants
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Plants
     /// </summary>
     public class Duplicate_EnergyRequirementsForCropsProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         private List<Duplicate_EnergyRequirementsForCropsData> _data;
         private readonly CropTypeStringConverter _cropTypeStringConverter;
 
@@ -232,7 +237,7 @@ namespace H.Core.Providers.Plants
 
             if (result == null)
             {
-                Trace.TraceError($"Energy data not found for {province.GetDescription()}, {soilFunctionalCategory.GetDescription()}, {tillageType.GetDescription()}, {cropType.GetDescription()}");
+                _log.Error($"Energy data not found for {province.GetDescription()}, {soilFunctionalCategory.GetDescription()}, {tillageType.GetDescription()}, {cropType.GetDescription()}");
 
                 return new Duplicate_EnergyRequirementsForCropsData()
                 {

@@ -1,10 +1,15 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class AnimalTypeStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public AnimalType Convert(string input)
         {
             var cleanedInput = this.GetLettersAsLowerCase(input);
@@ -162,7 +167,7 @@ namespace H.Core.Converters
 
                 default:
                 {
-                    Trace.TraceError($"{nameof(AnimalTypeStringConverter)}.{nameof(AnimalTypeStringConverter.Convert)}: unknown animal type {input}. Returning {AnimalType.BeefBackgrounder}");
+                    _log.Error($"{nameof(AnimalTypeStringConverter)}.{nameof(AnimalTypeStringConverter.Convert)}: unknown animal type {input}. Returning {AnimalType.BeefBackgrounder}");
 
                     return AnimalType.BeefBackgrounder;
                 }                    

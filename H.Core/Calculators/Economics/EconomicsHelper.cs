@@ -3,11 +3,16 @@ using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.Enumerations;
 using H.Core.Models;
 using H.Core.Providers.Economics;
+using NLog;
 
 namespace H.Core.Calculators.Economics
 {
     public class EconomicsHelper : UnitsOfMeasurementCalculator
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         #endregion
@@ -228,7 +233,7 @@ namespace H.Core.Calculators.Economics
                     case CropType.WheatGan:
                         return pricePerBushel * WheatGanBushelPerTonne;
                     default:
-                        Trace.TraceInformation(
+                        _log.Info(
                             $"{nameof(EconomicsCalculator)}.{nameof(ConvertMarketPriceFromDollarsPerBushelToDollarsPerTonne)}: missing conversion data for '{cropType}. Returning 0;");
                         return 0;
                 }

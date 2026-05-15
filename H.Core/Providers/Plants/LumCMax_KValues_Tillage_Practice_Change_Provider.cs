@@ -3,7 +3,7 @@ using H.Core.Converters;
 using H.Infrastructure;
 using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Providers.Plants
 {
@@ -12,6 +12,10 @@ namespace H.Core.Providers.Plants
     /// </summary>
     public class LumCMax_KValues_Tillage_Practice_Change_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly EcozoneStringConverter _ecozoneStringConverter = new EcozoneStringConverter();
@@ -24,7 +28,6 @@ namespace H.Core.Providers.Plants
 
         public LumCMax_KValues_Tillage_Practice_Change_Provider()
         {
-            HTraceListener.AddTraceListener();
             this.Data = this.ReadData();
         }
 
@@ -48,7 +51,7 @@ namespace H.Core.Providers.Plants
             }
             else
             {
-                Trace.TraceError($"{nameof(LumCMax_KValues_Tillage_Practice_Change_Provider.GetLumCMax)} unable to get value for {ecozone.GetDescription()}, {soilTexture.GetDescription()}, and {tillagePracticeChangeType.GetDescription()}. Returning default value of {defaultValue}.");
+                _log.Error($"{nameof(LumCMax_KValues_Tillage_Practice_Change_Provider.GetLumCMax)} unable to get value for {ecozone.GetDescription()}, {soilTexture.GetDescription()}, and {tillagePracticeChangeType.GetDescription()}. Returning default value of {defaultValue}.");
 
                 return defaultValue;
             }
@@ -64,7 +67,7 @@ namespace H.Core.Providers.Plants
             }
             else
             {
-                Trace.TraceError($"{nameof(LumCMax_KValues_Tillage_Practice_Change_Provider.GetKValue)} unable to get value for {ecozone.GetDescription()}, {soilTexture.GetDescription()}, and {tillagePracticeChangeType.GetDescription()}. Returning default value of {defaultValue}.");
+                _log.Error($"{nameof(LumCMax_KValues_Tillage_Practice_Change_Provider.GetKValue)} unable to get value for {ecozone.GetDescription()}, {soilTexture.GetDescription()}, and {tillagePracticeChangeType.GetDescription()}. Returning default value of {defaultValue}.");
 
                 return defaultValue;
             }

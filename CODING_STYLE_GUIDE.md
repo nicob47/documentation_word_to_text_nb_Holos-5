@@ -447,12 +447,52 @@ public bool ValidatePercentage(string propertyName, double value)
 }
 ```
 
-### Debug Traces
+### Logging
+
+All logging goes through **NLog**. Two mechanisms, both configured by `H.GUI.Avalonia/H.Avalonia/NLog.config`:
+
+1. **`ILogger` (Microsoft.Extensions.Logging.Abstractions) via DI** — preferred when the class is constructed by the container and the ctor can accept an `ILogger`. The DI factory in `App.SetUpLogging` is NLog-backed, so the logger lands in the same pipeline.
+
+   ```csharp
+   public class FieldComponentService
+   {
+       private readonly ILogger _logger;
+       public FieldComponentService(ILogger logger) { _logger = logger; }
+
+       public void Save()
+       {
+           _logger.LogDebug("Saved UI state for field component {ComponentName}", componentName);
+       }
+   }
+   ```
+
+2. **Static `NLog.Logger` field** — for classes the container doesn't construct (data providers, helpers, partial classes), get a logger directly from `LogManager`. Same NLog pipeline, no DI required.
+
+   ```csharp
+   using NLog;
+
+   public class ShelterbeltAgTRatioProvider
+   {
+       private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
+       public double GetAboveGroundBiomassTotalTreeBiomassRatio(TreeSpecies treeSpecies, int age)
+       {
+           // ...
+           _log.Error($"{nameof(ShelterbeltAgTRatioProvider)}.{nameof(GetAboveGroundBiomassTotalTreeBiomassRatio)}" +
+               $" unable to get data for the tree species: {treeSpecies} and age: {age}." +
+               $" Returning default value of {defaultValue}.");
+       }
+   }
+   ```
+
+**Do not use `System.Diagnostics.Trace.*`** — those calls bypass the NLog config and produce a competing format in the Output window. The codebase used to bridge them via `HTraceListener`, but every callsite has been migrated to NLog directly.
+
+When NLog and `Microsoft.Extensions.Logging` are imported in the same file, `ILogger` becomes ambiguous (both namespaces define it). Alias the concrete NLog types instead of importing the namespace:
 
 ```csharp
-Trace.TraceError($"{nameof(ShelterbeltAgTRatioProvider)}.{nameof(GetAboveGroundBiomassTotalTreeBiomassRatio)}" +
-    $" unable to get data for the tree species: {treeSpecies} and age: {age}." +
-    $" Returning default value of {defaultValue}.");
+using Microsoft.Extensions.Logging;
+using Logger = NLog.Logger;
+using LogManager = NLog.LogManager;
 ```
 
 ---

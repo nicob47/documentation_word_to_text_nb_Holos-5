@@ -18,11 +18,16 @@ using System.Linq;
 using H.Avalonia.Services;
 using H.Avalonia.Views;
 using H.Core.Services.StorageService;
+using NLog;
 
 namespace H.Avalonia.ViewModels.Results
 {
     public class SoilResultsViewModel : ResultsViewModelBase
     {
+        // NLog logger. Routes through the same NLog pipeline as ILogger so every
+        // log line in the app uses the unified format from NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         
         private readonly IRegionManager? _regionManager;
@@ -186,7 +191,7 @@ namespace H.Avalonia.ViewModels.Results
             }
             catch (TaskCanceledException e)
             {
-                Trace.TraceInformation($@"{e.Message} and TaskCanceledException thrown in method 
+                _log.Info($@"{e.Message} and TaskCanceledException thrown in method 
                                             {nameof(AddViewItemsAsync)} in class {nameof(SoilResultsViewModel)}");
                 _cancellationTokenSource.Dispose();
             }

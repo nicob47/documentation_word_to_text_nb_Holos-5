@@ -1,10 +1,15 @@
 ﻿using H.Core.Enumerations;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class BeddingMaterialTypeStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public BeddingMaterialType Convert(string input)
         {
             switch(this.GetLettersAsLowerCase(input))
@@ -30,7 +35,7 @@ namespace H.Core.Converters
 
                 default:
                 {
-                    Trace.TraceError($"{nameof(BeddingMaterialTypeStringConverter)}.{nameof(BeddingMaterialTypeStringConverter.Convert)} cannot find the given bedding material {input}. Returning {BeddingMaterialType.None}");
+                    _log.Error($"{nameof(BeddingMaterialTypeStringConverter)}.{nameof(BeddingMaterialTypeStringConverter.Convert)} cannot find the given bedding material {input}. Returning {BeddingMaterialType.None}");
                     return BeddingMaterialType.None;
                  }
 

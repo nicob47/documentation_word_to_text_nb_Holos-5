@@ -3,6 +3,7 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_29_Default_Manure_Excreted_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Inner Classes
 
         public class Table_29_Default_Manure_Excreted_Provider_Data
@@ -133,7 +138,7 @@ namespace H.Core.Providers.Animals
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_29_Default_Manure_Excreted_Provider)}.{nameof(GetManureExcretionRate)}" +
+                _log.Error($"{nameof(Table_29_Default_Manure_Excreted_Provider)}.{nameof(GetManureExcretionRate)}" +
                                  $" unable to get data for manure excretion rate for animal type: {animalType}." +
                                  $" Returning default value of 0.");
 
@@ -187,7 +192,7 @@ namespace H.Core.Providers.Animals
                 }
             }
 
-            Trace.TraceError($"{nameof(Table_29_Default_Manure_Excreted_Provider)}.{nameof(GetPercentageOfManureProducedInSystem)}" +
+            _log.Error($"{nameof(Table_29_Default_Manure_Excreted_Provider)}.{nameof(GetPercentageOfManureProducedInSystem)}" +
                              $" unable to get data for animal type: {animalType} and manure type: {manureStateType}." +
                              $" Returning default value of 0.");
 

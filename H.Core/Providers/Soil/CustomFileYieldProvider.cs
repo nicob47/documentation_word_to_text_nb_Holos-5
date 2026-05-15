@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Soil
 {
@@ -8,6 +9,10 @@ namespace H.Core.Providers.Soil
     /// </summary>
     public class CustomFileYieldProvider : ICustomFileYieldProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly Dictionary<string, List<CustomUserYieldData>> _cache;
@@ -36,7 +41,7 @@ namespace H.Core.Providers.Soil
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{nameof(CustomFileYieldProvider)}.{nameof(CustomFileYieldProvider.HasExpectedInputFormat)}. Error reading input file: {e.ToString()}");
+                _log.Error($"{nameof(CustomFileYieldProvider)}.{nameof(CustomFileYieldProvider.HasExpectedInputFormat)}. Error reading input file: {e.ToString()}");
 
                 return false;
             }
@@ -122,7 +127,7 @@ namespace H.Core.Providers.Soil
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Trace.TraceError($"{nameof(CustomFileYieldProvider)}.{nameof(GetYieldData)}: file path cannot be empty.");
+                _log.Error($"{nameof(CustomFileYieldProvider)}.{nameof(GetYieldData)}: file path cannot be empty.");
 
                 return new List<CustomUserYieldData>();
             }
@@ -174,7 +179,7 @@ namespace H.Core.Providers.Soil
                 _cache.Add(filePath, customUserYieldDatas);
             }        
 
-            Trace.TraceInformation($"{nameof(CustomFileYieldProvider)}.{nameof(CacheData)}: yield data file was cached");
+            _log.Info($"{nameof(CustomFileYieldProvider)}.{nameof(CacheData)}: yield data file was cached");
         }
 
         #endregion

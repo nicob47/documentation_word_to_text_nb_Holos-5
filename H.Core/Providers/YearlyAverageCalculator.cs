@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 #endregion
 
@@ -12,15 +12,18 @@ namespace H.Core.Providers
     /// </summary>
     public static class YearlyAverageCalculator
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Public Methods
 
         public static List<double> GetAverages(this List<double> values)
         {
-            HTraceListener.AddTraceListener();
             if (values.Count != 12)
             {
                 var message = $"{nameof(YearlyAverageCalculator)}.{nameof(GetAverages)}: expected a list of 12 values but got {values.Count()} values instead.";
-                Trace.WriteLine(message);
+                _log.Info(message);
 
                 throw new InvalidOperationException();
             }

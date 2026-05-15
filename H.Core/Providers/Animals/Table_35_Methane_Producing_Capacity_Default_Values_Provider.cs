@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -10,6 +11,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_35_Methane_Producing_Capacity_Default_Values_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public double GetMethaneProducingCapacityOfManure(AnimalType animalType)
         {
             // Footnote 3 : For Methane producing capacity (B0) value reference.
@@ -74,7 +79,7 @@ namespace H.Core.Providers.Animals
                 return 0.10;
             }
 
-            Trace.TraceError($"{nameof(Table_35_Methane_Producing_Capacity_Default_Values_Provider)}.{nameof(GetMethaneProducingCapacityOfManure)}: no result found for '{animalType.GetDescription()}'");
+            _log.Error($"{nameof(Table_35_Methane_Producing_Capacity_Default_Values_Provider)}.{nameof(GetMethaneProducingCapacityOfManure)}: no result found for '{animalType.GetDescription()}'");
 
             return 0;
         }

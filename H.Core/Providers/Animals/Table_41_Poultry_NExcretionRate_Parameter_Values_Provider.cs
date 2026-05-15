@@ -3,6 +3,7 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_41_Poultry_NExcretionRate_Parameter_Values_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly AnimalTypeStringConverter _animalTypeStringConverter;
@@ -53,7 +58,7 @@ namespace H.Core.Providers.Animals
                 return data;
             }
 
-            Trace.TraceError($"{nameof(Table_41_Poultry_NExcretionRate_Parameter_Values_Provider)}.{nameof(GetParameterValues)}: No data for '{animalType.GetDescription()}'");
+            _log.Error($"{nameof(Table_41_Poultry_NExcretionRate_Parameter_Values_Provider)}.{nameof(GetParameterValues)}: No data for '{animalType.GetDescription()}'");
 
             return new Table_41_Poultry_NExcretionRate_Parameter_Values_Data();
         }
@@ -73,7 +78,7 @@ namespace H.Core.Providers.Animals
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_41_Poultry_NExcretionRate_Parameter_Values_Provider)}.{nameof(ReadFile)}" +
+                    _log.Info($"{nameof(Table_41_Poultry_NExcretionRate_Parameter_Values_Provider)}.{nameof(ReadFile)}" +
                                 $" - File: {nameof(CsvResourceNames.PoultryNExcretionParameterValues)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

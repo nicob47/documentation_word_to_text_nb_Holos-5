@@ -1,6 +1,6 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -10,6 +10,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_39_Crude_Protein_Content_Swine_Feed_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         #endregion
@@ -18,7 +22,6 @@ namespace H.Core.Providers.Animals
 
         public Table_39_Crude_Protein_Content_Swine_Feed_Provider()
         {
-            HTraceListener.AddTraceListener();
         }
 
         #endregion
@@ -54,7 +57,7 @@ namespace H.Core.Providers.Animals
             }
             else
             {
-                System.Diagnostics.Trace.TraceError($"{nameof(Table_39_Crude_Protein_Content_Swine_Feed_Provider)}.{nameof(GetCrudeProteinInFeedForSwineGroupByProvince)}" +
+                _log.Error($"{nameof(Table_39_Crude_Protein_Content_Swine_Feed_Provider)}.{nameof(GetCrudeProteinInFeedForSwineGroupByProvince)}" +
                                                     $" unable to get data for province: {province} and diet type: {dietType.GetDescription()}" +
                                                     $" Returning default value of 0.");
 

@@ -6,12 +6,16 @@ using H.Core.Models.Animals;
 using H.Core.Providers.Animals;
 using H.Core.Providers.Energy;
 using H.Core.Providers.Feed;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Services.Animals
 {
     public abstract partial class AnimalResultsServiceBase : IAnimalResultsService
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private static readonly DietProvider _dietProvider;
@@ -51,8 +55,6 @@ namespace H.Core.Services.Animals
 
         protected AnimalResultsServiceBase()
         {
-            HTraceListener.AddTraceListener();
-
         }
 
         #endregion
@@ -96,7 +98,7 @@ namespace H.Core.Services.Animals
                 month.AnimalGroup = animalGroup;
                 month.ManagementPeriod = managementPeriod;
 
-                Trace.TraceInformation($"{nameof(AnimalResultsServiceBase)} calculating emissions for {month}.");
+                _log.Info($"{nameof(AnimalResultsServiceBase)} calculating emissions for {month}.");
 
                 // Daily emissions for the current month only
                 var dailyEmissionsForMonth = new List<GroupEmissionsByDay>();
@@ -152,7 +154,7 @@ namespace H.Core.Services.Animals
                     month.AnimalGroup = animalGroup;
                     month.ManagementPeriod = managementPeriod;
 
-                    Trace.TraceInformation($"{nameof(AnimalResultsServiceBase)} calculating emissions for {month}.");
+                    _log.Info($"{nameof(AnimalResultsServiceBase)} calculating emissions for {month}.");
 
                     // Daily emissions for the current month only
                     var dailyEmissionsForMonth = new List<GroupEmissionsByDay>();
@@ -193,7 +195,7 @@ namespace H.Core.Services.Animals
             AnimalComponentBase animalComponent,
             Farm farm)
         {
-            Trace.TraceInformation($"{nameof(BeefCattleResultsService)}.{nameof(CalculateResultsForComponent)}: calculating emissions for {animalComponent.Name}.");
+            _log.Info($"{nameof(BeefCattleResultsService)}.{nameof(CalculateResultsForComponent)}: calculating emissions for {animalComponent.Name}.");
 
             var animalGroupEmissionResults = new List<AnimalGroupEmissionResults>();
 

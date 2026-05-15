@@ -3,7 +3,7 @@
 using System.Diagnostics;
 using H.Core.Providers.Polygon;
 using H.Core.Providers.Soil;
-using H.Core.Tools;
+using NLog;
 
 #endregion
 
@@ -14,6 +14,10 @@ namespace H.Core.Providers
     /// </summary>
     public class GeographicDataProvider : GeographicDataProviderBase, IGeographicDataProvider, IHolosMapPolygonIdListProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly ISoilDataProvider _soilDataProvider;
@@ -24,8 +28,6 @@ namespace H.Core.Providers
 
         public GeographicDataProvider()
         {
-            HTraceListener.AddTraceListener();            
-
             _soilDataProvider = new NationalSoilDataBaseProvider();
         }
 
@@ -44,7 +46,7 @@ namespace H.Core.Providers
 
             this.IsInitialized = true;
 
-            Trace.TraceInformation($"{nameof(GeographicDataProvider)} has been initialized.");
+            _log.Info($"{nameof(GeographicDataProvider)} has been initialized.");
         }
 
         public SoilData? GetPredominantSoilDataByPolygonId(int polygonId)

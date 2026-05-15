@@ -1,5 +1,6 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace H.Core.Migrations;
 
@@ -9,6 +10,10 @@ namespace H.Core.Migrations;
 /// </summary>
 public static class JsonMigrationPipeline
 {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
     /// <summary>
     /// The current schema version. All newly saved files will have this version.
     /// </summary>
@@ -40,7 +45,7 @@ public static class JsonMigrationPipeline
         {
             if (version >= migration.FromVersion && version < migration.ToVersion)
             {
-                Trace.TraceInformation($"Running migration {migration.GetType().Name} ({migration.FromVersion} → {migration.ToVersion})");
+                _log.Info($"Running migration {migration.GetType().Name} ({migration.FromVersion} â†’ {migration.ToVersion})");
                 migration.MigrateApplicationData(root);
                 version = migration.ToVersion;
             }
@@ -62,7 +67,7 @@ public static class JsonMigrationPipeline
         {
             if (version >= migration.FromVersion && version < migration.ToVersion)
             {
-                Trace.TraceInformation($"Running export migration {migration.GetType().Name} ({migration.FromVersion} → {migration.ToVersion})");
+                _log.Info($"Running export migration {migration.GetType().Name} ({migration.FromVersion} â†’ {migration.ToVersion})");
                 migration.MigrateFarmExport(farms);
                 version = migration.ToVersion;
             }

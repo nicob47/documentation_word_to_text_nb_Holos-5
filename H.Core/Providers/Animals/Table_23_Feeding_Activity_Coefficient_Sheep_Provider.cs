@@ -1,6 +1,6 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -9,9 +9,12 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_23_Feeding_Activity_Coefficient_Sheep_Provider : IFeedingActivityCoefficientProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public Table_23_Feeding_Activity_Coefficient_Sheep_Provider()
         {
-            HTraceListener.AddTraceListener(); 
         }
         public IFeedingActivityCoeffientData GetByHousing(HousingType housingType)
         {
@@ -58,7 +61,7 @@ namespace H.Core.Providers.Animals
                         FeedingActivityCoefficient = 0
                     };
 
-                    Trace.TraceError($"{nameof(Table_23_Feeding_Activity_Coefficient_Sheep_Provider.GetByHousing)}" +
+                    _log.Error($"{nameof(Table_23_Feeding_Activity_Coefficient_Sheep_Provider.GetByHousing)}" +
                     $" unable to get data for housing type: {housingType}." +
                     $" Returning default value of {defaultValue}.");
                     return defaultValue;

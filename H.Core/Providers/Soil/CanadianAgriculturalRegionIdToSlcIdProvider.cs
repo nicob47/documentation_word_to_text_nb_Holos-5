@@ -1,13 +1,17 @@
 ﻿using System.Diagnostics;
 using H.Content;
 using H.Core.Converters;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Soil
 {
     public class CanadianAgriculturalRegionIdToSlcIdProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public const int DefaultValueForBadPolygonInput = 0;
 
         private static readonly ProvinceStringConverter _provinceConverter = new ProvinceStringConverter();
@@ -15,7 +19,6 @@ namespace H.Core.Providers.Soil
 
         public CanadianAgriculturalRegionIdToSlcIdProvider()
         {
-            HTraceListener.AddTraceListener();
             this._cachedData = this.GetData();
         }
 
@@ -60,7 +63,7 @@ namespace H.Core.Providers.Soil
                 return result.CarId;
             }            
 
-            Trace.TraceError($"{nameof(CanadianAgriculturalRegionIdToSlcIdProvider)}.{nameof(CanadianAgriculturalRegionIdToSlcIdProvider.GetCarId)} unable to get car id for {polyId}. Returning default value of {DefaultValueForBadPolygonInput}.");
+            _log.Error($"{nameof(CanadianAgriculturalRegionIdToSlcIdProvider)}.{nameof(CanadianAgriculturalRegionIdToSlcIdProvider.GetCarId)} unable to get car id for {polyId}. Returning default value of {DefaultValueForBadPolygonInput}.");
 
             return DefaultValueForBadPolygonInput;
         }
@@ -73,7 +76,7 @@ namespace H.Core.Providers.Soil
                 return result.CarId;
             }
 
-            Trace.TraceError($"{nameof(CanadianAgriculturalRegionIdToSlcIdProvider)}{nameof(CanadianAgriculturalRegionIdToSlcIdProvider.GetCarId)} unable to get car id for {polyId} and {SplitPolys} Returning default value of {DefaultValueForBadPolygonInput}.");
+            _log.Error($"{nameof(CanadianAgriculturalRegionIdToSlcIdProvider)}{nameof(CanadianAgriculturalRegionIdToSlcIdProvider.GetCarId)} unable to get car id for {polyId} and {SplitPolys} Returning default value of {DefaultValueForBadPolygonInput}.");
 
             return DefaultValueForBadPolygonInput;
         }

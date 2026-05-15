@@ -5,11 +5,16 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Core.Mappers;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Economics
 {
     public class CropEconomicsProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly CropTypeStringConverter _cropTypeStringConverter = new CropTypeStringConverter();
@@ -103,7 +108,7 @@ namespace H.Core.Providers.Economics
                 return result;
             }
 
-            Trace.TraceError($"{nameof(CropEconomicsProvider)}.{nameof(Get)}: no economic data found for '{cropType.GetDescription()}','{soilFunctionalCategory.GetDescription()}, and '{province.GetDescription()}''. Returning default value");
+            _log.Error($"{nameof(CropEconomicsProvider)}.{nameof(Get)}: no economic data found for '{cropType.GetDescription()}','{soilFunctionalCategory.GetDescription()}, and '{province.GetDescription()}''. Returning default value");
 
             return new CropEconomicData() { Province = province };
         }
@@ -137,7 +142,7 @@ namespace H.Core.Providers.Economics
                 case Province.Ontario:
                     return this.MapOntarioFarmCropToEconomicCropType(cropType);
                 default:
-                    Trace.TraceError($"{nameof(CropEconomicsProvider)}.{nameof(this.FarmCropTypeToEconCropType)}: {province} is invalid and something wasn't handled correctly");
+                    _log.Error($"{nameof(CropEconomicsProvider)}.{nameof(this.FarmCropTypeToEconCropType)}: {province} is invalid and something wasn't handled correctly");
                     return CropType.NotSelected;
             }
         }

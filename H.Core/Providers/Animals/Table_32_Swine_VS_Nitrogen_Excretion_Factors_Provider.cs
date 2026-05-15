@@ -1,7 +1,7 @@
 ﻿using H.Core.Enumerations;
 using System.Diagnostics;
 using H.Infrastructure;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -11,12 +11,14 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_32_Swine_VS_Nitrogen_Excretion_Factors_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         private readonly Dictionary<string, DefaultVSAndNitrogenExcretionAdjustmentFactorsForDietsData> _cache = new Dictionary<string, DefaultVSAndNitrogenExcretionAdjustmentFactorsForDietsData>();
 
         public Table_32_Swine_VS_Nitrogen_Excretion_Factors_Provider()
         {
-            HTraceListener.AddTraceListener();
-
             _cache.Add(DietType.Standard.GetDescription().ToUpperInvariant(), new DefaultVSAndNitrogenExcretionAdjustmentFactorsForDietsData()
             {
                 Name = DietType.Standard.GetDescription(),
@@ -50,7 +52,7 @@ namespace H.Core.Providers.Animals
             {
                 var defaultValue = _cache.First().Value;
 
-                Trace.TraceError($"{nameof(Table_32_Swine_VS_Nitrogen_Excretion_Factors_Provider)}.{nameof(GetByDietType)}: unknown diet type, returning default value {defaultValue}");
+                _log.Error($"{nameof(Table_32_Swine_VS_Nitrogen_Excretion_Factors_Provider)}.{nameof(GetByDietType)}: unknown diet type, returning default value {defaultValue}");
 
                 return defaultValue;
             }

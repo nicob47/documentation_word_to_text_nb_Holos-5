@@ -2,7 +2,6 @@
 using H.Core.Calculators.Climate;
 using H.Core.Enumerations;
 using H.Core.Models;
-using H.Core.Tools;
 using H.Infrastructure;
 
 namespace H.Core.Providers.Climate
@@ -24,8 +23,6 @@ namespace H.Core.Providers.Climate
 
         public ClimateProvider(ISlcClimateProvider slcClimateDataProvider)
         {
-            HTraceListener.AddTraceListener();
-
             if (slcClimateDataProvider != null)
             {
                 _slcClimateDataProvider = slcClimateDataProvider;

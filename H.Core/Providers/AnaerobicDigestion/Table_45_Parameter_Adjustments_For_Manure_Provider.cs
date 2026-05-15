@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.AnaerobicDigestion
     /// </summary>
     public class Table_45_Parameter_Adjustments_For_Manure_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         #endregion
 
@@ -53,7 +58,7 @@ namespace H.Core.Providers.AnaerobicDigestion
 
             else
             {
-                Trace.TraceError($"{nameof(Table_45_Parameter_Adjustments_For_Manure_Provider)}.{nameof(Table_45_Parameter_Adjustments_For_Manure_Provider.GetParametersAdjustmentInstance)}" +
+                _log.Error($"{nameof(Table_45_Parameter_Adjustments_For_Manure_Provider)}.{nameof(Table_45_Parameter_Adjustments_For_Manure_Provider.GetParametersAdjustmentInstance)}" +
                     $" does not contain ManureStateType: {manureStateType}. Please specify either {nameof(ManureStateType.DeepBedding)} or {nameof(ManureStateType.SolidStorage)}" +
                     $" returning empty object instance.");
                 return new Table_45_Parameter_Adjustments_For_Manure_Data();

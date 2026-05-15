@@ -2,6 +2,7 @@
 using H.Content;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Shelterbelt
 {
@@ -10,6 +11,10 @@ namespace H.Core.Providers.Shelterbelt
     /// </summary>
     public static class ShelterbeltCarbonDataProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         /// <summary>
@@ -193,7 +198,7 @@ namespace H.Core.Providers.Shelterbelt
             }
             else
             {
-                Trace.TraceError((nameof(ShelterbeltCarbonDataProvider) + " cannot find value in lookup table."));
+                _log.Error((nameof(ShelterbeltCarbonDataProvider) + " cannot find value in lookup table."));
 
                 return 0;
             }

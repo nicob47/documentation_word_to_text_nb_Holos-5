@@ -17,6 +17,7 @@ using H.Core.Providers.Soil;
 using H.Core.Calculators.Carbon;
 using H.Core.Calculators.Nitrogen;
 using H.Core.Test;
+using NLog;
 
 #nullable disable
 
@@ -26,6 +27,8 @@ namespace H.Integration.Hay_LCI
     [Ignore]
     public class HayLCIIntegrationTest : UnitTestBase
     {
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Internal Classes
 
         class Table1Item
@@ -470,7 +473,7 @@ namespace H.Integration.Hay_LCI
 
                 currentCount++;
 
-                Trace.TraceInformation($"Assigned default data for farm #{farm.Name}, {farmCount - currentCount} remaining.");
+                _log.Info($"Assigned default data for farm #{farm.Name}, {farmCount - currentCount} remaining.");
             }
         }
 
@@ -616,7 +619,7 @@ namespace H.Integration.Hay_LCI
 
                 currentCount++;
 
-                Trace.TraceInformation($"Downloaded climate data for farm #{currentCount}, {farmCount - currentCount} remaining.");
+                _log.Info($"Downloaded climate data for farm #{currentCount}, {farmCount - currentCount} remaining.");
             }
         }
 
@@ -638,7 +641,7 @@ namespace H.Integration.Hay_LCI
 
                 currentCount++;
 
-                Trace.TraceInformation($"Assigned soil data for farm #{currentCount}, {farmCount - currentCount} remaining.");
+                _log.Info($"Assigned soil data for farm #{currentCount}, {farmCount - currentCount} remaining.");
             }
         }
 

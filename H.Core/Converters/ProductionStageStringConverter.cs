@@ -1,11 +1,16 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class ProductionStageStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public ProductionStages Convert(string input)
         {
             var cleanedInput = base.GetLettersAsLowerCase(input);
@@ -36,7 +41,7 @@ namespace H.Core.Converters
                 {
                         ProductionStages notFound = ProductionStages.Gestating;
 
-                    Trace.TraceError($"{nameof(ProductionStageStringConverter)}.{nameof(ProductionStageStringConverter.Convert)}: unknown production stage '{input}'. Returning {notFound.GetDescription()}");
+                    _log.Error($"{nameof(ProductionStageStringConverter)}.{nameof(ProductionStageStringConverter.Convert)}: unknown production stage '{input}'. Returning {notFound.GetDescription()}");
 
                     return notFound;
                 }

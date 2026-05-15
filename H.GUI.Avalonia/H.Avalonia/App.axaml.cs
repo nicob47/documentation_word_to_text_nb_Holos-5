@@ -1,4 +1,4 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -153,7 +153,7 @@ namespace H.Avalonia
         ///     <c>LanguageManager.SetLanguage</c> sets thread cultures and
         ///     <see cref="LocalizationService.Instance.CurrentCulture"/>, triggering a
         ///     <see cref="LocalizationService.Refresh"/> that propagates to every
-        ///     <see cref="LocalizedString"/> → the UI starts in French.
+        ///     <see cref="LocalizedString"/> â†’ the UI starts in French.
         ///   </item>
         /// </list>
         ///
@@ -198,7 +198,6 @@ namespace H.Avalonia
 
             // Register the ILogger instance as a singleton in the Prism container
             containerRegistry.RegisterInstance(typeof(ILogger), logger);
-            
             // Configure DryIoc logging for resolution errors
             ConfigureDryIocLogging(containerRegistry, logger);
         }

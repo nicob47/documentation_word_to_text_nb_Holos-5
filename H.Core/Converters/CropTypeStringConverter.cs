@@ -1,10 +1,15 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class CropTypeStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public CropType Convert(string input)
         {
             switch (this.GetLettersAsLowerCase(input))
@@ -430,7 +435,7 @@ namespace H.Core.Converters
 
                 default:
                     {
-                        Trace.TraceError($"{nameof(CropTypeStringConverter)}: Crop type '{input}' not mapped, returning default value.");
+                        _log.Error($"{nameof(CropTypeStringConverter)}: Crop type '{input}' not mapped, returning default value.");
 
                         return CropType.NotSelected;
                     }

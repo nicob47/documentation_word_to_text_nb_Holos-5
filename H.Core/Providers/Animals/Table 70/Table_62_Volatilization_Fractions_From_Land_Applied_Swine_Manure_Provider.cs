@@ -3,11 +3,16 @@ using H.Core.Enumerations;
 using H.Core.Providers.Animals.Table_69;
 using H.Infrastructure;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.Animals.Table_70
 {
     public class Table_62_Volatilization_Fractions_From_Land_Applied_Swine_Manure_Provider : Table_61_Volatilization_Fractions_From_Land_Applied_Dairy_Manure_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Constructors
 
         public Table_62_Volatilization_Fractions_From_Land_Applied_Swine_Manure_Provider() : base()
@@ -25,7 +30,7 @@ namespace H.Core.Providers.Animals.Table_70
 
             if (animalType.IsSwineType() == false)
             {
-                Trace.TraceError($"{nameof(Table_62_Volatilization_Fractions_From_Land_Applied_Swine_Manure_Provider)}.{nameof(GetData)}" +
+                _log.Error($"{nameof(Table_62_Volatilization_Fractions_From_Land_Applied_Swine_Manure_Provider)}.{nameof(GetData)}" +
                                  $" can only provide data for {AnimalType.Dairy.GetDescription()} animals.");
 
                 return notFound;
@@ -33,7 +38,7 @@ namespace H.Core.Providers.Animals.Table_70
 
             if (_validProvinces.Contains(province) == false)
             {
-                Trace.TraceError($"{nameof(Table_62_Volatilization_Fractions_From_Land_Applied_Swine_Manure_Provider)}.{nameof(GetData)}" +
+                _log.Error($"{nameof(Table_62_Volatilization_Fractions_From_Land_Applied_Swine_Manure_Provider)}.{nameof(GetData)}" +
                                  $" unable to find province {province} in the available data.");
 
                 return notFound;

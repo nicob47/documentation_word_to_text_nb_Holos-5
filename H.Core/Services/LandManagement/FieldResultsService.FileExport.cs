@@ -4,6 +4,7 @@ using H.Core.Models.LandManagement.Fields;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using NLog;
 
 namespace H.Core.Services.LandManagement
 {
@@ -31,12 +32,12 @@ namespace H.Core.Services.LandManagement
             }
             catch (Exception exception)
             {
-                Trace.TraceInformation($"{nameof(FieldResultsService)}.{nameof(this.ExportAllResultsToFile)}: error writing data to csv file: '{exception.Message}'.");
+                _log.Info($"{nameof(FieldResultsService)}.{nameof(this.ExportAllResultsToFile)}: error writing data to csv file: '{exception.Message}'.");
 
                 return;
             }
 
-            Trace.TraceInformation($"{nameof(FieldResultsService)}.{nameof(this.ExportAllResultsToFile)}: successfully exported data to csv file: '{path}'.");
+            _log.Info($"{nameof(FieldResultsService)}.{nameof(this.ExportAllResultsToFile)}: successfully exported data to csv file: '{path}'.");
         }
 
         public bool ExportResultsToFile(
@@ -80,12 +81,12 @@ namespace H.Core.Services.LandManagement
             }
             catch (IOException exception)
             {
-                Trace.TraceInformation($"{nameof(FieldResultsService)}.{nameof(this.ExportResultsToFile)}: error writing data to csv file: '{exception.Message}'.");
+                _log.Info($"{nameof(FieldResultsService)}.{nameof(this.ExportResultsToFile)}: error writing data to csv file: '{exception.Message}'.");
 
                 return false;
             }
 
-            Trace.TraceInformation($"{nameof(FieldResultsService)}.{nameof(this.ExportResultsToFile)}: successfully exported data to csv file: '{filePath}'.");
+            _log.Info($"{nameof(FieldResultsService)}.{nameof(this.ExportResultsToFile)}: successfully exported data to csv file: '{filePath}'.");
             return true;
         }
 

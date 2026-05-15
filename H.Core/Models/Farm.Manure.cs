@@ -3,6 +3,7 @@ using H.Core.Enumerations;
 using System.Diagnostics;
 using H.Core.Models.LandManagement.Fields;
 using H.Core.Providers.Animals;
+using NLog;
 
 namespace H.Core.Models
 {
@@ -69,7 +70,7 @@ namespace H.Core.Models
 
             if (manureCompositionData == null)
             {
-                Trace.TraceError($"{nameof(Farm)}.{nameof(GetManureCompositionData)}" +
+                _log.Error($"{nameof(Farm)}.{nameof(GetManureCompositionData)}" +
                                  $" unable to get data for manure animal source type: {animalType}, and manure state type: {manureStateType}." +
                                  $" Returning default value of {defaultValue}.");
 

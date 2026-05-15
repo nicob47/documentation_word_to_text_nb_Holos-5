@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Globalization;
 using H.Content;
 using H.Core.Converters;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -15,6 +15,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_6_Manure_Types_Default_Composition_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly AnimalTypeStringConverter _animalTypeStringConverter;
@@ -26,8 +30,6 @@ namespace H.Core.Providers.Animals
 
         public Table_6_Manure_Types_Default_Composition_Provider()
         {
-            HTraceListener.AddTraceListener();
-
             _animalTypeStringConverter = new AnimalTypeStringConverter();
             _manureStateTypeStringConverter = new ManureStateTypeStringConverter();
 
@@ -580,12 +582,12 @@ namespace H.Core.Providers.Animals
 
             if (data is not null)
             {
-                Trace.TraceError($"{nameof(Table_6_Manure_Types_Default_Composition_Provider)}.{nameof(GetManureCompositionDataByType)} " +
+                _log.Error($"{nameof(Table_6_Manure_Types_Default_Composition_Provider)}.{nameof(GetManureCompositionDataByType)} " +
                                  $"could not find ManureStateType: {manureStateType} for AnimalType: {animalType} in the csv file. Returning 0 for all values.");
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_6_Manure_Types_Default_Composition_Provider)}.{nameof(GetManureCompositionDataByType)} " +
+                _log.Error($"{nameof(Table_6_Manure_Types_Default_Composition_Provider)}.{nameof(GetManureCompositionDataByType)} " +
                                  $"could not find AnimalType: {animalType} in the csv file. Returning 0 for all values.");
             }
 

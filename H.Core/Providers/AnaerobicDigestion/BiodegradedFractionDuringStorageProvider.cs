@@ -1,11 +1,16 @@
 ﻿using H.Core.Enumerations;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
     // Provider that calculates the Biodegraded fraction during storage.
     public class BiodegradedFractionDuringStorageProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         #endregion
 
@@ -165,7 +170,7 @@ namespace H.Core.Providers.AnaerobicDigestion
             }
             else
             {
-                Trace.TraceError($"{nameof(BiodegradedFractionDuringStorageProvider)}.{nameof(BiodegradedFractionDuringStorageProvider.GetBiodegradedFractionData)} " +
+                _log.Error($"{nameof(BiodegradedFractionDuringStorageProvider)}.{nameof(BiodegradedFractionDuringStorageProvider.GetBiodegradedFractionData)} " +
                     $"could not find DigestateParameters: {parameter}. Returning an empty instance of BiodegradedFractionDuringStorageData");
                 return new BiodegradedFractionDuringStorageData();
             }

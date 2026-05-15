@@ -6,6 +6,7 @@ using H.Core.Models;
 using H.Core.Models.Infrastructure;
 using H.Core.Models.LandManagement.Fields;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Services.LandManagement
 {
@@ -127,7 +128,7 @@ namespace H.Core.Services.LandManagement
 
             stageState.IsInitialized = true;
 
-            System.Diagnostics.Trace.WriteLine(
+            _log.Info(
                 $"[GHGAnalysis.Init] clear={clearMs}ms createDetailViewItems={createMs}ms " +
                 $"items={stageState.DetailsScreenViewCropViewItems.Count}");
         }
@@ -339,7 +340,7 @@ namespace H.Core.Services.LandManagement
             FieldSystemComponent fieldSystemComponent, 
             Farm farm)
         {
-            Trace.TraceInformation($"{nameof(FieldResultsService)}.{nameof(CreateItems)}: creating details view items for field: '{fieldSystemComponent.Name}' and farm: '{farm.Name}'");
+            _log.Info($"{nameof(FieldResultsService)}.{nameof(CreateItems)}: creating details view items for field: '{fieldSystemComponent.Name}' and farm: '{farm.Name}'");
             var compSw = System.Diagnostics.Stopwatch.StartNew();
             long digMs, hayMs, createItemsMs, initPropsMs, perennialsMs, coverMs, undersownMs, grazingMs, addRangeMs, manureMs, assignCarbonMs;
 
@@ -352,7 +353,7 @@ namespace H.Core.Services.LandManagement
                 }
                 else
                 {
-                    Trace.TraceError($"{nameof(FieldResultsService)}.{nameof(CreateItems)}: yield input file was not in the expected format. Using default yield assignment method instead");
+                    _log.Error($"{nameof(FieldResultsService)}.{nameof(CreateItems)}: yield input file was not in the expected format. Using default yield assignment method instead");
 
                     // Fall back to custom since we don't want to overwrite users entered yields (custom enum will skip assignment of yields)
                     farm.YieldAssignmentMethod = YieldAssignmentMethod.Custom;
@@ -413,7 +414,7 @@ namespace H.Core.Services.LandManagement
             assignCarbonMs = sw.ElapsedMilliseconds;
 
             compSw.Stop();
-            System.Diagnostics.Trace.WriteLine(
+            _log.Info(
                 $"[GHGAnalysis.Comp] field='{fieldSystemComponent.Name}' total={compSw.ElapsedMilliseconds}ms " +
                 $"dig={digMs}ms hay={hayMs}ms createItems={createItemsMs}ms initProps={initPropsMs}ms " +
                 $"perennials={perennialsMs}ms cover={coverMs}ms undersown={undersownMs}ms grazing={grazingMs}ms " +

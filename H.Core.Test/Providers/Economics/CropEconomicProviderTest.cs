@@ -1,12 +1,15 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
 using H.Core.Providers.Economics;
+using NLog;
 
 namespace H.Core.Test.Providers.Economics
 {
     [TestClass]
     public class CropEconomicProviderTest
     {
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private CropEconomicsProvider _provider = null!;
@@ -289,9 +292,9 @@ namespace H.Core.Test.Providers.Economics
             var darkBrownAverage = darkBrown.Average(x => x.TotalFixedCostPerUnit);
             var blackAverage = black.Average(x => x.TotalFixedCostPerUnit);
 
-            Trace.TraceInformation($"{nameof(brownAverage)}: {brownAverage}");
-            Trace.TraceInformation($"{nameof(darkBrownAverage)}: {darkBrownAverage}");
-            Trace.TraceInformation($"{nameof(blackAverage)}: {blackAverage}");
+            _log.Info($"{nameof(brownAverage)}: {brownAverage}");
+            _log.Info($"{nameof(darkBrownAverage)}: {darkBrownAverage}");
+            _log.Info($"{nameof(blackAverage)}: {blackAverage}");
         }
         #endregion
     }

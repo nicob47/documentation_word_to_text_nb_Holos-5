@@ -3,6 +3,7 @@ using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Core.Converters;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.Irrigation
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Irrigation
     /// </summary>
     public class Table_4_Monthly_Irrigation_Water_Application_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         private readonly ProvinceStringConverter _provinceStringConverter;
 
@@ -83,7 +88,7 @@ namespace H.Core.Providers.Irrigation
 
                 if (shouldWarn)
                 {
-                    Trace.TraceError($"{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider)}.{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider.GetMonthlyAverageIrrigationDataInstance)}" +
+                    _log.Error($"{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider)}.{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider.GetMonthlyAverageIrrigationDataInstance)}" +
                                      $" unable to find Province: {province} in the available province data." +
                                      $" Returning null. (Subsequent occurrences of this province will be suppressed.)");
                 }
@@ -93,7 +98,7 @@ namespace H.Core.Providers.Irrigation
             
             else
             {
-                //Trace.TraceError($"{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider)}.{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider.GetMonthlyAverageIrrigationDataInstance)}" +
+                //_log.Error($"{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider)}.{nameof(Table_4_Monthly_Irrigation_Water_Application_Provider.GetMonthlyAverageIrrigationDataInstance)}" +
                 //                 $" unable to find Month: {month} in the available month data." +
                 //                 $" Returning null.");
                 return null;

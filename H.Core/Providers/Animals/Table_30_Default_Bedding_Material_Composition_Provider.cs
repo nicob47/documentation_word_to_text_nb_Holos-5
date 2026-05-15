@@ -1,7 +1,7 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
 using System.Diagnostics;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -10,12 +10,14 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_30_Default_Bedding_Material_Composition_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public List<Table_30_Default_Bedding_Material_Composition_Data> Data { get; } = new List<Table_30_Default_Bedding_Material_Composition_Data>();
         
         public Table_30_Default_Bedding_Material_Composition_Provider()
         {
-            HTraceListener.AddTraceListener();
-
             /*
              * Beef
              */
@@ -445,7 +447,7 @@ namespace H.Core.Providers.Animals
                 }
             }
 
-            Trace.TraceError($"Unknown default bedding rate for {animalType.GetDescription()}, {housingType.GetDescription()}, and {beddingMaterialType.GetHashCode()}. Returning default value of 1.");
+            _log.Error($"Unknown default bedding rate for {animalType.GetDescription()}, {housingType.GetDescription()}, and {beddingMaterialType.GetHashCode()}. Returning default value of 1.");
 
             return 1;
         }

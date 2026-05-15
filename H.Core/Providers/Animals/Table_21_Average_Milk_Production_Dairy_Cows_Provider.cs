@@ -4,6 +4,7 @@ using H.Core.Enumerations;
 using H.Core.Converters;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 
 namespace H.Core.Providers.Animals
@@ -13,6 +14,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_21_Average_Milk_Production_Dairy_Cows_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly ProvinceStringConverter _provinceStringConverter;
@@ -72,14 +77,14 @@ namespace H.Core.Providers.Animals
             data = this.AvgMilkProductionData.Find(x => (x.Year == year));
             if (data != null)
             {
-                Trace.TraceError($"{ nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider)}.{nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider.GetAverageMilkProductionForDairyCowsValue)}" +
+                _log.Error($"{ nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider)}.{nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider.GetAverageMilkProductionForDairyCowsValue)}" +
                                  $" unable to find province: {province} in the available province data." +
                                  $" Returning 0.");
                 return 0;
             }
             else
             {
-                Trace.TraceError($"{ nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider)}.{nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider.GetAverageMilkProductionForDairyCowsValue)}" +
+                _log.Error($"{ nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider)}.{nameof(Table_21_Average_Milk_Production_Dairy_Cows_Provider.GetAverageMilkProductionForDairyCowsValue)}" +
                                  $" unable to find Year: {year} in the available year data." +
                                  $" Returning 0.");
                 return 0;

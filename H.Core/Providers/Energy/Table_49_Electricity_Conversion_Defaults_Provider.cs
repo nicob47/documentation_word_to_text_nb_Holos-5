@@ -3,6 +3,7 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Energy
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Energy
     /// </summary>
     public class Table_49_Electricity_Conversion_Defaults_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
 
         #region Fields
 
@@ -63,14 +68,14 @@ namespace H.Core.Providers.Energy
             data = this.Data.Find(x => (x.Year == year));
             if (data != null)
             {
-                Trace.TraceError($"{ nameof(Table_49_Electricity_Conversion_Defaults_Provider)}.{nameof(Table_49_Electricity_Conversion_Defaults_Provider.GetElectricityConversionData)}" +
+                _log.Error($"{ nameof(Table_49_Electricity_Conversion_Defaults_Provider)}.{nameof(Table_49_Electricity_Conversion_Defaults_Provider.GetElectricityConversionData)}" +
                                  $" unable to find province: {province} in the available province data." +
                                  $" Returning empty instance of {nameof(Table_49_Electricity_Conversion_Defaults_Data)}.");
                 return new Table_49_Electricity_Conversion_Defaults_Data();
             }
             else
             {
-                Trace.TraceError($"{ nameof(Table_49_Electricity_Conversion_Defaults_Provider)}.{nameof(Table_49_Electricity_Conversion_Defaults_Provider.GetElectricityConversionData)}" +
+                _log.Error($"{ nameof(Table_49_Electricity_Conversion_Defaults_Provider)}.{nameof(Table_49_Electricity_Conversion_Defaults_Provider.GetElectricityConversionData)}" +
                                  $" unable to find Year: {year} in the available year data." +
                                  $" Returning empty instance of {nameof(Table_49_Electricity_Conversion_Defaults_Data)}.");
                 return new Table_49_Electricity_Conversion_Defaults_Data();
@@ -139,7 +144,7 @@ namespace H.Core.Providers.Energy
 
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    //Trace.Write($"{nameof(Table_49_Electricity_Conversion_Defaults_Provider)}.{nameof(ReadFile)}" +
+                    //_log.Info($"{nameof(Table_49_Electricity_Conversion_Defaults_Provider)}.{nameof(ReadFile)}" +
                                 //$" - File: {nameof(CsvResourceNames.ElectricityConversionValues)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

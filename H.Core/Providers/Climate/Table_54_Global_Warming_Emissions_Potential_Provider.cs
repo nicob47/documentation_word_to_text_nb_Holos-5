@@ -3,6 +3,7 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 namespace H.Core.Providers.Climate
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Climate
     /// </summary>
     public class Table_54_Global_Warming_Emissions_Potential_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly EmissionTypeStringConverter _emissionTypeStringConverter;
@@ -61,12 +66,12 @@ namespace H.Core.Providers.Climate
 
             if (data != null)
             {
-                Trace.TraceError($"{nameof(Table_54_Global_Warming_Emissions_Potential_Provider)}.{nameof(Table_54_Global_Warming_Emissions_Potential_Provider.GetGlobalWarmingEmissionsInstance)}" +
+                _log.Error($"{nameof(Table_54_Global_Warming_Emissions_Potential_Provider)}.{nameof(Table_54_Global_Warming_Emissions_Potential_Provider.GetGlobalWarmingEmissionsInstance)}" +
                                  $" the EmissionType: {emissionType} was not found in the available data. Returning null");
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_54_Global_Warming_Emissions_Potential_Provider)}.{nameof(Table_54_Global_Warming_Emissions_Potential_Provider.GetGlobalWarmingEmissionsInstance)} " +
+                _log.Error($"{nameof(Table_54_Global_Warming_Emissions_Potential_Provider)}.{nameof(Table_54_Global_Warming_Emissions_Potential_Provider.GetGlobalWarmingEmissionsInstance)} " +
                                  $"the Year: {year} was not found in the available data. Returning null");
             }
 
@@ -98,7 +103,7 @@ namespace H.Core.Providers.Climate
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_54_Global_Warming_Emissions_Potential_Provider)}.{nameof(ReadFile)}" +
+                    _log.Info($"{nameof(Table_54_Global_Warming_Emissions_Potential_Provider)}.{nameof(ReadFile)}" +
                                 $" - File: {nameof(CsvResourceNames.GlobalWarmingPotential)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

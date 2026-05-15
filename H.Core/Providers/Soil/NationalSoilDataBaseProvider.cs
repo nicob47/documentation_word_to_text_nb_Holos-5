@@ -4,8 +4,8 @@ using System.Diagnostics;
 using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 #endregion
 
@@ -16,6 +16,10 @@ namespace H.Core.Providers.Soil
     /// </summary>
     public class NationalSoilDataBaseProvider : GeographicDataProviderBase, ISoilDataProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields       
 
         private const string AgriculturalTypeSoilProfile = "A";
@@ -39,7 +43,6 @@ namespace H.Core.Providers.Soil
 
         public NationalSoilDataBaseProvider()
         {
-            HTraceListener.AddTraceListener();
             _provinceStringConverter = new ProvinceStringConverter();
             _firstNonLitterLayerCache = new Dictionary<string, SoilLayerTableData>();
             _soilLayerTableBySoilIdentifierDictionary = new Dictionary<string, List<SoilLayerTableData>>();
@@ -75,7 +78,7 @@ namespace H.Core.Providers.Soil
 
             this.IsInitialized = true;
 
-            Trace.TraceInformation($"{nameof(NationalSoilDataBaseProvider)} has been initialized.");
+            _log.Info($"{nameof(NationalSoilDataBaseProvider)} has been initialized.");
         }
 
 
@@ -84,7 +87,7 @@ namespace H.Core.Providers.Soil
             // Check if polygon exists.
             if (this.GetPolygonIdList().Contains(polygonId) == false)
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(DataExistsForPolygon)} polygon '{polygonId}' not found in polygon attribute table.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(DataExistsForPolygon)} polygon '{polygonId}' not found in polygon attribute table.");
 
                 return false;
             }
@@ -93,7 +96,7 @@ namespace H.Core.Providers.Soil
             var componentExists = _componentTableDataList.Any(x => x.PolygonId == polygonId);
             if (componentExists == false)
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(DataExistsForPolygon)} no soil component entry found for polygon '{polygonId}'.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(DataExistsForPolygon)} no soil component entry found for polygon '{polygonId}'.");
 
                 return false;
             }
@@ -172,7 +175,7 @@ namespace H.Core.Providers.Soil
         {
             var componentsWithinPolygon = _componentTableDataList.Where(x => x.PolygonId == polygonId).ToList();
 
-            Trace.TraceInformation($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetAllSoilDataForAllComponentsWithinPolygon)} found {componentsWithinPolygon.Count} total components in polygon '{polygonId}. Getting first non-litter layers for these components.");
+            _log.Info($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetAllSoilDataForAllComponentsWithinPolygon)} found {componentsWithinPolygon.Count} total components in polygon '{polygonId}. Getting first non-litter layers for these components.");
 
             var result = new List<SoilData>();
 
@@ -181,7 +184,7 @@ namespace H.Core.Providers.Soil
             {
                 var componentTableData = componentsWithinPolygon[index];
 
-                Trace.TraceInformation($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetAllSoilDataForAllComponentsWithinPolygon)} getting soil data for component #{index + 1}.");
+                _log.Info($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetAllSoilDataForAllComponentsWithinPolygon)} getting soil data for component #{index + 1}.");
 
                 // If there is no soil dat for this component, move on to next.
                 if (this.GetFirstNonLitterLayer(componentTableData) == null)
@@ -224,7 +227,7 @@ namespace H.Core.Providers.Soil
 
                 result.Add(soilData);
 
-                Trace.TraceInformation($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetAllSoilDataForAllComponentsWithinPolygon)} found soil data for component #{index + 1}.");
+                _log.Info($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetAllSoilDataForAllComponentsWithinPolygon)} found soil data for component #{index + 1}.");
             }
 
             return result;
@@ -238,7 +241,7 @@ namespace H.Core.Providers.Soil
         {
             if (!_polygonAttributeTableDataList.ContainsKey(polygonId))
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(NationalSoilDataBaseProvider.GetEcodistrictName)}: unable to find ecodistrict name for polygon id of {polygonId}. Returning empty string.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(NationalSoilDataBaseProvider.GetEcodistrictName)}: unable to find ecodistrict name for polygon id of {polygonId}. Returning empty string.");
 
                 return string.Empty;
             }
@@ -246,7 +249,7 @@ namespace H.Core.Providers.Soil
             var polygonAttributeTableData = _polygonAttributeTableDataList[polygonId];
             if (_ecodistrictNamesTableDataList.ContainsKey(polygonAttributeTableData.EcodistrictId) == false)
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(NationalSoilDataBaseProvider.GetEcodistrictName)}: unable to find ecodistrict name for polygon id of {polygonId}. Returning empty string.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(NationalSoilDataBaseProvider.GetEcodistrictName)}: unable to find ecodistrict name for polygon id of {polygonId}. Returning empty string.");
 
                 return string.Empty;
             }
@@ -260,7 +263,7 @@ namespace H.Core.Providers.Soil
         {
             if (!_polygonAttributeTableDataList.ContainsKey(polygonId))
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(NationalSoilDataBaseProvider.GetEcodistrictId)}: unable to find ecodistrict id for polygon id of {polygonId}. Returning default value of 0.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(NationalSoilDataBaseProvider.GetEcodistrictId)}: unable to find ecodistrict id for polygon id of {polygonId}. Returning default value of 0.");
 
                 return 0;
             }
@@ -1359,7 +1362,7 @@ namespace H.Core.Providers.Soil
                 return firstNonLitterLayer;
             }
 
-            Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} first non-litter layer not found component id '{componentTableData.PolygonComponentId}'. Returning null.");
+            _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} first non-litter layer not found component id '{componentTableData.PolygonComponentId}'. Returning null.");
 
             return null;
         }
@@ -1381,7 +1384,7 @@ namespace H.Core.Providers.Soil
                 }
             }
 
-            Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} first non-litter layer not found for polygon '{polygonId}'. Returning null.");
+            _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} first non-litter layer not found for polygon '{polygonId}'. Returning null.");
 
             return null;
         }
@@ -1403,7 +1406,7 @@ namespace H.Core.Providers.Soil
             }
             else
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(this.GetAppropriateLayer)} no layers found with layer numbers equal to 1 or 2.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(this.GetAppropriateLayer)} no layers found with layer numbers equal to 1 or 2.");
 
                 return null;
             }
@@ -1436,7 +1439,7 @@ namespace H.Core.Providers.Soil
                 }
                 else
                 {
-                    Trace.TraceWarning($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} no soil layer table entries found for soil name id '{soilNameIdentifier}' with agricultural soil profile. Searching for native soil profiles.");
+                    _log.Warn($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} no soil layer table entries found for soil name id '{soilNameIdentifier}' with agricultural soil profile. Searching for native soil profiles.");
                 }
 
                 var nativeProfileEntries = entriesBySoilNameIdentifier.Where(x => x.TypeOfSoilProfile.Equals(NativeTypeSoilProfile));
@@ -1444,7 +1447,7 @@ namespace H.Core.Providers.Soil
                 if (nativeProfileEntries.Any())
                 {
                     var layer = this.GetAppropriateLayer(nativeProfileEntries);
-                    Trace.TraceWarning($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} native soil profile was found.");
+                    _log.Warn($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} native soil profile was found.");
 
                     if (_firstNonLitterLayerCache.ContainsKey(soilNameIdentifier) == false)
                     {
@@ -1455,11 +1458,11 @@ namespace H.Core.Providers.Soil
                 }
                 else
                 {
-                    Trace.TraceWarning($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} no soil layer table entries found for soil name id '{soilNameIdentifier}' with native soil profile.");
+                    _log.Warn($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} no soil layer table entries found for soil name id '{soilNameIdentifier}' with native soil profile.");
                 }
             }
 
-            Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} no soil layer table entry found for soil name id '{soilNameIdentifier}'. Returning null.");
+            _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetFirstNonLitterLayer)} no soil layer table entry found for soil name id '{soilNameIdentifier}'. Returning null.");
 
             return null;
         }
@@ -1508,7 +1511,7 @@ namespace H.Core.Providers.Soil
             }
             else
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(this.GetLargestComponentWithinPolygon)} value not found for polygon '{polygonId}'. Returning null.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(this.GetLargestComponentWithinPolygon)} value not found for polygon '{polygonId}'. Returning null.");
 
                 return null;
             }
@@ -1579,7 +1582,7 @@ namespace H.Core.Providers.Soil
                     return nativeProfile;
                 }
 
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetSoilNameTableData)} value not found for soil name identifier '{soilNameIdentifier}'. Returning null.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetSoilNameTableData)} value not found for soil name identifier '{soilNameIdentifier}'. Returning null.");
 
                 return null;
             }
@@ -1598,7 +1601,7 @@ namespace H.Core.Providers.Soil
             }
             else
             {
-                Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetSoilNameTableData)} value not found for soil name identifier '{soilNameIdentifier}'. Returning null.");
+                _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(GetSoilNameTableData)} value not found for soil name identifier '{soilNameIdentifier}'. Returning null.");
 
                 return null;
             }
@@ -1711,7 +1714,7 @@ namespace H.Core.Providers.Soil
 
                 default:
                     {
-                        Trace.TraceError($"{nameof(NationalSoilDataBaseProvider)}.{nameof(this.ConvertSoilGreatGroupCode)} value not found for soil great group code '{soilGreatGroup.ToLowerInvariant()}'.");
+                        _log.Error($"{nameof(NationalSoilDataBaseProvider)}.{nameof(this.ConvertSoilGreatGroupCode)} value not found for soil great group code '{soilGreatGroup.ToLowerInvariant()}'.");
 
                         return SoilGreatGroupType.Unknown;
                     }

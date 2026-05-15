@@ -1,5 +1,6 @@
 ﻿using H.Core.Enumerations;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.AnaerobicDigestion
     /// </summary>
     public class Table_47_Solid_Liquid_Separation_Coefficients_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         #endregion
 
@@ -86,7 +91,7 @@ namespace H.Core.Providers.AnaerobicDigestion
 
                 default:
                     {
-                        Trace.TraceError($"{nameof(Table_47_Solid_Liquid_Separation_Coefficients_Provider)}.{nameof(Table_47_Solid_Liquid_Separation_Coefficients_Provider.GetSolidLiquidSeparationCoefficientInstance)} " +
+                        _log.Error($"{nameof(Table_47_Solid_Liquid_Separation_Coefficients_Provider)}.{nameof(Table_47_Solid_Liquid_Separation_Coefficients_Provider.GetSolidLiquidSeparationCoefficientInstance)} " +
                             $"invalid DigestateParameters specified : {coefficient}. Returning an empty instance of SolidLiquidSeparationCoefficientsData.");
                         return new SolidLiquidSeparationCoefficientsData();
                     }

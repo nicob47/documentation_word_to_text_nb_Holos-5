@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Net;
+using NLog;
 
 namespace H.Core.Providers.Climate
 {
@@ -20,6 +21,10 @@ namespace H.Core.Providers.Climate
     /// </summary>
     public class NasaClimateProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private EvapotranspirationCalculator _evapotranspirationCalculator = new EvapotranspirationCalculator();
@@ -101,7 +106,7 @@ namespace H.Core.Providers.Climate
             var content = this.GetCachedData(latitude, longitude);
             if (string.IsNullOrWhiteSpace(content))
             {
-                Trace.TraceInformation($"Cached climate data for lat: {latitude}, long: {longitude} not found. Downloading now.");
+                _log.Info($"Cached climate data for lat: {latitude}, long: {longitude} not found. Downloading now.");
 
                 try
                 {
@@ -111,21 +116,21 @@ namespace H.Core.Providers.Climate
                     var getNasaApi = Task.Run(() => GetNasaApiString(url));
                     if (getNasaApi.Wait(TimeSpan.FromSeconds(Timeout)))
                     {
-                        Trace.TraceInformation($"{nameof(NasaClimateProvider)}.{nameof(GetCustomClimateData)}, NASA API Task Status: {getNasaApi.Status}");
+                        _log.Info($"{nameof(NasaClimateProvider)}.{nameof(GetCustomClimateData)}, NASA API Task Status: {getNasaApi.Status}");
                         content = getNasaApi.Result;
                     }
                     else
                     {
-                        Trace.TraceError($"{nameof(NasaClimateProvider)}.{nameof(GetCustomClimateData)}, NASA API Task Status: {getNasaApi.Status}");
+                        _log.Error($"{nameof(NasaClimateProvider)}.{nameof(GetCustomClimateData)}, NASA API Task Status: {getNasaApi.Status}");
                         throw new Exception("NASA API couldn't be reached or connection timed out.");
                     }
                 }
                 catch (Exception e)
                 {
-                    Trace.TraceInformation($"Could not load data from NASA API. Exception thrown.");
-                    Trace.TraceError($"Exception occurred in {nameof(NasaClimateProvider)}.{nameof(GetCustomClimateData)}. Exception message: {e.Message}");
-                    Trace.TraceError($"Inner Exception message: {e.InnerException}");
-                    Trace.TraceInformation($"Returning SLC Data.");
+                    _log.Info($"Could not load data from NASA API. Exception thrown.");
+                    _log.Error($"Exception occurred in {nameof(NasaClimateProvider)}.{nameof(GetCustomClimateData)}. Exception message: {e.Message}");
+                    _log.Error($"Inner Exception message: {e.InnerException}");
+                    _log.Info($"Returning SLC Data.");
 
                     return new List<DailyClimateData>();
                 }
@@ -138,14 +143,14 @@ namespace H.Core.Providers.Climate
                 {
                     // For some reason we got an empty string from web call
 
-                    Trace.TraceError($"{nameof(NasaClimateProvider)}: there was an error while trying to download NASA climate data. String was empty.");
-                    Trace.TraceInformation($"Returning SLC Data.");
+                    _log.Error($"{nameof(NasaClimateProvider)}: there was an error while trying to download NASA climate data. String was empty.");
+                    _log.Info($"Returning SLC Data.");
                     return new List<DailyClimateData>();
                 }
             }
 
 
-            Trace.TraceInformation($"{nameof(NasaClimateProvider)}: Processing data received from NASA API.");
+            _log.Info($"{nameof(NasaClimateProvider)}: Processing data received from NASA API.");
 
 
             JObject jObject = JObject.Parse(content);
@@ -154,7 +159,7 @@ namespace H.Core.Providers.Climate
             if (featuresValueArray == null)
             {
                 // This can occur when NASA takes the API offline for maintenance
-                Trace.TraceInformation($"{nameof(NasaClimateProvider)}: there was an error while trying to download NASA climate data");
+                _log.Info($"{nameof(NasaClimateProvider)}: there was an error while trying to download NASA climate data");
                 return new List<DailyClimateData>();
             }
 
@@ -273,7 +278,7 @@ namespace H.Core.Providers.Climate
                     fileInfo.LastAccessTime = DateTime.Now;
                 }
 
-                Trace.TraceInformation($"{nameof(NasaClimateProvider)}: cached data was found.");
+                _log.Info($"{nameof(NasaClimateProvider)}: cached data was found.");
 
                 return File.ReadAllText(path);
             }
@@ -292,7 +297,7 @@ namespace H.Core.Providers.Climate
 
         private void CacheData(double latitude, double longitude, string content)
         {
-            Trace.TraceInformation($"Caching NASA climate data for lat: {latitude}, long: {longitude}");
+            _log.Info($"Caching NASA climate data for lat: {latitude}, long: {longitude}");
 
             var path = this.GetCachedPath(latitude, longitude);
 
@@ -306,19 +311,19 @@ namespace H.Core.Providers.Climate
         /// <returns></returns>
         private string GetNasaApiString(string url)
         {
-            Trace.TraceInformation($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)} : Trying to access NASA API.");
+            _log.Info($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)} : Trying to access NASA API.");
 #pragma warning disable SYSLIB0014 // WebClient is obsolete — HttpClient migration deferred
             var webClient = new WebClient();
 #pragma warning restore SYSLIB0014
             string content = webClient.DownloadString(url);
             if (content != string.Empty)
             {
-                Trace.TraceInformation($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)} : API content downloaded successfully.");
+                _log.Info($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)} : API content downloaded successfully.");
             }
             else
             {
-                Trace.TraceError($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)}, API content could not be downloaded.");
-                Trace.TraceError($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)}, API url: {url}");
+                _log.Error($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)}, API content could not be downloaded.");
+                _log.Error($"{nameof(NasaClimateProvider)}.{nameof(GetNasaApiString)}, API url: {url}");
             }
             return content;
         }

@@ -4,6 +4,7 @@ using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Content;
 using H.Core.Providers.AnaerobicDigestion;
+using NLog;
 
 namespace H.Core.Providers.Plants
 {
@@ -12,6 +13,10 @@ namespace H.Core.Providers.Plants
     /// </summary>
     public class Table_9_Nitrogen_Lignin_Content_In_Crops_Provider : ProviderBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly CropTypeStringConverter _cropTypeStringConverter;
@@ -76,7 +81,7 @@ namespace H.Core.Providers.Plants
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_9_Nitrogen_Lignin_Content_In_Crops_Provider)}.{nameof(Table_9_Nitrogen_Lignin_Content_In_Crops_Provider.GetDataByCropType)}" +
+                _log.Error($"{nameof(Table_9_Nitrogen_Lignin_Content_In_Crops_Provider)}.{nameof(Table_9_Nitrogen_Lignin_Content_In_Crops_Provider.GetDataByCropType)}" +
                     $" could not find Crop Type: {cropType} in the available crop data. Returning 0.");
 
                 return new Table_9_Nitrogen_Lignin_Content_In_Crops_Data();

@@ -1,6 +1,7 @@
-using H.Core.Enumerations;
+﻿using H.Core.Enumerations;
 using H.Core.Providers.Feed;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -12,6 +13,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_33_Daily_Feed_Intake_Swine_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
 
@@ -36,7 +41,7 @@ namespace H.Core.Providers.Animals
             }
             else
             {
-                System.Diagnostics.Trace.TraceError($"{nameof(Table_33_Daily_Feed_Intake_Swine_Provider)}.{nameof(GetFeedIntakeAmount)}" +
+                _log.Error($"{nameof(Table_33_Daily_Feed_Intake_Swine_Provider)}.{nameof(GetFeedIntakeAmount)}" +
                                                     $" unable to get data for province: {province} and animal type: {animalType.GetDescription()}" +
                                                     $" Returning default value of 0.");
 
@@ -98,7 +103,7 @@ namespace H.Core.Providers.Animals
                         {AnimalType.SwineLactatingSow, 0}
                     };
 
-                    System.Diagnostics.Trace.TraceError($"{nameof(Table_33_Daily_Feed_Intake_Swine_Provider)}.{nameof(Table_33_Daily_Feed_Intake_Swine_Provider.GetByProvince)}" +
+                    _log.Error($"{nameof(Table_33_Daily_Feed_Intake_Swine_Provider)}.{nameof(Table_33_Daily_Feed_Intake_Swine_Provider.GetByProvince)}" +
                     $" unable to get data for province: {province}." +
                     $" Returning default value of {defaultValue}.");
                     return defaultValue;

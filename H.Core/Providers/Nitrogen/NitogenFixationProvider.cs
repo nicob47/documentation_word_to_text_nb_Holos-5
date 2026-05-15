@@ -1,6 +1,4 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
-
 namespace H.Core.Providers.Nitrogen
 {
     public class NitogenFixationProvider
@@ -15,7 +13,6 @@ namespace H.Core.Providers.Nitrogen
 
         public NitogenFixationProvider()
         {
-            HTraceListener.AddTraceListener();
             _table = new List<NitrogenFixationResult>()
             {
                 new NitrogenFixationResult() { CropType = CropType.Soybeans, Fixation = 108 },

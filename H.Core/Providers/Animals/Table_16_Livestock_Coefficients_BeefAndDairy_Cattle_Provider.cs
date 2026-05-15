@@ -1,7 +1,7 @@
 ﻿#region Imports
 
 using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 #endregion
 
@@ -12,9 +12,12 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider : IAnimalCoefficientDataProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider()
         {
-            HTraceListener.AddTraceListener();
         }
 
         public AnimalCoefficientData GetCoefficientsByAnimalType(
@@ -207,7 +210,7 @@ namespace H.Core.Providers.Animals
                         DefaultInitialWeight = 0,
                         DefaultFinalWeight = 0,
                     };
-                    System.Diagnostics.Trace.TraceError($"{nameof(Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider)}.{nameof(Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider.GetCoefficientsByAnimalType)}" +
+                    _log.Error($"{nameof(Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider)}.{nameof(Table_16_Livestock_Coefficients_BeefAndDairy_Cattle_Provider.GetCoefficientsByAnimalType)}" +
                         $" unable to get data for animal type: {animalType}." +
                         $" Returning default value of {defaultValue}.");
                     return defaultValue;

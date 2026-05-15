@@ -3,12 +3,17 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
     public class EmissionFactorsForDigestateStorageProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly DigestateStateStringConverter _digestateStateStringConverter;
@@ -55,12 +60,12 @@ namespace H.Core.Providers.AnaerobicDigestion
 
             if (data != null)
             {
-                Trace.TraceError($"{nameof(EmissionFactorsForDigestateStorageProvider)}.{nameof(EmissionFactorsForDigestateStorageProvider.GetEmissionFactorInstance)}: " +
+                _log.Error($"{nameof(EmissionFactorsForDigestateStorageProvider)}.{nameof(EmissionFactorsForDigestateStorageProvider.GetEmissionFactorInstance)}: " +
                     $"cannot find Emission Origin: {emissionOrigin}. Returning an empty instance of EmissionFactorsForDigestateStorageData.");
             }
             else
             {
-                Trace.TraceError($"{nameof(EmissionFactorsForDigestateStorageProvider)}.{nameof(EmissionFactorsForDigestateStorageProvider.GetEmissionFactorInstance)}: " +
+                _log.Error($"{nameof(EmissionFactorsForDigestateStorageProvider)}.{nameof(EmissionFactorsForDigestateStorageProvider.GetEmissionFactorInstance)}: " +
                     $"cannot find Emission Type: {emissionType}. Returning an empty instance of EmissionFactorsForDigestateStorageData.");
             }
 

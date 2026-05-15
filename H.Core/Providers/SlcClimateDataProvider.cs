@@ -7,8 +7,8 @@ using H.Core.Providers.Climate;
 using H.Core.Providers.Evapotranspiration;
 using H.Core.Providers.Precipitation;
 using H.Core.Providers.Temperature;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 #endregion
 
@@ -18,6 +18,10 @@ namespace H.Core.Providers
     /// </summary>
     public class SlcClimateDataProvider : ProviderBase, ISlcClimateProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         // with the added SLC data this new private class is necessary so that we can simplify data processing and get rid of anonymous types which cannot be passed out of functions
         private class SlcIntermediateClimateData
         {
@@ -62,8 +66,6 @@ namespace H.Core.Providers
 
         public SlcClimateDataProvider()
         {
-            HTraceListener.AddTraceListener();
-
             _temperatureDataList = new List<TemperatureData>();
             _precipitationDataList = new List<PrecipitationData>();
             _evapotranspirationDataList = new List<EvapotranspirationData>();
@@ -113,7 +115,7 @@ namespace H.Core.Providers
             if (!HasDataForPolygonId(polygonId, timeFrame))
             {
                 //we don't have climate data for the polygon
-                Trace.TraceInformation($"{nameof(SlcClimateDataProvider)}.{nameof(GetClimateData)}: {currentPolygonId} is not associated with any SLC climate data. Asking user for another polygon to get data from.");
+                _log.Info($"{nameof(SlcClimateDataProvider)}.{nameof(GetClimateData)}: {currentPolygonId} is not associated with any SLC climate data. Asking user for another polygon to get data from.");
                 return new ClimateData();
             }
             var evapotranspirationData = this.GetEvapotranspirationDataByPolygonId(polygonId, timeFrame);
@@ -156,7 +158,7 @@ namespace H.Core.Providers
                     result = SlcListsGroupedByTimeFrame[timeFrame].Item3.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
                 default:
-                    Trace.TraceError($"{nameof(SlcClimateDataProvider)}.{nameof(GetEvapotranspirationDataByPolygonId)}: No SLC normals for '{timeFrame}' found. Defaulting to original SLC data.");
+                    _log.Error($"{nameof(SlcClimateDataProvider)}.{nameof(GetEvapotranspirationDataByPolygonId)}: No SLC normals for '{timeFrame}' found. Defaulting to original SLC data.");
                     result = _evapotranspirationDataList.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
             }
@@ -165,7 +167,7 @@ namespace H.Core.Providers
                 return result;
             }
 
-            Trace.TraceError($"{nameof(SlcClimateDataProvider)}.{nameof(GetEvapotranspirationDataByPolygonId)}. Evapotranspiration not found for polygon '{polygonId}'. Returning 0 for all values.");
+            _log.Error($"{nameof(SlcClimateDataProvider)}.{nameof(GetEvapotranspirationDataByPolygonId)}. Evapotranspiration not found for polygon '{polygonId}'. Returning 0 for all values.");
 
             return new EvapotranspirationData();
         }
@@ -197,7 +199,7 @@ namespace H.Core.Providers
                     result = SlcListsGroupedByTimeFrame[timeFrame].Item2.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
                 default:
-                    Trace.TraceError($"{nameof(SlcClimateDataProvider)}.{nameof(GetPrecipitationDataByPolygonId)}: No SLC normals for '{timeFrame}' found. Defaulting to original SLC data.");
+                    _log.Error($"{nameof(SlcClimateDataProvider)}.{nameof(GetPrecipitationDataByPolygonId)}: No SLC normals for '{timeFrame}' found. Defaulting to original SLC data.");
                     result = _precipitationDataList.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
             }
@@ -206,7 +208,7 @@ namespace H.Core.Providers
                 return result;
             }
 
-            Trace.TraceError($"{nameof(SlcClimateDataProvider)}.{nameof(GetPrecipitationDataByPolygonId)}. Precipitation not found for polygon '{polygonId}'. Returning 0 for all values.");
+            _log.Error($"{nameof(SlcClimateDataProvider)}.{nameof(GetPrecipitationDataByPolygonId)}. Precipitation not found for polygon '{polygonId}'. Returning 0 for all values.");
 
             return new PrecipitationData();
         }
@@ -238,7 +240,7 @@ namespace H.Core.Providers
                     result = SlcListsGroupedByTimeFrame[timeFrame].Item1.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
                 default:
-                    Trace.TraceError($"{nameof(SlcClimateDataProvider)}.{nameof(GetTemperatureDataByPolygonId)}: No SLC normals for '{timeFrame}' found. Defaulting to original SLC data.");
+                    _log.Error($"{nameof(SlcClimateDataProvider)}.{nameof(GetTemperatureDataByPolygonId)}: No SLC normals for '{timeFrame}' found. Defaulting to original SLC data.");
                     result = _temperatureDataList.SingleOrDefault(x => x.PolygonId == polygonId);
                     break;
             }
@@ -248,7 +250,7 @@ namespace H.Core.Providers
             }
             else
             {
-                Trace.TraceError($"{nameof(SlcClimateDataProvider)}.{nameof(GetTemperatureDataByPolygonId)}. Temperature not found for polygon '{polygonId}'. Returning 0 for all values.");
+                _log.Error($"{nameof(SlcClimateDataProvider)}.{nameof(GetTemperatureDataByPolygonId)}. Temperature not found for polygon '{polygonId}'. Returning 0 for all values.");
 
                 return new TemperatureData();
             }
@@ -322,7 +324,7 @@ namespace H.Core.Providers
 
             this.IsInitialized = true;
 
-            Trace.TraceInformation($"{nameof(SlcClimateDataProvider)} has been initialized.");
+            _log.Info($"{nameof(SlcClimateDataProvider)} has been initialized.");
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using H.Core.Tools;
+﻿using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -9,9 +9,12 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_24_Lamb_Daily_Weight_Gain_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public Table_24_Lamb_Daily_Weight_Gain_Provider()
         {
-            HTraceListener.AddTraceListener();
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace H.Core.Providers.Animals
 
             else
             {
-                System.Diagnostics.Trace.TraceError($"{nameof(Table_24_Lamb_Daily_Weight_Gain_Provider)}.{nameof(Table_24_Lamb_Daily_Weight_Gain_Provider.GetDailyWeightGain)}" +
+                _log.Error($"{nameof(Table_24_Lamb_Daily_Weight_Gain_Provider)}.{nameof(Table_24_Lamb_Daily_Weight_Gain_Provider.GetDailyWeightGain)}" +
                     $" unable to get data for lamb ratio: {lambRatio}." +
                     $" Returning default value of {0}.");
                 return 0;

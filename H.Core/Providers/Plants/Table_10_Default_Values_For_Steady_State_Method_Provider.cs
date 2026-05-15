@@ -3,6 +3,7 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Plants
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Plants
     /// </summary>
     public class Table_10_Default_Values_For_Steady_State_Method_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly AnimalTypeStringConverter _animalStringConverter;
@@ -47,7 +52,7 @@ namespace H.Core.Providers.Plants
 
             if (data == null)
             {
-                Trace.TraceError($"{nameof(Table_10_Default_Values_For_Steady_State_Method_Provider)}.{nameof(GetSteadyStateMethodValueForAnimalGroup)} " +
+                _log.Error($"{nameof(Table_10_Default_Values_For_Steady_State_Method_Provider)}.{nameof(GetSteadyStateMethodValueForAnimalGroup)} " +
                                  $": AnimalType {animalType} not found in the provider data. Returning null");
             }
 

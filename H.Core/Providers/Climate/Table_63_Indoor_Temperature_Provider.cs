@@ -3,11 +3,16 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Climate
 {
     public class Table_63_Indoor_Temperature_Provider : ProviderBase, IIndoorTemperatureProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly ProvinceStringConverter _provincesConverter = new ProvinceStringConverter();
@@ -55,7 +60,7 @@ namespace H.Core.Providers.Climate
 
                 if (shouldWarn)
                 {
-                    Trace.TraceError($"{nameof(Table_63_Indoor_Temperature_Provider)}.{nameof(Table_63_Indoor_Temperature_Provider.GetIndoorTemperature)}" +
+                    _log.Error($"{nameof(Table_63_Indoor_Temperature_Provider)}.{nameof(Table_63_Indoor_Temperature_Provider.GetIndoorTemperature)}" +
                                      $" unknown province: '{province.GetDescription()}', returning 0. (Subsequent occurrences of this province will be suppressed.)");
                 }
 

@@ -5,8 +5,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 #endregion
 
@@ -16,6 +16,10 @@ namespace H.Core.Models.Animals
     /// </summary>
     public abstract class AnimalComponentBase : ComponentBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private ObservableCollection<AnimalGroup> _groups = null!;
@@ -26,7 +30,6 @@ namespace H.Core.Models.Animals
 
         protected AnimalComponentBase()
         {
-            HTraceListener.AddTraceListener();
             this.Groups = new ObservableCollection<AnimalGroup>();
 
             this.PropertyChanged += OnPropertyChanged;
@@ -96,7 +99,7 @@ namespace H.Core.Models.Animals
         {
             if (parentGroupType.IsLactatingType() == false)
             {
-                Trace.TraceInformation($"{nameof(AnimalComponentBase)}.{nameof(GetAssociatedParentGroup)}: parent group type '{parentGroupType.GetDescription()}' is not a lactating animal group type, so there can be no associate parent group for this group of young animals: '{youngAnimalGroup.GroupType.GetDescription()}'.");
+                _log.Info($"{nameof(AnimalComponentBase)}.{nameof(GetAssociatedParentGroup)}: parent group type '{parentGroupType.GetDescription()}' is not a lactating animal group type, so there can be no associate parent group for this group of young animals: '{youngAnimalGroup.GroupType.GetDescription()}'.");
 
                 return null;
             }

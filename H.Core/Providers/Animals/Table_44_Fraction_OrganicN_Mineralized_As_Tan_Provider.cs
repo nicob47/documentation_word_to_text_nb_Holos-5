@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -13,9 +13,12 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_44_Fraction_OrganicN_Mineralized_As_Tan_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public Table_44_Fraction_OrganicN_Mineralized_As_Tan_Provider()
         {
-            HTraceListener.AddTraceListener(); 
         }
 
         /// <summary>
@@ -147,7 +150,7 @@ namespace H.Core.Providers.Animals
                     };
             }
 
-            Trace.TraceError($"{nameof(Table_44_Fraction_OrganicN_Mineralized_As_Tan_Provider)}.{nameof(GetByStorageType)} unknown type {stateType.GetDescription()}. Returning default.");
+            _log.Error($"{nameof(Table_44_Fraction_OrganicN_Mineralized_As_Tan_Provider)}.{nameof(GetByStorageType)} unknown type {stateType.GetDescription()}. Returning default.");
 
             return new FractionOfOrganicNitrogenMineralizedData();
 

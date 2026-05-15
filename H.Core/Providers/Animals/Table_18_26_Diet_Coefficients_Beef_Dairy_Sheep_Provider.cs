@@ -1,8 +1,9 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -13,6 +14,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly DietTypeStringConverter _dietConverter = new DietTypeStringConverter();
@@ -54,12 +59,12 @@ namespace H.Core.Providers.Animals
 
             if (dataInstance == null)
             {
-                Trace.TraceError($"{nameof(Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider)}.{nameof(GetDietCoefficientsDataInstance)}" +
+                _log.Error($"{nameof(Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider)}.{nameof(GetDietCoefficientsDataInstance)}" +
                                  $" the AnimalType: {animalType} was not found in the available data. Returning null.");
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider)}.{nameof(GetDietCoefficientsDataInstance)}" +
+                _log.Error($"{nameof(Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider)}.{nameof(GetDietCoefficientsDataInstance)}" +
                                  $" the DietType: {dietType} was not found in the available data. Returning null.");
             }
 
@@ -80,7 +85,7 @@ namespace H.Core.Providers.Animals
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider)}.{nameof(BuildCache)}" +
+                    _log.Info($"{nameof(Table_18_26_Diet_Coefficients_Beef_Dairy_Sheep_Provider)}.{nameof(BuildCache)}" +
                                 $" - File: {nameof(CsvResourceNames.DietCoefficientsForDairyBeefSheep)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

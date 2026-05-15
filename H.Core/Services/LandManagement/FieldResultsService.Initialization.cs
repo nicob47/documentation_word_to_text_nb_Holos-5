@@ -5,6 +5,7 @@ using H.Core.Models;
 using H.Core.Models.LandManagement.Fields;
 using H.Core.Providers.Soil;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Services.LandManagement
 {
@@ -18,7 +19,7 @@ namespace H.Core.Services.LandManagement
         {
             viewItem.IsInitialized = false;
 
-            Trace.TraceInformation($"{nameof(FieldResultsService)}.{nameof(AssignSystemDefaults)}: applying defaults to {viewItem.CropTypeString}");
+            _log.Info($"{nameof(FieldResultsService)}.{nameof(AssignSystemDefaults)}: applying defaults to {viewItem.CropTypeString}");
 
             var defaults = farm.Defaults;
 
@@ -284,7 +285,7 @@ namespace H.Core.Services.LandManagement
                 }
                 else
                 {
-                    Trace.TraceWarning($"No default yield data found for {viewItem.CropType.GetDescription()}");
+                    _log.Warn($"No default yield data found for {viewItem.CropType.GetDescription()}");
                 }
 
                 viewItem.CalculateDryYield();
@@ -305,7 +306,7 @@ namespace H.Core.Services.LandManagement
             }
             else
             {
-                Trace.TraceWarning($"No default yield data found for {viewItem.CropType.GetDescription()} in {viewItem.Year}");
+                _log.Warn($"No default yield data found for {viewItem.CropType.GetDescription()} in {viewItem.Year}");
             }
         }
 
@@ -384,7 +385,7 @@ namespace H.Core.Services.LandManagement
             var yieldAssignmentMethod = farm.UseFieldLevelYieldAssignement ? fieldSystemComponent.YieldAssignmentMethod : farm.YieldAssignmentMethod;
             if (viewItem.CropType == CropType.NotSelected || viewItem.Year == 0)
             {
-                Trace.TraceError($"{nameof(FieldResultsService)}.{nameof(AssignYieldToYear)}: bad crop type or bad year for view item '{viewItem}'");
+                _log.Error($"{nameof(FieldResultsService)}.{nameof(AssignYieldToYear)}: bad crop type or bad year for view item '{viewItem}'");
 
                 viewItem.Yield = 0;
             }
@@ -466,7 +467,7 @@ namespace H.Core.Services.LandManagement
                 }
                 else
                 {
-                    Trace.TraceError($"{nameof(FieldResultsService)}.{nameof(AssignYieldToYear)}: no custom yield data for {viewItem.Year} and {fieldSystemComponent.Name} was found in custom yield file. Attempting to assign a default yield for this year from the default yield provider.");
+                    _log.Error($"{nameof(FieldResultsService)}.{nameof(AssignYieldToYear)}: no custom yield data for {viewItem.Year} and {fieldSystemComponent.Name} was found in custom yield file. Attempting to assign a default yield for this year from the default yield provider.");
 
                     // With the Tier 2 model, we need to have yields for the run-in years. If the user loads a custom yield file, they might not have yields for this period. In this case,
                     // we check if we can get yields for these years by checking the small area data table.
@@ -476,7 +477,7 @@ namespace H.Core.Services.LandManagement
 
                     if (viewItem.Yield == 0)
                     {
-                        Trace.TraceError($"{nameof(FieldResultsService)}.{nameof(AssignYieldToYear)}: no yield data for {viewItem.Year} and {fieldSystemComponent.Name} was found.");
+                        _log.Error($"{nameof(FieldResultsService)}.{nameof(AssignYieldToYear)}: no yield data for {viewItem.Year} and {fieldSystemComponent.Name} was found.");
                     }                    
                 }
 

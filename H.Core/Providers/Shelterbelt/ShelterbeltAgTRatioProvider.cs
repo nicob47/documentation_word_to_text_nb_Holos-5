@@ -1,18 +1,21 @@
 ﻿using System.Diagnostics;
 using H.Content;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Shelterbelt
 {
     public class ShelterbeltAgTRatioProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Constructors
 
         public ShelterbeltAgTRatioProvider()
         {
-            HTraceListener.AddTraceListener();
             this.GetLines();
         }
 
@@ -106,7 +109,7 @@ namespace H.Core.Providers.Shelterbelt
             if (aboveGroundBiomassTotalTreeBiomassRatio == 0)
             {
                 var defaultValue = 0;
-                Trace.TraceError($"{nameof(ShelterbeltAgTRatioProvider)}.{nameof(this.GetAboveGroundBiomassTotalTreeBiomassRatio)}" +
+                _log.Error($"{nameof(ShelterbeltAgTRatioProvider)}.{nameof(this.GetAboveGroundBiomassTotalTreeBiomassRatio)}" +
                     $" unable to get data for the tree species: {treeSpecies} and age: {age}." +
                     $" Returning default value of {defaultValue}.");
                 return defaultValue;

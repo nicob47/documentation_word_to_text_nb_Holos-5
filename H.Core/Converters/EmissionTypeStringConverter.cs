@@ -1,10 +1,15 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class EmissionTypeStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public EmissionTypes Convert(string input)
         {
             switch (this.GetLowerCase(input))
@@ -49,7 +54,7 @@ namespace H.Core.Converters
                     return EmissionTypes.NonFossilCH4;
                 default:
                 {
-                    Trace.TraceError($"{nameof(EmissionTypeStringConverter)}.{nameof(EmissionTypeStringConverter.Convert)}: unknown emissions type: {input} returning {EmissionTypes.EntericMethane}");
+                    _log.Error($"{nameof(EmissionTypeStringConverter)}.{nameof(EmissionTypeStringConverter.Convert)}: unknown emissions type: {input} returning {EmissionTypes.EntericMethane}");
                     return EmissionTypes.EntericMethane;
                 }
             }

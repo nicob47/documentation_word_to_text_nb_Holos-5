@@ -14,6 +14,10 @@
       <PackageReference Include="Prism.Avalonia" Version="8.1.97.11000" />
       <PackageReference Include="Prism.DryIoc.Avalonia" Version="8.1.97.11000" />
       <PackageReference Include="SharpKml.Core" Version="6.1.0" />
+      <!-- NLog so H.Infrastructure uses the same single logging pipeline as the rest
+           of the codebase (H.Core / H.Avalonia). Host process configures NLog via
+           NLog.config; this assembly just emits records through it. -->
+      <PackageReference Include="NLog" Version="6.0.4" />
     </ItemGroup>
 
     <ItemGroup>

@@ -5,8 +5,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 #endregion
 
@@ -16,6 +16,10 @@ namespace H.Core.Models.Animals
     /// </summary>
     public class AnimalGroup : ModelBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields                              
 
         private AnimalType _groupType;
@@ -33,8 +37,6 @@ namespace H.Core.Models.Animals
 
         public AnimalGroup()
         {
-            HTraceListener.AddTraceListener();
-
             this.ManagementPeriods.CollectionChanged -= this.ManagementPeriodsOnCollectionChanged;
             this.ManagementPeriods.CollectionChanged += this.ManagementPeriodsOnCollectionChanged;
 
@@ -267,7 +269,7 @@ namespace H.Core.Models.Animals
             // When considering a group of cows and associated calves, the user will have two separate management periods. If the cow group and the calf group don't have overlapping start and end
             // dates for the management period, then the management period will be null.
 
-            Trace.TraceError($"{nameof(AnimalGroup)}.{nameof(AnimalGroup.GetManagementPeriodByMonthAndYear)}: no management period found for {this.Name} ({this.AnimalTypeString}), with month '{month}' and year '{year}'");
+            _log.Error($"{nameof(AnimalGroup)}.{nameof(AnimalGroup.GetManagementPeriodByMonthAndYear)}: no management period found for {this.Name} ({this.AnimalTypeString}), with month '{month}' and year '{year}'");
 
             return null;
         }

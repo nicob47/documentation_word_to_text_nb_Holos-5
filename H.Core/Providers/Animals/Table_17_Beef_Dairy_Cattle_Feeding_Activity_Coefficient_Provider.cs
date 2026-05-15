@@ -1,7 +1,7 @@
 ﻿#region Imports
 
 using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 #endregion
 
@@ -13,9 +13,12 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_17_Beef_Dairy_Cattle_Feeding_Activity_Coefficient_Provider : IFeedingActivityCoefficientProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public Table_17_Beef_Dairy_Cattle_Feeding_Activity_Coefficient_Provider()
         {
-            HTraceListener.AddTraceListener();
         }
         public IFeedingActivityCoeffientData GetByHousing(HousingType housingType)
         {
@@ -55,7 +58,7 @@ namespace H.Core.Providers.Animals
                     {
                         FeedingActivityCoefficient = 0,
                     };
-                    System.Diagnostics.Trace.TraceError($"{nameof(Table_17_Beef_Dairy_Cattle_Feeding_Activity_Coefficient_Provider)}.{nameof(Table_17_Beef_Dairy_Cattle_Feeding_Activity_Coefficient_Provider.GetByHousing)}" +
+                    _log.Error($"{nameof(Table_17_Beef_Dairy_Cattle_Feeding_Activity_Coefficient_Provider)}.{nameof(Table_17_Beef_Dairy_Cattle_Feeding_Activity_Coefficient_Provider.GetByHousing)}" +
                         $" unable to get data for housing type: {housingType}." +
                         $" Returning default value of {defaultValue}.");
                     return defaultValue;

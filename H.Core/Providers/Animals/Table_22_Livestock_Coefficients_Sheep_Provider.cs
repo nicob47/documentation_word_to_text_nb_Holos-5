@@ -1,9 +1,9 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -12,6 +12,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_22_Livestock_Coefficients_Sheep_Provider : ISheepCoefficientDataProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly AnimalTypeStringConverter _converter = new AnimalTypeStringConverter();
@@ -23,7 +27,6 @@ namespace H.Core.Providers.Animals
 
         public Table_22_Livestock_Coefficients_Sheep_Provider()
         {
-            HTraceListener.AddTraceListener();
             _cache = BuildCache();
         }
 
@@ -44,7 +47,7 @@ namespace H.Core.Providers.Animals
             if (result == null)
             {
                 var defaultValue = this.GetSheepCoefficients().Single(x => x.AnimalType == AnimalType.Lambs);
-                Trace.TraceError($"{nameof(Table_22_Livestock_Coefficients_Sheep_Provider)}.{nameof(Table_22_Livestock_Coefficients_Sheep_Provider.GetCoefficientsByAnimalType)}" +
+                _log.Error($"{nameof(Table_22_Livestock_Coefficients_Sheep_Provider)}.{nameof(Table_22_Livestock_Coefficients_Sheep_Provider.GetCoefficientsByAnimalType)}" +
                     $" unable to get data for animal type: {animalType}." +
                     $" Returning default value of {defaultValue}.");
 
@@ -72,7 +75,7 @@ namespace H.Core.Providers.Animals
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_22_Livestock_Coefficients_Sheep_Provider)}.{nameof(BuildCache)}" +
+                    _log.Info($"{nameof(Table_22_Livestock_Coefficients_Sheep_Provider)}.{nameof(BuildCache)}" +
                                 $" - File: {nameof(CsvResourceNames.SheepCoefficients)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

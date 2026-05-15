@@ -3,6 +3,7 @@ using H.Core.Enumerations;
 using H.Core.Models;
 using H.Core.Models.Animals;
 using H.Core.Models.LandManagement.Fields;
+using NLog;
 
 namespace H.Core.Services.LandManagement
 {
@@ -155,7 +156,7 @@ namespace H.Core.Services.LandManagement
             }
             secondaryLoopMs = sw.ElapsedMilliseconds;
 
-            System.Diagnostics.Trace.WriteLine(
+            _log.Info(
                 $"[GHGAnalysis.AssignC] yields={yieldsMs}ms updateReturns={updateReturnsMs}ms " +
                 $"main={mainLoopMs}ms (adjoin={adjoiningMs}ms inputs={inputsMs}ms climate={climateMs}ms tillage={tillageMs}ms mgmt={managementMs}ms) " +
                 $"secondary={secondaryLoopMs}ms mainYears={distinctYears.Count} secondaryItems={secondaryCrops.Count}");
@@ -536,6 +537,23 @@ namespace H.Core.Services.LandManagement
                 // Create the item with the steady state (equilibrium) values
                 var equilibriumYearResults = this.CalculateEquilibriumYear(viewItemsForField, farm, fieldSystemGuid);
 
+                // Diagnostic: when the ICBM chart shows nothing, the usual cause is either an
+                // equilibrium that came out as NaN/Infinity (climate parameter ~ 0 in the
+                // steady-state denominator) or C inputs of zero. Trace the seed values once per
+                // field so the Output window shows what the per-year loop is starting from.
+                _log.Info(
+                    $"[GHGAnalysis.ICBM] field='{fieldSystemComponent?.Name}' equilibrium " +
+                    $"AG_input={equilibriumYearResults.CombinedAboveGroundInput:F2} " +
+                    $"BG_input={equilibriumYearResults.CombinedBelowGroundInput:F2} " +
+                    $"Y_ag={equilibriumYearResults.YoungPoolSoilCarbonAboveGround:F2} " +
+                    $"Y_bg={equilibriumYearResults.YoungPoolSoilCarbonBelowGround:F2} " +
+                    $"Y_manure={equilibriumYearResults.YoungPoolManureCarbon:F2} " +
+                    $"O={equilibriumYearResults.OldPoolSoilCarbon:F2} " +
+                    $"SoilC={equilibriumYearResults.SoilCarbon:F2} " +
+                    $"climate={equilibriumYearResults.ClimateParameter:F3} " +
+                    $"mgmt={equilibriumYearResults.ManagementFactor:F3} " +
+                    $"useClimate={farm.Defaults.UseClimateParameterInsteadOfManagementFactor}");
+
                 for (int i = 0; i < viewItemsForField.Count; i++)
                 {
                     // List<T> indexer is O(1); the previous ElementAt(int) here dispatched through
@@ -558,6 +576,20 @@ namespace H.Core.Services.LandManagement
                         nextYearResults: null,
                         farm: farm,
                         yearIndex: i);
+
+                    // Diagnostic: per-year SoilCarbon so we can see exactly what the chart is
+                    // going to receive. If these come out as 0, NaN, or Infinity the chart will
+                    // either flat-line on the axis or drop the series entirely.
+                    _log.Info(
+                        $"[GHGAnalysis.ICBM] field='{fieldSystemComponent?.Name}' year={currentYearResults.Year} " +
+                        $"AG_input={currentYearResults.CombinedAboveGroundInput:F2} " +
+                        $"BG_input={currentYearResults.CombinedBelowGroundInput:F2} " +
+                        $"Y_ag={currentYearResults.YoungPoolSoilCarbonAboveGround:F2} " +
+                        $"Y_bg={currentYearResults.YoungPoolSoilCarbonBelowGround:F2} " +
+                        $"Y_manure={currentYearResults.YoungPoolManureCarbon:F2} " +
+                        $"O={currentYearResults.OldPoolSoilCarbon:F2} " +
+                        $"SoilC={currentYearResults.SoilCarbon:F2} " +
+                        $"dSoilC={currentYearResults.ChangeInCarbon:F3}");
                 }
             }
 

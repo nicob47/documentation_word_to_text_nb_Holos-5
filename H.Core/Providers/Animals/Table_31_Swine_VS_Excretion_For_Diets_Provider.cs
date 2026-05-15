@@ -1,5 +1,5 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -9,11 +9,14 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_31_Swine_VS_Excretion_For_Diets_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Constructors
         
         public Table_31_Swine_VS_Excretion_For_Diets_Provider()
         {
-            HTraceListener.AddTraceListener();
         } 
 
         #endregion
@@ -183,7 +186,7 @@ namespace H.Core.Providers.Animals
                         {AnimalType.SwineLactatingSow, 0}
                     };
 
-                    System.Diagnostics.Trace.TraceError($"{nameof(Table_31_Swine_VS_Excretion_For_Diets_Provider)}.{nameof(Table_31_Swine_VS_Excretion_For_Diets_Provider.GetByProvince)}" +
+                    _log.Error($"{nameof(Table_31_Swine_VS_Excretion_For_Diets_Provider)}.{nameof(Table_31_Swine_VS_Excretion_For_Diets_Provider.GetByProvince)}" +
                     $" unable to get data for province: {province}." +
                     $" Returning default value of {defaultValue}.");
                     return defaultValue;

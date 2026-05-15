@@ -3,6 +3,7 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Economics
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Economics
     /// </summary>
     public class Feed_Costs_For_Beef_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly DietTypeStringConverter _dietTypeStringConverter;
@@ -49,7 +54,7 @@ namespace H.Core.Providers.Economics
 
             if (data == null)
             {
-                Trace.TraceError($"{nameof(Feed_Costs_For_Beef_Provider)}.{nameof(GetFeedCostByDietType)} " +
+                _log.Error($"{nameof(Feed_Costs_For_Beef_Provider)}.{nameof(GetFeedCostByDietType)} " +
                                  $": could not find DietType: {dietType} data in the csv file. Returning null.");
                 return null;
             }

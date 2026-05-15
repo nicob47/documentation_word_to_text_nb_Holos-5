@@ -4,6 +4,7 @@ using H.Core.Calculators.UnitsOfMeasurement;
 using H.Core.CustomAttributes;
 using H.Core.Enumerations;
 using H.Core.Properties;
+using NLog;
 
 namespace H.Core.Converters
 {
@@ -13,6 +14,10 @@ namespace H.Core.Converters
     /// <typeparam name="T"></typeparam>
     public class PropertyConverter<T> : IPropertyConverter
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly UnitsOfMeasurementCalculator _unitsCalculator = null!;
@@ -57,7 +62,7 @@ namespace H.Core.Converters
                 var prop = this.PropertyInfos.FirstOrDefault(x => x.Name == propertyName);
                 if (prop == null)
                 {
-                    Trace.TraceInformation($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: {propertyName} cannot be converted or doesn't exist. Returning 0");
+                    _log.Info($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: {propertyName} cannot be converted or doesn't exist. Returning 0");
                     return 0;
                 }
 
@@ -65,7 +70,7 @@ namespace H.Core.Converters
                 return this.GetSystemValueFromBinding(prop);
             }
 
-            Trace.TraceInformation($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: {nameof(PropertyInfos)} is null. Returning 0");
+            _log.Info($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: {nameof(PropertyInfos)} is null. Returning 0");
             return 0;
         }
 
@@ -76,14 +81,14 @@ namespace H.Core.Converters
                 var prop = this.PropertyInfos.FirstOrDefault(x => x.Name == propertyName);
                 if (prop == null)
                 {
-                    Trace.TraceInformation($"{nameof(PropertyConverter<T>)}.{nameof(GetBindingValueFromSystem)}: {propertyName} cannot be converted or doesn't exist. Returning 0");
+                    _log.Info($"{nameof(PropertyConverter<T>)}.{nameof(GetBindingValueFromSystem)}: {propertyName} cannot be converted or doesn't exist. Returning 0");
                     return 0;
                 }
 
                 return this.GetBindingValueFromSystem(prop);
             }
 
-            Trace.TraceInformation($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: {nameof(PropertyInfos)} is null. Returning 0");
+            _log.Info($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: {nameof(PropertyInfos)} is null. Returning 0");
             return 0;
         }
 
@@ -113,7 +118,7 @@ namespace H.Core.Converters
                 return imperialValue;
             }
 
-            Trace.TraceError($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
+            _log.Error($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
 
             return 0;
         }
@@ -142,7 +147,7 @@ namespace H.Core.Converters
 
                 return imperialValue;
             }
-            Trace.TraceError($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
+            _log.Error($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
             return 0;
         }
 
@@ -172,7 +177,7 @@ namespace H.Core.Converters
                 var convertedValue = _unitsCalculator.ConvertValueToMetricFromImperial(imperialUnit, propValue, metricUnit);
                 return convertedValue;
             }
-            Trace.TraceError($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
+            _log.Error($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
             return 0;
         }
 
@@ -202,7 +207,7 @@ namespace H.Core.Converters
             
                 return convertedValue;
             }
-            Trace.TraceError($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
+            _log.Error($"{nameof(PropertyConverter<T>)}.{nameof(GetSystemValueFromBinding)}: unable to convert {prop.Name} value, returning 0.");
 
             return 0;
         }

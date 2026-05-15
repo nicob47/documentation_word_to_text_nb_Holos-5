@@ -9,11 +9,16 @@ using H.Core.Models.Results;
 using H.Core.Providers.Economics;
 using H.Core.Services.LandManagement;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Calculators.Economics
 {
     public class EconomicsCalculator : EconomicsHelper
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly CropEconomicsProvider _provider = new CropEconomicsProvider();
@@ -85,7 +90,7 @@ namespace H.Core.Calculators.Economics
             }
             catch (IOException e)
             {
-                Trace.TraceError($"{nameof(EconomicsCalculator)}.{nameof(ExportEconomicsDataToFile)}: error occurred {e.Message}");
+                _log.Error($"{nameof(EconomicsCalculator)}.{nameof(ExportEconomicsDataToFile)}: error occurred {e.Message}");
                 return false;
             }
             return true;
@@ -152,7 +157,7 @@ namespace H.Core.Calculators.Economics
 
                 if (viewItem.CropEconomicData is null)
                 {
-                    Trace.TraceError($"{nameof(EconomicsCalculator)}.{nameof(CalculateCropResults)}: {nameof(CropEconomicData)} is null for {viewItem.CropType.GetDescription()}");
+                    _log.Error($"{nameof(EconomicsCalculator)}.{nameof(CalculateCropResults)}: {nameof(CropEconomicData)} is null for {viewItem.CropType.GetDescription()}");
                     continue;
                 }
 

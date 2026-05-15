@@ -1,10 +1,15 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Converters
 {
     public class ManureStateTypeStringConverter : ConverterBase
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public ManureStateType Convert(string input)
         {
             switch (GetLettersAsLowerCase(input))
@@ -66,7 +71,7 @@ namespace H.Core.Converters
                     return ManureStateType.DailySpread;
 
                 default:
-                    Trace.TraceError($"{nameof(ManureStateTypeStringConverter)}.{nameof(Convert)} was not able to convert" +
+                    _log.Error($"{nameof(ManureStateTypeStringConverter)}.{nameof(Convert)} was not able to convert" +
                                      $" ManureStateType: {input}. Returning {ManureStateType.NotSelected}");
                     return ManureStateType.NotSelected;
             }

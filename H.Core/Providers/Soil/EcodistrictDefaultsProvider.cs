@@ -2,8 +2,8 @@
 using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Soil
 {
@@ -12,6 +12,10 @@ namespace H.Core.Providers.Soil
     /// </summary>
     public class EcodistrictDefaultsProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly EcozoneStringConverter _ecozoneStringConverter;
@@ -33,8 +37,6 @@ namespace H.Core.Providers.Soil
 
         public EcodistrictDefaultsProvider()
         {
-            HTraceListener.AddTraceListener();
-
             _ecozoneStringConverter = new EcozoneStringConverter();
             _provinceStringConverter = new ProvinceStringConverter();
             _soilFunctionalCategoryStringConverter = new SoilFunctionalCategoryStringConverter();
@@ -74,7 +76,7 @@ namespace H.Core.Providers.Soil
 
                 if (shouldWarn)
                 {
-                    Trace.TraceError($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetEcozone)} unable to get ecozone for ecodistrict: {ecodistrictId}. Returning default value of {Ecozone.AtlanticMaritimes.GetDescription()}. (Subsequent occurrences of this ecodistrict will be suppressed.)");
+                    _log.Error($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetEcozone)} unable to get ecozone for ecodistrict: {ecodistrictId}. Returning default value of {Ecozone.AtlanticMaritimes.GetDescription()}. (Subsequent occurrences of this ecodistrict will be suppressed.)");
                 }
 
                 return Ecozone.AtlanticMaritimes;
@@ -102,7 +104,7 @@ namespace H.Core.Providers.Soil
 
                 if (shouldWarn)
                 {
-                    Trace.TraceError($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetFractionOfLandOccupiedByPortionsOfLandscape)} unable to get FTopo value for ecodistrict: {ecodistrictId}, province: {province}. Returning default value of {defaultValue}. (Subsequent occurrences of this key will be suppressed.)");
+                    _log.Error($"{nameof(EcodistrictDefaultsProvider)}.{nameof(EcodistrictDefaultsProvider.GetFractionOfLandOccupiedByPortionsOfLandscape)} unable to get FTopo value for ecodistrict: {ecodistrictId}, province: {province}. Returning default value of {defaultValue}. (Subsequent occurrences of this key will be suppressed.)");
                 }
 
                 return defaultValue;

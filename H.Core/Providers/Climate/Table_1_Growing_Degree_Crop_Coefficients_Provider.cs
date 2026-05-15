@@ -2,8 +2,6 @@
 using H.Core.Converters;
 using H.Infrastructure;
 using H.Core.Enumerations;
-using H.Core.Tools;
-
 namespace H.Core.Providers.Climate
 {
     /// <summary>
@@ -15,8 +13,6 @@ namespace H.Core.Providers.Climate
 
         public Table_1_Growing_Degree_Crop_Coefficients_Provider()
         {
-            HTraceListener.AddTraceListener();
-
             _cache = this.BuildCache();
         }
 

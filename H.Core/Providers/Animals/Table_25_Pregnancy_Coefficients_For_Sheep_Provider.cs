@@ -1,4 +1,4 @@
-﻿using H.Core.Tools;
+﻿using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -8,10 +8,13 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_25_Pregnancy_Coefficients_For_Sheep_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
 
         public Table_25_Pregnancy_Coefficients_For_Sheep_Provider()
         {
-            HTraceListener.AddTraceListener(); 
         }
         public double GetPregnancyCoefficient(double lambRatio)
         {
@@ -32,7 +35,7 @@ namespace H.Core.Providers.Animals
 
             else
             {
-                System.Diagnostics.Trace.TraceError($"{nameof(Table_25_Pregnancy_Coefficients_For_Sheep_Provider)}.{nameof(Table_25_Pregnancy_Coefficients_For_Sheep_Provider.GetPregnancyCoefficient)}" +
+                _log.Error($"{nameof(Table_25_Pregnancy_Coefficients_For_Sheep_Provider)}.{nameof(Table_25_Pregnancy_Coefficients_For_Sheep_Provider.GetPregnancyCoefficient)}" +
                     $" unable to get data for lamb ratio: {lambRatio}." +
                     $" Returning default value of {0}.");
                 return 0;

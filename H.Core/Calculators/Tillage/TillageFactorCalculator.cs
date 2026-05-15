@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 using H.Core.Enumerations;
-using H.Core.Tools;
+using NLog;
 
 #endregion
 
@@ -14,6 +14,10 @@ namespace H.Core.Calculators.Tillage
     /// </summary>
     public class TillageFactorCalculator : ITillageFactorCalculator
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly List<TillageFactorTableRow> _tillageFactorTableRows;
@@ -24,7 +28,6 @@ namespace H.Core.Calculators.Tillage
 
         public TillageFactorCalculator()
         {
-            HTraceListener.AddTraceListener();
             _tillageFactorTableRows = new List<TillageFactorTableRow>
             {
                 new TillageFactorTableRow
@@ -159,7 +162,7 @@ namespace H.Core.Calculators.Tillage
             }
             else
             {
-                Trace.TraceError($"{nameof(TillageFactorCalculator)}.{nameof(CalculateCropTillageFactor)}: unable to calculate factor for {soilFunctionalCategory} and {tillageType}. Returning 1.");
+                _log.Error($"{nameof(TillageFactorCalculator)}.{nameof(CalculateCropTillageFactor)}: unable to calculate factor for {soilFunctionalCategory} and {tillageType}. Returning 1.");
 
                 return 1;
             }

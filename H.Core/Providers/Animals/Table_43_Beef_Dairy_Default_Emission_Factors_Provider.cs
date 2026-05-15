@@ -1,8 +1,8 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
 using System.Diagnostics;
 using H.Core.Models.LandManagement.Fields;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -12,11 +12,14 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_43_Beef_Dairy_Default_Emission_Factors_Provider : IAnimalAmmoniaEmissionFactorProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Constructors
         
         public Table_43_Beef_Dairy_Default_Emission_Factors_Provider()
         {
-            HTraceListener.AddTraceListener();
         } 
 
         #endregion
@@ -67,7 +70,7 @@ namespace H.Core.Providers.Animals
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetEmissionFactorByHousing)}" +
+                _log.Error($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetEmissionFactorByHousing)}" +
                                  $" unable to get data for housing type: {housingType}.");
 
                 return 0;
@@ -92,7 +95,7 @@ namespace H.Core.Providers.Animals
             }
             else 
             {
-                Trace.TraceError($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetByManureStorageType)}" +
+                _log.Error($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetByManureStorageType)}" +
                                  $" unable to get data for storage type: {storageType}.");
                 return 0;
             }
@@ -129,7 +132,7 @@ namespace H.Core.Providers.Animals
                     return 0.02;
 
                 default:
-                    Trace.TraceError($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetAmmoniaEmissionFactorForLiquidAppliedManure)}" +
+                    _log.Error($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetAmmoniaEmissionFactorForLiquidAppliedManure)}" +
                                      $" unable to get data for spreading method: {manureApplicationType.GetDescription()}.");
                     return 0;
             }
@@ -147,7 +150,7 @@ namespace H.Core.Providers.Animals
                     return 0.79;
 
                 default:
-                    Trace.TraceError($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetAmmoniaEmissionFactorForSolidAppliedManure)}" +
+                    _log.Error($"{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider)}.{nameof(Table_43_Beef_Dairy_Default_Emission_Factors_Provider.GetAmmoniaEmissionFactorForSolidAppliedManure)}" +
                         $" unable to get data for land application type: {tillageType}.");
                     return 0;
             }

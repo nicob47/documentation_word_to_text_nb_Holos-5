@@ -3,6 +3,7 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Economics
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Economics
     /// </summary>
     public class Beef_Cattle_Winter_Feed_Cost_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly AnimalTypeStringConverter _animalTypeStringConverter;
@@ -63,12 +68,12 @@ namespace H.Core.Providers.Economics
 
             if (data != null)
             {
-                Trace.TraceError($"{nameof(Beef_Cattle_Winter_Feed_Cost_Provider)}.{nameof(GetBeefCattleWinterFeedCost)} " +
+                _log.Error($"{nameof(Beef_Cattle_Winter_Feed_Cost_Provider)}.{nameof(GetBeefCattleWinterFeedCost)} " +
                                  $": could not find DietType: {dietType} in the .csv file for the AnimalType:{animalType}, returning null.");
             }
             else
             {
-                Trace.TraceError($"{nameof(Beef_Cattle_Winter_Feed_Cost_Provider)}.{nameof(GetBeefCattleWinterFeedCost)} " +
+                _log.Error($"{nameof(Beef_Cattle_Winter_Feed_Cost_Provider)}.{nameof(GetBeefCattleWinterFeedCost)} " +
                                  $": could not find AnimalType: {animalType} in the .csv file, returning null.");
             }
 

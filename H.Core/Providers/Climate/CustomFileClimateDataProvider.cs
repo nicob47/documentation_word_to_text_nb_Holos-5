@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Climate
 {
@@ -9,6 +9,10 @@ namespace H.Core.Providers.Climate
     /// </summary>
     public class CustomFileClimateDataProvider : ICustomFileClimateDataProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         #endregion
@@ -17,7 +21,6 @@ namespace H.Core.Providers.Climate
 
         public CustomFileClimateDataProvider()
         {
-            HTraceListener.AddTraceListener();
         }
 
         #endregion
@@ -35,7 +38,7 @@ namespace H.Core.Providers.Climate
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{nameof(CustomFileClimateDataProvider)}.{nameof(CustomFileClimateDataProvider.HasExpectedInputFormat)}. Error reading input file: {e.ToString()}");
+                _log.Error($"{nameof(CustomFileClimateDataProvider)}.{nameof(CustomFileClimateDataProvider.HasExpectedInputFormat)}. Error reading input file: {e.ToString()}");
 
                 return false;
             }
@@ -113,9 +116,9 @@ namespace H.Core.Providers.Climate
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{nameof(CustomFileClimateDataProvider)}.{nameof(GetDailyClimateData)}");
-                Trace.TraceError($"{e.Message}");
-                Trace.TraceError($"{e.InnerException}");
+                _log.Error($"{nameof(CustomFileClimateDataProvider)}.{nameof(GetDailyClimateData)}");
+                _log.Error($"{e.Message}");
+                _log.Error($"{e.InnerException}");
 
                 return new List<DailyClimateData>();
             }

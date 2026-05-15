@@ -3,6 +3,7 @@ using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 namespace H.Core.Providers.Climate
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Climate
     /// </summary>
     public class Table_55_Global_Radiative_Forcing_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
         private readonly EmissionTypeStringConverter _emissionTypeStringConverter;
 
@@ -59,12 +64,12 @@ namespace H.Core.Providers.Climate
             data = this.Data.Find(x => (x.Year == year));
             if (data != null)
             {
-                Trace.TraceError($"{nameof(Table_55_Global_Radiative_Forcing_Provider)}.{nameof(Table_55_Global_Radiative_Forcing_Provider.GetGlobalRadiativeForcingInstance)}" +
+                _log.Error($"{nameof(Table_55_Global_Radiative_Forcing_Provider)}.{nameof(Table_55_Global_Radiative_Forcing_Provider.GetGlobalRadiativeForcingInstance)}" +
                                  $" the EmissionType: {emissionType} was not found in the available data. Returning null");
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_55_Global_Radiative_Forcing_Provider)}.{nameof(Table_55_Global_Radiative_Forcing_Provider.GetGlobalRadiativeForcingInstance)} " +
+                _log.Error($"{nameof(Table_55_Global_Radiative_Forcing_Provider)}.{nameof(Table_55_Global_Radiative_Forcing_Provider.GetGlobalRadiativeForcingInstance)} " +
                                  $"the Year: {year} was not found in the available data. Returning null");
             }
 

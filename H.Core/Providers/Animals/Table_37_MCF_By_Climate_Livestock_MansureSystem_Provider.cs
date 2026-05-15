@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using H.Core.Enumerations;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -10,6 +11,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_37_MCF_By_Climate_Livestock_MansureSystem_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         // MCFs by climate zone (kg kg^-1)
 
         public double GetByClimateAndHandlingSystem(
@@ -180,7 +185,7 @@ namespace H.Core.Providers.Animals
                 return ClimateZones.WarmTemperateDry;
             }
 
-            Trace.TraceError($"{nameof(Table_37_MCF_By_Climate_Livestock_MansureSystem_Provider.GetClimateZone)}" +
+            _log.Error($"{nameof(Table_37_MCF_By_Climate_Livestock_MansureSystem_Provider.GetClimateZone)}" +
                              $" unable to get data for methane conversion factor since climate zone is unknown" +
                              $" Returning default value of 0.");
             return 0;

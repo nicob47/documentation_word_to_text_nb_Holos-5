@@ -5,6 +5,7 @@ using H.Core.Enumerations;
 using H.Core.Providers.Carbon;
 using H.Core.Providers.Climate;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.AnaerobicDigestion
 {
@@ -15,6 +16,10 @@ namespace H.Core.Providers.AnaerobicDigestion
     /// </summary>
     public class Table_46_Biogas_Methane_Production_Parameters_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly FarmResidueTypeStringConverter _farmResidueTypeStringConverter;
@@ -97,7 +102,7 @@ namespace H.Core.Providers.AnaerobicDigestion
             }
             else
             {
-                Trace.TraceError($"{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider)}.{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider.GetBiogasMethaneProductionInstance)}" +
+                _log.Error($"{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider)}.{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider.GetBiogasMethaneProductionInstance)}" +
                     $" does not contain AnimalType of {lookupAnimalType}. Returning an empty instance of {nameof(Table_46_Biogas_Methane_Production_Parameters_Provider)}");
             }
 
@@ -119,7 +124,7 @@ namespace H.Core.Providers.AnaerobicDigestion
                 return data;
             }
 
-            Trace.TraceError($"{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider)}.{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider.GetBiogasMethaneProductionInstance)}" +
+            _log.Error($"{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider)}.{nameof(Table_46_Biogas_Methane_Production_Parameters_Provider.GetBiogasMethaneProductionInstance)}" +
              $" does not contain FarmResidueType of {residueType}. Returning an empty instance of {nameof(Table_46_Biogas_Methane_Production_Parameters_Provider)}");
 
             return new BiogasAndMethaneProductionParametersData();

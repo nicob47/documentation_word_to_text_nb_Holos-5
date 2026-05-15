@@ -1,7 +1,7 @@
 ﻿using H.Core.Enumerations;
-using H.Core.Tools;
 using System.Diagnostics;
 using H.Core.Models.Animals;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -10,6 +10,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider 
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Properties
         private List<Table_36_Livestock_Emission_Conversion_Factors_Data> Data { get; set; } = new List<Table_36_Livestock_Emission_Conversion_Factors_Data>(); 
         #endregion
@@ -18,7 +22,6 @@ namespace H.Core.Providers.Animals
 
         public Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider()
         {
-            HTraceListener.AddTraceListener();
         }
 
         #endregion
@@ -100,7 +103,7 @@ namespace H.Core.Providers.Animals
                 return 64;
             }
 
-            Trace.TraceError($"{nameof(Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider)}.{nameof(GetAnnualEntericMethaneEmissionRate)}" +
+            _log.Error($"{nameof(Table_27_Enteric_CH4_Swine_Poultry_OtherLivestock_Provider)}.{nameof(GetAnnualEntericMethaneEmissionRate)}" +
                              $" unable to get data for animal type: {animalType}." +
                              $" Returning default value of 0.");
 

@@ -3,11 +3,16 @@ using H.Core.Enumerations;
 using H.Core.Converters;
 using H.Infrastructure;
 using H.Content;
+using NLog;
 
 namespace H.Core.Providers.Soil
 {
     public class SilageYieldProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private readonly ProvinceStringConverter _provinceStringConverter;
@@ -57,12 +62,12 @@ namespace H.Core.Providers.Soil
 
             if (data != null)
             {
-                Trace.TraceError($"{nameof(SilageYieldProvider)}.{nameof(SilageYieldProvider.GetDataInstance)} cannot find the Province: {province} " +
+                _log.Error($"{nameof(SilageYieldProvider)}.{nameof(SilageYieldProvider.GetDataInstance)} cannot find the Province: {province} " +
                     $" in the available data. Returning null");
             }
             else
             {
-                Trace.TraceError($"{nameof(SilageYieldProvider)}.{nameof(SilageYieldProvider.GetDataInstance)} cannot find the Year: {year} " +
+                _log.Error($"{nameof(SilageYieldProvider)}.{nameof(SilageYieldProvider.GetDataInstance)} cannot find the Year: {year} " +
                     $" in the available data. Returning null");
             }
 

@@ -2,8 +2,8 @@
 using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Soil
 {
@@ -12,6 +12,10 @@ namespace H.Core.Providers.Soil
     /// </summary>
     public class DefaultYieldProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public DefaultYieldTableData DefaultValueForGetRowByCarIdYearAndCropType = new DefaultYieldTableData()
         {
             PrId = 0,
@@ -40,7 +44,6 @@ namespace H.Core.Providers.Soil
 
         public DefaultYieldProvider()
         {
-            HTraceListener.AddTraceListener();
             this._cachedData = this.GetData();
         }
 
@@ -134,7 +137,7 @@ namespace H.Core.Providers.Soil
             var listByCarId = _cachedData.Where(x => x.CarId == carId);
             if (listByCarId.Any() == false)
             {
-                Trace.TraceError($"{nameof(DefaultYieldProvider)}.{nameof(DefaultYieldProvider.GetRowByCarIdYearAndCropType)}" +
+                _log.Error($"{nameof(DefaultYieldProvider)}.{nameof(DefaultYieldProvider.GetRowByCarIdYearAndCropType)}" +
                     $" unable to get row for carID: {carId}, year: {year}, crop type: {cropType}." +
                     $" Returning default value of {DefaultValueForGetRowByCarIdYearAndCropType}.");
                 return DefaultValueForGetRowByCarIdYearAndCropType;
@@ -143,7 +146,7 @@ namespace H.Core.Providers.Soil
             var listByYear = listByCarId.Where(x => x.Year == year);
             if (listByYear.Any() == false)
             {
-                Trace.TraceError($"{nameof(DefaultYieldProvider)}.{nameof(DefaultYieldProvider.GetRowByCarIdYearAndCropType)}" +
+                _log.Error($"{nameof(DefaultYieldProvider)}.{nameof(DefaultYieldProvider.GetRowByCarIdYearAndCropType)}" +
                     $" unable to get row for carID: {carId}, year: {year}, crop type: {cropType}." +
                     $" Returning default value of {DefaultValueForGetRowByCarIdYearAndCropType}.");
                 return DefaultValueForGetRowByCarIdYearAndCropType;
@@ -152,7 +155,7 @@ namespace H.Core.Providers.Soil
             var listByCrop = listByCarId.Where(x => x.CropType == cropType);
             if (listByCrop.Any() == false)
             {
-                Trace.TraceError($"{nameof(DefaultYieldProvider)}.{nameof(DefaultYieldProvider.GetRowByCarIdYearAndCropType)}" +
+                _log.Error($"{nameof(DefaultYieldProvider)}.{nameof(DefaultYieldProvider.GetRowByCarIdYearAndCropType)}" +
                     $" unable to get row for carID: {carId}, year: {year}, crop type: {cropType}." +
                     $" Returning default value of {DefaultValueForGetRowByCarIdYearAndCropType}.");
                 return DefaultValueForGetRowByCarIdYearAndCropType;

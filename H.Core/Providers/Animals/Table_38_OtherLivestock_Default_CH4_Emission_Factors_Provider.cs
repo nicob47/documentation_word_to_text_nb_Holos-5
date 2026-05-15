@@ -1,5 +1,6 @@
 ﻿using H.Core.Enumerations;
 using H.Infrastructure;
+using NLog;
 
 namespace H.Core.Providers.Animals
 {
@@ -8,6 +9,10 @@ namespace H.Core.Providers.Animals
     /// </summary>
     public class Table_38_OtherLivestock_Default_CH4_Emission_Factors_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         public double GetDailyManureMethaneEmissionRate(AnimalType animalType)
         {
             // Refer to Footnote 1 for CH4 manure rate value reference.
@@ -41,7 +46,7 @@ namespace H.Core.Providers.Animals
                 return 0.000603;
             }
 
-            System.Diagnostics.Trace.TraceError(
+            _log.Error(
                 $"{nameof(Table_38_OtherLivestock_Default_CH4_Emission_Factors_Provider)}.{nameof(GetDailyManureMethaneEmissionRate)}" +
                 $": Unable to get data for animal type: {animalType.GetDescription()}." +
                 $" Returning default value of 0.");

@@ -2,6 +2,7 @@
 using H.Core.Converters;
 using H.Infrastructure;
 using System.Diagnostics;
+using NLog;
 
 namespace H.Core.Providers.Shelterbelt
 {
@@ -11,6 +12,10 @@ namespace H.Core.Providers.Shelterbelt
     /// </summary>
     public class Table_11_Coefficients_For_AGB_Estimation_Shelterbelt_Trees_Provider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         private readonly TreeSpeciesStringConverter _treeSpeciesStringConverter = new TreeSpeciesStringConverter();
         private readonly List<Table_11_Coefficients_For_AGB_Estimation_Shelterbelt_Trees_Data> _cache;
 
@@ -35,7 +40,7 @@ namespace H.Core.Providers.Shelterbelt
             {
                 if (string.IsNullOrWhiteSpace(line[0]))
                 {
-                    Trace.Write($"{nameof(Table_11_Coefficients_For_AGB_Estimation_Shelterbelt_Trees_Provider)}.{nameof(BuildCache)}" +
+                    _log.Info($"{nameof(Table_11_Coefficients_For_AGB_Estimation_Shelterbelt_Trees_Provider)}.{nameof(BuildCache)}" +
                                 $" - File: {nameof(CsvResourceNames.CoefficientsForAboveGroundBiomassEstimationForShelterbeltTreeSpecies)} : first cell of the line is empty. Exiting loop to stop reading more lines inside .csv file.");
                     break;
                 }

@@ -65,10 +65,55 @@ public class FarmAnalysisServiceTests
         Assert.AreEqual("shelterbeltCalculator", ex.ParamName);
     }
 
+    /// <summary>
+    /// Build a synthetic farm with a Canadian province so the analysis-entry guard
+    /// (rejects non-Canadian provinces) accepts it. Default <c>new Farm()</c> leaves
+    /// <see cref="Farm.Province"/> at the enum default <c>SelectProvince</c>, which the
+    /// guard correctly treats as "user hasn't picked a Canadian province yet" and
+    /// refuses to run — so every test that hits RunAnalysis goes through this helper.
+    /// </summary>
+    private static Farm MakeFarm(string? name = null)
+    {
+        var farm = new Farm { Province = Province.Alberta };
+        if (!string.IsNullOrEmpty(name))
+        {
+            farm.Name = name;
+        }
+        return farm;
+    }
+
     [TestMethod]
     public void RunAnalysis_NullFarm_Throws()
     {
         Assert.ThrowsExactly<ArgumentNullException>(() => _sut.RunAnalysis(null!));
+    }
+
+    [TestMethod]
+    public void RunAnalysis_NonCanadianProvince_ThrowsInvalidOperationExceptionWithClearMessage()
+    {
+        // Guard A: a farm imported from a v4 .json with Province=Laois (or any other
+        // Ireland-mode value) used to silently produce a NaN-filled chart because every
+        // Canada-keyed provider missed and the ICBM steady-state denominator collapsed
+        // to zero. Now we refuse to run at all and surface a clear message that the
+        // existing LastErrorMessage banner in GHGResultsView can show.
+        var farm = new Farm { Province = Province.Laois, Name = "Imported v4 farm" };
+
+        var ex = Assert.ThrowsExactly<InvalidOperationException>(() => _sut.RunAnalysis(farm));
+
+        StringAssert.Contains(ex.Message, "non-Canadian");
+        StringAssert.Contains(ex.Message, "Laois");
+    }
+
+    [TestMethod]
+    public void RunAnalysis_DefaultSelectProvince_AlsoBlockedByGuard()
+    {
+        // A brand-new Farm() defaults to Province.SelectProvince (enum value 0). The guard
+        // treats this the same way as any other non-Canadian value: refuse to run so the
+        // user is forced into the soil settings to pick a province first. This is the
+        // behaviour every other test in this class works around via MakeFarm().
+        var farm = new Farm { Name = "Fresh farm with no province picked" };
+
+        Assert.ThrowsExactly<InvalidOperationException>(() => _sut.RunAnalysis(farm));
     }
 
     [TestMethod]
@@ -77,7 +122,7 @@ public class FarmAnalysisServiceTests
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
             .Returns(new List<CropViewItem>());
 
-        var farm = new Farm { Name = "Bare farm" };
+        var farm = MakeFarm("Bare farm");
 
         var result = _sut.RunAnalysis(farm);
 
@@ -96,7 +141,7 @@ public class FarmAnalysisServiceTests
             new AnimalComponentEmissionsResults(),
         };
 
-        var farm = new Farm();
+        var farm = MakeFarm();
         _animalService.Setup(s => s.GetAnimalResults(farm)).Returns(animalResults);
 
         List<AnimalComponentEmissionsResults>? observedAtCalculateTime = null;
@@ -126,7 +171,7 @@ public class FarmAnalysisServiceTests
         };
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>())).Returns(crops);
 
-        var result = _sut.RunAnalysis(new Farm());
+        var result = _sut.RunAnalysis(MakeFarm());
 
         Assert.AreEqual(6, result.YearResults.Count);
 
@@ -166,7 +211,7 @@ public class FarmAnalysisServiceTests
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
             .Returns(new List<CropViewItem> { crop });
 
-        var result = _sut.RunAnalysis(new Farm());
+        var result = _sut.RunAnalysis(MakeFarm());
 
         var row = result.YearResults.Single();
         Assert.AreEqual(150, row.AboveGroundCarbonInput);
@@ -196,7 +241,7 @@ public class FarmAnalysisServiceTests
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
             .Returns(new List<CropViewItem> { crop });
 
-        var result = _sut.RunAnalysis(new Farm());
+        var result = _sut.RunAnalysis(MakeFarm());
 
         var row = result.YearResults.Single();
         Assert.AreEqual(100, row.AboveGroundCarbonInput);
@@ -208,7 +253,7 @@ public class FarmAnalysisServiceTests
     [TestMethod]
     public void RunAnalysis_PopulatesCarbonModellingStrategyFromFarmDefaults()
     {
-        var farm = new Farm();
+        var farm = MakeFarm();
         farm.Defaults.CarbonModellingStrategy = CarbonModellingStrategies.IPCCTier2;
 
         _fieldResultsService.Setup(s => s.CalculateFinalResults(farm)).Returns(new List<CropViewItem>());
@@ -224,7 +269,7 @@ public class FarmAnalysisServiceTests
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
             .Returns(new List<CropViewItem>());
 
-        var farm = new Farm();
+        var farm = MakeFarm();
 
         var result = _sut.RunAnalysis(farm);
 
@@ -248,7 +293,7 @@ public class FarmAnalysisServiceTests
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
             .Returns(new List<CropViewItem> { crop });
 
-        var result = _sut.RunAnalysis(new Farm());
+        var result = _sut.RunAnalysis(MakeFarm());
 
         var row = result.YearResults.Single();
         Assert.AreEqual(142.5, row.NitrogenAppliedFromManure);
@@ -267,7 +312,7 @@ public class FarmAnalysisServiceTests
         _fieldResultsService.Setup(s => s.CalculateFinalResults(It.IsAny<Farm>()))
             .Returns(new List<CropViewItem>());
 
-        var farm = new Farm();
+        var farm = MakeFarm();
         farm.Components.Add(new ShelterbeltComponent { Name = "Empty belt" });
 
         var result = _sut.RunAnalysis(farm);

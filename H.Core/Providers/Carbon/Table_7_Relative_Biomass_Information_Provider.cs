@@ -5,8 +5,8 @@ using H.Content;
 using H.Core.Converters;
 using H.Core.Enumerations;
 using H.Core.Providers.AnaerobicDigestion;
-using H.Core.Tools;
 using H.Infrastructure;
+using NLog;
 
 #endregion
 
@@ -19,6 +19,10 @@ namespace H.Core.Providers.Carbon
     /// </summary>
     public class Table_7_Relative_Biomass_Information_Provider : IResidueDataProvider
     {
+        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Fields
 
         private List<Table_7_Relative_Biomass_Information_Data> _data;
@@ -29,7 +33,6 @@ namespace H.Core.Providers.Carbon
 
         public Table_7_Relative_Biomass_Information_Provider()
         {
-            HTraceListener.AddTraceListener();
             _data = this.GetData().ToList();
         }
 
@@ -77,7 +80,7 @@ namespace H.Core.Providers.Carbon
             var byCropType = _data.Where(x => x.CropType == cropType).ToList();
             if (byCropType.Any() == false)
             {
-                Trace.TraceError($"{nameof(Table_7_Relative_Biomass_Information_Provider)}.{nameof(this.GetResidueData)}: unknown crop type: '{cropType.GetDescription()}'. Returning default values.");
+                _log.Error($"{nameof(Table_7_Relative_Biomass_Information_Provider)}.{nameof(this.GetResidueData)}: unknown crop type: '{cropType.GetDescription()}'. Returning default values.");
 
                 return new Table_7_Relative_Biomass_Information_Data();
             }
