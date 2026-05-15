@@ -13,9 +13,15 @@ using NLog;
 namespace H.Core.Providers.Carbon
 {
     /// <summary>
-    /// This implements multiple tables.
-    /// <para>Table 7a: Relative biomass allocation coefficients for different crops in the Holos model.</para>
-    /// <para>Table 7b: Relative biomass lignin and nitrogen contents</para>
+    /// Combined provider for Table 7a (biomass allocation coefficients — fractions of plant C
+    /// going to product, straw, roots, extraroots) and Table 7b (lignin + nitrogen content per
+    /// crop residue type).
+    ///
+    /// <para><b>Where it's used:</b></para>
+    /// <see cref="ICBMSoilCarbonCalculator.SetCarbonInputs"/> reads these per crop to compute
+    /// CarbonInputFromProduct / Straw / Roots / Extraroots. The lookup key is
+    /// (crop type, soil functional category, irrigation type, irrigation amount, province), so
+    /// the same crop can have different residue allocations across the country.
     /// </summary>
     public class Table_7_Relative_Biomass_Information_Provider : IResidueDataProvider
     {

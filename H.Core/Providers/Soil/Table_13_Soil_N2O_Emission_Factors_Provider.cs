@@ -6,8 +6,19 @@ using NLog;
 namespace H.Core.Providers.Soil
 {
     /// <summary>
-    /// <para>Table 13: Soil nitrous oxide emission factors (N2O EF) as influenced by source of nitrogen, soil texture, tillage practice and crop type in Canada (adapted from Liang et al., 2020)</para>
-    /// <para>Provider contains values for RF_NS, RF_TX, RF_TILL, TF_CS and RF_AM</para>
+    /// Table 13 — Canadian soil N₂O emission factors adapted from Liang et al. (2020), broken
+    /// down by N source, soil texture, tillage practice, and crop type. Holds the modifier
+    /// factors that <see cref="H.Core.Calculators.Nitrogen.N2OEmissionFactorCalculator"/>
+    /// multiplies together with the base emission factor to get the final per-context EF.
+    ///
+    /// <para><b>Factor abbreviations:</b></para>
+    /// <list type="bullet">
+    ///   <item><c>RF_NS</c> — reduction / modifier factor for the nitrogen source (synthetic vs organic vs residue).</item>
+    ///   <item><c>RF_TX</c> — modifier for soil texture (fine / medium / coarse).</item>
+    ///   <item><c>RF_TILL</c> — modifier for tillage practice (intensive / reduced / no-till).</item>
+    ///   <item><c>TF_CS</c> — temperature factor by climate scenario.</item>
+    ///   <item><c>RF_AM</c> — modifier for application method (broadcast / banded / injected).</item>
+    /// </list>
     /// </summary>
     public class Table_13_Soil_N2O_Emission_Factors_Provider
     {
@@ -17,10 +28,20 @@ namespace H.Core.Providers.Soil
 
         #region Inner Classes
 
+        /// <summary>
+        /// Discriminator used by Table 13 lookups — different RF_NS values apply depending on
+        /// whether the N input is synthetic fertilizer, organic (manure / digestate), or crop
+        /// residue.
+        /// </summary>
         public enum NitrogenSourceTypes
         {
+            /// <summary>Synthetic fertilizer N (urea, anhydrous ammonia, etc.).</summary>
             SyntheticNitrogen,
+
+            /// <summary>Organic N from manure or digestate applications.</summary>
             OrganicNitrogen,
+
+            /// <summary>N returned via crop residues (straw, roots, extraroots) at harvest / senescence.</summary>
             CropResidueNitrogen,
         }
 

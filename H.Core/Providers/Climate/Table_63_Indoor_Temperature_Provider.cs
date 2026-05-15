@@ -7,6 +7,18 @@ using NLog;
 
 namespace H.Core.Providers.Climate
 {
+    /// <summary>
+    /// Table 63 — monthly average indoor barn temperatures by Canadian province. Used by the
+    /// animal pipeline's housing-emissions math (manure-storage-stage methane / N₂O emissions
+    /// depend on ambient indoor temperature). The carbon pipeline touches this indirectly via
+    /// the animal-results service when grazing or manure deposits feed back into field N₂O.
+    ///
+    /// <para><b>Unknown-province handling:</b></para>
+    /// Falls back to an empty <see cref="IndoorTemperatureData"/> (all zeros) when the province
+    /// isn't in the table, and warns once per unique unknown province via
+    /// <see cref="_warnedProvinces"/>. Calculation behaviour matches v4 — only the log volume
+    /// changes.
+    /// </summary>
     public class Table_63_Indoor_Temperature_Provider : ProviderBase, IIndoorTemperatureProvider
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every

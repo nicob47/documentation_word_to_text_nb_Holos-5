@@ -5,6 +5,25 @@ using H.Infrastructure;
 
 namespace H.Core.Providers.Soil
 {
+    /// <summary>
+    /// Default-yield lookup keyed by <c>(year, SLC polygon, crop type, province)</c>. Used by
+    /// the carbon pipeline when the user hasn't supplied a custom yield for a crop —
+    /// <c>FieldResultsService.AssignYieldToAllYears</c> falls back here.
+    ///
+    /// <para><b>Performance note:</b></para>
+    /// The backing CSV has &gt;1 million rows (every polygon × year × crop combination). Parsing
+    /// it dominates the constructor of <c>FieldResultsService</c> (~7–12 seconds in profiling).
+    /// To keep the first "Run GHG Analysis" click off this critical path, the GUI's
+    /// <c>ContainerRegistrationService.PreWarmHeavyServices</c> resolves <c>IFieldResultsService</c>
+    /// on a background thread at app startup so the file is already loaded by the time the user
+    /// reaches the results page.
+    ///
+    /// <para><b>Two-dictionary design:</b></para>
+    /// <see cref="_cache"/> holds the original CSV-loaded values; <see cref="_updatedYields"/>
+    /// holds values from a secondary CSV that overrides the originals for specific
+    /// (year, polygon, crop, province) combinations. Lookups check the override dictionary
+    /// first.
+    /// </summary>
     public class SmallAreaYieldProvider
     {
         #region Fields
@@ -12,9 +31,15 @@ namespace H.Core.Providers.Soil
         private readonly ProvinceStringConverter _provinceStringConverter = new ProvinceStringConverter();
         private readonly CropTypeStringConverter _cropStringConverter = new CropTypeStringConverter();
 
-        // Use a dictionary since there are > 1M records in the file
+        /// <summary>
+        /// Primary yield-lookup cache. Composite key avoids per-call LINQ over a 1M-row list.
+        /// </summary>
         private readonly Dictionary<(int year, int polygon, CropType cropType, Province province), SmallAreaYieldData> _cache = new Dictionary<(int year, int polygon, CropType cropType, Province province), SmallAreaYieldData>();
 
+        /// <summary>
+        /// Overrides loaded from a secondary CSV; checked first by lookup callers. Lets us patch
+        /// specific yields without re-cutting the primary file.
+        /// </summary>
         private readonly Dictionary<(int year, int polygon, CropType cropType, Province province), SmallAreaYieldData> _updatedYields = new Dictionary<(int year, int polygon, CropType cropType, Province province), SmallAreaYieldData>();
 
 

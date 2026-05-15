@@ -9,7 +9,17 @@ using NLog;
 namespace H.Core.Providers.Plants
 {
     /// <summary>
-    /// Table 9. Default values for nitrogen and lignin contents in crops for the IPCC (2019) Tier 2 steady-state method (iterated)
+    /// Table 9 — per-crop nitrogen and lignin contents plus the slope / intercept / R:S
+    /// coefficients used by Tier 2's yield-to-residue conversion. Holds the data
+    /// <see cref="H.Core.Calculators.Carbon.IPCCTier2CarbonInputCalculator.CanCalculateInputsForCrop"/>
+    /// uses to decide whether Tier 2 can handle a given crop — when the slope value is 0 the
+    /// crop has no Tier 2 entry and the dispatch falls back to ICBM.
+    ///
+    /// <para>
+    /// The metabolic vs structural DOM-input split that drives Tier 2's active-pool inputs is
+    /// computed from these N + lignin contents (more lignin → more structural, slower-turnover
+    /// input).
+    /// </para>
     /// </summary>
     public class Table_9_Nitrogen_Lignin_Content_In_Crops_Provider : ProviderBase
     {

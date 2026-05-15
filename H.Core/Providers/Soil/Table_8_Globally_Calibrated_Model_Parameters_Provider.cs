@@ -9,7 +9,12 @@ using NLog;
 namespace H.Core.Providers.Soil
 {
     /// <summary>
-    /// Table 8: Globally calibrated model parameters to be used to estimate SOC changes from mineral soils with the IPCC (2019) Tier 2 steady-state method
+    /// Table 8 — globally calibrated model parameters for the IPCC (2019) Tier 2 steady-state
+    /// method. Holds the decomposition rate constants, transfer fractions between pools, and
+    /// tillage-modifier coefficients that drive
+    /// <see cref="H.Core.Calculators.Carbon.IPCCTier2SoilCarbonCalculator"/>'s active / slow /
+    /// passive pool dynamics. Only consulted when the user has selected Tier 2 as the strategy
+    /// — ICBM uses different calibration constants stored on <c>farm.Defaults</c>.
     /// </summary>
     public class Table_8_Globally_Calibrated_Model_Parameters_Provider
     {

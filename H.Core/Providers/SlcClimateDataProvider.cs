@@ -15,6 +15,23 @@ using NLog;
 namespace H.Core.Providers
 {
     /// <summary>
+    /// SLC (Soil Landscape of Canada) climate data provider. Loads the monthly normals
+    /// (temperature, precipitation, potential evapotranspiration) for every Canadian SLC
+    /// polygon, indexed by the climate normal time frame (1950–1980, 1960–1990, … 1990–2017).
+    /// The carbon pipeline reads these via <c>FieldResultsService.CalculateClimateParameter</c>
+    /// when a farm has no custom daily-climate data of its own — most user-authored farms hit
+    /// this path rather than the daily-data path.
+    ///
+    /// <para><b>Time-frame model:</b></para>
+    /// SLC normals come in five 30-year (or 27-year for the last one) windows. The user picks
+    /// one via <c>farm.ClimateNormalRangeType</c>; this provider stores all five lists in
+    /// memory and routes <c>GetTemperatureByCoordinates</c> / sibling calls to the active
+    /// time-frame's list.
+    ///
+    /// <para><b>Why all five are loaded eagerly:</b></para>
+    /// The CSVs are small (a few MB total) and switching between time frames during a session
+    /// would otherwise have to re-parse them. Loading once at startup is cheaper than the
+    /// alternatives.
     /// </summary>
     public class SlcClimateDataProvider : ProviderBase, ISlcClimateProvider
     {

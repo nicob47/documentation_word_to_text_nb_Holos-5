@@ -8,7 +8,24 @@ using NLog;
 namespace H.Core.Providers.Irrigation
 {
     /// <summary>
-    /// Table 4. Percentage of total annual irrigation water applied by month for each province/region in Canada (average values across 2010 and 2012).
+    /// Table 4 — percentage of total annual irrigation water applied by month for each Canadian
+    /// province / region (averages across 2010 and 2012). Used by the climate-parameter
+    /// calculation to redistribute the user's annual irrigation total across the growing season
+    /// when computing precipitation effects.
+    ///
+    /// <para><b>Lookup contract:</b></para>
+    /// <see cref="GetMonthlyAverageIrrigationDataInstance"/> returns the data row for a
+    /// (month, province) pair, falling back to any-province if the specific one isn't present
+    /// (legacy farms) and returning <c>null</c> if even the month is missing. Callers treat
+    /// <c>null</c> as zero irrigation for that month.
+    ///
+    /// <para><b>Non-Canadian-province suppression:</b></para>
+    /// On a miss the provider warns once per unique province via a static
+    /// <see cref="_warnedProvinces"/> set, then suppresses subsequent warnings for the same
+    /// province. Without this, a single v4-imported farm with Province=Laois could emit
+    /// hundreds of thousands of identical lines to the Output window (one per
+    /// month × year × field). The warning suppression doesn't change calculation behaviour —
+    /// callers still see <c>null</c> and use zero.
     /// </summary>
     public class Table_4_Monthly_Irrigation_Water_Application_Provider
     {

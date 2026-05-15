@@ -5,11 +5,35 @@ using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Calculators.Carbon;
 
+/// <summary>
+/// ICBM-specific carbon-input math: turns yield + crop type + manure / digestate / grazing
+/// inputs into the per-hectare <c>AboveGroundCarbonInput</c> / <c>BelowGroundCarbonInput</c> /
+/// <c>ManureCarbonInputsPerHectare</c> / <c>DigestateCarbonInputsPerHectare</c> fields that
+/// the ICBM pool dynamics consume.
+///
+/// <para><b>Relationship to <see cref="ICBMSoilCarbonCalculator"/>:</b></para>
+/// The input-side math currently lives in both this class and on the soil-carbon calculator.
+/// The Phase 4 follow-up list in <c>MEMORY.md</c> tracks the migration that strips the
+/// duplicates from <see cref="ICBMSoilCarbonCalculator"/> in favour of this calculator.
+///
+/// <para><b>Perennial-root floor:</b></para>
+/// <see cref="MinimumPerennialRootCarbonInput"/> = 450 kg C ha⁻¹ — Holos won't let perennial
+/// root-C input fall below this regardless of yield, matching v4's behaviour. The annual
+/// increase percentage (<see cref="PerennialRootCarbonAnnualIncreasePercent"/> = 19.35%) is
+/// applied year-over-year for stands that haven't reached the maximum yet.
+/// </summary>
 public class ICBMCarbonInputCalculator : CarbonInputCalculatorBase, IICBMCarbonInputCalculator
 {
+    /// <summary>Moisture content (fraction) used to convert fresh-biomass yields to dry matter.</summary>
     private const double MoistureContentFreshBiomass = 0.8;
+
+    /// <summary>Moisture content (fraction) of air-dried hay used in supplemental-feed math.</summary>
     private const double MoistureContentAirDriedHay = 0.13;
+
+    /// <summary>Floor for perennial root C input regardless of low yield (kg C ha⁻¹). Matches v4.</summary>
     private const double MinimumPerennialRootCarbonInput = 450;
+
+    /// <summary>Year-over-year increase percentage for perennial root C input until the maximum is reached.</summary>
     private const double PerennialRootCarbonAnnualIncreasePercent = 19.35;
 
     #region Public Methods

@@ -5,18 +5,39 @@ using H.Core.Services.Animals;
 
 namespace H.Core.Calculators.Carbon;
 
+/// <summary>
+/// Shared base for the two carbon-input calculators (<see cref="ICBMCarbonInputCalculator"/>
+/// and <see cref="IPCCTier2CarbonInputCalculator"/>). Owns the parts of the input math both
+/// strategies share — most notably the supplemental-hay-to-grazing-animals contribution
+/// (equations 2.1.2-34 / 2.1.2-2) which feeds <c>AboveGroundCarbonInput</c> in both models.
+///
+/// <para><b>Note on duplication:</b></para>
+/// Some input methods (PlantCarbonInAgriculturalProduct, CarbonInputFromProduct, etc.) are
+/// currently duplicated between <see cref="ICBMSoilCarbonCalculator"/> and
+/// <see cref="ICBMCarbonInputCalculator"/>. The Phase 4 follow-up list in
+/// <c>MEMORY.md</c> tracks the de-duplication work.
+/// </summary>
 public class CarbonInputCalculatorBase : ICarbonInputCalculator
 {
     #region Fields
 
+    /// <summary>Manure C / N source — initialized per-farm by <c>AssignInputs</c> before each calc.</summary>
     protected readonly IManureService manureService;
+
+    /// <summary>Digestate C / N source — same lifecycle as <see cref="manureService"/>.</summary>
     protected readonly IDigestateService digestateService;
+
+    /// <summary>Animal-pipeline accessor for grazing / supplemental-feed lookups.</summary>
     protected readonly IAnimalService animalService;
 
     #endregion
 
     #region Constructors
 
+    /// <summary>
+    /// Default-constructs the manure / digestate / animal services. Subclasses inherit the
+    /// instances; callers re-initialize them per-farm before each carbon-input pass.
+    /// </summary>
     public CarbonInputCalculatorBase()
     {
         manureService = new ManureService();

@@ -8,7 +8,16 @@ using NLog;
 namespace H.Core.Providers.Soil
 {
     /// <summary>
-    /// Used to assist in the lookup of values in Table 1.
+    /// Ecodistrict defaults — provides the ecozone, FTopo (topographic fraction), and other
+    /// per-ecodistrict defaults that the carbon / nitrogen pipeline needs to look up by SLC
+    /// ecodistrict id. Backed by the "Table 1" CSV in <c>H.Content/Documentation</c>.
+    ///
+    /// <para><b>Why two warning hashsets:</b></para>
+    /// Missing ecodistrict ids are warned about differently depending on which method missed:
+    /// <see cref="GetEcozone"/> uses <see cref="_warnedEcozoneMisses"/> (keyed by id alone),
+    /// while <see cref="GetFractionOfLandOccupiedByPortionsOfLandscape"/> uses
+    /// <see cref="_warnedFTopoMisses"/> (keyed by id + province) since the same ecodistrict
+    /// can span multiple provinces with different FTopo values.
     /// </summary>
     public class EcodistrictDefaultsProvider
     {
