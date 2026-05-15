@@ -232,6 +232,73 @@ For a deeper architectural narrative — how the partials fit together, how DI i
 how the analysis pipeline flows — see [`ARCHITECTURE.md`](../../../ARCHITECTURE.md) and the
 visual flowchart in [`Carbon_Model_Flow.md`](./Carbon_Model_Flow.md).
 
+## GUI navigation map
+
+Discovering the screen sequence by running the app is fine, but slow. This state diagram
+shows the navigation graph — which view leads to which, where one-time setup screens fit,
+and how the carbon-results page is reached. Every transition corresponds to a real
+`IRegionManager.RequestNavigate(...)` call in the codebase; greppable by view name if you
+need to find the trigger.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Disclaimer : App.OnInitialized
+    Disclaimer --> MeasurementProvince : Accept
+
+    state "Measurement &amp; Province\n(one-time, persisted in app.config)" as MeasurementProvince
+    MeasurementProvince --> FarmOptions : Continue
+
+    state "Farm Options\n(landing screen for an open session)" as FarmOptions
+    FarmOptions --> FarmCreation : New farm
+    FarmOptions --> FarmOpenExisting : Open existing
+    FarmOptions --> FarmImportFile : Import v4 .json
+
+    FarmCreation --> SoilDataView : Configure soil
+    SoilDataView --> ClimateDataView : Configure climate
+    ClimateDataView --> MyComponents : Done setup
+
+    FarmOpenExisting --> MyComponents : Select farm
+    FarmImportFile --> FarmOpenExisting : Import succeeded
+
+    state "My Components\n(active-farm dashboard)" as MyComponents
+    MyComponents --> FieldComponent : Add / edit field
+    MyComponents --> AnimalComponent : Add / edit beef / dairy / swine / etc.
+    MyComponents --> ShelterbeltComponent : Add / edit shelterbelt
+    MyComponents --> ADComponent : Add / edit anaerobic digester
+    MyComponents --> GHGResults : Results button
+
+    state "Field Component Editor\n(3 steps: name/area/soil, crops, details)" as FieldComponent
+    FieldComponent --> MyComponents : Save / back
+
+    AnimalComponent --> MyComponents : Save / back
+    ShelterbeltComponent --> MyComponents : Save / back
+    ADComponent --> MyComponents : Save / back
+
+    state "GHG &amp; Carbon Results\n(per-field DataGrid + soil-C trend chart)" as GHGResults
+    GHGResults --> MyComponents : Go back
+```
+
+### Things worth knowing about the navigation graph
+
+- **`Disclaimer` and `MeasurementProvince` are one-time.** Once accepted / selected, they
+  don't appear again — the selection is persisted in `app.config` and `IStorage` so the next
+  launch goes straight to `FarmOptions`.
+- **`FarmImportFile` is the v4 `.json` import path.** It deserializes through Newtonsoft.Json
+  with `TypeNameHandling.Auto`, runs the imported farms through
+  `NormalizeProvinceOnImport` (the Guard B province check), and then hands off to
+  `FarmOpenExisting` so the user can pick which imported farm to make active.
+- **`MyComponents` is the hub.** Every per-component editor reachable from there
+  (`FieldComponent`, the six animal-species editors, `Shelterbelt`, `AnaerobicDigestion`)
+  shares the same "save returns to MyComponents" pattern.
+- **`GHGResults` is the entry point to the carbon pipeline.** What happens behind the
+  button click — the full path from `RunAnalysisAsync` through the calculators to the
+  chart — is in [`Carbon_Model_Flow.md`](./Carbon_Model_Flow.md).
+- **Region naming convention:** all the views above are registered with
+  `UiRegions.ContentRegion` (the main content area). `ToolbarRegion` and `FooterRegion`
+  hold static views (`ToolbarView`, `FooterView`) that stay put across navigation. Grep
+  for `RequestNavigate(UiRegions.ContentRegion, nameof(...))` to find every transition
+  trigger.
+
 ## Logging
 
 The whole codebase logs through **NLog** ([`NLog.config`](../../../H.GUI.Avalonia/H.Avalonia/NLog.config))

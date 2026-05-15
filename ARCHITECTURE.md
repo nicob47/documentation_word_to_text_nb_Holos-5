@@ -78,6 +78,71 @@ graph TD
     K --> L[Application Ready]
 ```
 
+### **DI Bootstrap Sequence (Detailed)**
+
+The high-level flow above is the conceptual order. This sequence diagram shows the actual
+inter-class calls during startup — what registers what, and where each major actor enters
+the picture. Use it when you need to add a new service / view / provider and want to know
+which seam it slots into.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Av as Avalonia framework
+    participant App as App (PrismApplication)
+    participant Log as LoggerFactory + NLog
+    participant DI as Container (DryIoc / Prism)
+    participant CRS as ContainerRegistrationService
+    participant FRS as FieldResultsService
+
+    Av->>App: Initialize()
+    App->>App: AvaloniaXamlLoader.Load(this)
+    Av->>App: RegisterTypes(containerRegistry)
+
+    rect rgb(245,245,245)
+    Note over App,Log: SetUpLogging(containerRegistry)
+    App->>Log: LoggerFactory.Create + AddNLog
+    Log-->>App: ILogger
+    App->>DI: RegisterInstance(typeof(ILogger), logger)
+    App->>App: ConfigureDryIocLogging(...)
+    end
+
+    App->>DI: Container.Resolve<ILogger>()
+    DI-->>App: ILogger
+
+    rect rgb(245,245,245)
+    Note over App,CRS: ContainerRegistrationService.RegisterAllTypes
+    App->>CRS: new(Container, logger).RegisterAllTypes(containerRegistry)
+    CRS->>DI: Register hundreds of services / views / factories / providers
+    CRS->>CRS: PreWarmHeavyServices()
+    CRS-)FRS: Task.Run → Resolve<IFieldResultsService> (off-thread)
+    Note right of FRS: SmallAreaYieldProvider<br/>parses ~1M-row CSV<br/>so first user click<br/>doesn't pay the cost
+    end
+
+    Av->>App: OnFrameworkInitializationCompleted()
+    App->>DI: CreateShell() → Container.Resolve<MainWindow>()
+    DI-->>App: MainWindow
+
+    Av->>App: OnInitialized()
+    App->>App: SetLanguage() (reads app.config)
+    App->>DI: Resolve IRegionManager
+    App->>DI: regionManager.RegisterViewWithRegion(...) ×N
+    App->>DI: Resolve GeographicDataProvider, KmlHelpers
+    Note over App: Application is ready
+```
+
+**Why this matters for new contributors:**
+
+- New service → register inside `ContainerRegistrationService.RegisterAllTypes`, after the
+  `SetUpLogging` step but before the `MainWindow` is resolved. Prism will then inject it
+  into any view-model that declares it as a ctor parameter.
+- New view → registered the same way, with `containerRegistry.RegisterForNavigation<TView, TViewModel>()`.
+  The view region wiring happens later in `OnInitialized`.
+- Heavy startup work → if a service has a multi-second cold-start cost (large CSV parse,
+  HTTP probe, etc.), use the `PreWarmHeavyServices` Task.Run pattern so the first user
+  interaction doesn't block. `SmallAreaYieldProvider`'s 1M-row parse is the existing
+  example.
+
 ### **Modern Architecture Benefits**
 
 The architecture implemented in this bootloader provides:

@@ -117,6 +117,127 @@ flowchart TD
 - **Stage-state initialisation is cached across analysis runs.** Switching the Strategy ComboBox between ICBM and Tier 2 does *not* re-run `InitializeStageState` — only the downstream math (`CalculateFinalResults` onward) re-runs. The strategy only affects pool dynamics, not the C-input inventory. If you change something upstream that affects inputs (a yield, a crop, a manure application), call `InvalidateFieldStageState()` on the ViewModel or flip `stageState.IsInitialized = false` so the next `RunAnalysis` rebuilds.
 - **`AssignPerennialStandIds` has a defensive `FirstOrDefault` fallback** for legacy v4 farms where some years have zero items with `IsSecondaryCrop == false`. Same pattern as three sibling methods (`GetMainCropForYear` in `FieldResultsService.DetailViewItems.cs`, `FieldComponentHelper.cs`, `IFieldComponentHelper.cs`). The fallback exists because the v4 → v5 JSON load path doesn't reliably set the flag.
 
+## Animal pipeline dispatch
+
+Branching off the main flow above: `FarmAnalysisService.RunAnalysis` calls
+`IAnimalService.GetAnimalResults(farm)` after stage-state build but before the field-level
+final pass. That call fans out to six per-species result services, each of which produces
+`AnimalComponentEmissionsResults` for the farm's components in that species. The results
+are then primed into `FieldResultsService.AnimalResults` so the nitrogen pass can fold
+grazing / manure / digestate N back into per-field N₂O totals.
+
+```mermaid
+classDiagram
+    direction TB
+
+    class IAnimalService {
+        <<interface>>
+        +GetAnimalResults(farm) List
+        +GetAnimalResults(animalType, farm) List
+        +GetResultsForGroup(group, farm, component) AnimalGroupEmissionResults
+        +GetGroupEmissionsFromGrazingAnimals(...) List
+    }
+
+    class AnimalResultsService {
+        +GetAnimalResults(farm) List
+        -OtherLivestockResultsService _other
+        -SwineResultsService _swine
+        -PoultryResultsService _poultry
+        -BeefCattleResultsService _beef
+        -DairyCattleResultsService _dairy
+        -SheepResultsService _sheep
+    }
+
+    class AnimalResultsServiceBase {
+        <<abstract>>
+        #_dietProvider
+        #_cachedComponentListResults
+        +CalculateResultsForAnimalComponents(components, farm) List
+        +GetResultsForManagementPeriod(group, period, component, farm)
+        #CalculateDailyEmissions(...)*
+    }
+
+    class BeefAndDairyResultsServiceBase {
+        <<abstract>>
+        #CalculateIndirectManureNitrousOxide(...)
+        #GetFractionOfNitrogenExcretedInUrine(...)
+    }
+
+    class BeefCattleResultsService {
+        +CalculateDailyEmissionsForCalves(...)
+        Table 16, 17, 36, 43
+    }
+
+    class DairyCattleResultsService {
+        +CalculateDailyEmissions(...)
+        Table 16, 17, 21, 36, 43
+    }
+
+    class SwineResultsService {
+        Table 27, 31, 32, 33, 39, 40
+    }
+
+    class PoultryResultsService {
+        Table 41 + TAN defaults
+    }
+
+    class SheepResultsService {
+        Table 22, 23, 24, 25, 36
+    }
+
+    class OtherLivestockResultsService {
+        Table 27, 34
+        horses / llamas / bison / etc.
+    }
+
+    IAnimalService <|.. AnimalResultsService
+
+    AnimalResultsService ..> BeefCattleResultsService : dispatches Beef
+    AnimalResultsService ..> DairyCattleResultsService : dispatches Dairy
+    AnimalResultsService ..> SwineResultsService : dispatches Swine
+    AnimalResultsService ..> SheepResultsService : dispatches Sheep
+    AnimalResultsService ..> PoultryResultsService : dispatches Poultry
+    AnimalResultsService ..> OtherLivestockResultsService : dispatches OtherLivestock
+
+    AnimalResultsServiceBase <|-- BeefAndDairyResultsServiceBase
+    AnimalResultsServiceBase <|-- SwineResultsService
+    AnimalResultsServiceBase <|-- PoultryResultsService
+    AnimalResultsServiceBase <|-- SheepResultsService
+    AnimalResultsServiceBase <|-- OtherLivestockResultsService
+
+    BeefAndDairyResultsServiceBase <|-- BeefCattleResultsService
+    BeefAndDairyResultsServiceBase <|-- DairyCattleResultsService
+```
+
+### How a component flows through
+
+1. `AnimalResultsService.GetAnimalResults(farm)` first calls
+   `_initializationService.CheckInitialization(farm)` so half-populated components get
+   sensible defaults (diets, emission factors, daily intakes).
+2. It then dispatches per species: passes
+   `farm.BeefCattleComponents.Cast<AnimalComponentBase>()` etc. into each species' service's
+   `CalculateResultsForAnimalComponents`.
+3. Each species' service inherits the per-component walk from `AnimalResultsServiceBase` —
+   for each component, look up the cached result if the component hasn't gone dirty;
+   otherwise call `CalculateComponentEmissionResults`, which loops every
+   `AnimalGroup` and every `ManagementPeriod` inside, doing the day-by-day emissions.
+4. The species-specific overrides plug in at the daily-emission step
+   (`CalculateDailyEmissions` and its calf variant for beef cow-calf) where the
+   per-species coefficient tables matter — Table 16/17 for ruminant ME / DE, Table 27 for
+   swine and other monogastric CH₄, Table 41 for poultry crude-protein N excretion, etc.
+5. Each component's results land in an `AnimalComponentEmissionsResults` wrapper.
+   `FarmAnalysisService` collects the concatenated list and assigns it to
+   `_fieldResultsService.AnimalResults` so the field-level nitrogen pass can read it.
+
+### Why beef and dairy share an extra base
+
+`BeefAndDairyResultsServiceBase` exists because cattle (ruminant + production) share more
+math than the per-species coefficient tables would suggest: indirect manure N₂O from
+urinary-N volatilization, the urinary-N fraction lookup that splits between an equation
+(dairy) and a Table 36 lookup (beef), and the IPCC 2019 enteric CH₄ ruminant model. Sheep
+is also a ruminant but uses its own coefficient tables (Tables 22–25) and slots in beside
+the cattle base rather than under it.
+
 ## Where the failure modes surface
 
 | Symptom in the GUI | Look here first |
