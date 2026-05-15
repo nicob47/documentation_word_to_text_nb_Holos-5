@@ -31,15 +31,12 @@ flowchart TD
     end
 
     %% ========================================================================
-    %% 2. NAVIGATION + GUARD
+    %% 2. NAVIGATION
     %% ========================================================================
     Btn --> VM["GHGResultsViewModel<br>.RunAnalysisAsync"]
     VM --> Bg["await Task.Run<br>(off UI thread — Recalculate banner shows)"]
     Bg --> Svc["FarmAnalysisService.RunAnalysis(farm)"]
-
-    Svc --> GuardA{"Guard A<br>CanadianProvinces.IsCanadian<br>(Farm.Province AND<br>DefaultSoilData.Province)?"}
-    GuardA -- "No (e.g. Laois from v4 .json)" --> Err["throw InvalidOperationException<br>VM catch → LastErrorMessage banner<br>'Pick a Canadian province'"]
-    GuardA -- Yes --> Init
+    Svc --> Init
 
     %% ========================================================================
     %% 3. BUILD PER-YEAR DETAIL VIEW ITEMS
@@ -114,7 +111,6 @@ flowchart TD
 
 ## Things the diagram doesn't make obvious
 
-- **Guard A is upstream of everything.** A non-Canadian `Farm.Province` (e.g. an `Laois` value carried over from a v4 `.json` authored under v4's Ireland mode) short-circuits before `InitializeStageState` even runs. The user sees the `LastErrorMessage` banner in `GHGResultsView` instead of a blank chart. Whitelist lives in [`H.Core/Enumerations/CanadianProvinces.cs`](../../../H.Core/Enumerations/CanadianProvinces.cs).
 - **The strategy dispatch happens twice.** Once during `AssignCarbonInputs` (per-crop input math) and once inside `CalculateFinalResultsForField` (per-year pool dynamics). Both check `farm.Defaults.CarbonModellingStrategy`. The second one is where ICBM's steady-state denominator can blow up on a zero climate parameter — `CalculateYoungPoolSteadyStateAboveGround` does `numerator / (1 - exp(-k * climateParameter))`, which produces `±∞` or `NaN` when `climateParameter` is 0. LiveCharts silently drops those points, so you get an empty chart with a populated DataGrid. Tier 2's monthly water/temperature math doesn't have that single-divide-by-climate vulnerability and degrades to finite (if wrong) values.
 - **The animal pipeline is primed *between* `AssignCarbonInputs` and `CalculateFinalResults`** — not before stage-state build. That ordering matters because `CalculateNitrogenAtInterval` reads `_fieldResultsService.AnimalResults` for grazing/manure N deposits; if it ran earlier, manure-N from grazing animals would be zero for fields that share an animal component.
 - **`MergeDetailViewItems` produces new instances via `PropertyMapper`.** The merged copies carry the `Combined*` fields forward but they are *not* the same object references as the originals in `DetailsScreenViewCropViewItems`. Anything in the equilibrium / per-year loop that mutates `viewItemsForField[i]` is writing to a merged copy, and the `SoilCarbon` the chart eventually reads comes from the merged copy too.
@@ -125,7 +121,6 @@ flowchart TD
 
 | Symptom in the GUI | Look here first |
 |---|---|
-| "Pick a Canadian province" banner, no rows | Guard A — farm has a non-Canadian `Province` (likely v4 import). Fix in soil settings, or check `FileImportFarmViewModel.NormalizeProvinceOnImport`. |
 | Blank chart but DataGrid populated | ICBM `SoilCarbon` came out `NaN` / `±Infinity`. Check `climateParameter` in `CalculateClimateParameter`; trace the `[GHGAnalysis.ICBM]` lines emitted by `CalculateFinalResultsForField`. |
 | Both chart and DataGrid blank, no error | `InitializeStageState` produced zero detail view items. Check that the field has at least one `CropViewItem` and that `CreateDetailViewItems` ran (look for `[GHGAnalysis.Comp]` Trace lines). |
 | `InvalidOperationException: Sequence contains no matching element` | Was `AssignPerennialStandIds:114` before the defensive fallback landed — this is now handled. If it surfaces again, look for the same `.Single(...)` pattern in a sibling method that wasn't updated. |
@@ -138,8 +133,7 @@ flowchart TD
 |---|---|
 | Authoring | `H.Avalonia/ViewModels/ComponentViews/LandManagement/Field/FieldComponentViewModel.cs` |
 | Recalculate button + chart wiring | `H.Avalonia/ViewModels/Results/GHGResultsViewModel.cs`, `Views/ResultViews/GHGResultsView.axaml` |
-| Analysis entry + Guard A | `H.Core/Services/Analysis/FarmAnalysisService.cs` |
-| Whitelist | `H.Core/Enumerations/CanadianProvinces.cs` |
+| Analysis entry | `H.Core/Services/Analysis/FarmAnalysisService.cs` |
 | Stage-state build | `H.Core/Services/LandManagement/FieldResultsService.DetailViewItems.cs` |
 | Per-crop input dispatch | `FieldResultsService.Carbon.cs` (`AssignCarbonInputs`) |
 | ICBM inputs | `H.Core/Calculators/Carbon/ICBMSoilCarbonCalculator.cs` (`SetCarbonInputs`) |
@@ -148,4 +142,3 @@ flowchart TD
 | Final Tier 2 math | `H.Core/Calculators/Carbon/IPCCTier2SoilCarbonCalculator.cs` (`CalculateResults`) |
 | Shelterbelt | `H.Core/Calculators/Shelterbelt/ShelterbeltCalculator.cs` |
 | Result DTOs | `H.Core/Models/Results/FarmAnalysisResults.cs`, `FieldAnalysisYearResult.cs`, `ShelterbeltYearResult.cs` |
-| v4-import remap (Guard B) | `H.Avalonia/ViewModels/OptionsViews/FileMenuViews/FileImportFarmViewModel.cs` (`NormalizeProvinceOnImport`) |
