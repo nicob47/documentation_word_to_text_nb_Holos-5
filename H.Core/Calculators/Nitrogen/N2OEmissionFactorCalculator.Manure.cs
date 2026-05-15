@@ -6,6 +6,16 @@ using H.Infrastructure;
 
 namespace H.Core.Calculators.Nitrogen
 {
+    /// <summary>
+    /// Partial: manure N₂O emissions. Covers both direct N₂O from soil-applied manure and
+    /// indirect N₂O via NH₃ volatilization and NO₃ leaching. Equations 4.6.1-* and 4.6.2-*.
+    ///
+    /// <para>
+    /// The per-application math reads from <c>ManureService</c> (configured by the field-level
+    /// pipeline before this code path is exercised). For grazing-deposited manure see the
+    /// sibling partial <c>N2OEmissionFactorCalculator.Grazing.cs</c>.
+    /// </para>
+    /// </summary>
     public partial class N2OEmissionFactorCalculator
     {
         #region Public Methods

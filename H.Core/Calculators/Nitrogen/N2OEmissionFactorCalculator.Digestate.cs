@@ -5,10 +5,25 @@ using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Calculators.Nitrogen
 {
+    /// <summary>
+    /// Partial: N₂O emissions from digestate applied to fields. Digestate is the nitrogen-rich
+    /// output of an anaerobic-digestion component on the farm; the AD pipeline produces it
+    /// from input substrates (manure, crop residues, food waste) and the user applies it to
+    /// fields just like manure. The N₂O accounting mirrors manure's but uses different
+    /// emission factors (digestate typically has a higher NH₃-loss fraction because it's more
+    /// alkaline).
+    /// </summary>
     public partial class N2OEmissionFactorCalculator
     {
         #region Public Methods
 
+        /// <summary>
+        /// NH₃ loss from land-applied digestate, expressed as the fraction of applied N lost.
+        /// Constant 0.1705 (17.05%) — the calibrated default for the AD pipeline; matches the
+        /// v4 implementation.
+        /// </summary>
+        /// <param name="amountOfNitrogen">Applied N (kg N).</param>
+        /// <returns>NH₃-N loss (kg N).</returns>
         public double CalculateNH3LossFromLandAppliedDigestateForField(double amountOfNitrogen)
         {
             return amountOfNitrogen * 0.1705;

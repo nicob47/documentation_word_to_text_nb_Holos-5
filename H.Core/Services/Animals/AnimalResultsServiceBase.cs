@@ -10,6 +10,30 @@ using NLog;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Shared base for every per-species animal-results service (beef, dairy, swine, sheep,
+    /// poultry, other-livestock — see the <c>BeefCattleResultsService</c>, <c>DairyResultsService</c>,
+    /// etc. in this folder). Owns the cross-cutting plumbing every species shares:
+    /// <list type="bullet">
+    ///   <item>Diet lookup (<c>DietProvider</c> + cached <c>_diets</c> list).</item>
+    ///   <item>Emission-factor providers (Table 36, Table 43, Table 49).</item>
+    ///   <item>The per-component result cache (<see cref="_cachedComponentListResults"/>) — keyed on the component so re-runs don't redo the work unless the component is dirty.</item>
+    ///   <item>The month-by-month walk inside <c>GetResultsForManagementPeriod</c>.</item>
+    /// </list>
+    ///
+    /// <para>
+    /// Species-specific overrides plug into <c>CalculateDailyEmissions</c> and a handful of
+    /// virtual hooks. The partial-class file <c>AnimalResultsServiceBase.Grazing.cs</c> holds
+    /// the grazing-specific math that the field-level carbon pipeline reads to compute manure
+    /// deposits on pasture.
+    /// </para>
+    ///
+    /// <para><b>Cache invalidation:</b></para>
+    /// <see cref="_cachedComponentListResults"/> is keyed by component reference and only
+    /// recomputes when <c>component.ResultsCalculated == false</c>. Edit a component's
+    /// management period or diet → flip that flag (or replace the component instance) and the
+    /// next analysis pass will recalculate.
+    /// </summary>
     public abstract partial class AnimalResultsServiceBase : IAnimalResultsService
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
@@ -65,8 +89,14 @@ namespace H.Core.Services.Animals
 
         #region Public Methods
 
+        /// <summary>
+        /// Top-level entry point — given the set of components for a single species (e.g. all
+        /// beef-cattle components on the farm), runs <c>CalculateComponentEmissionResults</c> on
+        /// each and returns the collected per-component results. The orchestrator
+        /// (<c>AnimalResultsService</c>) calls this once per species and concatenates the lists.
+        /// </summary>
         public List<AnimalComponentEmissionsResults> CalculateResultsForAnimalComponents(
-            IEnumerable<AnimalComponentBase> components, 
+            IEnumerable<AnimalComponentBase> components,
             Farm farm)
         {
             var animalComponentEmissionResults = new List<AnimalComponentEmissionsResults>();

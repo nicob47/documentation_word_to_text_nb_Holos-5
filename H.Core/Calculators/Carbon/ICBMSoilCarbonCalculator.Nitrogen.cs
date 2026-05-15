@@ -3,6 +3,18 @@ using H.Core.Models;
 
 namespace H.Core.Calculators.Carbon
 {
+    /// <summary>
+    /// Partial: ICBM's nitrogen-side pool dynamics. Mirrors the carbon side's structure (young /
+    /// old pool flows driven by climate parameter) but tracks N stocks and translates them into
+    /// the direct + indirect N₂O emissions the GUI surfaces in
+    /// <see cref="H.Core.Models.Results.FieldAnalysisYearResult.DirectN2OPerHectare"/> /
+    /// <c>IndirectN2OPerHectare</c>.
+    ///
+    /// <para><b>Why N after C:</b></para>
+    /// The C/N ratio of the soil pools feeds into the nitrogen calculation, so
+    /// <see cref="CalculateCarbonAtInterval"/> must run for the same year first. The
+    /// <c>FieldResultsService.CalculateFinalResultsForField</c> loop enforces this ordering.
+    /// </summary>
     public partial class ICBMSoilCarbonCalculator
     {
         #region Fields
@@ -11,12 +23,22 @@ namespace H.Core.Calculators.Carbon
 
         #region Properties
 
+        /// <summary>
+        /// Stoichiometric N requirement for the old (humified) pool to grow this year — used to
+        /// close the residue-N → soil-N balance. Set during <see cref="CalculateNitrogenAtInterval"/>.
+        /// </summary>
         public double OldPoolNitrogenRequirement { get; set; }
 
         #endregion
 
         #region Overrides
 
+        /// <summary>
+        /// Equation 2.6.1-3. Seeds the organic-N pool from the current year's organic-N inputs
+        /// (manure + digestate + crop residues) before the per-year flows step. Override of the
+        /// abstract hook on <see cref="CarbonCalculatorBase"/> so the base class's nitrogen-pass
+        /// can pick the right starting condition without knowing which model is running.
+        /// </summary>
         protected override void SetOrganicNitrogenPoolStartState()
         {
             // Equation 2.6.1-3
@@ -27,6 +49,23 @@ namespace H.Core.Calculators.Carbon
 
         #region Public Methods
 
+        /// <summary>
+        /// ICBM per-year nitrogen step. Called once per (field × year) from
+        /// <c>FieldResultsService.CalculateFinalResultsForField</c> immediately after
+        /// <see cref="CalculateCarbonAtInterval"/>.
+        ///
+        /// <para><b>What it writes:</b></para>
+        /// Direct N₂O contributions (synthetic fertilizer, crop residues, mineralized N, organic
+        /// N) and indirect N₂O contributions (leaching, volatilization) onto
+        /// <paramref name="currentYearResults"/>. The DTO mapper in <c>FarmAnalysisService</c>
+        /// reads these to fill <see cref="H.Core.Models.Results.FieldAnalysisYearResult.DirectN2OPerHectare"/>
+        /// / <c>IndirectN2OPerHectare</c>.
+        ///
+        /// <para><b>yearIndex semantics:</b></para>
+        /// 0 for the first user-visible year; uses the equilibrium pseudo-year as
+        /// <paramref name="previousYearResults"/>. Higher indices read pool values from the
+        /// preceding iteration's output.
+        /// </summary>
         public void CalculateNitrogenAtInterval(
            CropViewItem previousYearResults,
            CropViewItem currentYearResults,

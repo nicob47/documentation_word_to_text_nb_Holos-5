@@ -6,6 +6,23 @@ using H.Core.Models.LandManagement.Fields;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Top-level orchestrator for animal emissions — implements <see cref="IAnimalService"/>.
+    /// Dispatches each animal component on a farm to the species-specific results service
+    /// (beef, dairy, swine, sheep, poultry, other-livestock) and concatenates the results.
+    ///
+    /// <para><b>Why six sub-services:</b></para>
+    /// Each species has a different emission-factor table, different management-period
+    /// semantics, and different diet handling. Holos v4 modeled this with one big switch
+    /// statement; the v5 port broke that into per-species services that all derive from
+    /// <see cref="AnimalResultsServiceBase"/>. This class is the dispatcher.
+    ///
+    /// <para><b>Pre-step: initialization:</b></para>
+    /// Every public entry point first calls <c>_initializationService.CheckInitialization(farm)</c>,
+    /// which lazily fills in default values on unsaved / partially-populated components (diets,
+    /// emission factors, default daily intakes). Skipping this step on a fresh farm produces
+    /// zero emissions.
+    /// </summary>
     public class AnimalResultsService : IAnimalService
     {
         #region Fields

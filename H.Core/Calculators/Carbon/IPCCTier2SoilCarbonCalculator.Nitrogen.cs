@@ -3,6 +3,12 @@ using H.Core.Models;
 
 namespace H.Core.Calculators.Carbon
 {
+    /// <summary>
+    /// Partial: IPCC Tier 2 nitrogen-side pool dynamics. Mirrors the carbon-side three-pool
+    /// (active / slow / passive) topology — flipping <see cref="CalculationMode"/> to
+    /// <see cref="CalculationModes.Nitrogen"/> swaps the inputs and output destinations to the
+    /// nitrogen variants on each <see cref="CropViewItem"/> while reusing the same flow code.
+    /// </summary>
     public partial class IPCCTier2SoilCarbonCalculator
     {
         #region Fields
@@ -11,6 +17,10 @@ namespace H.Core.Calculators.Carbon
 
         #region Properties
 
+        /// <summary>
+        /// Stoichiometric N requirement for soil organic carbon to accumulate at the calculated
+        /// rate this year. Inversely fed back into the mineralization side of the N balance.
+        /// </summary>
         public double SocNRequirement { get; set; }
 
         #endregion

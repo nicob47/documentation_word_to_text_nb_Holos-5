@@ -9,6 +9,27 @@ using H.Infrastructure;
 
 namespace H.Core.Calculators.Nitrogen
 {
+    /// <summary>
+    /// Central nitrogen-emission-factor calculator. Every path that touches N₂O — synthetic
+    /// fertilizer, crop residues, mineralized N, organic N (manure / digestate / grazing) —
+    /// flows through here for its emission factor + downstream contribution math.
+    ///
+    /// <para><b>Why this is a partial class:</b></para>
+    /// The math is split across <c>.cs</c> (the soil-side base equations and leaching /
+    /// volatilization fractions), <c>.Manure.cs</c> (per-application + per-grazing-period
+    /// manure N₂O), <c>.Grazing.cs</c> (pasture deposits), and <c>.Digestate.cs</c> (anaerobic
+    /// digestion outputs applied to fields). Each partial owns the corresponding emission
+    /// stream — keeping them in one logical type so the soil pool flows in
+    /// <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator"/> /
+    /// <see cref="H.Core.Calculators.Carbon.IPCCTier2SoilCarbonCalculator"/> can pull from a
+    /// single instance.
+    ///
+    /// <para><b>Required collaborators:</b></para>
+    /// <see cref="ManureService"/>, <see cref="DigestateService"/>, and
+    /// <see cref="ClimateProvider"/> must all be wired up before the per-year nitrogen pass
+    /// runs. <c>FieldResultsService.CalculateFinalResultsForField</c> primes the manure /
+    /// digestate services with animal results before kicking off the field-level pass.
+    /// </summary>
     public partial class N2OEmissionFactorCalculator : IN2OEmissionFactorCalculator
     {
         #region Fields
@@ -19,19 +40,44 @@ namespace H.Core.Calculators.Nitrogen
         #endregion
 
         #region Properties
-        
+
+        /// <summary>
+        /// Computes manure N (kg N ha⁻¹) flowing onto a field from manure applications and
+        /// barn-stored manure. Must be initialized per-farm before the field-level nitrogen
+        /// pass — <c>FieldResultsService.CalculateFinalResultsForField</c> does this for ICBM /
+        /// Tier 2 once <c>AnimalResults</c> is populated.
+        /// </summary>
         public IManureService ManureService { get; set; }
+
+        /// <summary>
+        /// Computes digestate N flowing onto a field from anaerobic-digestion components. Same
+        /// initialization ordering applies as for <see cref="ManureService"/>.
+        /// </summary>
         public IDigestateService DigestateService { get; set; }
 
+        /// <summary>
+        /// Climate provider used by leaching / volatilization fractions (precipitation,
+        /// evapotranspiration). Assigned via DI constructor; null-forgiving operator on the
+        /// declaration because the ctor unconditionally sets it.
+        /// </summary>
         public IClimateProvider ClimateProvider { get; set; } = null!;
 
+        /// <summary>Per-species emission-factor lookup (Table 36).</summary>
         public IAnimalEmissionFactorsProvider LivestockEmissionConversionFactorsProvider { get; set; }
+
+        /// <summary>Per-species ammonia emission-factor lookup for housing / storage / application stages (Table 43).</summary>
         public IAnimalAmmoniaEmissionFactorProvider AnimalAmmoniaEmissionFactorProvider { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs the calculator with a default-instantiated <see cref="ManureService"/> /
+        /// <see cref="DigestateService"/> pair and the Table 36 + Table 43 providers wired up.
+        /// Callers (notably the soil-carbon calculators) reassign <see cref="ManureService"/> /
+        /// <see cref="DigestateService"/> with farm-primed instances before the field pass.
+        /// </summary>
         public N2OEmissionFactorCalculator(IClimateProvider climateProvider)
         {
             this.ManureService = new ManureService();
@@ -51,9 +97,14 @@ namespace H.Core.Calculators.Nitrogen
         #region Public Methods
 
         /// <summary>
-        /// Equation 2.6.6-1
-        /// Equation 2.6.6-2
+        /// Equations 2.6.6-1 / 2.6.6-2. Fraction of applied N that leaches below the root zone,
+        /// derived from the precipitation : potential-evapotranspiration ratio. Clamped to
+        /// [0.05, 0.30] per the IPCC defaults — values outside this range aren't supported by
+        /// the empirical relationship the formula is fit to.
         /// </summary>
+        /// <param name="precipitation">Annual precipitation (mm).</param>
+        /// <param name="potentialEvapotranspiration">Annual potential evapotranspiration (mm).</param>
+        /// <returns>Leaching fraction, unitless, in [0.05, 0.30].</returns>
         private double CalculateLeachingFraction(
             double precipitation,
             double potentialEvapotranspiration)
