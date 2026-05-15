@@ -11,6 +11,19 @@ using H.Core.Providers.Animals;
 namespace H.Core.Services.Animals
 {
     /// <summary>
+    /// Per-species results service for swine components (gilts, sows, boars, weaners, growers,
+    /// finishers). Derives directly from <see cref="AnimalResultsServiceBase"/> — unlike beef
+    /// + dairy, swine doesn't share a ruminant base class because the underlying methodology
+    /// is different: swine enteric CH₄ comes from a Table 27 lookup rather than a metabolic
+    /// model, and swine manure VS / N excretion uses Tables 31 / 32 / 33 / 39 for
+    /// crude-protein-driven nitrogen and volatile-solids estimation.
+    ///
+    /// <para>
+    /// <see cref="Table_40_Swine_Default_PrGain_Values_Provider"/> supplies protein-gain
+    /// defaults used by the daily-emission path. Registered as the swine implementation of
+    /// <see cref="ISwineResultsService"/>; dispatched to by <see cref="AnimalResultsService"/>
+    /// for any <see cref="H.Core.Enumerations.ComponentCategory.Swine"/> component.
+    /// </para>
     /// </summary>
     public class SwineResultsService : AnimalResultsServiceBase, ISwineResultsService
     {

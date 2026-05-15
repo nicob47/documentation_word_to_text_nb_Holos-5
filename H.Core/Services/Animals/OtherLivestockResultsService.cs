@@ -6,7 +6,23 @@ using H.Core.Models.Animals;
 namespace H.Core.Services.Animals
 {
     /// <summary>
-    /// The main class to calculate emissions from animals such as horses, deer, etc.
+    /// Per-species results service for "other livestock" — horses, mules, llamas, alpacas,
+    /// bison, elk, deer, goats. Derives from <see cref="AnimalResultsServiceBase"/> and reuses
+    /// the base class's daily-emission walk; each species' coefficients come from Table 27
+    /// (enteric CH₄) and Table 34 (volatile excretion) lookups by animal type.
+    ///
+    /// <para>
+    /// Other-livestock components have simpler management-period semantics than ruminants or
+    /// monogastric production animals — they typically run year-round with one or two
+    /// management periods rather than the staged growing / finishing setups beef/swine use.
+    /// </para>
+    ///
+    /// <para>
+    /// Registered as the other-livestock implementation of
+    /// <see cref="IOtherLivestockResultsService"/>; dispatched to by
+    /// <see cref="AnimalResultsService"/> for any
+    /// <see cref="H.Core.Enumerations.ComponentCategory.OtherLivestock"/> component.
+    /// </para>
     /// </summary>
     public class OtherLivestockResultsService : AnimalResultsServiceBase, IOtherLivestockResultsService
     {

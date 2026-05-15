@@ -6,6 +6,20 @@ using H.Core.Providers.Animals;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Per-species results service for sheep components (ewes, rams, lambs). Derives from
+    /// <see cref="AnimalResultsServiceBase"/>. Sheep is a ruminant (so enteric CH₄ uses a
+    /// metabolic model similar to cattle) but has its own coefficient tables — Table 22 for
+    /// livestock coefficients, Table 23 for feeding activity, Table 25 for pregnancy
+    /// coefficients, and Table 24 for lamb daily weight gain. Those are wired up in the
+    /// constructor.
+    ///
+    /// <para>
+    /// Registered as the sheep implementation of <see cref="ISheepResultsService"/>;
+    /// dispatched to by <see cref="AnimalResultsService"/> for any
+    /// <see cref="H.Core.Enumerations.ComponentCategory.Sheep"/> component.
+    /// </para>
+    /// </summary>
     public class SheepResultsService : AnimalResultsServiceBase, ISheepResultsService
     {
         #region Fields

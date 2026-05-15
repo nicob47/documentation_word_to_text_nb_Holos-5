@@ -5,6 +5,20 @@ using H.Core.Models.Animals;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Per-species results service for dairy components (lactating cows, dry cows, heifers,
+    /// calves). Derives from <see cref="BeefAndDairyResultsServiceBase"/>, which holds the
+    /// ruminant enteric CH₄ + manure N excretion math shared with beef; the override here
+    /// supplies the dairy-specific daily-emission path (lactating cows have higher dry-matter
+    /// intake and produce more manure N — those parameters feed in via
+    /// <see cref="ManagementPeriod"/>).
+    ///
+    /// <para>
+    /// Registered as the dairy implementation of <see cref="IDairyResultsService"/> and
+    /// dispatched to by <see cref="AnimalResultsService"/> for any
+    /// <see cref="H.Core.Enumerations.ComponentCategory.Dairy"/> component on the farm.
+    /// </para>
+    /// </summary>
     public class DairyCattleResultsService : BeefAndDairyResultsServiceBase, IDairyResultsService
     {
         #region Fields

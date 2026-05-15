@@ -5,6 +5,21 @@ using H.Core.Enumerations;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Shared base for the two ruminant cattle result services
+    /// (<see cref="BeefCattleResultsService"/> and <see cref="DairyCattleResultsService"/>).
+    /// Holds the ruminant-specific math that doesn't apply to swine / poultry / sheep / other:
+    /// <list type="bullet">
+    ///   <item>Enteric CH₄ via the IPCC 2019 ruminant model (gross-energy → DE → CH₄ conversion factor).</item>
+    ///   <item>Indirect manure N₂O from urinary-N volatilization (Equation 4.6.2-1 etc.).</item>
+    ///   <item>Crude-protein-driven fraction-of-N-in-urine, with different lookup paths for beef vs dairy because dairy uses an equation while beef uses a Table 36 lookup.</item>
+    /// </list>
+    ///
+    /// <para>
+    /// Sheep is also a ruminant but uses different coefficient tables; it derives directly
+    /// from <see cref="AnimalResultsServiceBase"/> rather than from this class.
+    /// </para>
+    /// </summary>
     public abstract class BeefAndDairyResultsServiceBase : AnimalResultsServiceBase
     {
         protected void CalculateIndirectManureNitrousOxide(GroupEmissionsByDay dailyEmissions,

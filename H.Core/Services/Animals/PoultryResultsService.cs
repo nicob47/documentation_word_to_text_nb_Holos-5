@@ -6,6 +6,19 @@ using H.Core.Providers.Animals;
 
 namespace H.Core.Services.Animals
 {
+    /// <summary>
+    /// Per-species results service for poultry components (broilers, layers, turkeys, ducks,
+    /// geese, chicks / pullets). Derives directly from <see cref="AnimalResultsServiceBase"/>.
+    /// Unlike ruminants and swine, poultry has no enteric CH₄ — only manure-derived CH₄ and
+    /// N₂O. Crude-protein-driven N excretion uses Table 41's parameter values + the default
+    /// daily TAN-excretion table.
+    ///
+    /// <para>
+    /// Registered as the poultry implementation of <see cref="IPoultryResultsService"/>;
+    /// dispatched to by <see cref="AnimalResultsService"/> for any
+    /// <see cref="H.Core.Enumerations.ComponentCategory.Poultry"/> component on the farm.
+    /// </para>
+    /// </summary>
     public class PoultryResultsService : AnimalResultsServiceBase, IPoultryResultsService
     {
         #region Fields

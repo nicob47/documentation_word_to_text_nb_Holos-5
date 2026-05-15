@@ -10,6 +10,23 @@ using H.Core.Models.Animals;
 namespace H.Core.Services.Animals
 {
     /// <summary>
+    /// Per-species results service for beef-cattle components (cow-calf, backgrounding,
+    /// feedlot finishing). Derives from <see cref="BeefAndDairyResultsServiceBase"/>, which
+    /// hosts the math shared with dairy (enteric CH₄ via the IPCC 2019 ruminant model, manure
+    /// N excretion based on intake and digestibility, etc.) and only adds the beef-specific
+    /// daily-emission paths here — most notably calf-side calculations on cow-calf herds.
+    ///
+    /// <para><b>Daily-emission entry point:</b></para>
+    /// <see cref="CalculateDailyEmissionsForCalves"/> handles the calf cohort separately from
+    /// the cow cohort because calves have different start weights, growth rates, intake, and
+    /// digestibility. The base class's enteric CH₄ / manure N math is reused via the
+    /// <c>base.Calculate*</c> calls inside.
+    ///
+    /// <para>
+    /// Registered as the beef-cattle implementation of <see cref="IBeefCattleResultsService"/>
+    /// and dispatched to by <see cref="AnimalResultsService"/> for any
+    /// <see cref="H.Core.Enumerations.ComponentCategory.BeefProduction"/> component on the farm.
+    /// </para>
     /// </summary>
     public class BeefCattleResultsService : BeefAndDairyResultsServiceBase, IBeefCattleResultsService
     {
