@@ -22,6 +22,49 @@ using NLog;
 
 namespace H.Core.Services.LandManagement
 {
+    /// <summary>
+    /// Core land-management calculation service. Owns the per-field, per-year detail-view-item
+    /// tree and produces the final ICBM / IPCC Tier 2 soil-carbon + nitrogen results that the
+    /// <see cref="H.Core.Services.Analysis.IFarmAnalysisService"/> façade flattens into DTOs for
+    /// the GUI.
+    ///
+    /// <para><b>Two-phase lifecycle:</b></para>
+    /// <list type="number">
+    ///   <item>
+    ///     <c>InitializeStageState(farm)</c> (in <c>.DetailViewItems.cs</c>) — rebuilds
+    ///     <see cref="H.Core.Models.LandManagement.Fields.FieldSystemDetailsStageState"/> from
+    ///     the user-authored CropViewItems on each <c>FieldSystemComponent</c>: cycles them
+    ///     across <c>startYear..endYear</c>, sorts perennials/cover crops, and calls
+    ///     <c>AssignCarbonInputs</c> so every detail view item has its C inputs filled in.
+    ///   </item>
+    ///   <item>
+    ///     <c>CalculateFinalResults(farm)</c> — reads the stage state, runs the
+    ///     equilibrium / per-year pool dynamics (ICBM or Tier 2 depending on
+    ///     <c>farm.Defaults.CarbonModellingStrategy</c>), and returns the flat list of
+    ///     <see cref="H.Core.Models.LandManagement.Fields.CropViewItem"/>s with SoilCarbon,
+    ///     ChangeInCarbon, and N₂O fields populated.
+    ///   </item>
+    /// </list>
+    ///
+    /// <para><b>Why this class is split across partials:</b></para>
+    /// The service is large enough that grouping by concern (Carbon, DetailViewItems, Perennials,
+    /// CoverCrops, UnderSownCrops, Initialization, FileExport, EstimatesOfProduction) keeps each
+    /// file readable. All partials share the fields and helpers declared here in
+    /// <c>FieldResultsService.cs</c>.
+    ///
+    /// <para><b>Performance-critical paths:</b></para>
+    /// <list type="bullet">
+    ///   <item>
+    ///     <c>CalculateClimateParameter</c> is memoized via <see cref="_climateParameterCache"/>
+    ///     — the 365-day loop dominates AssignCarbonInputs without it.
+    ///   </item>
+    ///   <item>
+    ///     The <c>SmallAreaYieldProvider</c> CSV (~1M rows) loads in the constructor; the GUI
+    ///     pre-warms <c>IFieldResultsService</c> at startup so the user's first click doesn't pay
+    ///     that cost.
+    ///   </item>
+    /// </list>
+    /// </summary>
     public partial class FieldResultsService : IFieldResultsService
     {
         // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
@@ -142,8 +185,20 @@ namespace H.Core.Services.LandManagement
 
         #region Properties
 
+        /// <summary>
+        /// Per-animal-component emission results, primed by <see cref="H.Core.Services.Analysis.FarmAnalysisService"/>
+        /// before it calls <see cref="CalculateFinalResults(Farm)"/>. The nitrogen calculator reads this
+        /// to fold in manure deposits from grazing animals and barn-stored manure applications. Must be
+        /// set <i>after</i> stage-state build but <i>before</i> the final pass — see the ordering note in
+        /// <c>FarmAnalysisService.RunAnalysis</c>.
+        /// </summary>
         public List<AnimalComponentEmissionsResults> AnimalResults { get; set; }
 
+        /// <summary>
+        /// Used by the carbon pipeline to look up grazing manure / supplemental-feed contributions on
+        /// behalf of the field. Defaulted to a self-constructed <see cref="AnimalResultsService"/> for
+        /// the legacy CLI / test path; production DI overrides this with the registered singleton.
+        /// </summary>
         public IAnimalService AnimalResultsService { get; set; }
 
         #endregion
@@ -151,7 +206,9 @@ namespace H.Core.Services.LandManagement
         #region Public Methods
 
         /// <summary>
-        /// Calculates final multiyear C and N2O results for a collection of farms
+        /// Convenience overload that runs <see cref="CalculateFinalResults(Farm)"/> over a sequence
+        /// of farms and concatenates the per-farm results into a single list. Used by the CLI bulk
+        /// path; the GUI runs one farm at a time through <see cref="CalculateFinalResults(Farm)"/>.
         /// </summary>
         public List<CropViewItem> CalculateFinalResults(IEnumerable<Farm> farms)
         {
@@ -167,8 +224,25 @@ namespace H.Core.Services.LandManagement
         }
 
         /// <summary>
-        /// Calculates final multiyear C and N2O results for a farm
+        /// Final-pass orchestrator. Reads the per-year detail view items out of the farm's
+        /// <see cref="H.Core.Models.LandManagement.Fields.FieldSystemDetailsStageState"/> (which must
+        /// already have been populated by <c>InitializeStageState</c>), then per field:
+        /// <list type="number">
+        ///   <item><c>CombineInputsForAllCropsInSameYear</c> — sums main + cover/under-sown crop inputs into the Combined* fields on the main-crop row.</item>
+        ///   <item><c>MergeDetailViewItems</c> — copies each year's main crop into a fresh list (one row per year, fed to the pool dynamics).</item>
+        ///   <item><c>CalculateFinalResultsForField</c> (in <c>.Carbon.cs</c>) — runs the ICBM equilibrium + per-year loop, or the IPCC Tier 2 monthly pool dynamics, depending on <c>farm.Defaults.CarbonModellingStrategy</c>.</item>
+        /// </list>
+        /// Then <c>CalculateAverageSoilOrganicCarbonForFields</c> assigns each row the farm-wide
+        /// per-year average SoilCarbon for cross-field comparisons.
+        ///
+        /// Emits a <c>[GHGAnalysis.Field]</c> trace line with a per-phase ms breakdown so a
+        /// contributor can spot which step regresses without attaching a profiler.
         /// </summary>
+        /// <returns>
+        /// Flat list of merged <see cref="CropViewItem"/>s (one per field × year) with SoilCarbon,
+        /// ChangeInCarbon, and N₂O fields populated. Returns an empty list when there is no stage
+        /// state to read.
+        /// </returns>
         public List<CropViewItem> CalculateFinalResults(Farm farm)
         {
             var totalSw = System.Diagnostics.Stopwatch.StartNew();

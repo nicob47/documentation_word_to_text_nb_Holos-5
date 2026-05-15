@@ -8,13 +8,55 @@ using H.Core.Providers.Soil;
 
 namespace H.Core.Calculators.Carbon
 {
+    /// <summary>
+    /// IPCC Tier 2 (Steady-State) soil-carbon calculator. Alternative to ICBM that the user can
+    /// select via the Strategy ComboBox in <c>GHGResultsView</c>. Where ICBM has four pools that
+    /// decay exponentially as a function of one annual climate parameter, Tier 2 uses three pools
+    /// driven by monthly water and temperature factors:
+    /// <list type="bullet">
+    ///   <item><b>Active pool:</b> fast-turnover C from fresh residues (DOM input metabolic + structural fractions).</item>
+    ///   <item><b>Slow pool:</b> intermediate-turnover C produced from active-pool decomposition.</item>
+    ///   <item><b>Passive pool:</b> stabilized humified C, very slow turnover.</item>
+    /// </list>
+    ///
+    /// <para><b>Two distinct responsibilities:</b></para>
+    /// <list type="number">
+    ///   <item>
+    ///     <c>CalculateInputs</c> — per-crop, per-year input math. Splits residue C into metabolic
+    ///     vs structural DOM input pools based on N and lignin content (Table 9 lookup). Writes
+    ///     <c>AboveGroundCarbonInput</c> / <c>BelowGroundCarbonInput</c> in the same shape as ICBM
+    ///     so the DTO mapping stays uniform.
+    ///   </item>
+    ///   <item>
+    ///     <c>CalculateResults</c> — the per-year pool dynamics. Walks each year applying the
+    ///     monthly water + temperature factors to each pool, decays them, transfers carbon
+    ///     between active → slow → passive, and emits the final
+    ///     <c>SoilCarbon = activePool + slowPool + passivePool</c>.
+    ///   </item>
+    /// </list>
+    ///
+    /// <para>
+    /// <c>CalculationMode</c> toggles whether the same instance is running its carbon math or its
+    /// nitrogen math (Tier 2 reuses the pool-flow structure for the N side via partial
+    /// <c>IPCCTier2SoilCarbonCalculator.Nitrogen.cs</c>). Holos sets this back to
+    /// <c>CalculationModes.Carbon</c> between carbon / nitrogen passes.
+    /// </para>
+    /// </summary>
     public partial class IPCCTier2SoilCarbonCalculator : CarbonCalculatorBase
     {
         #region Enumerations
 
+        /// <summary>
+        /// Discriminator used by the Tier 2 calculator to know whether a given call is asking
+        /// for the carbon or the nitrogen pool dynamics. Both modes share the same pool-flow
+        /// machinery, only the inputs and the destination fields differ.
+        /// </summary>
         public enum CalculationModes
         {
+            /// <summary>Run the carbon-side pool dynamics (default).</summary>
             Carbon,
+
+            /// <summary>Run the nitrogen-side pool dynamics — partial-class file <c>.Nitrogen.cs</c>.</summary>
             Nitrogen,
         }
 
@@ -29,6 +71,12 @@ namespace H.Core.Calculators.Carbon
 
         #region Constructors
 
+        /// <summary>
+        /// DI constructor. Initializes the calculator in carbon mode (the nitrogen mode is opted
+        /// into by flipping <see cref="CalculationMode"/> before calling the nitrogen entry
+        /// points). Both dependencies are required.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">If either dependency is <c>null</c>.</exception>
         public IPCCTier2SoilCarbonCalculator(IClimateProvider climateProvider, N2OEmissionFactorCalculator n2OEmissionFactorCalculator)
         {
             this.CalculationMode = CalculationModes.Carbon;
@@ -56,6 +104,11 @@ namespace H.Core.Calculators.Carbon
 
         #region Properties
 
+        /// <summary>
+        /// Whether the calculator is currently running its carbon or nitrogen pool dynamics.
+        /// Holos flips this between passes — the carbon pass runs first (because nitrogen calcs
+        /// read the carbon results), then nitrogen.
+        /// </summary>
         public CalculationModes CalculationMode { get; set; }
 
         #endregion
@@ -103,6 +156,28 @@ namespace H.Core.Calculators.Carbon
             currentYearViewItem.SoilCarbon = farm.StartingSoilOrganicCarbon;
         }
 
+        /// <summary>
+        /// Final-pass entry point for the IPCC Tier 2 carbon model. Called from
+        /// <c>FieldResultsService.CalculateFinalResultsForField</c> when the user has selected
+        /// IPCC Tier 2 (otherwise the ICBM equilibrium + per-year loop runs in its place).
+        ///
+        /// <para><b>Steps:</b></para>
+        /// <list type="number">
+        ///   <item>Run the <i>run-in period</i> over <paramref name="runInPeriodItems"/> to seed the active / slow / passive pools to their steady-state values for the user's rotation. Without this seed, the first few years of the user-visible output would show artificial transients while the pools converge.</item>
+        ///   <item>If the user supplied a measured starting SOC value, redistribute it across the three pools using the fractions the run-in period produced (see <see cref="AssignCustomStartPoint"/>).</item>
+        ///   <item>Walk <paramref name="viewItemsByField"/> in year order, computing the monthly water + temperature factors and stepping each pool. Final <c>SoilCarbon</c> is <c>activePool + slowPool + passivePool</c>.</item>
+        /// </list>
+        ///
+        /// <para>
+        /// Unlike ICBM, Tier 2 mutates the <c>IpccTier2CarbonResults</c> sub-object on each
+        /// CropViewItem with the per-pool detail in addition to writing the headline
+        /// <c>SoilCarbon</c> field.
+        /// </para>
+        /// </summary>
+        /// <param name="farm">The farm whose climate / soil / defaults drive the math.</param>
+        /// <param name="viewItemsByField">Merged-per-year view items for the field (one row per year). Updated in place.</param>
+        /// <param name="fieldSystemComponent">The owning field component (used for area + tillage history).</param>
+        /// <param name="runInPeriodItems">Synthetic pre-history view items (typically a few rotation cycles) used to spin up the pools to equilibrium before the user-visible run starts.</param>
         public void CalculateResults(
             Farm farm,
             List<CropViewItem> viewItemsByField,

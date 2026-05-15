@@ -22,9 +22,29 @@ using Prism.Regions;
 namespace H.Avalonia.ViewModels.Results;
 
 /// <summary>
-/// Phase 5 vertical slice: pulls the ICBM / IPCC Tier 2 carbon results from
-/// <see cref="IFarmAnalysisService"/> for the active farm and exposes them as a flat
-/// <see cref="FieldAnalysisYearResult"/> collection that the view's DataGrid binds to.
+/// ViewModel for the GHG &amp; Carbon results page (<c>GHGResultsView</c>). Sits between the
+/// user's "Run Analysis" / "Recalculate" / strategy-toggle clicks and the
+/// <see cref="IFarmAnalysisService"/> calculator stack.
+///
+/// <para><b>Responsibilities:</b></para>
+/// <list type="bullet">
+///   <item>Resolve the active farm and call <c>IFarmAnalysisService.RunAnalysis</c> on a background thread (<see cref="RunAnalysisAsync"/>).</item>
+///   <item>Project <see cref="FarmAnalysisResults"/> onto bindable <see cref="ObservableCollection{T}"/> surfaces (<see cref="YearResults"/>, <see cref="ShelterbeltYearResults"/>) for the DataGrids.</item>
+///   <item>Build the soil-C trend chart (<see cref="SoilCarbonTrendSeries"/>) — one LineSeries per field across the union of years.</item>
+///   <item>Expose the strategy ComboBox (<see cref="SelectedStrategy"/>): flipping ICBM ↔ Tier 2 writes back to <c>farm.Defaults.CarbonModellingStrategy</c> and re-runs the analysis.</item>
+///   <item>Surface errors from the calculator stack via <see cref="LastErrorMessage"/>, which the view's error banner shows.</item>
+///   <item>Export field results to CSV (static helper) or Excel via <see cref="ExportFieldResultsToExcel"/>.</item>
+/// </list>
+///
+/// <para><b>Threading note:</b></para>
+/// The heavy carbon / N pipeline runs inside <c>Task.Run</c> so the UI thread stays free to paint
+/// the "Running carbon analysis..." banner. The continuation back on the UI thread is what writes
+/// the ObservableCollections — anything that needs the UI dispatcher (chart series, collection
+/// changes) is on that side of the <c>await</c>.
+///
+/// <para>
+/// See <c>Carbon_Model_Flow.md</c> for the full pipeline diagram and how this VM fits in.
+/// </para>
 /// </summary>
 public class GHGResultsViewModel : ResultsViewModelBase
 {

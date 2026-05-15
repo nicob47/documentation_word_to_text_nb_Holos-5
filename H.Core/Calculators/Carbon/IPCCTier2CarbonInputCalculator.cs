@@ -6,9 +6,29 @@ using H.Core.Providers.Plants;
 
 namespace H.Core.Calculators.Carbon;
 
+/// <summary>
+/// Tier 2 input-calculation half: converts a crop's yield + crop-specific Table 9 coefficients
+/// (slope, intercept, R:S ratio, lignin / N content) into per-hectare above-ground and
+/// below-ground carbon inputs that the Tier 2 pool dynamics in
+/// <see cref="IPCCTier2SoilCarbonCalculator"/> consume.
+///
+/// <para><b>Crop coverage:</b></para>
+/// Table 9 only has slope / intercept values for a subset of Canadian crop types. For anything
+/// else (e.g. obscure cover crops, exotic perennials) we fall back to the ICBM approach. Use
+/// <see cref="CanCalculateInputsForCrop"/> to check before calling this calculator; if it returns
+/// <c>false</c>, the dispatch in <c>FieldResultsService.AssignCarbonInputs</c> routes to
+/// <see cref="ICBMSoilCarbonCalculator.SetCarbonInputs"/> instead.
+///
+/// <para><b>Constants:</b></para>
+/// <c>AboveGroundCarbonContent</c> = <c>BelowGroundCarbonContent</c> = 0.42 — the IPCC default
+/// fraction of dry-matter residue that is carbon (kg C / kg DM).
+/// </summary>
 public class IPCCTier2CarbonInputCalculator : CarbonInputCalculatorBase, IIPCCTier2CarbonInputCalculator
 {
+    /// <summary>IPCC default — fraction of above-ground dry-matter residue that is carbon (kg C / kg DM).</summary>
     private const double AboveGroundCarbonContent = 0.42;
+
+    /// <summary>IPCC default — fraction of below-ground (root + extra-root) dry-matter residue that is carbon (kg C / kg DM).</summary>
     private const double BelowGroundCarbonContent = 0.42;
 
     #region Fields
@@ -38,6 +58,25 @@ public class IPCCTier2CarbonInputCalculator : CarbonInputCalculatorBase, IIPCCTi
         return _slopeProvider.GetDataByCropType(cropViewItem.CropType).SlopeValue > 0;
     }
 
+    /// <summary>
+    /// Populates the per-crop, per-year Tier 2 carbon-input fields on <paramref name="viewItem"/>.
+    /// Mirrors <see cref="ICBMSoilCarbonCalculator.SetCarbonInputs"/> in shape — the downstream
+    /// DTO mapper reads the same <c>AboveGroundCarbonInput</c> / <c>BelowGroundCarbonInput</c>
+    /// fields regardless of which calculator produced them.
+    ///
+    /// <para><b>The math:</b></para>
+    /// <list type="number">
+    ///   <item>Look up the crop's Table 9 row (slope, intercept, R:S ratio).</item>
+    ///   <item>Compute the harvest index from yield + intercept + slope + moisture.</item>
+    ///   <item>Compute above-ground residue dry matter, subtract burned / removed fractions.</item>
+    ///   <item>Multiply by 0.42 (C content) and divide by area to get <c>AboveGroundCarbonInput</c> (kg C ha⁻¹).</item>
+    ///   <item>Compute below-ground residue dry matter using R:S ratio + fractionRenewed (1 for annuals, 1/standLength for perennials).</item>
+    ///   <item>Add supplemental hay fed to grazing animals + manure / digestate from animal components.</item>
+    /// </list>
+    /// </summary>
+    /// <param name="viewItem">The CropViewItem to populate. Mutated in place.</param>
+    /// <param name="farm">Farm context for grazing / animal lookups.</param>
+    /// <param name="animalResults">Pre-computed per-animal-component emission results; primes manure / digestate services for this calculation.</param>
     public void AssignInputs(CropViewItem viewItem, Farm farm, List<AnimalComponentEmissionsResults> animalResults)
     {
         manureService.Initialize(farm, animalResults);

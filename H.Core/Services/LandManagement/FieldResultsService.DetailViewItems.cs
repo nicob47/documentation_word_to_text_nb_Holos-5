@@ -10,17 +10,45 @@ using NLog;
 
 namespace H.Core.Services.LandManagement
 {
+    /// <summary>
+    /// Partial: detail-view-item construction and stage-state management.
+    ///
+    /// The Avalonia GUI doesn't have v4's per-field "Details" screen — users go from the
+    /// component editor straight to the GHG results page. So the methods here are responsible
+    /// for synthesizing the per-year detail rows that the carbon pipeline needs, instead of
+    /// reading them from a UI-populated cache the way v4 did.
+    ///
+    /// <para><b>Entry points worth knowing:</b></para>
+    /// <list type="bullet">
+    ///   <item><see cref="InitializeStageState(Farm)"/> — top-level lazy initialiser. Called from <c>FarmAnalysisService</c> when the farm's stage state isn't populated yet.</item>
+    ///   <item><c>CreateDetailViewItems(Farm)</c> — loops every field component and builds rows. Calls <c>AssignCarbonInputs</c> (in <c>.Carbon.cs</c>) at the end of each field so the rows have their C inputs filled in before <c>CalculateFinalResults</c> reads them.</item>
+    ///   <item><see cref="CombineInputsForAllCropsInSameYear"/> — sums main + cover crop contributions into the <c>Combined*</c> fields on the main-crop row, so the downstream pool dynamics only have to read one row per year.</item>
+    ///   <item><see cref="MergeDetailViewItems"/> — collapses any remaining duplicate-year rows into a single row per year via <see cref="MapDetailsScreenViewItemFromComponentScreenViewItem"/>. Note: produces new instances, not references to the originals.</item>
+    /// </list>
+    /// </summary>
     public partial class FieldResultsService
     {
 
         #region Public Methods
 
         /// <summary>
-        /// Map properties from the component selection screen view item to the detail screen view item.
+        /// Deep-copies a <see cref="CropViewItem"/> into a new instance for use as a per-year
+        /// detail row. Uses <see cref="PropertyMapper"/> (reflection-driven, with a compiled
+        /// delegate cache per source/destination type pair) to copy scalar fields, then manually
+        /// iterates the collection-typed children (manure / harvest / grazing / hay-import /
+        /// fertilizer / digestate applications) so the copy doesn't share mutable list references
+        /// with the source.
+        ///
+        /// <para>
+        /// The <paramref name="year"/> parameter is used to retarget any dated child items
+        /// (manure applications, harvests, etc.) to the new year while preserving month + day —
+        /// this is how the historical-projection logic generates plausible synthetic events for
+        /// past years that the user only authored once on the current year.
+        /// </para>
         /// </summary>
-        /// <param name="viewItem">The <see cref="H.Core.Models.LandManagement.Fields.CropViewItem"/> to copy from.</param>
-        /// <param name="year">When creating historical view items, this value will be used to set the year of any associated <see cref="ManureApplicationViewItem"/>s etc.</param>
-        /// <returns>A duplicated <see cref="H.Core.Models.LandManagement.Fields.CropViewItem"/></returns>
+        /// <param name="viewItem">The component-screen <see cref="CropViewItem"/> to copy.</param>
+        /// <param name="year">Target year — applied to any dated child collections during the copy.</param>
+        /// <returns>A new <see cref="CropViewItem"/> instance with copied state.</returns>
         public CropViewItem MapDetailsScreenViewItemFromComponentScreenViewItem(CropViewItem viewItem, int year)
         {
             var result = PropertyMapper.Map<CropViewItem, CropViewItem>(viewItem);
@@ -89,6 +117,12 @@ namespace H.Core.Services.LandManagement
             return result;
         }
 
+        /// <summary>
+        /// Gets the farm's <see cref="FieldSystemDetailsStageState"/> (lazy-creating one if
+        /// missing). Does <i>not</i> populate it — use <see cref="InitializeStageState"/> for
+        /// that. Callers that need to read view items must check <c>stageState.IsInitialized</c>
+        /// or call <c>InitializeStageState</c> first.
+        /// </summary>
         public FieldSystemDetailsStageState GetStageState(Farm farm)
         {
             var stageState = farm.StageStates.OfType<FieldSystemDetailsStageState>().SingleOrDefault();
@@ -107,6 +141,21 @@ namespace H.Core.Services.LandManagement
             return stageState;
         }
 
+        /// <summary>
+        /// Rebuilds the farm's <see cref="FieldSystemDetailsStageState"/> from scratch: clears
+        /// any cached detail view items, drops the climate-parameter memo (so user edits to
+        /// climate / soil / defaults take effect), then runs <c>CreateDetailViewItems(farm)</c>
+        /// to regenerate the per-year, per-field rows that the final pass will consume.
+        ///
+        /// <para>
+        /// Called by <c>FarmAnalysisService</c> lazily — only when <c>stageState.IsInitialized</c>
+        /// is false. The GUI invalidates that flag whenever the user clicks Recalculate or edits
+        /// field components. Calling this twice in a row is safe; calling it on every
+        /// analysis pass is wasteful (multi-decade farms can spend &gt;10s here).
+        /// </para>
+        ///
+        /// <para>Emits a <c>[GHGAnalysis.Init]</c> trace with the clear / build ms breakdown.</para>
+        /// </summary>
         public void InitializeStageState(Farm farm)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();

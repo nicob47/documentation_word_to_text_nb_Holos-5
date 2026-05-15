@@ -12,6 +12,47 @@ using H.Core.Services.LandManagement;
 namespace H.Core.Calculators.Carbon
 {
     /// <summary>
+    /// Implementation of the ICBM (Introductory Carbon Balance Model) soil-carbon calculator —
+    /// Holos' default carbon model. ICBM splits soil organic carbon into four pools that decay
+    /// exponentially:
+    /// <list type="bullet">
+    ///   <item><b>Young pool — above-ground (Y_ag):</b> fresh above-ground residue from crop straw + cover crops.</item>
+    ///   <item><b>Young pool — below-ground (Y_bg):</b> root and extra-root carbon.</item>
+    ///   <item><b>Young pool — manure (Y_manure):</b> manure / digestate inputs treated as a separate young pool.</item>
+    ///   <item><b>Old pool (O):</b> stabilized humified C, decays much more slowly.</item>
+    /// </list>
+    ///
+    /// <para><b>Two distinct responsibilities:</b></para>
+    /// <list type="number">
+    ///   <item>
+    ///     <c>SetCarbonInputs</c> — per-crop, per-year input math (plant-C-in-product, residue
+    ///     fractions, manure / digestate C). Writes <c>AboveGroundCarbonInput</c>,
+    ///     <c>BelowGroundCarbonInput</c>, <c>ManureCarbonInputsPerHectare</c>, etc. onto the
+    ///     <see cref="CropViewItem"/>. Called from <c>FieldResultsService.AssignCarbonInputs</c>
+    ///     during stage-state build.
+    ///   </item>
+    ///   <item>
+    ///     <c>CalculateYoungPoolSteadyState*</c> / <c>CalculateOldPoolSteadyState</c> /
+    ///     <c>CalculateYoungPool*AtInterval</c> / <c>CalculateOldPoolSoilCarbonAtInterval</c> /
+    ///     <c>CalculateSoilCarbonAtInterval</c> — pool dynamics math. Called from
+    ///     <c>FieldResultsService.CalculateFinalResultsForField</c> during the final pass:
+    ///     first to seed the equilibrium values, then once per year to step each pool.
+    ///   </item>
+    /// </list>
+    ///
+    /// <para><b>Failure mode to watch for:</b></para>
+    /// Every steady-state and interval equation has the form
+    /// <c>numerator / (1 - exp(-k * climateParameter))</c>. A <c>climateParameter</c> of 0 makes
+    /// the denominator 0 and produces <c>±Infinity</c> or <c>NaN</c>. The downstream chart in
+    /// <c>GHGResultsView</c> silently drops NaN points, so a corrupted climate parameter looks
+    /// like "the chart is empty". Diagnostic <c>[GHGAnalysis.ICBM]</c> traces in
+    /// <c>FieldResultsService.Carbon.cs</c> emit the per-year pool values to make this visible
+    /// in the VS Output window.
+    ///
+    /// <para>
+    /// The nitrogen-side math lives in the partial class file
+    /// <c>ICBMSoilCarbonCalculator.Nitrogen.cs</c>.
+    /// </para>
     /// </summary>
     public partial class ICBMSoilCarbonCalculator : CarbonCalculatorBase, IICBMSoilCarbonCalculator
     {
@@ -22,6 +63,13 @@ namespace H.Core.Calculators.Carbon
 
         #region Constructors
 
+        /// <summary>
+        /// DI constructor. The climate provider is used by the nitrogen-side math
+        /// (precipitation / leaching factors); the N₂O factor calculator owns the manure /
+        /// digestate / synthetic-fertilizer emission-factor logic that the per-year nitrogen
+        /// step calls into.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">If either dependency is <c>null</c>.</exception>
         public ICBMSoilCarbonCalculator(IClimateProvider climateProvider, N2OEmissionFactorCalculator n2OEmissionFactorCalculator)
         {
             if (climateProvider != null)
@@ -51,6 +99,33 @@ namespace H.Core.Calculators.Carbon
 
         #region Public Methods
 
+        /// <summary>
+        /// Populates the per-crop, per-year carbon-input fields on <paramref name="currentYearViewItem"/>.
+        /// Called once per (field × year) from <c>FieldResultsService.AssignCarbonInputs</c> during
+        /// stage-state build.
+        ///
+        /// <para><b>Writes:</b></para>
+        /// <list type="bullet">
+        ///   <item><c>PlantCarbonInAgriculturalProduct</c> — Cp, the C in the harvested product.</item>
+        ///   <item><c>CarbonInputFromProduct</c> / <c>CarbonInputFromStraw</c> / <c>CarbonInputFromRoots</c> / <c>CarbonInputFromExtraroots</c> — fractional partitions of crop C.</item>
+        ///   <item><c>AboveGroundCarbonInput</c> — straw + product fractions, plus supplemental hay fed to grazing animals.</item>
+        ///   <item><c>BelowGroundCarbonInput</c> — roots + extra-roots.</item>
+        ///   <item><c>ManureCarbonInputsPerHectare</c> — manure applications + grazing-animal deposits.</item>
+        ///   <item><c>DigestateCarbonInputsPerHectare</c> — anaerobic-digestion digestate applications.</item>
+        ///   <item><c>TotalCarbonInputs</c> — sum of all four above.</item>
+        /// </list>
+        ///
+        /// <para><b>Previous / next year:</b></para>
+        /// Both can be <c>null</c> for the first or last year of a field's history. For perennial
+        /// crops, the previous / next year items must belong to the same perennial stand (use
+        /// <c>FieldResultsService.GetAdjoiningYears</c> to resolve them).
+        ///
+        /// <para><b>Non-swathing grazing scenario:</b></para>
+        /// When grazing animals are on the field and the harvest method isn't swathing /
+        /// stubble-grazing, plant-C and yield are derived from total C losses by grazing animals
+        /// rather than from the harvested yield — see equations 11.3.2-6 / 11.3.2-7 / 11.3.2-9.
+        /// </summary>
+        /// <returns>The same <paramref name="currentYearViewItem"/> instance, mutated in place.</returns>
         public CropViewItem SetCarbonInputs(
             CropViewItem? previousYearViewItem,
             CropViewItem currentYearViewItem,
@@ -827,11 +902,21 @@ namespace H.Core.Calculators.Carbon
         }
 
         /// <summary>
-        /// Equation 2.1.3-4
+        /// Equation 2.1.3-4. Steady-state value of the above-ground young pool: how much C this
+        /// pool holds when input and decay are balanced over the rotation. Seeds
+        /// <c>YoungPoolSoilCarbonAboveGround</c> on the equilibrium-year view item that
+        /// <c>FieldResultsService.CalculateEquilibriumYear</c> builds.
+        ///
+        /// <para><b>NaN failure mode:</b></para>
+        /// The denominator is <c>1 - exp(-k * climateParameter)</c>. When <c>climateParameter</c>
+        /// is 0 the denominator is 0 and the result is <c>±Infinity</c> or <c>NaN</c>, which
+        /// propagates through <c>CalculateSoilCarbonAtInterval</c> to the chart and produces the
+        /// "empty chart" symptom. That used to fire on non-Canadian farms whose SLC climate
+        /// lookup returned 0 — now blocked by the province guard in <c>FarmAnalysisService</c>.
         /// </summary>
         public double CalculateYoungPoolSteadyStateAboveGround(
-            double averageAboveGroundCarbonInput, 
-            double youngPoolDecompositionRate, 
+            double averageAboveGroundCarbonInput,
+            double youngPoolDecompositionRate,
             double climateParameter)
         {
             var numerator = averageAboveGroundCarbonInput * Math.Exp(-1 * youngPoolDecompositionRate * climateParameter);
@@ -1017,39 +1102,47 @@ namespace H.Core.Calculators.Carbon
         }
 
         /// <summary>
-        /// Equation 2.1.3-15
+        /// Equation 2.1.3-15. Total soil organic carbon at the end of the interval is the sum of
+        /// the four ICBM pools. This is the value that <see cref="CropViewItem.SoilCarbon"/> ends
+        /// up holding and that the GUI chart reads.
         /// </summary>
+        /// <returns>SoilCarbon (kg C ha⁻¹) — sum of the four pool inputs.</returns>
         public double CalculateSoilCarbonAtInterval(
-            double youngPoolSoilCarbonAboveGroundAtInterval, 
-            double youngPoolSoilCarbonBelowGroundAtInterval, 
-            double oldPoolSoilCarbonAtInterval, 
+            double youngPoolSoilCarbonAboveGroundAtInterval,
+            double youngPoolSoilCarbonBelowGroundAtInterval,
+            double oldPoolSoilCarbonAtInterval,
             double youngPoolManureAtInterval)
         {
             return youngPoolSoilCarbonAboveGroundAtInterval + youngPoolSoilCarbonBelowGroundAtInterval + oldPoolSoilCarbonAtInterval + youngPoolManureAtInterval;
         }
 
         /// <summary>
-        /// Equation 2.1.3-16
+        /// Equation 2.1.3-16. Year-over-year change in soil organic carbon. Positive when carbon
+        /// is accumulating (sequestration), negative when the soil is a net source.
         /// </summary>
+        /// <returns>ΔSoilC (kg C ha⁻¹ yr⁻¹).</returns>
         public double CalculateChangeInSoilCarbonAtInterval(
-            double soilOrganicCarbonAtInterval, 
+            double soilOrganicCarbonAtInterval,
             double soilOrganicCarbonAtPreviousInterval)
         {
             return soilOrganicCarbonAtInterval - soilOrganicCarbonAtPreviousInterval;
         }
 
         /// <summary>
-        /// Equation 2.1.3-17
+        /// Equation 2.1.3-17. Scales the per-hectare ΔSoilC to a per-field absolute value by
+        /// multiplying by the field area.
         /// </summary>
+        /// <returns>ΔSoilC for the entire field (kg C field⁻¹ yr⁻¹).</returns>
         public double CalculateChangeInSoilOrganicCarbonForFieldAtInterval(
-            double changeInSoilOrganicCarbonAtInterval, 
+            double changeInSoilOrganicCarbonAtInterval,
             double fieldArea)
         {
             return changeInSoilOrganicCarbonAtInterval * fieldArea;
         }
 
         /// <summary>
-        /// Equation 2.1.3-18
+        /// Equation 2.1.3-18. Sums the per-field ΔSoilC values to the farm level. Just a sum —
+        /// kept as a named method so the equation reference is greppable.
         /// </summary>
         public double CalculateChangeInSoilOrganicCarbonForFarmAtInterval(
             IEnumerable<double> changeInSoilOrganicCarbonForFields)
@@ -1058,7 +1151,9 @@ namespace H.Core.Calculators.Carbon
         }
 
         /// <summary>
-        /// Equation 2.1.4-1
+        /// Equation 2.1.4-1. Converts soil organic carbon to CO₂-equivalent using the molar-mass
+        /// ratio 44/12 (CO₂ : C). Used when surfacing the carbon results in CO₂e units for
+        /// GHG-inventory-style reporting.
         /// </summary>
         public double CalculateCarbonDioxideEquivalentsForSoil(double soilOrganicCarbonAtInterval)
         {

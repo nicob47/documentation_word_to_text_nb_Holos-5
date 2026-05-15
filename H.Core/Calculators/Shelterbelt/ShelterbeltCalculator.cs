@@ -5,6 +5,24 @@ using H.Infrastructure;
 
 namespace H.Core.Calculators.Shelterbelt
 {
+    /// <summary>
+    /// Shelterbelt biomass / DOM / total-ecosystem carbon calculator. Orthogonal to the field-level
+    /// ICBM / Tier 2 soil-carbon math — shelterbelts use an allometric model: tree circumference at
+    /// year of observation → biomass via species-specific A and B coefficients → ratio against
+    /// lookup-table ideal growth → project forward/backward in time using ideal TEC / BIOM / DOM
+    /// curves scaled by that growth ratio.
+    ///
+    /// <para><b>Two-stage flow used by <see cref="H.Core.Services.Analysis.FarmAnalysisService"/>:</b></para>
+    /// <list type="number">
+    ///   <item><see cref="CalculateInitialResults(ShelterbeltComponent)"/> — builds <c>TrannumData</c> rows for every (row × tree group × year) combination on a single component and fills in biomass carbon.</item>
+    ///   <item><c>TotalResultsForEachYear</c> — aggregates the per-tree-group data across all shelterbelt components on the farm into <c>TrannumResultViewItem</c>s that <c>FarmAnalysisService</c> maps to <see cref="H.Core.Models.Results.ShelterbeltYearResult"/> DTO rows.</item>
+    /// </list>
+    ///
+    /// <para>
+    /// Units are Mg C km⁻¹ (megagrams carbon per kilometre of shelterbelt) — different from the
+    /// field-level kg C ha⁻¹ used elsewhere. See <see cref="H.Core.Models.Results.ShelterbeltYearResult"/>.
+    /// </para>
+    /// </summary>
     public class ShelterbeltCalculator
     {
         #region Fields

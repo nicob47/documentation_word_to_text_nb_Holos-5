@@ -12,17 +12,43 @@ using NLog;
 
 namespace H.Core.Services.Analysis;
 
-/// <inheritdoc />
+/// <summary>
+/// GUI-facing façade that orchestrates the carbon / nitrogen analysis pipeline and maps the
+/// result into a flat <see cref="FarmAnalysisResults"/> DTO.
+///
+/// <para><b>What it does, in order:</b></para>
+/// <list type="number">
+///   <item>Validate the farm has a supported Canadian province (defense-in-depth — the GUI shouldn't let a non-Canadian value reach here, but a v4 import can sneak one in).</item>
+///   <item>Lazy-build the per-year detail view items via <see cref="IFieldResultsService.InitializeStageState"/> if they aren't already populated. The Avalonia GUI lets users jump straight to results without touching the legacy details screen that v4's WPF GUI used to build the stage state for them, so the analysis service has to do it.</item>
+///   <item>Prime <c>_fieldResultsService.AnimalResults</c> with the animal emissions before the field-level math runs (the nitrogen calculator reads grazing/manure deposits from there).</item>
+///   <item>Run <see cref="IFieldResultsService.CalculateFinalResults(Farm)"/> for the field-level ICBM / Tier 2 math.</item>
+///   <item>Run the shelterbelt calculator orthogonally (only when the farm has shelterbelt components — uses an allometric model, not soil-pool dynamics).</item>
+///   <item>Map both into the <see cref="FarmAnalysisResults"/> DTO so view models can bind without depending on <c>CropViewItem</c>.</item>
+/// </list>
+///
+/// <para>
+/// Emits a <c>[GHGAnalysis]</c> trace line with a per-phase ms breakdown — useful for spotting
+/// regressions without attaching a profiler. See <c>Carbon_Model_Flow.md</c> for the full
+/// pipeline diagram.
+/// </para>
+/// </summary>
 public class FarmAnalysisService : IFarmAnalysisService
 {
-        // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
-        // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
-        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+    // NLog logger. Replaces legacy Trace.TraceError/Warning/Information/WriteLine calls so every
+    // log line in the codebase goes through the single NLog pipeline configured in NLog.config.
+    private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
     private readonly IFieldResultsService _fieldResultsService;
     private readonly IAnimalService _animalService;
     private readonly ShelterbeltCalculator _shelterbeltCalculator;
 
+    /// <summary>
+    /// Constructs the façade with the three calculation services it orchestrates. All are
+    /// required; passing <c>null</c> for any throws <see cref="ArgumentNullException"/>.
+    /// </summary>
+    /// <param name="fieldResultsService">Owns the per-year detail view items and runs the field-level ICBM / Tier 2 math.</param>
+    /// <param name="animalService">Computes per-component animal emissions; primed into <c>_fieldResultsService.AnimalResults</c> before the field pass so nitrogen calc can fold in grazing / manure N.</param>
+    /// <param name="shelterbeltCalculator">Allometric shelterbelt biomass / DOM / ecosystem-C model. Orthogonal to the soil-pool calculations.</param>
     public FarmAnalysisService(
         IFieldResultsService fieldResultsService,
         IAnimalService animalService,
@@ -37,6 +63,16 @@ public class FarmAnalysisService : IFarmAnalysisService
         _shelterbeltCalculator = shelterbeltCalculator;
     }
 
+    /// <inheritdoc />
+    /// <remarks>
+    /// Synchronous — runs the full carbon + nitrogen pipeline on the calling thread. The Avalonia
+    /// VM (<c>GHGResultsViewModel.RunAnalysisAsync</c>) wraps the call in <c>Task.Run</c> so the
+    /// UI thread stays responsive while this runs.
+    ///
+    /// <para>Throws <see cref="InvalidOperationException"/> when the farm's province is outside
+    /// the Canadian whitelist (Guard A) — the GUI catches the exception and surfaces the message
+    /// via the existing <c>LastErrorMessage</c> banner.</para>
+    /// </remarks>
     public FarmAnalysisResults RunAnalysis(Farm farm)
     {
         ArgumentNullException.ThrowIfNull(farm);
@@ -147,6 +183,13 @@ public class FarmAnalysisService : IFarmAnalysisService
         return result;
     }
 
+    /// <summary>
+    /// Runs the shelterbelt allometric model for any shelterbelt components on the farm and maps
+    /// the per-component, per-year <c>TrannumResultViewItem</c>s into flat
+    /// <see cref="ShelterbeltYearResult"/> rows. Returns an empty collection when the farm has no
+    /// shelterbelt components — orthogonal to the field-level ICBM / Tier 2 path, so we can
+    /// short-circuit cheaply.
+    /// </summary>
     private IReadOnlyList<ShelterbeltYearResult> CalculateShelterbeltResults(Farm farm)
     {
         var shelterbelts = farm.Components.OfType<ShelterbeltComponent>().ToList();
@@ -173,6 +216,11 @@ public class FarmAnalysisService : IFarmAnalysisService
             .ToList();
     }
 
+    /// <summary>
+    /// Maps a per-component, per-year <see cref="TrannumResultViewItem"/> (the v4 shelterbelt
+    /// calculator's internal row type) into the flat <see cref="ShelterbeltYearResult"/> DTO.
+    /// Carbon quantities are kept in their native Mg C km⁻¹ — see the DTO XML doc for units.
+    /// </summary>
     private static ShelterbeltYearResult ToShelterbeltYearResult(TrannumResultViewItem trannum) => new()
     {
         Year = trannum.Year,
@@ -185,6 +233,19 @@ public class FarmAnalysisService : IFarmAnalysisService
         TotalEcosystemCarbonChange = trannum.TotalEcosystemCarbonChange,
     };
 
+    /// <summary>
+    /// Maps a single merged-per-year <see cref="CropViewItem"/> into the
+    /// <see cref="FieldAnalysisYearResult"/> DTO that the GUI binds to.
+    ///
+    /// <para><b>Combined* vs per-crop field selection:</b></para>
+    /// The <c>Combined*</c> fields hold "main crop + cover crop" inputs after
+    /// <c>CarbonService.CombineCarbonInputs</c> has run. For simple fields without a cover crop
+    /// those fields are zero, so we fall back to the main-crop-only values
+    /// (<c>AboveGroundCarbonInput</c> et al). If neither has been populated the user will see
+    /// zeros — that's a legitimate "no inputs assigned" signal rather than something to paper over.
+    ///
+    /// <para>SoilCarbon is in kg C ha⁻¹ (not Mg) — see the DTO XML doc.</para>
+    /// </summary>
     private static FieldAnalysisYearResult ToYearResult(CropViewItem viewItem) => new()
     {
         Year = viewItem.Year,

@@ -7,12 +7,55 @@ using NLog;
 
 namespace H.Core.Services.LandManagement
 {
+    /// <summary>
+    /// Partial: carbon-input dispatch and final ICBM / Tier 2 result pass.
+    ///
+    /// <para><b>Two entry points worth knowing about:</b></para>
+    /// <list type="bullet">
+    ///   <item>
+    ///     <c>AssignCarbonInputs(viewItems, farm, fieldSystemComponent)</c> — per-crop loop. For
+    ///     each crop in each year, dispatches to either
+    ///     <see cref="H.Core.Calculators.Carbon.IPCCTier2SoilCarbonCalculator.CalculateInputs"/>
+    ///     (if strategy is IPCC Tier 2 and Table 9 has data for this crop) or
+    ///     <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator.SetCarbonInputs"/>
+    ///     otherwise. Also computes climate / tillage / management factors.
+    ///   </item>
+    ///   <item>
+    ///     <c>CalculateFinalResultsForField</c> — the final per-year pool dynamics. ICBM seeds
+    ///     pools from <c>CalculateEquilibriumYear</c> then steps year-by-year via
+    ///     <c>CalculateCarbonAtInterval</c>; Tier 2 hands off to
+    ///     <see cref="H.Core.Calculators.Carbon.IPCCTier2SoilCarbonCalculator.CalculateResults"/>.
+    ///   </item>
+    /// </list>
+    ///
+    /// <para>
+    /// Diagnostic traces tagged <c>[GHGAnalysis.AssignC]</c> and <c>[GHGAnalysis.ICBM]</c> are
+    /// emitted from these paths to help spot bad inputs / NaN propagation.
+    /// </para>
+    /// </summary>
     public partial class FieldResultsService
     {
+        /// <summary>
+        /// Tuple holding a year's three adjoining <see cref="CropViewItem"/>s — the year itself,
+        /// the year before it, and the year after. Some ICBM input calculations (perennial root
+        /// returns, missing-yield interpolation) need to look across year boundaries; this
+        /// struct makes the lookup explicit.
+        ///
+        /// <para>
+        /// For perennial crops, the previous/next items must belong to the <i>same perennial
+        /// stand</i> (matched on <c>PerennialStandGroupId</c>) — switching to a new stand resets
+        /// the temporal continuity. For annuals, previous/next are usually <c>null</c>.
+        /// </para>
+        /// </summary>
         public class AdjoiningYears
         {
+            /// <summary>Item for <c>year - 1</c>, or <c>null</c> for annuals / start of history / start of a perennial stand.</summary>
             public CropViewItem? PreviousYearViewItem { get; set; }
+
+            /// <summary>Item for <c>year</c>. Always populated when <see cref="AdjoiningYears"/> is returned by <c>GetAdjoiningYears</c>.</summary>
             public CropViewItem CurrentYearViewItem { get; set; } = null!;
+
+            /// <summary>Item for <c>year + 1</c>, or <c>null</c> for annuals / end of history / end of a perennial stand.</summary>
             public CropViewItem? NextYearViewItem { get; set; }
         }
 
@@ -187,6 +230,35 @@ namespace H.Core.Services.LandManagement
 
         #region Private Methods
 
+        /// <summary>
+        /// ICBM per-year step. Reads the four pool values from <paramref name="previousYearResults"/>
+        /// and writes the four updated pool values plus <c>SoilCarbon</c> and <c>ChangeInCarbon</c>
+        /// onto <paramref name="currentYearResults"/>.
+        ///
+        /// <para><b>Pool flow per year:</b></para>
+        /// <list type="bullet">
+        ///   <item><c>YoungPoolSoilCarbonAboveGround</c> ← <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator.CalculateYoungPoolAboveGroundCarbonAtInterval"/></item>
+        ///   <item><c>YoungPoolSoilCarbonBelowGround</c> ← <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator.CalculateYoungPoolBelowGroundCarbonAtInterval"/></item>
+        ///   <item><c>YoungPoolManureCarbon</c> ← <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator.CalculateYoungPoolManureCarbonAtInterval"/></item>
+        ///   <item><c>OldPoolSoilCarbon</c> ← <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator.CalculateOldPoolSoilCarbonAtInterval"/></item>
+        ///   <item><c>SoilCarbon = sum of the four above</c>; <c>ChangeInCarbon = current SoilC − previous SoilC</c></item>
+        /// </list>
+        ///
+        /// <para><b>Climate vs management factor:</b></para>
+        /// All four pool calculations take a "climate or management" scalar. Which one is used
+        /// depends on <c>farm.Defaults.UseClimateParameterInsteadOfManagementFactor</c>. The
+        /// management factor combines climate + tillage; the raw climate parameter ignores
+        /// tillage practice. Both calculators are wired up the same way regardless of which is
+        /// selected.
+        ///
+        /// <para><b>Custom starting SOC:</b></para>
+        /// When <c>farm.UseCustomStartingSoilOrganicCarbon</c> is true and we're on the first
+        /// real year (previousYear == equilibrium year placeholder, Year = 0), we keep the
+        /// equilibrium pool values verbatim and override <c>SoilCarbon = StartingSoilOrganicCarbon</c>
+        /// so the user-measured value is the visible starting point rather than the calculated
+        /// equilibrium.
+        /// </para>
+        /// </summary>
         private void CalculateCarbonAtInterval(
             CropViewItem previousYearResults,
             CropViewItem currentYearResults,
@@ -278,6 +350,32 @@ namespace H.Core.Services.LandManagement
             }
         }
 
+        /// <summary>
+        /// Builds the synthetic "year 0" <see cref="CropViewItem"/> that ICBM uses to seed its
+        /// per-year pool dynamics. Averages the rotation's C inputs + climate / management
+        /// factors and then runs the steady-state ICBM equations (see
+        /// <see cref="H.Core.Calculators.Carbon.ICBMSoilCarbonCalculator.CalculateYoungPoolSteadyStateAboveGround"/>
+        /// etc.) to compute what each pool would hold if the input / decay rates were sustained
+        /// indefinitely.
+        ///
+        /// <para>
+        /// The returned item is not added to the farm's stage state — it's used only as
+        /// <c>previousYearResults</c> for the very first iteration of the per-year loop in
+        /// <see cref="CalculateFinalResultsForField"/>.
+        /// </para>
+        ///
+        /// <para><b>Rotation-size handling:</b></para>
+        /// Reads <c>SizeOfFirstRotationForField</c> from the first detail view item. On legacy
+        /// (v4-imported) farms this can be zero; we fall back to
+        /// <c>FieldSystemComponent.SizeOfFirstRotationInField()</c> to recover a sensible value
+        /// rather than averaging over zero items.
+        ///
+        /// <para><b>Custom starting SOC branch:</b></para>
+        /// When <c>farm.UseCustomStartingSoilOrganicCarbon</c> is true, the young pools are
+        /// derived from the user's measured value (equations 2.1.3-8, 2.1.3-9) and the old pool
+        /// takes whatever's left over (equation 2.1.3-10). When false, all four pools come from
+        /// the analytic steady-state expressions.
+        /// </summary>
         public CropViewItem CalculateEquilibriumYear(
             List<CropViewItem> detailViewItems,
             Farm farm,
